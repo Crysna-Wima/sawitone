@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+    Route::view('dashboard','dashboard.index');
+
     Route::prefix('master')->group(function () {
         Route::get('/get-data-all/{model}','DataMasterController@get_data_all');
         Route::get('/get-data-by-id/{model}/{id}','DataMasterController@get_data_by_id');
@@ -22,31 +24,21 @@ use Illuminate\Support\Facades\Route;
 // Route::group(['middleware' => ['cek_login', 'cek_authorize']], function () {
     Route::prefix('data-master')->group(function () {
         Route::prefix('master-menu')->group(function () {
-            Route::get('/','DataMaster\MasterMenuController@index');
-            Route::get('/detail/{id}','DataMaster\MasterMenuController@detail');
-            Route::get('/datatables','DataMaster\MasterMenuController@datatables');
-            Route::post('/store-update','DataMaster\MasterMenuController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterMenuController@delete');
+            Route::get('/','Settings\SettingMenuController@index');
+            Route::get('/detail/{id}','Settings\SettingMenuController@detail');
+            Route::get('/datatables','Settings\SettingMenuController@datatables');
+            Route::post('/store-update','Settings\SettingMenuController@store_update');
+            Route::delete('/delete/{id}','Settings\SettingMenuController@delete');
         });
 
         Route::prefix('master-user')->group(function () {
-            Route::get('/','DataMaster\MasterUserController@index');
-            Route::get('/detail/{id}','DataMaster\MasterUserController@detail');
-            Route::get('/datatables','DataMaster\MasterUserController@datatables');
-            Route::post('/store-update','DataMaster\MasterUserController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterUserController@delete');
+            Route::get('/','Settings\SettingUserController@index');
+            Route::get('/detail/{id}','Settings\SettingUserController@detail');
+            Route::get('/datatables','Settings\SettingUserController@datatables');
+            Route::post('/store-update','Settings\SettingUserController@store_update');
+            Route::delete('/delete/{id}','Settings\SettingUserController@delete');
 
-            Route::get('/add-menu/{id}','DataMaster\MasterUserController@add_menu');
-        });
-
-        Route::prefix('master-role')->group(function () {
-            Route::get('/','DataMaster\MasterRoleController@index');
-            Route::get('/detail/{id}','DataMaster\MasterRoleController@detail');
-            Route::get('/datatables','DataMaster\MasterRoleController@datatables');
-            Route::post('/store-update','DataMaster\MasterRoleController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterRoleController@delete');
-
-            Route::get('/add-menu/{id}','DataMaster\MasterRoleController@add_menu');
+            Route::get('/add-menu/{id}','Settings\SettingUserController@add_menu');
         });
     });
 // });

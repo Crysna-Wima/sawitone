@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\DataMaster;
+namespace App\Http\Controllers\Settings;
 
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
@@ -11,20 +11,20 @@ use DataTables;
 use Carbon\Carbon;
 use File;
 
-use App\Models\Menu;
+use App\Models\MasterMenu;
 
 class SettingMenuController extends Controller
 {
     public function index(){
-        return view('data-master.master-menu.master-menu-index');
+        return view('data-master.master-menu.index');
     }
 
     public function detail($id){
-        return Menu::find($id);
+        return MasterMenu::find($id);
     }
 
     public function datatables(){
-        $master_menu = Menu::where('parent_id', '0')->orderBy('index','asc')->get();
+        $master_menu = MasterMenu::where('parent_id', '0')->orderBy('index','asc')->get();
 
         $array = [];
         $count = 0;
@@ -35,10 +35,10 @@ class SettingMenuController extends Controller
             $array[$count]['icon'] = $value->icon;
             $array[$count]['link'] = $value->link;
             $array[$count]['status'] = "menu";
-            
+
             $count++;
 
-            $sub_menu = Menu::where('parent_id', $value->id)->orderBy('index','asc')->get();
+            $sub_menu = MasterMenu::where('parent_id', $value->id)->orderBy('index','asc')->get();
             foreach($sub_menu as $value2){
                 $array[$count]['id'] = $value2->id;
                 $array[$count]['nama'] = $value2->nama_menu;
@@ -63,7 +63,7 @@ class SettingMenuController extends Controller
             'parent_id' => 'required',
             'menu' => 'required',
         ]);
-            
+
         if($validator->fails()) {
             return [
                 'status' => 300,
@@ -71,21 +71,21 @@ class SettingMenuController extends Controller
             ];
         }
 
-        Menu::updateOrCreate(['id' => $request->id],$request->all() );
+        MasterMenu::updateOrCreate(['id' => $request->id],$request->all() );
 
 		return [
-			'status' => 200, // SUCCESS 
+			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'
-		];		
+		];
     }
 
     public function delete($id){
-        $delete = Menu::find($id);
+        $delete = MasterMenu::find($id);
 
 		if($delete != null){
-			
+
 			$delete->delete();
-	
+
 			return response()->json([
 				'status' => 200,
 				'message' => "Data berhasil dihapus"
