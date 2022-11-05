@@ -23,6 +23,15 @@ use Illuminate\Support\Facades\Route;
 
 // Route::group(['middleware' => ['cek_login', 'cek_authorize']], function () {
     Route::prefix('data-master')->group(function () {
+
+        Route::prefix('meta-data')->group(function () {
+            Route::get('/','DataMaster\MetaDataController@index');
+            Route::get('/detail/{fc_kode}','DataMaster\MetaDataController@detail');
+            Route::get('/datatables','DataMaster\MetaDataController@datatables');
+            Route::post('/store-update','DataMaster\MetaDataController@store_update');
+            Route::delete('/delete/{fc_kode}','DataMaster\MetaDataController@delete');
+        });
+
         Route::prefix('master-menu')->group(function () {
             Route::get('/','Settings\SettingMenuController@index');
             Route::get('/detail/{id}','Settings\SettingMenuController@detail');

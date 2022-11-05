@@ -9,7 +9,7 @@
             <div class="card-header">
                <h4>Data Menu</h4>
                <div class="card-header-action">
-                  <button type="button" class="btn btn-primary" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Menu</button>
+                  <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Menu</button>
                </div>
             </div>
             <div class="card-body">

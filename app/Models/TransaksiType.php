@@ -18,7 +18,7 @@ class TransaksiType extends Model
 
     protected $table = 't_trxtype';
     protected $primaryKey = ['fc_trx', 'fc_kode'];
-    protected $guarded = [];
+    protected $fillable = ['fc_trx', 'fc_kode', 'fv_description'];
     protected $appends = [];
 
     public function scopeActive($query){
