@@ -11,20 +11,20 @@ use DataTables;
 use Carbon\Carbon;
 use File;
 
-use App\Models\TransaksiType;
+use App\Models\Supplier;
 
-class MetaDataController extends Controller
+class SupplierController extends Controller
 {
     public function index(){
-        return view('data-master.meta-data.index');
+        return view('data-master.supplier.index');
     }
 
     public function detail($fc_kode){
-        return TransaksiType::where('fc_kode', $fc_kode)->first();
+        return Supplier::where('fc_kode', $fc_kode)->first();
     }
 
     public function datatables(){
-        $data = TransaksiType::orderBy('fc_trx', 'ASC')->get();
+        $data = Supplier::orderBy('fc_trx', 'ASC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -45,7 +45,7 @@ class MetaDataController extends Controller
             ];
         }
 
-        TransaksiType::updateOrCreate(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode],[
+        Supplier::updateOrCreate(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode],[
             'fc_trx' => $request->fc_trx,
             'fc_kode' => $request->fc_kode,
             'fv_description' => $request->fv_description,
@@ -58,7 +58,7 @@ class MetaDataController extends Controller
     }
 
     public function delete($fc_kode){
-        TransaksiType::where('fc_kode', $fc_kode)->delete();
+        Supplier::where('fc_kode', $fc_kode)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

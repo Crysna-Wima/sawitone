@@ -49,6 +49,32 @@ use Illuminate\Support\Facades\Route;
 
             Route::get('/add-menu/{id}','Settings\SettingUserController@add_menu');
         });
+
+         Route::prefix('customer')->group(function () {
+            Route::get('/','DataMaster\CustomerController@index');
+            Route::get('/detail/{fc_kode}','DataMaster\CustomerController@detail');
+            Route::get('/datatables','DataMaster\CustomerController@datatables');
+            Route::post('/store-update','DataMaster\CustomerController@store_update');
+            Route::delete('/delete/{fc_kode}','DataMaster\CustomerController@delete');
+        });
+
+        Route::prefix('supplier')->group(function () {
+            Route::get('/','DataMaster\SupplierController@index');
+            Route::get('/detail/{fc_kode}','DataMaster\SupplierController@detail');
+            Route::get('/datatables','DataMaster\SupplierController@datatables');
+            Route::post('/store-update','DataMaster\SupplierController@store_update');
+            Route::delete('/delete/{fc_kode}','DataMaster\SupplierController@delete');
+        });
+
+         Route::prefix('sales')->group(function () {
+            Route::get('/','DataMaster\SalesController@index');
+            Route::get('/detail/{fc_kode}','DataMaster\SalesController@detail');
+            Route::get('/datatables','DataMaster\SalesController@datatables');
+            Route::post('/store-update','DataMaster\SalesController@store_update');
+            Route::delete('/delete/{fc_kode}','DataMaster\SalesController@delete');
+        });
+
+
     });
 // });
 
