@@ -41,67 +41,67 @@
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-         <div class="modal-header br">
+        <div class="modal-header br">
             <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
-         </div>
-         <form id="form_submit" action="/data-master/master-menu/store-update" method="POST" autocomplete="off">
+        </div>
+        <form id="form_submit" action="/data-master/master-menu/store-update" method="POST" autocomplete="off">
             <div class="modal-body">
-               <div class="row">
-                  <div class="col-12 col-md-6 col-lg-6">
-                     <div class="form-group">
-                           <label>Nama Menu</label>
-                           <input type="text" hidden class="form-control" name="id" id="id">
-                           <input type="text" hidden class="form-control" name="type" id="type">
-                           <input type="text" class="form-control required-field" name="nama_menu" id="nama_menu">
-                     </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-6">
-                     <div class="form-group">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group">
+                        <label>Nama Menu</label>
+                        <input type="text" hidden class="form-control" name="id" id="id">
+                        <input type="text" hidden class="form-control" name="type" id="type">
+                        <input type="text" class="form-control required-field" name="nama_menu" id="nama_menu">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group">
                         <label>Icon</label>
                         <input type="text" class="form-control" name="icon" id="icon">
-                     </div>
-                  </div>
-                  <div class="col-12 col-md-3 col-lg-3">
-                     <div class="form-group">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 col-lg-3">
+                    <div class="form-group">
                         <label>Index</label>
                         <input type="text" class="form-control required-field" name="index" id="index">
-                     </div>
-                  </div>
-                  <div class="col-12 col-md-3 col-lg-3">
-                     <div class="form-group">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 col-lg-3">
+                    <div class="form-group">
                         <label>Parent</label>
                         <input type="text" class="form-control required-field" name="parent_id" id="parent_id">
-                     </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-6">
-                     <div class="form-group">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group">
                         <label>Menu</label>
                         <input type="text" class="form-control required-field" name="menu" id="menu">
-                     </div>
-                  </div>
+                    </div>
+                </div>
 
-                  <div class="col-12 col-md-6 col-lg-6">
-                     <div class="form-group">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group">
                         <label>Sub-Menu</label>
                         <input type="text" class="form-control" name="submenu" id="submenu">
-                     </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-6">
-                     <div class="form-group">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="form-group">
                         <label>Url</label>
                         <input type="text" class="form-control" name="link" id="link">
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
-         </form>
+        </form>
       </div>
    </div>
 </div>

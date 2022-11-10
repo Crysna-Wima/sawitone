@@ -45,84 +45,84 @@
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
-          <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
-             <div class="modal-body">
-                <div class="row">
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Division Code</label>
-                             <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label>Branch</label>
-                            <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+            <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Bank Name</label>
+                                <input type="text" class="form-control required-field" name="fv_bankname" id="fv_bankname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label>Bank Type</label>
+                                <select class="form-control select2 required-field" name="fc_banktype" id="fc_banktype">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Bank Code</label>
+                                <input type="text" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Bank Username</label>
+                                <input type="text" class="form-control required-field" name="fv_bankusername" id="fv_bankusername">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label>Bank Hold</label>
+                                <select class="form-control required-field select2" name="fl_bankhold" id="fl_bankhold">
+                                    <option value="T">YES</option>
+                                    <option value="F">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Bank Branch</label>
+                                <input type="text" class="form-control required-field" name="fv_bankbranch" id="fv_bankbranch">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Bank Address 1</label>
+                                <textarea class="form-control required-field" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Bank Address 2</label>
+                                <textarea class="form-control required-field" name="fv_bankaddress2" id="fv_bankaddress2" style="height: 100px"></textarea>
+                            </div>
                         </div>
                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Bank Name</label>
-                             <input type="text" class="form-control required-field" name="fv_bankname" id="fv_bankname">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-2 col-lg-2">
-                         <div class="form-group">
-                             <label>Bank Type</label>
-                             <select class="form-control select2 required-field" name="fc_banktype" id="fc_banktype">
-                                 <option>1</option>
-                                 <option>2</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-4 col-lg-4">
-                         <div class="form-group">
-                             <label>Bank Code</label>
-                             <input type="text" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
-                         </div>
-                     </div>
-
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Bank Username</label>
-                             <input type="text" class="form-control required-field" name="fv_bankusername" id="fv_bankusername">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-2 col-lg-2">
-                         <div class="form-group">
-                             <label>Bank Hold</label>
-                             <select class="form-control required-field select2" name="fl_bankhold" id="fl_bankhold">
-                                 <option value="T">YES</option>
-                                 <option value="F">NO</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-4 col-lg-4">
-                         <div class="form-group">
-                             <label>Bank Branch</label>
-                             <input type="text" class="form-control required-field" name="fv_bankbranch" id="fv_bankbranch">
-                         </div>
-                     </div>
-
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Bank Address 1</label>
-                             <textarea class="form-control required-field" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Bank Address 2</label>
-                             <textarea class="form-control required-field" name="fv_bankaddress2" id="fv_bankaddress2" style="height: 100px"></textarea>
-                         </div>
-                     </div>
                 </div>
-             </div>
-             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-             </div>
-          </form>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
        </div>
     </div>
  </div>

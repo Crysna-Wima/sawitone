@@ -45,40 +45,40 @@
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
-          <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-             <div class="modal-body">
-                <div class="row">
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>TRX</label>
-                             <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Kode</label>
-                             <input type="text" class="form-control required-field" name="fc_code" id="fc_code">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Deskipsi</label>
-                             <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 100px"></textarea>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Action</label>
-                             <textarea class="form-control required-field" name="fc_action" id="fc_action" style="height: 70px"></textarea>
-                         </div>
-                     </div>
+            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>TRX</label>
+                                <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Kode</label>
+                                <input type="text" class="form-control required-field" name="fc_code" id="fc_code">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Deskipsi</label>
+                                <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Action</label>
+                                <textarea class="form-control required-field" name="fc_action" id="fc_action" style="height: 70px"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-             </div>
-             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-             </div>
-          </form>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
        </div>
     </div>
  </div>

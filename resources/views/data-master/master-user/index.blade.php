@@ -39,15 +39,15 @@
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
    <div class="modal-dialog modal-xs" role="document">
       <div class="modal-content">
-         <div class="modal-header br">
+        <div class="modal-header br">
             <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
-         </div>
-         <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
+        </div>
+        <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
             <div class="modal-body">
-               <div class="row">
+            <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label>Role</label>
@@ -73,13 +73,13 @@
                             <input type="text" class="form-control required-field" name="name" id="name">
                         </div>
                     </div>
-               </div>
+            </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
             </div>
-         </form>
+        </form>
       </div>
    </div>
 </div>

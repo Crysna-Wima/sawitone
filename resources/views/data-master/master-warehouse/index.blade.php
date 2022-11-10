@@ -39,78 +39,78 @@
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
        <div class="modal-content">
-          <div class="modal-header br">
-             <h5 class="modal-title"></h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
-          </div>
-          <form id="form_submit" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
-             <div class="modal-body">
-                <div class="row">
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Division Code</label>
-                             <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Branch</label>
-                             <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-6 col-lg-6">
-                         <div class="form-group">
-                             <label>Warehouse Code</label>
-                             <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-3 col-lg-3">
-                         <div class="form-group">
-                             <label>Warehouse Pos</label>
-                             <select class="form-control select2 required-field" name="fc_warehousepos" id="fc_warehousepos">
-                                 <option value="INTERNAL">Internal</option>
-                                 <option value="EXTERNAL">External</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-3 col-lg-3">
-                         <div class="form-group">
-                             <label>Status</label>
-                             <select class="form-control select2 required-field" name="fl_status" id="fl_status">
-                                <option value="G">Gudang</option>
-                                <option value="D">Display</option>
-                             </select>
-                         </div>
-                     </div>
+            <div class="modal-header br">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Warehouse Code</label>
+                                <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Warehouse Pos</label>
+                                <select class="form-control select2 required-field" name="fc_warehousepos" id="fc_warehousepos">
+                                    <option value="INTERNAL">Internal</option>
+                                    <option value="EXTERNAL">External</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control select2 required-field" name="fl_status" id="fl_status">
+                                    <option value="G">Gudang</option>
+                                    <option value="D">Display</option>
+                                </select>
+                            </div>
+                        </div>
 
-                     <div class="col-12 col-md-9 col-lg-9">
-                         <div class="form-group">
-                             <label>Rackname</label>
-                             <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-3 col-lg-3">
-                         <div class="form-group">
-                             <label>Capacity</label>
-                             <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
-                         </div>
-                     </div>
+                        <div class="col-12 col-md-9 col-lg-9">
+                            <div class="form-group">
+                                <label>Rackname</label>
+                                <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Capacity</label>
+                                <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
+                            </div>
+                        </div>
 
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Deskripsi</label>
-                             <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 150px"></textarea>
-                         </div>
-                     </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 150px"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-             </div>
-             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
-             </div>
-          </form>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
        </div>
     </div>
 </div>
