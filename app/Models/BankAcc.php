@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Blameable;
 
-class Customer extends Model
+class BankAcc extends Model
 {
     use HasFactory, Blameable, SoftDeletes, LogsActivity;
 
     protected static $logAttributes = ["*"];
     public $incrementing = false;
 
-    protected $table = 't_customer';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_membercode'];
+    protected $table = 't_bankacc';
+    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_bankcode'];
     protected $guarded = [];
     protected $appends = [];
 

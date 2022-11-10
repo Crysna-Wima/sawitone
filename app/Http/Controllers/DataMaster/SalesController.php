@@ -16,7 +16,7 @@ use App\Models\Sales;
 class SalesController extends Controller
 {
     public function index(){
-        return view('data-master.sales.index');
+        return view('data-master.master-sales.index');
     }
 
     public function detail($fc_kode){
@@ -24,7 +24,7 @@ class SalesController extends Controller
     }
 
     public function datatables(){
-        $data = Sales::orderBy('fc_trx', 'ASC')->get();
+        $data = Sales::orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -32,10 +32,10 @@ class SalesController extends Controller
     }
 
     public function store_update(request $request){
-       $validator = Validator::make($request->all(), [
-            'fc_trx' => 'required',
-            'fc_kode' => 'required',
-            'fv_description' => 'required',
+        $validator = Validator::make($request->all(), [
+            'fc_divisioncode' => 'required',
+            'fc_branch' => 'required',
+            'fc_salescode' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -45,11 +45,11 @@ class SalesController extends Controller
             ];
         }
 
-        Sales::updateOrCreate(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode],[
-            'fc_trx' => $request->fc_trx,
-            'fc_kode' => $request->fc_kode,
-            'fv_description' => $request->fv_description,
-        ] );
+        Sales::updateOrCreate([
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_salescode' => $request->fc_salescode,
+        ], $request->all());
 
 		return [
 			'status' => 200, // SUCCESS

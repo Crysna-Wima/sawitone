@@ -13,37 +13,19 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, logsActivity;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected static $logAttributes = ["*"];
+    public $incrementing = false;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 't_user';
+    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
+    protected $guarded = [];
+    protected $appends = [];
     protected $hidden = [
-        'password',
+        'fc_password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function master_role(){
-        return $this->belongsTo(MasterRole::class)->withTrashed();
+    public function scopeActive($query){
+        $query->where('status', 1);
     }
 }

@@ -11,20 +11,20 @@ use DataTables;
 use Carbon\Carbon;
 use File;
 
-use App\Models\Customer;
+use App\Models\Brand;
 
-class CustomerController extends Controller
+class MasterBrandController extends Controller
 {
     public function index(){
-        return view('data-master.master-customer.index');
+        return view('data-master.master-brand.index');
     }
 
-    public function detail($fc_membercode){
-        return Customer::where('fc_membercode', $fc_membercode)->first();
+    public function detail($fc_brand){
+        return Brand::where('fc_brand', $fc_brand)->first();
     }
 
     public function datatables(){
-        $data = Customer::orderBy('created_at', 'DESC')->get();
+        $data = Brand::orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -35,7 +35,9 @@ class CustomerController extends Controller
        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
-            'fc_membercode' => 'required',
+            'fc_brand' => 'required',
+            'fc_group' => 'required',
+            'fc_subgroup' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -45,10 +47,12 @@ class CustomerController extends Controller
             ];
         }
 
-        Customer::updateOrCreate([
+        Brand::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
-            'fc_membercode' => $request->fc_membercode,
+            'fc_brand' => $request->fc_brand,
+            'fc_group' => $request->fc_group,
+            'fc_subgroup' => $request->fc_subgroup,
         ], $request->all());
 
 		return [
@@ -57,8 +61,8 @@ class CustomerController extends Controller
 		];
     }
 
-    public function delete($fc_membercode){
-        Customer::where('fc_membercode', $fc_membercode)->delete();
+    public function delete($fc_brand){
+        Brand::where('fc_brand', $fc_brand)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

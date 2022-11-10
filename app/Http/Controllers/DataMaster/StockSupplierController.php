@@ -11,20 +11,20 @@ use DataTables;
 use Carbon\Carbon;
 use File;
 
-use App\Models\Customer;
+use App\Models\StockSupplier;
 
-class CustomerController extends Controller
+class StockSupplierController extends Controller
 {
     public function index(){
-        return view('data-master.master-customer.index');
+        return view('data-master.stock-supplier.index');
     }
 
-    public function detail($fc_membercode){
-        return Customer::where('fc_membercode', $fc_membercode)->first();
+    public function detail($fc_kode){
+        return StockSupplier::where('fc_kode', $fc_kode)->first();
     }
 
     public function datatables(){
-        $data = Customer::orderBy('created_at', 'DESC')->get();
+        $data = StockSupplier::orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -32,10 +32,12 @@ class CustomerController extends Controller
     }
 
     public function store_update(request $request){
-       $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
-            'fc_membercode' => 'required',
+            'fc_stockcode' => 'required',
+            'fc_barcode' => 'required',
+            'fc_suppliercode' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -45,10 +47,12 @@ class CustomerController extends Controller
             ];
         }
 
-        Customer::updateOrCreate([
+        Sales::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
-            'fc_membercode' => $request->fc_membercode,
+            'fc_stockcode' => $request->fc_stockcode,
+            'fc_barcode' => $request->fc_barcode,
+            'fc_suppliercode' => $request->fc_suppliercode,
         ], $request->all());
 
 		return [
@@ -57,8 +61,8 @@ class CustomerController extends Controller
 		];
     }
 
-    public function delete($fc_membercode){
-        Customer::where('fc_membercode', $fc_membercode)->delete();
+    public function delete($fc_kode){
+        StockSupplier::where('fc_kode', $fc_kode)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

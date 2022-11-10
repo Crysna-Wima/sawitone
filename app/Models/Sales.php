@@ -13,7 +13,6 @@ class Sales extends Model
     use HasFactory, Blameable, SoftDeletes, LogsActivity;
 
     protected static $logAttributes = ["*"];
-    public $timestamps = false;
     public $incrementing = false;
 
     protected $table = 't_sales';

@@ -11,20 +11,20 @@ use DataTables;
 use Carbon\Carbon;
 use File;
 
-use App\Models\Customer;
+use App\Models\BankAcc;
 
-class CustomerController extends Controller
+class MasterBankAccController extends Controller
 {
     public function index(){
-        return view('data-master.master-customer.index');
+        return view('data-master.master-bank-acc.index');
     }
 
-    public function detail($fc_membercode){
-        return Customer::where('fc_membercode', $fc_membercode)->first();
+    public function detail($fc_bankcode){
+        return BankAcc::where('fc_bankcode', $fc_bankcode)->first();
     }
 
     public function datatables(){
-        $data = Customer::orderBy('created_at', 'DESC')->get();
+        $data = BankAcc::orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -35,7 +35,7 @@ class CustomerController extends Controller
        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
-            'fc_membercode' => 'required',
+            'fc_bankcode' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -45,10 +45,10 @@ class CustomerController extends Controller
             ];
         }
 
-        Customer::updateOrCreate([
+        BankAcc::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
-            'fc_membercode' => $request->fc_membercode,
+            'fc_bankcode' => $request->fc_bankcode,
         ], $request->all());
 
 		return [
@@ -57,8 +57,8 @@ class CustomerController extends Controller
 		];
     }
 
-    public function delete($fc_membercode){
-        Customer::where('fc_membercode', $fc_membercode)->delete();
+    public function delete($fc_bankcode){
+        BankAcc::where('fc_bankcode', $fc_bankcode)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"
