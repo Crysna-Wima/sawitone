@@ -16,7 +16,7 @@ class Sales extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_sales';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_salescode'];
+    protected $primaryKey = 'fc_salescode';
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

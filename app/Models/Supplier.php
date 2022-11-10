@@ -16,7 +16,8 @@ class Supplier extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_supplier';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_suppliercode'];
+    protected $primaryKey = 'fc_suppliercode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_suppliercode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

@@ -16,7 +16,8 @@ class Stock extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_stock';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode'];
+    protected $primaryKey = 'fc_stockcode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

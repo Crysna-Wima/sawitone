@@ -16,7 +16,8 @@ class Customer extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_customer';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_membercode'];
+    protected $primaryKey = 'fc_membercode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_membercode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

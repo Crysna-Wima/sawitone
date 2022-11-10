@@ -16,7 +16,8 @@ class BankAcc extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_bankacc';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_bankcode'];
+    protected $primaryKey = 'fc_bankcode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_bankcode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

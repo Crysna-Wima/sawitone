@@ -16,7 +16,8 @@ class Warehouse extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_warehouse';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_warehousecode'];
+    protected $primaryKey = 'fc_warehousecode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_warehousecode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

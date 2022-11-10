@@ -16,7 +16,8 @@ class SalesCustomer extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_salescustomer';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_salescode', 'fc_membercode'];
+    protected $primaryKey = 'fc_salescode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_salescode', 'fc_membercode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

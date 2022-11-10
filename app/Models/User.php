@@ -17,7 +17,8 @@ class User extends Authenticatable
     protected static $logAttributes = ["*"];
 
     protected $table = 't_user';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
+    protected $primaryKey = 'fc_userid';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

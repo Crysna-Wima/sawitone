@@ -16,7 +16,8 @@ class Brand extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_brand';
-    protected $primaryKey = ['fc_brand', 'fc_group', 'fc_subgroup'];
+    protected $primaryKey = 'fc_subgroup';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_brand', 'fc_group', 'fc_subgroup'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];

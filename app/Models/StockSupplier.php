@@ -16,7 +16,8 @@ class StockSupplier extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_stocksupplier';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_suppliercode'];
+    protected $primaryKey = 'fc_suppliercode';
+    // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_suppliercode'];
     public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];
