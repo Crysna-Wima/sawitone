@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
     Route::view('salescustomer','MOCKUP.salescustomer');
     Route::view('stockcustomer','MOCKUP.stockcustomer');
     Route::view('stocksupplier','MOCKUP.stocksupplier');
+    Route::view('supplier','MOCKUP.supplier');
 
 
     Route::view('dashboard','dashboard.index');

@@ -66,15 +66,10 @@
                                     id="fc_divisioncode">
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
-                            <div class="form-group" style="margin: 1px">
-                                <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
