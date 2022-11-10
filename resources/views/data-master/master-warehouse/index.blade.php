@@ -171,7 +171,7 @@
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'transaksi_type.fv_description' },
+         { data: 'branch.fv_description' },
          { data: 'fc_warehousecode' },
          { data: 'fc_warehousecode' },
       ],

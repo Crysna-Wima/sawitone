@@ -20,6 +20,12 @@ use Illuminate\Support\Facades\Route;
         Route::get('/get-data-by-id/{model}/{id}','DataMasterController@get_data_by_id');
         Route::get('/get-data-where-field-id-first/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_first');
         Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_get');
+
+        Route::get('/data-brand','DataMasterController@data_brand');
+        Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');
+        Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
+
+
     });
 
 // Route::group(['middleware' => ['cek_login', 'cek_authorize']], function () {
@@ -109,26 +115,26 @@ use Illuminate\Support\Facades\Route;
 
         Route::prefix('sales-customer')->group(function () {
             Route::get('/','DataMaster\SalesCustomerController@index');
-            Route::get('/detail/{id}','DataMaster\SalesCustomerController@detail');
+            Route::get('/detail/{salescode}/{membercode}','DataMaster\SalesCustomerController@detail');
             Route::get('/datatables','DataMaster\SalesCustomerController@datatables');
             Route::post('/store-update','DataMaster\SalesCustomerController@store_update');
-            Route::delete('/delete/{id}','DataMaster\SalesCustomerController@delete');
+            Route::delete('/delete/{salescode}/{membercode}','DataMaster\SalesCustomerController@delete');
         });
 
         Route::prefix('stock-customer')->group(function () {
             Route::get('/','DataMaster\StockCustomerController@index');
-            Route::get('/detail/{id}','DataMaster\StockCustomerController@detail');
+            Route::get('/detail/{stockcode}/{membercode}','DataMaster\StockCustomerController@detail');
             Route::get('/datatables','DataMaster\StockCustomerController@datatables');
             Route::post('/store-update','DataMaster\StockCustomerController@store_update');
-            Route::delete('/delete/{id}','DataMaster\StockCustomerController@delete');
+            Route::delete('/delete/{stockcode}/{membercode}','DataMaster\StockCustomerController@delete');
         });
 
         Route::prefix('stock-supplier')->group(function () {
             Route::get('/','DataMaster\StockSupplierController@index');
-            Route::get('/detail/{id}','DataMaster\StockSupplierController@detail');
+            Route::get('/detail/{stockcode}/{suppliercode}','DataMaster\StockSupplierController@detail');
             Route::get('/datatables','DataMaster\StockSupplierController@datatables');
             Route::post('/store-update','DataMaster\StockSupplierController@store_update');
-            Route::delete('/delete/{id}','DataMaster\StockSupplierController@delete');
+            Route::delete('/delete/{stockcode}/{suppliercode}','DataMaster\StockSupplierController@delete');
         });
 
 

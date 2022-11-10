@@ -19,8 +19,8 @@ class MasterBrandController extends Controller
         return view('data-master.master-brand.index');
     }
 
-    public function detail($fc_brand){
-        return Brand::where('fc_brand', $fc_brand)->first();
+    public function detail($fc_subgroup){
+        return Brand::where('fc_subgroup', $fc_subgroup)->first();
     }
 
     public function datatables(){
@@ -61,8 +61,8 @@ class MasterBrandController extends Controller
 		];
     }
 
-    public function delete($fc_brand){
-        Brand::where('fc_brand', $fc_brand)->delete();
+    public function delete($fc_subgroup){
+        Brand::where('fc_subgroup', $fc_subgroup)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

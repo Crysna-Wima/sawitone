@@ -18,9 +18,10 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Sales Code</th>
+                           <th scope="col" class="text-center">Member Code</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -222,22 +223,23 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,5] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
+         { data: 'fc_salescode' },
+         { data: 'fc_membercode' },
+         { data: 'fc_membercode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/sales-customer/detail/" + data.fc_salescode + "/" + data.fc_membercode;
          var url_delete = "/data-master/sales-customer/delete/" + data.fc_salescode + "/" + data.fc_membercode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(5)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_salescustomerdescription}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });

@@ -19,8 +19,8 @@ class StockCustomerController extends Controller
         return view('data-master.stock-customer.index');
     }
 
-    public function detail($fc_stockcode){
-        return StockCustomer::where('fc_stockcode', $fc_stockcode)->first();
+    public function detail($fc_stockcode, $fc_membercode){
+        return StockCustomer::where(['fc_stockcode' => $fc_stockcode, 'fc_membercode' => $fc_membercode])->first();
     }
 
     public function datatables(){
@@ -61,8 +61,8 @@ class StockCustomerController extends Controller
 		];
     }
 
-    public function delete($fc_stockcode){
-        StockCustomer::where('fc_stockcode', $fc_stockcode)->delete();
+    public function delete($fc_stockcode, $fc_membercode){
+        StockCustomer::where(['fc_stockcode' => $fc_stockcode, 'fc_membercode' => $fc_membercode])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

@@ -17,11 +17,12 @@
                   <table class="table table-striped" id="tb" width="100%">
                      <thead>
                         <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Divisi</th>
+                            <th scope="col" class="text-center">Branch</th>
+                            <th scope="col" class="text-center">Stock Code</th>
+                            <th scope="col" class="text-center">Supplier Code</th>
+                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -246,16 +247,17 @@
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
+         { data: 'fc_stockcode' },
+         { data: 'fc_membercode' },
+         { data: 'fc_suppliercode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_kode;
-         var url_delete = "/data-master/stock-supplier/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_stockcode + '/' + data.fc_suppliercode;
+         var url_delete = "/data-master/stock-supplier/delete/" + data.fc_stockcode + '/' + data.fc_suppliercode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(5)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

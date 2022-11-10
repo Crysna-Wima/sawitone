@@ -11,14 +11,13 @@ use Kavist\RajaOngkir\Facades\RajaOngkir;
 use DataTables;
 use Carbon\Carbon;
 
-use App\Models\MasterPackage;
+use App\Models\Brand;
 
 use App\Helpers\ApiFormatter;
 
 class DataMasterCOntroller extends Controller
 {
     public function get_data_all($model){
-
         $model = 'App\\Models\\' . $model;
         $data = $model::all();
 
@@ -26,7 +25,6 @@ class DataMasterCOntroller extends Controller
     }
 
     public function get_data_by_id($model, $id){
-
         $model = 'App\\Models\\' . $model;
         $data = $model::find($id);
 
@@ -34,7 +32,6 @@ class DataMasterCOntroller extends Controller
     }
 
     public function get_data_where_field_id_first($model, $where_field, $id){
-
         $model = 'App\\Models\\' . $model;
         $data = $model::where($where_field, $id)->first();
 
@@ -42,13 +39,27 @@ class DataMasterCOntroller extends Controller
     }
 
     public function get_data_where_field_id_get($model, $where_field, $id){
-
         $model = 'App\\Models\\' . $model;
         $data = $model::where($where_field, $id)->get();
 
         return ApiFormatter::getResponse($data);
     }
     #================ DATA =====================#
+    public function data_brand(){
+        $data = Brand::select('fc_brand')->groupBy('fc_brand')->get();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function data_group_by_brand(request $request){
+        $data = Brand::select('fc_group')->where('fc_brand', $request->fc_brand)->groupBy('fc_group')->get();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function data_subgroup_by_group(request $request){
+        $data = Brand::select('fc_subgroup')->where('fc_group', $request->fc_group)->groupBy('fc_subgroup')->get();
+        return ApiFormatter::getResponse($data);
+    }
+
 
     #================ DATATABLES ===============#
 

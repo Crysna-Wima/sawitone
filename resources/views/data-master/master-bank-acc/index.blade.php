@@ -18,9 +18,9 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
                            <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Nama</th>
+                           <th scope="col" class="text-center">Tipe</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -182,10 +182,10 @@
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_bankcode' },
+         { data: 'fv_bankname' },
+         { data: 'fc_banktype' },
+         { data: 'fc_banktype' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_bankcode;

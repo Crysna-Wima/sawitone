@@ -18,9 +18,9 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Brand</th>
+                           <th scope="col" class="text-center">Group</th>
+                           <th scope="col" class="text-center">Subgroup</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -143,10 +143,10 @@
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_brand' },
+         { data: 'fc_group' },
+         { data: 'fc_subgroup' },
+         { data: 'fc_subgroup' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-brand/detail/" + data.fc_subgroup;

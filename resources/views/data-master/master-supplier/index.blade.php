@@ -18,9 +18,10 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
                            <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Legal Status</th>
+                           <th scope="col" class="text-center">Nama</th>
+                           <th scope="col" class="text-center">Phone    </th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -127,7 +128,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Join Date</label>
-                                <input type="text" readonly class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                                <input type="text"   class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -412,22 +413,23 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,5] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_suppliercode' },
+         { data: 'fc_supplierlegalstatus' },
+         { data: 'fc_suppliername1' },
+         { data: 'fc_supplierphone1' },
+         { data: 'fc_supplierphone1' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-supplier/detail/" + data.fc_kode;
-         var url_delete = "/data-master/master-supplier/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/master-supplier/detail/" + data.fc_suppliercode;
+         var url_delete = "/data-master/master-supplier/delete/" + data.fc_suppliercode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(5)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_suppliername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });

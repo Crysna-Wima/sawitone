@@ -18,9 +18,11 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
                            <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Nama</th>
+                           <th scope="col" class="text-center">Type</th>
+                           <th scope="col" class="text-center">Level</th>
+                           <th scope="col" class="text-center">Blacklist</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -342,20 +344,22 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,6] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_salescode' },
+         { data: 'fc_salesname1' },
+         { data: 'fc_salestype' },
+         { data: 'fn_saleslevel' },
+         { data: 'fn_salesblacklist' },
+         { data: 'fn_salesblacklist' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-sales/detail/" + data.fc_salescode;
          var url_delete = "/data-master/master-sales/delete/" + data.fc_salescode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(6)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_salesname1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

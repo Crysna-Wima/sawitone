@@ -19,8 +19,8 @@ class SalesController extends Controller
         return view('data-master.master-sales.index');
     }
 
-    public function detail($fc_kode){
-        return Sales::where('fc_kode', $fc_kode)->first();
+    public function detail($fc_salescode){
+        return Sales::where('fc_salescode', $fc_salescode)->first();
     }
 
     public function datatables(){
@@ -57,8 +57,8 @@ class SalesController extends Controller
 		];
     }
 
-    public function delete($fc_kode){
-        Sales::where('fc_kode', $fc_kode)->delete();
+    public function delete($fc_salescode){
+        Sales::where('fc_salescode', $fc_salescode)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

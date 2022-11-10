@@ -19,8 +19,8 @@ class SupplierController extends Controller
         return view('data-master.master-supplier.index');
     }
 
-    public function detail($fc_kode){
-        return Supplier::where('fc_kode', $fc_kode)->first();
+    public function detail($fc_suppliercode){
+        return Supplier::where('fc_suppliercode', $fc_suppliercode)->first();
     }
 
     public function datatables(){
@@ -57,8 +57,8 @@ class SupplierController extends Controller
 		];
     }
 
-    public function delete($fc_kode){
-        Supplier::where('fc_kode', $fc_kode)->delete();
+    public function delete($fc_suppliercode){
+        Supplier::where('fc_suppliercode', $fc_suppliercode)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

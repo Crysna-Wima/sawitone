@@ -24,7 +24,7 @@ class MasterWarehouseController extends Controller
     }
 
     public function datatables(){
-        $data = Warehouse::with('transaksi_type')->orderBy('created_at', 'DESC')->get();
+        $data = Warehouse::with('branch')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
