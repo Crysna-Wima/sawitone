@@ -23,4 +23,8 @@ class Warehouse extends Model
     public function scopeActive($query){
         $query->where('status', 1);
     }
+
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+    }
 }

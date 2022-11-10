@@ -24,7 +24,7 @@ class MasterWarehouseController extends Controller
     }
 
     public function datatables(){
-        $data = Warehouse::orderBy('created_at', 'DESC')->get();
+        $data = Warehouse::with('transaksi_type')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -49,7 +49,7 @@ class MasterWarehouseController extends Controller
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_warehousecode' => $request->fc_warehousecode,
-        ], $request->all());
+        ], $request->except(['type']));
 
 		return [
 			'status' => 200, // SUCCESS

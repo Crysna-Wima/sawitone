@@ -20,7 +20,7 @@ class Brand extends Model
     protected $guarded = [];
     protected $appends = [];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
     }
 }

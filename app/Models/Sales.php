@@ -20,7 +20,27 @@ class Sales extends Model
     protected $guarded = [];
     protected $appends = [];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+    }
+
+    public function sales_type(){
+        return $this->belongsTo(TransaksiType::class, 'fc_salestype', 'fc_kode');
+    }
+
+    public function sales_level(){
+        return $this->belongsTo(TransaksiType::class, 'fn_saleslevel', 'fc_kode');
+    }
+
+    public function sales_bank1(){
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank1', 'fc_bankcode');
+    }
+
+    public function sales_bank2(){
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank2', 'fc_bankcode');
+    }
+
+    public function sales_bank3(){
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank3', 'fc_bankcode');
     }
 }

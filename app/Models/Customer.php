@@ -20,7 +20,39 @@ class Customer extends Model
     protected $guarded = [];
     protected $appends = [];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+    }
+
+    public function member_type_business(){
+        return $this->belongsTo(TransaksiType::class, 'fc_membertypebusiness', 'fc_kode');
+    }
+
+    public function member_member_typebranch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_member_branchtype', 'fc_kode');
+    }
+
+    public function member_legal_status(){
+        return $this->belongsTo(TransaksiType::class, 'fc_memberlegalstatus', 'fc_kode');
+    }
+
+    public function member_tax_code(){
+        return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode');
+    }
+
+    public function member_nationality(){
+        return $this->belongsTo(TransaksiType::class, 'fc_membernationality', 'fc_kode');
+    }
+
+    public function member_bank1(){
+        return $this->belongsTo(BankAcc::class, 'fc_memberbank1', 'fc_bankcode');
+    }
+
+    public function member_bank2(){
+        return $this->belongsTo(BankAcc::class, 'fc_memberbank2', 'fc_bankcode');
+    }
+
+    public function member_bank3(){
+        return $this->belongsTo(BankAcc::class, 'fc_memberbank3', 'fc_bankcode');
     }
 }

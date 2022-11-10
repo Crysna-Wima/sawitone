@@ -15,12 +15,16 @@ class StockCustomer extends Model
     protected static $logAttributes = ["*"];
     public $incrementing = false;
 
-    protected $table = 't_stock';
+    protected $table = 't_stockcustomer';
     protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_membercode'];
     protected $guarded = [];
     protected $appends = [];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+    }
+
+    public function member_code(){
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode');
     }
 }
