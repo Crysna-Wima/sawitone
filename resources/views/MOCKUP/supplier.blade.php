@@ -75,31 +75,52 @@
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Code</label>
-                                <input type="text" class="form-control required-field" name="fc_salescode"
-                                    id="fc_salescode">
+                                <label>Supplier Code</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliercode"
+                                    id="fc_suppliercode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname1"
-                                    id="fc_salesname1">
+                                <label>Supplier Name 1</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliername1"
+                                    id="fc_suppliername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname2"
-                                    id="fc_salesname2">
+                                <label>Supplier Name 2</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliername2"
+                                    id="fc_suppliername2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier Pic Name</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicname"
+                                    id="fc_supplierpicname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Pic Phone</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicphone"
+                                    id="fc_supplierpicphone">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Pic Pos</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicpos"
+                                    id="fc_supplierpicpos">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Type</label>
-                                <select class="form-control select2 required-field" name="fc_sales_type"
-                                    id="fc_sales_type">
+                                <label>Supplier Legal Status</label>
+                                <select class="select2" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus">
                                     <option>1</option>
                                     <option>2</option>
                                 </select>
@@ -107,120 +128,134 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Level</label>
-                                <select class="form-control select2 required-field" name="sales_level" id="sales_level">
+                                <label>Supplier Nationality</label>
+                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality">
                                     <option>1</option>
                                     <option>2</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center">
-                            <div class="form-group d-flex" style="margin: 0">
-                                <div class="selectgroup w-50" style="margin-right: 10px">
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="1" class="selectgroup-input"
-                                            checked="">
-                                        <span class="selectgroup-button">Yes</span>
-                                    </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="0" class="selectgroup-input">
-                                        <span class="selectgroup-button">No</span>
-                                    </label>
-                                </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Forex</label>
+                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Type Business</label>
+                                <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Join Date</label>
+                                <input type="text" readonly class="form-control" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Expired</label>
+                                <input type="text" readonly class="form-control" name="fd_supplierexpired" id="fd_supplierexpired">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Reseller</label>
+                                <select class="select2" name="fl_supplierreseller" id="fl_supplierreseller">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Tax Code</label>
+                                <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Mail 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesmail1"
-                                    id="fc_salesmail1">
+                                <label>Supplier Email 1</label>
+                                <input type="text" class="form-control" name="fc_supplieremail1" id="fc_supplieremail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Mail 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesmail2"
-                                    id="fc_salesmail2">
+                                <label>Supplier Email 2</label>
+                                <input type="text" class="form-control" name="fc_supplieremail2" id="fc_supplieremail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone1"
-                                    id="fc_salesphone1">
+                                <label>Supplier Phone 1</label>
+                                <input type="text" class="form-control" name="fc_supplierphone1" id="fc_supplierphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone2"
-                                    id="fc_salesphone2">
+                                <label>Supplier Phone 2</label>
+                                <input type="text" class="form-control" name="fc_supplierphone2" id="fc_supplierphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone3"
-                                    id="fc_salesphone3">
+                                <label>Supplier Phone 3</label>
+                                <input type="text" class="form-control" name="fc_supplierphone3" id="fc_supplierphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank1"
-                                    id="fc_salesbank1">
+                                <label>Supplier Bank 1</label>
+                                <input type="text" class="form-control" name=fc_supplierbank1"" id="fc_supplierbank1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank2"
-                                    id="fc_salesbank2">
+                                <label>Supplier Bank 2</label>
+                                <input type="text" class="form-control" name="fc_supplierbank2" id="fc_supplierbank2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank3"
-                                    id="fc_salesbank3">
+                                <label>Supplier Bank 3</label>
+                                <input type="text" class="form-control" name="fc_supplierbank3" id="fc_supplierbank3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek1"
-                                    id="fc_salesnorek1">
+                                <label>Supplier No Rekening 1</label>
+                                <input type="text" class="form-control" name=fc_suppliernorek1"" id="fc_suppliernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek2"
-                                    id="fc_salesnorek2">
+                                <label>Supplier No Rekening 2</label>
+                                <input type="text" class="form-control" name="fc_suppliernorek2" id="fc_suppliernorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek3"
-                                    id="fc_salesnorek3">
+                                <label>Supplier No Rekening 3</label>
+                                <input type="text" class="form-control" name="fc_suppliernorek3" id="fc_suppliernorek3">
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-12 col-lg-12">
+                        <div class="col-12 col-md-8 col-lg-8">
                             <div class="form-group">
-                                <label>Sales Virtual AC</label>
-                                <textarea name="fc_salesvirtualac" id="fc_salesvirtualac" class="form-control" style="height: 50px"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Sales Description</label>
-                                <textarea name="fc_salesdescription" id="fc_saldescription" class="form-control" style="height: 80px"></textarea>
+                                <label>Supplier Virtual AC</label>
+                                <input type="text" class="form-control" name="fc_suppliervirtualac" id="fc_suppliervirtualac">
                             </div>
                         </div>
                     </div>
