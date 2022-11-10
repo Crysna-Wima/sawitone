@@ -99,13 +99,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Group</label>
-                                <input type="text" class="form-control required-field" name="fc_group" id="fc_group" readonly>
+                                <input type="text" class="form-control" name="fc_group" id="fc_group" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sub Group</label>
-                                <input type="text" class="form-control required-field" name="fc_subgroup" id="fc_subgroup" readonly>
+                                <input type="text" class="form-control" name="fc_subgroup" id="fc_subgroup" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3"></div>
@@ -119,7 +119,7 @@
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fl_batch" value="0" class="selectgroup-input">
-                                        <span class="selectgroup-button">No</spanT
+                                        <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
                             </div>
@@ -377,7 +377,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="fv_description" id="fv_description" style="height: 50px" class="form-control required-field"></textarea>
+                                <textarea name="fv_stockdescription" id="fv_stockdescription" style="height: 50px" class="form-control required-field"></textarea>
                             </div>
                         </div>
 

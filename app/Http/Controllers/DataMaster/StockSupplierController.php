@@ -47,7 +47,7 @@ class StockSupplierController extends Controller
             ];
         }
 
-        Sales::updateOrCreate([
+        StockSupplier::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_stockcode' => $request->fc_stockcode,

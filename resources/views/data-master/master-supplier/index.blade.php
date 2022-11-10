@@ -45,14 +45,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/master-supplier/store-update" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode"
-                                    id="fc_divisioncode">
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -65,109 +64,98 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Code</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliercode"
-                                    id="fc_suppliercode">
+                                <input type="text" class="form-control required-field" name="fc_suppliercode" id="fc_suppliercode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliername1"
-                                    id="fc_suppliername1">
+                                <input type="text" class="form-control required-field" name="fc_suppliername1" id="fc_suppliername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliername2"
-                                    id="fc_suppliername2">
+                                <input type="text" class="form-control required-field" name="fc_suppliername2" id="fc_suppliername2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Pic Name</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicname"
-                                    id="fc_supplierpicname">
+                                <input type="text" class="form-control required-field" name="fc_supplierpicname" id="fc_supplierpicname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Pic Phone</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicphone"
-                                    id="fc_supplierpicphone">
+                                <input type="text" class="form-control required-field" name="fc_supplierpicphone" id="fc_supplierpicphone">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Pic Pos</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicpos"
-                                    id="fc_supplierpicpos">
+                                <input type="text" class="form-control required-field" name="fc_supplierpicpos" id="fc_supplierpicpos">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Legal Status</label>
-                                <select class="select2" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="select2" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Nationality</label>
-                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Forex</label>
-                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex">
+                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex" value="s">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Type Business</label>
-                                <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Join Date</label>
-                                <input type="text" readonly class="form-control" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                                <input type="text" readonly class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Expired</label>
-                                <input type="text" readonly class="form-control" name="fd_supplierexpired" id="fd_supplierexpired">
+                                <input type="text" class="form-control datepicker" name="fd_supplierexpired" id="fd_supplierexpired">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Reseller</label>
-                                <select class="select2" name="fl_supplierreseller" id="fl_supplierreseller">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_supplierreseller" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Active</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_supplierreseller" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">Non Active</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Tax Code</label>
-                                <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode"></select>
                             </div>
                         </div>
 
@@ -206,7 +194,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier Bank 1</label>
-                                <input type="text" class="form-control" name=fc_supplierbank1"" id="fc_supplierbank1">
+                                <input type="text" class="form-control" name="fc_supplierbank1" id="fc_supplierbank1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -225,7 +213,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier No Rekening 1</label>
-                                <input type="text" class="form-control" name=fc_suppliernorek1"" id="fc_suppliernorek1">
+                                <input type="text" class="form-control" name="fc_suppliernorek1" id="fc_suppliernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -262,6 +250,153 @@
 
 @section('js')
 <script>
+       $(document).ready(function(){
+        get_data_branch();
+        get_data_legal_status();
+        get_data_nationality();
+        get_data_type_business();
+        get_data_tax_code();
+    })
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_legal_status(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_supplierlegalstatus").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_supplierlegalstatus").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_nationality(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_suppliernationality").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_suppliernationality").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_type_business(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_suppliertypebusiness").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_suppliertypebusiness").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_tax_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_suppliertaxcode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_suppliertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
 
     function add(){
       $("#modal").modal('show');
@@ -273,7 +408,7 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/master-supplier/datatables',
          type: 'GET'
       },
       columnDefs: [
@@ -287,8 +422,8 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/master-supplier/detail/" + data.fc_kode;
+         var url_delete = "/data-master/master-supplier/delete/" + data.fc_kode;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

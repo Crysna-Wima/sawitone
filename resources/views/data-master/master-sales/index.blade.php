@@ -91,19 +91,19 @@
                                 <select class="form-control select2 required-field" name="fn_saleslevel" id="fn_saleslevel"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center">
-                            <div class="form-group d-flex" style="margin: 0">
-                                <div class="selectgroup w-50" style="margin-right: 10px">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <label>Blacklist</label>
+                                <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input">
-                                        <span class="selectgroup-button">Yes</span>
+                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="N" class="selectgroup-input" checked="">
-                                        <span class="selectgroup-button">No</span>
+                                        <input type="radio" name="fn_salesblacklist" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">Non Active</span>
                                     </label>
                                 </div>
-                            </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">

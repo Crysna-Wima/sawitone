@@ -45,7 +45,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/stock-supplier/store-update" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -238,7 +238,7 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/stock-supplier/datatables',
          type: 'GET'
       },
       columnDefs: [
@@ -252,8 +252,8 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_kode;
+         var url_delete = "/data-master/stock-supplier/delete/" + data.fc_kode;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
