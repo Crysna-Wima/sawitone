@@ -46,7 +46,6 @@
              </button>
           </div>
           <form id="form_submit" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
-                <input type="text" name="type" id="type">
              <div class="modal-body">
                 <div class="row">
                      <div class="col-12 col-md-6 col-lg-6">
@@ -121,7 +120,7 @@
 @section('js')
 <script>
 
-$(document).ready(function(){
+    $(document).ready(function(){
         get_data_branch();
     });
 

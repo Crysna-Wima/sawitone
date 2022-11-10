@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Blameable;
+use App\Traits\CompositeKey;
 
 class Brand extends Model
 {
-    use HasFactory, Blameable, SoftDeletes, LogsActivity;
+    use HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
-    public $incrementing = false;
 
     protected $table = 't_brand';
-    protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_brand', 'fc_group', 'fc_subgroup'];
+    protected $primaryKey = ['fc_brand', 'fc_group', 'fc_subgroup'];
+    public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];
 

@@ -45,7 +45,7 @@
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
-          <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+          <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
              <div class="modal-body">
                 <div class="row">
                      <div class="col-12 col-md-6 col-lg-6">
@@ -54,22 +54,16 @@
                              <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
                          </div>
                      </div>
-                     <div class="col-12 col-md-4 col-lg-4">
-                         <div class="form-group">
-                             <label>Branch</label>
-                             <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
-                         </div>
-                     </div>
-                     <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
-                         <div class="form-group" style="margin: 1px">
-                             <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
-                         </div>
-                     </div>
-
+                     <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                        </div>
+                    </div>
                      <div class="col-12 col-md-6 col-lg-6">
                          <div class="form-group">
                              <label>Bank Name</label>
-                             <input type="text" class="form-control required-field" name="fc_bankname" id="fc_bankname">
+                             <input type="text" class="form-control required-field" name="fv_bankname" id="fv_bankname">
                          </div>
                      </div>
                      <div class="col-12 col-md-2 col-lg-2">
@@ -98,28 +92,28 @@
                          <div class="form-group">
                              <label>Bank Hold</label>
                              <select class="form-control required-field select2" name="fl_bankhold" id="fl_bankhold">
-                                 <option>1</option>
-                                 <option>2</option>
+                                 <option value="T">YES</option>
+                                 <option value="F">NO</option>
                              </select>
                          </div>
                      </div>
                      <div class="col-12 col-md-4 col-lg-4">
                          <div class="form-group">
                              <label>Bank Branch</label>
-                             <input type="text" class="form-control required-field" name="fc_bankbranch" id="fc_bankbranch">
+                             <input type="text" class="form-control required-field" name="fv_bankbranch" id="fv_bankbranch">
                          </div>
                      </div>
 
                      <div class="col-12 col-md-12 col-lg-12">
                          <div class="form-group">
                              <label>Bank Address 1</label>
-                             <textarea class="form-control required-field" name="fc_bankaddress1" id="fc_bankaddress1" style="height: 100px"></textarea>
+                             <textarea class="form-control required-field" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
                          </div>
                      </div>
                      <div class="col-12 col-md-12 col-lg-12">
                          <div class="form-group">
                              <label>Bank Address 2</label>
-                             <textarea class="form-control required-field" name="fv_fc_bankaddress2" id="fv_fc_bankaddress2" style="height: 100px"></textarea>
+                             <textarea class="form-control required-field" name="fv_bankaddress2" id="fv_bankaddress2" style="height: 100px"></textarea>
                          </div>
                      </div>
                 </div>
@@ -138,9 +132,41 @@
 @section('js')
 <script>
 
+    $(document).ready(function(){
+        get_data_branch();
+    })
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
     function add(){
       $("#modal").modal('show');
-      $(".modal-title").text('Tambah User');
+      $(".modal-title").text('Tambah Master Bank Acc');
       $("#form_submit")[0].reset();
     }
 
@@ -148,7 +174,7 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/master-bank-acc/datatables',
          type: 'GET'
       },
       columnDefs: [
@@ -162,18 +188,18 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_bankcode;
+         var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_bankcode;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
    function edit(url){
-      edit_action(url, 'Edit Data Master Supplier');
+      edit_action(url, 'Edit Data Master Bank Acc');
       $("#type").val('update');
    }
 </script>

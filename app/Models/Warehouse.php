@@ -7,22 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Blameable;
+use App\Traits\CompositeKey;
 
 class Warehouse extends Model
 {
-    use HasFactory, Blameable, SoftDeletes, LogsActivity;
+    use HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
-    public $incrementing = false;
 
     protected $table = 't_warehouse';
     protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_warehousecode'];
+    public $incrementing = false;
     protected $guarded = [];
     protected $appends = [];
-
-    public function scopeActive($query){
-        $query->where('status', 1);
-    }
 
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');

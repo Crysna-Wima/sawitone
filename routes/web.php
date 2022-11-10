@@ -13,19 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-    Route::view('trxtype','MOCKUP.trxtype');
-    Route::view('bankacc','MOCKUP.bankacc');
-    Route::view('warehouse','MOCKUP.warehouse');
-    Route::view('brand','MOCKUP.brand');
-    Route::view('stock','MOCKUP.stock');
-    Route::view('sales','MOCKUP.sales');
-    Route::view('salescustomer','MOCKUP.salescustomer');
-    Route::view('stockcustomer','MOCKUP.stockcustomer');
-    Route::view('stocksupplier','MOCKUP.stocksupplier');
-    Route::view('supplier','MOCKUP.supplier');
-
-
     Route::view('dashboard','dashboard.index');
 
     Route::prefix('master')->group(function () {

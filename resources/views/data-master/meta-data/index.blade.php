@@ -37,7 +37,7 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xs" role="document">
        <div class="modal-content">
           <div class="modal-header br">
              <h5 class="modal-title"></h5>

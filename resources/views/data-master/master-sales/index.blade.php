@@ -45,14 +45,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/master-sales/store-update" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode"
-                                    id="fc_divisioncode">
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -65,54 +64,43 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Code</label>
-                                <input type="text" class="form-control required-field" name="fc_salescode"
-                                    id="fc_salescode">
+                                <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname1"
-                                    id="fc_salesname1">
+                                <input type="text" class="form-control required-field" name="fc_salesname1" id="fc_salesname1">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname2"
-                                    id="fc_salesname2">
+                                <input type="text" class="form-control required-field" name="fc_salesname2" id="fc_salesname2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Type</label>
-                                <select class="form-control select2 required-field" name="fc_sales_type"
-                                    id="fc_sales_type">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="form-control select2 required-field" name="fc_salestype" id="fc_salestype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Level</label>
-                                <select class="form-control select2 required-field" name="sales_level" id="sales_level">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="form-control select2 required-field" name="fn_saleslevel" id="fn_saleslevel"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center">
                             <div class="form-group d-flex" style="margin: 0">
                                 <div class="selectgroup w-50" style="margin-right: 10px">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="1" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="0" class="selectgroup-input">
+                                        <input type="radio" name="fn_salesblacklist" value="N" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -122,81 +110,70 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Mail 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesmail1"
-                                    id="fc_salesmail1">
+                                <input type="text" class="form-control required-field" name="fc_salesemail1" id="fc_salesemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Mail 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesmail2"
-                                    id="fc_salesmail2">
+                                <input type="text" class="form-control required-field" name="fc_salesemail2" id="fc_salesemail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone1"
-                                    id="fc_salesphone1">
+                                <input type="text" class="form-control required-field" name="fc_salesphone1" id="fc_salesphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone2"
-                                    id="fc_salesphone2">
+                                <input type="text" class="form-control required-field" name="fc_salesphone2" id="fc_salesphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone3"
-                                    id="fc_salesphone3">
+                                <input type="text" class="form-control required-field" name="fc_salesphone3" id="fc_salesphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank1"
-                                    id="fc_salesbank1">
+                                <select type="text" class="form-control select2 required-field" name="fc_salesbank1" id="fc_salesbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank2"
-                                    id="fc_salesbank2">
+                                <select type="text" class="form-control select2 required-field" name="fc_salesbank2" id="fc_salesbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesbank3"
-                                    id="fc_salesbank3">
+                                <select type="text" class="form-control select2 required-field" name="fc_salesbank3" id="fc_salesbank3"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek1"
-                                    id="fc_salesnorek1">
+                                <input type="text" class="form-control required-field" name="fc_salesnorek1" id="fc_salesnorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek2"
-                                    id="fc_salesnorek2">
+                                <input type="text" class="form-control required-field" name="fc_salesnorek2" id="fc_salesnorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek3"
-                                    id="fc_salesnorek3">
+                                <input type="text" class="form-control required-field" name="fc_salesnorek3" id="fc_salesnorek3">
                             </div>
                         </div>
 
@@ -209,7 +186,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales Description</label>
-                                <textarea name="fc_salesdescription" id="fc_saldescription" class="form-control" style="height: 80px"></textarea>
+                                <textarea name="fv_salesdescription" id="fv_salesdescription" class="form-control" style="height: 80px"></textarea>
                             </div>
                         </div>
                     </div>
@@ -221,15 +198,139 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('js')
 <script>
 
+    $(document).ready(function(){
+        get_data_branch();
+        get_data_sales_type();
+        get_data_sales_level();
+        get_data_sales_bank();
+    });
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_sales_type(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALETY",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_salestype").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_salestype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_sales_level(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALETY",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fn_saleslevel").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fn_saleslevel").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_sales_bank(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-all/BankAcc",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_salesbank1").empty();
+                    $("#fc_salesbank2").empty();
+                    $("#fc_salesbank3").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_salesbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_salesbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_salesbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+
+
     function add(){
       $("#modal").modal('show');
-      $(".modal-title").text('Tambah User');
+      $(".modal-title").text('Tambah Master Sales');
       $("#form_submit")[0].reset();
     }
 
@@ -237,7 +338,7 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/master-sales/datatables',
          type: 'GET'
       },
       columnDefs: [
@@ -251,12 +352,12 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/master-sales/detail/" + data.fc_salescode;
+         var url_delete = "/data-master/master-sales/delete/" + data.fc_salescode;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_salesname1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });

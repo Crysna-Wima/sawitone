@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Blameable;
+use App\Traits\CompositeKey;
 
 class TransaksiType extends Model
 {
-    use HasFactory, Blameable, SoftDeletes, LogsActivity;
+    use HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
-    public $incrementing = false;
 
     protected $table = 't_trxtype';
     protected $primaryKey = ['fc_trx', 'fc_kode'];
+    public $incrementing = false;
     protected $fillable = ['fc_trx', 'fc_kode', 'fv_description'];
     protected $appends = [];
 
