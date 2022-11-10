@@ -65,76 +65,61 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Stock Code</label>
-                                <input type="text" class="form-control required-field" name="fc_stockcode" id="fc_stockcode">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Barcode</label>
-                                <input type="text" class="form-control required-field" name="fc_barcode" id="fc_barcode">
+                                <select class="form-control select2 required-field" name="fc_stockcode" id="fc_stockcode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Code</label>
-                                <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Input Date</label>
-                                <input type="text" class="form-control required-field" name="fd_inputdate" id="fd_inputdate">
+                                <label>Barcode</label>
+                                <input type="text" class="form-control required-field" name="fc_barcode" id="fc_barcode">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Customer</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_customer" id="fm_price_customer">
-                                </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Harga Pembelian dari Supplier</label>
+                                <input type="text" class="form-control required-field" name="fm_purchase" id="fm_purchase">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Detail</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_detail" id="fm_price_detail">
-                                </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price Customer</label>
+                                <input type="text" class="form-control required-field" name="fm_price_customer" id="fm_price_customer">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Distributor</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_distributor" id="fm_price_distributor">
-                                </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="text" class="form-control required-field" name="fm_price_default" id="fm_price_default">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Project</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_project" id="fm_price_project">
-                                </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price Distributor</label>
+                                <input type="text" class="form-control required-field" name="fm_price_distributor" id="fm_price_distributor">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Dealer</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_dealer" id="fm_price_dealer">
-                                </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price Project</label>
+                                <input type="text" class="form-control required-field" name="fm_price_project" id="fm_price_project">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
-                                <div class="form-group">
-                                    <label>Price Enduser</label>
-                                    <input type="text" class="form-control required-field" name="fm_price_enduser" id="fm_price_enduser">
-                                </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price Dealer</label>
+                                <input type="text" class="form-control required-field" name="fm_price_dealer" id="fm_price_dealer">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Price End User</label>
+                                <input type="text" class="form-control required-field" name="fm_price_enduser" id="fm_price_enduser">
                             </div>
                         </div>
                     </div>
@@ -152,6 +137,96 @@
 
 @section('js')
 <script>
+
+    $(document).ready(function(){
+        get_data_branch();
+        get_data_stock_code();
+        get_data_supplier_code();
+    })
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_stock_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_stockcode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_stockcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_supplier_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_suppliercode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_suppliercode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
 
     function add(){
       $("#modal").modal('show');

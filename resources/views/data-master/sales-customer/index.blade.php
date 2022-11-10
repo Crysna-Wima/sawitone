@@ -37,7 +37,7 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-xs" role="document">
         <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title"></h5>
@@ -45,7 +45,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
@@ -55,60 +55,50 @@
                                     id="fc_divisioncode">
                             </div>
                         </div>
-                        <div class="col-12 col-md-8 col-lg-8">
+                        <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-4 d-flex justify-content-center align-items-center">
-                            <div class="form-group" style="margin: 1px">
-                                <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales Code</label>
-                                <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Member Code</label>
-                                <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode">
-                                    <option>1</option>
-                                    <option>2</option>
-                                </select>
+                                <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Member Join Date</label>
-                                <input type="text" class="form-control required-field" name="fd_memberjoindate" id="fd_memberjoindate">
+                                <input type="text" class="form-control datepicker required-field" name="fd_memberjoindate" id="fd_memberjoindate">
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12 d-flex align-items-center">
-                            <div class="form-group d-flex w-100" style="margin: 0">
-                                <div class="selectgroup w-100" style="margin-right: 10px">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="1" class="selectgroup-input"
+                                        <input type="radio" name="fl_active" value="T" class="selectgroup-input"
                                             checked="">
-                                        <span class="selectgroup-button">Yes</span>
+                                        <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="value1" value="0" class="selectgroup-input">
-                                        <span class="selectgroup-button">No</span>
+                                        <input type="radio" name="fl_active" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">Non Active</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12 mt-3">
+                        <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales Customer Description</label>
-                                <textarea name="pv_salescustomerdescription" id="pv_salescustomerdescription" style="height: 90px" class="form-control"></textarea>
+                                <textarea name="fv_salescustomerdescription" id="fv_salescustomerdescription" style="height: 90px" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -128,9 +118,99 @@
 @section('js')
 <script>
 
+    $(document).ready(function(){
+        get_data_branch();
+        get_data_sales_code();
+        get_data_member_code();
+    })
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_sales_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_salescode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_salescode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_member_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_membercode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membercode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
     function add(){
       $("#modal").modal('show');
-      $(".modal-title").text('Tambah User');
+      $(".modal-title").text('Tambah Sales Customer');
       $("#form_submit")[0].reset();
     }
 
@@ -138,7 +218,7 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/sales-customer/datatables',
          type: 'GET'
       },
       columnDefs: [
@@ -152,18 +232,18 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/sales-customer/detail/" + data.fc_salescode + "/" + data.fc_membercode;
+         var url_delete = "/data-master/sales-customer/delete/" + data.fc_salescode + "/" + data.fc_membercode;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_salescustomerdescription}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
    function edit(url){
-      edit_action(url, 'Edit Data Master Supplier');
+      edit_action(url, 'Edit Data Sales Customer');
       $("#type").val('update');
    }
 </script>

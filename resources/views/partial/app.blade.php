@@ -24,6 +24,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custome.css') }}">
 
     <style>
+
+        @media (min-width: 768px) {
+            .modal-xl {
+                width: 90%;
+                max-width:1200px;
+            }
+        }
+
         .table tbody td {
             vertical-align: middle;
         }

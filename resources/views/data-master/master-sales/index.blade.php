@@ -60,7 +60,6 @@
                                 <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Code</label>
