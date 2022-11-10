@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title','Meta Data')
+@section('title','Master Sales Customer')
 @section('content')
 
 <div class="section-body">
@@ -7,9 +7,9 @@
       <div class="col-12 col-md-12 col-lg-12">
          <div class="card">
             <div class="card-header">
-                <h4>Data Meta Data</h4>
+                <h4>Data Master Sales Customer</h4>
                 <div class="card-header-action">
-                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Meta Data</button>
+                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales Customer</button>
                 </div>
             </div>
             <div class="card-body">
@@ -48,28 +48,66 @@
           <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
              <div class="modal-body">
                 <div class="row">
-                     <div class="col-12 col-md-12 col-lg-12">
+                     <div class="col-12 col-md-6 col-lg-6">
                          <div class="form-group">
-                             <label>TRX</label>
-                             <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
+                             <label>Division Code</label>
+                             <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
                          </div>
                      </div>
-                     <div class="col-12 col-md-12 col-lg-12">
+                     <div class="col-12 col-md-4 col-lg-4">
                          <div class="form-group">
-                             <label>Kode</label>
-                             <input type="text" class="form-control required-field" name="fc_code" id="fc_code">
+                             <label>Branch</label>
+                             <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
                          </div>
                      </div>
-                     <div class="col-12 col-md-12 col-lg-12">
-                         <div class="form-group">
-                             <label>Deskipsi</label>
-                             <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 100px"></textarea>
+                     <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
+                         <div class="form-group" style="margin: 1px">
+                             <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
                          </div>
                      </div>
+
+                     <div class="col-12 col-md-6 col-lg-6">
+                         <div class="form-group">
+                             <label>Warehouse Code</label>
+                             <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-3 col-lg-3">
+                         <div class="form-group">
+                             <label>Warehouse Pos</label>
+                             <select class="form-control select2 required-field" name="fc_warehousepos" id="fc_warehousepos">
+                                 <option>1</option>
+                                 <option>2</option>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-3 col-lg-3">
+                         <div class="form-group">
+                             <label>Status</label>
+                             <select class="form-control select2 required-field" name="fl_status" id="fl_status">
+                                 <option>1</option>
+                                 <option>2</option>
+                             </select>
+                         </div>
+                     </div>
+
+                     <div class="col-12 col-md-9 col-lg-9">
+                         <div class="form-group">
+                             <label>Racname</label>
+                             <input type="text" class="form-control required-field" name="fc_racname" id="fc_racname">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-3 col-lg-3">
+                         <div class="form-group">
+                             <label>Capacity</label>
+                             <input type="text" class="form-control required-field" name="fn_capacity" id="fn_capacity">
+                         </div>
+                     </div>
+
                      <div class="col-12 col-md-12 col-lg-12">
                          <div class="form-group">
-                             <label>Action</label>
-                             <textarea class="form-control required-field" name="fc_action" id="fc_action" style="height: 70px"></textarea>
+                             <label>Deskripsi</label>
+                             <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 150px"></textarea>
                          </div>
                      </div>
                 </div>
@@ -82,6 +120,7 @@
        </div>
     </div>
  </div>
+
 
 @endsection
 
@@ -123,7 +162,7 @@
    });
 
    function edit(url){
-      edit_action(url, 'Edit Data Meta Data');
+      edit_action(url, 'Edit Data Master Supplier');
       $("#type").val('update');
    }
 </script>

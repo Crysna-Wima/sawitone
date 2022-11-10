@@ -37,47 +37,90 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
-                        </div>
-                    </div>
-               </div>
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
+            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode"
+                                    id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4 d-flex justify-content-center align-items-center">
+                            <div class="form-group" style="margin: 1px">
+                                <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Sales Code</label>
+                                <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Member Code</label>
+                                <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Member Join Date</label>
+                                <input type="text" class="form-control required-field" name="fd_memberjoindate" id="fd_memberjoindate">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 d-flex align-items-center">
+                            <div class="form-group d-flex w-100" style="margin: 0">
+                                <div class="selectgroup w-100" style="margin-right: 10px">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value1" value="1" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Yes</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value1" value="0" class="selectgroup-input">
+                                        <span class="selectgroup-button">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 mt-3">
+                            <div class="form-group">
+                                <label>Sales Customer Description</label>
+                                <textarea name="pv_salescustomerdescription" id="pv_salescustomerdescription" style="height: 90px" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
 </div>
+
 
 @endsection
 

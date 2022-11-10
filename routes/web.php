@@ -110,6 +110,14 @@ use Illuminate\Support\Facades\Route;
             Route::delete('/delete/{fc_kode}','DataMaster\MasterStockController@delete');
         });
 
+        Route::prefix('master-warehouse')->group(function () {
+            Route::get('/','DataMaster\MasterWarehouseController@index');
+            Route::get('/detail/{fc_kode}','DataMaster\MasterWarehouseController@detail');
+            Route::get('/datatables','DataMaster\MasterWarehouseController@datatables');
+            Route::post('/store-update','DataMaster\MasterWarehouseController@store_update');
+            Route::delete('/delete/{fc_kode}','DataMaster\MasterWarehouseController@delete');
+        });
+
         Route::prefix('sales-customer')->group(function () {
             Route::get('/','DataMaster\SalesCustomerController@index');
             Route::get('/detail/{fc_kode}','DataMaster\SalesCustomerController@detail');

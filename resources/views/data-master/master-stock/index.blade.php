@@ -36,47 +36,325 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header br">
             <h5 class="modal-title"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+        </div>
+        <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
             <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
+                            <label>Division Code</label>
+                            <input type="text" class="form-control required-field" name="fc_divisioncode"
+                                id="fc_divisioncode">
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
+                            <label>Branch</label>
+                            <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
+                    <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
+                        <div class="form-group" style="margin: 1px">
+                            <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
                         </div>
                     </div>
-               </div>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
+
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Stock Code</label>
+                            <input type="text" class="form-control required-field" name="fc_stockcode"
+                                id="fc_stockcode">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Barcode</label>
+                            <input type="text" class="form-control required-field" name="fc_barcode"
+                                id="fc_barcode">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 d-flex justify-content-center align-items-center">
+                        <div class="form-group d-flex" style="margin: 0">
+                            <div class="selectgroup w-25 mx-1">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value1" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value1" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                            <div class="selectgroup w-25 mx-1">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value2" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value2" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                            <div class="selectgroup w-25 mx-1">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value3" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value3" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                            <div class="selectgroup w-25 mx-1">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value4" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value5" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Name Short</label>
+                            <input type="text" class="form-control required-field" name="fc_nameshort"
+                                id="fc_nameshort">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-9">
+                        <div class="form-group">
+                            <label>Name Long</label>
+                            <input type="text" class="form-control required-field" name="fc_namelong"
+                                id="fc_namelong">
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2">
+                        <div class="col-12 col-md-2 col-lg-2 d-flex align-items-center">
+                            <div class="form-group" style="margin: 0">
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value5" value="1" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Yes</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value5" value="0" class="selectgroup-input">
+                                        <span class="selectgroup-button">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="col-12 col-md-2 col-lg-2 d-flex align-items-center">
+                            <div class="form-group" style="margin: 0">
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value6" value="1" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Yes</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value6" value="0" class="selectgroup-input">
+                                        <span class="selectgroup-button">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <div class="col-12 col-md-2 col-lg-2 d-flex align-items-center">
+                            <div class="form-group" style="margin: 0">
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value7" value="1" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Yes</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="value7" value="0" class="selectgroup-input">
+                                        <span class="selectgroup-button">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Reorder Level</label>
+                            <input type="text" class="form-control required-field" name="fn_reorderlevel"
+                                id="fn_reorderlevel">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Max on Hand</label>
+                            <input type="text" class="form-control required-field" name="fn_maxonhand"
+                                id="fn_maxonhand">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 d-flex align-items-center">
+                        <div class="form-group" style="margin: 0">
+                            <div class="buttons">
+                                <button type="button" style="margin: 0" class="btn btn-sm btn-primary">
+                                    Notifications <span class="badge badge-transparent">4</span>
+                                </button>
+                                <button type="button" style="margin: 0" class="btn btn-sm btn-primary">
+                                    Notifications <span class="badge badge-transparent">4</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Type Stock 1</label>
+                            <select class="form-control select2 required-field" name="fc_typestock1" id="fc_typestock1">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Type Stock 2</label>
+                            <select class="form-control select2 required-field" name="fc_typestock2" id="fc_typestock2">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <select class="form-control select2 required-field" name="fc_brand" id="fc_brand">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Name Pack</label>
+                            <input type="text" class="form-control required-field" name="fc_namepack"
+                                id="fc_namepack">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Cogs</label>
+                            <input type="text" class="form-control required-field" name="fm_cogs"
+                                id="fm_cogs">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Purchase</label>
+                            <input type="text" class="form-control required-field" name="fm_purchase"
+                                id="fm_purchase">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Sales Price</label>
+                            <input type="text" class="form-control required-field" name="fm_salesprice"
+                                id="fm_salesprice">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3 d-flex justify-content-center align-items-center">
+                        <div class="form-group d-flex" style="margin: 0">
+                            <div class="selectgroup w-50" style="margin-right: 10px">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value8" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value8" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                            <div class="selectgroup w-50">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value9" value="1" class="selectgroup-input"
+                                        checked="">
+                                    <span class="selectgroup-button">Yes</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="value9" value="0" class="selectgroup-input">
+                                    <span class="selectgroup-button">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Price Default</label>
+                            <input type="text" class="form-control required-field" name="fm_price_default"
+                                id="fm_price_default">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Price Distributor</label>
+                            <input type="text" class="form-control required-field" name="fm_price_distributor"
+                                id="fm_price_distributor">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Price Project</label>
+                            <input type="text" class="form-control required-field" name="fm_price_project"
+                                id="fm_price_project">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Price Dealer</label>
+                            <input type="text" class="form-control required-field" name="fm_price_dealer"
+                                id="fm_price_dealer">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Price End User</label>
+                            <input type="text" class="form-control required-field" name="fm_price_enduser"
+                                id="fm_price_enduser">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="fv_description" id="fv_description" style="height: 50px" class="form-control required-field"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+        </form>
+    </div>
 </div>
 
 @endsection

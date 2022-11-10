@@ -37,47 +37,101 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
-                        </div>
-                    </div>
-               </div>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
-</div>
+    <div class="modal-dialog modal-lg" role="document">
+       <div class="modal-content">
+          <div class="modal-header br">
+             <h5 class="modal-title"></h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+             <div class="modal-body">
+                <div class="row">
+                     <div class="col-12 col-md-6 col-lg-6">
+                         <div class="form-group">
+                             <label>Division Code</label>
+                             <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-4 col-lg-4">
+                         <div class="form-group">
+                             <label>Branch</label>
+                             <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
+                         <div class="form-group" style="margin: 1px">
+                             <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
+                         </div>
+                     </div>
+
+                     <div class="col-12 col-md-6 col-lg-6">
+                         <div class="form-group">
+                             <label>Bank Name</label>
+                             <input type="text" class="form-control required-field" name="fc_bankname" id="fc_bankname">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-2 col-lg-2">
+                         <div class="form-group">
+                             <label>Bank Type</label>
+                             <select class="form-control select2 required-field" name="fc_banktype" id="fc_banktype">
+                                 <option>1</option>
+                                 <option>2</option>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-4 col-lg-4">
+                         <div class="form-group">
+                             <label>Bank Code</label>
+                             <input type="text" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
+                         </div>
+                     </div>
+
+                     <div class="col-12 col-md-6 col-lg-6">
+                         <div class="form-group">
+                             <label>Bank Username</label>
+                             <input type="text" class="form-control required-field" name="fv_bankusername" id="fv_bankusername">
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-2 col-lg-2">
+                         <div class="form-group">
+                             <label>Bank Hold</label>
+                             <select class="form-control required-field select2" name="fl_bankhold" id="fl_bankhold">
+                                 <option>1</option>
+                                 <option>2</option>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-4 col-lg-4">
+                         <div class="form-group">
+                             <label>Bank Branch</label>
+                             <input type="text" class="form-control required-field" name="fc_bankbranch" id="fc_bankbranch">
+                         </div>
+                     </div>
+
+                     <div class="col-12 col-md-12 col-lg-12">
+                         <div class="form-group">
+                             <label>Bank Address 1</label>
+                             <textarea class="form-control required-field" name="fc_bankaddress1" id="fc_bankaddress1" style="height: 100px"></textarea>
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-12 col-lg-12">
+                         <div class="form-group">
+                             <label>Bank Address 2</label>
+                             <textarea class="form-control required-field" name="fv_fc_bankaddress2" id="fv_fc_bankaddress2" style="height: 100px"></textarea>
+                         </div>
+                     </div>
+                </div>
+             </div>
+             <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
 
 @endsection
 

@@ -37,46 +37,119 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
-                        </div>
-                    </div>
-               </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
+            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode"
+                                    id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <input type="text" class="form-control required-field" name="fc_branch" id="fc_branch">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2 d-flex justify-content-center align-items-center">
+                            <div class="form-group" style="margin: 1px">
+                                <button type="button" class="btn btn-primary">Modal TRXTYPE</button>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Stock Code</label>
+                                <input type="text" class="form-control required-field" name="fc_stockcode" id="fc_stockcode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Barcode</label>
+                                <input type="text" class="form-control required-field" name="fc_barcode" id="fc_barcode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Code</label>
+                                <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Input Date</label>
+                                <input type="text" class="form-control required-field" name="fd_inputdate" id="fd_inputdate">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Customer</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_customer" id="fm_price_customer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Detail</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_detail" id="fm_price_detail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Distributor</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_distributor" id="fm_price_distributor">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Project</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_project" id="fm_price_project">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Dealer</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_dealer" id="fm_price_dealer">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12 col-md-6 col-lg-6" style="padding: 0!important">
+                                <div class="form-group">
+                                    <label>Price Enduser</label>
+                                    <input type="text" class="form-control required-field" name="fm_price_enduser" id="fm_price_enduser">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @endsection
