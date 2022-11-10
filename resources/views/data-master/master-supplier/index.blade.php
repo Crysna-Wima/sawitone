@@ -37,46 +37,224 @@
 
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
-                        </div>
-                    </div>
-               </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
+            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode"
+                                    id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier Code</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliercode"
+                                    id="fc_suppliercode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Name 1</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliername1"
+                                    id="fc_suppliername1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Name 2</label>
+                                <input type="text" class="form-control required-field" name="fc_suppliername2"
+                                    id="fc_suppliername2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier Pic Name</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicname"
+                                    id="fc_supplierpicname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Pic Phone</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicphone"
+                                    id="fc_supplierpicphone">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Pic Pos</label>
+                                <input type="text" class="form-control required-field" name="fc_supplierpicpos"
+                                    id="fc_supplierpicpos">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Legal Status</label>
+                                <select class="select2" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Nationality</label>
+                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Forex</label>
+                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Type Business</label>
+                                <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Join Date</label>
+                                <input type="text" readonly class="form-control" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Expired</label>
+                                <input type="text" readonly class="form-control" name="fd_supplierexpired" id="fd_supplierexpired">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Reseller</label>
+                                <select class="select2" name="fl_supplierreseller" id="fl_supplierreseller">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Tax Code</label>
+                                <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode">
+                                    <option>1</option>
+                                    <option>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier Email 1</label>
+                                <input type="text" class="form-control" name="fc_supplieremail1" id="fc_supplieremail1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier Email 2</label>
+                                <input type="text" class="form-control" name="fc_supplieremail2" id="fc_supplieremail2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Phone 1</label>
+                                <input type="text" class="form-control" name="fc_supplierphone1" id="fc_supplierphone1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Phone 2</label>
+                                <input type="text" class="form-control" name="fc_supplierphone2" id="fc_supplierphone2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Phone 3</label>
+                                <input type="text" class="form-control" name="fc_supplierphone3" id="fc_supplierphone3">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Bank 1</label>
+                                <input type="text" class="form-control" name=fc_supplierbank1"" id="fc_supplierbank1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Bank 2</label>
+                                <input type="text" class="form-control" name="fc_supplierbank2" id="fc_supplierbank2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier Bank 3</label>
+                                <input type="text" class="form-control" name="fc_supplierbank3" id="fc_supplierbank3">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier No Rekening 1</label>
+                                <input type="text" class="form-control" name=fc_suppliernorek1"" id="fc_suppliernorek1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier No Rekening 2</label>
+                                <input type="text" class="form-control" name="fc_suppliernorek2" id="fc_suppliernorek2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Supplier No Rekening 3</label>
+                                <input type="text" class="form-control" name="fc_suppliernorek3" id="fc_suppliernorek3">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-8 col-lg-8">
+                            <div class="form-group">
+                                <label>Supplier Virtual AC</label>
+                                <input type="text" class="form-control" name="fc_suppliervirtualac" id="fc_suppliervirtualac">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @endsection
