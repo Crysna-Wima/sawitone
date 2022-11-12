@@ -25,7 +25,11 @@ class MasterStockController extends Controller
     }
 
     public function datatables(){
-        $data = Stock::orderBy('created_at', 'DESC')->get();
+        $data = Stock::with(
+            'branch',
+            'type_stock1',
+            'type_stock2',
+        )->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

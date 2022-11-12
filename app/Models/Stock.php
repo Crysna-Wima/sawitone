@@ -30,18 +30,6 @@ class Stock extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
     }
 
-    public function brand(){
-        return $this->belongsTo(TransaksiType::class, 'fc_brand', 'fc_brand');
-    }
-
-    public function group(){
-        return $this->belongsTo(TransaksiType::class, 'fc_group', 'fc_group');
-    }
-
-    public function subgroup(){
-        return $this->belongsTo(TransaksiType::class, 'fc_subgroup', 'fc_subgroup');
-    }
-
     public function type_stock1(){
         return $this->belongsTo(TransaksiType::class, 'fc_typestock1', 'fc_kode');
     }

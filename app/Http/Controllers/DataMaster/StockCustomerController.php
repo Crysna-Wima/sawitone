@@ -25,7 +25,7 @@ class StockCustomerController extends Controller
     }
 
     public function datatables(){
-        $data = StockCustomer::orderBy('created_at', 'DESC')->get();
+        $data = StockCustomer::with('branch', 'stock', 'customer')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

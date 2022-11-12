@@ -24,7 +24,7 @@ class MasterBrandController extends Controller
     }
 
     public function datatables(){
-        $data = Brand::orderBy('created_at', 'DESC')->get();
+        $data = Brand::with('branch')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

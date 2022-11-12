@@ -25,4 +25,12 @@ class SalesCustomer extends Model
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
     }
+
+    public function sales(){
+        return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode');
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode');
+    }
 }

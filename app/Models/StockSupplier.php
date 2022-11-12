@@ -26,7 +26,11 @@ class StockSupplier extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
     }
 
-    public function supplier_code(){
+    public function stock(){
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+    }
+
+    public function supplier(){
         return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode');
     }
 }

@@ -24,7 +24,16 @@ class SupplierController extends Controller
     }
 
     public function datatables(){
-        $data = Supplier::orderBy('created_at', 'DESC')->get();
+        $data = Supplier::with(
+            'branch',
+            'supplier_legal_status',
+            'supplier_nationality',
+            'supplier_type_business',
+            'supplier_tax_code',
+            'supplier_bank1',
+            'supplier_bank2',
+            'supplier_bank3',
+        )->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

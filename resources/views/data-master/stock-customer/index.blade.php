@@ -29,8 +29,6 @@
                            <th scope="col" class="text-center">Branch</th>
                            <th scope="col" class="text-center">Stock Code</th>
                            <th scope="col" class="text-center">Member Code</th>
-                           <th scope="col" class="text-center">Input Date</th>
-                           <th scope="col" class="text-center">Update</th>
                            <th scope="col" class="text-center">Price Customer</th>
                            <th scope="col" class="text-center">Price Default</th>
                            <th scope="col" class="text-center">Price Distributor</th>
@@ -251,30 +249,28 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,5] },
-         { className: 'd-flex', targets: [13] },
+         { className: 'text-center', targets: [0,11] },
+         { className: 'd-flex', targets: [11] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
-         { data: 'fc_stockcode' },
-         { data: 'fc_membercode' },
-         { data: 'fd_inputdate' },
-         { data: 'fd_update' },
-         { data: 'fm_price_customer' },
-         { data: 'fm_price_default' },
-         { data: 'fm_price_distributor' },
-         { data: 'fm_price_project' },
-         { data: 'fm_price_dealer' },
-         { data: 'fm_price_enduser' },
+         { data: 'branch.fv_description' },
+         { data: 'stock.fc_nameshort' },
+         { data: 'customer.fc_membername1' },
+         { data: 'fm_price_customer', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_default', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_distributor', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_project', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_dealer', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_enduser', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fc_membercode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/stock-customer/detail/" + data.fc_stockcode + '/' + data.fc_membercode;
          var url_delete = "/data-master/stock-customer/delete/" + data.fc_stockcode + '/' + data.fc_membercode;
 
-         $('td:eq(13)', row).html(`
+         $('td:eq(11)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

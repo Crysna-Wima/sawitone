@@ -26,7 +26,11 @@ class StockCustomer extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
     }
 
-    public function member_code(){
+    public function stock(){
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+    }
+
+    public function customer(){
         return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode');
     }
 }

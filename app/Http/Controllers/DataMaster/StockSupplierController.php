@@ -25,7 +25,7 @@ class StockSupplierController extends Controller
     }
 
     public function datatables(){
-        $data = StockSupplier::orderBy('created_at', 'DESC')->get();
+        $data = StockSupplier::with('branch', 'supplier', 'stock')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

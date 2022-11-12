@@ -233,15 +233,15 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,5] },
+         { className: 'text-center', targets: [0,8] },
          { className: 'd-flex', targets: [0,8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
-         { data: 'fc_salescode' },
-         { data: 'fc_membercode' },
+         { data: 'branch.fv_description' },
+         { data: 'sales.fc_salesname1' },
+         { data: 'customer.fc_membername1' },
          { data: 'fd_memberjoindate' },
          { data: 'fl_active' },
          { data: 'fv_salescustomerdescription' },

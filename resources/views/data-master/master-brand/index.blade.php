@@ -141,12 +141,12 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,6] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fc_brand' },
          { data: 'fc_group' },
          { data: 'fc_subgroup' },

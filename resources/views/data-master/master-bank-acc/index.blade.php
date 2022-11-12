@@ -192,13 +192,13 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,11] },
          { className: 'd-flex', targets: [11] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fv_bankname' },
          { data: 'fc_banktype' },
          { data: 'fc_bankcode' },

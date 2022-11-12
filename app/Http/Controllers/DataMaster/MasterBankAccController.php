@@ -24,7 +24,7 @@ class MasterBankAccController extends Controller
     }
 
     public function datatables(){
-        $data = BankAcc::orderBy('created_at', 'DESC')->get();
+        $data = BankAcc::with('branch')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

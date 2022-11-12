@@ -171,12 +171,12 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,1,2] },
+         { className: 'text-center', targets: [0,9] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fc_warehousecode' },
          { data: 'fc_warehousepos' },
          { data: 'fl_status' },

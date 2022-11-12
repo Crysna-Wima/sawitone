@@ -683,7 +683,7 @@
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fc_stockcode' },
          { data: 'fc_barcode' },
          { data: 'fc_nameshort' },
@@ -698,29 +698,29 @@
          { data: 'fc_brand' },
          { data: 'fc_group' },
          { data: 'fc_subgroup' },
-         { data: 'fc_typestock1' },
-         { data: 'fc_typestock2' },
+         { data: 'type_stock1.fv_description' },
+         { data: 'type_stock2.fv_description' },
          { data: 'fc_namepack' },
          { data: 'fn_reorderlevel' },
          { data: 'fn_maxonhand' },
-         { data: 'fm_cogs' },
-         { data: 'fm_purchase' },
-         { data: 'fm_salesprice' },
+         { data: 'fm_cogs', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_purchase', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_salesprice', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fl_disc_date' },
          { data: 'fd_disc_begin' },
          { data: 'fd_disc_end' },
-         { data: 'fm_disc_rp' },
+         { data: 'fm_disc_rp', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fm_disc_pr' },
          { data: 'fl_disc_time' },
          { data: 'ft_disc_begin' },
          { data: 'ft_disc_end' },
-         { data: 'fm_time_disc_rp' },
+         { data: 'fm_time_disc_rp', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fm_time_disc_pr' },
-         { data: 'fm_price_default' },
-         { data: 'fm_price_distributor' },
-         { data: 'fm_price_project' },
-         { data: 'fm_price_dealer' },
-         { data: 'fm_price_enduser' },
+         { data: 'fm_price_default',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_distributor',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_project',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_dealer',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_price_enduser',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fv_stockdescription' },
          { data: 'fc_divisioncode' },
       ],
@@ -728,10 +728,52 @@
          var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode;
          var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode;
 
-         $('td:eq(41)', row).html(`
+        if(data.fl_batch == 'T'){
+            $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(8)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_expired == 'T'){
+            $('td:eq(9)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(9)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_serialnumber == 'T'){
+            $('td:eq(10)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(10)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_catnumber == 'T'){
+            $('td:eq(11)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(11)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_blacklist == 'T'){
+            $('td:eq(12)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(12)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_taxtype == 'T'){
+            $('td:eq(13)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(13)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_repsupplier == 'T'){
+            $('td:eq(14)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(14)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        $('td:eq(41)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_nameshort}')"><i class="fa fa-trash"> </i> Hapus</button>
-         `);
+        `);
       }
    });
 
