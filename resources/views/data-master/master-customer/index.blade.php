@@ -370,6 +370,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="fv_memberdescription" id="fv_memberdescription" style="height: 90px" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -649,7 +655,7 @@
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fc_membercode' },
          { data: 'fc_membername1' },
          { data: 'fc_membername2' },
@@ -663,16 +669,16 @@
          { data: 'fc_memberweb' },
          { data: 'fc_memberemail1' },
          { data: 'fc_memberemail2' },
-         { data: 'fc_membertypebusiness' },
-         { data: 'fc_member_branchtype' },
+         { data: 'member_type_business.fv_description' },
+         { data: 'member_typebranch.fv_description' },
          { data: 'fl_memberreseller' },
-         { data: 'fc_memberlegalstatus' },
-         { data: 'fc_membertaxcode' },
+         { data: 'member_legal_status.fv_description' },
+         { data: 'member_tax_code.fv_description' },
          { data: 'fc_membernpwp_no' },
          { data: 'fc_membernpwp_name' },
          { data: 'fc_member_npwpaddress1' },
          { data: 'fc_member_npwpaddress2' },
-         { data: 'fc_membernationality' },
+         { data: 'member_nationality.fv_description' },
          { data: 'fc_memberforex' },
          { data: 'fm_memberAP' },
          { data: 'fn_memberAgingAP' },
@@ -682,9 +688,9 @@
          { data: 'fc_memberpicpos' },
          { data: 'fd_memberjoindate' },
          { data: 'fl_membercontract' },
-         { data: 'fc_memberbank1' },
-         { data: 'fc_memberbank2' },
-         { data: 'fc_memberbank3' },
+         { data: 'member_bank1.fv_bankname' },
+         { data: 'member_bank2.fv_bankname' },
+         { data: 'member_bank3.fv_bankname' },
          { data: 'fc_membervirtualac' },
          { data: 'fc_membernorek1' },
          { data: 'fc_membernorek2' },

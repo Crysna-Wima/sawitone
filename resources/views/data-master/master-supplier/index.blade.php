@@ -315,6 +315,12 @@
                                 <select type="text" class="form-control select2" name="fn_supplierlockTrans" id="fn_supplierlockTrans"></select>
                             </div>
                         </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="fv_supplierdescription" id="fv_supplierdescription" style="height: 90px" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -560,7 +566,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,5] },
-         { className: 'd-flex', targets: [36] },
+         { className: 'd-flex', targets: [37] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -599,13 +605,14 @@
          { data: 'fc_suppliernorek1' },
          { data: 'fc_suppliernorek2' },
          { data: 'fc_suppliernorek3' },
+         { data: 'fv_supplierdescription' },
          { data: 'fc_suppliercode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-supplier/detail/" + data.fc_suppliercode;
          var url_delete = "/data-master/master-supplier/delete/" + data.fc_suppliercode;
 
-         $('td:eq(36)', row).html(`
+         $('td:eq(37)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_suppliername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

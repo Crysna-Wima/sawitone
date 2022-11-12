@@ -24,7 +24,17 @@ class CustomerController extends Controller
     }
 
     public function datatables(){
-        $data = Customer::orderBy('created_at', 'DESC')->get();
+        $data = Customer::with(
+            'branch',
+            'member_type_business',
+            'member_typebranch',
+            'member_legal_status',
+            'member_tax_code',
+            'member_nationality',
+            'member_bank1',
+            'member_bank2',
+            'member_bank3',
+            )->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

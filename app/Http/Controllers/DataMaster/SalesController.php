@@ -20,7 +20,14 @@ class SalesController extends Controller
     }
 
     public function detail($fc_salescode){
-        return Sales::where('fc_salescode', $fc_salescode)->first();
+        return Sales::with(
+            'branch',
+            'sales_type',
+            'sales_level',
+            'sales_bank1',
+            'sales_bank2',
+            'sales_bank3',
+        )->where('fc_salescode', $fc_salescode)->first();
     }
 
     public function datatables(){

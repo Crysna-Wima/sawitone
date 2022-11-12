@@ -30,7 +30,7 @@ class Customer extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_membertypebusiness', 'fc_kode');
     }
 
-    public function member_member_typebranch(){
+    public function member_typebranch(){
         return $this->belongsTo(TransaksiType::class, 'fc_member_branchtype', 'fc_kode');
     }
 
