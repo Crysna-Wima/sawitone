@@ -148,13 +148,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Nationality</label>
-                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality"></select>
+                                <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Forex</label>
-                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex" value="s">
+                                <input type="text" readonly class="form-control" name="fc_supplierforex" id="fc_supplierforex">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -291,7 +291,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier Virtual AC</label>
                                 <input type="text" class="form-control" name="fc_suppliervirtualac" id="fc_suppliervirtualac">
@@ -299,24 +299,20 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Aging AR</label>
-                                <input type="text" class="form-control" name="fn_supplierAgingAR" id="fn_supplierAgingAR">
+                                <label>Supplier Hutang</label>
+                                <input type="text" class="form-control" readonly name="fm_supplierAR" id="fm_supplierAR" value="0">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label>Supplier Aging AP</label>
+                                <input type="number" class="form-control" name="fn_supplierAgingAR" id="fn_supplierAgingAR">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Lock Transaksi</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_supplierlockTrans" value="T" class="selectgroup-input"
-                                            checked="">
-                                        <span class="selectgroup-button">LOCK</span>
-                                    </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_supplierlockTrans" value="F" class="selectgroup-input">
-                                        <span class="selectgroup-button">NOT LOCK</span>
-                                    </label>
-                                </div>
+                                <select type="text" class="form-control select2" name="fn_supplierlockTrans" id="fn_supplierlockTrans"></select>
                             </div>
                         </div>
                     </div>
@@ -340,8 +336,13 @@
         get_data_nationality();
         get_data_type_business();
         get_data_tax_code();
+        get_data_lock_code();
         get_data_supplier_bank();
     })
+
+    function change_nationality(){
+        $('#fc_supplierforex').val($('#fc_suppliernationality').val());
+    }
 
     function get_data_branch(){
         $("#modal_loading").modal('show');
@@ -374,7 +375,7 @@
     function get_data_legal_status(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_LEGAL",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -402,7 +403,7 @@
     function get_data_nationality(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/NATIONALITY",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -430,7 +431,7 @@
     function get_data_type_business(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/MEMBER_BUSI_TYPE",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -458,7 +459,7 @@
     function get_data_tax_code(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_TAXTYPE",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -468,6 +469,34 @@
                     $("#fc_suppliertaxcode").empty();
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_suppliertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_lock_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_LOCKTYPE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fn_supplierlockTrans").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fn_supplierlockTrans").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -519,6 +548,7 @@
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Master Supplier');
       $("#form_submit")[0].reset();
+      change_nationality();
     }
 
    var tb = $('#tb').DataTable({
