@@ -200,7 +200,7 @@
           type: "GET",
           dataType: "JSON",
           success: function(response){
-             setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 500);
              Object.keys(response).forEach(function (key) {
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {

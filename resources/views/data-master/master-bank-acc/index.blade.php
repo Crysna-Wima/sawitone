@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Bank Acc')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -13,15 +20,22 @@
                 </div>
             </div>
             <div class="card-body">
-               <div class="table-responsive">
+               <div class="table-responsive" style="overflow-x: unset">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center">Tipe</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Bank Name</th>
+                           <th scope="col" class="text-center">Bank Type</th>
+                           <th scope="col" class="text-center">Bank Code</th>
+                           <th scope="col" class="text-center">Bank Branch</th>
+                           <th scope="col" class="text-center">Bank Username</th>
+                           <th scope="col" class="text-center">Bank Hold</th>
+                           <th scope="col" class="text-center">Bank Address 1</th>
+                           <th scope="col" class="text-center">Bank Address 2</th>
+                           <th scope="col" class="text-center justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -179,19 +193,27 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,4] },
+         { className: 'd-flex', targets: [11] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_bankcode' },
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
          { data: 'fv_bankname' },
          { data: 'fc_banktype' },
-         { data: 'fc_banktype' },
+         { data: 'fc_bankcode' },
+         { data: 'fv_bankbranch' },
+         { data: 'fv_bankusername' },
+         { data: 'fl_bankhold' },
+         { data: 'fv_bankaddress1' },
+         { data: 'fv_bankaddress2' },
+         { data: 'fv_bankaddress2' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_bankcode;
          var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_bankcode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(11)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

@@ -18,9 +18,11 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
                            <th scope="col" class="text-center">Brand</th>
                            <th scope="col" class="text-center">Group</th>
-                           <th scope="col" class="text-center">Subgroup</th>
+                           <th scope="col" class="text-center">Sub Group</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -143,6 +145,8 @@
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
          { data: 'fc_brand' },
          { data: 'fc_group' },
          { data: 'fc_subgroup' },
@@ -152,7 +156,7 @@
          var url_edit   = "/data-master/master-brand/detail/" + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_subgroup;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(6)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_subgroup}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

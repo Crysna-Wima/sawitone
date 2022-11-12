@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Sales Customer')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,14 +22,17 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Divisi</th>
                            <th scope="col" class="text-center">Branch</th>
                            <th scope="col" class="text-center">Sales Code</th>
                            <th scope="col" class="text-center">Member Code</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Member Join Date</th>
+                           <th scope="col" class="text-center">Active</th>
+                           <th scope="col" class="text-center">Sales Customer Description</th>
+                           <th scope="col" class="text-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -224,6 +234,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,5] },
+         { className: 'd-flex', targets: [0,8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -231,13 +242,16 @@
          { data: 'fc_branch' },
          { data: 'fc_salescode' },
          { data: 'fc_membercode' },
-         { data: 'fc_membercode' },
+         { data: 'fd_memberjoindate' },
+         { data: 'fl_active' },
+         { data: 'fv_salescustomerdescription' },
+         { data: 'fd_memberjoindate' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/sales-customer/detail/" + data.fc_salescode + "/" + data.fc_membercode;
          var url_delete = "/data-master/sales-customer/delete/" + data.fc_salescode + "/" + data.fc_membercode;
 
-         $('td:eq(5)', row).html(`
+         $('td:eq(8)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

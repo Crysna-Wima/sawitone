@@ -18,9 +18,16 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Email </th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center">Role</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">User Id</th>
+                           <th scope="col" class="text-center">Usrename</th>
+                           <th scope="col" class="text-center">Password</th>
+                           <th scope="col" class="text-center">Group User</th>
+                           <th scope="col" class="text-center">Level</th>
+                           <th scope="col" class="text-center">Hold</th>
+                           <th scope="col" class="text-center">Expired</th>
+                           <th scope="col" class="text-center">Description</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -107,16 +114,23 @@
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'email' },
-         { data: 'name' },
-         { data: 'master_role.role' },
-         { data: 'email' },
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
+         { data: 'fc_userid' },
+         { data: 'fc_username' },
+         { data: 'fc_password' },
+         { data: 'fc_groupuser' },
+         { data: 'fl_level' },
+         { data: 'fl_hold' },
+         { data: 'fd_expired' },
+         { data: 'fv_description' },
+         { data: 'fv_description' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-user/detail/" + data.id;
          var url_delete = "/data-master/master-user/delete/" + data.id;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(11)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

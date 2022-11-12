@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Stock')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,14 +22,50 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Divisi</th>
                            <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Stock Code</th>
+                           <th scope="col" class="text-center">Barcode</th>
+                           <th scope="col" class="text-center">Name Short</th>
+                           <th scope="col" class="text-center">Name Long</th>
+                           <th scope="col" class="text-center">Batch</th>
+                           <th scope="col" class="text-center">Expired</th>
+                           <th scope="col" class="text-center">Serial Number</th>
+                           <th scope="col" class="text-center">Cat Number</th>
+                           <th scope="col" class="text-center">BlackList</th>
+                           <th scope="col" class="text-center">Tax Type</th>
+                           <th scope="col" class="text-center">Resupplier</th>
+                           <th scope="col" class="text-center">Brand</th>
+                           <th scope="col" class="text-center">Group</th>
+                           <th scope="col" class="text-center">Subgroup</th>
+                           <th scope="col" class="text-center">Type Stock 1</th>
+                           <th scope="col" class="text-center">Type Stock 2</th>
+                           <th scope="col" class="text-center">Name Pack</th>
+                           <th scope="col" class="text-center">Reorder Level</th>
+                           <th scope="col" class="text-center">Max</th>
+                           <th scope="col" class="text-center">cogs</th>
+                           <th scope="col" class="text-center">Purchase</th>
+                           <th scope="col" class="text-center">Sales Price</th>
+                           <th scope="col" class="text-center">FL Disc Date</th>
+                           <th scope="col" class="text-center">FD Disc Begin</th>
+                           <th scope="col" class="text-center">FD Disc End</th>
+                           <th scope="col" class="text-center">FM Disc Rp</th>
+                           <th scope="col" class="text-center">FM Disc Pr</th>
+                           <th scope="col" class="text-center">FL Disc Time</th>
+                           <th scope="col" class="text-center">FT Disc Begin</th>
+                           <th scope="col" class="text-center">FT Disc End</th>
+                           <th scope="col" class="text-center">FM Time Disc RP</th>
+                           <th scope="col" class="text-center">FM Time Disc PR</th>
+                           <th scope="col" class="text-center">Price Default</th>
+                           <th scope="col" class="text-center">Price Distributor</th>
+                           <th scope="col" class="text-center">Price Project</th>
+                           <th scope="col" class="text-center">Price Dealer</th>
+                           <th scope="col" class="text-center">Price End User</th>
+                           <th scope="col" class="text-center">Stock Description</th>
+                           <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -635,20 +678,57 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,5] },
+         { className: 'd-flex', targets: [41] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
          { data: 'fc_branch' },
          { data: 'fc_stockcode' },
+         { data: 'fc_barcode' },
          { data: 'fc_nameshort' },
-         { data: 'fc_nameshort' },
+         { data: 'fc_namelong' },
+         { data: 'fl_batch' },
+         { data: 'fl_expired' },
+         { data: 'fl_serialnumber' },
+         { data: 'fl_catnumber' },
+         { data: 'fl_blacklist' },
+         { data: 'fl_taxtype' },
+         { data: 'fl_repsupplier' },
+         { data: 'fc_brand' },
+         { data: 'fc_group' },
+         { data: 'fc_subgroup' },
+         { data: 'fc_typestock1' },
+         { data: 'fc_typestock2' },
+         { data: 'fc_namepack' },
+         { data: 'fn_reorderlevel' },
+         { data: 'fn_maxonhand' },
+         { data: 'fm_cogs' },
+         { data: 'fm_purchase' },
+         { data: 'fm_salesprice' },
+         { data: 'fl_disc_date' },
+         { data: 'fd_disc_begin' },
+         { data: 'fd_disc_end' },
+         { data: 'fm_disc_rp' },
+         { data: 'fm_disc_pr' },
+         { data: 'fl_disc_time' },
+         { data: 'ft_disc_begin' },
+         { data: 'ft_disc_end' },
+         { data: 'fm_time_disc_rp' },
+         { data: 'fm_time_disc_pr' },
+         { data: 'fm_price_default' },
+         { data: 'fm_price_distributor' },
+         { data: 'fm_price_project' },
+         { data: 'fm_price_dealer' },
+         { data: 'fm_price_enduser' },
+         { data: 'fv_stockdescription' },
+         { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode;
          var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode;
 
-         $('td:eq(5)', row).html(`
+         $('td:eq(41)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_nameshort}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

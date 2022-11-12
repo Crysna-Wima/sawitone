@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Supplier')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,14 +22,46 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Legal Status</th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center">Phone    </th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Supplier Code</th>
+                           <th scope="col" class="text-center">Supplier Legal Status</th>
+                           <th scope="col" class="text-center">Supplier Name 1</th>
+                           <th scope="col" class="text-center">Supplier Name 2</th>
+                           <th scope="col" class="text-center">Supplier Phone 1</th>
+                           <th scope="col" class="text-center">Supplier Phone 2</th>
+                           <th scope="col" class="text-center">Supplier Phone 3</th>
+                           <th scope="col" class="text-center">Supplier Email 1</th>
+                           <th scope="col" class="text-center">Supplier Email 2</th>
+                           <th scope="col" class="text-center">Supplier Nationality</th>
+                           <th scope="col" class="text-center">Supplier Forex</th>
+                           <th scope="col" class="text-center">Supplier Type Business</th>
+                           <th scope="col" class="text-center">Supplier Reseller</th>
+                           <th scope="col" class="text-center">Supplier Tax Code</th>
+                           <th scope="col" class="text-center">Supplier NPWP</th>
+                           <th scope="col" class="text-center">Supplier NPWP Name</th>
+                           <th scope="col" class="text-center">Supplier NPWP Address 1</th>
+                           <th scope="col" class="text-center">Supplier NPWP Address 2</th>
+                           <th scope="col" class="text-center">Supplier AR</th>
+                           <th scope="col" class="text-center">Supplier Aging AR</th>
+                           <th scope="col" class="text-center">Supplier Lock</th>
+                           <th scope="col" class="text-center">Supplier Pic Name</th>
+                           <th scope="col" class="text-center">Supplier Pic Phone</th>
+                           <th scope="col" class="text-center">Supplier Pic Pos</th>
+                           <th scope="col" class="text-center">Supplier Join Date</th>
+                           <th scope="col" class="text-center">Supplier Expired</th>
+                           <th scope="col" class="text-center">Supplier Bank 1</th>
+                           <th scope="col" class="text-center">Supplier Bank 2</th>
+                           <th scope="col" class="text-center">Supplier Bank 3</th>
+                           <th scope="col" class="text-center">Supplier Virtual Acc</th>
+                           <th scope="col" class="text-center">Supplier Norek 1</th>
+                           <th scope="col" class="text-center">Supplier Norek 2</th>
+                           <th scope="col" class="text-center">Supplier Norek 3</th>
+                           <th scope="col" class="text-center">Supplier Description</th>
+                           <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -491,20 +530,52 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,5] },
+         { className: 'd-flex', targets: [37] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
          { data: 'fc_suppliercode' },
          { data: 'fc_supplierlegalstatus' },
          { data: 'fc_suppliername1' },
+         { data: 'fc_suppliername2' },
          { data: 'fc_supplierphone1' },
-         { data: 'fc_supplierphone1' },
+         { data: 'fc_supplierphone2' },
+         { data: 'fc_supplierphone3' },
+         { data: 'fc_supplieremail1' },
+         { data: 'fc_supplieremail2' },
+         { data: 'fc_suppliernationality' },
+         { data: 'fc_supplierforex' },
+         { data: 'fc_suppliertypebusiness' },
+         { data: 'fl_supplierreseller' },
+         { data: 'fc_suppliertaxcode' },
+         { data: 'fc_supplierNPWP' },
+         { data: 'fc_suppliernpwp_name' },
+         { data: 'fc_supplier_npwpaddress1' },
+         { data: 'fc_supplier_npwpaddress2' },
+         { data: 'fm_supplierAR' },
+         { data: 'fn_supplierAgingAR' },
+         { data: 'fn_supplierlockTrans' },
+         { data: 'fc_supplierpicname' },
+         { data: 'fc_supplierpicphone' },
+         { data: 'fc_supplierpicpos' },
+         { data: 'fd_supplierjoindate' },
+         { data: 'fd_supplierexpired' },
+         { data: 'fc_supplierbank1' },
+         { data: 'fc_supplierbank2' },
+         { data: 'fc_supplierbank3' },
+         { data: 'fc_suppliervirtualac' },
+         { data: 'fc_suppliernorek1' },
+         { data: 'fc_suppliernorek2' },
+         { data: 'fc_suppliernorek3' },
+         { data: 'fc_suppliercode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-supplier/detail/" + data.fc_suppliercode;
          var url_delete = "/data-master/master-supplier/delete/" + data.fc_suppliercode;
 
-         $('td:eq(5)', row).html(`
+         $('td:eq(37)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_suppliername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

@@ -18,9 +18,14 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Division</th>
                            <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Warehouse</th>
+                           <th scope="col" class="text-center">Warehouse Code</th>
+                           <th scope="col" class="text-center">Warehouse Pos</th>
+                           <th scope="col" class="text-center">Status</th>
+                           <th scope="col" class="text-center">Rackname</th>
+                           <th scope="col" class="text-center">Capacity</th>
+                           <th scope="col" class="text-center">Description</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -171,15 +176,20 @@
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
+         { data: 'fc_branch' },
          { data: 'fc_warehousecode' },
-         { data: 'fc_warehousecode' },
+         { data: 'fc_warehousepos' },
+         { data: 'fl_status' },
+         { data: 'fc_rackname' },
+         { data: 'fn_capacity' },
+         { data: 'fv_description' },
+         { data: 'fv_description' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-warehouse/detail/" + data.fc_warehousecode;
          var url_delete = "/data-master/master-warehouse/delete/" + data.fc_warehousecode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(9)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_warehousecode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

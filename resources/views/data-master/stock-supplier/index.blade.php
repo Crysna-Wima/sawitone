@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Stock Supplier')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,14 +22,23 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
-                            <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">Divisi</th>
-                            <th scope="col" class="text-center">Branch</th>
-                            <th scope="col" class="text-center">Stock Code</th>
-                            <th scope="col" class="text-center">Supplier Code</th>
-                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">No</th>
+                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Stock Code</th>
+                           <th scope="col" class="text-center">Barcode</th>
+                           <th scope="col" class="text-center">Supplier Code</th>
+                           <th scope="col" class="text-center">Input Date</th>
+                           <th scope="col" class="text-center">Update</th>
+                           <th scope="col" class="text-center">Price Customer</th>
+                           <th scope="col" class="text-center">Price Default</th>
+                           <th scope="col" class="text-center">Price Distributor</th>
+                           <th scope="col" class="text-center">Price Project</th>
+                           <th scope="col" class="text-center">Price Dealer</th>
+                           <th scope="col" class="text-center">Price End User</th>
+                           <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -244,20 +260,30 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,5] },
+         { className: 'd-flex', targets: [14] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
          { data: 'fc_branch' },
          { data: 'fc_stockcode' },
+         { data: 'fc_barcode' },
          { data: 'fc_suppliercode' },
-         { data: 'fc_suppliercode' },
+         { data: 'fd_inputdate' },
+         { data: 'fd_update' },
+         { data: 'fm_price_customer' },
+         { data: 'fm_price_default' },
+         { data: 'fm_price_distributor' },
+         { data: 'fm_price_project' },
+         { data: 'fm_price_dealer' },
+         { data: 'fm_price_enduser' },
+         { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_stockcode + '/' + data.fc_suppliercode;
          var url_delete = "/data-master/stock-supplier/delete/" + data.fc_stockcode + '/' + data.fc_suppliercode;
 
-         $('td:eq(5)', row).html(`
+         $('td:eq(14)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

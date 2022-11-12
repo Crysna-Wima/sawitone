@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Sales')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,15 +22,31 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center">Type</th>
-                           <th scope="col" class="text-center">Level</th>
-                           <th scope="col" class="text-center">Blacklist</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Sales Code</th>
+                           <th scope="col" class="text-center">Sales Name 1</th>
+                           <th scope="col" class="text-center">Sales Name 2</th>
+                           <th scope="col" class="text-center">Sales Type</th>
+                           <th scope="col" class="text-center">Sales Level</th>
+                           <th scope="col" class="text-center">Sales BlackList</th>
+                           <th scope="col" class="text-center">Sales Phone 1</th>
+                           <th scope="col" class="text-center">Sales Phone 2</th>
+                           <th scope="col" class="text-center">Sales Phone 3</th>
+                           <th scope="col" class="text-center">Sales Email 1</th>
+                           <th scope="col" class="text-center">Sales Email 2</th>
+                           <th scope="col" class="text-center">Sales Bank 1</th>
+                           <th scope="col" class="text-center">Sales Bank 2</th>
+                           <th scope="col" class="text-center">Sales Bank 3</th>
+                           <th scope="col" class="text-center">Sales Virtual Acc</th>
+                           <th scope="col" class="text-center">Sales NoRek 1</th>
+                           <th scope="col" class="text-center">Sales NoRek 2</th>
+                           <th scope="col" class="text-center">Sales NoRek 3</th>
+                           <th scope="col" class="text-center">Sales Description</th>
+                           <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -38,7 +61,7 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static" style="overflow-y: auto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header br">
@@ -342,22 +365,39 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6] },
+         { className: 'text-center', targets: [0] },
+         { className: 'd-flex', targets: [22] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
          { data: 'fc_salescode' },
          { data: 'fc_salesname1' },
+         { data: 'fc_salesname2' },
          { data: 'fc_salestype' },
          { data: 'fn_saleslevel' },
          { data: 'fn_salesblacklist' },
-         { data: 'fn_salesblacklist' },
+         { data: 'fc_salesphone1' },
+         { data: 'fc_salesphone2' },
+         { data: 'fc_salesphone3' },
+         { data: 'fc_salesemail1' },
+         { data: 'fc_salesemail2' },
+         { data: 'fc_salesbank1' },
+         { data: 'fc_salesbank2' },
+         { data: 'fc_salesbank3' },
+         { data: 'fc_salesvirtualac' },
+         { data: 'fc_salesnorek1' },
+         { data: 'fc_salesnorek2' },
+         { data: 'fc_salesnorek3' },
+         { data: 'fv_salesdescription' },
+         { data: 'fc_salestype' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-sales/detail/" + data.fc_salescode;
          var url_delete = "/data-master/master-sales/delete/" + data.fc_salescode;
 
-         $('td:eq(6)', row).html(`
+         $('td:eq(22)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_salesname1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

@@ -1,5 +1,12 @@
 @extends('partial.app')
 @section('title','Master Customer')
+@section('css')
+<style>
+    #tb_wrapper .row:nth-child(2){
+        overflow-x: auto;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -15,14 +22,52 @@
             <div class="card-body">
                <div class="table-responsive">
                   <table class="table table-striped" id="tb" width="100%">
-                     <thead>
+                     <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Legal Status</th>
-                           <th scope="col" class="text-center">Nama</th>
-                           <th scope="col" class="text-center">Phone    </th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                           <th scope="col" class="text-center">Division</th>
+                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Member Code</th>
+                           <th scope="col" class="text-center">Member Name 1</th>
+                           <th scope="col" class="text-center">Member Name 2</th>
+                           <th scope="col" class="text-center">Member Address 1</th>
+                           <th scope="col" class="text-center">Member Address 2</th>
+                           <th scope="col" class="text-center">Member Address Loading 1</th>
+                           <th scope="col" class="text-center">Member Address Loading 2</th>
+                           <th scope="col" class="text-center">Member Phone 1</th>
+                           <th scope="col" class="text-center">Member Phone 2</th>
+                           <th scope="col" class="text-center">Member Phone 3</th>
+                           <th scope="col" class="text-center">Member Web</th>
+                           <th scope="col" class="text-center">Member Email 1</th>
+                           <th scope="col" class="text-center">Member Email 2</th>
+                           <th scope="col" class="text-center">Member Type Buisness</th>
+                           <th scope="col" class="text-center">Member Branch Type</th>
+                           <th scope="col" class="text-center">Member Reseller</th>
+                           <th scope="col" class="text-center">Member Legal Status</th>
+                           <th scope="col" class="text-center">Member Tax Code</th>
+                           <th scope="col" class="text-center">Member NPWP No</th>
+                           <th scope="col" class="text-center">Member NPWP Name</th>
+                           <th scope="col" class="text-center">Member NPWP Address 1</th>
+                           <th scope="col" class="text-center">Member NPWP Address 2</th>
+                           <th scope="col" class="text-center">Member Nationality</th>
+                           <th scope="col" class="text-center">Member Forex</th>
+                           <th scope="col" class="text-center">Member AP</th>
+                           <th scope="col" class="text-center">Member Aging AP</th>
+                           <th scope="col" class="text-center">Member Lock Trans Type</th>
+                           <th scope="col" class="text-center">Member Pic Name</th>
+                           <th scope="col" class="text-center">Member Pic Phone</th>
+                           <th scope="col" class="text-center">Member Pic Pos</th>
+                           <th scope="col" class="text-center">Member Join Date</th>
+                           <th scope="col" class="text-center">Member Contract</th>
+                           <th scope="col" class="text-center">Member Bank 1</th>
+                           <th scope="col" class="text-center">Member Bank 2</th>
+                           <th scope="col" class="text-center">Member Bank 3</th>
+                           <th scope="col" class="text-center">Member Virtual Acc</th>
+                           <th scope="col" class="text-center">Member Norek 1</th>
+                           <th scope="col" class="text-center">Member Norek 2</th>
+                           <th scope="col" class="text-center">Member Norek 3</th>
+                           <th scope="col" class="text-center">Member Desciption</th>
+                           <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -540,21 +585,60 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,5] },
+         { className: 'text-center', targets: [0] },
+         { className: 'd-flex', targets: [43] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
+         { data: 'fc_divisioncode' },
+         { data: 'fc_branch' },
          { data: 'fc_membercode' },
-         { data: 'fc_memberlegalstatus' },
          { data: 'fc_membername1' },
+         { data: 'fc_membername2' },
+         { data: 'fc_memberaddress1' },
+         { data: 'fc_memberaddress2' },
+         { data: 'fc_memberaddress_loading1' },
+         { data: 'fc_memberaddress_loading2' },
          { data: 'fc_memberphone1' },
-         { data: 'fc_memberphone1' },
+         { data: 'fc_memberphone2' },
+         { data: 'fc_memberphone3' },
+         { data: 'fc_memberweb' },
+         { data: 'fc_memberemail1' },
+         { data: 'fc_memberemail2' },
+         { data: 'fc_membertypebusiness' },
+         { data: 'fc_member_branchtype' },
+         { data: 'fl_memberreseller' },
+         { data: 'fc_memberlegalstatus' },
+         { data: 'fc_membertaxcode' },
+         { data: 'fc_membernpwp_no' },
+         { data: 'fc_membernpwp_name' },
+         { data: 'fc_member_npwpaddress1' },
+         { data: 'fc_member_npwpaddress2' },
+         { data: 'fc_membernationality' },
+         { data: 'fc_memberforex' },
+         { data: 'fm_memberAP' },
+         { data: 'fn_memberAgingAP' },
+         { data: 'fc_memberlockTransType' },
+         { data: 'fc_memberpicname' },
+         { data: 'fc_memberpicphone' },
+         { data: 'fc_memberpicpos' },
+         { data: 'fd_memberjoindate' },
+         { data: 'fl_membercontract' },
+         { data: 'fc_memberbank1' },
+         { data: 'fc_memberbank2' },
+         { data: 'fc_memberbank3' },
+         { data: 'fc_membervirtualac' },
+         { data: 'fc_membernorek1' },
+         { data: 'fc_membernorek2' },
+         { data: 'fc_membernorek3' },
+         { data: 'fv_memberdescription' },
+         { data: 'fc_memberpicpos' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-customer/detail/" + data.fc_membercode;
          var url_delete = "/data-master/master-customer/delete/" + data.fc_membercode;
 
-         $('td:eq(5)', row).html(`
+         $('td:eq(43)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
