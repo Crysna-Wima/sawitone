@@ -80,7 +80,30 @@
                                 <input type="text" class="form-control required-field" name="fc_membername2" id="fc_membername2">
                             </div>
                         </div>
-
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Address 1</label>
+                                <textarea type="text" class="form-control" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Address 2</label>
+                                <textarea type="text" class="form-control" name="fc_memberaddress2" id="fc_memberaddress2" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Address Loading 1</label>
+                                <textarea type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Address Loading 2</label>
+                                <textarea type="text" class="form-control" name="fc_memberaddress_loading2" id="fc_memberaddress_loading2" style="height: 100px"></textarea>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Pic Name</label>
@@ -268,7 +291,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Customer Virtual AC</label>
                                 <input type="text" class="form-control" name="fc_membervirtualac" id="fc_membervirtualac">
@@ -276,8 +299,14 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
+                                <label>Customer Hutang</label>
+                                <input type="text" class="form-control" readonly name="fm_memberAP" id="fm_memberAP" value="0">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <div class="form-group">
                                 <label>Customer Aging AP</label>
-                                <input type="text" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP">
+                                <input type="number" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -317,6 +346,7 @@
         get_data_nationality();
         get_data_type_business();
         get_data_tax_code();
+        get_data_lock_code();
         get_data_member_bank();
         get_data_branch_type();
     })
@@ -450,6 +480,34 @@
                     $("#fc_membertaxcode").empty();
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_lock_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_LOCKTYPE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_memberlockTransType").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_memberlockTransType").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 }else{
                     iziToast.error({

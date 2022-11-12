@@ -156,7 +156,7 @@
     function get_data_sales_code(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-all/Sales",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -165,7 +165,7 @@
                     var data = response.data;
                     $("#fc_salescode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_salescode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -184,7 +184,7 @@
     function get_data_member_code(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-all/Customer",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -193,7 +193,7 @@
                     var data = response.data;
                     $("#fc_membercode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_membercode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
                     }
                 }else{
                     iziToast.error({

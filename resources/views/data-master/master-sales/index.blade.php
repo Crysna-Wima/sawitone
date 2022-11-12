@@ -243,7 +243,7 @@
     function get_data_sales_type(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALETY",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESTYPE",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -271,7 +271,7 @@
     function get_data_sales_level(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALETY",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESlEVEL",
             type: "GET",
             dataType: "JSON",
             success: function(response){

@@ -176,7 +176,7 @@
     function get_data_stock_code(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-all/Stock",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -185,7 +185,7 @@
                     var data = response.data;
                     $("#fc_stockcode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_stockcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_stockcode").append(`<option value="${data[i].fc_stockcode}">${data[i].fc_nameshort}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -204,7 +204,7 @@
     function get_data_supplier_code(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-all/Supplier",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -213,7 +213,7 @@
                     var data = response.data;
                     $("#fc_suppliercode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_suppliercode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_suppliercode").append(`<option value="${data[i].fc_suppliercode}">${data[i].fc_suppliername1}</option>`);
                     }
                 }else{
                     iziToast.error({
