@@ -352,4 +352,38 @@
         return parseInt(rupiah.replace(/,.*|[^0-9]/g, ''), 10).toString();
     }
 
+    function base64ToPdfDownload(base64Pdf, filenamePdf){
+        const linkSource = base64Pdf;
+        const downloadLink = document.createElement("a");
+        const fileName = filenamePdf;
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    }
+
+    function b64toBlob(dataURI) {
+        var byteString = atob(dataURI.split(',')[1]);
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: 'application/pdf' });
+    }
+
+
+    function separator(id, char, every) {
+        var elemId = document.getElementById(id);
+        var value = elemId.value;
+        var regrep = new RegExp(char, "g");
+        var rep = value.replace(regrep, '');
+
+        if (rep.length > 0) {
+            var regex = new RegExp(".{1," + every + "}", "g");
+            var fixValue = rep.match(regex).join(char);
+            elemId.value = fixValue;
+        }
+    }
+
  </script>

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-    Route::view('dashboard','dashboard.index');
+    Route::view('/','dashboard.index');
 
     Route::prefix('master')->group(function () {
         Route::get('/get-data-all/{model}','DataMasterController@get_data_all');

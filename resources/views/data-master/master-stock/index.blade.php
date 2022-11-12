@@ -91,6 +91,9 @@
                                 <input type="text" class="form-control required-field" name="fc_namepack" id="fc_namepack">
                             </div>
                         </div>
+                        <input type="text" hidden id="fc_brand_dummy">
+                        <input type="text" hidden id="fc_group_dummy">
+                        <input type="text" hidden id="fc_subgroup_dummy">
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Brand</label>
@@ -237,31 +240,31 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Reorder Level</label>
-                                <input type="text" class="form-control required-field" name="fn_reorderlevel" id="fn_reorderlevel">
+                                <input type="number" class="form-control required-field" name="fn_reorderlevel" id="fn_reorderlevel">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Max on Hand</label>
-                                <input type="text" class="form-control required-field" name="fn_maxonhand" id="fn_maxonhand">
+                                <input type="number" class="form-control required-field" name="fn_maxonhand" id="fn_maxonhand">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Cogs</label>
-                                <input type="text" class="form-control required-field" name="fm_cogs" id="fm_cogs">
+                                <input type="text" class="form-control required-field format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Purchase</label>
-                                <input type="text" class="form-control required-field" name="fm_purchase" id="fm_purchase">
+                                <input type="text" class="form-control required-field format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Price</label>
-                                <input type="text" class="form-control required-field" name="fm_salesprice" id="fm_salesprice">
+                                <input type="text" class="form-control required-field format-rp" name="fm_salesprice" id="fm_salesprice" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3"></div>
@@ -296,13 +299,13 @@
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal">
                                 <div class="form-group">
                                     <label>Rupiah</label>
-                                    <input type="text" class="form-control required-field" name="fm_disc_rp" id="fm_disc_rp">
+                                    <input type="text" class="form-control required-field format-rp" name="fm_disc_rp" id="fm_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal">
                                 <div class="form-group">
                                     <label>Persentase</label>
-                                    <input type="text" class="form-control required-field" name="fm_disc_pr" id="fm_disc_pr">
+                                    <input type="number" class="form-control required-field" name="fm_disc_pr" id="fm_disc_pr">
                                 </div>
                             </div>
                         </div>
@@ -325,57 +328,57 @@
                             </div>
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu">
                                 <div class="form-group">
-                                    <label>Tanggal Start</label>
-                                    <input type="text" class="form-control required-field datepicker" name="ft_disc_begin" id="ft_disc_begin">
+                                    <label>Waktu Start</label>
+                                    <input type="text" class="form-control required-field time-format" name="ft_disc_begin" id="ft_disc_begin" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_begin', ':', 2)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu">
                                 <div class="form-group">
-                                    <label>Tanggal End</label>
-                                    <input type="text" class="form-control required-field datepicker" name="ft_disc_end" id="ft_disc_end">
+                                    <label>Waktu End</label>
+                                    <input type="text" class="form-control required-field time-format" name="ft_disc_end" id="ft_disc_end" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_end', ':', 2)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu">
                                 <div class="form-group">
                                     <label>Rupiah</label>
-                                    <input type="text" class="form-control required-field" name="fm_time_disc_rp" id="fm_time_disc_rp">
+                                    <input type="text" class="form-control required-field format-rp" name="fm_time_disc_rp" id="fm_time_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu">
                                 <div class="form-group">
                                     <label>Persentase</label>
-                                    <input type="text" class="form-control required-field" name="fm_time_disc_pr" id="fm_time_disc_pr">
+                                    <input type="number" class="form-control required-field" name="fm_time_disc_pr" id="fm_time_disc_pr">
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" class="form-control required-field" name="fm_price_default" id="fm_price_default">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Distributor</label>
-                                <input type="text" class="form-control required-field" name="fm_price_distributor" id="fm_price_distributor">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Project</label>
-                                <input type="text" class="form-control required-field" name="fm_price_project" id="fm_price_project">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price Dealer</label>
-                                <input type="text" class="form-control required-field" name="fm_price_dealer" id="fm_price_dealer">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price End User</label>
-                                <input type="text" class="form-control required-field" name="fm_price_enduser" id="fm_price_enduser">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -464,9 +467,13 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_brand").empty();
-                    $("#fc_brand").append(`<option>- Pilih -</option>`);
+                    $("#fc_brand").append(`<option selected disabled>- Pilih -</option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_brand").append(`<option value="${data[i].fc_brand}">${data[i].fc_brand}</option>`);
+                        if(data[i].fc_brand == $('#fc_brand_dummy').val()){
+                            $("#fc_brand").append(`<option value="${data[i].fc_brand}" selected>${data[i].fc_brand}</option>`);
+                        }else{
+                            $("#fc_brand").append(`<option value="${data[i].fc_brand}">${data[i].fc_brand}</option>`);
+                        }
                     }
                 }else{
                     iziToast.error({
@@ -496,10 +503,16 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_group").empty();
-                    $("#fc_group").append(`<option>- Pilih -</option>`);
+                    $("#fc_group").append(`<option selected disabled>- Pilih -</option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_group").append(`<option value="${data[i].fc_group}">${data[i].fc_group}</option>`);
+                        if(data[i].fc_group == $('#fc_group_dummy').val()){
+                            $("#fc_group").append(`<option value="${data[i].fc_group}" selected>${data[i].fc_group}</option>`);
+                        }else{
+                            $("#fc_group").append(`<option value="${data[i].fc_group}">${data[i].fc_group}</option>`);
+                        }
                     }
+
+                    get_data_subgroup();
                 }else{
                     iziToast.error({
                         title: 'Error!',
@@ -528,9 +541,13 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_subgroup").empty();
-                    $("#fc_subgroup").append(`<option>- Pilih -</option>`);
+                    $("#fc_subgroup").append(`<option selected disabled>- Pilih -</option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_subgroup").append(`<option value="${data[i].fc_subgroup}">${data[i].fc_subgroup}</option>`);
+                        if(data[i].fc_subgroup == $('#fc_subgroup_dummy').val()){
+                            $("#fc_subgroup").append(`<option value="${data[i].fc_subgroup}" selected>${data[i].fc_subgroup}</option>`);
+                        }else{
+                            $("#fc_subgroup").append(`<option value="${data[i].fc_subgroup}">${data[i].fc_subgroup}</option>`);
+                        }
                     }
                 }else{
                     iziToast.error({
@@ -606,6 +623,7 @@
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Master Stock');
       $("#form_submit")[0].reset();
+      reset_all_select();
     }
 
    var tb = $('#tb').DataTable({
@@ -638,8 +656,9 @@
    });
 
    function edit(url){
-      edit_action_custom(url, 'Edit Data Master Stock');
-      $("#type").val('update');
+        reset_all_select()
+        edit_action_custom(url, 'Edit Data Master Stock');
+        $("#type").val('update');
    }
 
    function edit_action_custom(url, modal_text){
@@ -653,6 +672,11 @@
           dataType: "JSON",
           success: function(response){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+
+             $('#fc_brand_dummy').val(response.fc_brand);
+             $('#fc_group_dummy').val(response.fc_group);
+             $('#fc_subgroup_dummy').val(response.fc_subgroup);
+
              Object.keys(response).forEach(function (key) {
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {
@@ -676,13 +700,6 @@
                    elem_name.val(response[key]);
                 }
              });
-
-            get_data_brand();
-            $('#fc_brand').select2("trigger", "select", { data: { id: fc_brand } });
-            get_data_group();
-            $('#fc_group').select2("trigger", "select", { data: { id: fc_group } });
-            get_data_subgroup();
-            $('#fc_subgroup').select2("trigger", "select", { data: { id: fc_subgroup } });
 
           },error: function (jqXHR, textStatus, errorThrown){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);

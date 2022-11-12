@@ -181,7 +181,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales Virtual AC</label>
-                                <textarea name="fc_salesvirtualac" id="fc_salesvirtualac" class="form-control" style="height: 50px"></textarea>
+                                <input name="fc_salesvirtualac" id="fc_salesvirtualac" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -327,8 +327,6 @@
             }
         });
     }
-
-
 
     function add(){
       $("#modal").modal('show');

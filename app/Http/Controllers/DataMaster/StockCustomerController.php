@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\Convert;
 
 use DataTables;
 use Carbon\Carbon;
@@ -46,6 +47,13 @@ class StockCustomerController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
+
+        $request->merge(['fm_price_customer' => Convert::convert_to_double($request->fm_price_customer) ]);
+        $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);
+        $request->merge(['fm_price_distributor' => Convert::convert_to_double($request->fm_price_distributor) ]);
+        $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
+        $request->merge(['fm_price_dealer' => Convert::convert_to_double($request->fm_price_dealer) ]);
+        $request->merge(['fm_price_enduser' => Convert::convert_to_double($request->fm_price_enduser) ]);
 
         StockCustomer::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,

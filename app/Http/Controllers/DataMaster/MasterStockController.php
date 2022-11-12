@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\Convert;
 
 use DataTables;
 use Carbon\Carbon;
@@ -44,6 +45,17 @@ class MasterStockController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
+
+        $request->merge(['fm_cogs' => Convert::convert_to_double($request->fm_cogs) ]);
+        $request->merge(['fm_purchase' => Convert::convert_to_double($request->fm_purchase) ]);
+        $request->merge(['fm_salesprice' => Convert::convert_to_double($request->fm_salesprice) ]);
+        $request->merge(['fm_disc_rp' => Convert::convert_to_double($request->fm_disc_rp) ]);
+        $request->merge(['fm_time_disc_rp' => Convert::convert_to_double($request->fm_time_disc_rp) ]);
+        $request->merge(['fm_price_distributor' => Convert::convert_to_double($request->fm_price_distributor) ]);
+        $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
+        $request->merge(['fm_price_dealer' => Convert::convert_to_double($request->fm_price_dealer) ]);
+        $request->merge(['fm_price_enduser' => Convert::convert_to_double($request->fm_price_enduser) ]);
+        $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);
 
         Stock::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,

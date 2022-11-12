@@ -37,7 +37,7 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static" style="overflow-y: auto">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
@@ -124,7 +124,6 @@
                                 <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
                             </div>
                         </div>
-
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Join Date</label>
@@ -159,7 +158,30 @@
                                 <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode"></select>
                             </div>
                         </div>
-
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier NPWP</label>
+                                <input type="text" class="form-control" name="fc_supplierNPWP" id="fc_supplierNPWP">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier NPWP Name</label>
+                                <input type="text" class="form-control" name="fc_suppliernpwp_name" id="fc_suppliernpwp_name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier NPWP Address 1</label>
+                                <textarea type="text" class="form-control" name="fc_supplier_npwpaddress1" id="fc_supplier_npwpaddress1" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Supplier NPWP Address 2</label>
+                                <textarea type="text" class="form-control" name="fc_supplier_npwpaddress2" id="fc_supplier_npwpaddress2" style="height: 100px"></textarea>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Email 1</label>
@@ -195,19 +217,19 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier Bank 1</label>
-                                <input type="text" class="form-control" name="fc_supplierbank1" id="fc_supplierbank1">
+                                <select type="text" class="form-control select2" name="fc_supplierbank1" id="fc_supplierbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier Bank 2</label>
-                                <input type="text" class="form-control" name="fc_supplierbank2" id="fc_supplierbank2">
+                                <select type="text" class="form-control select2" name="fc_supplierbank2" id="fc_supplierbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Supplier Bank 3</label>
-                                <input type="text" class="form-control" name="fc_supplierbank3" id="fc_supplierbank3">
+                                <select type="text" class="form-control select2" name="fc_supplierbank3" id="fc_supplierbank3"></select>
                             </div>
                         </div>
 
@@ -230,10 +252,32 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-8 col-lg-8">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Virtual AC</label>
                                 <input type="text" class="form-control" name="fc_suppliervirtualac" id="fc_suppliervirtualac">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Supplier Aging AR</label>
+                                <input type="text" class="form-control" name="fn_supplierAgingAR" id="fn_supplierAgingAR">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Lock Transaksi</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fn_supplierlockTrans" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">LOCK</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fn_supplierlockTrans" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">NOT LOCK</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -257,6 +301,7 @@
         get_data_nationality();
         get_data_type_business();
         get_data_tax_code();
+        get_data_supplier_bank();
     })
 
     function get_data_branch(){
@@ -384,6 +429,38 @@
                     $("#fc_suppliertaxcode").empty();
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_suppliertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_supplier_bank(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-all/BankAcc",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_supplierbank1").empty();
+                    $("#fc_supplierbank2").empty();
+                    $("#fc_supplierbank3").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_supplierbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_supplierbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_supplierbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                     }
                 }else{
                     iziToast.error({

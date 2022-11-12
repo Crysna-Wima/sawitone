@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>SYNERGY &mdash; CB</title>
+    <title>DEXA &mdash; DISTIBUTOR PARTNER</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/public_page/images/favicon.ico')}}">
 
     <!-- General CSS Files -->
@@ -141,6 +141,11 @@
                 format: "yyyy",
                 viewMode: "years",
                 minViewMode: "years"
+            });
+
+            $(".datepicker-time").datepicker({
+                autoclose: true,
+                format: "HH:mm",
             });
         });
 

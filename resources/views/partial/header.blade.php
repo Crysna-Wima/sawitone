@@ -27,10 +27,10 @@
   <div class="main-sidebar">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="index.html">REPOSITORY</a>
+        <a href="index.html">DEXA</a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">UPN</a>
+        <a href="index.html">DEXA</a>
       </div>
         <?php
           $url_menu = Request::segment(1);

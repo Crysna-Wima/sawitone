@@ -82,37 +82,37 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price Customer</label>
-                                <input type="text" class="form-control required-field" name="fm_price_customer" id="fm_price_customer">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_customer" id="fm_price_customer" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" class="form-control required-field" name="fm_price_default" id="fm_price_default">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price Distributor</label>
-                                <input type="text" class="form-control required-field" name="fm_price_distributor" id="fm_price_distributor">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price Project</label>
-                                <input type="text" class="form-control required-field" name="fm_price_project" id="fm_price_project">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price Dealer</label>
-                                <input type="text" class="form-control required-field" name="fm_price_dealer" id="fm_price_dealer">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Price End User</label>
-                                <input type="text" class="form-control required-field" name="fm_price_enduser" id="fm_price_enduser">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                     </div>
@@ -203,6 +203,7 @@
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 if(response.status === 200){
                     var data = response.data;
+                    console.log(data)
                     $("#fc_membercode").empty();
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membercode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);

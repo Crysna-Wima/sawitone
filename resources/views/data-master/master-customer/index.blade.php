@@ -18,9 +18,10 @@
                      <thead>
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Type</th>
                            <th scope="col" class="text-center">Kode</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
+                           <th scope="col" class="text-center">Legal Status</th>
+                           <th scope="col" class="text-center">Nama</th>
+                           <th scope="col" class="text-center">Phone    </th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -36,84 +37,526 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-   <div class="modal-dialog modal-xs" role="document">
-      <div class="modal-content">
-         <div class="modal-header br">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
-            <div class="modal-body">
-               <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Type</label>
-                            <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Deskipsi</label>
-                            <input type="text" class="form-control required-field" name="fv_description" id="fv_description">
-                        </div>
-                    </div>
-               </div>
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static" style="overflow-y: auto">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer bg-whitesmoke br">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-         </form>
-      </div>
-   </div>
+            <form id="form_submit" action="/data-master/master-customer/store-update" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Division Code</label>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Branch</label>
+                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Code</label>
+                                <input type="text" class="form-control required-field" name="fc_membercode" id="fc_membercode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Name 1</label>
+                                <input type="text" class="form-control required-field" name="fc_membername1" id="fc_membername1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Name 2</label>
+                                <input type="text" class="form-control required-field" name="fc_membername2" id="fc_membername2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Pic Name</label>
+                                <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Pic Phone</label>
+                                <input type="text" class="form-control required-field" name="fc_memberpicphone" id="fc_memberpicphone">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Pic Pos</label>
+                                <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Legal Status</label>
+                                <select class="select2" name="fc_memberlegalstatus" id="fc_memberlegalstatus"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Nationality</label>
+                                <select class="select2" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Forex</label>
+                                <input type="text" readonly class="form-control" name="fc_memberforex" id="fc_memberforex">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Type Business</label>
+                                <select class="select2" name="fc_membertypebusiness" id="fc_membertypebusiness"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Join Date</label>
+                                <input type="text"   class="form-control datepicker" name="fd_memberjoindate" id="fd_memberjoindate">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Contact</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">YES</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_membercontract" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">NO</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Reseller</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_memberreseller" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">Active</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fl_memberreseller" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">Non Active</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Tax Code</label>
+                                <select class="select2" name="fc_membertaxcode" id="fc_membertaxcode"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Branch Type</label>
+                                <select class="select2" class="form-control" name="fc_member_branchtype" id="fc_member_branchtype"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer NPWP</label>
+                                <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer NPWP Name</label>
+                                <input type="text" class="form-control" name="fc_membernpwp_name" id="fc_membernpwp_name">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer NPWP Address 1</label>
+                                <textarea type="text" class="form-control" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer NPWP Address 2</label>
+                                <textarea type="text" class="form-control" name="fc_member_npwpaddress2" id="fc_member_npwpaddress2" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Email 1</label>
+                                <input type="text" class="form-control" name="fc_memberemail1" id="fc_memberemail1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Email 2</label>
+                                <input type="text" class="form-control" name="fc_memberemail2" id="fc_memberemail2">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Phone 1</label>
+                                <input type="text" class="form-control" name="fc_memberphone1" id="fc_memberphone1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Phone 2</label>
+                                <input type="text" class="form-control" name="fc_memberphone2" id="fc_memberphone2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Phone 3</label>
+                                <input type="text" class="form-control" name="fc_memberphone3" id="fc_memberphone3">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Bank 1</label>
+                                <select type="text" class="form-control select2" name="fc_memberbank1" id="fc_memberbank1"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Bank 2</label>
+                                <select type="text" class="form-control select2" name="fc_memberbank2" id="fc_memberbank2"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer Bank 3</label>
+                                <select type="text" class="form-control select2" name="fc_memberbank3" id="fc_memberbank3"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer No Rekening 1</label>
+                                <input type="text" class="form-control" name="fc_membernorek1" id="fc_membernorek1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer No Rekening 2</label>
+                                <input type="text" class="form-control" name="fc_membernorek2" id="fc_membernorek2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer No Rekening 3</label>
+                                <input type="text" class="form-control" name="fc_membernorek3" id="fc_membernorek3">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Customer Virtual AC</label>
+                                <input type="text" class="form-control" name="fc_membervirtualac" id="fc_membervirtualac">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Customer Aging AP</label>
+                                <input type="text" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Lock Transaksi</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_memberlockTransType" value="T" class="selectgroup-input"
+                                            checked="">
+                                        <span class="selectgroup-button">LOCK</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_memberlockTransType" value="F" class="selectgroup-input">
+                                        <span class="selectgroup-button">NOT LOCK</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @endsection
 
 @section('js')
 <script>
+    $(document).ready(function(){
+        get_data_branch();
+        get_data_legal_status();
+        get_data_nationality();
+        get_data_type_business();
+        get_data_tax_code();
+        get_data_member_bank();
+        get_data_branch_type();
+    })
+
+    function change_nationality(){
+        $('#fc_memberforex').val($('#fc_membernationality').val());
+    }
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_legal_status(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_LEGAL",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_memberlegalstatus").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_memberlegalstatus").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_nationality(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/NATIONALITY",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_membernationality").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membernationality").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_type_business(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/MEMBER_BUSI_TYPE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_membertypebusiness").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membertypebusiness").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_tax_code(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_TAXTYPE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_membertaxcode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_member_bank(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-all/BankAcc",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_memberbank1").empty();
+                    $("#fc_memberbank2").empty();
+                    $("#fc_memberbank3").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_memberbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_memberbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_memberbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_branch_type(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_TYPEOFFICE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_member_branchtype").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_member_branchtype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
 
     function add(){
       $("#modal").modal('show');
-      $(".modal-title").text('Tambah User');
+      $(".modal-title").text('Tambah Master Customer');
       $("#form_submit")[0].reset();
+      change_nationality();
     }
 
    var tb = $('#tb').DataTable({
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/meta-data/datatables',
+         url: '/data-master/master-customer/datatables',
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,5] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_trx' },
-         { data: 'fc_kode' },
-         { data: 'fv_description' },
-         { data: 'fc_kode' },
+         { data: 'fc_membercode' },
+         { data: 'fc_memberlegalstatus' },
+         { data: 'fc_membername1' },
+         { data: 'fc_memberphone1' },
+         { data: 'fc_memberphone1' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
-         var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
+         var url_edit   = "/data-master/master-customer/detail/" + data.fc_membercode;
+         var url_delete = "/data-master/master-customer/delete/" + data.fc_membercode;
 
-         $('td:eq(4)', row).html(`
+         $('td:eq(5)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
