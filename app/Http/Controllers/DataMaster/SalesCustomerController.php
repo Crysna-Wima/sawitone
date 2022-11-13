@@ -34,7 +34,6 @@ class SalesCustomerController extends Controller
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
-            'fc_branch' => 'required',
             'fc_salescode' => 'required',
             'fc_membercode' => 'required',
         ]);
@@ -46,13 +45,14 @@ class SalesCustomerController extends Controller
             ];
         }
 
+        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = SalesCustomer::where([
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_salescode' => $request->fc_salescode,
                 'fc_membercode' => $request->fc_membercode,
-            ])->count();
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [

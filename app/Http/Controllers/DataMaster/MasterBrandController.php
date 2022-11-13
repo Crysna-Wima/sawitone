@@ -34,7 +34,6 @@ class MasterBrandController extends Controller
     public function store_update(request $request){
        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
-            'fc_branch' => 'required',
             'fc_brand' => 'required',
             'fc_group' => 'required',
             'fc_subgroup' => 'required',
@@ -47,6 +46,7 @@ class MasterBrandController extends Controller
             ];
         }
 
+        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = Brand::where([
                 'fc_divisioncode' => $request->fc_divisioncode,
@@ -54,7 +54,7 @@ class MasterBrandController extends Controller
                 'fc_brand' => $request->fc_brand,
                 'fc_group' => $request->fc_group,
                 'fc_subgroup' => $request->fc_subgroup,
-            ])->count();
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [

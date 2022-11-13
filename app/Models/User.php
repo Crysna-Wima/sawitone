@@ -21,13 +21,17 @@ class User extends Authenticatable
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
     public $incrementing = false;
     protected $guarded = ['type'];
-    protected $appends = [];
+    protected $appends = ['branch_desc'];
     protected $hidden = [
         'fc_password',
     ];
 
     public function scopeActive($query){
         $query->where('fl_level', 'T');
+    }
+
+    public function getBranchDescAttribute(){
+        return $this->branch->fv_description;
     }
 
     public function branch(){

@@ -35,7 +35,6 @@ class StockSupplierController extends Controller
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
-            'fc_branch' => 'required',
             'fc_stockcode' => 'required',
             'fc_barcode' => 'required',
             'fc_suppliercode' => 'required',
@@ -48,6 +47,7 @@ class StockSupplierController extends Controller
             ];
         }
 
+        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = StockSupplier::where([
                 'fc_divisioncode' => $request->fc_divisioncode,
@@ -55,7 +55,7 @@ class StockSupplierController extends Controller
                 'fc_stockcode' => $request->fc_stockcode,
                 'fc_barcode' => $request->fc_barcode,
                 'fc_suppliercode' => $request->fc_suppliercode,
-            ])->count();
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [
@@ -72,7 +72,6 @@ class StockSupplierController extends Controller
         $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
         $request->merge(['fm_price_dealer' => Convert::convert_to_double($request->fm_price_dealer) ]);
         $request->merge(['fm_price_enduser' => Convert::convert_to_double($request->fm_price_enduser) ]);
-
 
         StockSupplier::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,

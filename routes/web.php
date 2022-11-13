@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-    Route::view('/','dashboard.index');
+    Route::get('/','LoginController@index')->name('login');
+    Route::post('/login','LoginController@login');
+    Route::get('/logout','LoginController@logout');
 
     Route::prefix('master')->group(function () {
         Route::get('/get-data-all/{model}','DataMasterController@get_data_all');
@@ -24,13 +25,18 @@ use Illuminate\Support\Facades\Route;
         Route::get('/data-brand','DataMasterController@data_brand');
         Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
-
-
     });
 
-// Route::group(['middleware' => ['cek_login', 'cek_authorize']], function () {
-    Route::prefix('data-master')->group(function () {
+// Route::group(['middleware' => ['cek_login']], function () {
+    Route::view('/dashboard','dashboard.index')->name('dashboard');
 
+    //CHANGE PASSWORD
+    Route::prefix('change-password')->group(function () {
+        Route::get('/', 'LoginController@change_password');
+        Route::post('/action-change-password','LoginController@action_change_password');
+    });
+
+    Route::prefix('data-master')->group(function () {
         Route::prefix('meta-data')->group(function () {
             Route::get('/','DataMaster\MetaDataController@index');
             Route::get('/detail/{id}','DataMaster\MetaDataController@detail');

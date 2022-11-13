@@ -50,7 +50,7 @@ class MetaDataController extends Controller
                 'fc_trx' => $request->fc_trx,
                 'fc_kode' => $request->fc_kode,
                 'fv_description' => $request->fv_description,
-            ])->count();
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [

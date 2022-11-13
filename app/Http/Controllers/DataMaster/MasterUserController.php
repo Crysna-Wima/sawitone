@@ -36,7 +36,7 @@ class MasterUserController extends Controller
        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
-            'fc_userid' => 'required',
+            'fc_userid' => 'required|unique:t_user,fc_userid,NULL,id,deleted_at,NULL',
             'fc_username' => 'required|unique:t_user,fc_username,NULL,id,deleted_at,NULL',
             'fc_password' => 'required',
         ]);
@@ -53,7 +53,7 @@ class MasterUserController extends Controller
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_userid' => $request->fc_userid,
-            ])->count();
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [
@@ -64,11 +64,10 @@ class MasterUserController extends Controller
         }
 
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
-
         User::updateOrCreate([
-            'fc_divisioncode' => 'required',
-            'fc_branch' => 'required',
-            'fc_userid' => 'required',
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_userid' => $request->fc_userid,
         ], $request->all());
 
 		return [

@@ -59,17 +59,18 @@
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
+            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
             <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode">
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Branch</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
@@ -163,7 +164,12 @@
                     var data = response.data;
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        if(data[i].fc_kode == $('#fc_branch_view').val()){
+                            $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
+                            $("#fc_branch").prop("disabled", true);
+                        }else{
+                            $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        }
                     }
                 }else{
                     iziToast.error({
