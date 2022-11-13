@@ -701,7 +701,7 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,5] },
+         { className: 'text-center', targets: [0,41] },
          { className: 'd-flex', targets: [41] },
       ],
       columns: [

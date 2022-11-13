@@ -21,10 +21,9 @@
                            <th scope="col" class="text-center">Division</th>
                            <th scope="col" class="text-center">Branch</th>
                            <th scope="col" class="text-center">User Id</th>
-                           <th scope="col" class="text-center">Usrename</th>
-                           <th scope="col" class="text-center">Password</th>
+                           <th scope="col" class="text-center">Username</th>
                            <th scope="col" class="text-center">Group User</th>
-                           <th scope="col" class="text-center">Level</th>
+                           <th scope="col" class="text-center">Status</th>
                            <th scope="col" class="text-center">Hold</th>
                            <th scope="col" class="text-center">Expired</th>
                            <th scope="col" class="text-center">Description</th>
@@ -55,33 +54,77 @@
         <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
             <input type="text" name="type" id="type" hidden>
             <div class="modal-body">
-            <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12" hidden>
                         <div class="form-group">
-                            <label>Role</label>
-                            <select class="form-control select2 required-field" name="master_role_id" id="master_role_id">
-                                <option selected disabled>- Pilih -</option>
-                                @foreach (\App\Models\MasterRole::get() as $p)
-                                <option value="{{ $p->id }}">{{ $p->role }}</option>
-                                @endforeach
-                            </select>
+                            <label>Division Code</label>
+                            <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="SBY001" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" hidden class="form-control" name="id" id="id">
-                            <input type="text" hidden class="form-control" name="type" id="type">
-                            <input type="text" class="form-control required-field" name="email" id="email">
+                            <label>Branch</label>
+                            <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>User ID</label>
+                            <input type="text" class="form-control required-field" name="fc_userid" id="fc_userid">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" class="form-control required-field" name="fc_username" id="fc_username" onkeyup="return onkeyupLowercase(this.id)">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" class="form-control required-field" name="fc_password" id="fc_password">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Group User</label>
+                            <select class="form-control select2 required-field" name="fc_groupuser" id="fc_groupuser"></select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Hold</label>
+                            <input type="text" class="form-control required-field" name="fl_hold" id="fl_hold">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fl_level" value="T" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Active</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fl_level" value="F" class="selectgroup-input">
+                                    <span class="selectgroup-button">Non Active</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" class="form-control required-field" name="name" id="name">
+                            <label>Expired Date</label>
+                            <input type="text"   class="form-control datepicker" name="fd_expired" id="fd_expired">
                         </div>
                     </div>
-            </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="fv_description" id="fv_description" style="height: 90px" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -97,10 +140,71 @@
 @section('js')
 <script>
 
+    $(document).ready(function(){
+        get_data_branch();
+        get_data_group_user();
+    })
+
     function add(){
       $("#modal").modal('show');
       $(".modal-title").text('Tambah User');
       $("#form_submit")[0].reset();
+    }
+
+    function get_data_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_branch").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_group_user(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/GROUPUSER",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_groupuser").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_groupuser").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
     }
 
    var tb = $('#tb').DataTable({
@@ -111,16 +215,15 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,4] },
+         { className: 'text-center', targets: [0,6,10] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'fc_branch' },
+         { data: 'branch.fv_description' },
          { data: 'fc_userid' },
          { data: 'fc_username' },
-         { data: 'fc_password' },
-         { data: 'fc_groupuser' },
+         { data: 'group_user.fv_description' },
          { data: 'fl_level' },
          { data: 'fl_hold' },
          { data: 'fd_expired' },
@@ -128,23 +231,64 @@
          { data: 'fv_description' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-user/detail/" + data.id;
-         var url_delete = "/data-master/master-user/delete/" + data.id;
 
-         $('td:eq(11)', row).html(`
+        if(data.fl_level == 'T'){
+            $('td:eq(6)', row).html(`<span class="badge badge-success">active</span>`);
+        }else{
+            $('td:eq(6)', row).html(`<span class="badge badge-danger">deactive</span>`);
+        }
+
+         var url_reset_password   = "/data-master/master-user/reset-password/" + data.fc_userid;
+         var url_edit   = "/data-master/master-user/detail/" + data.fc_userid;
+         var url_delete = "/data-master/master-user/delete/" + data.fc_userid;
+
+         $('td:eq(10)', row).html(`
+            <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
+
+
+    function reset_password(url){
+        swal({
+             title: 'Apakah anda yakin?',
+             text: 'Apakah anda yakin akan melakukan reset password ?',
+             icon: 'warning',
+             buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                url : url,
+                type: "GET",
+                dataType: "JSON",
+                success: function(response){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    if(response.status === 200){
+                        swal(response.message, {  icon: 'success', });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                    }else{
+                        swal(response.message, {  icon: 'error', });
+                    }
+
+                },error: function (jqXHR, textStatus, errorThrown){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+                }
+                });
+            }
+        });
+    }
+
    function edit(url){
       edit_action(url, 'Edit Data User');
       $("#type").val('update');
-   }
-
-   function detail(id){
-      window.location.href = "/data-master/master-user/add-menu/" + id;
    }
 </script>
 @endsection

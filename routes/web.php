@@ -48,13 +48,14 @@ use Illuminate\Support\Facades\Route;
         });
 
         Route::prefix('master-user')->group(function () {
-            Route::get('/','Settings\SettingUserController@index');
-            Route::get('/detail/{id}','Settings\SettingUserController@detail');
-            Route::get('/datatables','Settings\SettingUserController@datatables');
-            Route::post('/store-update','Settings\SettingUserController@store_update');
-            Route::delete('/delete/{id}','Settings\SettingUserController@delete');
+            Route::get('/','DataMaster\MasterUserController@index');
+            Route::get('/detail/{id}','DataMaster\MasterUserController@detail');
+            Route::get('/datatables','DataMaster\MasterUserController@datatables');
+            Route::post('/store-update','DataMaster\MasterUserController@store_update');
+            Route::delete('/delete/{id}','DataMaster\MasterUserController@delete');
 
-            Route::get('/add-menu/{id}','Settings\SettingUserController@add_menu');
+            Route::get('/reset-password/{id}','DataMaster\MasterUserController@reset_password');
+            // Route::get('/add-menu/{id}','Settings\MasterUserController@add_menu');
         });
 
         Route::prefix('master-customer')->group(function () {

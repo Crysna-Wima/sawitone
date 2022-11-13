@@ -24,10 +24,17 @@ class User extends Authenticatable
     protected $appends = [];
     protected $hidden = [
         'fc_password',
-        'remember_token',
     ];
 
-     public function scopeActive($query){
+    public function scopeActive($query){
         $query->where('fl_level', 'T');
+    }
+
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
+    public function group_user(){
+        return $this->belongsTo(TransaksiType::class, 'fc_groupuser', 'fc_kode')->withTrashed();
     }
 }

@@ -309,6 +309,14 @@
         });
     }
 
+    //return onkeyupLowercase(this.id);
+    function onkeyupLowercase(id){
+            var lowercase = document.getElementById(id);
+            lowercase.addEventListener('keyup', function(e){
+                lowercase.value = this.value.toLowerCase();
+        });
+    }
+
     //return onKeypressAngka(event,false);
     function onKeypressAngka(e, decimal) {
         var key;
