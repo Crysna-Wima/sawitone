@@ -30,6 +30,13 @@
                 width: 90%;
                 max-width:1200px;
             }
+
+            .modal-xl .modal-body {
+                max-height: calc(100vh - 210px);
+                max-width: 100% !important;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
         }
 
         .table tbody td {

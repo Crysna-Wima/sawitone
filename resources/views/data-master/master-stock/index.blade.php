@@ -317,35 +317,35 @@
                                     <label>Diskon Tanggal</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_date" id="fl_disc_date" value="T" class="selectgroup-input" checked="" onclick="click_diskon_tanggal()">
+                                            <input type="radio" name="fl_disc_date" id="fl_disc_date" value="T" class="fl_disc_date selectgroup-input" checked="" onclick="click_diskon_tanggal()">
                                             <span class="selectgroup-button">Yes</span>
                                         </label>
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_date" id="fl_disc_date" value="F" class="selectgroup-input" onclick="click_diskon_tanggal()">
+                                            <input type="radio" checked name="fl_disc_date" id="fl_disc_date" value="F" class="fl_disc_date selectgroup-input" onclick="click_diskon_tanggal()">
                                             <span class="selectgroup-button">No</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal">
+                            <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Tanggal Start</label>
                                     <input type="text" class="form-control required-field datepicker" name="fd_disc_begin" id="fd_disc_begin">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal">
+                            <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Tanggal End</label>
                                     <input type="text" class="form-control required-field datepicker" name="fd_disc_end" id="fd_disc_end">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal">
+                            <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Rupiah</label>
                                     <input type="text" class="form-control required-field format-rp" name="fm_disc_rp" id="fm_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal">
+                            <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Persentase</label>
                                     <input type="number" class="form-control required-field" name="fm_disc_pr" id="fm_disc_pr">
@@ -358,36 +358,36 @@
                                     <label>Diskon Waktu</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_time" id="fl_disc_time" value="F" class="selectgroup-input" onclick="click_diskon_waktu()"
+                                            <input type="radio" name="fl_disc_time" id="fl_disc_time" value="T" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()"
                                                 checked="">
                                             <span class="selectgroup-button">Yes</span>
                                         </label>
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_time" id="fl_disc_time" value="T" class="selectgroup-input" onclick="click_diskon_waktu()">
+                                            <input type="radio" checked name="fl_disc_time" id="fl_disc_time" value="F" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()">
                                             <span class="selectgroup-button">No</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu">
+                            <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Waktu Start</label>
                                     <input type="text" class="form-control required-field time-format" name="ft_disc_begin" id="ft_disc_begin" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_begin', ':', 2)">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu">
+                            <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Waktu End</label>
                                     <input type="text" class="form-control required-field time-format" name="ft_disc_end" id="ft_disc_end" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_end', ':', 2)">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu">
+                            <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Rupiah</label>
                                     <input type="text" class="form-control required-field format-rp" name="fm_time_disc_rp" id="fm_time_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu">
+                            <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Persentase</label>
                                     <input type="number" class="form-control required-field" name="fm_time_disc_pr" id="fm_time_disc_pr">
@@ -455,8 +455,7 @@
     })
 
     function click_diskon_tanggal(){
-        alert($('#fl_disc_date').val());
-        if($('#fl_disc_date').val() == 'F'){
+        if($('.fl_disc_date:checked').val() == 'F'){
             $('.place_diskon_tanggal').prop('hidden', true);
         }else{
             $('.place_diskon_tanggal').prop('hidden', false);
@@ -464,7 +463,7 @@
     }
 
     function click_diskon_waktu(){
-        if($('#fl_disc_date').val() == 'F'){
+        if($('.fl_disc_time:checked').val() == 'F'){
             $('.place_diskon_waktu').prop('hidden', true);
         }else{
             $('.place_diskon_waktu').prop('hidden', false);
@@ -822,6 +821,9 @@
                    elem_name.val(response[key]);
                 }
              });
+
+             click_diskon_tanggal();
+             click_diskon_waktu();
 
           },error: function (jqXHR, textStatus, errorThrown){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
