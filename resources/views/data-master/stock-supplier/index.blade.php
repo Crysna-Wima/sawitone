@@ -61,6 +61,7 @@
                 </button>
             </div>
             <form id="form_submit" action="/data-master/stock-supplier/store-update" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -73,7 +74,7 @@
                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 

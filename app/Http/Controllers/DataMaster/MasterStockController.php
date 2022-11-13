@@ -27,6 +27,7 @@ class MasterStockController extends Controller
     public function datatables(){
         $data = Stock::with(
             'branch',
+            'namepack',
             'type_stock1',
             'type_stock2',
         )->orderBy('created_at', 'DESC')->get();
@@ -48,6 +49,21 @@ class MasterStockController extends Controller
                 'status' => 300,
                 'message' => $validator->errors()->first()
             ];
+        }
+
+        if(empty($request->type)){
+            $cek_data = Stock::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_stockcode' => $request->fc_stockcode,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
         }
 
         $request->merge(['fm_cogs' => Convert::convert_to_double($request->fm_cogs) ]);

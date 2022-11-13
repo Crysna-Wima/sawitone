@@ -20,14 +20,14 @@ class User extends Authenticatable
     protected $primaryKey = 'fc_userid';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
     protected $hidden = [
         'fc_password',
         'remember_token',
     ];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
+     public function scopeActive($query){
+        $query->where('fl_level', 'T');
     }
 }

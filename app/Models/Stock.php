@@ -19,7 +19,7 @@ class Stock extends Model
     protected $primaryKey = 'fc_stockcode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function scopeActive($query){
@@ -27,14 +27,18 @@ class Stock extends Model
     }
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
+    public function namepack(){
+        return $this->belongsTo(TransaksiType::class, 'fc_namepack', 'fc_kode')->withTrashed();
     }
 
     public function type_stock1(){
-        return $this->belongsTo(TransaksiType::class, 'fc_typestock1', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_typestock1', 'fc_kode')->withTrashed();
     }
 
     public function type_stock2(){
-        return $this->belongsTo(TransaksiType::class, 'fc_typestock2', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_typestock2', 'fc_kode')->withTrashed();
     }
 }

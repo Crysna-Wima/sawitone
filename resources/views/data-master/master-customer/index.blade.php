@@ -92,6 +92,7 @@
                 </button>
             </div>
             <form id="form_submit" action="/data-master/master-customer/store-update" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -103,7 +104,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
@@ -203,12 +204,11 @@
                                 <label>Customer Contact</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">YES</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_membercontract" value="F" class="selectgroup-input">
+                                        <input type="radio" name="fl_membercontract" value="F" class="selectgroup-input"  checked="">
                                         <span class="selectgroup-button">NO</span>
                                     </label>
                                 </div>
@@ -219,12 +219,11 @@
                                 <label>Customer Reseller</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_memberreseller" value="T" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_memberreseller" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_memberreseller" value="F" class="selectgroup-input">
+                                        <input type="radio" name="fl_memberreseller" value="F" class="selectgroup-input"  checked="">
                                         <span class="selectgroup-button">Non Active</span>
                                     </label>
                                 </div>
@@ -301,19 +300,19 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Customer Bank 1</label>
-                                <select type="text" class="form-control select2" name="fc_memberbank1" id="fc_memberbank1"></select>
+                                <select class="form-control select2" name="fc_memberbank1" id="fc_memberbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Customer Bank 2</label>
-                                <select type="text" class="form-control select2" name="fc_memberbank2" id="fc_memberbank2"></select>
+                                <select class="form-control select2" name="fc_memberbank2" id="fc_memberbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Customer Bank 3</label>
-                                <select type="text" class="form-control select2" name="fc_memberbank3" id="fc_memberbank3"></select>
+                                <select class="form-control select2" name="fc_memberbank3" id="fc_memberbank3"></select>
                             </div>
                         </div>
 
@@ -357,17 +356,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Lock Transaksi</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_memberlockTransType" value="T" class="selectgroup-input"
-                                            checked="">
-                                        <span class="selectgroup-button">LOCK</span>
-                                    </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_memberlockTransType" value="F" class="selectgroup-input">
-                                        <span class="selectgroup-button">NOT LOCK</span>
-                                    </label>
-                                </div>
+                                <select class="form-control select2" name="fc_memberlockTransType" id="fc_memberlockTransType"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">

@@ -48,6 +48,23 @@ class StockSupplierController extends Controller
             ];
         }
 
+        if(empty($request->type)){
+            $cek_data = StockSupplier::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_stockcode' => $request->fc_stockcode,
+                'fc_barcode' => $request->fc_barcode,
+                'fc_suppliercode' => $request->fc_suppliercode,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
+        }
+
         $request->merge(['fm_purchase' => Convert::convert_to_double($request->fm_purchase) ]);
         $request->merge(['fm_price_customer' => Convert::convert_to_double($request->fm_price_customer) ]);
         $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);

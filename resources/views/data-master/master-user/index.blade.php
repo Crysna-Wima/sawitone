@@ -53,6 +53,7 @@
             </button>
         </div>
         <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
+            <input type="text" name="type" id="type" hidden>
             <div class="modal-body">
             <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">

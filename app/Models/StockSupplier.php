@@ -19,18 +19,18 @@ class StockSupplier extends Model
     protected $primaryKey = 'fc_suppliercode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_suppliercode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
 
     public function supplier(){
-        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode');
+        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
 }

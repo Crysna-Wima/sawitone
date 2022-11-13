@@ -54,6 +54,21 @@ class SupplierController extends Controller
             ];
         }
 
+        if(empty($request->type)){
+            $cek_data = Supplier::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_suppliercode' => $request->fc_suppliercode,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
+        }
+
         Supplier::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,

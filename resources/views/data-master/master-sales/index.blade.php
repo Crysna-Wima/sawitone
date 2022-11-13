@@ -71,6 +71,7 @@
                 </button>
             </div>
             <form id="form_submit" action="/data-master/master-sales/store-update" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
@@ -82,7 +83,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -120,12 +121,11 @@
                             <label>Blacklist</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="F" class="selectgroup-input">
+                                        <input type="radio" name="fn_salesblacklist" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Non Active</span>
                                     </label>
                                 </div>
@@ -166,19 +166,19 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 1</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_salesbank1" id="fc_salesbank1"></select>
+                                <select class="form-control select2 required-field" name="fc_salesbank1" id="fc_salesbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 2</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_salesbank2" id="fc_salesbank2"></select>
+                                <select class="form-control select2 required-field" name="fc_salesbank2" id="fc_salesbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 3</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_salesbank3" id="fc_salesbank3"></select>
+                                <select class="form-control select2 required-field" name="fc_salesbank3" id="fc_salesbank3"></select>
                             </div>
                         </div>
 

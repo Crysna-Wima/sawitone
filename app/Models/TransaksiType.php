@@ -21,8 +21,4 @@ class TransaksiType extends Model
     public $incrementing = false;
     protected $fillable = ['fc_trx', 'fc_kode', 'fv_description'];
     protected $appends = [];
-
-    public function scopeActive($query){
-        $query->where('status', 1);
-    }
 }

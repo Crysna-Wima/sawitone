@@ -15,10 +15,10 @@ class MasterRole extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 'master_role';
-    protected $guarded = ['id'];
+    protected $guarded = ['id','type'];
     protected $appends = [];
 
-    public function scopeActive($query){
-        $query->where('status', 1);
-    }
+    // public function scopeActive($query){
+    //     $query->where('status', 1);
+    // }
 }

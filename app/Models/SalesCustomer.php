@@ -19,18 +19,18 @@ class SalesCustomer extends Model
     protected $primaryKey = 'fc_salescode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_salescode', 'fc_membercode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
     public function sales(){
-        return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode');
+        return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
 
     public function customer(){
-        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode');
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
 }

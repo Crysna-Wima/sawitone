@@ -19,18 +19,18 @@ class StockCustomer extends Model
     protected $primaryKey = 'fc_membercode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_membercode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
 
     public function customer(){
-        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode');
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
 }

@@ -19,10 +19,10 @@ class BankAcc extends Model
     protected $primaryKey = 'fc_bankcode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_bankcode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 }

@@ -19,39 +19,39 @@ class Supplier extends Model
     protected $primaryKey = 'fc_suppliercode';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_suppliercode'];
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
     public function supplier_legal_status(){
-        return $this->belongsTo(TransaksiType::class, 'fc_supplierlegalstatus', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_supplierlegalstatus', 'fc_kode')->withTrashed();
     }
 
     public function supplier_nationality(){
-        return $this->belongsTo(TransaksiType::class, 'fc_suppliernationality', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_suppliernationality', 'fc_kode')->withTrashed();
     }
 
     public function supplier_type_business(){
-        return $this->belongsTo(TransaksiType::class, 'fc_suppliertypebusiness', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_suppliertypebusiness', 'fc_kode')->withTrashed();
     }
 
     public function supplier_tax_code(){
-        return $this->belongsTo(TransaksiType::class, 'fc_suppliertaxcode', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_suppliertaxcode', 'fc_kode')->withTrashed();
     }
 
     public function supplier_bank1(){
-        return $this->belongsTo(BankAcc::class, 'fc_supplierbank1', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_supplierbank1', 'fc_bankcode')->withTrashed();
     }
 
     public function supplier_bank2(){
-        return $this->belongsTo(BankAcc::class, 'fc_supplierbank2', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_supplierbank2', 'fc_bankcode')->withTrashed();
     }
 
     public function supplier_bank3(){
-        return $this->belongsTo(BankAcc::class, 'fc_supplierbank3', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_supplierbank3', 'fc_bankcode')->withTrashed();
     }
 
 }

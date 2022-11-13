@@ -46,6 +46,22 @@ class SalesCustomerController extends Controller
             ];
         }
 
+        if(empty($request->type)){
+            $cek_data = SalesCustomer::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_salescode' => $request->fc_salescode,
+                'fc_membercode' => $request->fc_membercode,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
+        }
+
         SalesCustomer::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,

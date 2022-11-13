@@ -18,30 +18,30 @@ class Sales extends Model
     protected $table = 't_sales';
     protected $primaryKey = 'fc_salescode';
     public $incrementing = false;
-    protected $guarded = [];
+    protected $guarded = ['type'];
     protected $appends = [];
 
     public function branch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
     public function sales_type(){
-        return $this->belongsTo(TransaksiType::class, 'fc_salestype', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fc_salestype', 'fc_kode')->withTrashed();
     }
 
     public function sales_level(){
-        return $this->belongsTo(TransaksiType::class, 'fn_saleslevel', 'fc_kode');
+        return $this->belongsTo(TransaksiType::class, 'fn_saleslevel', 'fc_kode')->withTrashed();
     }
 
     public function sales_bank1(){
-        return $this->belongsTo(BankAcc::class, 'fc_salesbank1', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank1', 'fc_bankcode')->withTrashed();
     }
 
     public function sales_bank2(){
-        return $this->belongsTo(BankAcc::class, 'fc_salesbank2', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank2', 'fc_bankcode')->withTrashed();
     }
 
     public function sales_bank3(){
-        return $this->belongsTo(BankAcc::class, 'fc_salesbank3', 'fc_bankcode');
+        return $this->belongsTo(BankAcc::class, 'fc_salesbank3', 'fc_bankcode')->withTrashed();
     }
 }

@@ -47,6 +47,23 @@ class MasterBrandController extends Controller
             ];
         }
 
+        if(empty($request->type)){
+            $cek_data = Brand::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_brand' => $request->fc_brand,
+                'fc_group' => $request->fc_group,
+                'fc_subgroup' => $request->fc_subgroup,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
+        }
+
         Brand::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,

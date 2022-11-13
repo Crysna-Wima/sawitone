@@ -90,6 +90,7 @@
                 </button>
             </div>
             <form id="form_submit" action="/data-master/master-stock/store-update" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-3 col-lg-3">
@@ -101,7 +102,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -131,7 +132,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Name Pack</label>
-                                <input type="text" class="form-control required-field" name="fc_namepack" id="fc_namepack">
+                                <select class="form-control select2 required-field" name="fc_namepack" id="fc_namepack"></select>
                             </div>
                         </div>
                         <input type="text" hidden id="fc_brand_dummy">
@@ -140,19 +141,19 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Brand</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_brand" id="fc_brand" onchange="get_data_group()"></select>
+                                <select class="form-control select2 required-field" name="fc_brand" id="fc_brand" onchange="get_data_group()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Group</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_group" id="fc_group" onchange="get_data_subgroup()"></select>
+                                <select class="form-control select2 required-field" name="fc_group" id="fc_group" onchange="get_data_subgroup()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sub Group</label>
-                                <select type="text" class="form-control select2 required-field" name="fc_subgroup" id="fc_subgroup"></select>
+                                <select class="form-control select2 required-field" name="fc_subgroup" id="fc_subgroup"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3"></div>
@@ -161,11 +162,11 @@
                                 <label>Batch</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_batch" value="F" class="selectgroup-input" checked="">
+                                        <input type="radio" name="fl_batch" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_batch" value="0" class="selectgroup-input">
+                                        <input type="radio" name="fl_batch" value="F" class="selectgroup-input" checked>
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -176,12 +177,11 @@
                                 <label>Expired Date</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_expired" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_expired" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_expired" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_expired" value="F" class="selectgroup-input" checked>
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -192,12 +192,11 @@
                                 <label>Serial Number</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_serialnumber" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_serialnumber" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_serialnumber" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_serialnumber" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -208,12 +207,11 @@
                                 <label>Cat Number</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_catnumber" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_catnumber" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_catnumber" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_catnumber" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -224,12 +222,11 @@
                                 <label>Blacklist</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_blacklist" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_blacklist" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_blacklist" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_blacklist" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -240,12 +237,11 @@
                                 <label>Tax Type</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_taxtype" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_taxtype" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_taxtype" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_taxtype" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -256,12 +252,11 @@
                                 <label>Rep Supplier</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_repsupplier" value="F" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_repsupplier" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_repsupplier" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fl_repsupplier" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -317,11 +312,11 @@
                                     <label>Diskon Tanggal</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_date" id="fl_disc_date" value="T" class="fl_disc_date selectgroup-input" checked="" onclick="click_diskon_tanggal()">
+                                            <input type="radio" name="fl_disc_date" id="fl_disc_date" value="T" class="fl_disc_date selectgroup-input" onclick="click_diskon_tanggal()">
                                             <span class="selectgroup-button">Yes</span>
                                         </label>
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" checked name="fl_disc_date" id="fl_disc_date" value="F" class="fl_disc_date selectgroup-input" onclick="click_diskon_tanggal()">
+                                            <input type="radio" checked name="fl_disc_date" id="fl_disc_date" value="F" checked="" class="fl_disc_date selectgroup-input" onclick="click_diskon_tanggal()">
                                             <span class="selectgroup-button">No</span>
                                         </label>
                                     </div>
@@ -358,12 +353,11 @@
                                     <label>Diskon Waktu</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" name="fl_disc_time" id="fl_disc_time" value="T" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()"
-                                                checked="">
+                                            <input type="radio" name="fl_disc_time" id="fl_disc_time" value="T" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()">
                                             <span class="selectgroup-button">Yes</span>
                                         </label>
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <input type="radio" checked name="fl_disc_time" id="fl_disc_time" value="F" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()">
+                                            <input type="radio" checked name="fl_disc_time" id="fl_disc_time" checked="" value="F" class="selectgroup-input fl_disc_time" onclick="click_diskon_waktu()">
                                             <span class="selectgroup-button">No</span>
                                         </label>
                                     </div>
@@ -449,6 +443,7 @@
 
     $(document).ready(function(){
         get_data_branch();
+        get_data_namepack();
         get_data_brand();
         get_data_type_stock1();
         get_data_type_stock2();
@@ -483,6 +478,34 @@
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function get_data_namepack(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/UNITY",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_namepack").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_namepack").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -666,6 +689,8 @@
       $(".modal-title").text('Tambah Master Stock');
       $("#form_submit")[0].reset();
       reset_all_select();
+      click_diskon_tanggal();
+      click_diskon_waktu();
     }
 
    var tb = $('#tb').DataTable({
@@ -699,7 +724,7 @@
          { data: 'fc_subgroup' },
          { data: 'type_stock1.fv_description' },
          { data: 'type_stock2.fv_description' },
-         { data: 'fc_namepack' },
+         { data: 'namepack.fv_description' },
          { data: 'fn_reorderlevel' },
          { data: 'fn_maxonhand' },
          { data: 'fm_cogs', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },

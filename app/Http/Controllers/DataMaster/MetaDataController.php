@@ -45,6 +45,21 @@ class MetaDataController extends Controller
             ];
         }
 
+        if(empty($request->type)){
+            $cek_data = TransaksiType::where([
+                'fc_trx' => $request->fc_trx,
+                'fc_kode' => $request->fc_kode,
+                'fv_description' => $request->fv_description,
+            ])->count();
+
+            if($cek_data > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                ];
+            }
+        }
+
         TransaksiType::updateOrCreate(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode],[
             'fc_trx' => $request->fc_trx,
             'fc_kode' => $request->fc_kode,
