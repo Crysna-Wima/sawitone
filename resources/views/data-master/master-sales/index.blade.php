@@ -400,8 +400,8 @@
          { data: 'fc_salestype' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-sales/detail/" + data.fc_salescode;
-         var url_delete = "/data-master/master-sales/delete/" + data.fc_salescode;
+         var url_edit   = "/data-master/master-sales/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
+         var url_delete = "/data-master/master-sales/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
 
          $('td:eq(22)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

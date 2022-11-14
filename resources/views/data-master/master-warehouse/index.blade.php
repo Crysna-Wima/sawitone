@@ -193,8 +193,8 @@
          { data: 'fv_description' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-warehouse/detail/" + data.fc_warehousecode;
-         var url_delete = "/data-master/master-warehouse/delete/" + data.fc_warehousecode;
+         var url_edit   = "/data-master/master-warehouse/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
+         var url_delete = "/data-master/master-warehouse/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
 
          $('td:eq(9)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

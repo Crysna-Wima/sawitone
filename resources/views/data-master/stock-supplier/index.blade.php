@@ -283,9 +283,9 @@
          { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_stockcode + '/' + data.fc_suppliercode;
-         var url_delete = "/data-master/stock-supplier/delete/" + data.fc_stockcode + '/' + data.fc_suppliercode;
-
+         var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
+         var url_delete = "/data-master/stock-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
+fc_barcode
          $('td:eq(12)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>

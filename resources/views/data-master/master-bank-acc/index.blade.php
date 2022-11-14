@@ -217,8 +217,8 @@
          { data: 'fv_bankaddress2' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_bankcode;
-         var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_bankcode;
+         var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
+         var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
 
          $('td:eq(11)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

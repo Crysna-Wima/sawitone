@@ -615,8 +615,8 @@
          { data: 'fc_suppliercode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-supplier/detail/" + data.fc_suppliercode;
-         var url_delete = "/data-master/master-supplier/delete/" + data.fc_suppliercode;
+         var url_edit   = "/data-master/master-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
+         var url_delete = "/data-master/master-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
 
          $('td:eq(37)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

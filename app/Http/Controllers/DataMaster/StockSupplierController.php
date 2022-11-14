@@ -20,8 +20,13 @@ class StockSupplierController extends Controller
         return view('data-master.stock-supplier.index');
     }
 
-    public function detail($fc_stockcode, $fc_suppliercode){
-        return StockSupplier::where(['fc_stockcode' => $fc_stockcode, 'fc_suppliercode' => $fc_suppliercode])->first();
+    public function detail($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_suppliercode){
+        return StockSupplier::where([
+            'fc_divisoncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_stockcode' => $fc_stockcode,
+            'fc_suppliercode' => $fc_suppliercode,
+        ])->first();
     }
 
     public function datatables(){
@@ -92,8 +97,13 @@ class StockSupplierController extends Controller
 		];
     }
 
-    public function delete($fc_stockcode, $fc_suppliercode){
-        StockSupplier::where(['fc_stockcode' => $fc_stockcode, 'fc_suppliercode' => $fc_suppliercode])->delete();
+    public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_suppliercode){
+        StockSupplier::where([
+            'fc_divisoncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_stockcode' => $fc_stockcode,
+            'fc_suppliercode' => $fc_suppliercode,
+        ])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

@@ -255,8 +255,8 @@
          { data: 'fd_memberjoindate' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/sales-customer/detail/" + data.fc_salescode + "/" + data.fc_membercode;
-         var url_delete = "/data-master/sales-customer/delete/" + data.fc_salescode + "/" + data.fc_membercode;
+         var url_edit   = "/data-master/sales-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
+         var url_delete = "/data-master/sales-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
 
          $('td:eq(8)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

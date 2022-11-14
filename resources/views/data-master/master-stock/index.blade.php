@@ -755,8 +755,8 @@
          { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode;
-         var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode;
+         var url_edit   = "/data-master/master-stock/detail/" + '/' + data.stockcode + '/' + data.fc_barcode;
+         var url_delete = "/data-master/master-stock/delete/" + '/' + data.stockcode + '/' + data.fc_barcode;
 
         if(data.fl_batch == 'T'){
             $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);

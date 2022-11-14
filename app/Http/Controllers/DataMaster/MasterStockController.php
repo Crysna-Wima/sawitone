@@ -20,8 +20,11 @@ class MasterStockController extends Controller
         return view('data-master.master-stock.index');
     }
 
-    public function detail($fc_stockcode){
-        return Stock::where('fc_stockcode', $fc_stockcode)->first();
+    public function detail($fc_stockcode, $fc_barcode){
+        return Stock::where([
+            'fc_stockcode' => $fc_stockcode,
+            'fc_barcode' => $fc_barcode,
+        ])->first();
     }
 
     public function datatables(){
@@ -88,8 +91,11 @@ class MasterStockController extends Controller
 		];
     }
 
-    public function delete($fc_stockcode){
-        Stock::where('fc_stockcode', $fc_stockcode)->delete();
+    public function delete($fc_stockcode, $fc_barcode){
+        Stock::where([
+            'fc_stockcode' => $fc_stockcode,
+            'fc_barcode' => $fc_barcode,
+        ])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

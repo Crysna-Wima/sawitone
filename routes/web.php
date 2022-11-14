@@ -55,93 +55,93 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-user')->group(function () {
             Route::get('/','DataMaster\MasterUserController@index');
-            Route::get('/detail/{id}','DataMaster\MasterUserController@detail');
+            Route::get('/detail/{fc_username}','DataMaster\MasterUserController@detail');
             Route::get('/datatables','DataMaster\MasterUserController@datatables');
             Route::post('/store-update','DataMaster\MasterUserController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterUserController@delete');
+            Route::delete('/delete/{fc_username}','DataMaster\MasterUserController@delete');
 
-            Route::get('/reset-password/{id}','DataMaster\MasterUserController@reset_password');
+            Route::get('/reset-password/{fc_username}','DataMaster\MasterUserController@reset_password');
             // Route::get('/add-menu/{id}','Settings\MasterUserController@add_menu');
         });
 
         Route::prefix('master-customer')->group(function () {
             Route::get('/','DataMaster\CustomerController@index');
-            Route::get('/detail/{id}','DataMaster\CustomerController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_membercode}','DataMaster\CustomerController@detail');
             Route::get('/datatables','DataMaster\CustomerController@datatables');
             Route::post('/store-update','DataMaster\CustomerController@store_update');
-            Route::delete('/delete/{id}','DataMaster\CustomerController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_membercode}','DataMaster\CustomerController@delete');
         });
 
         Route::prefix('master-supplier')->group(function () {
             Route::get('/','DataMaster\SupplierController@index');
-            Route::get('/detail/{id}','DataMaster\SupplierController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_suppliercode}','DataMaster\SupplierController@detail');
             Route::get('/datatables','DataMaster\SupplierController@datatables');
             Route::post('/store-update','DataMaster\SupplierController@store_update');
-            Route::delete('/delete/{id}','DataMaster\SupplierController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_suppliercode}','DataMaster\SupplierController@delete');
         });
 
         Route::prefix('master-sales')->group(function () {
             Route::get('/','DataMaster\SalesController@index');
-            Route::get('/detail/{id}','DataMaster\SalesController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_salescode}','DataMaster\SalesController@detail');
             Route::get('/datatables','DataMaster\SalesController@datatables');
             Route::post('/store-update','DataMaster\SalesController@store_update');
-            Route::delete('/delete/{id}','DataMaster\SalesController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_salescode}','DataMaster\SalesController@delete');
         });
 
         Route::prefix('master-bank-acc')->group(function () {
             Route::get('/','DataMaster\MasterBankAccController@index');
-            Route::get('/detail/{id}','DataMaster\MasterBankAccController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_bankcode}','DataMaster\MasterBankAccController@detail');
             Route::get('/datatables','DataMaster\MasterBankAccController@datatables');
             Route::post('/store-update','DataMaster\MasterBankAccController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterBankAccController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_bankcode}','DataMaster\MasterBankAccController@delete');
         });
 
         Route::prefix('master-brand')->group(function () {
             Route::get('/','DataMaster\MasterBrandController@index');
-            Route::get('/detail/{id}','DataMaster\MasterBrandController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_brand}/{fc_group}/{fc_subgroup}','DataMaster\MasterBrandController@detail');
             Route::get('/datatables','DataMaster\MasterBrandController@datatables');
             Route::post('/store-update','DataMaster\MasterBrandController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterBrandController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_brand}/{fc_group}/{fc_subgroup}','DataMaster\MasterBrandController@delete');
         });
 
         Route::prefix('master-stock')->group(function () {
             Route::get('/','DataMaster\MasterStockController@index');
-            Route::get('/detail/{id}','DataMaster\MasterStockController@detail');
+            Route::get('/detail/{fc_stockcode}/{fc_barcode}','DataMaster\MasterStockController@detail');
             Route::get('/datatables','DataMaster\MasterStockController@datatables');
             Route::post('/store-update','DataMaster\MasterStockController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterStockController@delete');
+            Route::delete('/delete/{fc_stockcode}/{fc_barcode}','DataMaster\MasterStockController@delete');
         });
 
         Route::prefix('master-warehouse')->group(function () {
             Route::get('/','DataMaster\MasterWarehouseController@index');
-            Route::get('/detail/{id}','DataMaster\MasterWarehouseController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}','DataMaster\MasterWarehouseController@detail');
             Route::get('/datatables','DataMaster\MasterWarehouseController@datatables');
             Route::post('/store-update','DataMaster\MasterWarehouseController@store_update');
-            Route::delete('/delete/{id}','DataMaster\MasterWarehouseController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}','DataMaster\MasterWarehouseController@delete');
         });
 
         Route::prefix('sales-customer')->group(function () {
             Route::get('/','DataMaster\SalesCustomerController@index');
-            Route::get('/detail/{salescode}/{membercode}','DataMaster\SalesCustomerController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{salescode}/{membercode}','DataMaster\SalesCustomerController@detail');
             Route::get('/datatables','DataMaster\SalesCustomerController@datatables');
             Route::post('/store-update','DataMaster\SalesCustomerController@store_update');
-            Route::delete('/delete/{salescode}/{membercode}','DataMaster\SalesCustomerController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{salescode}/{membercode}','DataMaster\SalesCustomerController@delete');
         });
 
         Route::prefix('stock-customer')->group(function () {
             Route::get('/','DataMaster\StockCustomerController@index');
-            Route::get('/detail/{stockcode}/{membercode}','DataMaster\StockCustomerController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{membercode}','DataMaster\StockCustomerController@detail');
             Route::get('/datatables','DataMaster\StockCustomerController@datatables');
             Route::post('/store-update','DataMaster\StockCustomerController@store_update');
-            Route::delete('/delete/{stockcode}/{membercode}','DataMaster\StockCustomerController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{membercode}','DataMaster\StockCustomerController@delete');
         });
 
         Route::prefix('stock-supplier')->group(function () {
             Route::get('/','DataMaster\StockSupplierController@index');
-            Route::get('/detail/{stockcode}/{suppliercode}','DataMaster\StockSupplierController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{suppliercode}','DataMaster\StockSupplierController@detail');
             Route::get('/datatables','DataMaster\StockSupplierController@datatables');
             Route::post('/store-update','DataMaster\StockSupplierController@store_update');
-            Route::delete('/delete/{stockcode}/{suppliercode}','DataMaster\StockSupplierController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{suppliercode}','DataMaster\StockSupplierController@delete');
         });
 
 

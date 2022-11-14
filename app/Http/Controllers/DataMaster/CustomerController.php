@@ -19,8 +19,12 @@ class CustomerController extends Controller
         return view('data-master.master-customer.index');
     }
 
-    public function detail($fc_membercode){
-        return Customer::where('fc_membercode', $fc_membercode)->first();
+    public function detail($fc_divisioncode,$fc_branch,$fc_membercode){
+        return Customer::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_membercode' => $fc_membercode,
+        ])->first();
     }
 
     public function datatables(){
@@ -82,8 +86,12 @@ class CustomerController extends Controller
 		];
     }
 
-    public function delete($fc_membercode){
-        Customer::where('fc_membercode', $fc_membercode)->delete();
+    public function delete($fc_divisioncode,$fc_branch,$fc_membercode){
+        Customer::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_membercode' => $fc_membercode,
+        ])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

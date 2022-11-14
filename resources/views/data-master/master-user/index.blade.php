@@ -238,9 +238,9 @@
             $('td:eq(7)', row).html(`<span class="badge badge-danger">Not Hold</span>`);
         }
 
-         var url_reset_password   = "/data-master/master-user/reset-password/" + data.fc_userid;
-         var url_edit   = "/data-master/master-user/detail/" + data.fc_userid;
-         var url_delete = "/data-master/master-user/delete/" + data.fc_userid;
+         var url_reset_password   = "/data-master/master-user/reset-password/" + data.fc_username;
+         var url_edit   = "/data-master/master-user/detail/" + data.fc_username;
+         var url_delete = "/data-master/master-user/delete/" + data.fc_username;
 
          $('td:eq(10)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>

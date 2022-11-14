@@ -19,8 +19,12 @@ class MasterWarehouseController extends Controller
         return view('data-master.master-warehouse.index');
     }
 
-    public function detail($fc_warehousecode){
-        return Warehouse::where('fc_warehousecode', $fc_warehousecode)->first();
+    public function detail($fc_divisioncode, $fc_branch, $fc_warehousecode){
+        return Warehouse::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_warehousecode' => $fc_warehousecode,
+        ])->first();
     }
 
     public function datatables(){
@@ -72,8 +76,12 @@ class MasterWarehouseController extends Controller
 		];
     }
 
-    public function delete($fc_warehousecode){
-        Warehouse::where('fc_warehousecode', $fc_warehousecode)->delete();
+    public function delete($fc_divisioncode, $fc_branch, $fc_warehousecode){
+        Warehouse::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_warehousecode' => $fc_warehousecode,
+        ])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"

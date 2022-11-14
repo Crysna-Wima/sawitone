@@ -20,8 +20,8 @@ class MasterUserController extends Controller
         return view('data-master.master-user.index');
     }
 
-    public function detail($fc_userid){
-        return User::where('fc_userid', $fc_userid)->first();
+    public function detail($fc_username){
+        return User::where('fc_username', $fc_username)->first();
     }
 
     public function datatables(){
@@ -83,16 +83,16 @@ class MasterUserController extends Controller
 		];
     }
 
-    public function delete($fc_userid){
-        User::where('fc_userid', $fc_userid)->delete();
+    public function delete($fc_username){
+        User::where('fc_username', $fc_username)->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"
         ]);
     }
 
-    public function reset_password($fc_userid){
-        User::where('fc_userid', $fc_userid)->update(['fc_password' => Hash::make('passworddefault')]);
+    public function reset_password($fc_username){
+        User::where('fc_username', $fc_username)->update(['fc_password' => Hash::make('passworddefault')]);
         return [
             'status' => 200,
             'message' => 'Password berhasil dirubah menjadi -- passworddefault --',

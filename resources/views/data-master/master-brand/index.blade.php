@@ -160,8 +160,8 @@
          { data: 'fc_subgroup' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-brand/detail/" + data.fc_subgroup;
-         var url_delete = "/data-master/master-brand/delete/" + data.fc_subgroup;
+         var url_edit   = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
+         var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
          $('td:eq(6)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>

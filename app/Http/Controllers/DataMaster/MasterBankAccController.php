@@ -19,8 +19,12 @@ class MasterBankAccController extends Controller
         return view('data-master.master-bank-acc.index');
     }
 
-    public function detail($fc_bankcode){
-        return BankAcc::where('fc_bankcode', $fc_bankcode)->first();
+    public function detail($fc_divisioncode,$fc_branch,$fc_bankcode){
+        return BankAcc::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_bankcode' => $fc_bankcode,
+        ])->first();
     }
 
     public function datatables(){
@@ -72,8 +76,12 @@ class MasterBankAccController extends Controller
 		];
     }
 
-    public function delete($fc_bankcode){
-        BankAcc::where('fc_bankcode', $fc_bankcode)->delete();
+    public function delete($fc_divisioncode,$fc_branch,$fc_bankcode){
+        BankAcc::where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
+            'fc_bankcode' => $fc_bankcode,
+        ])->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"
