@@ -23,7 +23,7 @@
                            <th scope="col" class="text-center">User Id</th>
                            <th scope="col" class="text-center">Username</th>
                            <th scope="col" class="text-center">Group User</th>
-                           <th scope="col" class="text-center">Status</th>
+                           <th scope="col" class="text-center">Level</th>
                            <th scope="col" class="text-center">Hold</th>
                            <th scope="col" class="text-center">Expired</th>
                            <th scope="col" class="text-center">Description</th>
@@ -215,7 +215,7 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,10] },
+         { className: 'text-center', targets: [0,7,10] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -233,9 +233,9 @@
       rowCallback : function(row, data){
 
         if(data.fl_hold == 'T'){
-            $('td:eq(7)', row).html(`<span class="badge badge-success">active</span>`);
+            $('td:eq(7)', row).html(`<span class="badge badge-success">Hold</span>`);
         }else{
-            $('td:eq(7)', row).html(`<span class="badge badge-danger">deactive</span>`);
+            $('td:eq(7)', row).html(`<span class="badge badge-danger">Not Hold</span>`);
         }
 
          var url_reset_password   = "/data-master/master-user/reset-password/" + data.fc_userid;

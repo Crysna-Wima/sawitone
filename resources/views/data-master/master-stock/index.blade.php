@@ -326,25 +326,25 @@
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Tanggal Start</label>
-                                    <input type="text" class="form-control required-field datepicker" name="fd_disc_begin" id="fd_disc_begin">
+                                    <input type="text" class="form-control datepicker" name="fd_disc_begin" id="fd_disc_begin">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Tanggal End</label>
-                                    <input type="text" class="form-control required-field datepicker" name="fd_disc_end" id="fd_disc_end">
+                                    <input type="text" class="form-control datepicker" name="fd_disc_end" id="fd_disc_end">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Rupiah</label>
-                                    <input type="text" class="form-control required-field format-rp" name="fm_disc_rp" id="fm_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
+                                    <input type="text" class="form-control format-rp" name="fm_disc_rp" id="fm_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_tanggal" hidden>
                                 <div class="form-group">
                                     <label>Persentase</label>
-                                    <input type="number" class="form-control required-field" name="fm_disc_pr" id="fm_disc_pr">
+                                    <input type="number" class="form-control" name="fm_disc_pr" id="fm_disc_pr">
                                 </div>
                             </div>
                         </div>
@@ -367,25 +367,25 @@
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Waktu Start</label>
-                                    <input type="text" class="form-control required-field time-format" name="ft_disc_begin" id="ft_disc_begin" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_begin', ':', 2)">
+                                    <input type="text" class="form-control time-format" name="ft_disc_begin" id="ft_disc_begin" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_begin', ':', 2)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Waktu End</label>
-                                    <input type="text" class="form-control required-field time-format" name="ft_disc_end" id="ft_disc_end" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_end', ':', 2)">
+                                    <input type="text" class="form-control time-format" name="ft_disc_end" id="ft_disc_end" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_end', ':', 2)">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Rupiah</label>
-                                    <input type="text" class="form-control required-field format-rp" name="fm_time_disc_rp" id="fm_time_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
+                                    <input type="text" class="form-control format-rp" name="fm_time_disc_rp" id="fm_time_disc_rp" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                             <div class="col-12 col-md-2 col-lg-2 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Persentase</label>
-                                    <input type="number" class="form-control required-field" name="fm_time_disc_pr" id="fm_time_disc_pr">
+                                    <input type="number" class="form-control" name="fm_time_disc_pr" id="fm_time_disc_pr">
                                 </div>
                             </div>
                         </div>
@@ -637,7 +637,7 @@
     function get_data_type_stock1(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/UNITY",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -665,7 +665,7 @@
     function get_data_type_stock2(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/GOODSTRANS",
             type: "GET",
             dataType: "JSON",
             success: function(response){
