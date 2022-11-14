@@ -118,13 +118,13 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_membername1" id="fc_membername1">
+                                <input type="text" class="form-control" name="fc_membername1" id="fc_membername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_membername2" id="fc_membername2">
+                                <input type="text" class="form-control" name="fc_membername2" id="fc_membername2">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -154,19 +154,19 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Pic Name</label>
-                                <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
+                                <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Pic Phone</label>
-                                <input type="text" class="form-control required-field" name="fc_memberpicphone" id="fc_memberpicphone">
+                                <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Pic Pos</label>
-                                <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
+                                <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
                             </div>
                         </div>
 

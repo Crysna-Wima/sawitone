@@ -94,7 +94,7 @@
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>Level</label>
-                            <input type="text" class="form-control required-field" name="fl_level" id="fl_level">
+                            <input type="text" class="form-control" name="fl_level" id="fl_level">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">

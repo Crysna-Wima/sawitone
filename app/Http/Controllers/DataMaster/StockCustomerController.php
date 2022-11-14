@@ -71,6 +71,11 @@ class StockCustomerController extends Controller
         $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
         $request->merge(['fm_price_dealer' => Convert::convert_to_double($request->fm_price_dealer) ]);
         $request->merge(['fm_price_enduser' => Convert::convert_to_double($request->fm_price_enduser) ]);
+        $request->request->add(['fd_inputdate' => Carbon::now()]);
+
+        if($request->has('fm_price_customer') || $request->has('fm_price_default') || $request->has('fm_price_distributor') || $request->has('fm_price_project') || $request->has('fm_price_dealer') || $request->has('fm_price_enduser')){
+            $request->request->add(['fd_update' => Carbon::now()]);
+        }
 
         StockCustomer::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,

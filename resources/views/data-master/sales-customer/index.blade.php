@@ -56,7 +56,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+            <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
             <form id="form_submit" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
@@ -89,7 +89,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Member Join Date</label>
-                                <input type="text" class="form-control datepicker required-field" name="fd_memberjoindate" id="fd_memberjoindate">
+                                <input type="text" class="form-control datepicker" name="fd_memberjoindate" id="fd_memberjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">

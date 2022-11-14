@@ -97,13 +97,13 @@
                         <div class="col-12 col-md-3 col-lg-3" hidden>
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
+                                <input type="text" class="form-control" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -133,7 +133,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Name Pack</label>
-                                <select class="form-control select2 required-field" name="fc_namepack" id="fc_namepack"></select>
+                                <select class="form-control select2" name="fc_namepack" id="fc_namepack"></select>
                             </div>
                         </div>
                         <input type="text" hidden id="fc_brand_dummy">
@@ -142,19 +142,19 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Brand</label>
-                                <select class="form-control select2 required-field" name="fc_brand" id="fc_brand" onchange="get_data_group()"></select>
+                                <select class="form-control select2" name="fc_brand" id="fc_brand" onchange="get_data_group()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Group</label>
-                                <select class="form-control select2 required-field" name="fc_group" id="fc_group" onchange="get_data_subgroup()"></select>
+                                <select class="form-control select2" name="fc_group" id="fc_group" onchange="get_data_subgroup()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sub Group</label>
-                                <select class="form-control select2 required-field" name="fc_subgroup" id="fc_subgroup"></select>
+                                <select class="form-control select2" name="fc_subgroup" id="fc_subgroup"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3"></div>
@@ -267,43 +267,43 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Type Stock 1</label>
-                                <select class="form-control select2 required-field" name="fc_typestock1" id="fc_typestock1"></select>
+                                <select class="form-control select2" name="fc_typestock1" id="fc_typestock1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Type Stock 2</label>
-                                <select class="form-control select2 required-field" name="fc_typestock2" id="fc_typestock2"></select>
+                                <select class="form-control select2" name="fc_typestock2" id="fc_typestock2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Reorder Level</label>
-                                <input type="number" class="form-control required-field" name="fn_reorderlevel" id="fn_reorderlevel">
+                                <input type="number" class="form-control" name="fn_reorderlevel" id="fn_reorderlevel">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Max on Hand</label>
-                                <input type="number" class="form-control required-field" name="fn_maxonhand" id="fn_maxonhand">
+                                <input type="number" class="form-control" name="fn_maxonhand" id="fn_maxonhand">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Cogs</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Purchase</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp required-field" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Price</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_salesprice" id="fm_salesprice" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp required-field" name="fm_salesprice" id="fm_salesprice" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3"></div>
@@ -392,31 +392,31 @@
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Distributor</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Project</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price Dealer</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price End User</label>
-                                <input type="text" class="form-control required-field format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">

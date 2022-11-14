@@ -76,7 +76,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Warehouse Pos</label>
-                                <select class="form-control select2 required-field" name="fc_warehousepos" id="fc_warehousepos">
+                                <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos">
                                     <option value="INTERNAL">Internal</option>
                                     <option value="EXTERNAL">External</option>
                                 </select>
@@ -85,7 +85,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select class="form-control select2 required-field" name="fl_status" id="fl_status">
+                                <select class="form-control select2" name="fl_status" id="fl_status">
                                     <option value="G">Gudang</option>
                                     <option value="D">Display</option>
                                 </select>
@@ -95,20 +95,20 @@
                         <div class="col-12 col-md-9 col-lg-9">
                             <div class="form-group">
                                 <label>Rackname</label>
-                                <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname">
+                                <input type="text" class="form-control" name="fc_rackname" id="fc_rackname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Capacity</label>
-                                <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
+                                <input type="number" class="form-control" name="fn_capacity" id="fn_capacity">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Deskripsi</label>
-                                <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 150px"></textarea>
+                                <textarea class="form-control" name="fv_description" id="fv_description" style="height: 150px"></textarea>
                             </div>
                         </div>
                     </div>

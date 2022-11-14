@@ -96,26 +96,26 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname1" id="fc_salesname1">
+                                <input type="text" class="form-control" name="fc_salesname1" id="fc_salesname1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesname2" id="fc_salesname2">
+                                <input type="text" class="form-control" name="fc_salesname2" id="fc_salesname2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Type</label>
-                                <select class="form-control select2 required-field" name="fc_salestype" id="fc_salestype"></select>
+                                <select class="form-control select2" name="fc_salestype" id="fc_salestype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Sales Level</label>
-                                <select class="form-control select2 required-field" name="fn_saleslevel" id="fn_saleslevel"></select>
+                                <select class="form-control select2" name="fn_saleslevel" id="fn_saleslevel"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -135,70 +135,70 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Mail 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesemail1" id="fc_salesemail1">
+                                <input type="text" class="form-control" name="fc_salesemail1" id="fc_salesemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Mail 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesemail2" id="fc_salesemail2">
+                                <input type="text" class="form-control" name="fc_salesemail2" id="fc_salesemail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone1" id="fc_salesphone1">
+                                <input type="text" class="form-control" name="fc_salesphone1" id="fc_salesphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone2" id="fc_salesphone2">
+                                <input type="text" class="form-control" name="fc_salesphone2" id="fc_salesphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesphone3" id="fc_salesphone3">
+                                <input type="text" class="form-control" name="fc_salesphone3" id="fc_salesphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 1</label>
-                                <select class="form-control select2 required-field" name="fc_salesbank1" id="fc_salesbank1"></select>
+                                <select class="form-control select2" name="fc_salesbank1" id="fc_salesbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 2</label>
-                                <select class="form-control select2 required-field" name="fc_salesbank2" id="fc_salesbank2"></select>
+                                <select class="form-control select2" name="fc_salesbank2" id="fc_salesbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Bank 3</label>
-                                <select class="form-control select2 required-field" name="fc_salesbank3" id="fc_salesbank3"></select>
+                                <select class="form-control select2" name="fc_salesbank3" id="fc_salesbank3"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 1</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek1" id="fc_salesnorek1">
+                                <input type="text" class="form-control" name="fc_salesnorek1" id="fc_salesnorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 2</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek2" id="fc_salesnorek2">
+                                <input type="text" class="form-control" name="fc_salesnorek2" id="fc_salesnorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales No Rekening 3</label>
-                                <input type="text" class="form-control required-field" name="fc_salesnorek3" id="fc_salesnorek3">
+                                <input type="text" class="form-control" name="fc_salesnorek3" id="fc_salesnorek3">
                             </div>
                         </div>
 

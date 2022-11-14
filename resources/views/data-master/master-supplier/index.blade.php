@@ -112,32 +112,32 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Name 1</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliername1" id="fc_suppliername1">
+                                <input type="text" class="form-control" name="fc_suppliername1" id="fc_suppliername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Name 2</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliername2" id="fc_suppliername2">
+                                <input type="text" class="form-control" name="fc_suppliername2" id="fc_suppliername2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Pic Name</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicname" id="fc_supplierpicname">
+                                <input type="text" class="form-control" name="fc_supplierpicname" id="fc_supplierpicname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Pic Phone</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicphone" id="fc_supplierpicphone">
+                                <input type="text" class="form-control" name="fc_supplierpicphone" id="fc_supplierpicphone">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Pic Pos</label>
-                                <input type="text" class="form-control required-field" name="fc_supplierpicpos" id="fc_supplierpicpos">
+                                <input type="text" class="form-control" name="fc_supplierpicpos" id="fc_supplierpicpos">
                             </div>
                         </div>
 
