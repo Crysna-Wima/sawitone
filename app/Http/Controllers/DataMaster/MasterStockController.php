@@ -39,8 +39,8 @@ class MasterStockController extends Controller
 
     public function store_update(request $request){
        $validator = Validator::make($request->all(), [
-            'fc_divisioncode' => 'required',
             'fc_stockcode' => 'required',
+            'fc_barcode' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -53,9 +53,8 @@ class MasterStockController extends Controller
         $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = Stock::where([
-                'fc_divisioncode' => $request->fc_divisioncode,
-                'fc_branch' => $request->fc_branch,
                 'fc_stockcode' => $request->fc_stockcode,
+                'fc_barcode' => $request->fc_barcode,
             ])->withTrashed()->count();
 
             if($cek_data > 0){

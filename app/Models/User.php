@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\CompositeKey;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, logsActivity, CompositeKey;
+    use HasApiTokens, HasFactory, Notifiable, logsActivity, CompositeKey, SoftDeletes;
 
     protected static $logAttributes = ["*"];
 

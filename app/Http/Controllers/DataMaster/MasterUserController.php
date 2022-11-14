@@ -43,6 +43,7 @@ class MasterUserController extends Controller
 
         if(empty($request->type)){
             $validation_array['fc_password'] = 'required';
+            $validation_array['fc_username'] = 'required|unique:t_user,fc_username,NULL,fc_username,deleted_at,NULL';
         }
 
        $validator = Validator::make($request->all(), $validation_array);
