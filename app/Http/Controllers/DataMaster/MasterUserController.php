@@ -33,13 +33,19 @@ class MasterUserController extends Controller
     }
 
     public function store_update(request $request){
-       $validator = Validator::make($request->all(), [
+
+        $validation_array = [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
-            'fc_userid' => 'required|unique:t_user,fc_userid,NULL,id,deleted_at,NULL',
-            'fc_username' => 'required|unique:t_user,fc_username,NULL,id,deleted_at,NULL',
-            'fc_password' => 'required',
-        ]);
+            'fc_userid' => 'required',
+            'fc_username' => 'required'
+        ];
+
+        if(empty($request->type)){
+            $validation_array['fc_password'] = 'required';
+        }
+
+       $validator = Validator::make($request->all(), $validation_array);
 
         if($validator->fails()) {
             return [

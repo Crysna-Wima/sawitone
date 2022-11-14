@@ -82,7 +82,7 @@
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" class="form-control required-field" name="fc_password" id="fc_password">
+                            <input type="text" class="form-control" name="fc_password" id="fc_password">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
@@ -94,7 +94,16 @@
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>Hold</label>
-                            <input type="text" class="form-control required-field" name="fl_hold" id="fl_hold">
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fl_hold" value="T" class="selectgroup-input">
+                                    <span class="selectgroup-button">Active</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fl_hold" value="F" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Non Active</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
