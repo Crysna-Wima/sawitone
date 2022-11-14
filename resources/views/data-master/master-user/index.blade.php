@@ -93,20 +93,20 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label>Hold</label>
-                            <input type="text" class="form-control required-field" name="fl_hold" id="fl_hold">
+                            <label>Level</label>
+                            <input type="text" class="form-control required-field" name="fl_level" id="fl_level">
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label>Status</label>
+                            <label>Hold</label>
                             <div class="selectgroup w-100">
                                 <label class="selectgroup-item" style="margin: 0!important">
-                                    <input type="radio" name="fl_level" value="T" class="selectgroup-input" checked="">
+                                    <input type="radio" name="fl_hold" value="T" class="selectgroup-input">
                                     <span class="selectgroup-button">Active</span>
                                 </label>
                                 <label class="selectgroup-item" style="margin: 0!important">
-                                    <input type="radio" name="fl_level" value="F" class="selectgroup-input">
+                                    <input type="radio" name="fl_hold" value="F" class="selectgroup-input" checked="">
                                     <span class="selectgroup-button">Non Active</span>
                                 </label>
                             </div>
@@ -232,10 +232,10 @@
       ],
       rowCallback : function(row, data){
 
-        if(data.fl_level == 'T'){
-            $('td:eq(6)', row).html(`<span class="badge badge-success">active</span>`);
+        if(data.fl_hold == 'T'){
+            $('td:eq(7)', row).html(`<span class="badge badge-success">active</span>`);
         }else{
-            $('td:eq(6)', row).html(`<span class="badge badge-danger">deactive</span>`);
+            $('td:eq(7)', row).html(`<span class="badge badge-danger">deactive</span>`);
         }
 
          var url_reset_password   = "/data-master/master-user/reset-password/" + data.fc_userid;

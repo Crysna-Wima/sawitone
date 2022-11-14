@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Carbon;
+
 use App\Models\User;
 
 class LoginController extends Controller
@@ -43,6 +45,21 @@ class LoginController extends Controller
         $user = User::where(['fc_username' => $request->username])->first();
         if(!empty($user)){
             if (Hash::check($request->password, $user->fc_password)) {
+
+                if($user->fl_hold == 'T'){
+                    return [
+                        'status' => 300,
+                        'message' => 'Akun anda saat ini sedang di hold silahkan hubungi admin untuk aktivasi'
+                    ];
+                }
+
+                if($user->fd_expired != null && $user->fd_expired < Carbon::now()->format('Y-m-d')){
+                    return [
+                        'status' => 300,
+                        'message' => 'Akun anda saat ini sudah expired'
+                    ];
+                }
+
                 Auth::login($user);
             }
         }

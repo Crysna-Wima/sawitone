@@ -8,13 +8,13 @@
         <div class="card">
           <div class="card-body ">
               <div class="text-center mb-2 mt-2">
-                <h3 class="text-primary">Welcome Back, Admin!</h3>
+                <h3 class="text-primary">Welcome Back, {{ auth()->user()->fc_userid }}!</h3>
               </div>
           </div>
         </div>
       </div>
     </div>
-    
+
 </div>
 @endsection
 
