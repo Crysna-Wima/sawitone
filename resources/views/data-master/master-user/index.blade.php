@@ -289,6 +289,7 @@
    function edit(url){
       edit_action(url, 'Edit Data User');
       $("#type").val('update');
+      $('#fc_branch').attr("disabled", true);
    }
 </script>
 @endsection

@@ -70,7 +70,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" onchange="change_branch()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -150,10 +150,37 @@
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].fc_kode == $('#fc_branch_view').val()){
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
-                            $("#fc_branch").prop("disabled", true);
                         }else{
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
+                    }
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function change_branch(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    var data = response.data;
+                    $("#fc_salescode").empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -267,6 +294,7 @@
    function edit(url){
       edit_action(url, 'Edit Data Sales Customer');
       $("#type").val('update');
+      $("#fc_branch").prop("disabled", true);
    }
 </script>
 @endsection

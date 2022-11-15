@@ -202,7 +202,7 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Contact</label>
+                                <label>Customer Contract</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input">
@@ -409,8 +409,7 @@
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].fc_kode == $('#fc_branch_view').val()){
-                            $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
-                            $('#fc_branch').attr("disabled", true);
+                            $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }else{
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
@@ -707,6 +706,7 @@
    function edit(url){
       edit_action(url, 'Edit Data Master Customer');
       $("#type").val('update');
+      $('#fc_branch').attr("disabled", true);
    }
 </script>
 @endsection
