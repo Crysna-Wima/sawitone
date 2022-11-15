@@ -20,11 +20,12 @@ class StockCustomerController extends Controller
         return view('data-master.stock-customer.index');
     }
 
-    public function detail($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_membercode){
+    public function detail($fc_divisioncode,$fc_branch,$fc_stockcode,$fc_barcode,$fc_membercode){
         return StockCustomer::where([
             'fc_divisioncode' => $fc_divisioncode,
             'fc_branch' => $fc_branch,
             'fc_stockcode' => $fc_stockcode,
+            'fc_barcode' => $fc_barcode,
             'fc_membercode' => $fc_membercode,
         ])->first();
     }

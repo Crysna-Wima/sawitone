@@ -340,6 +340,11 @@
         }
     }
 
+    function convertRupiah(angka){
+      var nominal = angka.toString();
+      return nominal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    }
+
     function fungsiRupiah(angka){
         var number_string = angka.toString().replace(/[^,\d]/g, '').toString(),
         split   		= number_string.split(','),

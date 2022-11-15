@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/data-brand','DataMasterController@data_brand');
         Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
+        Route::get('/data-stock-by-primary/{stockcode}/{barcode}','DataMasterController@data_stock_by_primary');
     });
 
 Route::group(['middleware' => ['cek_login']], function () {
