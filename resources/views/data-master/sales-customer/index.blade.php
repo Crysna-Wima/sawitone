@@ -64,8 +64,7 @@
                         <div class="col-12 col-md-12 col-lg-12" hidden>
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode"
-                                    id="fc_divisioncode">
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" id="fc_divisioncode">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">

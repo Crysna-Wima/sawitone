@@ -112,7 +112,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Name 1</label>
-                                <input type="text" class="form-control" name="fc_suppliername1" id="fc_suppliername1">
+                                <input type="text" class="form-control required-field" name="fc_suppliername1" id="fc_suppliername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -162,7 +162,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Supplier Type Business</label>
-                                <select class="select2" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
+                                <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">

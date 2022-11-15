@@ -118,7 +118,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Name 1</label>
-                                <input type="text" class="form-control" name="fc_membername1" id="fc_membername1">
+                                <input type="text" class="form-control required-field" name="fc_membername1" id="fc_membername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -173,7 +173,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Legal Status</label>
-                                <select class="select2" name="fc_memberlegalstatus" id="fc_memberlegalstatus"></select>
+                                <select class="select2 required-field" name="fc_memberlegalstatus" id="fc_memberlegalstatus"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -191,7 +191,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Type Business</label>
-                                <select class="select2" name="fc_membertypebusiness" id="fc_membertypebusiness"></select>
+                                <select class="select2 required-field" name="fc_membertypebusiness" id="fc_membertypebusiness"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -239,7 +239,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Branch Type</label>
-                                <select class="select2" class="form-control" name="fc_member_branchtype" id="fc_member_branchtype"></select>
+                                <select class="select2" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">

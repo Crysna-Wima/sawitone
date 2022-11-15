@@ -89,7 +89,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+            <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
             <form id="form_submit" action="/data-master/master-stock/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
@@ -422,7 +422,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="fv_stockdescription" id="fv_stockdescription" style="height: 50px" class="form-control required-field"></textarea>
+                                <textarea name="fv_stockdescription" id="fv_stockdescription" style="height: 50px" class="form-control"></textarea>
                             </div>
                         </div>
 
@@ -637,7 +637,7 @@
     function get_data_type_stock1(){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/UNITY",
+            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/GOODSMATERY",
             type: "GET",
             dataType: "JSON",
             success: function(response){
@@ -755,8 +755,8 @@
          { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-stock/detail/" + '/' + data.stockcode + '/' + data.fc_barcode;
-         var url_delete = "/data-master/master-stock/delete/" + '/' + data.stockcode + '/' + data.fc_barcode;
+         var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode + '/' + data.fc_barcode;
+         var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode + '/' + data.fc_barcode;
 
         if(data.fl_batch == 'T'){
             $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);

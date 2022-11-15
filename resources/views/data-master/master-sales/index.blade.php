@@ -96,7 +96,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Name 1</label>
-                                <input type="text" class="form-control" name="fc_salesname1" id="fc_salesname1">
+                                <input type="text" class="form-control required-field" name="fc_salesname1" id="fc_salesname1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -148,7 +148,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Sales Phone 1</label>
-                                <input type="text" class="form-control" name="fc_salesphone1" id="fc_salesphone1">
+                                <input type="text" class="form-control required-field" name="fc_salesphone1" id="fc_salesphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">

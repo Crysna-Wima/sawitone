@@ -80,9 +80,8 @@ class MasterStockController extends Controller
         $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);
 
         Stock::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
             'fc_stockcode' => $request->fc_stockcode,
+                'fc_barcode' => $request->fc_barcode,
         ], $request->all());
 
 		return [
