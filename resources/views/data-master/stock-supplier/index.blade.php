@@ -18,6 +18,7 @@
             </div>
             <div class="card-body">
                <div class="row">
+                    <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
                     <form id="form_submit" action="/data-master/stock-supplier/store-update" method="POST" autocomplete="off">
                         <input type="text" name="type" id="type" hidden>
                         <div class="modal-body">
