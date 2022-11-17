@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Builder;
 use App\Blameable;
+use App\Helpers\Convert;
 use App\Traits\CompositeKey;
 
 class StockCustomer extends Model
