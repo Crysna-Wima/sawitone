@@ -139,10 +139,10 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('stock-supplier')->group(function () {
             Route::get('/','DataMaster\StockSupplierController@index');
-            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{suppliercode}','DataMaster\StockSupplierController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{membercode}','DataMaster\StockSupplierController@detail');
             Route::get('/datatables','DataMaster\StockSupplierController@datatables');
             Route::post('/store-update','DataMaster\StockSupplierController@store_update');
-            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{suppliercode}','DataMaster\StockSupplierController@delete');
+            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{membercode}','DataMaster\StockSupplierController@delete');
         });
 
 

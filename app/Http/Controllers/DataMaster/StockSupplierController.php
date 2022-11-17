@@ -20,9 +20,10 @@ class StockSupplierController extends Controller
         return view('data-master.stock-supplier.index');
     }
 
-    public function detail($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_suppliercode){
+    public function detail($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_barcode, $fc_suppliercode){
         return StockSupplier::where([
-            'fc_divisoncode' => $fc_divisioncode,
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_barcode' => $fc_barcode,
             'fc_branch' => $fc_branch,
             'fc_stockcode' => $fc_stockcode,
             'fc_suppliercode' => $fc_suppliercode,
@@ -97,9 +98,10 @@ class StockSupplierController extends Controller
 		];
     }
 
-    public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_suppliercode){
+    public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_barcode, $fc_suppliercode){
         StockSupplier::where([
             'fc_divisoncode' => $fc_divisioncode,
+            'fc_barcode' => $fc_barcode,
             'fc_branch' => $fc_branch,
             'fc_stockcode' => $fc_stockcode,
             'fc_suppliercode' => $fc_suppliercode,
