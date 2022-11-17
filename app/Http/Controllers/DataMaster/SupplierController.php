@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -78,6 +79,10 @@ class SupplierController extends Controller
             'fc_branch' => $request->fc_branch,
             'fc_suppliercode' => $request->fc_suppliercode,
         ], $request->all());
+
+        if(empty($request->type)){
+            NoDocument::update('SUPPLIER');
+        }
 
 		return [
 			'status' => 200, // SUCCESS

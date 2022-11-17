@@ -106,7 +106,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Supplier Code</label>
-                                <input type="text" class="form-control required-field" name="fc_suppliercode" id="fc_suppliercode">
+                                <input type="text" class="form-control required-field" name="fc_suppliercode" id="fc_suppliercode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -347,6 +347,35 @@
         get_data_supplier_bank();
     })
 
+    function generate_no_document(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/generate-no-document",
+            type: "GET",
+            data: {
+                'fv_document': 'SUPPLIER',
+                'fc_branch': null,
+                'fv_part': null,
+            },
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    $('#fc_suppliercode').val(response.data);
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
     function change_nationality(){
         $('#fc_supplierforex').val($('#fc_suppliernationality').val());
     }
@@ -561,6 +590,7 @@
       $(".modal-title").text('Tambah Master Supplier');
       $("#form_submit")[0].reset();
       change_nationality();
+      generate_no_document();
     }
 
    var tb = $('#tb').DataTable({

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Convert;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -83,6 +84,10 @@ class MasterStockController extends Controller
             'fc_stockcode' => $request->fc_stockcode,
                 'fc_barcode' => $request->fc_barcode,
         ], $request->all());
+
+        if(empty($request->type)){
+            NoDocument::update('STOCK');
+        }
 
 		return [
 			'status' => 200, // SUCCESS

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -69,6 +70,10 @@ class MasterWarehouseController extends Controller
             'fc_branch' => $request->fc_branch,
             'fc_warehousecode' => $request->fc_warehousecode,
         ], $request->except(['type']));
+
+        if(empty($request->type)){
+            NoDocument::update('WAREHOUSE');
+        }
 
 		return [
 			'status' => 200, // SUCCESS

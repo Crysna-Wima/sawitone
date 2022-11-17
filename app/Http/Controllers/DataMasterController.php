@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -62,6 +63,11 @@ class DataMasterCOntroller extends Controller
 
     public function data_stock_by_primary($stockcode, $barcode){
         $data = Stock::where(['fc_stockcode' => $stockcode, 'fc_barcode' => $barcode])->first();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function generate_no_document(request $request){
+        $data = NoDocument::generate(Carbon::now()->format('Y'), $request->fv_document, $request->fc_branch, $request->fv_part);
         return ApiFormatter::getResponse($data);
     }
 

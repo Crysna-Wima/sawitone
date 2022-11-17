@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -76,6 +77,10 @@ class SalesController extends Controller
             'fc_branch' => $request->fc_branch,
             'fc_salescode' => $request->fc_salescode,
         ], $request->all());
+
+        if(empty($request->type)){
+            NoDocument::update('SALES');
+        }
 
 		return [
 			'status' => 200, // SUCCESS

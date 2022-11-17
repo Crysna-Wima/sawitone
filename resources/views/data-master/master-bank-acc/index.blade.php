@@ -94,7 +94,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Bank Code</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode">
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" readonly>
                             </div>
                         </div>
 
@@ -152,6 +152,35 @@
         get_data_branch();
     })
 
+    function generate_no_document(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url : "/master/generate-no-document",
+            type: "GET",
+            data: {
+                'fv_document': 'BANK',
+                'fc_branch': null,
+                'fv_part': null,
+            },
+            dataType: "JSON",
+            success: function(response){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                if(response.status === 200){
+                    $('#fc_bankcode').val(response.data);
+                }else{
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
     function get_data_branch(){
         $("#modal_loading").modal('show');
         $.ajax({
@@ -189,6 +218,7 @@
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Master Bank Acc');
       $("#form_submit")[0].reset();
+      generate_no_document();
     }
 
    var tb = $('#tb').DataTable({

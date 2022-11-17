@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Helpers\NoDocument;
 
 use DataTables;
 use Carbon\Carbon;
@@ -79,6 +80,10 @@ class CustomerController extends Controller
             'fc_branch' => $request->fc_branch,
             'fc_membercode' => $request->fc_membercode,
         ], $request->all());
+
+        if(empty($request->type)){
+            NoDocument::update('CUSTOMER');
+        }
 
 		return [
 			'status' => 200, // SUCCESS
