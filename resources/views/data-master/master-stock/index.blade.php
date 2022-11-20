@@ -115,7 +115,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Stock Code</label>
-                                <input type="text" class="form-control required-field" name="fc_stockcode" id="fc_stockcode" readonly>
+                                <input type="text" class="form-control required-field" name="fc_stockcode" id="fc_stockcode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -450,35 +450,6 @@
         get_data_type_stock2();
     })
 
-    function generate_no_document(){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/generate-no-document",
-            type: "GET",
-            data: {
-                'fv_document': 'STOCK',
-                'fc_branch': null,
-                'fv_part': null,
-            },
-            dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    $('#fc_stockcode').val(response.data);
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
     function click_diskon_tanggal(){
         if($('.fl_disc_date:checked').val() == 'F'){
             $('.place_diskon_tanggal').prop('hidden', true);
@@ -726,7 +697,6 @@
       reset_all_select();
       click_diskon_tanggal();
       click_diskon_waktu();
-      generate_no_document();
     }
 
    var tb = $('#tb').DataTable({
