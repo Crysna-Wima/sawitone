@@ -90,7 +90,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Sales Code</label>
-                                <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode" readonly>
+                                <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -236,35 +236,6 @@
         get_data_sales_bank();
     });
 
-    function generate_no_document(){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/generate-no-document",
-            type: "GET",
-            data: {
-                'fv_document': 'SALES',
-                'fc_branch': null,
-                'fv_part': null,
-            },
-            dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    $('#fc_salescode').val(response.data);
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
     function get_data_branch(){
         $("#modal_loading").modal('show');
         $.ajax({
@@ -389,7 +360,6 @@
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Master Sales');
       $("#form_submit")[0].reset();
-      generate_no_document();
     }
 
    var tb = $('#tb').DataTable({

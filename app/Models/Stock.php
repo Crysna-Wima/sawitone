@@ -23,6 +23,10 @@ class Stock extends Model
     protected $guarded = ['type'];
     protected $appends = [];
 
+    public function GetFmPriceDefaultAttribute(){
+        return number_format($this->attributes['fm_price_default'], 2, ",", ".");
+    }
+
     public function scopeActive($query){
         $query->where('status', 1);
     }

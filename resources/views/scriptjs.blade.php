@@ -91,7 +91,7 @@
                       }
                    },error: function (jqXHR, textStatus, errorThrown){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
                    }
                 });
              }
@@ -155,7 +155,7 @@
                       }
                    },error: function (jqXHR, textStatus, errorThrown){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
                    }
                 });
              }
@@ -226,7 +226,7 @@
              });
           },error: function (jqXHR, textStatus, errorThrown){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-             swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+             swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
           }
        });
     }
@@ -259,7 +259,7 @@
 
                    },error: function (jqXHR, textStatus, errorThrown){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
                    }
                 });
              }

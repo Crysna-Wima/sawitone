@@ -69,11 +69,18 @@ class MasterStockController extends Controller
             }
         }
 
+        $request->merge(['fn_reorderlevel' => Convert::convert_to_double($request->fn_reorderlevel) ]);
+        $request->merge(['fn_maxonhand' => Convert::convert_to_double($request->fn_maxonhand) ]);
         $request->merge(['fm_cogs' => Convert::convert_to_double($request->fm_cogs) ]);
         $request->merge(['fm_purchase' => Convert::convert_to_double($request->fm_purchase) ]);
         $request->merge(['fm_salesprice' => Convert::convert_to_double($request->fm_salesprice) ]);
+
+        $request->merge(['fm_purchase' => Convert::convert_to_double($request->fm_purchase) ]);
+        $request->merge(['fm_salesprice' => Convert::convert_to_double($request->fm_salesprice) ]);
+        $request->merge(['fm_disc_pr' => Convert::convert_to_double($request->fm_disc_pr) ]);
         $request->merge(['fm_disc_rp' => Convert::convert_to_double($request->fm_disc_rp) ]);
         $request->merge(['fm_time_disc_rp' => Convert::convert_to_double($request->fm_time_disc_rp) ]);
+        $request->merge(['fm_time_disc_pr' => Convert::convert_to_double($request->fm_time_disc_pr) ]);
         $request->merge(['fm_price_distributor' => Convert::convert_to_double($request->fm_price_distributor) ]);
         $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
         $request->merge(['fm_price_dealer' => Convert::convert_to_double($request->fm_price_dealer) ]);
@@ -82,7 +89,7 @@ class MasterStockController extends Controller
 
         Stock::updateOrCreate([
             'fc_stockcode' => $request->fc_stockcode,
-                'fc_barcode' => $request->fc_barcode,
+            'fc_barcode' => $request->fc_barcode,
         ], $request->all());
 
         if(empty($request->type)){
