@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
         Route::get('/data-stock-by-primary/{stockcode}/{barcode}','DataMasterController@data_stock_by_primary');
+        Route::get('/data-customer-first/{fc_membercode}','DataMasterController@data_customer_first');
         Route::get('/generate-no-document','DataMasterController@generate_no_document');
     });
 
@@ -152,6 +153,9 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::prefix('apps')->group(function () {
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
+            Route::get('/datatables','Apps\SalesOrderController@datatables');
+
+            Route::get('/add-detail/{fc_sono}', 'Apps\SalesOrderController@add_detail');
         });
     });
 });

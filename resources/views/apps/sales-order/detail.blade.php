@@ -27,7 +27,14 @@
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Division</th>
                            <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">So Document</th>
+                           <th scope="col" class="text-center">Bank Name</th>
+                           <th scope="col" class="text-center">Bank Type</th>
+                           <th scope="col" class="text-center">Bank Code</th>
+                           <th scope="col" class="text-center">Bank Branch</th>
+                           <th scope="col" class="text-center">Bank Username</th>
+                           <th scope="col" class="text-center">Bank Hold</th>
+                           <th scope="col" class="text-center">Bank Address 1</th>
+                           <th scope="col" class="text-center">Bank Address 2</th>
                            <th scope="col" class="text-center justify-content-center">Actions</th>
                         </tr>
                      </thead>
@@ -94,7 +101,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>So Transport</label>
-                                <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
+                                <select class="form-control select2 required-field" name="fc_sotransport" id="fc_sotransport">
                                     <option value="Paket">Paket</option>
                                     <option value="Mandiri">Mandiri</option>
                                     <option value="Dexa">Dexa</option>
@@ -110,7 +117,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Customer Code</label>
-                                <select class="form-control select2" name="fc_membercode" id="fc_membercode" onchange="onchange_member_code(this.value)">
+                                <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode" onchange="onchange_member_code(this.value)">
                                 </select>
                             </div>
                         </div>
@@ -136,7 +143,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales</label>
-                                <select class="form-control select2" name="fc_salescode" id="fc_salescode"></select>
+                                <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -349,26 +356,34 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/apps/sales-order/datatables',
+         url: '/data-master/master-bank-acc/datatables',
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0] },
+         { className: 'text-center', targets: [0,11] },
+         { className: 'd-flex', targets: [11] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
          { data: 'branch.fv_description' },
-         { data: 'fc_sono' },
-         { data: 'fc_sono' },
+         { data: 'fv_bankname' },
+         { data: 'fc_banktype' },
+         { data: 'fc_bankcode' },
+         { data: 'fv_bankbranch' },
+         { data: 'fv_bankusername' },
+         { data: 'fl_bankhold' },
+         { data: 'fv_bankaddress1' },
+         { data: 'fv_bankaddress2' },
+         { data: 'fv_bankaddress2' },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
          var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
 
          $('td:eq(11)', row).html(`
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i></button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i></button>
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i> Hapus</button>
             <a href="/apps/sales-order/add-detail/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"> </i> Detail</button></a>
          `);
       }

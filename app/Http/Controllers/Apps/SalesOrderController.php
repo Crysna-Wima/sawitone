@@ -22,6 +22,11 @@ class SalesOrderController extends Controller
         return view('apps.sales-order.index');
     }
 
+    public function add_detail($fc_sono){
+        $data = TempSoMaster::with('branch', 'member_tax_code', 'sales')->where('fc_sono', $fc_sono)->first();
+        return view('views.apps.sales-order.detail', $data);
+    }
+
     public function detail($fc_divisioncode, $fc_branch, $fc_sono){
         return TempSoMaster::where([
             'fc_divisioncode' => $fc_divisioncode,
@@ -50,7 +55,7 @@ class SalesOrderController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        
+
         $request->request->add(['fc_sono' => auth()->user()->fc_user]);
 
         TempSoMaster::updateOrCreate([

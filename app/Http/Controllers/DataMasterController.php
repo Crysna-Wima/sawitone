@@ -12,9 +12,11 @@ use App\Helpers\NoDocument;
 use DataTables;
 use Carbon\Carbon;
 
+use App\Helpers\ApiFormatter;
+
 use App\Models\Brand;
 use App\Models\Stock;
-use App\Helpers\ApiFormatter;
+use App\Models\Customer;
 
 class DataMasterCOntroller extends Controller
 {
@@ -63,6 +65,11 @@ class DataMasterCOntroller extends Controller
 
     public function data_stock_by_primary($stockcode, $barcode){
         $data = Stock::where(['fc_stockcode' => $stockcode, 'fc_barcode' => $barcode])->first();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function data_customer_first($fc_membercode){
+        $data = Customer::with('member_tax_code')->where('fc_membercode', $fc_membercode)->first();
         return ApiFormatter::getResponse($data);
     }
 

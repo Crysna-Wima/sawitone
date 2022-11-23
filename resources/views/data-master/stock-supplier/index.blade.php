@@ -26,7 +26,7 @@
                                 <div class="col-12 col-md-6 col-lg-6" hidden>
                                     <div class="form-group">
                                         <label>Division Code</label>
-                                        <input type="text" class="form-control" name="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" id="fc_divisioncode">
+                                        <input type="text" class="form-control" name="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" id="fc_divisioncode" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4">
@@ -41,7 +41,7 @@
                                         <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode"></select>
                                     </div>
                                 </div>
-    
+
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>-</label>
@@ -151,7 +151,7 @@
            </div>
         </div>
      </div>
-      
+
    </div>
 </div>
 @endsection
