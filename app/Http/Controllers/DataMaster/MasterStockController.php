@@ -92,10 +92,6 @@ class MasterStockController extends Controller
             'fc_barcode' => $request->fc_barcode,
         ], $request->all());
 
-        if(empty($request->type)){
-            NoDocument::update('STOCK');
-        }
-
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'

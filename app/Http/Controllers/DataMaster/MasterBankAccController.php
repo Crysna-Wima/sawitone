@@ -71,10 +71,6 @@ class MasterBankAccController extends Controller
             'fc_bankcode' => $request->fc_bankcode,
         ], $request->all());
 
-        if(empty($request->type)){
-            NoDocument::update('BANK');
-        }
-
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'

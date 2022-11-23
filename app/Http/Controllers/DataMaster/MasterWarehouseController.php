@@ -71,10 +71,6 @@ class MasterWarehouseController extends Controller
             'fc_warehousecode' => $request->fc_warehousecode,
         ], $request->except(['type']));
 
-        if(empty($request->type)){
-            NoDocument::update('WAREHOUSE');
-        }
-
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'

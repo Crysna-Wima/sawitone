@@ -80,10 +80,6 @@ class SupplierController extends Controller
             'fc_suppliercode' => $request->fc_suppliercode,
         ], $request->all());
 
-        if(empty($request->type)){
-            NoDocument::update('SUPPLIER');
-        }
-
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'

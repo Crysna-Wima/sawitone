@@ -36,7 +36,7 @@ class SalesController extends Controller
             'sales_bank1',
             'sales_bank2',
             'sales_bank3',
-        )->orderBy('created_at', 'DESC')->get();
+        )->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
