@@ -31,6 +31,6 @@ class TempSoDetail extends Model
     }
 
     public function warehouse(){
-        return $this->belongsTo(Supplier::class, 'fc_warehouse', 'fc_warehouse')->withTrashed();
+        return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();
     }
 }

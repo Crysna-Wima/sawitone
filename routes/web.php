@@ -154,8 +154,16 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
             Route::get('/datatables','Apps\SalesOrderController@datatables');
+            Route::post('/store-update','Apps\SalesOrderController@store_update');
 
-            Route::get('/add-detail/{fc_sono}', 'Apps\SalesOrderController@add_detail');
+            Route::prefix('detail')->group(function () {
+                Route::get('/{fc_divisioncode}/{fc_branch}/{fc_sono}','Apps\SalesOrderDetailController@index');
+                Route::get('/datatables','Apps\SalesOrderDetailController@datatables');
+                Route::post('/store-update','Apps\SalesOrderDetailController@store_update');
+                Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
+
+                Route::get('/lock','Apps\SalesOrderDetailController@lock');
+            });
         });
     });
 });

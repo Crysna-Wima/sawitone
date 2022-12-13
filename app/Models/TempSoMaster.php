@@ -27,10 +27,10 @@ class TempSoMaster extends Model
     }
 
     public function member_tax_code(){
-        return $this->belongsTo(Stock::class, 'fc_membertaxcode', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed();
     }
 
     public function sales(){
-        return $this->belongsTo(Supplier::class, 'fc_salescode', 'fc_salescode')->withTrashed();
+        return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
 }

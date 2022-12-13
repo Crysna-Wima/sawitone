@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title','Sales Order')
+@section('title','Sales Order Detail')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2){
@@ -15,154 +15,221 @@
          <div class="card">
             <div class="card-header">
                 <h4>Data Sales Order</h4>
-                <div class="card-header-action">
-                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Sales Order</button>
-                </div>
             </div>
             <div class="card-body">
-               <div class="table-responsive" style="overflow-x: unset">
-                  <table class="table table-striped" id="tb" width="100%">
-                     <thead style="white-space: nowrap">
-                        <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Bank Name</th>
-                           <th scope="col" class="text-center">Bank Type</th>
-                           <th scope="col" class="text-center">Bank Code</th>
-                           <th scope="col" class="text-center">Bank Branch</th>
-                           <th scope="col" class="text-center">Bank Username</th>
-                           <th scope="col" class="text-center">Bank Hold</th>
-                           <th scope="col" class="text-center">Bank Address 1</th>
-                           <th scope="col" class="text-center">Bank Address 2</th>
-                           <th scope="col" class="text-center justify-content-center">Actions</th>
-                        </tr>
-                     </thead>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-@endsection
-
-@section('modal')
-
-<!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
-       <div class="modal-content">
-          <div class="modal-header br">
-             <h5 class="modal-title"></h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
-          </div>
-            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
-                <input type="text" name="type" id="type" hidden>
-                <div class="modal-body">
+                <div class="row">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}">
+                                <input type="text" class="form-control required-field" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" onchange="change_branch()"></select>
+                                <input type="text" class="form-control required-field" @isset($data) value="{{ $data->branch->fv_description }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>So Type</label>
-                                <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
-                                    <option value="Consignment">Consignment</option>
-                                    <option value="Regular SO">Regular SO</option>
-                                    <option value="Retailer">Retailer</option>
-                                </select>
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotype }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>So Expired</label>
-                                <input type="date" class="form-control datepicker" name="fd_soexpired" id="fd_soexpired">
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->fd_soexpired }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>So Reference</label>
-                                <input type="text" class="form-control" name="fc_soreference" id="fc_soreference">
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_soreference }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>So Transport</label>
-                                <select class="form-control select2 required-field" name="fc_sotransport" id="fc_sotransport">
-                                    <option value="Paket">Paket</option>
-                                    <option value="Mandiri">Mandiri</option>
-                                    <option value="Dexa">Dexa</option>
-                                </select>
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotransport }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Biaya Lain</label>
-                                <input type="text" class="form-control format-rp" name="fm_servpay" id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp" onkeyup="return onkeyupRupiah(this.id);" @isset($data) value="{{ $data->fm_servpay }}" @endisset readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Code</label>
-                                <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode" onchange="onchange_member_code(this.value)">
-                                </select>
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_membercode }}" @endisset readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Tax Code</label>
+                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->member_tax_code->fv_description }}" @endisset>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Tax Code</label>
-                                <input type="text" class="form-control" name="fc_membertaxcode" id="fc_membertaxcode" hidden readonly>
-                                <input type="text" class="form-control" name="fc_membertaxcode_view" id="fc_membertaxcode_view" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
                                 <label>Member Address Loading 1</label>
-                                <input type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" readonly>
+                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading1 }}" @endisset>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Member Address Loading 2</label>
-                                <input type="text" class="form-control" name="fc_memberaddress_loading2" id="fc_memberaddress_loading2" readonly>
+                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading2 }}" @endisset>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales</label>
-                                <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
+                                <input type="text" class="form-control" @isset($data) value="{{ $data->sales->fc_salesname1 }}" @endisset readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Description Approved</label>
-                                <textarea name="fv_sodesccriptionapproved" id="fv_sodesccriptionapproved" class="form-control" style="height: 80px"></textarea>
+                                <textarea class="form-control" style="height: 80px" readonly>@isset($data) {{ $data->fv_sodesccriptionapproved }} @endisset</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+           <div class="card-header">
+               <h4>Data Stock</h4>
+           </div>
+           <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive" style="overflow-x: unset">
+                        <table class="table table-striped" id="tb_stock" width="100%">
+                           <thead style="white-space: nowrap">
+                              <tr>
+                                 <th scope="col" class="text-center">No</th>
+                                 <th scope="col" class="text-center">Stock Code</th>
+                                 <th scope="col" class="text-center">Barcode</th>
+                                 <th scope="col" class="text-center">Name</th>
+                                 <th scope="col" class="text-center justify-content-center">Actions</th>
+                              </tr>
+                           </thead>
+                        </table>
+                    </div>
+                </div>
+           </div>
+        </div>
+     </div>
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+           <div class="card-header">
+               <h4>Data Sales Order Detail</h4>
+               <div class="card-header-action">
+                    <button type="button" class="btn btn-warning" onclick="click_lock_so();"><i class="fa fa-lock mr-1"></i> Kunci SO</button>
+            </div>
+           </div>
+           <div class="card-body">
+              <div class="table-responsive">
+                 <table class="table table-striped" id="tb" width="100%">
+                    <thead style="white-space: nowrap">
+                       <tr>
+                          <th scope="col" class="text-center">No</th>
+                          <th scope="col" class="text-center">Barcode</th>
+                          <th scope="col" class="text-center">Namepack</th>
+                          <th scope="col" class="text-center">Quantity</th>
+                          <th scope="col" class="text-center">Bonus</th>
+                          <th scope="col" class="text-center">Warehouse</th>
+                          <th scope="col" class="text-center justify-content-center">Actions</th>
+                       </tr>
+                    </thead>
+                 </table>
+              </div>
+           </div>
+        </div>
+     </div>
+   </div>
+</div>
+@endsection
+
+@section('modal')
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xs" role="document">
+       <div class="modal-content">
+          <div class="modal-header br">
+             <h5 class="modal-title">Add Sales Order Detail</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+            <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Stock Code</label>
+                                <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Barcode</label>
+                                <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" name="fc_name" id="fc_name" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>SO Quantity</label>
+                                <input type="number" min="1" class="form-control required-field" name="fn_so_qty" id="fn_so_qty">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>SO Quantity bonus</label>
+                                <input type="number" min="0" class="form-control required-field" name="fn_so_bonusqty" id="fn_so_bonusqty" value="0">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Warehouse</label>
+                                <select class="form-control select2" name="fc_warehousecode" id="fc_warehousecode">
+                                    @foreach ($warehouse as $item)
+                                        <option value="{{ $item->fc_warehousecode }}">{{ $item->fc_rackname }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="fv_description" id="fv_description" class="form-control" style="height: 80px"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Add SO</button>
                 </div>
             </form>
        </div>
     </div>
- </div>
-
+</div>
 @endsection
 
 @section('js')
@@ -173,6 +240,38 @@
         get_data_sales_code();
         get_data_member_code();
     })
+
+    function click_lock_so(){
+        swal({
+             title: 'Yakin?',
+             text: 'Data yang SO sudah di lock tidak bisa dirollback?',
+             icon: 'warning',
+             buttons: true,
+             dangerMode: true,
+       })
+       .then((willDelete) => {
+             if (willDelete) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                    url: '/apps/sales-order/detail/lock',
+                    type: "GET",
+                    dataType: 'JSON',
+                    success: function( response, textStatus, jQxhr ){
+                        if(response.status == 201){
+                            swal(response.message, { icon: 'success', });
+                            setTimeout(function () { window.location.href = '/apps/sales-order' }, 1500);
+                        }else{
+                            swal(response.message, { icon: 'error', });
+                        }
+                    },
+                    error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                    console.warn(jqXhr.responseText);
+                    },
+                });
+             }
+       });
+    }
 
     function get_data_branch(){
         $("#modal_loading").modal('show');
@@ -356,42 +455,57 @@
       processing: true,
       serverSide: true,
       ajax: {
-         url: '/data-master/master-bank-acc/datatables',
+         url: '/apps/sales-order/detail/datatables',
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,11] },
-         { className: 'd-flex', targets: [11] },
+         { className: 'text-center', targets: [0,6] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
-         { data: 'fv_bankname' },
-         { data: 'fc_banktype' },
-         { data: 'fc_bankcode' },
-         { data: 'fv_bankbranch' },
-         { data: 'fv_bankusername' },
-         { data: 'fl_bankhold' },
-         { data: 'fv_bankaddress1' },
-         { data: 'fv_bankaddress2' },
-         { data: 'fv_bankaddress2' },
+         { data: 'fc_barcode' },
+         { data: 'fc_namepack' },
+         { data: 'fn_so_qty' },
+         { data: 'fn_so_bonusqty' },
+         { data: 'warehouse.fc_rackname' },
+         { data: 'fc_warehousecode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
-         var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
+         var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-         $('td:eq(11)', row).html(`
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i> Hapus</button>
-            <a href="/apps/sales-order/add-detail/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"> </i> Detail</button></a>
+         $('td:eq(6)', row).html(`
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
-   function edit(url){
-      edit_action(url, 'Edit Data Sales Order');
-      $("#type").val('update');
-   }
+   var tb_stock = $('#tb_stock').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+         url: '/data-master/master-stock/datatables',
+         type: 'GET'
+      },
+      columnDefs: [
+         { className: 'text-center', targets: [0,4] },
+      ],
+      columns: [
+         { data: 'DT_RowIndex',searchable: false, orderable: false},
+         { data: 'fc_stockcode' },
+         { data: 'fc_barcode' },
+         { data: 'fc_nameshort' },
+         { data: 'fc_nameshort' },
+      ],
+      rowCallback : function(row, data){
+        $('td:eq(4)', row).html(`<button class="btn btn-success" onclick="click_choose_stock('${data.fc_stockcode}','${data.fc_barcode}', '${data.fc_nameshort}')"><i class="fa fa-check"></i> Choose</button>`);
+      }
+   });
+
+    function click_choose_stock(stockcode, barcode, name){
+        $('#modal').modal('show');
+        $('#fc_stockcode').val(stockcode);
+        $('#fc_barcode').val(barcode);
+        $('#fc_name').val(name);
+    }
 </script>
 @endsection

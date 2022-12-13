@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
+use App\Helpers\Convert;
 
 use DataTables;
 use Carbon\Carbon;
@@ -20,11 +21,6 @@ class SalesOrderController extends Controller
 {
     public function index(){
         return view('apps.sales-order.index');
-    }
-
-    public function add_detail($fc_sono){
-        $data = TempSoMaster::with('branch', 'member_tax_code', 'sales')->where('fc_sono', $fc_sono)->first();
-        return view('views.apps.sales-order.detail', $data);
     }
 
     public function detail($fc_divisioncode, $fc_branch, $fc_sono){
@@ -56,12 +52,18 @@ class SalesOrderController extends Controller
             ];
         }
 
-        $request->request->add(['fc_sono' => auth()->user()->fc_user]);
+        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay) ]);
+        $request->request->add(['fc_sono' => auth()->user()->fc_userid]);
 
         TempSoMaster::updateOrCreate([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_sono' => $request->fc_sono,
         ], $request->all());
+
+        return [
+            'status' => 200,
+            'message' => 'Data berhasil disimpan'
+        ];
     }
 }

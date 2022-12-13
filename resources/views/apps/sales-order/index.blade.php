@@ -53,7 +53,7 @@
              </button>
           </div>
             <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/data-master/master-bank-acc/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/apps/sales-order/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -154,7 +154,7 @@
             </form>
        </div>
     </div>
- </div>
+</div>
 
 @endsection
 
@@ -263,8 +263,7 @@
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 if(response.status === 200){
                     var data = response.data;
-                    console.log(data.member_tax_code);
-                    $('#fc_membertaxcode').val(data.fc_membercode);
+                    $('#fc_membertaxcode').val(data.member_tax_code.fc_kode);
                     $('#fc_membertaxcode_view').val(data.member_tax_code.fv_description);
                     $('#fc_memberaddress_loading1').val(data.fc_memberaddress_loading1);
                     $('#fc_memberaddress_loading2').val(data.fc_memberaddress_loading2);
@@ -353,7 +352,7 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0] },
+         { className: 'text-center', targets: [0,4] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -366,10 +365,10 @@
          var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
          var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
 
-         $('td:eq(11)', row).html(`
+         $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i></button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i></button>
-            <a href="/apps/sales-order/add-detail/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"> </i> Detail</button></a>
+            <a href="/apps/sales-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"> </i> Detail</button></a>
          `);
       }
    });
