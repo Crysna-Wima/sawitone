@@ -12,6 +12,7 @@ use App\Helpers\Convert;
 use DataTables;
 use Carbon\Carbon;
 use File;
+use DB;
 
 use App\Models\TempSoMaster;
 use App\Models\TempSoDetail;
@@ -65,5 +66,42 @@ class SalesOrderController extends Controller
             'status' => 200,
             'message' => 'Data berhasil disimpan'
         ];
+    }
+
+    public function delete($fc_divisioncode, $fc_branch, $fc_sono){
+        DB::beginTransaction();
+
+        TempSoDetail::where('fc_sono', $fc_sono)->delete();
+        TempSoMaster::where(['fc_divisioncode' => $fc_divisioncode, 'fc_branch' => $fc_branch, 'fc_sono' => $fc_sono])->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Data berhasil dihapus'
+        ];
+
+		try{
+
+			//query
+
+			DB::commit();
+
+			return [
+				'status' => 200, // SUCCESS
+				'message' => 'Data berhasil dihapus'
+			];
+
+
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }

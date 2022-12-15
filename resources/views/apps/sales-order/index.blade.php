@@ -281,7 +281,7 @@
         });
     }
 
-    function get_data_sales_code(){
+    function get_data_sales_code(fc_salescode = null){
         $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/get-data-all/Sales",
@@ -293,7 +293,11 @@
                     var data = response.data;
                     $("#fc_salescode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
+                        if(fc_salescode == data[i].fc_salescode){
+                            $("#fc_salescode").append(`<option selected value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
+                        }else{
+                            $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
+                        }
                     }
                 }else{
                     iziToast.error({
@@ -309,7 +313,8 @@
         });
     }
 
-    function get_data_member_code(){
+    function get_data_member_code(fc_membercode = null){
+        console.log('member' + fc_membercode);
         $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/get-data-all/Customer",
@@ -321,7 +326,12 @@
                     var data = response.data;
                     $("#fc_membercode").empty();
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                        if(fc_membercode == data[i].fc_membercode){
+                            $("#fc_membercode").append(`<option value="${data[i].fc_membercode}" selected>${data[i].fc_membername1}</option>`);
+                            onchange_member_code(data[i].fc_membercode);
+                        }else{
+                            $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                        }
                     }
                 }else{
                     iziToast.error({
@@ -362,20 +372,63 @@
          { data: 'fc_sono' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
-         var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
+         var url_edit   = "/apps/sales-order/detail-so/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_sono;
+         var url_delete = "/apps/sales-order/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_sono;
 
          $('td:eq(4)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i></button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i></button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_sono}')"><i class="fa fa-trash"> </i></button>
             <a href="/apps/sales-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-eye"> </i> Detail</button></a>
          `);
       }
    });
 
    function edit(url){
-      edit_action(url, 'Edit Data Sales Order');
+      edit_action_custom(url, 'Edit Data Sales Order');
       $("#type").val('update');
    }
+
+   function edit_action_custom(url, modal_text){
+       save_method = 'edit';
+       $("#modal").modal('show');
+       $(".modal-title").text(modal_text);
+       $("#modal_loading").modal('show');
+       $.ajax({
+          url : url,
+          type: "GET",
+          dataType: "JSON",
+          success: function(response){
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 500);
+             Object.keys(response).forEach(function (key) {
+                var elem_name = $('[name=' + key + ']');
+                if (elem_name.hasClass('selectric')) {
+                   elem_name.val(response[key]).change().selectric('refresh');
+                }else if(elem_name.hasClass('select2')){
+                   elem_name.select2("trigger", "select", { data: { id: response[key] } });
+                }else if(elem_name.hasClass('selectgroup-input')){
+                   $("input[name="+key+"][value=" + response[key] + "]").prop('checked', true);
+                }else if(elem_name.hasClass('my-ckeditor')){
+                   CKEDITOR.instances[key].setData(response[key]);
+                }else if(elem_name.hasClass('summernote')){
+                  elem_name.summernote('code', response[key]);
+                }else if(elem_name.hasClass('custom-control-input')){
+                   $("input[name="+key+"][value=" + response[key] + "]").prop('checked', true);
+                }else if(elem_name.hasClass('time-format')){
+                   elem_name.val(response[key].substr(0, 5));
+                }else if(elem_name.hasClass('format-rp')){
+                   var nominal = response[key].toString();
+                   elem_name.val(nominal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                }else{
+                   elem_name.val(response[key]);
+                }
+            });
+            get_data_member_code(response['fc_membercode']);
+            get_data_sales_code(response['fc_salescode']);
+          },error: function (jqXHR, textStatus, errorThrown){
+             setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+             swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+          }
+       });
+    }
 </script>
 @endsection

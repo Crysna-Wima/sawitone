@@ -153,6 +153,7 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::prefix('apps')->group(function () {
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
+            Route::get('/detail-so/{fc_divisioncode}/{fc_branch}/{fc_sono}','Apps\SalesOrderController@detail');
             Route::get('/datatables','Apps\SalesOrderController@datatables');
             Route::post('/store-update','Apps\SalesOrderController@store_update');
 
