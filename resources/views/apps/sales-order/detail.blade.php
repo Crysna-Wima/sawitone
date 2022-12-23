@@ -103,7 +103,33 @@
          </div>
       </div>
 
-      <div class="col-12 col-md-6 col-lg-6">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <input type="text" hidden id="total" value="{{ $total }}">
+            <input type="text" hidden id="grand" value="{{ $grand }}">
+            <input type="text" hidden id="diskon" value="{{ $discount }}">
+            <div class="card-body">
+                <div class="float-right" style="width: 40%">
+                    <div class="d-flex float-right">
+                        <div style="margin-right: 40px">
+                            <h5 class="float-right" style="font-size: 1.1rem">TOTAL</h5><br>
+                            <h5 class="float-right" style="font-size: 1.1rem">DISKON</h5><br>
+                            <hr style="border-top: 1px solid #d1d1d1; margin-top: 1.4rem; margin-bottom: .8rem; width: 150%">
+                            <h4 class="float-right" style="font-size: 1.4rem;">GRAND</h4><br>
+                        </div>
+                        <div>
+                            <h5 class="float-right" id="total_view" style="font-size: 1.1rem">{{ "Rp " . number_format($total,0,',','.') }}</h5><br>
+                            <h5 class="float-right" id="discount_view" style="font-size: 1.1rem">- {{ "Rp " . number_format($discount,0,',','.') }}</h5><br>
+                            <hr style="border-top: 1px solid #d1d1d1; margin-top: 1.4rem; margin-bottom: .8rem">
+                            <h3 class="float-right" id="grand_view" style="font-size: 1.4rem;">{{ "Rp " . number_format($grand,0,',','.') }}</h3><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-4">
         <div class="card">
            <div class="card-header">
                <h4>Data Stock</h4>
@@ -128,7 +154,7 @@
         </div>
      </div>
 
-      <div class="col-12 col-md-6 col-lg-6">
+      <div class="col-12 col-md-8 col-lg-8">
         <div class="card">
            <div class="card-header">
                <h4>Data Sales Order Detail</h4>
@@ -144,9 +170,13 @@
                           <th scope="col" class="text-center">No</th>
                           <th scope="col" class="text-center">Barcode</th>
                           <th scope="col" class="text-center">Namepack</th>
-                          <th scope="col" class="text-center">Quantity</th>
-                          <th scope="col" class="text-center">Bonus</th>
                           <th scope="col" class="text-center">Warehouse</th>
+                          <th scope="col" class="text-center">Quantity</th>
+                          <th scope="col" class="text-center">Bonus Qty</th>
+                          <th scope="col" class="text-center">Harga</th>
+                          <th scope="col" class="text-center">Disc (Rp)</th>
+                          <th scope="col" class="text-center">Total</th>
+                          <th scope="col" class="text-center">Description</th>
                           <th scope="col" class="text-center justify-content-center">Actions</th>
                        </tr>
                     </thead>
@@ -170,7 +200,7 @@
              </button>
           </div>
             <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
+            <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -219,7 +249,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Total Harga</label>
-                                <input type="text" class="form-control format-rp required-field" name="fn_so_value" id="fn_so_value" readonly> 
+                                <input type="text" class="form-control format-rp required-field" name="fn_so_value" id="fn_so_value" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -466,7 +496,7 @@
     function add(){
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Sales Order');
-      $("#form_submit")[0].reset();
+      $("#form_submit_custom")[0].reset();
       change_branch();
     }
 
@@ -478,21 +508,25 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6] },
+         { className: 'text-center', targets: [0,4,5,10] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_barcode' },
          { data: 'fc_namepack' },
+         { data: 'warehouse_desc' },
          { data: 'fn_so_qty' },
          { data: 'fn_so_bonusqty' },
-         { data: 'warehouse.fc_rackname' },
+         { data: 'fm_so_price', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_so_disc', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fn_so_value', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fv_description' },
          { data: 'fc_warehousecode' },
       ],
       rowCallback : function(row, data){
          var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-         $('td:eq(6)', row).html(`
+         $('td:eq(10)', row).html(`
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
@@ -533,5 +567,65 @@
         console.log($total_harga);
         $('#fn_so_value').val($total_harga.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
     }
+
+    $('#form_submit_custom').on('submit', function(e){
+       e.preventDefault();
+
+       var form_id = $(this).attr("id");
+       if(check_required(form_id) === false){
+          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+          return;
+       }
+
+       swal({
+             title: 'Yakin?',
+             text: 'Apakah anda yakin akan menyimpan data ini?',
+             icon: 'warning',
+             buttons: true,
+             dangerMode: true,
+       })
+       .then((willDelete) => {
+             if (willDelete) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                   url:  $('#form_submit_custom').attr('action'),
+                   type: $('#form_submit_custom').attr('method'),
+                   data: $('#form_submit_custom').serialize(),
+                   success: function(response){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      if(response.status == 200){
+                        $('#discount').val(response.data.discount);
+                        $('#total').val(response.data.total);
+                        $('#grand').val(response.data.grand);
+                        $('#discount_view').html(response.data.discount_view);
+                        $('#total_view').html(response.data.total_view);
+                        $('#grand_view').html(response.data.grand_view);
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         $("#form_submit_custom")[0].reset();
+                         reset_all_select();
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 201){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         window.location.href = response.link;
+                      }
+                      else if(response.status == 203){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 300){
+                         swal(response.message, { icon: 'error', });
+                      }
+                   },error: function (jqXHR, textStatus, errorThrown){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                   }
+                });
+             }
+       });
+    });
 </script>
 @endsection

@@ -21,6 +21,11 @@ use App\Models\Customer;
 class SalesOrderController extends Controller
 {
     public function index(){
+        $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
+        if(!empty($temp_so_master)){
+            return redirect()->route('so.detail');
+        }
+
         return view('apps.sales-order.index');
     }
 
