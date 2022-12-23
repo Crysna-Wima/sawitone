@@ -68,7 +68,8 @@ class SalesOrderController extends Controller
         ], $request->all());
 
         return [
-            'status' => 200,
+            'status' => 201,
+            'link' => '/apps/sales-order/detail',
             'message' => 'Data berhasil disimpan'
         ];
     }

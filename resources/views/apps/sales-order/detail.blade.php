@@ -18,84 +18,82 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6" hidden>
-                            <div class="form-group">
-                                <label>Division Code</label>
-                                <input type="text" class="form-control required-field" value="{{ auth()->user()->fc_divisioncode }}" readonly>
-                            </div>
+                    <div class="col-12 col-md-6 col-lg-6" hidden>
+                        <div class="form-group">
+                            <label>Division Code</label>
+                            <input type="text" class="form-control required-field" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Branch</label>
-                                <input type="text" class="form-control required-field" @isset($data) value="{{ $data->branch->fv_description }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Branch</label>
+                            <input type="text" class="form-control required-field" @isset($data) value="{{ $data->branch->fv_description }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>So Type</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotype }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>So Type</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotype }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>So Expired</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->fd_soexpired }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>So Expired</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->fd_soexpired }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>So Reference</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_soreference }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>So Reference</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_soreference }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>So Transport</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotransport }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>So Transport</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotransport }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Biaya Lain</label>
-                                <input type="text" class="form-control format-rp" @isset($data) value="{{ "Rp " . number_format($data->fm_servpay,0,',','.') }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Biaya Lain</label>
+                            <input type="text" class="form-control format-rp" @isset($data) value="{{ "Rp " . number_format($data->fm_servpay,0,',','.') }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Customer Code</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->fc_membercode }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Customer Code</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_membercode }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Tax Code</label>
-                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->member_tax_code->fv_description }}" @endisset>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label>Tax Code</label>
+                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->member_tax_code->fv_description }}" @endisset>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>Member Address Loading 1</label>
-                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading1 }}" @endisset>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Member Address Loading 1</label>
+                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading1 }}" @endisset>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>Member Address Loading 2</label>
-                                <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading2 }}" @endisset>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label>Member Address Loading 2</label>
+                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading2 }}" @endisset>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Sales</label>
-                                <input type="text" class="form-control" @isset($data) value="{{ $data->sales->fc_salesname1 }}" @endisset readonly>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Sales</label>
+                            <input type="text" class="form-control" @isset($data) value="{{ $data->sales->fc_salesname1 }}" @endisset readonly>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Description Approved</label>
-                                <textarea class="form-control" style="height: 80px" readonly>@isset($data) {{ $data->fv_sodesccriptionapproved }} @endisset</textarea>
-                            </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Description Approved</label>
+                            <textarea class="form-control" style="height: 80px" readonly>@isset($data) {{ $data->fv_sodesccriptionapproved }} @endisset</textarea>
                         </div>
                     </div>
                 </div>
