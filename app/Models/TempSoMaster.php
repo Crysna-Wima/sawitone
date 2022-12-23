@@ -20,7 +20,6 @@ class TempSoMaster extends Model
     protected $primaryKey = 'fc_sono';
     public $incrementing = false;
     protected $guarded = ['type'];
-    protected $appends = [];
 
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();

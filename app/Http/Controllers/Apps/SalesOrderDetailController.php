@@ -21,12 +21,10 @@ use App\Models\Warehouse;
 class SalesOrderDetailController extends Controller
 {
 
-    public function index($fc_divisioncode, $fc_branch, $fc_sono){
+    public function index(){
         $data['warehouse'] = Warehouse::all();
         $data['data'] = TempSoMaster::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_sono' => $fc_sono,
+            'fc_sono' => auth()->user()->fc_userid,
         ])->with('branch','member_tax_code','sales')->first();
 
         return view('apps.sales-order.detail', $data);
@@ -71,6 +69,10 @@ class SalesOrderDetailController extends Controller
         $fn_sorownum = 1;
         if(!empty($temp_detail)){
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
+        }
+
+        if($request->fc_warehousecode == 'NO GUDANG'){
+            $request->request->remove('fc_warehouse');
         }
 
         TempSoDetail::create([

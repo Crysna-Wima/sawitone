@@ -58,7 +58,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Biaya Lain</label>
-                                <input type="text" class="form-control format-rp" onkeyup="return onkeyupRupiah(this.id);" @isset($data) value="{{ $data->fm_servpay }}" @endisset readonly>
+                                <input type="text" class="form-control format-rp" @isset($data) value="{{ "Rp " . number_format($data->fm_servpay,0,',','.') }}" @endisset readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -192,10 +192,16 @@
                                 <input type="text" class="form-control" name="fc_name" id="fc_name" readonly>
                             </div>
                         </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Purchase</label>
+                                <input type="text" class="form-control format-rp" name="fm_so_price" id="fm_so_price" readonly>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>SO Quantity</label>
-                                <input type="number" min="1" class="form-control required-field" name="fn_so_qty" id="fn_so_qty">
+                                <input type="number" min="1" class="form-control required-field" name="fn_so_qty" id="fn_so_qty" onkeyup="onkeyup_total_harga()">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -204,10 +210,23 @@
                                 <input type="number" min="0" class="form-control required-field" name="fn_so_bonusqty" id="fn_so_bonusqty" value="0">
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>SO Disc (Rp)</label>
+                                <input type="text" class="form-control required-field" name="fm_so_disc" id="fm_so_disc" value="0" onkeyup="onkeyup_total_harga()">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Total Harga</label>
+                                <input type="text" class="form-control format-rp required-field" name="fn_so_value" id="fn_so_value" readonly> 
+                            </div>
+                        </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Warehouse</label>
                                 <select class="form-control select2" name="fc_warehousecode" id="fc_warehousecode">
+                                    <option>NO GUDANG</option>
                                     @foreach ($warehouse as $item)
                                         <option value="{{ $item->fc_warehousecode }}">{{ $item->fc_rackname }}</option>
                                     @endforeach
@@ -497,15 +516,22 @@
          { data: 'fc_nameshort' },
       ],
       rowCallback : function(row, data){
-        $('td:eq(4)', row).html(`<button class="btn btn-success" onclick="click_choose_stock('${data.fc_stockcode}','${data.fc_barcode}', '${data.fc_nameshort}')"><i class="fa fa-check"></i> Choose</button>`);
+        $('td:eq(4)', row).html(`<button class="btn btn-success" onclick="click_choose_stock('${data.fc_stockcode}','${data.fc_barcode}', '${data.fc_nameshort}', '${data.fm_price_default}')"><i class="fa fa-check"></i> Choose</button>`);
       }
    });
 
-    function click_choose_stock(stockcode, barcode, name){
+    function click_choose_stock(stockcode, barcode, name, price){
         $('#modal').modal('show');
         $('#fc_stockcode').val(stockcode);
         $('#fc_barcode').val(barcode);
         $('#fc_name').val(name);
+        $('#fm_so_price').val(price);
+    }
+
+    function onkeyup_total_harga(){
+        $total_harga = ($('#fm_so_price').val() * $('#fn_so_qty').val()) - parseInt($('#fm_so_disc').val());
+        console.log($total_harga);
+        $('#fn_so_value').val($total_harga.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
     }
 </script>
 @endsection

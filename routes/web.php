@@ -158,7 +158,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update','Apps\SalesOrderController@store_update');
 
             Route::prefix('detail')->group(function () {
-                Route::get('/{fc_divisioncode}/{fc_branch}/{fc_sono}','Apps\SalesOrderDetailController@index');
+                Route::get('/','Apps\SalesOrderDetailController@index');
                 Route::get('/datatables','Apps\SalesOrderDetailController@datatables');
                 Route::post('/store-update','Apps\SalesOrderDetailController@store_update');
                 Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
