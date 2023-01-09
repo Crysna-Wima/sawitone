@@ -22,12 +22,20 @@ use Illuminate\Support\Facades\Route;
         Route::get('/get-data-where-field-id-first/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_first');
         Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_get');
 
+        Route::get('/get-data-all-table/{model}','DataMasterController@get_data_all_table');
+        Route::get('/get-data-by-id-table/{model}/{id}','DataMasterController@get_data_by_id_table');
+        Route::get('/get-data-where-field-id-get-table/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_get_table');
+
         Route::get('/data-brand','DataMasterController@data_brand');
         Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
         Route::get('/data-stock-by-primary/{stockcode}/{barcode}','DataMasterController@data_stock_by_primary');
         Route::get('/data-customer-first/{fc_membercode}','DataMasterController@data_customer_first');
         Route::get('/generate-no-document','DataMasterController@generate_no_document');
+
+        Route::get('/get-data-customer-so-datatables/{fc_branch}','DataMasterController@get_data_customer_so_datatables');
+        Route::get('/get-data-stock-so-datatables','DataMasterController@get_data_stock_so_datatables');
+        
     });
 
 Route::group(['middleware' => ['cek_login']], function () {
@@ -165,6 +173,11 @@ Route::group(['middleware' => ['cek_login']], function () {
 
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
+        });
+
+        Route::prefix('sales-order2')->group(function () {
+           Route::view('/', 'apps.sales-order2.index');
+           Route::get('detailCustomer/{fc_membercode}', 'Apps\SalesOrder2@detail_customer');
         });
     });
 });

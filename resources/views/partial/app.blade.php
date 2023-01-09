@@ -60,6 +60,10 @@
             border: 1px solid #dc3545 !important;
         }
 
+        .modal-xl{
+            max-width: 1140px;
+        }
+
         </style>
 
     @yield('css')

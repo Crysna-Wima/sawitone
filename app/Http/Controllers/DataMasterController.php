@@ -81,4 +81,47 @@ class DataMasterCOntroller extends Controller
 
     #================ DATATABLES ===============#
 
+    public function get_data_all_table($model){
+        $model = 'App\\Models\\' . $model;
+        $data = $model::all();
+
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function get_data_by_id_table($model, $id){
+        $model = 'App\\Models\\' . $model;
+        $data = $model::find($id);
+
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+    
+    public function get_data_where_field_id_get_table($model, $where_field, $id){
+        $model = 'App\\Models\\' . $model;
+        $data = $model::where($where_field, $id)->get();
+
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+
+    public function get_data_customer_so_datatables($fc_branch){
+        $data = Customer::with('member_type_business','member_typebranch','member_legal_status')->where('fc_branch', $fc_branch)->get();
+
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function get_data_stock_so_datatables(){
+        $data = Stock::with('namepack')->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
 }
