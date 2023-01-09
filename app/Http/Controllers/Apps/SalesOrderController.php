@@ -21,34 +21,19 @@ use App\Models\Customer;
 class SalesOrderController extends Controller
 {
     public function index(){
-        $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
+        $temp_so_master = TempSoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', auth()->user()->fc_userid)->first();
         if(!empty($temp_so_master)){
-            return redirect()->route('so.detail');
+            $data['data'] = $temp_so_master;
+            return view('apps.sales-order.detail', $data);
         }
-
         return view('apps.sales-order.index');
-    }
-
-    public function detail($fc_divisioncode, $fc_branch, $fc_sono){
-        return TempSoMaster::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_sono' => $fc_sono,
-        ])->first();
-    }
-
-    public function datatables(){
-        $data = TempSoMaster::with('branch')->orderBy('created_at', 'DESC')->get();
-
-        return DataTables::of($data)
-                ->addIndexColumn()
-                ->make(true);
     }
 
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
-            'fc_divisioncode' => 'required',
-            'fc_branch' => 'required',
+            'fc_salescode' => 'required',
+            'fc_membercode' => 'required',
+            'fc_sotype' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -58,45 +43,46 @@ class SalesOrderController extends Controller
             ];
         }
 
-        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay) ]);
         $request->request->add(['fc_sono' => auth()->user()->fc_userid]);
 
-        TempSoMaster::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
+        $customer = Customer::where('fc_membercode', $request->fc_membercode)->first();
+
+        TempSoMaster::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
             'fc_sono' => $request->fc_sono,
+            'fc_sotype' => $request->fc_sotype,
+            'fc_membercode' => $request->fc_membercode,
+            'fc_membertaxcode' => $customer->fc_membertaxcode,
+            'fc_memberaddress_loading1' => $customer->fc_memberaddress_loading1,
+            'fc_memberaddress_loading2' => $customer->fc_memberaddress_loading2,
+            'fd_sodatesysinput' => Carbon::now(),
+            'fd_sodatesysinput' => Carbon::now(),
+            'fc_salescode' => $request->fc_salescode,
+            'fc_userid' => auth()->user()->fc_userid,
         ], $request->all());
 
         return [
             'status' => 201,
-            'link' => '/apps/sales-order/detail',
+            'link' => '/apps/sales-order2',
             'message' => 'Data berhasil disimpan'
         ];
     }
 
-    public function delete($fc_divisioncode, $fc_branch, $fc_sono){
+    public function delete(){
         DB::beginTransaction();
 
-        TempSoDetail::where('fc_sono', $fc_sono)->delete();
-        TempSoMaster::where(['fc_divisioncode' => $fc_divisioncode, 'fc_branch' => $fc_branch, 'fc_sono' => $fc_sono])->delete();
-
-        return [
-            'status' => 200,
-            'message' => 'Data berhasil dihapus'
-        ];
-
 		try{
-
-			//query
+            TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->delete();
+            TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid])->delete();
 
 			DB::commit();
 
 			return [
-				'status' => 200, // SUCCESS
+				'status' => 201, // SUCCESS
+                'link' => '/apps/sales-order',
 				'message' => 'Data berhasil dihapus'
 			];
-
-
 		}
 
 		catch(\Exception $e){

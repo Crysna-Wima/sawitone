@@ -69,7 +69,7 @@ class DataMasterCOntroller extends Controller
     }
 
     public function data_customer_first($fc_membercode){
-        $data = Customer::with('member_tax_code')->where('fc_membercode', $fc_membercode)->first();
+        $data = Customer::with('member_tax_code','member_typebranch','member_type_business','member_legal_status')->where('fc_membercode', $fc_membercode)->first();
         return ApiFormatter::getResponse($data);
     }
 
@@ -98,7 +98,7 @@ class DataMasterCOntroller extends Controller
                 ->addIndexColumn()
                 ->make(true);
     }
-    
+
     public function get_data_where_field_id_get_table($model, $where_field, $id){
         $model = 'App\\Models\\' . $model;
         $data = $model::where($where_field, $id)->get();

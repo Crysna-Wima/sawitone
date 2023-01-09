@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('/get-data-customer-so-datatables/{fc_branch}','DataMasterController@get_data_customer_so_datatables');
         Route::get('/get-data-stock-so-datatables','DataMasterController@get_data_stock_so_datatables');
-        
+
     });
 
 Route::group(['middleware' => ['cek_login']], function () {
@@ -161,9 +161,9 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::prefix('apps')->group(function () {
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
-            Route::get('/detail-so/{fc_divisioncode}/{fc_branch}/{fc_sono}','Apps\SalesOrderController@detail');
             Route::get('/datatables','Apps\SalesOrderController@datatables');
             Route::post('/store-update','Apps\SalesOrderController@store_update');
+            Route::delete('/delete','Apps\SalesOrderController@delete');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/','Apps\SalesOrderDetailController@index')->name('so.detail');

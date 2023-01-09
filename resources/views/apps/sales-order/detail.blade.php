@@ -1,397 +1,355 @@
 @extends('partial.app')
-@section('title','Sales Order Detail')
+@section('title','Sales Order')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2){
         overflow-x: auto;
+    }
+
+    .d-flex .flex-row-item {
+        flex: 1 1 30%;
+    }
+
+    .text-secondary{
+        color: #969DA4!important;
+    }
+
+    .text-success{
+        color: #28a745!important;
     }
 </style>
 @endsection
 @section('content')
 
 <div class="section-body">
-   <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                <h4>Data Sales Order</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6" hidden>
-                        <div class="form-group">
-                            <label>Division Code</label>
-                            <input type="text" class="form-control required-field" value="{{ auth()->user()->fc_divisioncode }}" readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Branch</label>
-                            <input type="text" class="form-control required-field" @isset($data) value="{{ $data->branch->fv_description }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>So Type</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotype }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>So Expired</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->fd_soexpired }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>So Reference</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_soreference }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>So Transport</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_sotransport }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Biaya Lain</label>
-                            <input type="text" class="form-control format-rp" @isset($data) value="{{ "Rp " . number_format($data->fm_servpay,0,',','.') }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Customer Code</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->fc_membercode }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Tax Code</label>
-                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->member_tax_code->fv_description }}" @endisset>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label>Member Address Loading 1</label>
-                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading1 }}" @endisset>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <div class="form-group">
-                            <label>Member Address Loading 2</label>
-                            <input type="text" class="form-control" readonly @isset($data) value="{{ $data->fc_memberaddress_loading2 }}" @endisset>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Sales</label>
-                            <input type="text" class="form-control" @isset($data) value="{{ $data->sales->fc_salesname1 }}" @endisset readonly>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label>Description Approved</label>
-                            <textarea class="form-control" style="height: 80px" readonly>@isset($data) {{ $data->fv_sodesccriptionapproved }} @endisset</textarea>
-                        </div>
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Master Sales Order</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <input type="text" hidden id="total" value="{{ $total }}">
-            <input type="text" hidden id="grand" value="{{ $grand }}">
-            <input type="text" hidden id="diskon" value="{{ $discount }}">
-            <div class="card-body">
-                <div class="float-right" style="width: 40%">
-                    <div class="d-flex float-right">
-                        <div style="margin-right: 40px">
-                            <h5 class="float-right" style="font-size: 1.1rem">TOTAL</h5><br>
-                            <h5 class="float-right" style="font-size: 1.1rem">DISKON</h5><br>
-                            <hr style="border-top: 1px solid #d1d1d1; margin-top: 1.4rem; margin-bottom: .8rem; width: 150%">
-                            <h4 class="float-right" style="font-size: 1.4rem;">GRAND</h4><br>
-                        </div>
-                        <div>
-                            <h5 class="float-right" id="total_view" style="font-size: 1.1rem">{{ "Rp " . number_format($total,0,',','.') }}</h5><br>
-                            <h5 class="float-right" id="discount_view" style="font-size: 1.1rem">- {{ "Rp " . number_format($discount,0,',','.') }}</h5><br>
-                            <hr style="border-top: 1px solid #d1d1d1; margin-top: 1.4rem; margin-bottom: .8rem">
-                            <h3 class="float-right" id="grand_view" style="font-size: 1.4rem;">{{ "Rp " . number_format($grand,0,',','.') }}</h3><br>
+                <div class="collapse" id="mycard-collapse">
+                    <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Tanggal : {{ \Carbon\Carbon::parse($data->created_at)->format('d/m/Y') }}</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Sales</label>
+                                    <input type="text" class="form-control" value="{{ $data->sales->fc_salesname1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Customer Code</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $data->fc_membercode }}" readonly>
+                                        <div class="input-group-append">
+                                        <button class="btn btn-primary" disabled onclick="click_modal_customer()" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>SO Type</label>
+                                    <input type="text" class="form-control" value="{{ $data->fc_sotype }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button class="btn btn-danger" onclick="click_delete()">Delete</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
-
-      <div class="col-12 col-md-4 col-lg-4">
-        <div class="card">
-           <div class="card-header">
-               <h4>Data Stock</h4>
-           </div>
-           <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive" style="overflow-x: unset">
-                        <table class="table table-striped" id="tb_stock" width="100%">
-                           <thead style="white-space: nowrap">
-                              <tr>
-                                 <th scope="col" class="text-center">No</th>
-                                 <th scope="col" class="text-center">Stock Code</th>
-                                 <th scope="col" class="text-center">Barcode</th>
-                                 <th scope="col" class="text-center">Name</th>
-                                 <th scope="col" class="text-center justify-content-center">Actions</th>
-                              </tr>
-                           </thead>
-                        </table>
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detail Customer Sales Order</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-           </div>
-        </div>
-     </div>
-
-      <div class="col-12 col-md-8 col-lg-8">
-        <div class="card">
-           <div class="card-header">
-               <h4>Data Sales Order Detail</h4>
-               <div class="card-header-action">
-                    <button type="button" class="btn btn-warning" onclick="click_lock_so();"><i class="fa fa-lock mr-1"></i> Kunci SO</button>
+                <div class="collapse" id="mycard-collapse2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>NPWP</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fc_membernpwp_no }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Cabang</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->member_typebranch->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Bisnis</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->member_type_business->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fc_membername1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fc_memberaddress1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Masa Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Legal Status</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->member_legal_status->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Alamat Muat</label>
+                                    <input type="text" class="form-control" value="{{ $data->fc_memberaddress_loading1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fm_memberAP }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-           </div>
-           <div class="card-body">
-              <div class="table-responsive">
-                 <table class="table table-striped" id="tb" width="100%">
-                    <thead style="white-space: nowrap">
-                       <tr>
-                          <th scope="col" class="text-center">No</th>
-                          <th scope="col" class="text-center">Barcode</th>
-                          <th scope="col" class="text-center">Namepack</th>
-                          <th scope="col" class="text-center">Warehouse</th>
-                          <th scope="col" class="text-center">Quantity</th>
-                          <th scope="col" class="text-center">Bonus Qty</th>
-                          <th scope="col" class="text-center">Harga</th>
-                          <th scope="col" class="text-center">Disc (Rp)</th>
-                          <th scope="col" class="text-center">Total</th>
-                          <th scope="col" class="text-center">Description</th>
-                          <th scope="col" class="text-center justify-content-center">Actions</th>
-                       </tr>
-                    </thead>
-                 </table>
-              </div>
-           </div>
         </div>
-     </div>
-   </div>
+
+        <div class="col-12 col-md-6 col-lg-7 place_detail">
+            <div class="card">
+                <div class="card-body" style="padding-top: 30px!important;">
+                    <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Barcode</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
+                                        <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <label>Qty</label>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="fn_so_qty" id="fn_so_qty">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button class="btn btn-success">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-5 place_detail">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="flex-row-item">
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Item</p>
+                                <p class="text-success flex-row-item" id="count_item">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Quantity</p>
+                                <p class="text-success flex-row-item" id="count_quantity">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Disc. Total</p>
+                                <p class="text-success flex-row-item">0,00</p>
+                            </div>
+                        </div>
+                        <div class="flex-row-item">
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Total</p>
+                                <p class="text-success text-center flex-row-item" id="total_harga">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Pajak(+11%)</p>
+                                <p class="text-success text-center flex-row-item">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="text-secondary flex-row-item">Disc. Item</p>
+                                <p class="text-success text-center flex-row-item">0,00</p>
+                            </div>
+                        </div>
+                        <div style="flex: 1 1 15%">
+                            <p class="text-secondary" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
+                            <h5 class="text-success" id="grand_total">Rp. 0,00</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+             <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb" width="100%">
+                                <thead style="white-space: nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Barcode</th>
+                                    <th scope="col" class="text-center">Nama Produk</th>
+                                    <th scope="col" class="text-center">Unity</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Harga</th>
+                                    <th scope="col" class="text-center">Disc.(%)</th>
+                                    <th scope="col" class="text-center">Disc.(Rp)</th>
+                                    <th scope="col" class="text-center">Total</th>
+                                    <th scope="col" class="text-center justify-content-center">Actions</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
 </div>
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xs" role="document">
-       <div class="modal-content">
-          <div class="modal-header br">
-             <h5 class="modal-title">Add Sales Order Detail</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
-          </div>
-            <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
-                <input type="text" name="type" id="type" hidden>
+    <div class="modal fade" role="dialog" id="modal_customer" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Stock Code</label>
-                                <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Barcode</label>
-                                <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="fc_name" id="fc_name" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Purchase</label>
-                                <input type="text" class="form-control format-rp" name="fm_so_price" id="fm_so_price" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>SO Quantity</label>
-                                <input type="number" min="1" class="form-control required-field" name="fn_so_qty" id="fn_so_qty" onkeyup="onkeyup_total_harga()">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>SO Quantity bonus</label>
-                                <input type="number" min="0" class="form-control required-field" name="fn_so_bonusqty" id="fn_so_bonusqty" value="0">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>SO Disc (Rp)</label>
-                                <input type="text" class="form-control required-field" name="fm_so_disc" id="fm_so_disc" value="0" onkeyup="onkeyup_total_harga()">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>Total Harga</label>
-                                <input type="text" class="form-control format-rp required-field" name="fn_so_value" id="fn_so_value" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Warehouse</label>
-                                <select class="form-control select2" name="fc_warehousecode" id="fc_warehousecode">
-                                    <option>NO GUDANG</option>
-                                    @foreach ($warehouse as $item)
-                                        <option value="{{ $item->fc_warehousecode }}">{{ $item->fc_rackname }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="fv_description" id="fv_description" class="form-control" style="height: 80px"></textarea>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_customer" width="100%">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Kode</th>
+                                <th scope="col" class="text-center">Nama</th>
+                                <th scope="col" class="text-center">Alamat</th>
+                                <th scope="col" class="text-center">Tipe Bisnis</th>
+                                <th scope="col" class="text-center">Tipe Cabang</th>
+                                <th scope="col" class="text-center">Status Legal</th>
+                                <th scope="col" class="text-center">NPWP</th>
+                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                            </tr>
+                        </thead>
+                        </table>
                     </div>
                 </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add SO</button>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" id="modal_stock" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_stock" width="100%">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Kode Produk</th>
+                                <th scope="col" class="text-center">Nama Produk</th>
+                                <th scope="col" class="text-center">Unity</th>
+                                <th scope="col" class="text-center">Harga</th>
+                                <th scope="col" class="text-center">Stock</th>
+                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                            </tr>
+                        </thead>
+                        </table>
+                    </div>
                 </div>
             </form>
-       </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
     </div>
-</div>
 @endsection
 
 @section('js')
 <script>
 
     $(document).ready(function(){
-        get_data_branch();
-        get_data_sales_code();
-        get_data_member_code();
+        get_data_sales();
+        $('.place_detail').attr('hidden', false);
     })
 
-    function click_lock_so(){
-        swal({
-             title: 'Yakin?',
-             text: 'Data yang SO sudah di lock tidak bisa dirollback?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((willDelete) => {
-             if (willDelete) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                    url: '/apps/sales-order/detail/lock',
-                    type: "GET",
-                    dataType: 'JSON',
-                    success: function( response, textStatus, jQxhr ){
-                        if(response.status == 201){
-                            swal(response.message, { icon: 'success', });
-                            setTimeout(function () { window.location.href = '/apps/sales-order' }, 1500);
-                        }else{
-                            swal(response.message, { icon: 'error', });
-                        }
-                    },
-                    error: function( jqXhr, textStatus, errorThrown ){
-                    console.log( errorThrown );
-                    console.warn(jqXhr.responseText);
-                    },
-                });
-             }
-       });
+    function click_modal_customer(){
+        $('#modal_customer').modal('show');
+        table_customer();
     }
 
-    function get_data_branch(){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_branch").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        if(data[i].fc_kode == $('#fc_branch_view').val()){
-                            $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
-                        }else{
-                            $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                        }
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
+    function click_modal_stock(){
+        $('#modal_stock').modal('show');
+        table_stock();
     }
 
-    function change_branch(){
+    function get_data_sales(){
         $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
             type: "GET",
             dataType: "JSON",
             success: function(response){
+                $('#modal_loading').modal('hide');
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_salescode").empty();
+                    $("#fc_salescode").append(`<option selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-
-        $.ajax({
-            url : "/master/get-data-where-field-id-get/Customer/fc_branch/" + $('#fc_branch').val(),
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_membercode").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        if(i == 0) {
-                            onchange_member_code(data[i].fc_membercode);
-                        }
-                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
                     }
                 }else{
                     iziToast.error({
@@ -416,8 +374,7 @@
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 if(response.status === 200){
                     var data = response.data;
-                    console.log(data.member_tax_code);
-                    $('#fc_membertaxcode').val(data.fc_membercode);
+                    $('#fc_membertaxcode').val(data.member_tax_code.fc_kode);
                     $('#fc_membertaxcode_view').val(data.member_tax_code.fv_description);
                     $('#fc_memberaddress_loading1').val(data.fc_memberaddress_loading1);
                     $('#fc_memberaddress_loading2').val(data.fc_memberaddress_loading2);
@@ -435,27 +392,76 @@
         });
     }
 
-    function get_data_sales_code(){
-        $("#modal_loading").modal('show');
+    function table_customer(){
+        var tb_customer = $('#tb_customer').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/master/get-data-customer-so-datatables/" +  $('#fc_branch').val(),
+                type: 'GET'
+            },
+            columnDefs: [
+                { className: 'text-center', targets: [0,7] },
+            ],
+            columns: [
+                { data: 'fc_membercode' },
+                { data: 'fc_membername1' },
+                { data: 'fc_memberaddress1' },
+                { data: 'member_type_business.fv_description' },
+                { data: 'member_typebranch.fv_description' },
+                { data: 'member_legal_status.fv_description' },
+                { data: 'fc_membernpwp_no' },
+                { data: 'fc_membernpwp_no' },
+            ],
+            rowCallback : function(row, data){
+                $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_customer('${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
+            }
+        });
+    }
+
+    function table_stock(){
+        var tb_stock = $('#tb_stock').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/master/get-data-stock-so-datatables",
+                type: 'GET'
+            },
+            columnDefs: [
+                { className: 'text-center', targets: [0, 6] },
+            ],
+            columns: [
+                { data: 'DT_RowIndex',searchable: false, orderable: false},
+                { data: 'fc_stockcode' },
+                { data: 'fc_nameshort' },
+                { data: 'namepack.fv_description' },
+                { data: 'fm_price_default', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp. ' )},
+                { data: 'fc_stockcode' },
+                { data: 'fc_stockcode' },
+            ],
+            rowCallback : function(row, data){
+                $('td:eq(6)', row).html(`
+                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
+            }
+        });
+    }
+
+    function detail_stock($id){
         $.ajax({
-            url : "/master/get-data-all/Sales",
+            url : "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
             type: "GET",
             dataType: "JSON",
             success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_salescode").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
+                var data = response.data;
+
+                $('#fc_barcode').val(data.fc_barcode);
+
+                $("#modal_stock").modal('hide');
             },error: function (jqXHR, textStatus, errorThrown){
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
@@ -463,167 +469,119 @@
         });
     }
 
-    function get_data_member_code(){
+    function detail_customer($id){
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-all/Customer",
+            url : "/master/data-customer-first/" + $id,
             type: "GET",
             dataType: "JSON",
             success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_membercode").empty();
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
-    function add(){
-      $("#modal").modal('show');
-      $(".modal-title").text('Tambah Sales Order');
-      $("#form_submit_custom")[0].reset();
-      change_branch();
-    }
-
-   var tb = $('#tb').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-         url: '/apps/sales-order/detail/datatables',
-         type: 'GET'
-      },
-      columnDefs: [
-         { className: 'text-center', targets: [0,4,5,10] },
-      ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_barcode' },
-         { data: 'fc_namepack' },
-         { data: 'warehouse_desc' },
-         { data: 'fn_so_qty' },
-         { data: 'fn_so_bonusqty' },
-         { data: 'fm_so_price', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
-         { data: 'fm_so_disc', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
-         { data: 'fn_so_value', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
-         { data: 'fv_description' },
-         { data: 'fc_warehousecode' },
-      ],
-      rowCallback : function(row, data){
-         var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
-
-         $('td:eq(10)', row).html(`
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus</button>
-         `);
-      }
-   });
-
-   var tb_stock = $('#tb_stock').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-         url: '/data-master/master-stock/datatables',
-         type: 'GET'
-      },
-      columnDefs: [
-         { className: 'text-center', targets: [0,4] },
-      ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_stockcode' },
-         { data: 'fc_barcode' },
-         { data: 'fc_nameshort' },
-         { data: 'fc_nameshort' },
-      ],
-      rowCallback : function(row, data){
-        $('td:eq(4)', row).html(`<button class="btn btn-success" onclick="click_choose_stock('${data.fc_stockcode}','${data.fc_barcode}', '${data.fc_nameshort}', '${data.fm_price_default}')"><i class="fa fa-check"></i> Choose</button>`);
-      }
-   });
-
-    function click_choose_stock(stockcode, barcode, name, price){
-        $('#modal').modal('show');
-        $('#fc_stockcode').val(stockcode);
-        $('#fc_barcode').val(barcode);
-        $('#fc_name').val(name);
-        $('#fm_so_price').val(price);
-    }
-
-    function onkeyup_total_harga(){
-        $total_harga = ($('#fm_so_price').val() * $('#fn_so_qty').val()) - parseInt($('#fm_so_disc').val());
-        console.log($total_harga);
-        $('#fn_so_value').val($total_harga.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
-    }
-
-    $('#form_submit_custom').on('submit', function(e){
-       e.preventDefault();
-
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
-
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((willDelete) => {
-             if (willDelete) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_submit_custom').attr('action'),
-                   type: $('#form_submit_custom').attr('method'),
-                   data: $('#form_submit_custom').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                        $('#discount').val(response.data.discount);
-                        $('#total').val(response.data.total);
-                        $('#grand').val(response.data.grand);
-                        $('#discount_view').html(response.data.discount_view);
-                        $('#total_view').html(response.data.total_view);
-                        $('#grand_view').html(response.data.grand_view);
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         $("#form_submit_custom")[0].reset();
-                         reset_all_select();
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         window.location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
+                var data = response.data;
+                $('#modal_loading').modal('hide');
+                $("#modal_customer").modal('hide');
+                Object.keys(data).forEach(function (key) {
+                    var elem_name = $('[name=' + key + ']');
+                    elem_name.val(data[key]);
                 });
-             }
-       });
+
+                $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
+                $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
+                $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
+
+
+            },error: function (jqXHR, textStatus, errorThrown){
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    var tb = $('#tb').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/sales-order/detail/datatables",
+            type: 'GET'
+        },
+        columnDefs: [
+            { className: 'text-center', targets: [0,4,5,6,7,8,9] },
+        ],
+        columns: [
+            { data: 'DT_RowIndex',searchable: false, orderable: false},
+            { data: 'fc_barcode' },
+            { data: 'stock.fc_nameshort' },
+            { data: 'namepack.fv_description' },
+            { data: 'fn_so_qty' },
+            { data: 'fm_so_oriprice',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' )  },
+            { data: 'fm_so_disc' },
+            { data: 'fm_so_disc' },
+            { data: 'total_harga', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+            { data: 'fn_so_value' },
+        ],
+        rowCallback : function(row, data){
+            var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
+
+            $('td:eq(9)', row).html(`
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus</button>
+            `);
+        },
+        footerCallback: function (row, data, start, end, display) {
+
+                let count_quantity = 0;
+                let total_harga = 0;
+                let grand_total = 0;
+
+                for (var i = 0; i < data.length; i++) {
+                    count_quantity += data[i].fn_so_qty;
+                    total_harga += data[i].total_harga;
+                    grand_total += data[i].total_harga;
+                }
+
+                $('#count_item').html(data.length);
+                $('#count_quantity').html(count_quantity);
+                $('#total_harga').html(fungsiRupiah(grand_total));
+                $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
+           }
     });
+
+    function click_delete(){
+        swal({
+                title: 'Apakah anda yakin?',
+                text: 'Apakah anda yakin akan menghapus data SO ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+        })
+        .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                    url : '/apps/sales-order/delete',
+                    type: "DELETE",
+                    dataType: "JSON",
+                    success: function(response){
+                        setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                        if(response.status === 201){
+                            $("#modal").modal('hide');
+                            iziToast.success({
+                                title: 'Success!',
+                                message: response.message,
+                                position: 'topRight'
+                                });
+                            window.location.href = response.link;
+                        }else{
+                            swal(response.message, {  icon: 'error', });
+                        }
+
+                    },error: function (jqXHR, textStatus, errorThrown){
+                        setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                    }
+                    });
+                }
+        });
+    }
+
 </script>
 @endsection

@@ -21,57 +21,21 @@ use App\Models\Warehouse;
 
 class SalesOrderDetailController extends Controller
 {
-
-    public function index(){
-        $data['warehouse'] = Warehouse::all();
-        $data['data'] = TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid])->with('branch','member_tax_code','sales')->first();
-
-        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
-
-        $so_discount = 0;
-        $so_total = 0;
-        $so_grand = 0;
-
-        if(!empty($temp_detail)){
-            foreach($temp_detail as $item){
-                $so_discount += $item->fm_so_disc;
-                $so_total += $item->fm_so_price * $item->fn_so_qty;
-            }
-
-            $so_grand = $so_total - $so_discount;
-        }
-
-        $data['discount'] = $so_discount;
-        $data['total'] = $so_total;
-        $data['grand'] = $so_grand;
-
-        return view('apps.sales-order.detail', $data);
-    }
-
-    public function detail($fc_divisioncode, $fc_branch, $fc_sono, $fn_sorownum){
-        return TempSoDetail::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_sono' => $fc_sono,
-            'fn_sorownum' => $fn_sorownum,
-        ])->first();
-    }
-
     public function datatables(){
-        $data = TempSoDetail::with('branch', 'warehouse')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $data = TempSoDetail::with('branch','warehouse','stock','namepack')->where('fc_sono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
+                ->addColumn('total_harga', function($item) {
+                    return $item->fn_so_qty * $item->fm_so_oriprice;
+                })
                 ->addIndexColumn()
                 ->make(true);
     }
 
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
-            'fc_stockcode' => 'required',
             'fc_barcode' => 'required',
-            'fc_name' => 'required',
             'fn_so_qty' => 'required',
-            'fn_so_bonusqty' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -81,7 +45,7 @@ class SalesOrderDetailController extends Controller
             ];
         }
 
-        $stock = Stock::where(['fc_stockcode' => $request->fc_stockcode, 'fc_barcode' => $request->fc_barcode])->first();
+        $stock = Stock::where(['fc_barcode' => $request->fc_barcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
         $fn_sorownum = 1;
@@ -89,15 +53,14 @@ class SalesOrderDetailController extends Controller
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
         }
 
-        if($request->fc_warehousecode == 'NO GUDANG'){
-            $request->request->remove('fc_warehouse');
-        }
+        $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
+
+        //total harga
+        $total_harga = $stock->fm_so_price * $stock->fn_so_qty;
 
         $request->merge(['fn_so_qty' => Convert::convert_to_double($request->fn_so_qty) ]);
-        $request->merge(['fm_so_price' => Convert::convert_to_double($request->fm_so_price) ]);
-        $request->merge(['fm_so_disc' => Convert::convert_to_double($request->fm_so_disc) ]);
-        $request->merge(['fn_so_value' => Convert::convert_to_double($request->fn_so_value) ]);
-        $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty) ]);
+        $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga) ]);
+        $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default) ]);
 
         TempSoDetail::create([
             'fc_divisioncode' => $stock->fc_divisioncode,
@@ -107,40 +70,36 @@ class SalesOrderDetailController extends Controller
             'fc_barcode' => $stock->fc_barcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
-            'fm_so_price' => $request->fm_so_price,
-            'fm_so_disc' => $request->fm_so_disc,
             'fn_so_value' => $request->fn_so_value,
-            'fn_so_bonusqty' => $request->fn_so_bonusqty,
-            'fc_warehousecode' => $request->fc_warehousecode,
-            'fv_description' => $request->fv_description,
+            'fm_so_oriprice' => $request->fm_so_price,
         ]);
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
 
-        $so_discount = 0;
-        $so_total = 0;
-        $so_grand = 0;
+        // $so_discount = 0;
+        // $so_total = 0;
+        // $so_grand = 0;
 
-        if(!empty($temp_detail)){
-            foreach($temp_detail as $item){
-                $so_discount += $item->fm_so_disc;
-                $so_total += $item->fm_so_price * $item->fn_so_qty;
-            }
+        // if(!empty($temp_detail)){
+        //     foreach($temp_detail as $item){
+        //         $so_discount += $item->fm_so_disc;
+        //         $so_total += $item->fm_so_price * $item->fn_so_qty;
+        //     }
 
-            $so_grand = $so_total - $so_discount;
-        }
+        //     $so_grand = $so_total - $so_discount;
+        // }
 
-        $data['discount'] = $so_discount;
-        $data['total'] = $so_total;
-        $data['grand'] = $so_grand;
+        // $data['discount'] = $so_discount;
+        // $data['total'] = $so_total;
+        // $data['grand'] = $so_grand;
 
-        $data['discount_view'] = "Rp " . number_format($so_discount,0,',','.');
-        $data['total_view'] = "Rp " . number_format($so_total,0,',','.');
-        $data['grand_view'] = "Rp " . number_format($so_grand,0,',','.');
+        // $data['discount_view'] = "Rp " . number_format($so_discount,0,',','.');
+        // $data['total_view'] = "Rp " . number_format($so_total,0,',','.');
+        // $data['grand_view'] = "Rp " . number_format($so_grand,0,',','.');
 
         return [
             'status' => 200,
-            'data' => $data,
+            // 'data' => $data,
             'message' => 'Data berhasil disimpan'
         ];
     }

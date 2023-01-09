@@ -32,4 +32,8 @@ class TempSoMaster extends Model
     public function sales(){
         return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
 }

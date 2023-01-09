@@ -20,11 +20,6 @@ class TempSoDetail extends Model
     protected $primaryKey = 'fn_sorownum';
     public $incrementing = false;
     protected $guarded = ['type'];
-    protected $appends = ['warehouse_desc'];
-
-    public function getWarehouseDescAttribute(){
-        return $this->attributes['fc_warehousecode'] == 'NO GUDANG' ? '-' : $this->warehouse->fc_rackname;
-    }
 
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
@@ -36,5 +31,9 @@ class TempSoDetail extends Model
 
     public function warehouse(){
         return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();
+    }
+
+    public function namepack(){
+        return $this->belongsTo(TransaksiType::class, 'fc_namepack', 'fc_kode')->withTrashed();
     }
 }
