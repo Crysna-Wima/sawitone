@@ -174,11 +174,6 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
         });
-
-        Route::prefix('sales-order2')->group(function () {
-           Route::view('/', 'apps.sales-order2.index');
-           Route::get('detailCustomer/{fc_membercode}', 'Apps\SalesOrder2@detail_customer');
-        });
     });
 });
 
