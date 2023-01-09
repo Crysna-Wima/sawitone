@@ -64,7 +64,7 @@ class SalesOrderController extends Controller
 
         return [
             'status' => 201,
-            'link' => '/apps/sales-order2',
+            'link' => '/apps/sales-order',
             'message' => 'Data berhasil disimpan'
         ];
     }

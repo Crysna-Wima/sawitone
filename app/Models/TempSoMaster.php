@@ -12,7 +12,7 @@ use App\Traits\CompositeKey;
 
 class TempSoMaster extends Model
 {
-    use HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
+    use HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 

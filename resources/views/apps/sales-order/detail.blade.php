@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-danger" onclick="click_delete()">Delete</button>
+                                <button class="btn btn-danger" onclick="click_delete()">Delete SO</button>
                             </div>
                         </div>
                     </div>
@@ -523,7 +523,7 @@
             var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
             $('td:eq(9)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus</button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
             `);
         },
         footerCallback: function (row, data, start, end, display) {
