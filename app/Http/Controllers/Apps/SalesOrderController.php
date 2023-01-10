@@ -34,6 +34,7 @@ class SalesOrderController extends Controller
             'fc_salescode' => 'required',
             'fc_membercode' => 'required',
             'fc_sotype' => 'required',
+            
         ]);
 
         if($validator->fails()) {

@@ -35,10 +35,11 @@ class SalesOrderDetailController extends Controller
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
-            'fn_so_qty' => 'required',
+            'fn_so_qty' => 'required|integer|min:1',
         ]);
 
         if($validator->fails()) {
+            // dd($validator->errors()->first());
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
