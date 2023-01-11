@@ -36,6 +36,7 @@ class SalesOrderDetailController extends Controller
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
+            'fn_so_bonusqty' => 'nullable|integer|min:0',     
         ]);
 
         if($validator->fails()) {
@@ -60,6 +61,7 @@ class SalesOrderDetailController extends Controller
         $total_harga = $stock->fm_so_price * $stock->fn_so_qty;
 
         $request->merge(['fn_so_qty' => Convert::convert_to_double($request->fn_so_qty) ]);
+        $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty) ]);
         $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga) ]);
         $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default) ]);
 
@@ -71,6 +73,7 @@ class SalesOrderDetailController extends Controller
             'fc_barcode' => $stock->fc_barcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
+            'fn_so_bonusqty' => $request->fn_so_bonusqty,
             'fn_so_value' => $request->fn_so_value,
             'fm_so_oriprice' => $request->fm_so_price,
         ]);

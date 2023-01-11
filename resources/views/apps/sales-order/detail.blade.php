@@ -176,10 +176,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty</label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="fn_so_qty" id="fn_so_qty">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label>Qty Bonus</label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -246,6 +252,7 @@
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
+                                            <th scope="col" class="text-center">Qty Bonus</th>
                                             <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(%)</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
@@ -263,7 +270,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="row mb-5">
                     <div class="col-12 col-md-12 col-lg-12 text-right">
-                        <button class="btn btn-success">Save SO</button>
+                        <button class="btn btn-success" onclick="save_so()">Save SO</button>
                     </div>
                 </div>
             </div>
@@ -608,6 +615,9 @@
                     data: 'fn_so_qty'
                 },
                 {
+                    data: 'fn_so_bonusqty'
+                },
+                {
                     data: 'fm_so_oriprice',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
@@ -628,7 +638,7 @@
             rowCallback: function(row, data) {
                 var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
             `);
             },
@@ -655,6 +665,55 @@
             swal({
                     title: 'Apakah anda yakin?',
                     text: 'Apakah anda yakin akan menghapus data SO ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: '/apps/sales-order/delete',
+                            type: "DELETE",
+                            dataType: "JSON",
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status === 201) {
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    window.location.href = response.link;
+                                } else {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
+                            }
+                        });
+                    }
+                });
+        }
+
+        // sementara
+        function save_so() {
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan menyimpan data SO ini?',
                     icon: 'warning',
                     buttons: true,
                     dangerMode: true,

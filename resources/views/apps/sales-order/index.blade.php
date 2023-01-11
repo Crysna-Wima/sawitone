@@ -173,7 +173,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 text-right">
-                            <button class="btn btn-success">Save Changes</button>
+                            <button class="btn btn-success">Add Item</button>
                         </div>
                     </div>
                 </div>
