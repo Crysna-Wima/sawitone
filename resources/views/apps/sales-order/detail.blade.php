@@ -322,7 +322,6 @@
 <script>
 
     $(document).ready(function(){
-        get_data_sales();
         $('.place_detail').attr('hidden', false);
     })
 
@@ -334,35 +333,6 @@
     function click_modal_stock(){
         $('#modal_stock').modal('show');
         table_stock();
-    }
-
-    function get_data_sales(){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                $('#modal_loading').modal('hide');
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_salescode").empty();
-                    $("#fc_salescode").append(`<option selected readonly> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
     }
 
     function onchange_member_code(fc_membercode){
