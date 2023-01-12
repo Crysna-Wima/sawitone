@@ -17,6 +17,16 @@
     .text-success{
         color: #28a745!important;
     }
+
+    @media (min-width: 992px) and (max-width: 1200px){
+        .flex-row-item{
+            font-size: 12px;
+        }
+
+        .grand-text{
+            font-size: .9rem;
+        }
+    }
 </style>
 @endsection
 @section('content')
@@ -142,7 +152,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-7 place_detail">
+        <div class="col-12 col-md-12 col-lg-6 place_detail">
             <div class="card">
                 <div class="card-body" style="padding-top: 30px!important;">
                     <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
@@ -173,7 +183,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-6 col-lg-5 place_detail">
+        <div class="col-12 col-md-12 col-lg-6 place_detail">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex">
@@ -191,23 +201,23 @@
                                 <p class="text-success flex-row-item">0,00</p>
                             </div>
                         </div>
-                        <div class="flex-row-item">
-                            <div class="d-flex">
+                        <div class="flex-row-item" style="margin-left: -30px">
+                            <div class="d-flex" style="gap: 5px">
                                 <p class="text-secondary flex-row-item">Total</p>
-                                <p class="text-success text-center flex-row-item" id="total_harga">0,00</p>
+                                <p class="text-success flex-row-item" id="total_harga">0,00</p>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex" style="gap: 5px">
                                 <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                <p class="text-success text-center flex-row-item">0,00</p>
+                                <p class="text-success flex-row-item">0,00</p>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex" style="gap: 5px">
                                 <p class="text-secondary flex-row-item">Disc. Item</p>
-                                <p class="text-success text-center flex-row-item">0,00</p>
+                                <p class="text-success flex-row-item">0,00</p>
                             </div>
                         </div>
-                        <div style="flex: 1 1 15%">
-                            <p class="text-secondary" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
-                            <h5 class="text-success" id="grand_total">Rp. 0,00</h5>
+                        <div class="d-flex" style="flex-direction: column">
+                            <p class="text-secondary grand-text" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
+                            <h5 class="text-success grand-text" id="grand_total">Rp. 0,00</h5>
                         </div>
                     </div>
                 </div>
