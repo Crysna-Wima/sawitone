@@ -632,7 +632,8 @@
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
-                    data: 'fn_so_value'
+                    data: 'fn_so_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
             ],
             rowCallback: function(row, data) {
@@ -722,8 +723,8 @@
                     if (willDelete) {
                         $("#modal_loading").modal('show');
                         $.ajax({
-                            url: '/apps/sales-order/delete',
-                            type: "DELETE",
+                            url: '/apps/sales-order/detail/lock',
+                            type: "GET",
                             dataType: "JSON",
                             success: function(response) {
                                 setTimeout(function() {

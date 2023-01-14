@@ -21,25 +21,27 @@ use App\Models\Warehouse;
 
 class SalesOrderDetailController extends Controller
 {
-    public function datatables(){
-        $data = TempSoDetail::with('branch','warehouse','stock','namepack')->where('fc_sono', auth()->user()->fc_userid)->get();
+    public function datatables()
+    {
+        $data = TempSoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_sono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
-                ->addColumn('total_harga', function($item) {
-                    return $item->fn_so_qty * $item->fm_so_oriprice;
-                })
-                ->addIndexColumn()
-                ->make(true);
+            ->addColumn('total_harga', function ($item) {
+                return $item->fn_so_qty * $item->fm_so_oriprice;
+            })
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function store_update(request $request){
+    public function store_update(request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
-            'fn_so_bonusqty' => 'nullable|integer|min:0',     
+            'fn_so_bonusqty' => 'nullable|integer|min:0',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             // dd($validator->errors()->first());
             return [
                 'status' => 300,
@@ -51,34 +53,39 @@ class SalesOrderDetailController extends Controller
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
         $fn_sorownum = 1;
-        if(!empty($temp_detail)){
+        if (!empty($temp_detail)) {
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
         }
 
         $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
 
         //total harga
-        $total_harga = $stock->fm_so_price * $stock->fn_so_qty;
+        $total_harga = $request->fn_so_value * $request->fm_so_price;
 
-        $request->merge(['fn_so_qty' => Convert::convert_to_double($request->fn_so_qty) ]);
-        $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty) ]);
-        $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga) ]);
-        $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default) ]);
+        $request->merge(['fn_so_qty' => Convert::convert_to_double($request->fn_so_qty)]);
+        $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty)]);
+        $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga)]);
+        $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default)]);
 
         TempSoDetail::create([
-            'fc_divisioncode' => $stock->fc_divisioncode,
-            'fc_branch' => $stock->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
             'fc_sono' => auth()->user()->fc_userid,
             'fn_sorownum' => $fn_sorownum,
             'fc_barcode' => $stock->fc_barcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
             'fn_so_bonusqty' => $request->fn_so_bonusqty,
-            'fn_so_value' => $request->fn_so_value,
+            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price,
             'fm_so_oriprice' => $request->fm_so_price,
         ]);
 
-        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        // dd($request->fn_so_qty*$request->fm_so_price);
+
+        // dd(Convert::convert_to_double($total_harga));
+
+
+
 
         // $so_discount = 0;
         // $so_total = 0;
@@ -108,7 +115,8 @@ class SalesOrderDetailController extends Controller
         ];
     }
 
-    public function delete($fc_sono, $fn_sorownum){
+    public function delete($fc_sono, $fn_sorownum)
+    {
         TempSoDetail::where(['fc_sono' => $fc_sono, 'fn_sorownum' => $fn_sorownum])->delete();
 
         return [
@@ -117,15 +125,28 @@ class SalesOrderDetailController extends Controller
         ];
     }
 
-    public function lock(){
+    public function lock()
+    {
 
         try {
-            TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F']);
+            // TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F']);
 
-            return [
-                'status' => 201,
-                'message' => 'Data berhasil di lock'
-            ];
+            $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+            $total = count($temp_detail);
+
+
+            if ($total != 0) {
+                TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F', 'fn_sodetail' => $total]);
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil di lock'
+                ];
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Item pesanan masih kosong, silahkan masukkan pesanan Anda!'
+                ];
+            }
         } catch (\Illuminate\Database\QueryException $e) {
 
             return [
@@ -133,8 +154,5 @@ class SalesOrderDetailController extends Controller
                 'message' => 'Data gagal di lock silahkan coba lagi'
             ];
         }
-
-
-
     }
 }

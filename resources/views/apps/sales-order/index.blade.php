@@ -63,7 +63,7 @@
                                         <label>SO Type</label>
                                         <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
                                             <option value="Consignment">Consignment</option>
-                                            <option value="Regular SO">Regular SO</option>
+                                            <option value="Regular SO">Grochery</option>
                                             <option value="Retailer">Retailer</option>
                                         </select>
                                     </div>
