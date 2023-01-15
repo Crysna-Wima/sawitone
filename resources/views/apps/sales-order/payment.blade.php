@@ -135,7 +135,7 @@
                                 <thead style="white-space: nowrap">
                                 <tr>
                                     <th scope="col" class="text-center">Kode Bayar</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
+                                    <th scope="col" class="text-center">Deskripsi Bayar</th>
                                     <th scope="col" class="text-center">Nominal</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Keterangan</th>
@@ -157,7 +157,7 @@
 
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_payment" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-m" role="document">
         <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title">Pilih Metode</h5>
@@ -165,28 +165,56 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                  <div class="col-12 col-md-6 col-lg-6">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label>Kode Bayar</label>
-                            <select class="form-control select2" name="" id=""></select>
+            <form id="form_submit" action="" method="POST" autocomplete="off">
+            <input type="text" name="type" id="type" hidden>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Kode Bayar</label>
+                            <select class="form-control select2 required-field" name="" id=""></select>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label>Kode Bayar</label>
-                        <input type="text" class="form-control" fdprocessedid="2ekutd">
-                      </div>
                     </div>
-                  </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Deskripsi Bayar</label>
+                            <input type="text" class="form-control required-field" name="" id="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Nominal</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                        Rp.
+                                        </div>
+                                    </div>
+                                <input type="text" class="form-control" fdprocessedid="hgh1fp">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Tanggal</label>
+                            <input type="text" class="form-control datepicker" name="" id="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Keterangan</label>
+                            <textarea name="" id="" style="height: 70px" class="form-control"></textarea>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+            <button type="submit" class="btn btn-success">Konfirmasi</button>
+            </div>
+        </form>
         </div>
     </div>
+</div>
 
 @endsection
 
