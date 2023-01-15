@@ -250,6 +250,9 @@
                     </div>
                 </div>
              </div>
+             <div class="button text-right mb-4">
+                <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+             </div>
         </div>
     </div>
 </div>
