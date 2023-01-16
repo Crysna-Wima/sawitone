@@ -73,7 +73,7 @@
                                         <label>SO Type</label>
                                         <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
                                             <option value="Consignment">Consignment</option>
-                                            <option value="Regular SO">Regular SO</option>
+                                            <option value="Regular SO">Grochery</option>
                                             <option value="Retailer">Retailer</option>
                                         </select>
                                     </div>
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-success">Save Changes</button>
+                                <button class="btn btn-success">Add Item</button>
                             </div>
                         </div>
                     </form>
