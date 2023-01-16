@@ -22,7 +22,7 @@ use App\Models\Warehouse;
 class SalesOrderDetailController extends Controller
 {
     public function datatables(){
-        $data = TempSoDetail::with('branch','warehouse','stock','namepack')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $data = TempSoDetail::with('branch','warehouse','stock','namepack','tempsomst')->where('fc_sono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
                 ->addColumn('total_harga', function($item) {

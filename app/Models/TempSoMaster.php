@@ -21,19 +21,28 @@ class TempSoMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
-    public function branch(){
+    public function branch()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
-    public function member_tax_code(){
+    public function member_tax_code()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed();
     }
 
-    public function sales(){
+    public function sales()
+    {
         return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
 
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
+
+    public function tempsodtl()
+    {
+        return $this->hasMany(TempSoDetail::class, 'fc_sono', 'fc_sono')->withTrashed();
     }
 }

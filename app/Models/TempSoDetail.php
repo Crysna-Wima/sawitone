@@ -36,4 +36,8 @@ class TempSoDetail extends Model
     public function namepack(){
         return $this->belongsTo(TransaksiType::class, 'fc_namepack', 'fc_kode')->withTrashed();
     }
+
+    public function tempsomst(){
+        return $this->belongsTo(TempSoMaster::class, 'fc_sono', 'fc_sono');
+    }
 }

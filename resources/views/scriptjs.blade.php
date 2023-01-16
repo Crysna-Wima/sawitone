@@ -79,7 +79,7 @@
                       else if(response.status == 201){
                          swal(response.message, { icon: 'success', });
                          $("#modal").modal('hide');
-                         window.location.href = response.link;
+                         location.href = location.href;
                       }
                       else if(response.status == 203){
                          swal(response.message, { icon: 'success', });

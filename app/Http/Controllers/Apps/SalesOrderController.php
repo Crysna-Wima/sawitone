@@ -25,8 +25,10 @@ class SalesOrderController extends Controller
         if(!empty($temp_so_master)){
             $data['data'] = $temp_so_master;
             return view('apps.sales-order.detail', $data);
+            
         }
-        return view('apps.sales-order.index');
+        // return view('apps.sales-order.index');
+        
     }
 
     public function store_update(request $request){
