@@ -335,11 +335,6 @@
         $('.place_detail').attr('hidden', false);
     })
 
-    function click_modal_customer(){
-        $('#modal_customer').modal('show');
-        table_customer();
-    }
-
     function click_modal_stock(){
         $('#modal_stock').modal('show');
         table_stock();
@@ -368,36 +363,6 @@
             },error: function (jqXHR, textStatus, errorThrown){
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
-    function table_customer(){
-        var tb_customer = $('#tb_customer').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/master/get-data-customer-so-datatables/" +  $('#fc_branch').val(),
-                type: 'GET'
-            },
-            columnDefs: [
-                { className: 'text-center', targets: [0,7] },
-            ],
-            columns: [
-                { data: 'fc_membercode' },
-                { data: 'fc_membername1' },
-                { data: 'fc_memberaddress1' },
-                { data: 'member_type_business.fv_description' },
-                { data: 'member_typebranch.fv_description' },
-                { data: 'member_legal_status.fv_description' },
-                { data: 'fc_membernpwp_no' },
-                { data: 'fc_membernpwp_no' },
-            ],
-            rowCallback : function(row, data){
-                $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_customer('${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
             }
         });
     }
@@ -442,33 +407,6 @@
                 $('#fc_barcode').val(data.fc_barcode);
 
                 $("#modal_stock").modal('hide');
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
-    function detail_customer($id){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/data-customer-first/" + $id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                var data = response.data;
-                $('#modal_loading').modal('hide');
-                $("#modal_customer").modal('hide');
-                Object.keys(data).forEach(function (key) {
-                    var elem_name = $('[name=' + key + ']');
-                    elem_name.val(data[key]);
-                });
-
-                $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
-                $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
-                $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-
-
             },error: function (jqXHR, textStatus, errorThrown){
                 setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
