@@ -187,7 +187,7 @@
                                 <button class="btn btn-success">Add Item</button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -353,13 +353,11 @@
     }
 
     function get_data_sales(){
-        $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
             type: "GET",
             dataType: "JSON",
             success: function(response){
-                $('#modal_loading').modal('hide');
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_salescode").empty();
@@ -375,7 +373,6 @@
                     });
                 }
             },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
             }
         });
@@ -387,7 +384,6 @@
             type: "GET",
             dataType: "JSON",
             success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 if(response.status === 200){
                     var data = response.data;
                     $('#fc_membertaxcode').val(data.member_tax_code.fc_kode);
@@ -402,7 +398,6 @@
                     });
                 }
             },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
             }
         });
@@ -438,66 +433,13 @@
         });
     }
 
-    function table_stock(){
-        var tb = $('#tb_stock').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/master/get-data-stock-so-datatables",
-                type: 'GET'
-            },
-            columnDefs: [
-                { className: 'text-center', targets: [0, 6] },
-            ],
-            columns: [
-                { data: 'DT_RowIndex',searchable: false, orderable: false},
-                { data: 'fc_stockcode' },
-                { data: 'fc_nameshort' },
-                { data: 'namepack.fv_description' },
-                { data: 'fm_price_default', render: $.fn.dataTable.render.number( '.', ',', 0, 'Rp. ' )},
-                { data: 'fc_stockcode' },
-                { data: 'fc_stockcode' },
-            ],
-            rowCallback : function(row, data){
-                $('td:eq(6)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
-            }
-        });
-    }
-
-    function detail_stock($id){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                var data = response.data;
-                $('#modal_loading').modal('hide');
-                $("#modal_customer").modal('hide');
-                console.log(data);
-                // Object.keys(data).forEach(function (key) {
-                //     var elem_name = $('[name=' + key + ']');
-                //     elem_name.val(data[key]);
-                // });
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
-
     function detail_customer($id){
-        $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/data-customer-first/" + $id,
             type: "GET",
             dataType: "JSON",
             success: function(response){
                 var data = response.data;
-                $('#modal_loading').modal('hide');
                 $("#modal_customer").modal('hide');
                 Object.keys(data).forEach(function (key) {
                     var elem_name = $('[name=' + key + ']');
@@ -510,7 +452,6 @@
 
 
             },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
             }
         });
