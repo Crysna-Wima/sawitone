@@ -129,12 +129,6 @@
                                     <textarea type="text" name="fc_memberaddress_loading1" class="form-control"
                                         id="fc_memberaddress_loading1" data-height="100" readonly><?php echo $data->customer->fc_memberaddress_loading1; ?></textarea>
                                 </div>
-                                <!-- <div class="form-group"> -->
-                                    <!-- <label>Alamat Muat</label> -->
-                                    <!-- <input type="text" name="fc_memberaddress_loading1" class="form-control" -->
-                                        <!-- value="{{ $data->customer->fc_memberaddress_loading1 }}" -->
-                                        <!-- id="fc_memberaddress_loading1" readonly> -->
-                                <!-- </div> -->
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
                                 @if ($data->fm_servpay == 0 && empty($data->fc_sotransport))
@@ -199,19 +193,9 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-<<<<<<< HEAD
                                     <label>Kode Metode Pembayaran</label>
-                                    <select class="form-control select2 " name="" id=""></select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label>Deskripsi Metode</label>
-                                    <input type="text" class="form-control " name="" id="" readonly>
-=======
-                                    <label>Kode Bayar</label>
                                     <select class="form-control select2 " name="fc_kode" id="fc_kode">
-                                        <option value="">--Pilih Kode Bayar--</option>
+                                        <option value="">-- Pilih Kode Bayar --</option>
                                         @foreach ($kode_bayar as $kode)
                                             <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
                                         @endforeach
@@ -222,7 +206,6 @@
                                 <div id="fv_description" class="form-group">
                                     <label>Deskripsi Bayar</label>
                                     <input type="text" class="form-control " name="fv_description" readonly>
->>>>>>> 7239f6a7cbc61861575ea2223945a2a92cf0f78c
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
