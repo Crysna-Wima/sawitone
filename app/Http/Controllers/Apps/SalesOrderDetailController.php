@@ -63,14 +63,15 @@ class SalesOrderDetailController extends Controller
         $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default) ]);
 
         TempSoDetail::create([
-            'fc_divisioncode' => $stock->fc_divisioncode,
-            'fc_branch' => $stock->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
             'fc_sono' => auth()->user()->fc_userid,
             'fn_sorownum' => $fn_sorownum,
             'fc_barcode' => $stock->fc_barcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
-            'fn_so_value' => $request->fn_so_value,
+            'fn_so_bonusqty' => $request->fn_so_bonusqty,
+            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price,
             'fm_so_oriprice' => $request->fm_so_price,
         ]);
 
@@ -116,12 +117,23 @@ class SalesOrderDetailController extends Controller
     public function lock(){
 
         try {
-            TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F']);
+            // TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F']);
 
-            return [
-                'status' => 201,
-                'message' => 'Data berhasil di lock'
-            ];
+            $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+            $total = count($temp_detail);
+
+
+            if ($total != 0) {
+                TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F', 'fn_sodetail' => $total]);
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil di lock'
+                ];
+            } 
+                return [
+                    'status' => 300,
+                    'message' => 'Item pesanan masih kosong, silahkan masukkan pesanan Anda!'
+                ];
         } catch (\Illuminate\Database\QueryException $e) {
 
             return [
@@ -129,8 +141,5 @@ class SalesOrderDetailController extends Controller
                 'message' => 'Data gagal di lock silahkan coba lagi'
             ];
         }
-
-
-
     }
 }
