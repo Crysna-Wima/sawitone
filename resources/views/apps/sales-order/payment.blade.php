@@ -59,27 +59,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-3 col-lg-2">
-                                <div class="form-group mr-3 d-flex-row">
+                            <div class="col-12 col-md-3 col-lg-2">
+                                <div class="form-group d-flex-row">
                                     <label>Total</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success grand-text" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-3 col-lg-2">
-                                <div class="form-group mr-3 d-flex-row">
+                            <div class="col-12 col-md-3 col-lg-2">
+                                <div class="form-group d-flex-row">
                                     <label>Kekurangan</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-danger grand-text" id="">Rp. 0,00</h5>
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-3 col-lg-2">
-                                <div class="form-group mr-3 d-flex-row">
+                            <div class="col-12 col-md-3 col-lg-2">
+                                <div class="form-group d-flex-row">
                                     <label>Hutang</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted grand-text" id="" value="{{ $data->customer->fm_memberAP }}">Rp. 0,00</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="" value="{{ $data->customer->fm_memberAP }}">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div id="fv_description" class="form-group">
-                                    <label>Deskripsi Bayar</label>
+                                    <label>Deskripsi Metode</label>
                                     <input type="text" class="form-control " name="fv_description" readonly>
                                 </div>
                             </div>

@@ -189,13 +189,15 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty</label>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="fn_so_qty" id="fn_so_qty">
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                            class="form-control" name="fn_so_qty" id="fn_so_qty">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty Bonus</label>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                            class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -234,9 +236,9 @@
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>
                                     <p class="text-success flex-row-item text-right">0,00</p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item grand-text" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
-                                    <h5 class="text-success flex-row-item grand-text text-right" id="grand_total">Rp. 0,00</h5>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
