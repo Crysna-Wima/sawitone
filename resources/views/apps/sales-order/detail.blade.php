@@ -211,38 +211,33 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex">
-                            <div class="flex-row-item">
+                            <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Item</p>
-                                    <p class="text-success flex-row-item" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Quantity</p>
-                                    <p class="text-success flex-row-item" id="count_quantity">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="count_quantity">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Disc. Total</p>
-                                    <p class="text-success flex-row-item">0,00</p>
+                                    <p class="text-success flex-row-item text-right">0,00</p>
                                 </div>
                             </div>
-                            <div class="flex-row-item" style="margin-left: -30px">
+                            <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Total</p>
-                                    <p class="text-success flex-row-item" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                    <p class="text-success flex-row-item">0,00</p>
+                                    <p class="text-success flex-row-item text-right">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Disc. Item</p>
-                                    <p class="text-success flex-row-item">0,00</p>
+                                    <p class="text-secondary flex-row-item grand-text" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
+                                    <h5 class="text-success flex-row-item grand-text text-right" id="grand_total">Rp. 0,00</h5>
                                 </div>
-                            </div>
-                            <div class="d-flex" style="flex-direction: column">
-                                <p class="text-secondary grand-text" style="font-weight: bold; font-size: 1.1rem">GRAND
-                                </p>
-                                <h5 class="text-success grand-text" id="grand_total">Rp. 0,00</h5>
                             </div>
                         </div>
                     </div>
@@ -341,7 +336,6 @@
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Harga</th>
-                                        <th scope="col" class="text-center">Stock</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
@@ -464,7 +458,7 @@
                 },
                 columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6]
+                    targets: [0, 5]
                 }, ],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -487,12 +481,9 @@
                     {
                         data: 'fc_stockcode'
                     },
-                    {
-                        data: 'fc_stockcode'
-                    },
                 ],
                 rowCallback: function(row, data) {
-                    $('td:eq(6)', row).html(`
+                    $('td:eq(5)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }

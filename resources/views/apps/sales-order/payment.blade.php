@@ -6,10 +6,6 @@
             overflow-x: auto;
         }
 
-        .d-flex .flex-row-item {
-            flex: 1 1 30%;
-        }
-
         .text-secondary {
             color: #969DA4 !important;
         }
@@ -67,7 +63,7 @@
                                 <div class="form-group mr-3 d-flex-row">
                                     <label>Total</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success grand-text" id="grand_total">Rp. 0,00</h5>
+                                        <h5 class="text-success grand-text" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -81,9 +77,9 @@
                             </div>
                             <div class="col-4 col-md-3 col-lg-2">
                                 <div class="form-group mr-3 d-flex-row">
-                                    <label>Kembalian</label>
+                                    <label>Hutang</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted grand-text" id="">Rp. 0,00</h5>
+                                        <h5 class="text-muted grand-text" id="" value="{{ $data->customer->fm_memberAP }}">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 col-md-4 col-lg-4">
+            <div class="col-12 col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
                         <form id="form_submit" action="/apps/sales-order/detail/payment/store-update/{{ $data->fc_sono }}"
@@ -109,36 +105,49 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
-                                <label>Servpay</label>
                                 <div class="form-group">
-                                    @if ($data->fm_servpay == 0)
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay">
-                                     @else
-                                     <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $data->fm_servpay }}">
-                                    @endif
+                                    <label>Servpay</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        @if ($data->fm_servpay == 0)
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                            class="form-control" name="fm_servpay" id="fm_servpay" fdprocessedid="hgh1fp">
+                                        @else
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                            class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $data->fm_servpay }}">
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <input type="text" name="fc_memberaddress_loading1" class="form-control"
-                                        value="{{ $data->customer->fc_memberaddress_loading1 }}"
-                                        id="fc_memberaddress_loading1" readonly>
+                                    <textarea type="text" name="fc_memberaddress_loading1" class="form-control"
+                                        id="fc_memberaddress_loading1" data-height="100" readonly><?php echo $data->customer->fc_memberaddress_loading1; ?></textarea>
                                 </div>
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label>Alamat Muat</label> -->
+                                    <!-- <input type="text" name="fc_memberaddress_loading1" class="form-control" -->
+                                        <!-- value="{{ $data->customer->fc_memberaddress_loading1 }}" -->
+                                        <!-- id="fc_memberaddress_loading1" readonly> -->
+                                <!-- </div> -->
                             </div>
-                            <div class=" text-right">
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
                                 @if ($data->fm_servpay == 0 && empty($data->fc_sotransport))
                                     <button type="submit" class="btn btn-success">Save</button>
                                         @else
                                     <button type="submit" class="btn btn-success">Edit</button>
                                 @endif
-                                
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-8 col-md-8 col-lg-8">
+            <div class="col-12 col-md-12 col-lg-8">
                 <div class="card">
                     <div class="card-header">
                         <h4>Metode Pembayaran</h4>
@@ -153,8 +162,8 @@
                                 <table class="table table-striped" id="tb" width="100%">
                                     <thead style="white-space: nowrap">
                                         <tr>
-                                            <th scope="col" class="text-center">Kode Bayar</th>
-                                            <th scope="col" class="text-center">Deskripsi Bayar</th>
+                                            <th scope="col" class="text-center">Kode Metode Pembayaran</th>
+                                            <th scope="col" class="text-center">Deskripsi Metode</th>
                                             <th scope="col" class="text-center">Nominal</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Keterangan</th>
@@ -190,13 +199,13 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>Kode Bayar</label>
+                                    <label>Kode Metode Pembayaran</label>
                                     <select class="form-control select2 " name="" id=""></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>Deskripsi Bayar</label>
+                                    <label>Deskripsi Metode</label>
                                     <input type="text" class="form-control " name="" id="" readonly>
                                 </div>
                             </div>
@@ -209,7 +218,8 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" fdprocessedid="hgh1fp">
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                            class="form-control" fdprocessedid="hgh1fp">
                                     </div>
                                 </div>
                             </div>
