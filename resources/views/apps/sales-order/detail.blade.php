@@ -195,8 +195,7 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty Bonus</label>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="fn_so_bonusqty"
-                                            id="fn_so_bonusqty">
+                                        <input type="text" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -603,7 +602,8 @@
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
-                    data: 'fn_so_value'
+                    data: 'fn_so_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
             ],
             rowCallback: function(row, data) {
@@ -646,6 +646,55 @@
                         $.ajax({
                             url: '/apps/sales-order/delete',
                             type: "DELETE",
+                            dataType: "JSON",
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status === 201) {
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    window.location.href = response.link;
+                                } else {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
+                            }
+                        });
+                    }
+                });
+        }
+
+        // sementara
+        function save_so() {
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan menyimpan data SO ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: '/apps/sales-order/detail/lock',
+                            type: "GET",
                             dataType: "JSON",
                             success: function(response) {
                                 setTimeout(function() {
