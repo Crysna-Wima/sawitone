@@ -279,13 +279,19 @@
                         $.each(fc_kode, function(key, value) {
                             // console.log(value['fv_description']);
                             // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
-                            
-                                $('#fv_description').append('<label>Deskripsi Bayar</label><input type="text" value="'+ value['fv_description'] +'" class="form-control " name="fv_description" id="fv_description" readonly>');
+                                
+                                    $('#fv_description').append('<label>Deskripsi Bayar</label><input type="text" value="'+ value['fv_description'] +'" class="form-control " name="fv_description" id="fv_description" readonly>');
+                                
+                                
                         
                             // console.log(value['fv_description'] == '')
                         });
                     }
                 });
+            }else{
+                $('#fv_description').empty().append(
+                '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fv_description" id="fv_description" readonly>'
+            );
             }
         });
     });

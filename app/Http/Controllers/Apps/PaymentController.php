@@ -51,7 +51,7 @@ class PaymentController extends Controller
     }
 
     public function getData(Request $request){
-        $data = TransaksiType::where('fc_kode', $request->fc_kode)->get();
+        $data = TransaksiType::where('fc_kode', $request->fc_kode)->where('fc_trx', "PAYMENTCODE")->get();
         return response()->json($data);
     }
 
