@@ -27,7 +27,7 @@ class SalesOrderController extends Controller
             return view('apps.sales-order.detail', $data);
             
         }
-        // return view('apps.sales-order.index');
+        return view('apps.sales-order.index');
         
     }
 

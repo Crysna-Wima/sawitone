@@ -199,6 +199,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
+<<<<<<< HEAD
                                     <label>Kode Metode Pembayaran</label>
                                     <select class="form-control select2 " name="" id=""></select>
                                 </div>
@@ -207,6 +208,21 @@
                                 <div class="form-group">
                                     <label>Deskripsi Metode</label>
                                     <input type="text" class="form-control " name="" id="" readonly>
+=======
+                                    <label>Kode Bayar</label>
+                                    <select class="form-control select2 " name="fc_kode" id="fc_kode">
+                                        <option value="">--Pilih Kode Bayar--</option>
+                                        @foreach ($kode_bayar as $kode)
+                                            <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div id="fv_description" class="form-group">
+                                    <label>Deskripsi Bayar</label>
+                                    <input type="text" class="form-control " name="fv_description" readonly>
+>>>>>>> 7239f6a7cbc61861575ea2223945a2a92cf0f78c
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -266,9 +282,44 @@
                     grand_total += (data.data[i].total_harga);
                 }
                 $('#grand_total').html("Rp. " + fungsiRupiah(grand_total + data.data[0].tempsomst.fm_servpay));
+                // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
 
             }
         });
 
+        $(document).ready(function() {
+        $('#fc_kode').on('change', function() {
+            var option_id = $(this).val();
+            $('#fv_description').empty();
+            if(option_id != "") {
+                $.ajax({
+                    url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/"+option_id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(fc_kode) {
+                        $.each(fc_kode, function(key, value) {
+                            // console.log(value['fv_description']);
+                            // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
+                                
+                                    $('#fv_description').append('<label>Deskripsi Bayar</label><input type="text" value="'+ value['fv_description'] +'" class="form-control " name="fv_description" id="fv_description" readonly>');
+                                
+                                
+                        
+                            // console.log(value['fv_description'] == '')
+                        });
+                    }
+                });
+            }else{
+                $('#fv_description').empty().append(
+                '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fv_description" id="fv_description" readonly>'
+            );
+            }
+        });
+    });
+
     </script>
 @endsection
+
+{{-- @php
+    var_dump($data->fc_sono)
+@endphp --}}

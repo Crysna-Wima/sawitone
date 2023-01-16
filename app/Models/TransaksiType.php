@@ -21,4 +21,10 @@ class TransaksiType extends Model
     public $incrementing = false;
     protected $fillable = ['fc_trx', 'fc_kode', 'fv_description'];
     protected $appends = [];
+
+    public function tempsopay(){
+        return $this->belongsTo(TempSoPay::class,'fc_kode','fc_sopaymentcode');
+        
+    }
+
 }
