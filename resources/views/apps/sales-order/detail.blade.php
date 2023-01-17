@@ -598,6 +598,7 @@
                     data: 'fn_so_value',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
+                
             ],
             rowCallback: function(row, data) {
                 var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;

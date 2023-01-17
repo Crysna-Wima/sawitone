@@ -172,8 +172,11 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
 
                 Route::get('/payment', 'Apps\PaymentController@index')->name('payment.index');
-                Route::get('/payment/getdata/{fc_kode}', 'Apps\PaymentController@getData');
+                Route::get('/payment/getdata/{fc_kode}','Apps\PaymentController@getData');
+                Route::get('/payment/datatables','Apps\PaymentController@datatable')->name('get_datatables');
                 Route::put('/payment/store-update/{fc_sono}', 'Apps\PaymentController@store_update');
+                Route::post('/payment/create', 'Apps\PaymentController@create');
+                Route::delete('/payment/delete/{fc_sono}/{fn_sopayrownum}', 'Apps\PaymentController@delete');
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
         });

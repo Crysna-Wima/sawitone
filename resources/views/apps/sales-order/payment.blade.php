@@ -37,7 +37,8 @@
                                 <div class="form-group mr-3">
                                     <label>Date Order</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control datepicker" fdprocessedid="8ovz8a">
+                                        <input type="text" id="fd_paymentdate" onchange="get_date_order()"
+                                            class="form-control datepicker" fdprocessedid="8ovz8a">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -63,7 +64,8 @@
                                 <div class="form-group d-flex-row">
                                     <label>Total</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" "
+                                            id="grand_total" name="grand_total">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +73,8 @@
                                 <div class="form-group d-flex-row">
                                     <label>Kekurangan</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="">Rp. 0,00</h5>
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="">
+                                            Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +82,8 @@
                                 <div class="form-group d-flex-row">
                                     <label>Hutang</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="" value="{{ $data->customer->fm_memberAP }}">Rp. 0,00</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id=""
+                                            value="{{ $data->customer->fm_memberAP }}">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -114,11 +118,15 @@
                                             </div>
                                         </div>
                                         @if ($data->fm_servpay == 0)
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
-                                            class="form-control" name="fm_servpay" id="fm_servpay" fdprocessedid="hgh1fp">
+                                            <input type="number" min="0"
+                                                oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                class="form-control" name="fm_servpay" id="fm_servpay"
+                                                fdprocessedid="hgh1fp">
                                         @else
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
-                                            class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $data->fm_servpay }}">
+                                            <input type="number" min="0"
+                                                oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                                class="form-control" name="fm_servpay" id="fm_servpay"
+                                                value="{{ $data->fm_servpay }}">
                                         @endif
                                     </div>
                                 </div>
@@ -126,14 +134,14 @@
                             <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <textarea type="text" name="fc_memberaddress_loading1" class="form-control"
-                                        id="fc_memberaddress_loading1" data-height="100" readonly><?php echo $data->customer->fc_memberaddress_loading1; ?></textarea>
+                                    <textarea type="text" name="fc_memberaddress_loading1" class="form-control" id="fc_memberaddress_loading1"
+                                        data-height="100" readonly><?php echo $data->customer->fc_memberaddress_loading1; ?></textarea>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
                                 @if ($data->fm_servpay == 0 && empty($data->fc_sotransport))
                                     <button type="submit" class="btn btn-success">Save</button>
-                                        @else
+                                @else
                                     <button type="submit" class="btn btn-success">Edit</button>
                                 @endif
                             </div>
@@ -187,7 +195,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="" method="POST" autocomplete="off">
+                <form id="form_submit" action="/apps/sales-order/detail/payment/create" method="POST"
+                    autocomplete="off">
+                    @csrf
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
@@ -205,7 +215,7 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div id="fv_description" class="form-group">
                                     <label>Deskripsi Metode</label>
-                                    <input type="text" class="form-control " name="fv_description" readonly>
+                                    <input type="text" class="form-control " name="fc_description" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -217,22 +227,23 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
-                                            class="form-control" fdprocessedid="hgh1fp">
+                                        <input type="number" min="0"
+                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
+                                            class="form-control" fdprocessedid="hgh1fp" name="fm_valuepayment">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="text" class="form-control datepicker" name="" id=""
-                                        readonly>
+                                    <input type="text" class="form-control" name="fd_paymentdate"
+                                        id="fd_paymentdate2" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea name="" id="" style="height: 70px" class="form-control"></textarea>
+                                    <textarea name="fv_keterangan" id="" style="height: 70px" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -270,36 +281,97 @@
             }
         });
 
-        $(document).ready(function() {
-        $('#fc_kode').on('change', function() {
-            var option_id = $(this).val();
-            $('#fv_description').empty();
-            if(option_id != "") {
-                $.ajax({
-                    url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/"+option_id,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(fc_kode) {
-                        $.each(fc_kode, function(key, value) {
-                            // console.log(value['fv_description']);
-                            // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
-                                
-                                    $('#fv_description').append('<label>Deskripsi Bayar</label><input type="text" value="'+ value['fv_description'] +'" class="form-control " name="fv_description" id="fv_description" readonly>');
-                                
-                                
-                        
-                            // console.log(value['fv_description'] == '')
-                        });
-                    }
-                });
-            }else{
-                $('#fv_description').empty().append(
-                '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fv_description" id="fv_description" readonly>'
-            );
-            }
-        });
-    });
+        function get_date_order() {
+            var input1 = document.getElementById("fd_paymentdate").value;
+            document.getElementById("fd_paymentdate2").value = input1;
+        }
 
+        $(document).ready(function() {
+            $('#fc_kode').on('change', function() {
+                var option_id = $(this).val();
+                $('#fv_description').empty();
+                if (option_id != "") {
+                    $.ajax({
+                        url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/" + option_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(fc_kode) {
+                            $.each(fc_kode, function(key, value) {
+                                // console.log(value['fv_description']);
+                                // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
+
+                                $('#fv_description').append(
+                                    '<label>Deskripsi Bayar</label><input type="text" value="' +
+                                    value['fv_description'] +
+                                    '" class="form-control " name="fc_description" id="fv_description" readonly>'
+                                );
+
+
+
+                                // console.log(value['fv_description'] == '')
+                            });
+                        }
+                    });
+                } else {
+                    $('#fv_description').empty().append(
+                        '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fc_description" id="fv_description" readonly>'
+                    );
+                }
+            });
+        });
+
+        function formatTimestamp(timestamp) {
+            var date = new Date(timestamp);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            return day + '-' + month + '-' + year;
+        }
+
+        // datatable
+
+
+        var tb = $('#tb').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('get_datatables') }}",
+            columns: [{
+                    data: 'fc_sopaymentcode',
+                    name: 'Kode Metode Pembayaran'
+                },
+                {
+                    data: 'fc_description',
+                    name: 'Deskripsi Metode'
+                },
+                {
+                    data: 'fm_valuepayment',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
+                    name: 'Nominal'
+                },
+                {
+                    data: "created_at",
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fv_keterangan',
+                    name: 'Keterangan'
+                },
+                // render tombol delete
+
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            rowCallback: function(row, data) {
+                var url_delete = "/apps/sales-order/detail/payment/delete/" + data.fc_sono + '/' + data.fn_sopayrownum;
+
+                $('td:eq(5)', row).html(`
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Payment')"><i class="fa fa-trash"> </i> Hapus Item</button>
+            `);
+            },
+        });
     </script>
 @endsection
 
