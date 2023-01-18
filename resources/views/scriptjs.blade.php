@@ -254,6 +254,7 @@
                          swal(response.message, {  icon: 'success', });
                          $("#modal").modal('hide');
                          tb.ajax.reload(null, false);
+                         location.href = location.href;
                       }else{
                          swal(response.message, {  icon: 'error', });
                       }

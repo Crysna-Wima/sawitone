@@ -26,4 +26,8 @@ class TempSoPay extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_sopaymentcode', 'fc_kode')->withTrashed();
     }
 
+    public function tempsomst(){
+        return $this->belongsTo(TempSoMaster::class, 'fc_sono', 'fc_sono');
+    }
+
 }

@@ -73,7 +73,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Kekurangan</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="">
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kekurangan">
                                             Rp. 0,00</h5>
                                     </div>
                                 </div>
@@ -284,7 +284,9 @@
                     total_harga += data.data[i].total_harga;
                     grand_total += (data.data[i].total_harga);
                 }
+
                 $('#grand_total').html("Rp. " + fungsiRupiah(grand_total + data.data[0].tempsomst.fm_servpay));
+                $('#kekurangan').html("Rp. " + fungsiRupiah(grand_total + data.data[0].tempsomst.fm_servpay-data.data[0].nominal));
                 // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
 
             }

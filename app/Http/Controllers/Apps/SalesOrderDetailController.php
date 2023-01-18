@@ -25,10 +25,13 @@ class SalesOrderDetailController extends Controller
     public function datatables()
     {
         $data = TempSoDetail::with('branch', 'warehouse', 'stock', 'namepack','tempsomst')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
                 return $item->fn_so_qty * $item->fm_so_oriprice;
+            })->addColumn('nominal', function () use($nominal){
+                return $nominal;
             })
             ->addIndexColumn()
             ->make(true);
