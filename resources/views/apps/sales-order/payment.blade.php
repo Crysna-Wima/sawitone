@@ -36,9 +36,9 @@
                             <div class="col-6 col-md-3 col-lg-3">
                                 <div class="form-group mr-3">
                                     <label>Date Order</label>
-                                    <div class="input-group">
+                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
                                         <input type="text" id="fd_paymentdate" onchange="get_date_order()"
-                                            class="form-control datepicker" fdprocessedid="8ovz8a">
+                                            class="form-control" fdprocessedid="8ovz8a">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -50,8 +50,8 @@
                             <div class="col-6 col-md-3 col-lg-3">
                                 <div class="form-group mr-3">
                                     <label>Date Expired</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control datepicker" fdprocessedid="8ovz8a">
+                                    <div class="input-group date" data-date-format="dd-mm-yyyy">
+                                        <input type="text" class="form-control" fdprocessedid="8ovz8a">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -270,6 +270,12 @@
 
 @section('js')
     <script>
+        $('document').ready(function(){
+            $('.input-group.date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+            });
+        });
         // ajax tanpa datatable untuk get data dari apps/sales-order/detail/datatables
         $.ajax({
             url: "{{ url('apps/sales-order/detail/datatables') }}",
