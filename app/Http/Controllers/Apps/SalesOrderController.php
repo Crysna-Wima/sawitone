@@ -17,6 +17,7 @@ use DB;
 use App\Models\TempSoMaster;
 use App\Models\TempSoDetail;
 use App\Models\Customer;
+use App\Models\TempSoPay;
 
 class SalesOrderController extends Controller
 {
@@ -78,6 +79,7 @@ class SalesOrderController extends Controller
 		try{
             TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->delete();
             TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid])->delete();
+            TempSoPay::where('fc_sono',auth()->user()->fc_userid)->delete();
 
 			DB::commit();
 

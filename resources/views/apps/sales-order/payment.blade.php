@@ -200,11 +200,20 @@
                     @csrf
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Kode Metode Pembayaran</label>
-                                    <select class="form-control select2 " name="fc_kode" id="fc_kode">
+                                    <select class="form-control select2 " name="fc_kode" id="fc_kode" required>
                                         <option value="">-- Pilih Kode Bayar --</option>
                                         @foreach ($kode_bayar as $kode)
                                             <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
@@ -229,21 +238,22 @@
                                         </div>
                                         <input type="number" min="0"
                                             oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" fdprocessedid="hgh1fp" name="fm_valuepayment">
+                                            class="form-control" fdprocessedid="hgh1fp" name="fm_valuepayment" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="text" class="form-control" name="fd_paymentdate"
-                                        id="fd_paymentdate2" readonly>
+                                    <input type="hidden" name="fd_paymentdate">
+                                    <input type="text" class="form-control datepicker" name="fd_paymentdate"
+                                        id="fd_paymentdate2" required readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea name="fv_keterangan" id="" style="height: 70px" class="form-control"></textarea>
+                                    <textarea name="fv_keterangan" id="" style="height: 70px" class="form-control" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -329,8 +339,6 @@
         }
 
         // datatable
-
-
         var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
@@ -365,7 +373,8 @@
                 }
             ],
             rowCallback: function(row, data) {
-                var url_delete = "/apps/sales-order/detail/payment/delete/" + data.fc_sono + '/' + data.fn_sopayrownum;
+                var url_delete = "/apps/sales-order/detail/payment/delete/" + data.fc_sono + '/' + data
+                    .fn_sopayrownum;
 
                 $('td:eq(5)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Payment')"><i class="fa fa-trash"> </i> Hapus Item</button>

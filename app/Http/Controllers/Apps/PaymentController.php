@@ -9,13 +9,13 @@ use App\Models\TempSoPay;
 use App\Models\TransaksiType;
 use Illuminate\Http\Request;
 use PhpParser\Builder\Function_;
+use Validator;
 use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
-    public function datatable()
-    {
+    public function datatable(){
         $temp_so_pay = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->get();
         // dd($temp_so_pay);
         return DataTables::of($temp_so_pay)
@@ -23,8 +23,7 @@ class PaymentController extends Controller
             ->make();
     }
 
-    public function index()
-    {
+    public function index(){
         $temp_so_master = TempSoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', auth()->user()->fc_userid)->first();
         // get data tempsopay dimana fc_trx = "PAYMENTCODE"
         $temp_so_pay = TransaksiType::where('fc_trx', "PAYMENTCODE")->get();
@@ -39,8 +38,19 @@ class PaymentController extends Controller
     }
 
 
-    public function store_update($fc_sono, Request $request)
-    {
+    public function store_update($fc_sono, Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_sotransport' => 'required',
+            'fm_servpay' => 'required',
+            'fc_memberaddress_loading1' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
         $temp_so_master = TempSoMaster::where('fc_sono', $fc_sono)->first();
         $temp_so_master->update([
             'fc_sotransport' => $request->fc_sotransport,
@@ -62,22 +72,29 @@ class PaymentController extends Controller
         ];
     }
 
-    public function getData(Request $request)
-    {
+    public function getData(Request $request){
         $data = TransaksiType::where('fc_kode', $request->fc_kode)->where('fc_trx', "PAYMENTCODE")->get();
         return response()->json($data);
       
     }
 
-    // create
-    public function create(Request $request)
-    {
+    public function create(Request $request){
 
-        
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
-        // dd($temp_so_master->fc_membercode);
+        // validasi request
+        $validator = Validator::make($request->all(),[
+            'fc_kode' => 'required',
+            'fc_description' => 'required',
+            'fm_valuepayment' => 'required',
+            'fd_paymentdate' => 'required',
+            'fv_keterangan' => 'required',
+        ]);
         
+        // jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
 
         $temp_so_pay = TempSoPay::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,

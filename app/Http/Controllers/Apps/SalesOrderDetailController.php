@@ -17,6 +17,7 @@ use App\Models\TempSoMaster;
 use App\Models\TempSoDetail;
 use App\Models\Customer;
 use App\Models\Stock;
+use App\Models\TempSoPay;
 use App\Models\Warehouse;
 
 class SalesOrderDetailController extends Controller
