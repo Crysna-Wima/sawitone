@@ -245,7 +245,6 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="hidden" name="fd_paymentdate">
                                     <input type="text" class="form-control datepicker" name="fd_paymentdate"
                                         id="fd_paymentdate2" required readonly>
                                 </div>
