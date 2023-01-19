@@ -614,9 +614,9 @@
                 let grand_total = 0;
 
                 for (var i = 0; i < data.length; i++) {
-                    count_quantity += data[i].fn_so_qty;
-                    total_harga += data[i].total_harga;
-                    grand_total += data[i].total_harga;
+                    count_quantity += parseFloat(data[i].fn_so_qty);
+                    total_harga += parseFloat(data[i].total_harga);
+                    grand_total += parseFloat(data[i].total_harga);
                 }
 
                 $('#count_item').html(data.length);
