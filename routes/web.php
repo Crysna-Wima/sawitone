@@ -176,6 +176,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/payment/datatables','Apps\PaymentController@datatable')->name('get_datatables');
                 Route::put('/payment/store-update/{fc_sono}', 'Apps\PaymentController@store_update');
                 Route::post('/payment/create', 'Apps\PaymentController@create');
+                Route::post('/payment/submit', 'Apps\PaymentController@submit_pembayaran');
                 Route::delete('/payment/delete/{fc_sono}/{fn_sopayrownum}', 'Apps\PaymentController@delete');
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
