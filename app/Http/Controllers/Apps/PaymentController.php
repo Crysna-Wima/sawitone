@@ -107,13 +107,12 @@ class PaymentController extends Controller
             'fc_description' => 'required',
             'fm_valuepayment' => 'required',
             'fd_paymentdate' => 'required',
-            'fv_keterangan' => 'required',
         ]);
 
         // jika validasi gagal
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        } else if ($nominal > $total_bayar) {
+        } else if (($nominal + $request->fm_valuepayment) > $total_bayar) {
             // tampilkan pesan error jika nominal yang dibayarkan lebih besar dari total pembayaran
             return redirect()->back()->with('error', 'Nominal yang dibayarkan lebih besar dari total pembayaran');
         } else {

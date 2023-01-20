@@ -291,15 +291,6 @@
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                for (var i = 0; i < data.data.length; i++) {
-                    console.log(data);
-                    count_quantity += parseFloat(data.data[i].fn_so_qty);
-                    total_harga += parseFloat(data.data[i].total_harga);
-                    grand_total += parseFloat(data.data[i].total_harga);
-                }
-                console.log(data.data[0].tempsomst.fm_servpay);
-                $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total) + parseFloat(data.data[0].tempsomst.fm_servpay)));
-
             }
         });
 
@@ -319,25 +310,18 @@
                         dataType: "json",
                         success: function(fc_kode) {
                             $.each(fc_kode, function(key, value) {
-                                // console.log(value['fv_description']);
-                                // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
-
+                         
                                 $('#fv_description').append(
                                     '<label>Deskripsi Bayar</label><input type="text" value="' +
                                     value['fv_description'] +
                                     '" class="form-control " name="fc_description" id="fv_description" readonly>'
                                 );
 
-
-
-                                // console.log(value['fv_description'] == '')
                             });
                         }
                     });
                 } else {
-                    $('#fv_description').empty().append(
-                        '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fc_description" id="fv_description" readonly>'
-                    );
+                    $('#fv_description').empty();
                 }
             });
         });
@@ -407,40 +391,6 @@
             //     var input1 = document.getElementById("fd_paymentdate").value;
             //     document.getElementById("fd_paymentdate2").value = input1;
             // }
-
-            $(document).ready(function() {
-                $('#fc_kode').on('change', function() {
-                    var option_id = $(this).val();
-                    $('#fv_description').empty();
-                    if (option_id != "") {
-                        $.ajax({
-                            url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/" + option_id,
-                            type: "GET",
-                            dataType: "json",
-                            success: function(fc_kode) {
-                                $.each(fc_kode, function(key, value) {
-                                    // console.log(value['fv_description']);
-                                    // $('#fv_description').append('<option value="'+ value['fv_description'] +'">'+ value['fv_description'] +'</option>');
-
-                                    $('#fv_description').append(
-                                        '<label>Deskripsi Bayar</label><input type="text" value="' +
-                                        value['fv_description'] +
-                                        '" class="form-control " name="fc_description" id="fv_description" readonly>'
-                                    );
-
-
-
-                                    // console.log(value['fv_description'] == '')
-                                });
-                            }
-                        });
-                    } else {
-                        $('#fv_description').empty().append(
-                            '<label>Deskripsi Bayar</label><input type="text" class="form-control " name="fc_description" id="fv_description" readonly>'
-                        );
-                    }
-                });
-            });
 
             function formatTimestamp(timestamp) {
                 var date = new Date(timestamp);
