@@ -370,9 +370,9 @@
                     let grand_total = 0;
 
                     for (var i = 0; i < data.data.length; i++) {
-                        count_quantity += data.data[i].fn_so_qty;
-                        total_harga += data.data[i].total_harga;
-                        grand_total += (data.data[i].total_harga);
+                        count_quantity += parseFloat(data.data[i].fn_so_qty);
+                        total_harga += parseFloat(data.data[i].total_harga);
+                        grand_total += parseFloat(data.data[i].total_harga);
                     }
 
                     var total_kurang = grand_total + data.data[0].tempsomst.fm_servpay -
@@ -380,8 +380,8 @@
                         grand_total +
                         data.data[0].tempsomst.fm_servpay - data.data[0].nominal;
 
-                    $('#grand_total').html("Rp. " + fungsiRupiah(grand_total + data.data[0].tempsomst.fm_servpay));
-                    $('#kekurangan').html("Rp. " + fungsiRupiah(total_kurang));
+                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst.fm_servpay)));
+                    $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
 
                 }
