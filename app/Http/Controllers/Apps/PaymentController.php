@@ -45,7 +45,6 @@ class PaymentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'fc_sotransport' => 'required',
-            'fm_servpay' => 'required',
             'fc_memberaddress_loading1' => 'required',
         ]);
 
@@ -112,7 +111,7 @@ class PaymentController extends Controller
         // jika validasi gagal
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        } else if (($nominal + $request->fm_valuepayment) > $total_bayar) {
+        } else if (($nominal + $request->fm_valuepayment) > ($total_bayar + $temp_so_master->fm_servpay)) {
             // tampilkan pesan error jika nominal yang dibayarkan lebih besar dari total pembayaran
             return redirect()->back()->with('error', 'Nominal yang dibayarkan lebih besar dari total pembayaran');
         } else {
