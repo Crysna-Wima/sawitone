@@ -184,11 +184,15 @@ class PaymentController extends Controller
                 'message' => 'Data pembayaran tidak boleh kosong',
                 'data' => $count_row_pay
             ];
-        }else if(($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0){
+        }else if(($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0 && ($total_bayar + $temp_so_master->fm_servpay) > $nominal){
             return [
                 'status' => 301,
                 'message' => 'Masih ada kekurangan',
-                'data' => $nominal
+            ];
+        }else if(($total_bayar + $temp_so_master->fm_servpay) < $nominal){
+            return [
+                'status' => 301,
+                'message' => 'Masih ada kelebihan pembayaran',
             ];
         }else{
             // insert data
