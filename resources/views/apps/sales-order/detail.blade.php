@@ -29,8 +29,8 @@
         }
     </style>
 @endsection
-@section('content')
 
+@section('content')
     <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
@@ -52,11 +52,17 @@
                                             {{ \Carbon\Carbon::parse($data->created_at)->format('d/m/Y') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Sales</label>
                                         <input type="text" class="form-control" value="{{ $data->sales->fc_salesname1 }}"
                                             readonly>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>SO Type</label>
+                                        <input type="text" class="form-control" value="{{ $data->fc_sotype }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -74,8 +80,8 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>SO Type</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_sotype }}" readonly>
+                                        <label>Status PKP</label>
+                                        <input type="text" class="form-control" value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -219,18 +225,18 @@
                                     <p class="text-success flex-row-item text-right" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Quantity</p>
-                                    <p class="text-success flex-row-item text-right" id="count_quantity">0,00</p>
-                                </div>
-                                <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Disc. Total</p>
                                     <p class="text-success flex-row-item text-right">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="text-secondary flex-row-item">Total</p>
+                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Total</p>
-                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
+                                    <p class="text-secondary flex-row-item">Service Pay</p>
+                                    <p class="text-success flex-row-item text-right" id="">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>

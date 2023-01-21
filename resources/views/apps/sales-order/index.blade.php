@@ -51,10 +51,20 @@
                                         <label>Tanggal : {{ \Carbon\Carbon::now()->format('d/m/Y') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Sales</label>
                                         <select class="form-control select2" name="fc_salescode" id="fc_salescode"></select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>SO Type</label>
+                                        <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
+                                            <option value="Consignment">Consignment</option>
+                                            <option value="Regular SO">Grochery</option>
+                                            <option value="Retailer">Retailer</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -70,12 +80,11 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>SO Type</label>
-                                        <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
-                                            <option value="Consignment">Consignment</option>
-                                            <option value="Regular SO">Grochery</option>
-                                            <option value="Retailer">Retailer</option>
-                                        </select>
+                                    <label>Status PKP</label>
+                                    <select class="form-control select2 select2-hidden-accessible" name="" id="" tabindex="-1" aria-hidden="true">
+                                        <option value="T">YES</option>
+                                        <option selected="" value="F">NO</option>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">

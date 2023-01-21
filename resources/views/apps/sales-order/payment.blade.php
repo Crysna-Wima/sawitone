@@ -35,6 +35,17 @@
             </ul>
         </div>
     @endif
+
+    <!-- @if (session()->has('alert')) -->
+    <!-- <div class="alert alert-warning alert-dismissible show fade"> -->
+        <!-- <div class="alert-body"> -->
+            <!-- <button class="close" data-dismiss="alert"> -->
+              <!-- <span>×</span> -->
+            <!-- </button> -->
+            <!-- <strong>Pemberitahuan! </strong>{{ session('alert') }} -->
+        <!-- </div> -->
+    <!-- </div> -->
+    <!-- @endif -->
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
@@ -117,7 +128,7 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
-                                <label>Servpay</label>
+                                <label>Service Pay</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -139,7 +150,7 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
-                                <label>Alamat Muat</label>
+                                <label>Alamat Tujuan</label>
                                 <textarea type="text" name="fc_memberaddress_loading1" class="form-control" id="fc_memberaddress_loading1"
                                     data-height="100" readonly><?php echo $data->customer->fc_memberaddress_loading1; ?></textarea>
                             </div>
@@ -183,7 +194,9 @@
                     </div>
                 </div>
             </div>
-            <div class="button text-right">
+            <div class="button text-right mb-4">
+                <button type="button" class="btn btn-secondary mr-2" onclick="history.back();">Back</button>
+                <button id="preview_button" class="btn btn-primary mr-2">Preview SO</button>
                 <button id="submit_button" class="btn btn-success">Submit</button>
             </div>
         </div>
@@ -242,8 +255,15 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="text" class="form-control datepicker" name="fd_paymentdate"
-                                        id="fd_paymentdate2" required readonly>
+                                    <div class="input-group" data-date-format="dd-mm-yyyy">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="fd_paymentdate2" class="form-control datepicker" 
+                                        name="fd_paymentdate" required>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -278,7 +298,7 @@
                         <p id="alert-message">{{ session('error') }}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
@@ -347,10 +367,11 @@
 
 
             // alert modal error
+            var error = "{{ session('error') }}";
             $(document).ready(function() {
-                @if (session('error'))
+                if (error) {
                     $('#alertModal').modal('show');
-                @endif
+                }
             });
 
             $('document').ready(function() {
