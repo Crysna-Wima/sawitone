@@ -78,7 +78,7 @@
                             </div>
                             <div class="col-12 col-md-3 col-lg-2">
                                 <div class="form-group d-flex-row">
-                                    <label>Kekurangan</label>
+                                    <label id="label_kekurangan">Kekurangan</label>
                                     <div class="text mt-2">
                                         <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kekurangan">
                                             Rp. 0,00</h5>
@@ -376,12 +376,17 @@
                     }
 
                     var total_kurang = grand_total + data.data[0].tempsomst.fm_servpay -
-                        data.data[0].nominal == grand_total + data.data[0].tempsomst.fm_servpay ? null :
+                        data.data[0].nominal == grand_total + data.data[0].tempsomst.fm_servpay ? 0 :
                         grand_total +
                         data.data[0].tempsomst.fm_servpay - data.data[0].nominal;
 
                     $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst.fm_servpay)));
-                    $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
+                    if(data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay){
+                        // ubah label_kekurangan htmlnya menjadi "kelebihan"
+                        $('#label_kekurangan').html("Kelebihan Pembayaran");
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total - data.data[0].tempsomst.fm_servpay)));
+                    }
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
 
                 }
