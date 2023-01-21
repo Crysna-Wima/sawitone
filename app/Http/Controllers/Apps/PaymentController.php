@@ -159,8 +159,10 @@ class PaymentController extends Controller
 
     }
 
-    public function submit_pembayaran(Request $request)
-    {
+    public function submit_pembayaran(Request $request){
+
+        $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
+
         // jumlah nominal yang dibayarkan
         $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
 
@@ -182,10 +184,11 @@ class PaymentController extends Controller
                 'message' => 'Data pembayaran tidak boleh kosong',
                 'data' => $count_row_pay
             ];
-        }else if($total_bayar - $nominal != 0){
+        }else if(($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0){
             return [
                 'status' => 301,
                 'message' => 'Masih ada kekurangan',
+                'data' => $nominal
             ];
         }else{
             // insert data
