@@ -228,7 +228,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Total</p>
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                    <p class="text-success flex-row-item text-right">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="fc_membertaxcode">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>

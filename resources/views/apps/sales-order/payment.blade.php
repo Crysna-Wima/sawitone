@@ -194,7 +194,7 @@
                 </div>
             </div>
             <div class="button text-right mb-4">
-                <button type="button" class="btn btn-secondary mr-2" onclick="history.back();">Back</button>
+                <button type="button" class="btn btn-icon icon-left btn-info mr-2" onclick="history.back();">Back</button>
                 <button id="preview_button" class="btn btn-primary mr-2">Preview SO</button>
                 @if ($data->fc_sostatus === 'F')
                     <button id="submit_button" class="btn btn-success" disabled>Submit</button>
