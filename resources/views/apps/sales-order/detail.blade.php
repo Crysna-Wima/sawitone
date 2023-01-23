@@ -565,13 +565,13 @@
         }
 
         var tb = $('#tb').DataTable({
-
+            // apabila data kosong
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
                 url: "/apps/sales-order/detail/datatables",
-                type: 'GET'
+                type: 'GET',
             },
             columnDefs: [{
                 className: 'text-center',
@@ -616,6 +616,7 @@
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
 
+
             ],
             rowCallback: function(row, data) {
                 var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
@@ -640,7 +641,12 @@
                 $('#count_quantity').html(count_quantity);
                 $('#total_harga').html(fungsiRupiah(grand_total));
                 $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
-                $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
+                // servpay
+                if(data.length != 0){
+                    $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
+                }
+
+                
             }
         });
 

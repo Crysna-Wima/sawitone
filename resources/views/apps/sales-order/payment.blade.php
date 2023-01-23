@@ -53,7 +53,7 @@
                                     <label>Date Order</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
                                         <input type="text" id="fd_sodateinputuser" class="form-control"
-                                            fdprocessedid="8ovz8a">
+                                            fdprocessedid="8ovz8a" required>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -66,7 +66,7 @@
                                 <div class="form-group mr-3">
                                     <label>Date Expired</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_soexpired" class="form-control" fdprocessedid="8ovz8a">
+                                        <input type="text" id="fd_soexpired" class="form-control" fdprocessedid="8ovz8a" required>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
