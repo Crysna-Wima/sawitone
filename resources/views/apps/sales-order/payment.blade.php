@@ -35,17 +35,13 @@
             </ul>
         </div>
     @endif
-
-    <!-- @if (session()->has('alert')) -->
-    <!-- <div class="alert alert-warning alert-dismissible show fade"> -->
-        <!-- <div class="alert-body"> -->
-            <!-- <button class="close" data-dismiss="alert"> -->
-              <!-- <span>×</span> -->
-            <!-- </button> -->
-            <!-- <strong>Pemberitahuan! </strong>{{ session('alert') }} -->
-        <!-- </div> -->
-    <!-- </div> -->
-    <!-- @endif -->
+    
+    {{-- flash message container --}}
+    <div id="alert-bayar">
+ 
+    </div>
+    
+    
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
@@ -56,7 +52,8 @@
                                 <div class="form-group mr-3">
                                     <label>Date Order</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_sodateinputuser" class="form-control" fdprocessedid="8ovz8a">
+                                        <input type="text" id="fd_sodateinputuser" class="form-control"
+                                            fdprocessedid="8ovz8a">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -100,7 +97,8 @@
                                 <div class="form-group d-flex-row">
                                     <label>Hutang</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="" >Rp. 0,00</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="">Rp.
+                                            0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -261,8 +259,8 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" id="fd_paymentdate2" class="form-control datepicker" 
-                                        name="fd_paymentdate" required>
+                                        <input type="text" id="fd_paymentdate2" class="form-control datepicker"
+                                            name="fd_paymentdate" required>
                                     </div>
                                 </div>
                             </div>
@@ -311,40 +309,40 @@
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        function get_date_order() {
-            var input1 = document.getElementById("fd_paymentdate").value;
-            document.getElementById("fd_paymentdate2").value = input1;
-        }
-
-        $(document).ready(function() {
-            $('#fc_kode').on('change', function() {
-                var option_id = $(this).val();
-                $('#fv_description').empty();
-                if (option_id != "") {
-                    $.ajax({
-                        url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/" + option_id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(fc_kode) {
-                            $.each(fc_kode, function(key, value) {
-                         
-                                $('#fv_description').append(
-                                    '<label>Deskripsi Bayar</label><input type="text" value="' +
-                                    value['fv_description'] +
-                                    '" class="form-control " name="fc_description" id="fv_description" readonly>'
-                                );
-
-                            });
-                        }
-                    });
-                } else {
-                    $('#fv_description').empty();
                 }
             });
-        });
+
+            function get_date_order() {
+                var input1 = document.getElementById("fd_paymentdate").value;
+                document.getElementById("fd_paymentdate2").value = input1;
+            }
+
+            $(document).ready(function() {
+                $('#fc_kode').on('change', function() {
+                    var option_id = $(this).val();
+                    $('#fv_description').empty();
+                    if (option_id != "") {
+                        $.ajax({
+                            url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/" + option_id,
+                            type: "GET",
+                            dataType: "json",
+                            success: function(fc_kode) {
+                                $.each(fc_kode, function(key, value) {
+
+                                    $('#fv_description').append(
+                                        '<label>Deskripsi Bayar</label><input type="text" value="' +
+                                        value['fv_description'] +
+                                        '" class="form-control " name="fc_description" id="fv_description" readonly>'
+                                    );
+
+                                });
+                            }
+                        });
+                    } else {
+                        $('#fv_description').empty();
+                    }
+                });
+            });
 
             $("#submit_button").click(function() {
                 var data = {
@@ -357,9 +355,15 @@
                     data: data,
                     success: function(response) {
                         // tampilkan modal section alert
-                        if(response.status == 300 || response.status == 301){
+                        if (response.status == 300 || response.status == 301) {
                             $('#alert-message').html(response.message);
                             $('#alertModal').modal('show');
+                        } else {
+                            // tampilkan flas message bootstrap id alert-bayar
+                            $('#alert-bayar').append
+                                ('<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' + response.message + '</div></div>');
+                                
+                            window.location.href = '/apps/sales-order';
                         }
                     }
                 });
@@ -401,13 +405,15 @@
                         grand_total +
                         data.data[0].tempsomst.fm_servpay - data.data[0].nominal;
 
-                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst.fm_servpay)));
-                    if(data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay){
+                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
+                        .fm_servpay)));
+                    if (data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay) {
                         // ubah label_kekurangan htmlnya menjadi "kelebihan"
                         $('#label_kekurangan').html("Kelebihan Pembayaran");
-                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total - data.data[0].tempsomst.fm_servpay)));
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total -
+                            data.data[0].tempsomst.fm_servpay)));
                     }
-                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
+                    $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
 
                 }

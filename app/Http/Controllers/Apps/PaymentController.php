@@ -159,7 +159,8 @@ class PaymentController extends Controller
 
     }
 
-    public function submit_pembayaran(Request $request){
+    public function submit_pembayaran(Request $request)
+    {
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
@@ -184,26 +185,40 @@ class PaymentController extends Controller
                 'message' => 'Data pembayaran tidak boleh kosong',
                 'data' => $count_row_pay
             ];
-        }else if(($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0 && ($total_bayar + $temp_so_master->fm_servpay) > $nominal){
+        } else if (($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0 && ($total_bayar + $temp_so_master->fm_servpay) > $nominal) {
             return [
                 'status' => 301,
                 'message' => 'Masih ada kekurangan',
             ];
-        }else if(($total_bayar + $temp_so_master->fm_servpay) < $nominal){
+        } else if (($total_bayar + $temp_so_master->fm_servpay) < $nominal) {
             return [
                 'status' => 301,
                 'message' => 'Masih ada kelebihan pembayaran',
             ];
-        }else{
-            // insert data
+        } else {
+            // insert into TempSoMaster
+            $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
+                'fc_sostatus' => 'F',
+                'fd_sodateinputuser' => $request->fd_sodateinputuser,
+                'fd_soexpired' => $request->fd_soexpired,
+                'fm_brutto' => $total_bayar + $temp_so_master->fm_servpay,
+                'fm_netto' => $total_bayar,
+            ]);
+
+            // jika update berhasil
+            if ($temp_so_master) {
+                // Tambahkan session flash message
+                session()->flash("message", "Pembayaran Berhasil");
+
+                // Kirim data message yang didapat dari session
+                $message = session()->get("message");
+                return response()->json(["status" => 200, "message" => $message]);
+            }
+
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan',
+            ];
         }
-
-        // return [
-        //     'status' => 200,
-        //     'message' => 'Data berhasil disimpan',
-        //     'data' => $count_row_pay
-        // ];
-
-
     }
 }

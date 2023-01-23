@@ -195,14 +195,16 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty</label>
                                     <div class="form-group">
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                        <input type="number" min="0"
+                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                             class="form-control" name="fn_so_qty" id="fn_so_qty">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Qty Bonus</label>
                                     <div class="form-group">
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" 
+                                        <input type="number" min="0"
+                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                             class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                     </div>
                                 </div>
@@ -236,15 +238,17 @@
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Service Pay</p>
-                                    <p class="text-success flex-row-item text-right" id="">0,00</p>
+                                    <p class="text-success flex-row-item text-right" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>
                                     <p class="text-success flex-row-item text-right">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -279,9 +283,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="button text-right mb-4">
-                    <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
-                </div>
+                @if ($data->fc_sostatus === 'F')
+                    <div class="button text-right mb-4">
+                        <a href="#" class="btn btn-success">Save SO</a>
+                    </div>
+                @else
+                    <div class="button text-right mb-4">
+                        <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
@@ -604,7 +615,7 @@
                     data: 'fn_so_value',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
-                
+
             ],
             rowCallback: function(row, data) {
                 var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
@@ -629,6 +640,7 @@
                 $('#count_quantity').html(count_quantity);
                 $('#total_harga').html(fungsiRupiah(grand_total));
                 $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
+                $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
             }
         });
 
