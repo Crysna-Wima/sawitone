@@ -35,13 +35,13 @@
             </ul>
         </div>
     @endif
-    
+
     {{-- flash message container --}}
     <div id="alert-bayar">
- 
+
     </div>
-    
-    
+
+
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
@@ -66,7 +66,8 @@
                                 <div class="form-group mr-3">
                                     <label>Date Expired</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_soexpired" class="form-control" fdprocessedid="8ovz8a" required>
+                                        <input type="text" id="fd_soexpired" class="form-control" fdprocessedid="8ovz8a"
+                                            required>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -195,7 +196,12 @@
             <div class="button text-right mb-4">
                 <button type="button" class="btn btn-secondary mr-2" onclick="history.back();">Back</button>
                 <button id="preview_button" class="btn btn-primary mr-2">Preview SO</button>
-                <button id="submit_button" class="btn btn-success">Submit</button>
+                @if ($data->fc_sostatus === 'F')
+                    <button id="submit_button" class="btn btn-success" disabled>Submit</button>
+                @else
+                    <button id="submit_button" class="btn btn-success">Submit</button>
+                @endif
+
             </div>
         </div>
     </div>
@@ -259,6 +265,10 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
+                                        {{-- input waktu sekarang format timestamp tipe hidden --}}
+                                        <input type="hidden" class="form-control" name="fd_sodatesysinput" id="fd_sodatesysinput"
+                                            value="{{ date('d-m-Y') }}" >
+                                        
                                         <input type="text" id="fd_paymentdate2" class="form-control datepicker"
                                             name="fd_paymentdate" required>
                                     </div>
@@ -267,7 +277,7 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Keterangan</label>
-                                    <textarea name="fv_keterangan" id="" style="height: 70px" class="form-control" required></textarea>
+                                    <textarea name="fv_keterangan" id="" style="height: 70px" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -345,28 +355,46 @@
             });
 
             $("#submit_button").click(function() {
-                var data = {
-                    'fd_sodateinputuser': $('#fd_sodateinputuser').val(),
-                    'fd_soexpired': $('#fd_soexpired').val()
-                };
-                $.ajax({
-                    type: 'POST',
-                    url: '/apps/sales-order/detail/payment/submit',
-                    data: data,
-                    success: function(response) {
-                        // tampilkan modal section alert
-                        if (response.status == 300 || response.status == 301) {
-                            $('#alert-message').html(response.message);
-                            $('#alertModal').modal('show');
-                        } else {
-                            // tampilkan flas message bootstrap id alert-bayar
-                            $('#alert-bayar').append
-                                ('<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' + response.message + '</div></div>');
-                                
-                            window.location.href = '/apps/sales-order';
+                swal({
+                        title: 'Apakah anda yakin?',
+                        text: 'Apakah anda yakin akan menyimpan data SO ini?',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((save) => {
+                        if (save) {
+                            // $("#modal_loading").modal('show');
+                            var data = {
+                                'fd_sodateinputuser': $('#fd_sodateinputuser').val(),
+                                'fd_soexpired': $('#fd_soexpired').val()
+                            };
+                            $.ajax({
+                                type: 'POST',
+                                url: '/apps/sales-order/detail/payment/submit',
+                                data: data,
+                                success: function(response) {
+                                    // tampilkan modal section alert
+                                    if (response.status == 300 || response.status == 301) {
+                                        $('#alert-message').html(response.message);
+                                        $('#alertModal').modal('show');
+                                    } else {
+                                        // tampilkan flas message bootstrap id alert-bayar
+                                        $('#alert-bayar').append(
+                                            '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
+                                            response.message + '</div></div>');
+                                        // redirect ke halaman sales order
+                                     
+                                            window.location.href = "/apps/sales-order";
+                                      
+
+                                    }
+                                }
+                            });
                         }
-                    }
-                });
+                    });
+
+
             });
 
 
@@ -409,7 +437,7 @@
                         .fm_servpay)));
                     if (data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay) {
                         // ubah label_kekurangan htmlnya menjadi "kelebihan"
-                        $('#label_kekurangan').html("Kelebihan Pembayaran");
+                        $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
                         $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total -
                             data.data[0].tempsomst.fm_servpay)));
                     }
@@ -471,7 +499,7 @@
                         .fn_sopayrownum;
 
                     $('td:eq(5)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Payment')"><i class="fa fa-trash"> </i> Hapus Item</button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Payment')"><i class="fa fa-trash"> </i> Hapus</button>
             `);
                 },
             });

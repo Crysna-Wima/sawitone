@@ -164,6 +164,10 @@ class PaymentController extends Controller
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
+        // jumlah item SO detail
+        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $total = count($temp_detail);
+
         // jumlah nominal yang dibayarkan
         $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
 
@@ -178,8 +182,19 @@ class PaymentController extends Controller
         // kemudian hitung jumlah datanya
         $count_row_pay = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->count();
 
-        // jika count_row_pay kosong return view dengan membawa pesan session
-        if ($count_row_pay == 0) {
+        // validasi
+        $validator = Validator::make($request->all(), [
+            'fd_sodateinputuser' => 'required',
+            'fd_soexpired' => 'required',
+        ]);
+
+        // jika validasi gagal
+        if($validator->fails()){
+            return [
+                'status' => 300,
+                'message' => 'Date Order atau Date Expired Kosong',
+            ];
+        }else if($count_row_pay == 0) {
             return [
                 'status' => 300,
                 'message' => 'Data pembayaran tidak boleh kosong',
@@ -197,12 +212,22 @@ class PaymentController extends Controller
             ];
         } else {
             // insert into TempSoMaster
+            if($total == 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Tambahkan Item terlebih dahulu',
+                ];
+            }
             $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
                 'fc_sostatus' => 'F',
                 'fd_sodateinputuser' => $request->fd_sodateinputuser,
                 'fd_soexpired' => $request->fd_soexpired,
                 'fm_brutto' => $total_bayar + $temp_so_master->fm_servpay,
                 'fm_netto' => $total_bayar,
+                'fn_sodetail' => $total
+                // 'fd_sodatesysinput' => waktu sekarang timestamp
+                
+                
             ]);
 
             // jika update berhasil
