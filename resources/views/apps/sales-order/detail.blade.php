@@ -245,10 +245,8 @@
                                     <p class="text-success flex-row-item text-right">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
-                                        GRAND</p>
-                                    <p class="text-success flex-row-item text-right"
-                                        style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
