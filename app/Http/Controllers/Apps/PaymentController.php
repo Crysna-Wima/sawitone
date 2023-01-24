@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Apps;
 
-use App\Models\BankAcc;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Validator;
+use DataTables;
+use PDF;
+
 use App\Models\TempSoDetail;
 use App\Models\TempSoMaster;
 use App\Models\TempSoPay;
 use App\Models\TransaksiType;
-use Illuminate\Http\Request;
-use PhpParser\Builder\Function_;
-use Validator;
-use Yajra\DataTables\Contracts\DataTable;
-use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
@@ -232,12 +232,9 @@ class PaymentController extends Controller
                 'fc_sostatus' => 'F',
                 'fd_sodateinputuser' => $request->fd_sodateinputuser,
                 'fd_soexpired' => $request->fd_soexpired,
-                'fm_brutto' => $total_bayar + $temp_so_master->fm_servpay,
-                'fm_netto' => $total_bayar,
-                'fn_sodetail' => $total
                 // 'fd_sodatesysinput' => waktu sekarang timestamp
-                
-                
+
+
             ]);
 
             // jika update berhasil
@@ -255,5 +252,15 @@ class PaymentController extends Controller
                 'message' => 'Data gagal disimpan',
             ];
         }
+    }
+
+    public function pdf(){
+
+        $data['so_master'] = TempSoMaster::with('branch','sales')->where('fc_sono', auth()->user()->fc_userid)->first();
+        $data['so_detail'] = TempSoDetail::with('stock')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', auth()->user()->fc_userid)->get();
+
+        $pdf = PDF::loadView('pdf.preview-so', $data)->setPaper('a4');
+        return $pdf->stream();
     }
 }

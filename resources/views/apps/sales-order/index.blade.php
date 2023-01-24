@@ -54,7 +54,7 @@
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Sales</label>
-                                        <select class="form-control select2" name="fc_salescode" id="fc_salescode"></select>
+                                        <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -131,7 +131,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" name="fc_memberemail1" id="fc_memberemail1" readonly>
+                                    <input type="text" class="form-control" name="fc_membername1" id="fc_membername1" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -281,26 +281,24 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_customer" width="100%">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">Kode</th>
-                                <th scope="col" class="text-center">Nama</th>
-                                <th scope="col" class="text-center">Alamat</th>
-                                <th scope="col" class="text-center">Tipe Bisnis</th>
-                                <th scope="col" class="text-center">Tipe Cabang</th>
-                                <th scope="col" class="text-center">Status Legal</th>
-                                <th scope="col" class="text-center">NPWP</th>
-                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                            </tr>
-                        </thead>
-                        </table>
-                    </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tb_customer" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Kode</th>
+                            <th scope="col" class="text-center">Nama</th>
+                            <th scope="col" class="text-center">Alamat</th>
+                            <th scope="col" class="text-center">Tipe Bisnis</th>
+                            <th scope="col" class="text-center">Tipe Cabang</th>
+                            <th scope="col" class="text-center">Status Legal</th>
+                            <th scope="col" class="text-center">NPWP</th>
+                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                        </tr>
+                    </thead>
+                    </table>
                 </div>
-            </form>
+            </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -317,25 +315,23 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_stock" width="100%">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">No</th>
-                                <th scope="col" class="text-center">Kode Produk</th>
-                                <th scope="col" class="text-center">Nama Produk</th>
-                                <th scope="col" class="text-center">Unity</th>
-                                <th scope="col" class="text-center">Harga</th>
-                                <th scope="col" class="text-center">Stock</th>
-                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                            </tr>
-                        </thead>
-                        </table>
-                    </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tb_stock" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">No</th>
+                            <th scope="col" class="text-center">Kode Produk</th>
+                            <th scope="col" class="text-center">Nama Produk</th>
+                            <th scope="col" class="text-center">Unity</th>
+                            <th scope="col" class="text-center">Harga</th>
+                            <th scope="col" class="text-center">Stock</th>
+                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                        </tr>
+                    </thead>
+                    </table>
                 </div>
-            </form>
+            </div>
             <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -373,7 +369,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_salescode").empty();
-                    $("#fc_salescode").append(`<option selected readonly> - Pilih - </option>`);
+                    $("#fc_salescode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
                     }

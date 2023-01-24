@@ -171,13 +171,18 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::post('/store-update','Apps\SalesOrderDetailController@store_update');
                 Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
 
-                Route::get('/payment', 'Apps\PaymentController@index')->name('payment.index');
-                Route::get('/payment/getdata/{fc_kode}','Apps\PaymentController@getData');
-                Route::get('/payment/datatables','Apps\PaymentController@datatable')->name('get_datatables');
-                Route::put('/payment/store-update/{fc_sono}', 'Apps\PaymentController@store_update');
-                Route::post('/payment/create', 'Apps\PaymentController@create');
-                Route::post('/payment/submit', 'Apps\PaymentController@submit_pembayaran');
-                Route::delete('/payment/delete/{fc_sono}/{fn_sopayrownum}', 'Apps\PaymentController@delete');
+                Route::prefix('payment')->group(function () {
+                    Route::get('/', 'Apps\PaymentController@index')->name('payment.index');
+                    Route::get('/getdata/{fc_kode}','Apps\PaymentController@getData');
+                    Route::get('/datatables','Apps\PaymentController@datatable')->name('get_datatables');
+                    Route::put('/store-update/{fc_sono}', 'Apps\PaymentController@store_update');
+                    Route::post('/create', 'Apps\PaymentController@create');
+                    Route::post('/submit', 'Apps\PaymentController@submit_pembayaran');
+                    Route::delete('/delete/{fc_sono}/{fn_sopayrownum}', 'Apps\PaymentController@delete');
+
+                    Route::get('/pdf', 'Apps\PaymentController@pdf');
+                });
+
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
         });

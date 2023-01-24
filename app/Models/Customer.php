@@ -40,7 +40,7 @@ class Customer extends Model
     }
 
     public function member_tax_code(){
-        return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%TAX%');;
+        return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%TAX%');
     }
 
     public function member_nationality(){
