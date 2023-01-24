@@ -13,6 +13,7 @@ use App\Models\TempSoDetail;
 use App\Models\TempSoMaster;
 use App\Models\TempSoPay;
 use App\Models\TransaksiType;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -232,7 +233,9 @@ class PaymentController extends Controller
                 'fc_sostatus' => 'F',
                 'fd_sodateinputuser' => $request->fd_sodateinputuser,
                 'fd_soexpired' => $request->fd_soexpired,
-                // 'fd_sodatesysinput' => waktu sekarang timestamp
+               
+                'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
+                
 
 
             ]);
