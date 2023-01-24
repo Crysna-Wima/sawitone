@@ -43,6 +43,9 @@ class SalesOrderDetailController extends Controller
             'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
             'fn_so_bonusqty' => 'nullable|integer|min:0',
+        ], [
+            'fc_barcode.required' => 'Barcode harus diisi',
+            'fn_so_qty.required' => 'Quantity harus diisi',
         ]);
 
         if ($validator->fails()) {

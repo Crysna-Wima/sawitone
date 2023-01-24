@@ -37,9 +37,7 @@
     @endif
 
     {{-- flash message container --}}
-    <div id="alert-bayar">
-
-    </div>
+    <div id="alert-bayar"></div>
 
 
     <div class="row">
@@ -194,7 +192,7 @@
                 </div>
             </div>
             <div class="button text-right mb-4">
-                <button type="button" class="btn btn-info mr-2" onclick="history.back();">Back</button>
+                <a href="/apps/sales-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
                 <button id="preview_button" class="btn btn-primary mr-2">Preview SO</button>
                 @if ($data->fc_sostatus === 'F')
                     <button id="submit_button" class="btn btn-success" disabled>Submit</button>
