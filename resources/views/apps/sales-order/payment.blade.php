@@ -428,18 +428,17 @@
                         grand_total += parseFloat(data.data[i].total_harga);
                     }
 
-                    var total_kurang = grand_total + data.data[0].tempsomst.fm_servpay -
-                        data.data[0].nominal == grand_total + data.data[0].tempsomst.fm_servpay ? 0 :
-                        grand_total +
-                        data.data[0].tempsomst.fm_servpay - data.data[0].nominal;
+                    var total_kurang = data.data[0].tempsomst.fm_brutto -
+                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? 0 :
+                        data.data[0].tempsomst.fm_brutto - data.data[0].nominal;
 
-                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
-                        .fm_servpay)));
-                    if (data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay) {
+                    // $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
+                    //     .fm_servpay)));
+                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].tempsomst.fm_brutto)));
+                    if (data.data[0].nominal > data.data[0].tempsomst.fm_brutto) {
                         // ubah label_kekurangan htmlnya menjadi "kelebihan"
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
-                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total -
-                            data.data[0].tempsomst.fm_servpay)));
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
                     }
                     $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);

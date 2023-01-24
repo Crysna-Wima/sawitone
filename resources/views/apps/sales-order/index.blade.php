@@ -81,10 +81,11 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                     <label>Status PKP</label>
-                                    <select class="form-control select2 select2-hidden-accessible" name="" id="" tabindex="-1" aria-hidden="true">
+                                    {{-- <select class="form-control select2 select2-hidden-accessible" name="" id="" tabindex="-1" aria-hidden="true">
                                         <option value="T">YES</option>
                                         <option selected="" value="F">NO</option>
-                                    </select>
+                                    </select> --}}
+                                    <input type="text" class="form-control" id="status_pkp" name="fc_pkp" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -451,6 +452,7 @@
             dataType: "JSON",
             success: function(response){
                 var data = response.data;
+                console.log(data);
                 $("#modal_customer").modal('hide');
                 Object.keys(data).forEach(function (key) {
                     var elem_name = $('[name=' + key + ']');
@@ -460,7 +462,7 @@
                 $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
                 $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
                 $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-
+                $('#status_pkp').val(data.member_tax_code.fv_description);
 
             },error: function (jqXHR, textStatus, errorThrown){
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });

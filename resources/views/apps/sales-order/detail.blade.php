@@ -81,7 +81,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input type="text" class="form-control" value="" readonly>
+                                        <input type="text" class="form-control" id="status_pkp" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -241,8 +241,8 @@
                                     <p class="text-success flex-row-item text-right" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                    <p class="text-success flex-row-item text-right" id="fc_membertaxcode">0,00</p>
+                                    <p class="text-secondary flex-row-item">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" id="fm_tax">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
@@ -548,7 +548,7 @@
                     $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
                     $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
                     $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-
+                    $('#status_pkp').val(data.member_tax_code.fv_description);
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -635,13 +635,17 @@
                     grand_total += data[i].total_harga;
                 }
 
-                $('#count_item').html(data.length);
                 $('#count_quantity').html(count_quantity);
-                $('#total_harga').html(fungsiRupiah(grand_total));
-                $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
+                // $('#total_harga').html(fungsiRupiah(grand_total));
+                // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
                 // servpay
                 if(data.length != 0){
                     $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
+                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
+                    $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
+                    $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
+                    $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
+                    $('#count_item').html(data[0].tempsomst.fn_sodetail);
                 }
 
                 
