@@ -169,7 +169,7 @@
 <div class="container" id="so-dexa">
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0">
-            <img src="{{ public_path('assets/img/Logo-dexa.png') }}" width="35%">
+            <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>DEXA GROUP</b></p>
