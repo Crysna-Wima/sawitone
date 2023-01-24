@@ -176,7 +176,7 @@
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST"
+                        <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -644,7 +644,7 @@
                     $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
                 }
 
-                
+
             }
         });
 
@@ -695,6 +695,49 @@
                     }
                 });
         }
+
+        $('#form_submit_custom').on('submit', function(e){
+            e.preventDefault();
+
+            var form_id = $(this).attr("id");
+            if(check_required(form_id) === false){
+                swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+                return;
+            }
+
+            $("#modal_loading").modal('show');
+            $.ajax({
+                url:  $('#form_submit_custom').attr('action'),
+                type: $('#form_submit_custom').attr('method'),
+                data: $('#form_submit_custom').serialize(),
+                success: function(response){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    if(response.status == 200){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        $("#form_submit_custom")[0].reset();
+                        reset_all_select();
+                        tb.ajax.reload(null, false);
+                    }
+                    else if(response.status == 201){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        location.href = location.href;
+                    }
+                    else if(response.status == 203){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                    }
+                    else if(response.status == 300){
+                        swal(response.message, { icon: 'error', });
+                    }
+                },error: function (jqXHR, textStatus, errorThrown){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                }
+            });
+        });
 
         // sementara
         function save_so() {
