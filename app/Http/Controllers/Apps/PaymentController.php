@@ -46,6 +46,9 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'fc_sotransport' => 'required',
             'fc_memberaddress_loading1' => 'required',
+        ],[
+            'fc_sotransport.required' => 'Transport harus diisi',
+            'fc_memberaddress_loading1.required' => 'Alamat Tujuan harus diisi',
         ]);
 
         if ($validator->fails()) {
@@ -106,6 +109,11 @@ class PaymentController extends Controller
             'fc_description' => 'required',
             'fm_valuepayment' => 'required',
             'fd_paymentdate' => 'required',
+        ], [
+            'fc_kode.required' => 'Kode Bayar harus diisi',
+            'fc_description.required' => 'Description harus diisi',
+            'fm_valuepayment.required' => 'Nominal harus diisi',
+            'fd_paymentdate.required' => 'Tanggal pembayaran harus diisi',
         ]);
 
         // jika validasi gagal
@@ -186,6 +194,9 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'fd_sodateinputuser' => 'required',
             'fd_soexpired' => 'required',
+        ], [
+            'fd_sodateinputuser.required' => 'Date Order harus diisi',
+            'fd_soexpired.required' => 'Date Expired harus diisi',
         ]);
 
         // jika validasi gagal
