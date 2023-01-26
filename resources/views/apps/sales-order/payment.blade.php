@@ -192,8 +192,10 @@
                 </div>
             </div>
             <div class="button text-right mb-4">
+
                 <a href="/apps/sales-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-                <button id="preview_button" class="btn btn-primary mr-2">Preview SO</button>
+                <a href="/apps/sales-order/detail/payment/pdf" target="_blank"><button id="preview_button" class="btn btn-primary mr-2">Preview SO</button></a>
+
                 @if ($data->fc_sostatus === 'F')
                     <button id="submit_button" class="btn btn-success" disabled>Submit</button>
                 @else
@@ -266,7 +268,7 @@
                                         {{-- input waktu sekarang format timestamp tipe hidden --}}
                                         <input type="hidden" class="form-control" name="fd_sodatesysinput" id="fd_sodatesysinput"
                                             value="{{ date('d-m-Y') }}" >
-                                        
+
                                         <input type="text" id="fd_paymentdate2" class="form-control datepicker"
                                             name="fd_paymentdate" required>
                                     </div>
@@ -382,9 +384,9 @@
                                             '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
                                             response.message + '</div></div>');
                                         // redirect ke halaman sales order
-                                     
+
                                             window.location.href = "/apps/sales-order";
-                                      
+
 
                                     }
                                 }
@@ -426,18 +428,17 @@
                         grand_total += parseFloat(data.data[i].total_harga);
                     }
 
-                    var total_kurang = grand_total + data.data[0].tempsomst.fm_servpay -
-                        data.data[0].nominal == grand_total + data.data[0].tempsomst.fm_servpay ? 0 :
-                        grand_total +
-                        data.data[0].tempsomst.fm_servpay - data.data[0].nominal;
+                    var total_kurang = data.data[0].tempsomst.fm_brutto -
+                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? 0 :
+                        data.data[0].tempsomst.fm_brutto - data.data[0].nominal;
 
-                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
-                        .fm_servpay)));
-                    if (data.data[0].nominal > grand_total + data.data[0].tempsomst.fm_servpay) {
+                    // $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
+                    //     .fm_servpay)));
+                    $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].tempsomst.fm_brutto)));
+                    if (data.data[0].nominal > data.data[0].tempsomst.fm_brutto) {
                         // ubah label_kekurangan htmlnya menjadi "kelebihan"
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
-                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - grand_total -
-                            data.data[0].tempsomst.fm_servpay)));
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
                     }
                     $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);

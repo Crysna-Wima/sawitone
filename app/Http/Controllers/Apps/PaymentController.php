@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Apps;
 
-use App\Models\BankAcc;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Validator;
+use DataTables;
+use PDF;
+
 use App\Models\TempSoDetail;
 use App\Models\TempSoMaster;
 use App\Models\TempSoPay;
 use App\Models\TransaksiType;
-use Illuminate\Http\Request;
-use PhpParser\Builder\Function_;
-use Validator;
-use Yajra\DataTables\Contracts\DataTable;
-use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -119,7 +120,7 @@ class PaymentController extends Controller
         // jika validasi gagal
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
-        } else if (($nominal + $request->fm_valuepayment) > ($total_bayar + $temp_so_master->fm_servpay)) {
+        } else if (($nominal + $request->fm_valuepayment) > $temp_so_master->fm_brutto) {
             // tampilkan pesan error jika nominal yang dibayarkan lebih besar dari total pembayaran
             return redirect()->back()->with('error', 'Nominal yang dibayarkan lebih besar dari total pembayaran');
         } else {
@@ -167,8 +168,7 @@ class PaymentController extends Controller
 
     }
 
-    public function submit_pembayaran(Request $request)
-    {
+    public function submit_pembayaran(Request $request){
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
@@ -211,12 +211,12 @@ class PaymentController extends Controller
                 'message' => 'Data pembayaran tidak boleh kosong',
                 'data' => $count_row_pay
             ];
-        } else if (($total_bayar + $temp_so_master->fm_servpay) - $nominal != 0 && ($total_bayar + $temp_so_master->fm_servpay) > $nominal) {
+        } else if ($temp_so_master->fm_brutto - $nominal != 0 && $temp_so_master->fm_brutto > $nominal) {
             return [
                 'status' => 301,
                 'message' => 'Masih ada kekurangan',
             ];
-        } else if (($total_bayar + $temp_so_master->fm_servpay) < $nominal) {
+        } else if ($temp_so_master->fm_brutto < $nominal) {
             return [
                 'status' => 301,
                 'message' => 'Masih ada kelebihan pembayaran',
@@ -233,22 +233,21 @@ class PaymentController extends Controller
                 'fc_sostatus' => 'F',
                 'fd_sodateinputuser' => $request->fd_sodateinputuser,
                 'fd_soexpired' => $request->fd_soexpired,
-                'fm_brutto' => $total_bayar + $temp_so_master->fm_servpay,
-                'fm_netto' => $total_bayar,
-                'fn_sodetail' => $total
-                // 'fd_sodatesysinput' => waktu sekarang timestamp
+               
+                'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
                 
-                
+
+
             ]);
 
             // jika update berhasil
             if ($temp_so_master) {
                 // Tambahkan session flash message
-                session()->flash("message", "Pembayaran Berhasil");
+                // session()->flash("message", "Pembayaran Berhasil"); 
 
-                // Kirim data message yang didapat dari session
-                $message = session()->get("message");
-                return response()->json(["status" => 200, "message" => $message]);
+                // // Kirim data message yang didapat dari session
+                // $message = session()->get("message");
+                return response()->json(["status" => 200, "message" => "Pembayaran Berhasil"]);
             }
 
             return [
@@ -256,5 +255,15 @@ class PaymentController extends Controller
                 'message' => 'Data gagal disimpan',
             ];
         }
+    }
+
+    public function pdf(){
+
+        $data['so_master'] = TempSoMaster::with('branch','sales')->where('fc_sono', auth()->user()->fc_userid)->first();
+        $data['so_detail'] = TempSoDetail::with('stock')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', auth()->user()->fc_userid)->get();
+
+        $pdf = PDF::loadView('pdf.preview-so', $data)->setPaper('a4');
+        return $pdf->stream();
     }
 }

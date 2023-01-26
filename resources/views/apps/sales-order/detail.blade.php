@@ -81,7 +81,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input type="text" class="form-control" value="" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -176,7 +176,7 @@
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST"
+                        <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -241,8 +241,8 @@
                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fc_membertaxcode">0,00</p>
+                                    <p class="text-secondary flex-row-item">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
@@ -548,7 +548,7 @@
                     $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
                     $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
                     $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-
+                    $('#status_pkp').val(data.member_tax_code.fv_description);
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -635,16 +635,20 @@
                     grand_total += data[i].total_harga;
                 }
 
-                $('#count_item').html(data.length);
                 $('#count_quantity').html(count_quantity);
-                $('#total_harga').html(fungsiRupiah(grand_total));
-                $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
+                // $('#total_harga').html(fungsiRupiah(grand_total));
+                // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
                 // servpay
                 if(data.length != 0){
-                    $('#fm_servpay').html(data[0].tempsomst.fm_servpay);
+                    $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
+                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
+                    $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
+                    $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
+                    $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
+                    $('#count_item').html(data[0].tempsomst.fn_sodetail);
                 }
 
-                
+
             }
         });
 
@@ -695,6 +699,49 @@
                     }
                 });
         }
+
+        $('#form_submit_custom').on('submit', function(e){
+            e.preventDefault();
+
+            var form_id = $(this).attr("id");
+            if(check_required(form_id) === false){
+                swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+                return;
+            }
+
+            $("#modal_loading").modal('show');
+            $.ajax({
+                url:  $('#form_submit_custom').attr('action'),
+                type: $('#form_submit_custom').attr('method'),
+                data: $('#form_submit_custom').serialize(),
+                success: function(response){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    if(response.status == 200){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        $("#form_submit_custom")[0].reset();
+                        reset_all_select();
+                        tb.ajax.reload(null, false);
+                    }
+                    else if(response.status == 201){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        location.href = location.href;
+                    }
+                    else if(response.status == 203){
+                        swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                    }
+                    else if(response.status == 300){
+                        swal(response.message, { icon: 'error', });
+                    }
+                },error: function (jqXHR, textStatus, errorThrown){
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                }
+            });
+        });
 
         // sementara
         function save_so() {
