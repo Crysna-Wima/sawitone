@@ -224,29 +224,29 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Item</p>
-                                    <p class="text-success flex-row-item text-right" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="text-secondary flex-row-item">Total</p>
-                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Service Pay</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_servpay">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px">
                                     <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                    <p class="text-success flex-row-item text-right" id="fc_membertaxcode">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fc_membertaxcode">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
