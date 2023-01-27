@@ -86,6 +86,7 @@
                             <div class="form-group">
                                 <label>Bank Type</label>
                                 <select class="form-control select2" name="fc_banktype" id="fc_banktype">
+                                    <option value="" selected disabled>- Pilih -</option>
                                     <option>1</option>
                                     <option>2</option>
                                 </select>
@@ -93,14 +94,14 @@
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Bank Code</label>
+                                <label>No. Rekening</label>
                                 <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Bank Username</label>
+                                <label>Nama Pemilik Rekening</label>
                                 <input type="text" class="form-control" name="fv_bankusername" id="fv_bankusername">
                             </div>
                         </div>
@@ -231,5 +232,7 @@
       edit_action(url, 'Edit Data Master Bank Acc');
       $("#type").val('update');
    }
+
+   $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

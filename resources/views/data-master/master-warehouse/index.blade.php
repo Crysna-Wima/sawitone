@@ -77,6 +77,7 @@
                             <div class="form-group">
                                 <label>Warehouse Pos</label>
                                 <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos">
+                                    <option value="" selected disabled>- Pilih -</option>
                                     <option value="INTERNAL">Internal</option>
                                     <option value="EXTERNAL">External</option>
                                 </select>
@@ -86,6 +87,7 @@
                             <div class="form-group">
                                 <label>Status</label>
                                 <select class="form-control select2" name="fl_status" id="fl_status">
+                                    <option value="" selected disabled>- Pilih -</option>
                                     <option value="G">Gudang</option>
                                     <option value="D">Display</option>
                                 </select>

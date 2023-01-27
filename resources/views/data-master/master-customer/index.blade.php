@@ -54,7 +54,11 @@
                            <th scope="col" class="text-center">Member AP</th>
                            <th scope="col" class="text-center">Member Aging AP</th>
                            <th scope="col" class="text-center">Member Lock Trans Type</th>
-                           <th scope="col" class="text-center">Member Pic Name</th>
+                           <th scope="col" class="text-center">Contact Person 1</th>
+                           <th scope="col" class="text-center">Contact Person 2</th>
+                           <th scope="col" class="text-center">Contact Person 3</th>
+                           <th scope="col" class="text-center">Contact Person 4</th>
+                           <th scope="col" class="text-center">Contact Person 5</th>
                            <th scope="col" class="text-center">Member Pic Phone</th>
                            <th scope="col" class="text-center">Member Pic Pos</th>
                            <th scope="col" class="text-center">Member Join Date</th>
@@ -153,8 +157,32 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Pic Name</label>
+                                <label>Contact Person Name 1</label>
                                 <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Contact Person Name 2</label>
+                                <input type="text" class="form-control" name="fc_memberpicname2" id="fc_memberpicname2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Contact Person Name 3</label>
+                                <input type="text" class="form-control" name="fc_memberpicname3" id="fc_memberpicname3">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Contact Person Name 4</label>
+                                <input type="text" class="form-control" name="fc_memberpicname4" id="fc_memberpicname4">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Contact Person Name 5</label>
+                                <input type="text" class="form-control" name="fc_memberpicname5" id="fc_memberpicname5">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -242,7 +270,7 @@
                                 <select class="select2" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-6">
                             <div class="form-group">
                                 <label>Customer NPWP</label>
                                 <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
@@ -436,6 +464,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_branch").empty();
+                    $("#fc_branch").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].fc_kode == $('#fc_branch_view').val()){
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
@@ -468,6 +497,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_memberlegalstatus").empty();
+                    $("#fc_memberlegalstatus").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_memberlegalstatus").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -496,6 +526,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_membernationality").empty();
+                    $("#fc_membernationality").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membernationality").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -524,6 +555,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_membertypebusiness").empty();
+                    $("#fc_membertypebusiness").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membertypebusiness").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -552,6 +584,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_membertaxcode").empty();
+                    $("#fc_membertaxcode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -580,6 +613,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_memberlockTransType").empty();
+                    $("##fc_memberlockTransType").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_memberlockTransType").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -608,8 +642,11 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_memberbank1").empty();
+                    $("#fc_memberbank1").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_memberbank2").empty();
+                    $("#fc_memberbank2").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_memberbank3").empty();
+                    $("#fc_memberbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_memberbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                         $("#fc_memberbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
@@ -640,6 +677,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_member_branchtype").empty();
+                    $("#fc_member_branchtype").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_member_branchtype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -708,6 +746,10 @@
          { data: 'fn_memberAgingAP' },
          { data: 'fc_memberlockTransType' },
          { data: 'fc_memberpicname' },
+         { data: 'fc_memberpicname2' },
+         { data: 'fc_memberpicname3' },
+         { data: 'fc_memberpicname4' },
+         { data: 'fc_memberpicname5' },
          { data: 'fc_memberpicphone' },
          { data: 'fc_memberpicpos' },
          { data: 'fd_memberjoindate' },
@@ -726,7 +768,7 @@
          var url_edit   = "/data-master/master-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_membercode;
          var url_delete = "/data-master/master-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_membercode;
 
-         $('td:eq(43)', row).html(`
+         $('td:eq(47)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

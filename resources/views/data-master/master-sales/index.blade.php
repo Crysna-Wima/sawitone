@@ -279,6 +279,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_salestype").empty();
+                    $("#fc_salestype").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salestype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -307,6 +308,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fn_saleslevel").empty();
+                    $("#fn_saleslevel").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fn_saleslevel").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -335,8 +337,11 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_salesbank1").empty();
+                    $("#fc_salesbank1").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_salesbank2").empty();
+                    $("#fc_salesbank2").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_salesbank3").empty();
+                    $("#fc_salesbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salesbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                         $("#fc_salesbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
