@@ -310,9 +310,15 @@
                         <a href="#" class="btn btn-success">Save SO</a>
                     </div>
                 @else
-                    <div class="button text-right mb-4">
+                   @if ($total == 0)
+                        <div class="button text-right mb-4">
+                           
+                        </div>
+                     @else
+                       <div class="button text-right mb-4">
                         <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
                     </div>
+                   @endif
                 @endif
 
             </div>

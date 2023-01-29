@@ -30,6 +30,7 @@
                 <h4 class="text-dark font-weight-normal">Welcome to <span class="font-weight-bold">DISTRIBUTOR DEXA</span></h4>
                 <p class="text-muted">Before you get started, you must login.</p>
                 <form id="form">
+                  @csrf
                    <div class="form-group">
                       <label>Username</label>
                       <input id="text" type="text" class="form-control" name="username" tabindex="1" required autofocus>
