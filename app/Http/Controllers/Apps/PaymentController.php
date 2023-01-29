@@ -15,6 +15,7 @@ use App\Models\TempSoMaster;
 use App\Models\TempSoPay;
 use App\Models\TransaksiType;
 use Carbon\Carbon;
+use DB;
 
 class PaymentController extends Controller
 {
@@ -231,16 +232,37 @@ class PaymentController extends Controller
                     'message' => 'Tambahkan Item terlebih dahulu',
                 ];
             }
-            $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
-                'fc_sostatus' => 'F',
-                'fd_sodateinputuser' => $request->fd_sodateinputuser,
-                'fd_soexpired' => $request->fd_soexpired,
-               
-                'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
+
+            DB::beginTransaction();
+
+            try{
+                $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
+                    'fc_sostatus' => 'F',
+                    'fd_sodateinputuser' => $request->fd_sodateinputuser,
+                    'fd_soexpired' => $request->fd_soexpired,
+                   
+                    'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+
+                TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->delete();
+                TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid])->delete();
                 
+                DB::commit();
 
+                return [
+                    'status' => 201, // SUCCESS
+                    'link' => '/apps/sales-order',
+                    'message' => 'Data berhasil dihapus'
+                ];
+            } catch(\Exception $e){
+                
+                DB::rollBack();
 
-            ]);
+                return [
+                    'status' 	=> 300, // GAGAL
+                    'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+                ];
+            }
 
             // jika update berhasil
             if ($temp_so_master) {
