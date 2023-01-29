@@ -181,7 +181,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>Barcode</label>
+                                        <label>Kode Barang</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_barcode" name="fc_barcode"
                                                 readonly>
@@ -201,12 +201,33 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <label>Qty Bonus</label>
+                                    <label>Bonus</label>
                                     <div class="form-group">
                                         <input type="number" min="0"
                                             oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                             class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                     </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-5">
+                                    <div class="form-group">
+                                        <label>Harga</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control format-rp" name="#" id="#"  onkeyup="return onkeyupRupiah(this.id);" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-7">
+                                    <div class="form-group">
+                                        <label>Deskripsi</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" fdprocessedid="hgh1fp" name="" required>
+                                        </div>
+                                    </div>  
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
                                     <button class="btn btn-success">Add Item</button>
@@ -219,6 +240,9 @@
 
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Calculation</h4>
+                    </div>
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
@@ -370,6 +394,10 @@
 
 @section('js')
     <script>
+        $(document).ready(function(){
+        // Format mata uang.
+        $( '.rupiah' ).mask('000.000.000', {reverse: true});
+        })
         $(document).ready(function() {
             $('.place_detail').attr('hidden', false);
         })

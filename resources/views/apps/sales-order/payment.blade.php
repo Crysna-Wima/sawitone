@@ -116,12 +116,21 @@
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
                                 <label>Transport</label>
+                                @if (empty($data->fc_sotransport))
                                 <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
                                     <option value="" selected disabled>- Pilih Transport -</option>
                                     <option value="By Dexa">By Dexa</option>
                                     <option value="By Paket">By Paket</option>
                                     <option value="By Customer">By Customer</option>
                                 </select>
+                                @else
+                                <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
+                                    <option value="{{ $data->fc_sotransport }}" selected disabled><?php echo $data->fc_sotransport; ?></option>
+                                    <option value="By Dexa">By Dexa</option>
+                                    <option value="By Paket">By Paket</option>
+                                    <option value="By Customer">By Customer</option>
+                                </select>
+                                @endif
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
@@ -134,14 +143,9 @@
                                         </div>
                                     </div>
                                     @if ($data->fm_servpay == 0)
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" name="fm_servpay" id="fm_servpay" fdprocessedid="hgh1fp">
+                                        <input type="text" class="form-control format-rp" name="fm_servpay" id="fm_servpay" fdprocessedid="hgh1fp"  onkeyup="return onkeyupRupiah(this.id);" required>
                                     @else
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" name="fm_servpay" id="fm_servpay"
-                                            value="{{ $data->fm_servpay }}">
+                                        <input type="text" class="form-control format-rp" name="fm_servpay" id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);" value="{{ $data->fm_servpay }}">
                                     @endif
                                 </div>
                             </div>
@@ -251,9 +255,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" fdprocessedid="hgh1fp" name="fm_valuepayment" required>
+                                        <input type="text" class="form-control format-rp" name="fm_valuepayment" id="fm_valuepayment"  onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                             </div>

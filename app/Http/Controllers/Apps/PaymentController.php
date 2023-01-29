@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\Convert;
 
 use Validator;
 use DataTables;
@@ -59,6 +60,7 @@ class PaymentController extends Controller
             ];
         }
         $temp_so_master = TempSoMaster::where('fc_sono', $fc_sono)->first();
+        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay) ]);
         $temp_so_master->update([
             'fc_sotransport' => $request->fc_sotransport,
             'fm_servpay' => $request->fm_servpay,
@@ -87,12 +89,12 @@ class PaymentController extends Controller
 
     public function create(Request $request)
     {
+        $request->merge(['fm_valuepayment' => Convert::convert_to_double($request->fm_valuepayment) ]);
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
         // jumlah nominal yang dibayarkan
         $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
-
         // get total pembayaran
         $data_bayar = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
         $total_bayar = 0;
