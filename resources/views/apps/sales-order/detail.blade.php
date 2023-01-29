@@ -319,6 +319,9 @@
                         <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
                     </div>
                    @endif
+                   {{-- <div id="btn-payment" class="button text-right mb-4">
+                           
+                   </div> --}}
                 @endif
 
             </div>
@@ -749,13 +752,18 @@
                 type: $('#form_submit_custom').attr('method'),
                 data: $('#form_submit_custom').serialize(),
                 success: function(response){
+                    
+                
                     setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                     if(response.status == 200){
-                        swal(response.message, { icon: 'success', });
+                        // swal(response.message, { icon: 'success', });
                         $("#modal").modal('hide');
                         $("#form_submit_custom")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
+                         if(response.total < 1){
+                            window.location.href = response.link;
+                         }
                     }
                     else if(response.status == 201){
                         swal(response.message, { icon: 'success', });

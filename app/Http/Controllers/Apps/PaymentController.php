@@ -252,7 +252,7 @@ class PaymentController extends Controller
                 return [
                     'status' => 201, // SUCCESS
                     'link' => '/apps/sales-order',
-                    'message' => 'Data berhasil dihapus'
+                    'message' => 'Submit Pembayaran Berhasil'
                 ];
             } catch(\Exception $e){
                 

@@ -39,6 +39,8 @@ class SalesOrderDetailController extends Controller
 
     public function store_update(request $request)
     {
+        $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
@@ -52,6 +54,7 @@ class SalesOrderDetailController extends Controller
             // dd($validator->errors()->first());
             return [
                 'status' => 300,
+                'total' => $total,
                 'message' => $validator->errors()->first()
             ];
         }
@@ -59,6 +62,8 @@ class SalesOrderDetailController extends Controller
         $stock = Stock::where(['fc_barcode' => $request->fc_barcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
+        
+
         $fn_sorownum = 1;
         if (!empty($temp_detail)) {
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
@@ -117,7 +122,8 @@ class SalesOrderDetailController extends Controller
 
         return [
             'status' => 200,
-            // 'data' => $data,
+            'total' => $total,
+            'link' => '/apps/sales-order',
             'message' => 'Data berhasil disimpan'
         ];
     }
