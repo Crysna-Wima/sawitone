@@ -161,6 +161,19 @@
             });
         });
 
+        function formatTimestamp(timestamp) {
+
+            if(timestamp == '0000-00-00 00:00:00'){
+                return '00-00-0000';
+            }
+
+            var date = new Date(timestamp);
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            return day + '-' + month + '-' + year;
+        }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
