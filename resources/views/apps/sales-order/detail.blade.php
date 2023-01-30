@@ -81,7 +81,8 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }}" readonly>
+                                        <input type="text" class="form-control"
+                                            value="{{ $data->member_tax_code->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -217,7 +218,8 @@
                                                     Rp.
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control format-rp" name="#" id="#"  onkeyup="return onkeyupRupiah(this.id);" required>
+                                            <input type="text" class="form-control format-rp" name="fm_so_price_edit"
+                                                id="fm_so_price"  required>
                                         </div>
                                     </div>
                                 </div>
@@ -225,9 +227,10 @@
                                     <div class="form-group">
                                         <label>Deskripsi</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" fdprocessedid="hgh1fp" name="" required>
+                                            <input type="text" class="form-control" fdprocessedid="hgh1fp"
+                                                name="fv_description" >
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
                                     <button class="btn btn-success">Add Item</button>
@@ -248,29 +251,36 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Service Pay</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -310,16 +320,16 @@
                         <a href="#" class="btn btn-success">Save SO</a>
                     </div>
                 @else
-                   @if ($total == 0)
+                    @if ($total == 0)
                         <div class="button text-right mb-4">
-                           
+
                         </div>
-                     @else
-                       <div class="button text-right mb-4">
-                        <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
-                    </div>
-                   @endif
-                   {{-- <div id="btn-payment" class="button text-right mb-4">
+                    @else
+                        <div class="button text-right mb-4">
+                            <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+                        </div>
+                    @endif
+                    {{-- <div id="btn-payment" class="button text-right mb-4">
                            
                    </div> --}}
                 @endif
@@ -403,9 +413,11 @@
 
 @section('js')
     <script>
-        $(document).ready(function(){
-        // Format mata uang.
-        $( '.rupiah' ).mask('000.000.000', {reverse: true});
+        $(document).ready(function() {
+            // Format mata uang.
+            $('.rupiah').mask('000.000.000', {
+                reverse: true
+            });
         })
         $(document).ready(function() {
             $('.place_detail').attr('hidden', false);
@@ -502,13 +514,38 @@
         }
 
         function table_stock() {
+            var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
             var tb_stock = $('#tb_stock').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
                 ajax: {
                     url: "/master/get-data-stock-so-datatables",
-                    type: 'GET'
+                    type: 'GET',
+                    dataSrc: function(data) {
+                        data.data.forEach(function(row) {
+                            switch (tipe_bisnis) {
+                                case 'PERSONAL':
+                                    row.fm_price_default = row.fm_price_enduser;
+                                    break;
+                                case 'DISTRIB':
+                                    row.fm_price_default = row.fm_price_distributor;
+                                    break;
+                                case 'RETAIL':
+                                    row.fm_price_default = row.fm_price_default;
+                                    break;
+                                case 'HOSPITAL':
+                                    row.fm_price_default = row.fm_price_project;
+                                    break;
+                                case 'ENDUSER':
+                                    row.fm_price_default = row.fm_price_enduser;
+                                    break;
+                                default:
+                                    row.fm_price_default = "";
+                            }
+                        });
+                        return data.data;
+                    }
                 },
                 columnDefs: [{
                     className: 'text-center',
@@ -551,7 +588,21 @@
                 dataType: "JSON",
                 success: function(response) {
                     var data = response.data;
-
+                    // console.log(data.tempsodetail[0].fm_so_price);
+                    var tipe_bisnis  = "{{ $data->customer->member_type_business->fv_description }}";
+                    if(tipe_bisnis == 'DISTRIB'){
+                        $('#fm_so_price').val(data.fm_price_distributor);
+                    }else if(tipe_bisnis == 'RETAIL'){
+                        $('#fm_so_price').val(data.fm_price_default);
+                    }else if(tipe_bisnis == 'HOSPITAL'){
+                        $('#fm_so_price').val(data.fm_price_project);
+                    }else if(tipe_bisnis == 'PERSONAL'){
+                        $('#fm_so_price').val(data.fm_price_enduser);
+                    }else if(tipe_bisnis == 'ENDUSER'){
+                        $('#fm_so_price').val(data.fm_price_enduser);
+                    }else{
+                        $('#fm_so_price').val("");
+                    }
                     $('#fc_barcode').val(data.fc_barcode);
 
                     $("#modal_stock").modal('hide');
@@ -676,7 +727,7 @@
                 // $('#total_harga').html(fungsiRupiah(grand_total));
                 // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
                 // servpay
-                if(data.length != 0){
+                if (data.length != 0) {
                     $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
                     $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
                     $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
@@ -737,50 +788,62 @@
                 });
         }
 
-        $('#form_submit_custom').on('submit', function(e){
+        $('#form_submit_custom').on('submit', function(e) {
             e.preventDefault();
 
             var form_id = $(this).attr("id");
-            if(check_required(form_id) === false){
-                swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+            if (check_required(form_id) === false) {
+                swal("Oops! Mohon isi field yang kosong", {
+                    icon: 'warning',
+                });
                 return;
             }
 
             $("#modal_loading").modal('show');
             $.ajax({
-                url:  $('#form_submit_custom').attr('action'),
+                url: $('#form_submit_custom').attr('action'),
                 type: $('#form_submit_custom').attr('method'),
                 data: $('#form_submit_custom').serialize(),
-                success: function(response){
-                    
-                
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                    if(response.status == 200){
+                success: function(response) {
+
+
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    if (response.status == 200) {
                         // swal(response.message, { icon: 'success', });
                         $("#modal").modal('hide');
                         $("#form_submit_custom")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
-                         if(response.total < 1){
+                        if (response.total < 1) {
                             window.location.href = response.link;
-                         }
-                    }
-                    else if(response.status == 201){
-                        swal(response.message, { icon: 'success', });
+                        }
+                    } else if (response.status == 201) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
                         $("#modal").modal('hide');
                         location.href = location.href;
-                    }
-                    else if(response.status == 203){
-                        swal(response.message, { icon: 'success', });
+                    } else if (response.status == 203) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
                         $("#modal").modal('hide');
                         tb.ajax.reload(null, false);
+                    } else if (response.status == 300) {
+                        swal(response.message, {
+                            icon: 'error',
+                        });
                     }
-                    else if(response.status == 300){
-                        swal(response.message, { icon: 'error', });
-                    }
-                },error: function (jqXHR, textStatus, errorThrown){
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                        icon: 'error',
+                    });
                 }
             });
         });

@@ -88,9 +88,13 @@ class SalesOrderDetailController extends Controller
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
             'fn_so_bonusqty' => $request->fn_so_bonusqty,
-            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price,
+            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price_edit,
             'fm_so_oriprice' => $request->fm_so_price,
+            'fm_so_price' => $request-> fm_so_price_edit,
+            'fv_description' => $request-> fv_description
         ]);
+
+    //    dd($request); 
 
         // dd($request->fn_so_qty*$request->fm_so_price);
 
