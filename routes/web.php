@@ -159,6 +159,15 @@ Route::group(['middleware' => ['cek_login']], function () {
     });
 
     Route::prefix('apps')->group(function () {
+
+        Route::prefix('master-sales-order')->group(function () {
+            Route::get('/','Apps\MasterSalesOrderController@index');
+            Route::get('/detail/{fc_sono}','Apps\MasterSalesOrderController@detail');
+            Route::get('/datatables','Apps\MasterSalesOrderController@datatables');
+            Route::get('/datatables-so-detail','Apps\MasterSalesOrderController@datatables_so_detail');
+            Route::get('/datatables-so-payment','Apps\MasterSalesOrderController@datatables_so_payment');
+        });
+
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
             Route::get('/datatables','Apps\SalesOrderController@datatables');
