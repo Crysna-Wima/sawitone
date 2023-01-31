@@ -191,29 +191,6 @@
                                 <button type="button" class="btn btn-danger" onclick=""><i class="fa fa-minus mr-1"></i></button>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Contact Person Name 2</label>
-                                <input type="text" class="form-control" name="fc_memberpicname2" id="fc_memberpicname2">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Phone 2</label>
-                                <input type="text" class="form-control" name="fc_memberpicphone2" id="fc_memberpicphone2">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
-                                <label>Customer CP Pos 2</label>
-                                <input type="text" class="form-control" name="fc_memberpicpos2" id="fc_memberpicpos2">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-1">
-                            <div class="text-center mt-4">
-                                <button type="button" class="btn btn-danger" onclick=""><i class="fa fa-minus mr-1"></i></button>
-                            </div>
-                        </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Legal Status</label>
