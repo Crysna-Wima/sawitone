@@ -59,8 +59,16 @@
                            <th scope="col" class="text-center">Contact Person 3</th>
                            <th scope="col" class="text-center">Contact Person 4</th>
                            <th scope="col" class="text-center">Contact Person 5</th>
-                           <th scope="col" class="text-center">Member Pic Phone</th>
-                           <th scope="col" class="text-center">Member Pic Pos</th>
+                           <th scope="col" class="text-center">Member CP Phone 1</th>
+                           <th scope="col" class="text-center">Member CP Phone 2</th>
+                           <th scope="col" class="text-center">Member CP Phone 3</th>
+                           <th scope="col" class="text-center">Member CP Phone 4</th>
+                           <th scope="col" class="text-center">Member CP Phone 5</th>
+                           <th scope="col" class="text-center">Member CP Pos 1</th>
+                           <th scope="col" class="text-center">Member CP Pos 2</th>
+                           <th scope="col" class="text-center">Member CP Pos 3</th>
+                           <th scope="col" class="text-center">Member CP Pos 4</th>
+                           <th scope="col" class="text-center">Member CP Pos 5</th>
                            <th scope="col" class="text-center">Member Join Date</th>
                            <th scope="col" class="text-center">Member Contract</th>
                            <th scope="col" class="text-center">Member Bank 1</th>
@@ -155,16 +163,40 @@
                                 <textarea type="text" class="form-control" name="fc_memberaddress_loading2" id="fc_memberaddress_loading2" style="height: 100px"></textarea>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Contact Person Name 1</label>
                                 <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Phone 1</label>
+                                <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Pos 1</label>
+                                <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Contact Person Name 2</label>
                                 <input type="text" class="form-control" name="fc_memberpicname2" id="fc_memberpicname2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Phone 2</label>
+                                <input type="text" class="form-control" name="fc_memberpicphone2" id="fc_memberpicphone2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Pos 2</label>
+                                <input type="text" class="form-control" name="fc_memberpicpos2" id="fc_memberpicpos2">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -173,10 +205,34 @@
                                 <input type="text" class="form-control" name="fc_memberpicname3" id="fc_memberpicname3">
                             </div>
                         </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Phone 3</label>
+                                <input type="text" class="form-control" name="fc_memberpicphone3" id="fc_memberpicphone3">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Pos 3</label>
+                                <input type="text" class="form-control" name="fc_memberpicpos3" id="fc_memberpicpos3">
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Contact Person Name 4</label>
                                 <input type="text" class="form-control" name="fc_memberpicname4" id="fc_memberpicname4">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Phone 4</label>
+                                <input type="text" class="form-control" name="fc_memberpicphone4" id="fc_memberpicphone4">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label>Customer CP Pos 4</label>
+                                <input type="text" class="form-control" name="fc_memberpicpos4" id="fc_memberpicpos4">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -185,19 +241,18 @@
                                 <input type="text" class="form-control" name="fc_memberpicname5" id="fc_memberpicname5">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Pic Phone</label>
-                                <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
+                                <label>Customer CP Phone 5</label>
+                                <input type="text" class="form-control" name="fc_memberpicphone5" id="fc_memberpicphone5">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Pic Pos</label>
-                                <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
+                                <label>Customer CP Pos 5</label>
+                                <input type="text" class="form-control" name="fc_memberpicpos5" id="fc_memberpicpos5">
                             </div>
                         </div>
-
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer Legal Status</label>
@@ -264,19 +319,19 @@
                                 <select class="select2" name="fc_membertaxcode" id="fc_membertaxcode"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>Branch Type</label>
                                 <select class="select2" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-6">
+                        <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>Customer NPWP</label>
                                 <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Customer NPWP Name</label>
                                 <input type="text" class="form-control" name="fc_membernpwp_name" id="fc_membernpwp_name">
@@ -712,7 +767,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0] },
-         { className: 'd-flex', targets: [43] },
+         { className: 'd-flex', targets: [51] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -751,7 +806,15 @@
          { data: 'fc_memberpicname4' },
          { data: 'fc_memberpicname5' },
          { data: 'fc_memberpicphone' },
+         { data: 'fc_memberpicphone2' },
+         { data: 'fc_memberpicphone3' },
+         { data: 'fc_memberpicphone4' },
+         { data: 'fc_memberpicphone5' },
          { data: 'fc_memberpicpos' },
+         { data: 'fc_memberpicpos2' },
+         { data: 'fc_memberpicpos3' },
+         { data: 'fc_memberpicpos4' },
+         { data: 'fc_memberpicpos5' },
          { data: 'fd_memberjoindate' },
          { data: 'fl_membercontract' },
          { data: 'member_bank1.fv_bankname' },
@@ -768,7 +831,7 @@
          var url_edit   = "/data-master/master-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_membercode;
          var url_delete = "/data-master/master-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_membercode;
 
-         $('td:eq(47)', row).html(`
+         $('td:eq(55)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
