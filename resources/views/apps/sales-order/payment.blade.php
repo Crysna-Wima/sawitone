@@ -136,7 +136,7 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
-                                <label>Service Pay</label>
+                                <label>Pelayanan</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">

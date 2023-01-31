@@ -163,6 +163,11 @@
                                 <textarea type="text" class="form-control" name="fc_memberaddress_loading2" id="fc_memberaddress_loading2" style="height: 100px"></textarea>
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-12 text-right">
+                            <div class="button mb-2">
+                                <button type="button" class="btn btn-success" onclick=""><i class="fa fa-plus mr-1"></i> Tambah Contact Person</button>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Contact Person Name 1</label>
@@ -175,10 +180,15 @@
                                 <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer CP Pos 1</label>
                                 <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-1">
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn btn-danger" onclick=""><i class="fa fa-minus mr-1"></i></button>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -193,64 +203,15 @@
                                 <input type="text" class="form-control" name="fc_memberpicphone2" id="fc_memberpicphone2">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-4">
+                        <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Customer CP Pos 2</label>
                                 <input type="text" class="form-control" name="fc_memberpicpos2" id="fc_memberpicpos2">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Contact Person Name 3</label>
-                                <input type="text" class="form-control" name="fc_memberpicname3" id="fc_memberpicname3">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Phone 3</label>
-                                <input type="text" class="form-control" name="fc_memberpicphone3" id="fc_memberpicphone3">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Pos 3</label>
-                                <input type="text" class="form-control" name="fc_memberpicpos3" id="fc_memberpicpos3">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Contact Person Name 4</label>
-                                <input type="text" class="form-control" name="fc_memberpicname4" id="fc_memberpicname4">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Phone 4</label>
-                                <input type="text" class="form-control" name="fc_memberpicphone4" id="fc_memberpicphone4">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Pos 4</label>
-                                <input type="text" class="form-control" name="fc_memberpicpos4" id="fc_memberpicpos4">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Contact Person Name 5</label>
-                                <input type="text" class="form-control" name="fc_memberpicname5" id="fc_memberpicname5">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Phone 5</label>
-                                <input type="text" class="form-control" name="fc_memberpicphone5" id="fc_memberpicphone5">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
-                                <label>Customer CP Pos 5</label>
-                                <input type="text" class="form-control" name="fc_memberpicpos5" id="fc_memberpicpos5">
+                        <div class="col-12 col-md-3 col-lg-1">
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn btn-danger" onclick=""><i class="fa fa-minus mr-1"></i></button>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">

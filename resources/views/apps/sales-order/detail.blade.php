@@ -219,7 +219,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_so_price_edit"
-                                                id="fm_so_price"  required>
+                                                id="fm_so_price" onkeyup="return onkeyupRupiah(this.id);"required>
                                         </div>
                                     </div>
                                 </div>
@@ -246,16 +246,24 @@
                     <div class="card-header">
                         <h4>Calculation</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 190px">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                                 </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
@@ -264,12 +272,20 @@
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Service Pay</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre" >
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>

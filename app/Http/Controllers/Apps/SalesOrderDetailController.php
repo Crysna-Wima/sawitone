@@ -78,6 +78,7 @@ class SalesOrderDetailController extends Controller
         $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty)]);
         $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga)]);
         $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default)]);
+        $request->merge(['fm_so_price_edit' => Convert::convert_to_double($request->fm_so_price_edit)]);
 
         TempSoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
