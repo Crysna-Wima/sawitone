@@ -528,7 +528,7 @@
                                 case 'PERSONAL':
                                     row.fm_price_default = row.fm_price_enduser;
                                     break;
-                                case 'DISTRIB':
+                                case 'DISTRIBUTOR':
                                     row.fm_price_default = row.fm_price_distributor;
                                     break;
                                 case 'RETAIL':
@@ -537,7 +537,7 @@
                                 case 'HOSPITAL':
                                     row.fm_price_default = row.fm_price_project;
                                     break;
-                                case 'ENDUSER':
+                                case 'END USER':
                                     row.fm_price_default = row.fm_price_enduser;
                                     break;
                                 default:
@@ -590,7 +590,7 @@
                     var data = response.data;
                     // console.log(data.tempsodetail[0].fm_so_price);
                     var tipe_bisnis  = "{{ $data->customer->member_type_business->fv_description }}";
-                    if(tipe_bisnis == 'DISTRIB'){
+                    if(tipe_bisnis == 'DISTRIBUTOR'){
                         $('#fm_so_price').val(data.fm_price_distributor);
                     }else if(tipe_bisnis == 'RETAIL'){
                         $('#fm_so_price').val(data.fm_price_default);
@@ -684,7 +684,7 @@
                     data: 'fn_so_bonusqty'
                 },
                 {
-                    data: 'fm_so_oriprice',
+                    data: 'fm_so_price',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
@@ -692,14 +692,13 @@
                 },
                 {
                     data: 'fm_so_disc'
-                },
-                {
-                    data: 'total_harga',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: 'fn_so_value',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null,
                 },
 
 
@@ -709,7 +708,7 @@
 
                 $('td:eq(10)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
-            `);
+                `);
             },
             footerCallback: function(row, data, start, end, display) {
 
