@@ -237,7 +237,7 @@
 
             {{-- TOTAL HARGA --}}
             <div class="col-12 col-md-12 col-lg-7 place_detail">
-                <div class="card" style="height: 220px">
+                <div class="card" style="height: 225px">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
