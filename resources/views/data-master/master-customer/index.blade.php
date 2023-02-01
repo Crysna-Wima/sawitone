@@ -94,6 +94,7 @@
 
 @section('modal')
 
+
     <!-- Modal -->
     <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static"
         style="overflow-y: auto">
@@ -176,42 +177,53 @@
                                         style="height: 100px"></textarea>
                                 </div>
                             </div>
-                            <div class="row contact-person-row">
-                                <div class="col-12 col-md-6 col-lg-12 text-right">
-                                    <div class="button mb-2">
-                                        <button id="contact-person" type="button" class="btn btn-success" onclick=""><i
-                                                class="fa fa-plus mr-1"></i> Tambah Contact Person</button>
-                                    </div>
+                        </div>
+
+                        {{-- contact person input --}}
+
+                        
+                            <div class="col-12 col-md-6 col-lg-12 text-right">
+                                <div class="button mb-2">
+                                    <button type="button" id="contact-person" class="btn btn-success" onclick=""><i
+                                            class="fa fa-plus mr-1"></i> Tambah Contact Person</button>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Contact Person Name 1</label>
-                                        <input type="text" class="form-control" name="fc_memberpicname"
-                                            id="fc_memberpicname">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Customer CP Phone 1</label>
-                                        <input type="text" class="form-control" name="fc_memberpicphone"
-                                            id="fc_memberpicphone">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3 col-lg-3">
-                                    <div class="form-group">
-                                        <label>Customer CP Pos 1</label>
-                                        <input type="text" class="form-control" name="fc_memberpicpos"
-                                            id="fc_memberpicpos">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3 col-lg-1">
-                                    <div class="text-center mt-4">
-                                        <button type="button" class="btn btn-danger" onclick=""><i
-                                                class="fa fa-minus mr-1"></i></button>
-                                    </div>
-                                </div>
-                               
                             </div>
+                        <div class="row contact-person-row">
+                         <div class="row w-100 ml-2">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label>Contact Person Name 1</label>
+                                    <input type="text" class="form-control" name="fc_memberpicname"
+                                        id="fc_memberpicname">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-4">
+                                <div class="form-group">
+                                    <label>Customer CP Phone 1</label>
+                                    <input type="text" class="form-control" name="fc_memberpicphone"
+                                        id="fc_memberpicphone">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3">
+                                <div class="form-group">
+                                    <label>Customer CP Pos 1</label>
+                                    <input type="text" class="form-control" name="fc_memberpicpos"
+                                        id="fc_memberpicpos">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-1">
+                                <div class="text-center mt-4">
+                                    <button type="button" class="btn btn-danger" onclick=""><i
+                                            class="fa fa-minus mr-1"></i></button>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {{-- end contact person --}}
+
+
+                        <div class="row">
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>Customer Legal Status</label>
@@ -438,6 +450,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -457,33 +471,50 @@
             var count = 1;
             $("#contact-person").click(function() {
                 count++;
-                $(".contact-person-row").append(`
-                <div class="col-12 col-md-6 col-lg-4">
+                if (count <= 5) {
+                    $(".contact-person-row").append(`
+                <div class="row w-100 ml-2 row-input">
+                <div class="col-12 col-md-6 col-lg-4 input-contact-person">
                     <div class="form-group">
                     <label>Contact Person Name ` + count + `</label>
-                    <input type="text" class="form-control" name="fc_memberpicname` + count + `" id="fc_memberpicname` + count + `">
+                    <input type="text" class="form-control" name="fc_memberpicname` + count +
+                        `" id="fc_memberpicname` + count + `">
                     </div>
                 </div>
-                <div class="col-12 col-md-3 col-lg-4">
+                <div class="col-12 col-md-3 col-lg-4 input-contact-person">
                     <div class="form-group">
                     <label>Customer CP Phone ` + count + `</label>
-                    <input type="text" class="form-control" name="fc_memberpicphone` + count + `" id="fc_memberpicphone` +
-                                count + `">
+                    <input type="text" class="form-control" name="fc_memberpicphone` + count +
+                        `" id="fc_memberpicphone` +
+                        count + `">
                     </div>
                 </div>
-                <div class="col-12 col-md-3 col-lg-3">
+                <div class="col-12 col-md-3 col-lg-3 input-contact-person">
                     <div class="form-group">
                     <label>Customer CP Pos ` + count + `</label>
-                    <input type="text" class="form-control" name="fc_memberpicpos` + count + `" id="fc_memberpicpos` + count + `">
+                    <input type="text" class="form-control" name="fc_memberpicpos` + count + `" id="fc_memberpicpos` +
+                        count + `">
                     </div>
                 </div>
-                <div class="col-12 col-md-3 col-lg-1">
+                <div class="col-12 col-md-3 col-lg-1 input-contact-person">
                     <div class="text-center mt-4">
-                    <button type="button" class="btn btn-danger" onclick=""><i class="fa fa-minus mr-1"></i></button>
+                    <button type="button" class="btn btn-danger remove-input" onclick=""><i class="fa fa-minus mr-1"></i></button>
                     </div>
+                </div>
                 </div>
                 `);
+                } else {
+                    // munculkan alert error
+                    alert("Maximal input 5");
+                }
             });
+
+            // Remove input
+            $(document).on('click', '.remove-input', function() {
+                count--;
+                $(this).closest('.row-input').remove();
+            });
+
         });
 
         $(document).ready(function() {
@@ -707,7 +738,7 @@
                         var data = response.data;
                         $("#fc_membertaxcode").empty();
                         $("#fc_membertaxcode").append(
-                        `<option value="" selected readonly> - Pilih - </option>`);
+                            `<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membertaxcode").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
