@@ -45,22 +45,22 @@
                         <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Submit :
-                                            {{ $data->fd_sodatesysinput }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Expired :
-                                            {{ $data->fd_soexpired }}</label>
-                                    </div>
-                                </div>
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Order :
-                                            {{ $data->fd_sodateinputuser }}</label>
+                                        <label>Submit : {{ $data->fd_sodatesysinput }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_sodateinputuser)) }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
+                                    <div class="form-group">
+                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 320px">
+                        <div class="card-body"  style="height: 303px">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
