@@ -470,8 +470,9 @@
         $(document).ready(function() {
             var count = 1;
             $("#contact-person").click(function() {
-                count++;
-                if (count <= 5) {
+                
+                if (count < 5) {
+                    count++;
                     $(".contact-person-row").append(`
                 <div class="row w-100 ml-2 row-input">
                 <div class="col-12 col-md-6 col-lg-4 input-contact-person">
@@ -512,6 +513,7 @@
             // Remove input
             $(document).on('click', '.remove-input', function() {
                 count--;
+                console.log(count);
                 $(this).closest('.row-input').remove();
             });
 

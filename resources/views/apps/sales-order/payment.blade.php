@@ -394,7 +394,9 @@
                                             '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
                                             response.message + '</div></div>');
                                         // redirect ke halaman sales order
-
+                                        // hapus local storage
+                                        localStorage.removeItem('fd_sodateinputuser');
+                                        localStorage.removeItem('fd_soexpired');
                                         window.location.href = "/apps/sales-order";
 
 
@@ -453,7 +455,12 @@
                     }
                     $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
-
+                    if(data.data[0].nominal - data.data[0].tempsomst.fm_brutto != 0){
+                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
+                    }else{
+                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].tempsomst.fm_brutto)));
+                    }
+                   
                 }
             });
 
