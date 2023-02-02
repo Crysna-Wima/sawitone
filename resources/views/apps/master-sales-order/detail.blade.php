@@ -192,9 +192,9 @@
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center">Bonus</th>
-                                            <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">DO</th>
                                             <th scope="col" class="text-center">INV</th>
+                                            <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
                                             <th scope="col" class="text-center">Total</th>
                                         </tr>
@@ -273,7 +273,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay"><?php echo number_format($data->fm_servpay,0,',','.') ?></p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">{{'RP '.number_format($data->fm_servpay,0,',','.') }}</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>

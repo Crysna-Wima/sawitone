@@ -29,6 +29,7 @@ class MasterSalesOrderController extends Controller
         session(['fc_sono_global' => $fc_sono]);
         $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
         return view('apps.master-sales-order.detail', $data);
+        // dd($data);
     }
 
     public function datatables_so_payment(){
