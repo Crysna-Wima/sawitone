@@ -41,8 +41,8 @@ class DataMasterCOntroller extends Controller
     {
         $model = 'App\\Models\\' . $model;
         $data = $model::where($where_field, $id)->first();
-
         return ApiFormatter::getResponse($data);
+        // dd($data);
     }
 
     public function get_data_where_field_id_get($model, $where_field, $id)

@@ -36,7 +36,7 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Master Sales Order</h4>
+                        <h4>Informasi Umum</h4>
                         <div class="card-header-action">
                             <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                         </div>
@@ -47,8 +47,20 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Tanggal :
-                                            {{ \Carbon\Carbon::parse($data->created_at)->format('d/m/Y') }}</label>
+                                        <label>Submit : {{ $data->fd_sodatesysinput }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_sodateinputuser)) }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
+                                    <div class="form-group">
+                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
@@ -70,10 +82,6 @@
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_membercode"
                                                 name="fc_membercode" value="{{ $data->fc_membercode }}" readonly>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" disabled onclick="click_modal_customer()"
-                                                    type="button"><i class="fa fa-search"></i></button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -91,14 +99,14 @@
             <div class="col-12 col-md-8 col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Detail Customer Sales Order</h4>
+                        <h4>Customer</h4>
                         <div class="card-header-action">
                             <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
                                     class="fas fa-minus"></i></a>
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body">
+                        <div class="card-body"  style="height: 303px">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
@@ -183,9 +191,10 @@
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
-                                            <th scope="col" class="text-center">Qty Bonus</th>
+                                            <th scope="col" class="text-center">Bonus</th>
+                                            <th scope="col" class="text-center">DO</th>
+                                            <th scope="col" class="text-center">INV</th>
                                             <th scope="col" class="text-center">Harga</th>
-                                            <th scope="col" class="text-center">Disc.(%)</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
                                             <th scope="col" class="text-center">Total</th>
                                         </tr>
@@ -198,19 +207,19 @@
             </div>
 
             {{-- TRANSPORT --}}
-            <div class="col-12 col-md-12 col-lg-4">
+            <div class="col-12 col-md-12 col-lg-5">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <div class="form-group">
                                     <label>Transport</label>
                                     <input type="text" class="form-control" value="{{ $data->fc_sotransport }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <div class="form-group">
-                                    <label>Service Pay</label>
+                                    <label>Pelayanan</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
@@ -221,48 +230,66 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label>Alamat Tujuan</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fc_memberaddress_loading1 }}" readonly>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             {{-- TOTAL HARGA --}}
-            <div class="col-12 col-md-12 col-lg-8 place_detail">
-                <div class="card">
+            <div class="col-12 col-md-12 col-lg-7 place_detail">
+                <div class="card" style="height: 225px">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Item</p>
-                                    <p class="text-success flex-row-item text-right" id="count_item">0,00</p>
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item"></p>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_so_disc">0,00</p>
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Total</p>
-                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
-                                <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Service Pay</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_servpay">0,00</p>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_tax">0,00</p>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">{{'RP '.number_format($data->fm_servpay,0,',','.') }}</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -279,6 +306,7 @@
                                 <table class="table table-striped" id="tb_sopay" width="100%">
                                     <thead style="white-space: nowrap">
                                         <tr>
+                                            <th scope="col" class="text-center">No.</th>
                                             <th scope="col" class="text-center">Kode Metode Pembayaran</th>
                                             <th scope="col" class="text-center">Deskripsi Metode</th>
                                             <th scope="col" class="text-center">Nominal</th>
@@ -298,19 +326,22 @@
                     <div class="card-header">
                         <h4>Catatan</h4>
                         <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                            <a data-collapse="#mycard-collapse3" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                         </div>
                     </div>
-                    <div class="collapse show" id="mycard-collapse">
+                    <div class="collapse show" id="mycard-collapse3">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
-                                    <textarea class="form-control" style="height: 150px;">{{ $data->fv_description }}</textarea>
+                                    <textarea class="form-control" style="height: 70px;" readonly>{{ $data->fv_description }}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="button text-left ml-3 mb-4">
+                <a href="/apps/master-sales-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
             </div>
         </div>
     </div>
@@ -329,7 +360,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 4, 5, 6, 7, 8, 9]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
             }, ],
             columns: [
                 { data: 'DT_RowIndex', searchable: false, orderable: false },
@@ -338,8 +369,9 @@
                 { data: 'namepack.fv_description' },
                 { data: 'fn_so_qty' },
                 { data: 'fn_so_bonusqty' },
+                { data: 'fn_do_qty' },
+                { data: 'fn_inv_qty' },
                 { data: 'fm_so_oriprice',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
-                { data: 'fm_so_disc' },
                 { data: 'fm_so_disc' },
                 { data: 'total_harga',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
             ],
@@ -381,9 +413,13 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0]
+                targets: [0, 1, 2, 3, 4, 5,]
             }, ],
-            columns: [{
+            columns: [
+                    {   data: 'DT_RowIndex', 
+                        searchable: false, 
+                        orderable: false },
+                    {
                         data: 'fc_sopaymentcode',
                         name: 'Kode Metode Pembayaran'
                     },

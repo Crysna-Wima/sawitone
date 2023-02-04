@@ -36,7 +36,7 @@ class Customer extends Model
     }
 
     public function member_legal_status(){
-        return $this->belongsTo(TransaksiType::class, 'fc_memberlegalstatus', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_memberlegalstatus', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%CUST_LEGAL%');
     }
 
     public function member_tax_code(){

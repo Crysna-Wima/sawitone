@@ -51,7 +51,7 @@
                                     <label>Date Order</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
                                         <input type="text" id="fd_sodateinputuser" class="form-control"
-                                            fdprocessedid="8ovz8a" required>
+                                            fdprocessedid="8ovz8a" onchange="saveFormInput(this)" required>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -64,8 +64,8 @@
                                 <div class="form-group mr-3">
                                     <label>Date Expired</label>
                                     <div class="input-group date" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_soexpired" class="form-control" fdprocessedid="8ovz8a"
-                                            required>
+                                        <input type="text" id="fd_soexpired" onchange="saveFormInput(this)"
+                                            class="form-control" fdprocessedid="8ovz8a" required>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -116,16 +116,27 @@
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
                                 <label>Transport</label>
-                                <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
-                                    <option value="By Dexa">By Dexa</option>
-                                    <option value="By Paket">By Paket</option>
-                                    <option value="By Customer">By Customer</option>
-                                </select>
+                                @if (empty($data->fc_sotransport))
+                                    <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
+                                        <option value="" selected disabled>- Pilih Transport -</option>
+                                        <option value="By Dexa">By Dexa</option>
+                                        <option value="By Paket">By Paket</option>
+                                        <option value="By Customer">By Customer</option>
+                                    </select>
+                                @else
+                                    <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
+                                        <option value="{{ $data->fc_sotransport }}" selected disabled><?php echo $data->fc_sotransport; ?>
+                                        </option>
+                                        <option value="By Dexa">By Dexa</option>
+                                        <option value="By Paket">By Paket</option>
+                                        <option value="By Customer">By Customer</option>
+                                    </select>
+                                @endif
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 pr-0 pl-0">
                             <div class="form-group">
-                                <label>Service Pay</label>
+                                <label>Pelayanan</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -133,13 +144,12 @@
                                         </div>
                                     </div>
                                     @if ($data->fm_servpay == 0)
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" name="fm_servpay" id="fm_servpay" fdprocessedid="hgh1fp">
+                                        <input type="text" class="form-control format-rp" name="fm_servpay"
+                                            id="fm_servpay" fdprocessedid="hgh1fp" onkeyup="return onkeyupRupiah(this.id);"
+                                            required>
                                     @else
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" name="fm_servpay" id="fm_servpay"
+                                        <input type="text" class="form-control format-rp" name="fm_servpay"
+                                            id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);"
                                             value="{{ $data->fm_servpay }}">
                                     @endif
                                 </div>
@@ -194,7 +204,8 @@
             <div class="button text-right mb-4">
 
                 <a href="/apps/sales-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-                <a href="/apps/sales-order/detail/payment/pdf" target="_blank"><button id="preview_button" class="btn btn-primary mr-2">Preview SO</button></a>
+                <a href="/apps/sales-order/detail/payment/pdf" target="_blank"><button id="preview_button"
+                        class="btn btn-primary mr-2">Preview SO</button></a>
 
                 @if ($data->fc_sostatus === 'F')
                     <button id="submit_button" class="btn btn-success" disabled>Submit</button>
@@ -250,9 +261,8 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="number" min="0"
-                                            oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
-                                            class="form-control" fdprocessedid="hgh1fp" name="fm_valuepayment" required>
+                                        <input type="text" class="form-control format-rp" name="fm_valuepayment"
+                                            id="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                             </div>
@@ -266,8 +276,8 @@
                                             </div>
                                         </div>
                                         {{-- input waktu sekarang format timestamp tipe hidden --}}
-                                        <input type="hidden" class="form-control" name="fd_sodatesysinput" id="fd_sodatesysinput"
-                                            value="{{ date('d-m-Y') }}" >
+                                        <input type="hidden" class="form-control" name="fd_sodatesysinput"
+                                            id="fd_sodatesysinput" value="{{ date('d-m-Y') }}">
 
                                         <input type="text" id="fd_paymentdate2" class="form-control datepicker"
                                             name="fd_paymentdate" required>
@@ -384,8 +394,10 @@
                                             '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
                                             response.message + '</div></div>');
                                         // redirect ke halaman sales order
-
-                                            window.location.href = "/apps/sales-order";
+                                        // hapus local storage
+                                        localStorage.removeItem('fd_sodateinputuser');
+                                        localStorage.removeItem('fd_soexpired');
+                                        window.location.href = "/apps/sales-order";
 
 
                                     }
@@ -438,13 +450,18 @@
                     if (data.data[0].nominal > data.data[0].tempsomst.fm_brutto) {
                         // ubah label_kekurangan htmlnya menjadi "kelebihan"
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
-                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0]
+                            .tempsomst.fm_brutto)));
                     }
 		    $('#label_kekurangan').html('<b>Kekurangan</b>');
                     $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
-                    console.log(data.data[0].nominal );
-		    console.log(data.data[0].tempsomst.fm_brutto);
-
+                    // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
+                    if(data.data[0].nominal - data.data[0].tempsomst.fm_brutto != 0){
+                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
+                    }else{
+                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].tempsomst.fm_brutto)));
+                    }
+                   
                 }
             });
 
@@ -504,6 +521,24 @@
             `);
                 },
             });
+
+            // date expired dan date order
+            function saveFormInput(element) {
+                localStorage.setItem(element.id, element.value);
+            }
+
+            window.onload = function() {
+                let fd_sodateinputuser = document.getElementById("fd_sodateinputuser");
+                let fd_soexpired = document.getElementById("fd_soexpired");
+
+                if (localStorage.getItem("fd_sodateinputuser")) {
+                    fd_sodateinputuser.value = localStorage.getItem("fd_sodateinputuser");
+                }
+
+                if (localStorage.getItem("fd_soexpired")) {
+                    fd_soexpired.value = localStorage.getItem("fd_soexpired");
+                }
+            };
         </script>
     @endsection
 

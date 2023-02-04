@@ -81,7 +81,8 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }}" readonly>
+                                        <input type="text" class="form-control"
+                                            value="{{ $data->member_tax_code->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -181,7 +182,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>Barcode</label>
+                                        <label>Kode Barang</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_barcode" name="fc_barcode"
                                                 readonly>
@@ -201,11 +202,34 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <label>Qty Bonus</label>
+                                    <label>Bonus</label>
                                     <div class="form-group">
                                         <input type="number" min="0"
                                             oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"
                                             class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-5">
+                                    <div class="form-group">
+                                        <label>Harga</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control format-rp" name="fm_so_price_edit"
+                                                id="fm_so_price" onkeyup="return onkeyupRupiah(this.id);"required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-7">
+                                    <div class="form-group">
+                                        <label>Deskripsi</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" fdprocessedid="hgh1fp"
+                                                name="fv_description" >
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -219,34 +243,53 @@
 
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-header">
+                        <h4>Calculation</h4>
+                    </div>
+                    <div class="card-body" style="height: 190px">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
-                                <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Item</p>
-                                    <p class="text-success flex-row-item text-right" id="count_item">0,00</p>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_so_disc">0,00</p>
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="text-secondary flex-row-item">Total</p>
-                                    <p class="text-success flex-row-item text-right" id="total_harga">0,00</p>
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
-                                <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Service Pay</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_servpay">0,00</p>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px">
-                                    <p class="text-secondary flex-row-item">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" id="fm_tax">0,00</p>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:large" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -286,9 +329,18 @@
                         <a href="#" class="btn btn-success">Save SO</a>
                     </div>
                 @else
-                    <div class="button text-right mb-4">
-                        <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
-                    </div>
+                    @if ($total == 0)
+                        <div class="button text-right mb-4">
+
+                        </div>
+                    @else
+                        <div class="button text-right mb-4">
+                            <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+                        </div>
+                    @endif
+                    {{-- <div id="btn-payment" class="button text-right mb-4">
+                           
+                   </div> --}}
                 @endif
 
             </div>
@@ -370,6 +422,12 @@
 
 @section('js')
     <script>
+        $(document).ready(function() {
+            // Format mata uang.
+            $('.rupiah').mask('000.000.000', {
+                reverse: true
+            });
+        })
         $(document).ready(function() {
             $('.place_detail').attr('hidden', false);
         })
@@ -465,13 +523,38 @@
         }
 
         function table_stock() {
+            var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
             var tb_stock = $('#tb_stock').DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
                 ajax: {
                     url: "/master/get-data-stock-so-datatables",
-                    type: 'GET'
+                    type: 'GET',
+                    dataSrc: function(data) {
+                        data.data.forEach(function(row) {
+                            switch (tipe_bisnis) {
+                                case 'PERSONAL':
+                                    row.fm_price_default = row.fm_price_enduser;
+                                    break;
+                                case 'DISTRIBUTOR':
+                                    row.fm_price_default = row.fm_price_distributor;
+                                    break;
+                                case 'RETAIL':
+                                    row.fm_price_default = row.fm_price_default;
+                                    break;
+                                case 'HOSPITAL':
+                                    row.fm_price_default = row.fm_price_project;
+                                    break;
+                                case 'END USER':
+                                    row.fm_price_default = row.fm_price_enduser;
+                                    break;
+                                default:
+                                    row.fm_price_default = "";
+                            }
+                        });
+                        return data.data;
+                    }
                 },
                 columnDefs: [{
                     className: 'text-center',
@@ -514,7 +597,21 @@
                 dataType: "JSON",
                 success: function(response) {
                     var data = response.data;
-
+                    // console.log(data.tempsodetail[0].fm_so_price);
+                    var tipe_bisnis  = "{{ $data->customer->member_type_business->fv_description }}";
+                    if(tipe_bisnis == 'DISTRIBUTOR'){
+                        $('#fm_so_price').val(data.fm_price_distributor);
+                    }else if(tipe_bisnis == 'RETAIL'){
+                        $('#fm_so_price').val(data.fm_price_default);
+                    }else if(tipe_bisnis == 'HOSPITAL'){
+                        $('#fm_so_price').val(data.fm_price_project);
+                    }else if(tipe_bisnis == 'PERSONAL'){
+                        $('#fm_so_price').val(data.fm_price_enduser);
+                    }else if(tipe_bisnis == 'ENDUSER'){
+                        $('#fm_so_price').val(data.fm_price_enduser);
+                    }else{
+                        $('#fm_so_price').val("");
+                    }
                     $('#fc_barcode').val(data.fc_barcode);
 
                     $("#modal_stock").modal('hide');
@@ -596,7 +693,7 @@
                     data: 'fn_so_bonusqty'
                 },
                 {
-                    data: 'fm_so_oriprice',
+                    data: 'fm_so_price',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
@@ -604,14 +701,13 @@
                 },
                 {
                     data: 'fm_so_disc'
-                },
-                {
-                    data: 'total_harga',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: 'fn_so_value',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null,
                 },
 
 
@@ -621,7 +717,7 @@
 
                 $('td:eq(10)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
-            `);
+                `);
             },
             footerCallback: function(row, data, start, end, display) {
 
@@ -639,7 +735,7 @@
                 // $('#total_harga').html(fungsiRupiah(grand_total));
                 // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
                 // servpay
-                if(data.length != 0){
+                if (data.length != 0) {
                     $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
                     $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
                     $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
@@ -700,45 +796,62 @@
                 });
         }
 
-        $('#form_submit_custom').on('submit', function(e){
+        $('#form_submit_custom').on('submit', function(e) {
             e.preventDefault();
 
             var form_id = $(this).attr("id");
-            if(check_required(form_id) === false){
-                swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+            if (check_required(form_id) === false) {
+                swal("Oops! Mohon isi field yang kosong", {
+                    icon: 'warning',
+                });
                 return;
             }
 
             $("#modal_loading").modal('show');
             $.ajax({
-                url:  $('#form_submit_custom').attr('action'),
+                url: $('#form_submit_custom').attr('action'),
                 type: $('#form_submit_custom').attr('method'),
                 data: $('#form_submit_custom').serialize(),
-                success: function(response){
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                    if(response.status == 200){
-                        swal(response.message, { icon: 'success', });
+                success: function(response) {
+
+
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    if (response.status == 200) {
+                        // swal(response.message, { icon: 'success', });
                         $("#modal").modal('hide');
                         $("#form_submit_custom")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
-                    }
-                    else if(response.status == 201){
-                        swal(response.message, { icon: 'success', });
+                        if (response.total < 1) {
+                            window.location.href = response.link;
+                        }
+                    } else if (response.status == 201) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
                         $("#modal").modal('hide');
                         location.href = location.href;
-                    }
-                    else if(response.status == 203){
-                        swal(response.message, { icon: 'success', });
+                    } else if (response.status == 203) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
                         $("#modal").modal('hide');
                         tb.ajax.reload(null, false);
+                    } else if (response.status == 300) {
+                        swal(response.message, {
+                            icon: 'error',
+                        });
                     }
-                    else if(response.status == 300){
-                        swal(response.message, { icon: 'error', });
-                    }
-                },error: function (jqXHR, textStatus, errorThrown){
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                        icon: 'error',
+                    });
                 }
             });
         });

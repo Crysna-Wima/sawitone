@@ -23,14 +23,20 @@ class SalesOrderController extends Controller
 {
     public function index(){
         $temp_so_master = TempSoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', auth()->user()->fc_userid)->first();
+        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $total = count($temp_detail);
         if(!empty($temp_so_master)){
             $data['data'] = $temp_so_master;
-            return view('apps.sales-order.detail', $data);
+            $data['total'] = $total;
+            return view('apps.sales-order.detail',$data);
+            // dd($data['total']);
             
         }
         return view('apps.sales-order.index');
         
+        
     }
+
 
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [

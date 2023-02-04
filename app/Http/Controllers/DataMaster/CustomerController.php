@@ -80,7 +80,7 @@ class CustomerController extends Controller
             'fc_branch' => $request->fc_branch,
             'fc_membercode' => $request->fc_membercode,
         ], $request->all());
-
+        //  dd($request->all());
         if(empty($request->type)){
             NoDocument::update('CUSTOMER');
         }

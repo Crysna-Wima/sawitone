@@ -162,6 +162,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_branch").empty();
+                    $("#fc_branch").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -190,6 +191,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_groupuser").empty();
+                    $("#fc_groupuser").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_groupuser").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -291,5 +293,7 @@
       $("#type").val('update');
       $('#fc_branch').attr("disabled", true);
    }
+   
+   $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

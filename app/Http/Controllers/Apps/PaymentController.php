@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\Convert;
 
 use Validator;
 use DataTables;
@@ -14,6 +15,7 @@ use App\Models\TempSoMaster;
 use App\Models\TempSoPay;
 use App\Models\TransaksiType;
 use Carbon\Carbon;
+use DB;
 
 class PaymentController extends Controller
 {
@@ -47,7 +49,7 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'fc_sotransport' => 'required',
             'fc_memberaddress_loading1' => 'required',
-        ],[
+        ], [
             'fc_sotransport.required' => 'Transport harus diisi',
             'fc_memberaddress_loading1.required' => 'Alamat Tujuan harus diisi',
         ]);
@@ -59,6 +61,7 @@ class PaymentController extends Controller
             ];
         }
         $temp_so_master = TempSoMaster::where('fc_sono', $fc_sono)->first();
+        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay)]);
         $temp_so_master->update([
             'fc_sotransport' => $request->fc_sotransport,
             'fm_servpay' => $request->fm_servpay,
@@ -87,12 +90,12 @@ class PaymentController extends Controller
 
     public function create(Request $request)
     {
+        $request->merge(['fm_valuepayment' => Convert::convert_to_double($request->fm_valuepayment)]);
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
         // jumlah nominal yang dibayarkan
         $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
-
         // get total pembayaran
         $data_bayar = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
         $total_bayar = 0;
@@ -168,7 +171,8 @@ class PaymentController extends Controller
 
     }
 
-    public function submit_pembayaran(Request $request){
+    public function submit_pembayaran(Request $request)
+    {
 
         $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first();
 
@@ -200,12 +204,12 @@ class PaymentController extends Controller
         ]);
 
         // jika validasi gagal
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => 'Date Order atau Date Expired Kosong',
             ];
-        }else if($count_row_pay == 0) {
+        } else if ($count_row_pay == 0) {
             return [
                 'status' => 300,
                 'message' => 'Data pembayaran tidak boleh kosong',
@@ -223,32 +227,57 @@ class PaymentController extends Controller
             ];
         } else {
             // insert into TempSoMaster
-            if($total == 0){
+            if ($total == 0) {
                 return [
                     'status' => 300,
                     'message' => 'Tambahkan Item terlebih dahulu',
                 ];
             }
-            $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
-                'fc_sostatus' => 'F',
-                'fd_sodateinputuser' => $request->fd_sodateinputuser,
-                'fd_soexpired' => $request->fd_soexpired,
-               
-                'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
-                
+
+            DB::beginTransaction();
+         
+            try {
+                $temp_so_master = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
+                    'fc_sostatus' => 'F',
+                    'fd_sodateinputuser' => date("Y-m-d H:i:s",strtotime($request->fd_sodateinputuser)),
+                    'fd_soexpired' => date("Y-m-d H:i:s",strtotime($request->fd_soexpired)),
+
+                    'fd_sodatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                // dd($request);
+                // tampilkan data yang di update dari $temp_so_master
 
 
-            ]);
+                TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->delete();
+                TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid])->delete();
+
+                DB::commit();
+                if ($temp_so_master) {
+                    return [
+                        'status' => 201, // SUCCESS
+                        'link' => '/apps/sales-order',
+                        'message' => 'Submit Pembayaran Berhasil'
+                    ];
+                }
+            } catch (\Exception $e) {
+
+                DB::rollBack();
+
+                return [
+                    'status'     => 300, // GAGAL
+                    'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+                ];
+            }
 
             // jika update berhasil
-            if ($temp_so_master) {
-                // Tambahkan session flash message
-                // session()->flash("message", "Pembayaran Berhasil"); 
+            // if ($temp_so_master) {
+            //     // Tambahkan session flash message
+            //     // session()->flash("message", "Pembayaran Berhasil"); 
 
-                // // Kirim data message yang didapat dari session
-                // $message = session()->get("message");
-                return response()->json(["status" => 200, "message" => "Pembayaran Berhasil"]);
-            }
+            //     // // Kirim data message yang didapat dari session
+            //     // $message = session()->get("message");
+            //     return response()->json(["status" => 200, "message" => "Pembayaran Berhasil"]);
+            // }
 
             return [
                 'status' => 300,
@@ -257,9 +286,10 @@ class PaymentController extends Controller
         }
     }
 
-    public function pdf(){
+    public function pdf()
+    {
 
-        $data['so_master'] = TempSoMaster::with('branch','sales')->where('fc_sono', auth()->user()->fc_userid)->first();
+        $data['so_master'] = TempSoMaster::with('branch', 'sales')->where('fc_sono', auth()->user()->fc_userid)->first();
         $data['so_detail'] = TempSoDetail::with('stock')->where('fc_sono', auth()->user()->fc_userid)->get();
         $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', auth()->user()->fc_userid)->get();
 

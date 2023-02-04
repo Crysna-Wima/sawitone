@@ -40,4 +40,5 @@ class TempSoDetail extends Model
     public function tempsomst(){
         return $this->belongsTo(TempSoMaster::class, 'fc_sono', 'fc_sono');
     }
+
 }

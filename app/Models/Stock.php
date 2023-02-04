@@ -46,4 +46,9 @@ class Stock extends Model
     public function type_stock2(){
         return $this->belongsTo(TransaksiType::class, 'fc_typestock2', 'fc_kode')->withTrashed();
     }
+
+    public function tempsodetail(){
+        return $this->hasMany(TempSoDetail::class, 'fc_barcode', 'fc_barcode');
+    }
+    
 }

@@ -39,6 +39,8 @@ class SalesOrderDetailController extends Controller
 
     public function store_update(request $request)
     {
+        $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
@@ -52,6 +54,7 @@ class SalesOrderDetailController extends Controller
             // dd($validator->errors()->first());
             return [
                 'status' => 300,
+                'total' => $total,
                 'message' => $validator->errors()->first()
             ];
         }
@@ -59,6 +62,8 @@ class SalesOrderDetailController extends Controller
         $stock = Stock::where(['fc_barcode' => $request->fc_barcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
+        
+
         $fn_sorownum = 1;
         if (!empty($temp_detail)) {
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
@@ -73,6 +78,7 @@ class SalesOrderDetailController extends Controller
         $request->merge(['fn_so_bonusqty' => Convert::convert_to_double($request->fn_so_bonusqty)]);
         $request->merge(['fn_so_value' => Convert::convert_to_double($total_harga)]);
         $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default)]);
+        $request->merge(['fm_so_price_edit' => Convert::convert_to_double($request->fm_so_price_edit)]);
 
         TempSoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -83,9 +89,13 @@ class SalesOrderDetailController extends Controller
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
             'fn_so_bonusqty' => $request->fn_so_bonusqty,
-            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price,
+            'fn_so_value' => $request->fn_so_qty * $request->fm_so_price_edit,
             'fm_so_oriprice' => $request->fm_so_price,
+            'fm_so_price' => $request-> fm_so_price_edit,
+            'fv_description' => $request-> fv_description
         ]);
+
+    //    dd($request); 
 
         // dd($request->fn_so_qty*$request->fm_so_price);
 
@@ -117,7 +127,8 @@ class SalesOrderDetailController extends Controller
 
         return [
             'status' => 200,
-            // 'data' => $data,
+            'total' => $total,
+            'link' => '/apps/sales-order',
             'message' => 'Data berhasil disimpan'
         ];
     }

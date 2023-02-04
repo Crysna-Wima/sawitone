@@ -250,7 +250,7 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Rep Supplier</label>
+                                <label>Report Supplier</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fl_repsupplier" value="T" class="selectgroup-input">
@@ -290,14 +290,14 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Cogs</label>
-                                <input type="text" class="form-control format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
+                                <label>Purchase</label>
+                                <input type="text" class="form-control format-rp required-field" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Purchase</label>
-                                <input type="text" class="form-control format-rp required-field" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
+                                <label>Cogs</label>
+                                <input type="text" class="form-control format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -510,6 +510,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_namepack").empty();
+                    $("#fc_namepack").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_namepack").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -645,6 +646,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_typestock1").empty();
+                    $("#fc_typestock1").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_typestock1").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -673,6 +675,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_typestock2").empty();
+                    $("#fc_typestock2").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_typestock2").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -862,5 +865,6 @@
           }
        });
     }
+    $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

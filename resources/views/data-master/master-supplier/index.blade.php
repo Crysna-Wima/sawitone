@@ -424,6 +424,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_supplierlegalstatus").empty();
+                    $("#fc_supplierlegalstatus").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_supplierlegalstatus").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -452,6 +453,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_suppliernationality").empty();
+                    $("#fc_suppliernationality").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_suppliernationality").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -480,6 +482,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_suppliertypebusiness").empty();
+                    $("#fc_suppliertypebusiness").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_suppliertypebusiness").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -508,6 +511,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_suppliertaxcode").empty();
+                    $("#fc_suppliertaxcode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_suppliertaxcode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -536,6 +540,7 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fn_supplierlockTrans").empty();
+                    $("#fn_supplierlockTrans").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fn_supplierlockTrans").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
@@ -564,8 +569,11 @@
                 if(response.status === 200){
                     var data = response.data;
                     $("#fc_supplierbank1").empty();
+                    $("#fc_supplierbank1").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_supplierbank2").empty();
+                    $("#fc_supplierbank2").append(`<option value="" selected readonly> - Pilih - </option>`);
                     $("#fc_supplierbank3").empty();
+                    $("#fc_supplierbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_supplierbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                         $("#fc_supplierbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);

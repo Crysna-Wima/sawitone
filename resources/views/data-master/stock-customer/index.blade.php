@@ -344,6 +344,7 @@
                     var data = response.data;
                     console.log(data)
                     $("#fc_membercode").empty();
+                    $("#fc_membercode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
                     }
