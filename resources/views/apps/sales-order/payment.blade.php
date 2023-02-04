@@ -440,8 +440,10 @@
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
                         $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
                     }
+		    $('#label_kekurangan').html('<b>Kekurangan</b>');
                     $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
-                    // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
+                    console.log(data.data[0].nominal );
+		    console.log(data.data[0].tempsomst.fm_brutto);
 
                 }
             });
