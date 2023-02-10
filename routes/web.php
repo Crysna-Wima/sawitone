@@ -197,6 +197,14 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/lock','Apps\SalesOrderDetailController@lock');
             });
         });
+        
+        Route::prefix('delivery-order')->group(function () {
+            Route::get('/','Apps\DeliveryOrderController@index');
+            Route::get('/detail/{fc_sono}','Apps\DeliveryOrderController@detail');
+            Route::get('/datatables','Apps\DeliveryOrderController@datatables');
+            Route::get('/datatables-so-detail','Apps\DeliveryOrderController@datatables_so_detail');
+            Route::get('/datatables-so-payment','Apps\DeliveryOrderController@datatables_so_payment');
+        });
     });
 });
 
