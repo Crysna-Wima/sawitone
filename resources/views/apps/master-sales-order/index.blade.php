@@ -46,7 +46,7 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,9] },
+         { className: 'text-center', targets: [0,6,7,9] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -64,9 +64,19 @@
          var url_edit   = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
+         $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+         if(data['fc_sostatus'] == 'F'){
+            $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
+         }else if(data['fc_sostatus'] == 'C'){
+            $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
+         }
+         else{
+            $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+         }
+
          $('td:eq(9)', row).html(`
             <a href="/apps/master-sales-order/detail/${data.fc_sono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-info btn-sm mr-1"><i class="fa fa-edit"></i> Edit</button>
+            <a href="/apps/master-sales-order/pdf/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
          `);
       }
    });

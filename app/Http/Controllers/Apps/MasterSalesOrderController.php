@@ -10,6 +10,7 @@ use App\Helpers\NoDocument;
 use App\Helpers\Convert;
 
 use DataTables;
+use PDF;
 use Carbon\Carbon;
 use File;
 use DB;
@@ -58,5 +59,15 @@ class MasterSalesOrderController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+    
+    public function pdf($fc_sono)
+    {
+        session(['fc_sono_global' => $fc_sono]);
+        $data['so_master'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
+        $data['so_detail'] = SoDetail::with('stock')->where('fc_sono', $fc_sono)->get();
+        $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', $fc_sono)->get();
+        $pdf = PDF::loadView('pdf.download-pdf', $data)->setPaper('a4');
+        return $pdf->stream();
     }
 }
