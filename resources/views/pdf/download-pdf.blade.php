@@ -163,6 +163,8 @@
         font-size: .8rem!important;
     }
 
+    .page_break { page-break-before: always; }
+
 </style>
 
 <body>
@@ -181,11 +183,12 @@
 
     <div class="content">
         <p style="text-align: center">{{ $so_master->fc_sotype }}</p>
+        <p style="text-align: center">({{ $so_master->fc_sono }})</p>
 
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
             <tr class="tp-1">
-                <td>Tanggal SO</td>
-                <td style="width: 5px">:</td>
+                <td> Tanggal SO</td>
+                <td style="width: 5px"> :</td>
                 <td style="width: 28%" colspan="3">{{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr>
@@ -342,6 +345,20 @@
                     <td colspan="4" class="text-center">Data Not Found</td>
                 </tr>
             @endif
+        </table>
+        <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15 ">
+            <br><br/>
+            <tr class="pt-1">
+                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right;">Sales Operator, PT. DEXA ARFINDO PRATAMA</td>
+            </tr>
+            <br><br/>
+            <br><br/>
+            <tr >
+                <td style="text-align: right;">(..............................)</td>
+            </tr>
         </table>
     <div>
 </div>
