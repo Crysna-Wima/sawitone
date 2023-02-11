@@ -215,7 +215,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/master-sales-order/datatables-so-detail",
+                url: "/apps/delivery-order/datatables-so-detail",
                 type: 'GET',
             },
             columnDefs: [{
@@ -235,72 +235,6 @@
                 { data: 'fm_so_disc' },
                 { data: 'total_harga',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
             ],
-            footerCallback: function(row, data, start, end, display) {
-
-                let count_quantity = 0;
-                let total_harga = 0;
-                let grand_total = 0;
-
-                for (var i = 0; i < data.length; i++) {
-                    count_quantity += data[i].fn_so_qty;
-                    total_harga += data[i].total_harga;
-                    grand_total += data[i].total_harga;
-                }
-
-                $('#count_quantity').html(count_quantity);
-                // $('#total_harga').html(fungsiRupiah(grand_total));
-                // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
-                // servpay
-                if(data.length != 0){
-                    $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].somst.fm_servpay));
-                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].somst.fm_tax));
-                    $('#grand_total').html("Rp. " + fungsiRupiah(data[0].somst.fm_brutto));
-                    $('#total_harga').html("Rp. " + fungsiRupiah(data[0].somst.fm_netto));
-                    $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].somst.fn_disctotal));
-                    $('#count_item').html(data[0].somst.fn_sodetail);
-                }
-            }
-        });
-
-        var tb_sopay = $('#tb_sopay').DataTable({
-            // apabila data kosong
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/apps/master-sales-order/datatables-so-payment",
-                type: 'GET',
-            },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5,]
-            }, ],
-            columns: [
-                    {   data: 'DT_RowIndex', 
-                        searchable: false, 
-                        orderable: false },
-                    {
-                        data: 'fc_sopaymentcode',
-                        name: 'Kode Metode Pembayaran'
-                    },
-                    {
-                        data: 'fc_description',
-                        name: 'Deskripsi Metode'
-                    },
-                    {
-                        data: 'fm_valuepayment',
-                        render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
-                        name: 'Nominal'
-                    },
-                    {
-                        data: "fd_paymentdate",
-                        render: formatTimestamp
-                    },
-                    {
-                        data: 'fv_keterangan',
-                        name: 'Keterangan'
-                    },
-                ],
         });
     </script>
 @endsection

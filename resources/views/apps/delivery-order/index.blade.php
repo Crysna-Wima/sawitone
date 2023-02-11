@@ -3,34 +3,34 @@
 @section('content')
 
 <div class="section-body">
-   <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                <h4>Data Sales Order</h4>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Data Sales Order</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb" width="100%">
+                            <thead>
+                                <tr>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Sono</th>
+                                <th scope="col" class="text-center">Order</th>
+                                <th scope="col" class="text-center">Expired</th>
+                                <th scope="col" class="text-center">Tipe</th>
+                                <th scope="col" class="text-center">Customer</th>
+                                <th scope="col" class="text-center">Item</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Total</th>
+                                <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-               <div class="table-responsive">
-                  <table class="table table-striped" id="tb" width="100%">
-                     <thead>
-                        <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Sono</th>
-                           <th scope="col" class="text-center">Order</th>
-                           <th scope="col" class="text-center">Expired</th>
-                           <th scope="col" class="text-center">Tipe</th>
-                           <th scope="col" class="text-center">Customer</th>
-                           <th scope="col" class="text-center">Item</th>
-                           <th scope="col" class="text-center">Status</th>
-                           <th scope="col" class="text-center">Total</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
-                        </tr>
-                     </thead>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
+        </div>
    </div>
 </div>
 @endsection
