@@ -47,27 +47,27 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Order :
+                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_sodateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Expired :
+                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Sales</label>
-                                        <input type="text" class="form-control" value=""
+                                        <input type="text" class="form-control" value="{{ $data->sales->fc_salesname1 }}"
                                             readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Tipe Order</label>
-                                        <input type="text" class="form-control" value="" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->fc_sotype }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -91,42 +91,42 @@
                                     <div class="form-group">
                                         <label>NPWP</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->fc_membernpwp_no }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Legal Status</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->member_legal_status->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Bisnis</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->member_type_business->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->fc_membername1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Cabang</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->member_typebranch->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <input type="text" class="form-control"
-                                            value="" readonly>
+                                        value="{{ $data->customer->fc_memberaddress1 }}" readonly>
                                     </div>
                                 </div>
                             </div>
