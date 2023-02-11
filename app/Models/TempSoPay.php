@@ -21,6 +21,7 @@ class TempSoPay extends Model
     protected $primaryKey = 'fn_sopayrownum';
     public $incrementing = false;
     protected $guarded = ['type'];
+    public $timestamps = true;
 
     public function transaksitype(){
         return $this->belongsTo(TransaksiType::class, 'fc_sopaymentcode', 'fc_kode')->withTrashed();

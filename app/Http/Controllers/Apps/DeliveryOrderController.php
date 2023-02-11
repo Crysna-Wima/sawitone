@@ -26,6 +26,10 @@ class DeliveryOrderController extends Controller
         return view('apps.delivery-order.index');
     }
 
+    public function create(){
+        return view('apps.delivery-order.do');
+    }
+
     public function detail($fc_sono){
         session(['fc_sono_global' => $fc_sono]);
         $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();

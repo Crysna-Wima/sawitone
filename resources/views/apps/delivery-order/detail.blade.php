@@ -202,7 +202,7 @@
         </div>
         <div class="button text-right mb-4">
             <a href="/apps/delivery-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-            <a href="#"><button type="button" class="btn btn-primary mr-2">Buat DO</button></a>
+            <a href="{{ route('create_do') }}"><button type="button" class="btn btn-primary mr-2">Buat DO</button></a>
         </div>
     </div>
 @endsection
