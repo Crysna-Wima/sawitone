@@ -209,7 +209,7 @@
                                     <div class="form-group">
                                     <label>Transport</label>
                                         <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
-                                            <option value="" selected disabled>- Pilih Transport -</option>
+                                            <option value="">- Pilih Transport -</option>
                                             <option value="By Dexa">By Dexa</option>
                                             <option value="By Paket">By Paket</option>
                                             <option value="By Customer">By Customer</option>
@@ -406,25 +406,9 @@
             },
             footerCallback: function(row, data, start, end, display) {
 
-                let count_quantity = 0;
-                let total_harga = 0;
-                let grand_total = 0;
 
-                for (var i = 0; i < data.length; i++) {
-                    count_quantity += data[i].fn_so_qty;
-                    total_harga += data[i].total_harga;
-                    grand_total += data[i].total_harga;
-                }
-
-                $('#count_quantity').html(count_quantity);
-                if (data.length != 0) {
-                    $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
-                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
-                    $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
-                    $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
-                    $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
-                    $('#count_item').html(data[0].tempsomst.fn_sodetail);
-                }
+                $("#fc_sotransport").val(data[0].somst.fc_sotransport);
+                $("#fc_sotransport").trigger("change");
             }
         });
     </script>
