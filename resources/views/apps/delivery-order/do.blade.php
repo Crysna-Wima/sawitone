@@ -38,7 +38,8 @@
                     <div class="card-header">
                         <h4>Informasi Umum</h4>
                         <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i
+                                    class="fas fa-minus"></i></a>
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse">
@@ -47,7 +48,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_sodateinputuser)) }}
+                                        <label>Order : {{ date('d-m-Y', strtotime($data->fd_sodateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
@@ -85,48 +86,48 @@
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 215px">
+                        <div class="card-body" style="height: 215px">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>NPWP</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->fc_membernpwp_no }}" readonly>
+                                            value="{{ $data->customer->fc_membernpwp_no }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Legal Status</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->member_legal_status->fv_description }}" readonly>
+                                            value="{{ $data->customer->member_legal_status->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Bisnis</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->member_type_business->fv_description }}" readonly>
+                                            value="{{ $data->customer->member_type_business->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->fc_membername1 }}" readonly>
+                                            value="{{ $data->customer->fc_membername1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Cabang</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->member_typebranch->fv_description }}" readonly>
+                                            value="{{ $data->customer->member_typebranch->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <input type="text" class="form-control"
-                                        value="{{ $data->customer->fc_memberaddress1 }}" readonly>
+                                            value="{{ $data->customer->fc_memberaddress1 }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -202,12 +203,11 @@
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body" style="height: 260px">
-                    <form id="form_submit_custom" action="#" method="POST"
-                            autocomplete="off">
+                        <form id="form_submit_custom" action="#" method="POST" autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                    <label>Transport</label>
+                                        <label>Transport</label>
                                         <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
                                             <option value="">- Pilih Transport -</option>
                                             <option value="By Dexa">By Dexa</option>
@@ -221,7 +221,7 @@
                                         <label>Transporter</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="" >
+                                                name="">
                                         </div>
                                     </div>
                                 </div>
@@ -235,8 +235,8 @@
                                                 </div>
                                             </div>
                                             {{-- input waktu sekarang format timestamp tipe hidden --}}
-                                            <input type="hidden" class="form-control" name=""
-                                                id="" value="{{ date('d-m-Y') }}">
+                                            <input type="hidden" class="form-control" name="" id=""
+                                                value="{{ date('d-m-Y') }}">
                                             <input type="text" id="" class="form-control datepicker"
                                                 name="" required>
                                         </div>
@@ -274,7 +274,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -282,7 +283,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -290,29 +292,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +348,7 @@
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="" width="100%">
+                            <table class="table table-striped" id="stock_inventory" width="100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -371,10 +378,71 @@
 
 @section('js')
     <script>
-
-        function pilih_inventory() {
-            $('#modal_inventory').modal('show');
+        function pilih_inventory(fc_stockcode) {
+            var stock_inventory_table = $('#stock_inventory');
+            if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
+                stock_inventory_table.DataTable().destroy();
+            }
+            stock_inventory_table.DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
+                    "type": "GET",
+                    "data": {
+                        "fc_stockcode": fc_stockcode
+                    }
+                },
+                "columns": [{
+                        "data": 'DT_RowIndex',
+                        "sortable": false,
+                        "searchable": false
+                    },
+                    {
+                        "data": "fc_barcode"
+                    },
+                    {
+                        "data": "stock.fc_namelong"
+                    },
+                    {
+                        "data": "fn_quantity"
+                    },
+                    {
+                        "data": "fc_rackcode"
+                    },
+                    {
+                        "data": "fc_batch"
+                    },
+                    {
+                        "data": "fc_catnumber"
+                    },
+                    {
+                        "data": "fd_expired"
+                    },
+                    {
+                        "data": "fm_cogs"
+                    },
+                    {
+                        "data": "fm_purchase"
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, full, meta) {
+                            return '<button type="button" class="btn btn-primary">Select</button>';
+                        }
+                    } // definisi kolom fc_keterangan
+                ],
+                "columnDefs": [{
+                    "className": "text-center",
+                    "targets": [0, 3, 4, 5]
+                }],
+                "initComplete": function() {
+                    // Tampilkan modal di sini
+                    $('#modal_inventory').modal('show');
+                }
+            });
         }
+
 
         var tb = $('#tb').DataTable({
             // apabila data kosong
@@ -388,25 +456,52 @@
             columnDefs: [{
                 className: 'text-center',
                 targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-            },],
-            columns: [
-                { data: 'DT_RowIndex', searchable: false, orderable: false },
-                { data: 'fc_barcode' },
-                { data: 'stock.fc_nameshort' },
-                { data: 'namepack.fv_description' },
-                { data: 'fn_so_qty' },
-                { data: 'fn_so_bonusqty' },
-                { data: 'fn_do_qty' },
-                { data: 'fn_inv_qty' },
-                { data: 'fm_so_oriprice',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
-                { data: 'fm_so_disc' },
-                { data: 'total_harga',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
-                { data: null },
-                
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_barcode'
+                },
+                {
+                    data: 'stock.fc_nameshort'
+                },
+                {
+                    data: 'namepack.fv_description'
+                },
+                {
+                    data: 'fn_so_qty'
+                },
+                {
+                    data: 'fn_so_bonusqty'
+                },
+                {
+                    data: 'fn_do_qty'
+                },
+                {
+                    data: 'fn_inv_qty'
+                },
+                {
+                    data: 'fm_so_oriprice',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: 'fm_so_disc'
+                },
+                {
+                    data: 'total_harga',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null
+                },
+
             ],
-            rowCallback : function(row, data){
-            $('td:eq(11)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="pilih_inventory()">Pilih Stock</button>
+            rowCallback: function(row, data) {
+                $('td:eq(11)', row).html(`
+                <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
             `);
             },
             footerCallback: function(row, data, start, end, display) {

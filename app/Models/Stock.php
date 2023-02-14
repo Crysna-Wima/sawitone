@@ -50,5 +50,9 @@ class Stock extends Model
     public function tempsodetail(){
         return $this->hasMany(TempSoDetail::class, 'fc_barcode', 'fc_barcode');
     }
+
+    public function invstore(){
+        return $this->hasMany(Invstore::class, 'fc_stockcode', 'fc_stockcode');
+    }
     
 }

@@ -18,6 +18,7 @@ use DB;
 use App\Models\SoMaster;
 use App\Models\SoDetail;
 use App\Models\TempSoPay;
+use App\Models\Invstore;
 
 class DeliveryOrderController extends Controller
 {
@@ -43,6 +44,14 @@ class DeliveryOrderController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make();
+    }
+
+    public function datatables_stock_inventory($fc_stockcode){
+        // get data from Invstore
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function datatables_so_detail()
