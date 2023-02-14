@@ -329,7 +329,7 @@
 @endsection
 
 @section('modal')
-    <div class="modal fade" role="dialog" id="modal_customer" data-keyboard="false" data-backdrop="static">
+    <div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header br">
@@ -341,7 +341,7 @@
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="tb_customer" width="100%">
+                            <table class="table table-striped" id="" width="100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -371,6 +371,11 @@
 
 @section('js')
     <script>
+
+        function pilih_inventory() {
+            $('#modal_inventory').modal('show');
+        }
+
         var tb = $('#tb').DataTable({
             // apabila data kosong
             processing: true,
@@ -383,7 +388,7 @@
             columnDefs: [{
                 className: 'text-center',
                 targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-            }, ],
+            },],
             columns: [
                 { data: 'DT_RowIndex', searchable: false, orderable: false },
                 { data: 'fc_barcode' },
@@ -401,7 +406,7 @@
             ],
             rowCallback : function(row, data){
             $('td:eq(11)', row).html(`
-                <a href="#"><button class="btn btn-warning btn-sm">Pilih Stock</button></a>
+                <button class="btn btn-warning btn-sm" onclick="pilih_inventory()">Pilih Stock</button>
             `);
             },
             footerCallback: function(row, data, start, end, display) {
