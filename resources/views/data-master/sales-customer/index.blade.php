@@ -269,8 +269,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,8] },
-         { className: 'd-flex', targets: [0,8] },
+         { className: 'text-center', targets: [0] },
+         { className: 'text-nowrap', targets: [8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},

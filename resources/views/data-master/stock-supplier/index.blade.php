@@ -143,7 +143,7 @@
                           <th scope="col" class="text-center">Price Project</th>
                           <th scope="col" class="text-center">Price Dealer</th>
                           <th scope="col" class="text-center">Price End User</th>
-                          <th scope="col" class="justify-content-center">Actions</th>
+                          <th scope="col" class="text-center">Actions</th>
                        </tr>
                     </thead>
                  </table>
@@ -387,8 +387,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,12] },
-         { className: 'd-flex', targets: [12] },
+         { className: 'text-center', targets: [0] },
+         { className: 'text-nowrap', targets: [12] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},

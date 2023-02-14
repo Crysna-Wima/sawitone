@@ -23,7 +23,7 @@
                                 <th scope="col" class="text-center">Item</th>
                                 <th scope="col" class="text-center">Status</th>
                                 <th scope="col" class="text-center">Total</th>
-                                <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                         </table>

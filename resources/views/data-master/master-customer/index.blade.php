@@ -80,7 +80,7 @@
                                         <th scope="col" class="text-center">Member Norek 2</th>
                                         <th scope="col" class="text-center">Member Norek 3</th>
                                         <th scope="col" class="text-center">Member Desciption</th>
-                                        <th scope="col" class="justify-content-center">Actions</th>
+                                        <th scope="col" class="text-center">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -908,6 +908,10 @@
                     className: 'd-flex',
                     targets: [51]
                 },
+                {
+                    className: 'text-nowrap',
+                    targets: [55]
+                }
             ],
             columns: [{
                     data: 'DT_RowIndex',

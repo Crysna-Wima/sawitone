@@ -35,7 +35,7 @@
                            <th scope="col" class="text-center">Bank Hold</th>
                            <th scope="col" class="text-center">Bank Address 1</th>
                            <th scope="col" class="text-center">Bank Address 2</th>
-                           <th scope="col" class="text-center justify-content-center">Actions</th>
+                           <th scope="col" class="text-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -200,8 +200,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,11] },
-         { className: 'd-flex', targets: [11] },
+         { className: 'text-center', targets: [0] },
+         { className: 'text-nowrap', targets: [11] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},

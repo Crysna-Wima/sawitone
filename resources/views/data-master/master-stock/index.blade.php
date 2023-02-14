@@ -65,7 +65,7 @@
                            <th scope="col" class="text-center">Price Dealer</th>
                            <th scope="col" class="text-center">Price End User</th>
                            <th scope="col" class="text-center">Stock Description</th>
-                           <th scope="col" class="justify-content-center">Actions</th>
+                           <th scope="col" class="text-center">Actions</th>
                         </tr>
                      </thead>
                   </table>
@@ -710,8 +710,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,41] },
-         { className: 'd-flex', targets: [41] },
+         { className: 'text-center', targets: [0] },
+         { className: 'text-nowrap', targets: [41] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
