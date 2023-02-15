@@ -48,7 +48,8 @@ class DeliveryOrderController extends Controller
 
     public function datatables_stock_inventory($fc_stockcode){
         // get data from Invstore
-        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->get();
+
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired','ASC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -72,5 +73,23 @@ class DeliveryOrderController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function cart_stock(request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_barcode' => 'required',
+            'quantity' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        //CHECK DATA STOCK
+        //INSERT DO
+
     }
 }

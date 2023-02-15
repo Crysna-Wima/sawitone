@@ -171,6 +171,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Delivery Item</h4>
+
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -338,6 +339,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="row place_alert_cart_stock">
+                </div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -354,6 +357,7 @@
                                         <th scope="col" class="text-center">Exp.</th>
                                         <th scope="col" class="text-center">COGS</th>
                                         <th scope="col" class="text-center">Pembelian</th>
+                                        <th scope="col" class="text-center">Quantity</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
@@ -421,7 +425,13 @@
                     {
                         "data": null,
                         "render": function(data, type, full, meta) {
-                            return '<button type="button" class="btn btn-primary">Select</button>';
+                            return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, full, meta) {
+                            return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
                         }
                     } // definisi kolom fc_keterangan
                 ],
@@ -436,6 +446,31 @@
             });
         }
 
+        function select_stock(fc_barcode){
+            let stock_name = 'input[name="pname[]'
+            console.log($('').val());
+            $.ajax({
+                url: '/apps/delivery-order/cart_stock',
+                type: "POST",
+                data: {
+                    'fc_barcode': fc_barcode,
+                    'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
+                },
+                dataType: 'JSON',
+                success: function( response, textStatus, jQxhr ){
+                    $('.place_alert_cart_stock').empty();
+                    if(response.status == '200'){
+                        $('.place_alert_cart_stock').append(`<span class="badge badge-success">${response.message}</span>`)
+                    }else{
+                        $('.place_alert_cart_stock').append(`<span class="badge badge-danger">${response.message}</span>`)
+                    }
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                    console.warn(jqXhr.responseText);
+                },
+            });
+        }
 
         var tb = $('#tb').DataTable({
             // apabila data kosong
