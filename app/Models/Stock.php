@@ -54,5 +54,6 @@ class Stock extends Model
     public function invstore(){
         return $this->hasMany(Invstore::class, 'fc_stockcode', 'fc_stockcode');
     }
+
     
 }

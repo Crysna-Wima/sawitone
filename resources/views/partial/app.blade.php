@@ -89,6 +89,7 @@
 
             @yield('modal')
             @yield('alert')
+            @yield('loading');
 
             <!-- Modal Load-->
             <div class="modal fade" role="dialog" id="modal_loading" data-keyboard="false" data-backdrop="static">
@@ -102,7 +103,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

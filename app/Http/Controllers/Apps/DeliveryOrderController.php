@@ -19,6 +19,7 @@ use App\Models\SoMaster;
 use App\Models\SoDetail;
 use App\Models\TempSoPay;
 use App\Models\Invstore;
+use App\Models\DoDetail;
 
 class DeliveryOrderController extends Controller
 {
@@ -75,6 +76,7 @@ class DeliveryOrderController extends Controller
         ->make(true);
     }
 
+
     public function cart_stock(request $request){
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
@@ -89,7 +91,69 @@ class DeliveryOrderController extends Controller
         }
 
         //CHECK DATA STOCK
-        //INSERT DO
+        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
+        if($data_stock->fn_quantity < $request->quantity){
+            return [
+                'status' => 300,
+                'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
+            ];
+        }
 
+
+        // Stock kosong
+        if($data_stock->fn_quantity == 0){
+            return [
+                'status' => 300,
+                'message' => 'Stock Kosong'
+            ];
+        }
+
+        // dd($data_stock);
+
+        //INSERT DoDetail dari data stock
+        $do_dtl = DoDetail::create([
+            'fc_divisioncode' => $data_stock->fc_divisioncode,
+            'fc_branch' => $data_stock->fc_branch,
+            'fc_dono' => auth()->user()->fc_userid,
+            'fc_barcode' => $request->fc_barcode,
+            'fn_qty_do' => $request->quantity,
+            'fc_namepack' => $data_stock->stock->fc_namepack,
+            'fc_rackcode' => $data_stock->fc_rackcode,
+            'fc_batch' => $data_stock->fc_batch,
+            'fc_catnumber' => $data_stock->fc_catnumber,
+            'fd_expired' => $data_stock->fd_expired,
+        ]);
+
+        //UPDATE STOCK
+        $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
+        ->update([
+            'fn_quantity' => $data_stock->fn_quantity - $request->quantity
+        ]);
+
+        // jika $do_dtl dan $stock_update bisa
+        if($do_dtl && $stock_update){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil ditambahkan'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal ditambahkan'
+            ];
+        }
+    }
+
+
+    
+    // datatable deliver item
+    public function datatables_do_detail()
+    {
+        $data = DoDetail::with('invstore.stock')->where('fc_dono', auth()->user()->fc_userid)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd(auth()->user()->fc_userid);
     }
 }

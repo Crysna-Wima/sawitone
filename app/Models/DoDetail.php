@@ -10,26 +10,29 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Blameable;
 use App\Traits\CompositeKey;
 
-class Invstore extends Model
+class DoDetail extends Model
 {
     use HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 
-    protected $table = 't_invstore';
-    protected $primaryKey = 'fc_barcode';
+    protected $table = 't_dodtl';
+    protected $primaryKey = 'fn_rownum';
     public $incrementing = false;
     protected $guarded = ['type'];
+    public $timestamps = true;
 
 
+    // relasi dengan tabel invstore
+    public function invstore(){
+        return $this->belongsTo(Invstore::class, 'fc_barcode', 'fc_barcode');
+    }
+
+    // relasi dengan tabel stock
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
+        return $this->belongsTo(Stock::class, 'fc_branch', 'fc_stockcode');
     }
 
-    // relasi dengan tabel dodtl
-    public function dodtl(){
-        return $this->hasMany(DoDetail::class, 'fc_barcode', 'fc_barcode');
-    }
 
-    
+
 }

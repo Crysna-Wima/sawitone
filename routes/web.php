@@ -205,6 +205,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\DeliveryOrderController@datatables');
             Route::get('/datatables-so-detail','Apps\DeliveryOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\DeliveryOrderController@datatables_so_payment');
+            Route::get('/datatables-do-detail','Apps\DeliveryOrderController@datatables_do_detail');
             Route::get('/datatables-stock-inventory/{fc_stockcode}','Apps\DeliveryOrderController@datatables_stock_inventory');
 
             Route::post('/cart_stock', 'Apps\DeliveryOrderController@cart_stock');

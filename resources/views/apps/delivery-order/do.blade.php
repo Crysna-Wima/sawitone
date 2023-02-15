@@ -176,7 +176,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="tb" width="100%">
+                                <table class="table table-striped" id="deliver-item" width="100%">
                                     <thead style="white-space: nowrap">
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
@@ -329,13 +329,22 @@
     </div>
 @endsection
 
+@section('loading')
+    {{-- loading --}}
+    <div class="loading" id="loading_data" style="display:none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+@endsection
+
 @section('modal')
     <div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -376,6 +385,7 @@
 @section('js')
     <script>
         function pilih_inventory(fc_stockcode) {
+           // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
                 stock_inventory_table.DataTable().destroy();
@@ -425,7 +435,7 @@
                     {
                         "data": null,
                         "render": function(data, type, full, meta) {
-                            return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                            return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                         }
                     },
                     {
@@ -440,8 +450,11 @@
                     "targets": [0, 3, 4, 5]
                 }],
                 "initComplete": function() {
+                    // hide loading_data
+                    // $('#loading_data').hide();
                     // Tampilkan modal di sini
                     $('#modal_inventory').modal('show');
+                    stock_inventory_table.DataTable().ajax.reload();
                 }
             });
         }
@@ -461,6 +474,7 @@
                     $('.place_alert_cart_stock').empty();
                     if(response.status == '200'){
                         $('.place_alert_cart_stock').append(`<span class="badge badge-success">${response.message}</span>`)
+                        location.reload();
                     }else{
                         $('.place_alert_cart_stock').append(`<span class="badge badge-danger">${response.message}</span>`)
                     }
@@ -537,6 +551,78 @@
 
                 $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 $("#fc_sotransport").trigger("change");
+            }
+        });
+
+
+        var deliver_item = $('#deliver-item').DataTable({
+            // apabila data kosong
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/delivery-order/datatables-do-detail",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_barcode'
+                },
+                {
+                    data: 'invstore.stock.fc_namelong'
+                },
+                {
+                    data: 'invstore.stock.fc_namepack'
+                },
+                {
+                    data: 'fn_qty_do'
+                },
+                {
+                    data: 'fc_status'
+                },
+                {
+                    data: 'fc_rackcode'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fc_catnumber',
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fn_price',
+                },
+                {
+                    data: 'fn_disc',
+                },
+                {
+                    data: 'fn_value'
+                },
+                {
+                    data: null
+                }
+
+            ],
+            rowCallback: function(row, data) {
+                $('td:eq(13)', row).html(`
+                <button class="btn btn-warning btn-sm" data onclick="">Hapus Item</button>
+            `);
+            },
+            footerCallback: function(row, data, start, end, display) {
+
+
+               
             }
         });
     </script>
