@@ -143,8 +143,6 @@ class DeliveryOrderController extends Controller
             ];
         }
     }
-
-
     
     // datatable deliver item
     public function datatables_do_detail()
@@ -155,5 +153,44 @@ class DeliveryOrderController extends Controller
             ->addIndexColumn()
             ->make(true);
         // dd(auth()->user()->fc_userid);
+    }
+
+    public function delete_item($fc_barcode){
+        // validasi $fc_barcode require
+        $validator = Validator::make(['fc_barcode' => $fc_barcode], [
+            'fc_barcode' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // get data stock dari fc_qty_do 
+        $data_stock = DoDetail::where('fc_barcode', $fc_barcode)->first();
+        $data_invstore = Invstore::where('fc_barcode', $fc_barcode)->first();
+
+        // update invstore kembalikan stock di invstore
+        $update_invstore = Invstore::where('fc_barcode', $fc_barcode)
+        ->update([
+            'fn_quantity' => $data_invstore->fn_quantity + $data_stock->fn_qty_do
+        ]);
+
+        // hapus
+        $hapus_item = DoDetail::where('fc_barcode', $fc_barcode)->delete();
+        // kemudian tambah
+        if($update_invstore && $hapus_item){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal dihapus'
+            ];
+        }
     }
 }

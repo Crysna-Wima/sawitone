@@ -275,7 +275,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -283,7 +284,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -291,29 +293,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +351,7 @@
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
-                    <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -385,7 +392,7 @@
 @section('js')
     <script>
         function pilih_inventory(fc_stockcode) {
-           // tampilkan loading_data
+            // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
                 stock_inventory_table.DataTable().destroy();
@@ -459,7 +466,7 @@
             });
         }
 
-        function select_stock(fc_barcode){
+        function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
             console.log($('').val());
             $.ajax({
@@ -470,17 +477,19 @@
                     'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
                 },
                 dataType: 'JSON',
-                success: function( response, textStatus, jQxhr ){
+                success: function(response, textStatus, jQxhr) {
                     $('.place_alert_cart_stock').empty();
-                    if(response.status == '200'){
-                        $('.place_alert_cart_stock').append(`<span class="badge badge-success">${response.message}</span>`)
+                    if (response.status == '200') {
+                        $('.place_alert_cart_stock').append(
+                            `<span class="badge badge-success">${response.message}</span>`)
                         location.reload();
-                    }else{
-                        $('.place_alert_cart_stock').append(`<span class="badge badge-danger">${response.message}</span>`)
+                    } else {
+                        $('.place_alert_cart_stock').append(
+                            `<span class="badge badge-danger">${response.message}</span>`)
                     }
                 },
-                error: function( jqXhr, textStatus, errorThrown ){
-                    console.log( errorThrown );
+                error: function(jqXhr, textStatus, errorThrown) {
+                    console.log(errorThrown);
                     console.warn(jqXhr.responseText);
                 },
             });
@@ -554,7 +563,6 @@
             }
         });
 
-
         var deliver_item = $('#deliver-item').DataTable({
             // apabila data kosong
             processing: true,
@@ -565,9 +573,15 @@
                 type: 'GET',
             },
             columnDefs: [{
-                className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-            }, ],
+                    className: 'text-center',
+                    targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                },
+                {
+                    targets: -1,
+                    data: null,
+                    defaultContent: '<button class="btn btn-danger btn-sm delete-btn">Hapus Item</button>'
+                }
+            ],
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
@@ -615,15 +629,48 @@
 
             ],
             rowCallback: function(row, data) {
+                const item_barcode = data.fc_barcode;
                 $('td:eq(13)', row).html(`
-                <button class="btn btn-warning btn-sm" data onclick="">Hapus Item</button>
+                <button class="btn btn-warning btn-sm delete-btn" data-id="${item_barcode}">Hapus Item</button>
             `);
             },
-            footerCallback: function(row, data, start, end, display) {
-
-
-               
-            }
+            initComplete: function() {
+                $('table').on('click', '.delete-btn', function(e) {
+                    e.preventDefault();
+                    var barcode = $(this).data('id');
+                    // console.log(barcode);
+                    swal({
+                            title: "Anda yakin ingin menghapus item ini?",
+                            icon: "warning",
+                            buttons: ["Batal", "Hapus"],
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $.ajax({
+                                    url: '/apps/delivery-order/delete-item/' + barcode,
+                                    type: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content')
+                                    },
+                                    success: function() {
+                                        deliver_item.ajax.reload();
+                                        swal("Item telah dihapus!", {
+                                            icon: "success",
+                                        });
+                                    },
+                                    error: function(xhr) {
+                                        swal("Oops!",
+                                            "Terjadi kesalahan saat menghapus item.",
+                                            "error");
+                                    }
+                                });
+                            }
+                        });
+                });
+            },
+            footerCallback: function(row, data, start, end, display) {}
         });
     </script>
 @endsection
