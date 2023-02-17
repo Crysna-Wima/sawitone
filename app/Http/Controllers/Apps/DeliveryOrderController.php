@@ -106,8 +106,12 @@ class DeliveryOrderController extends Controller
     }
 
     public function create(){
-        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', session('fc_sono_global'))->first();
+        // get fc_sono dari t_domst fc_userid yang login
+        $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+        $fc_sono_domst = $domst->fc_sono;
+        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono_domst)->first();
         return view('apps.delivery-order.do', $data);
+        // dd($fc_sono_domst);
     }
 
     public function datatables_so_payment(){
@@ -129,7 +133,17 @@ class DeliveryOrderController extends Controller
 
     public function datatables_so_detail()
     {
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', session('fc_sono_global'))->get();
+        
+
+        //  jika session fc_sono_global tidak sama dengan null
+        if(session('fc_sono_global') != null){
+            $fc_sono = session('fc_sono_global');
+        }else{
+            $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+            $fc_sono_domst = $domst->fc_sono;
+            $fc_sono = $fc_sono_domst;
+        }
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', $fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -137,6 +151,7 @@ class DeliveryOrderController extends Controller
             })
             ->addIndexColumn()
             ->make(true);
+        // dd($domst);
     }
 
     public function datatables(){
