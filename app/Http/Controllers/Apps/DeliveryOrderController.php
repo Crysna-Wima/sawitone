@@ -20,18 +20,89 @@ use App\Models\SoDetail;
 use App\Models\TempSoPay;
 use App\Models\Invstore;
 use App\Models\DoDetail;
+use App\Models\DoMaster;
 
 class DeliveryOrderController extends Controller
 {
 
     public function index(){
+        // cari di domst yang userid nya sama dengan userid yang login
+        $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        // jika $do_master tidak kosong return ke route create_do
+        if(!empty($do_master)){
+            return redirect()->route('create_do');
+        }
+
         return view('apps.delivery-order.index');
+        // dd($do_master);
     }
 
     public function detail($fc_sono){
         session(['fc_sono_global' => $fc_sono]);
         $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
+        
         return view('apps.delivery-order.detail', $data);
+        // dd($data);
+    }
+
+    public function insert_do(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_divisioncode' => 'required',
+            'fc_sono' => 'required',
+            'fc_sostatus' => 'required',
+            // 'fc_userid' => 'required',
+            'fc_dono' => 'required',
+        ], [
+            'fc_divisioncode.required' => 'Division Code tidak boleh kosong',
+            'fc_sono.required' => 'SO Number tidak boleh kosong',
+            'fc_sostatus.required' => 'SO Status tidak boleh kosong',
+            // 'fc_userid.required' => 'User ID tidak boleh kosong',
+            'fc_dono.required' => 'DO Number tidak boleh kosong',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        // cek apakah Do sudah ada apa belum berdasarkan dono dari userid yang login
+        $do_master = DoMaster::where('fc_dono', $request->fc_dono)->first();
+        if(!empty($do_master)){
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => 'Edit Do'
+                ]
+            );
+        }
+
+        $create_do_master = DoMaster::create([
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_sono' => $request->fc_sono,
+            'fc_sostatus' => $request->fc_sostatus,
+            'fc_userid' => auth()->user()->fc_userid,
+            'fc_dono' => $request->fc_dono,
+            'fc_dostatus' => 'I',
+        ]);
+
+        // jika validasi sukses dan $do_master berhasil response 200
+        if($create_do_master){
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => 'Insert Do'
+                ]
+            );
+        }else{
+            return response()->json(
+                [
+                    'status' => 300,
+                    'message' => 'Gagal Buat DO'
+                ]
+            );
+        }
+
+        
     }
 
     public function create(){

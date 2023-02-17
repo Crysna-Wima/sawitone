@@ -672,5 +672,8 @@
             },
             footerCallback: function(row, data, start, end, display) {}
         });
+
+
+        
     </script>
 @endsection
