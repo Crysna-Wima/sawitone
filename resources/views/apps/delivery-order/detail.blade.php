@@ -38,7 +38,8 @@
                     <div class="card-header">
                         <h4>Informasi Umum</h4>
                         <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i
+                                    class="fas fa-minus"></i></a>
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse">
@@ -47,7 +48,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_sodateinputuser)) }}
+                                        <label>Order : {{ date('d-m-Y', strtotime($data->fd_sodateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
@@ -82,7 +83,8 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Jumlah Item</label>
-                                        <input type="text" class="form-control" value="{{ $data->fn_sodetail }}" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->fn_sodetail }}"
+                                            readonly>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +102,7 @@
                         </div>
                     </div>
                     <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 303px">
+                        <div class="card-body" style="height: 303px">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
@@ -202,13 +204,56 @@
         </div>
         <div class="button text-right mb-4">
             <a href="/apps/delivery-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-            <a href="{{ route('create_do') }}"><button type="button" class="btn btn-primary mr-2">Buat DO</button></a>
+            <button type="button" onclick="insert_do()" class="btn btn-primary mr-2">Buat DO</button>
         </div>
     </div>
 @endsection
 
 @section('js')
     <script>
+        function insert_do() {
+            // Dapatkan data input dari elemen form
+            var fc_sono = "{{ $data->fc_sono }}";
+            var fc_divisioncode = "{{ $data->fc_divisioncode }}";
+            var fc_branch = "{{ $data->fc_branch }}";
+            var fc_sostatus = "{{ $data->fc_sostatus }}";
+            // var fc_userid = "{{ $data->fc_userid }}";
+            var fc_dono = "{{ auth()->user()->fc_userid }}";
+            // console.log(fc_dono)
+            // var inputVal = $('#input-field').val();
+
+            // Lakukan validasi data input
+            // if (inputVal === '') {
+            //     alert('Data input tidak boleh kosong!');
+            //     return;
+            // }
+            var dataToSend = {
+                'fc_divisioncode': fc_divisioncode,
+                'fc_branch': fc_branch,
+                'fc_sono': fc_sono,
+                'fc_sostatus': fc_sostatus,
+                // 'fc_userid': fc_userid,
+                'fc_dono': fc_dono
+            }
+
+            // Kirim data menggunakan Ajax
+            $.ajax({
+                url: "/apps/delivery-order/insert_do",
+                type: 'POST',
+                data: dataToSend,
+                success: function(response) {
+                    // Alihkan halaman hanya jika data berhasil disimpan
+                    window.location.href = "{{ route('create_do') }}";
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    swal("Gagal Buat DO (" + jqXHR
+                        .responseText + ")", {
+                            icon: 'error',
+                        });
+                }
+            });
+        }
+
         var tb = $('#tb').DataTable({
             // apabila data kosong
             processing: true,
@@ -222,18 +267,43 @@
                 className: 'text-center',
                 targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
             }, ],
-            columns: [
-                { data: 'DT_RowIndex', searchable: false, orderable: false },
-                { data: 'fc_barcode' },
-                { data: 'stock.fc_nameshort' },
-                { data: 'namepack.fv_description' },
-                { data: 'fn_so_qty' },
-                { data: 'fn_so_bonusqty' },
-                { data: 'fn_do_qty' },
-                { data: 'fn_inv_qty' },
-                { data: 'fm_so_oriprice',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
-                { data: 'fm_so_disc' },
-                { data: 'total_harga',render: $.fn.dataTable.render.number(',', '.', 0, 'Rp') },
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_barcode'
+                },
+                {
+                    data: 'stock.fc_nameshort'
+                },
+                {
+                    data: 'namepack.fv_description'
+                },
+                {
+                    data: 'fn_so_qty'
+                },
+                {
+                    data: 'fn_so_bonusqty'
+                },
+                {
+                    data: 'fn_do_qty'
+                },
+                {
+                    data: 'fn_inv_qty'
+                },
+                {
+                    data: 'fm_so_oriprice',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: 'fm_so_disc'
+                },
+                {
+                    data: 'total_harga',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
             ],
         });
     </script>

@@ -20,23 +20,98 @@ use App\Models\SoDetail;
 use App\Models\TempSoPay;
 use App\Models\Invstore;
 use App\Models\DoDetail;
+use App\Models\DoMaster;
 
 class DeliveryOrderController extends Controller
 {
 
     public function index(){
+        // cari di domst yang userid nya sama dengan userid yang login
+        $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        // jika $do_master tidak kosong return ke route create_do
+        if(!empty($do_master)){
+            return redirect()->route('create_do');
+        }
+
         return view('apps.delivery-order.index');
+        // dd($do_master);
     }
 
     public function detail($fc_sono){
         session(['fc_sono_global' => $fc_sono]);
         $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
+        
         return view('apps.delivery-order.detail', $data);
+        // dd($data);
+    }
+
+    public function insert_do(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_divisioncode' => 'required',
+            'fc_sono' => 'required',
+            'fc_sostatus' => 'required',
+            // 'fc_userid' => 'required',
+            'fc_dono' => 'required',
+        ], [
+            'fc_divisioncode.required' => 'Division Code tidak boleh kosong',
+            'fc_sono.required' => 'SO Number tidak boleh kosong',
+            'fc_sostatus.required' => 'SO Status tidak boleh kosong',
+            // 'fc_userid.required' => 'User ID tidak boleh kosong',
+            'fc_dono.required' => 'DO Number tidak boleh kosong',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        // cek apakah Do sudah ada apa belum berdasarkan dono dari userid yang login
+        $do_master = DoMaster::where('fc_dono', $request->fc_dono)->first();
+        if(!empty($do_master)){
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => 'Edit Do'
+                ]
+            );
+        }
+
+        $create_do_master = DoMaster::create([
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_sono' => $request->fc_sono,
+            'fc_sostatus' => $request->fc_sostatus,
+            'fc_userid' => auth()->user()->fc_userid,
+            'fc_dono' => $request->fc_dono,
+            'fc_dostatus' => 'I',
+        ]);
+
+        // jika validasi sukses dan $do_master berhasil response 200
+        if($create_do_master){
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => 'Insert Do'
+                ]
+            );
+        }else{
+            return response()->json(
+                [
+                    'status' => 300,
+                    'message' => 'Gagal Buat DO'
+                ]
+            );
+        }
+
+        
     }
 
     public function create(){
-        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', session('fc_sono_global'))->first();
+        // get fc_sono dari t_domst fc_userid yang login
+        $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+        $fc_sono_domst = $domst->fc_sono;
+        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
         return view('apps.delivery-order.do', $data);
+        // dd($data);
     }
 
     public function datatables_so_payment(){
@@ -58,7 +133,17 @@ class DeliveryOrderController extends Controller
 
     public function datatables_so_detail()
     {
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', session('fc_sono_global'))->get();
+        
+
+        //  jika session fc_sono_global tidak sama dengan null
+        if(session('fc_sono_global') != null){
+            $fc_sono = session('fc_sono_global');
+        }else{
+            $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+            $fc_sono_domst = $domst->fc_sono;
+            $fc_sono = $fc_sono_domst;
+        }
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', $fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -66,6 +151,7 @@ class DeliveryOrderController extends Controller
             })
             ->addIndexColumn()
             ->make(true);
+        // dd($domst);
     }
 
     public function datatables(){
@@ -200,5 +286,41 @@ class DeliveryOrderController extends Controller
 
         $pdf = PDF::loadView('pdf.preview-do', $data)->setPaper('a4');
         return $pdf->stream();
+
+    public function update_transport(Request $request,$fc_sono){
+        // validasi $fc_sono require
+        $validator = Validator::make(['fc_sono' => $fc_sono], [
+            'fc_sono' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        // dd($request);
+
+        $update_transport = DoMaster::where('fc_sono', $fc_sono)
+        ->update([
+            'fc_sotransport' => $request->fc_sotransport,
+            'fc_transporter' => $request->fc_transporter,
+            'fd_dodatesysinput' => $request->fd_dodatesysinput,
+            'fd_dodate' => $request->fd_dodate,
+            'fm_servpay' => $request->fm_servpay,
+        ]);
+
+        // jika $update_transport bisa
+        if($update_transport){
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil diupdate'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diupdate'
+            ];
+        }
     }
 }
