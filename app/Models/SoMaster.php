@@ -44,4 +44,10 @@ class SoMaster extends Model
     public function tempsopay(){
         return $this->hasMany(TempSoPay::class, 'fc_sono', 'fc_sono');
     }
+
+   // one to one
+    public function domst(){
+        return $this->hasOne(DoMaster::class, 'fc_sono', 'fc_sono');
+    }
+
 }

@@ -22,6 +22,8 @@ class DoMaster extends Model
     protected $guarded = ['type'];
     public $timestamps = true;
 
-
+    public function somst(){
+        return $this->belongsTo(SoMaster::class, 'fc_sono', 'fc_sono');
+    }
 
 }

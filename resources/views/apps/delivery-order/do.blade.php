@@ -204,7 +204,10 @@
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <form id="form_submit_custom" action="#" method="POST" autocomplete="off">
+                        <form id="form_submit" action="/apps/delivery-order/update_transport/{{ $data->fc_sono }}"
+                            method="POST" autocomplete="off">
+                            @csrf
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
@@ -221,8 +224,14 @@
                                     <div class="form-group">
                                         <label>Transporter</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="">
+                                            @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                               <input type="text" class="form-control" fdprocessedid="hgh1fp"
+                                                name="fc_transporter">
+                                                @else
+                                                <input type="text" class="form-control" value="{{ $data->domst->fc_transporter }}" fdprocessedid="hgh1fp"
+                                                name="fc_transporter">
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -236,10 +245,16 @@
                                                 </div>
                                             </div>
                                             {{-- input waktu sekarang format timestamp tipe hidden --}}
-                                            <input type="hidden" class="form-control" name="" id=""
-                                                value="{{ date('d-m-Y') }}">
-                                            <input type="text" id="" class="form-control datepicker"
-                                                name="" required>
+                                            <input type="hidden" class="form-control" name="fd_dodatesysinput"
+                                                id="fd_dodatesysinput" value="{{ date('d-m-Y') }}">
+                                            @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                                <input type="text" id="fd_dodate" class="form-control datepicker"
+                                                name="fd_dodate" required>
+                                                @else
+                                                <input type="text" id="fd_dodate" class="form-control datepicker"
+                                                name="fd_dodate" value="{{ $data->domst->fd_dodate }}" required>
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -252,13 +267,18 @@
                                                     Rp.
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control format-rp" name=""
-                                                id="" onkeyup="return onkeyupRupiah(this.id);"required>
+                                            <input type="text" class="form-control format-rp" name="fm_servpay"
+                                                id="fm_servpay" value="{{ $data->fm_servpay }}"
+                                                onkeyup="return onkeyupRupiah(this.id);"required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button class="btn btn-success">Save</button>
+                                    @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    @else
+                                        <button type="submit" class="btn btn-success">Edit</button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
@@ -266,55 +286,61 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6 place_detail">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Calculation</h4>
-                        </div>
-                        <div class="card-body" style="height: 180px">
-                            <div class="d-flex">
-                                <div class="flex-row-item" style="margin-right: 30px">
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Calculation</h4>
+                    </div>
+                    <div class="card-body" style="height: 180px">
+                        <div class="d-flex">
+                            <div class="flex-row-item" style="margin-right: 30px">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
-                                <div class="flex-row-item">
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                        <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
-                                    </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                            </div>
+                            <div class="flex-row-item">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -322,21 +348,22 @@
                 </div>
             </div>
         </div>
-        <div class="button text-right mb-4">
-            <a href="#"><button type="button" class="btn btn-danger mr-2">Cancel DO</button></a>
-            <a href="#"><button type="button" class="btn btn-primary mr-2">Preview</button></a>
-            <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
-        </div>
+    </div>
+    <div class="button text-right mb-4">
+        <a href="#"><button type="button" class="btn btn-danger mr-2">Cancel DO</button></a>
+        <a href="#"><button type="button" class="btn btn-primary mr-2">Preview</button></a>
+        <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
+    </div>
     </div>
 @endsection
 
 @section('loading')
     {{-- loading --}}
-    <div class="loading" id="loading_data" style="display:none;">
+    {{-- <div class="loading" id="loading_data" style="display:none;">
         <div class="spinner-border text-primary" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('modal')
@@ -666,8 +693,5 @@
             },
             footerCallback: function(row, data, start, end, display) {}
         });
-
-
-        
     </script>
 @endsection

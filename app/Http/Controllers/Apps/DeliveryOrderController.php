@@ -109,9 +109,9 @@ class DeliveryOrderController extends Controller
         // get fc_sono dari t_domst fc_userid yang login
         $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
         $fc_sono_domst = $domst->fc_sono;
-        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono_domst)->first();
+        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
         return view('apps.delivery-order.do', $data);
-        // dd($fc_sono_domst);
+        // dd($data);
     }
 
     public function datatables_so_payment(){
@@ -276,6 +276,44 @@ class DeliveryOrderController extends Controller
             return [
                 'status' => 300,
                 'message' => 'Data gagal dihapus'
+            ];
+        }
+    }
+
+    public function update_transport(Request $request,$fc_sono){
+        // validasi $fc_sono require
+        $validator = Validator::make(['fc_sono' => $fc_sono], [
+            'fc_sono' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        // dd($request);
+
+       
+        $update_transport = DoMaster::where('fc_sono', $fc_sono)
+        ->update([
+            'fc_sotransport' => $request->fc_sotransport,
+            'fc_transporter' => $request->fc_transporter,
+            'fd_dodatesysinput' => $request->fd_dodatesysinput,
+            'fd_dodate' => $request->fd_dodate,
+            'fm_servpay' => $request->fm_servpay,
+        ]);
+
+        // jika $update_transport bisa
+        if($update_transport){
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil diupdate'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diupdate'
             ];
         }
     }
