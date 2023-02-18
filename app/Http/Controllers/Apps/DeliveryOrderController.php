@@ -286,7 +286,8 @@ class DeliveryOrderController extends Controller
 
         $pdf = PDF::loadView('pdf.preview-do', $data)->setPaper('a4');
         return $pdf->stream();
-
+    }
+    
     public function update_transport(Request $request,$fc_sono){
         // validasi $fc_sono require
         $validator = Validator::make(['fc_sono' => $fc_sono], [
