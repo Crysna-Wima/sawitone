@@ -209,6 +209,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-stock-inventory/{fc_stockcode}','Apps\DeliveryOrderController@datatables_stock_inventory');
             Route::delete('/delete-item/{fc_barcode}','Apps\DeliveryOrderController@delete_item');
             Route::post('/cart_stock', 'Apps\DeliveryOrderController@cart_stock');
+
+            Route::get('/create_do/pdf', 'Apps\DeliveryOrderController@pdf');
         });
     });
 });

@@ -324,7 +324,7 @@
         </div>
         <div class="button text-right mb-4">
             <a href="#"><button type="button" class="btn btn-danger mr-2">Cancel DO</button></a>
-            <a href="#"><button type="button" class="btn btn-primary mr-2">Preview</button></a>
+            <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button" class="btn btn-primary mr-2">Preview</button></a>
             <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
         </div>
     </div>
