@@ -81,7 +81,7 @@
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
-                    data: 'fm_brutto'
+                    data: null
                 },
             ],
             rowCallback: function(row, data) {
@@ -97,15 +97,17 @@
                         <a href="/apps/delivery-order/detail/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
                      `);
                 } else if (data['fc_sostatus'] == 'C') {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
-                    $('td:eq(9)', row).html(`
-                     <a href="/apps/delivery-order/detail/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
-                  `);
+                //     $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
+                //     $('td:eq(9)', row).html(`
+                //      <a href="/apps/delivery-order/detail/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+                //   `);
+                     $(row).hide(); 
                 } else {
-                    $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
-                    $('td:eq(9)', row).html(`
-                     <button class="btn btn-light btn-sm mr-1" disabled><i class="fa fa-check"></i></button>
-                  `);
+                //     $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+                //     $('td:eq(9)', row).html(`
+                //      <button class="btn btn-light btn-sm mr-1" disabled><i class="fa fa-check"></i></button>
+                //   `);
+                    $(row).hide(); 
                 }
             }
         });
