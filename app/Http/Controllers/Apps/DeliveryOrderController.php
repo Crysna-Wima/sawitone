@@ -280,6 +280,14 @@ class DeliveryOrderController extends Controller
         }
     }
 
+    public function pdf(){
+        $data['so_master'] = SoMaster::with('branch', 'sales')->where('fc_sono', auth()->user()->fc_userid)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', auth()->user()->fc_userid)->get();
+
+        $pdf = PDF::loadView('pdf.preview-do', $data)->setPaper('a4');
+        return $pdf->stream();
+    }
+    
     public function update_transport(Request $request,$fc_sono){
         // validasi $fc_sono require
         $validator = Validator::make(['fc_sono' => $fc_sono], [
@@ -294,7 +302,6 @@ class DeliveryOrderController extends Controller
         }
         // dd($request);
 
-       
         $update_transport = DoMaster::where('fc_sono', $fc_sono)
         ->update([
             'fc_sotransport' => $request->fc_sotransport,
