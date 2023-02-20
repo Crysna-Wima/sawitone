@@ -151,7 +151,7 @@ class DeliveryOrderController extends Controller
             $fc_sono_domst = $domst->fc_sono;
             $fc_sono = $fc_sono_domst;
         }
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst')->where('fc_sono', $fc_sono)->get();
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.domst')->where('fc_sono', $fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -267,7 +267,7 @@ class DeliveryOrderController extends Controller
     // datatable deliver item
     public function datatables_do_detail()
     {
-        $data = DoDetail::with('invstore.stock')->where('fc_dono', auth()->user()->fc_userid)->get();
+        $data = DoDetail::with('invstore.stock','domst')->where('fc_dono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -343,7 +343,7 @@ class DeliveryOrderController extends Controller
             ->update([
                 'fc_sotransport' => $request->fc_sotransport,
                 'fc_transporter' => $request->fc_transporter,
-                'fd_dodatesysinput' => $request->fd_dodatesysinput,
+                // $request->fd_dodatesysinput convert format datetime,
                 'fd_dodate' => $request->fd_dodate,
                 'fm_servpay' => $request->fm_servpay,
             ]);
@@ -362,8 +362,7 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function cancel_do()
-    {
+    public function cancel_do(){
         DB::beginTransaction();
 
         try {
@@ -384,6 +383,48 @@ class DeliveryOrderController extends Controller
             return [
                 'status'     => 300, // GAGAL
                 'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
+    }
+
+    public function submit_do(Request $request){
+        // validasi all request
+        $validator = Validator::make($request->all(), [
+            'fc_sostatus' => 'required',
+            'fc_dostatus' => 'required',
+            'fd_dodatesysinput' => 'required',
+        ], [
+            'fc_sostatus.required' => 'SO Status tidak boleh kosong',
+            'fc_dostatus' => 'DO Status tidak boleh kosong',
+            'fd_dodatesysinput.required' => 'Tanggal Input tidak boleh kosong',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update
+        $update_do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+            ->update([
+                'fc_sostatus' => $request->fc_sostatus,
+                'fc_dostatus' => $request->fc_dostatus,
+                'fd_dodatesysinput' => $request->fd_dodatesysinput,
+            ]);
+
+        // jika $update_do bisa
+        if ($update_do_mst) {
+            return [
+                'status' => 201,
+                'link' => '/apps/delivery-order/',
+                'message' => 'Data berhasil disubmit'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disubmit'
             ];
         }
     }

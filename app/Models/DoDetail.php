@@ -33,6 +33,11 @@ class DoDetail extends Model
         return $this->belongsTo(Stock::class, 'fc_branch', 'fc_stockcode');
     }
 
+    public function domst(){
+        // relasi dengan tabel domst
+        return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
+    }
+
 
 
 }

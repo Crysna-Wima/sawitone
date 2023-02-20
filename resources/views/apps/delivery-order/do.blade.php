@@ -269,13 +269,12 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $data->fm_servpay }}"
-                                                onkeyup="return onkeyupRupiah(this.id);"required>
+                                                id="fm_servpay" value="{{ $data->domst->fm_servpay }}" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                    @if (empty($data->domst->fc_sotransport))
                                         <button type="submit" class="btn btn-success">Save</button>
                                     @else
                                         <button type="submit" class="btn btn-success">Edit</button>
@@ -354,7 +353,7 @@
         <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
         <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button"
                 class="btn btn-primary mr-2">Preview</button></a>
-        <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
+        <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
     </div>
     </div>
     </div>
@@ -608,8 +607,13 @@
             },
             footerCallback: function(row, data, start, end, display) {
 
-
+               // jika data[0].somst.domst.fc_sotransport tidak kosong
+               if(data[0].somst.domst.fc_sotransport !== ""){
+                $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
+               }else{
                 $("#fc_sotransport").val(data[0].somst.fc_sotransport);
+               }
+                
                 $("#fc_sotransport").trigger("change");
             }
         });
@@ -721,7 +725,9 @@
                         });
                 });
             },
-            footerCallback: function(row, data, start, end, display) {}
+            footerCallback: function(row, data, start, end, display) {
+
+            }
         });
 
         function click_delete() {
@@ -739,6 +745,59 @@
                             url: '/apps/delivery-order/cancel_do',
                             type: "DELETE",
                             dataType: "JSON",
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status === 201) {
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    window.location.href = response.link;
+                                } else {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
+                            }
+                        });
+                    }
+                });
+        }
+
+        function submit_do(){
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan submit data DO ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: '/apps/delivery-order/submit_do',
+                            type: "POST",
+                            data: {
+                                'fc_sostatus': 'P',
+                                'fc_dostatus': 'D',
+                                // 'fd_dodatesysinput' sekarang format datetime
+                                'fd_dodatesysinput': moment().format('YYYY-MM-DD HH:mm:ss'),
+                            },
                             success: function(response) {
                                 setTimeout(function() {
                                     $('#modal_loading').modal('hide');

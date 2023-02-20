@@ -26,4 +26,8 @@ class DoMaster extends Model
         return $this->belongsTo(SoMaster::class, 'fc_sono', 'fc_sono');
     }
 
+    public function dodtl(){
+        return $this->hasMany(DoDetail::class, 'fc_dono', 'fc_dono');
+    }
+
 }

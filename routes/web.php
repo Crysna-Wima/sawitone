@@ -213,6 +213,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/create_do/pdf', 'Apps\DeliveryOrderController@pdf');
             Route::put('/update_transport/{fc_sono}', 'Apps\DeliveryOrderController@update_transport');
             Route::delete('/cancel_do', 'Apps\DeliveryOrderController@cancel_do');
+            Route::post('/submit_do', 'Apps\DeliveryOrderController@submit_do');
         });
     });
 });
