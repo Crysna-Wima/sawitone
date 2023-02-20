@@ -210,10 +210,16 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-stock-inventory/{fc_stockcode}','Apps\DeliveryOrderController@datatables_stock_inventory');
             Route::delete('/delete-item/{fc_barcode}','Apps\DeliveryOrderController@delete_item');
             Route::post('/cart_stock', 'Apps\DeliveryOrderController@cart_stock');
-            Route::get('/create_do/pdf', 'Apps\DeliveryOrderController@pdf');
             Route::put('/update_transport/{fc_sono}', 'Apps\DeliveryOrderController@update_transport');
             Route::delete('/cancel_do', 'Apps\DeliveryOrderController@cancel_do');
             Route::post('/submit_do', 'Apps\DeliveryOrderController@submit_do');
+        });
+
+        Route::prefix('master-delivery-order')->group(function () {
+            Route::get('/','Apps\MasterDeliveryOrderController@index');
+            Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
+
+            Route::get('/pdf/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf');
         });
     });
 });

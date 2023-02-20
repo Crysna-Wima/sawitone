@@ -179,6 +179,50 @@
         </div>
     </div>
 </div>
+
+<div class="content">
+        <p style="text-align: center; font-weight:bold">Delivery Order</p>
+        <p style="text-align: center">({{ $do_mst->fc_dono }})</p>
+
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+            <tr class="tp-1">
+                <td>Tanggal Order</td>
+                <td style="width: 5px"> :</td>
+                <td style="width: 28%">{{ \Carbon\Carbon::parse( $do_mst->created_at )->isoFormat('D MMMM Y'); }}</td>
+                <td>No. Order</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%">{{ $do_mst->fc_sono }}</td>
+            </tr>
+            <tr class="tp-1">
+                <td>Tanggal Expired</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%">{{ $do_mst->fd_soexpired }}</td>
+            </tr>
+            <tr class="tp-1 pb-1">
+                <td>Tanggal Delivery</td>
+                <td style="width: 5px">:</td>
+                <td>{{ $do_mst->fd_dodateinputuser }}</td>
+                <td></td><td></td><td></td>
+            </tr>
+        </table>
+
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">{{ $do_mst->fc_sotype }}</p>
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+ 
+        </table>
+
+        <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15 ">
+            <br><br/>
+            <tr>
+                <td style="text-align: right;">Sales Operator, PT. DEXA ARFINDO PRATAMA</td>
+            </tr>
+            <br><br/>
+            <br><br/>
+            <tr >
+                <td style="text-align: right;">(..............................)</td>
+            </tr>
+        </table>
+    <div>
 </body>
 
 </html>
