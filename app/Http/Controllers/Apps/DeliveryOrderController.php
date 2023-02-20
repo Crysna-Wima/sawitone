@@ -25,11 +25,12 @@ use App\Models\DoMaster;
 class DeliveryOrderController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         // cari di domst yang userid nya sama dengan userid yang login
         $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika $do_master tidak kosong return ke route create_do
-        if(!empty($do_master)){
+        if (!empty($do_master)) {
             return redirect()->route('create_do');
         }
 
@@ -37,15 +38,17 @@ class DeliveryOrderController extends Controller
         // dd($do_master);
     }
 
-    public function detail($fc_sono){
+    public function detail($fc_sono)
+    {
         session(['fc_sono_global' => $fc_sono]);
-        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
-        
+        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
+
         return view('apps.delivery-order.detail', $data);
         // dd($data);
     }
 
-    public function insert_do(Request $request){
+    public function insert_do(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_sono' => 'required',
@@ -59,14 +62,14 @@ class DeliveryOrderController extends Controller
             // 'fc_userid.required' => 'User ID tidak boleh kosong',
             'fc_dono.required' => 'DO Number tidak boleh kosong',
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
         // cek apakah Do sudah ada apa belum berdasarkan dono dari userid yang login
         $do_master = DoMaster::where('fc_dono', $request->fc_dono)->first();
-        if(!empty($do_master)){
+        if (!empty($do_master)) {
             return response()->json(
                 [
                     'status' => 200,
@@ -86,14 +89,14 @@ class DeliveryOrderController extends Controller
         ]);
 
         // jika validasi sukses dan $do_master berhasil response 200
-        if($create_do_master){
+        if ($create_do_master) {
             return response()->json(
                 [
                     'status' => 200,
                     'message' => 'Insert Do'
                 ]
             );
-        }else{
+        } else {
             return response()->json(
                 [
                     'status' => 300,
@@ -101,20 +104,24 @@ class DeliveryOrderController extends Controller
                 ]
             );
         }
-
-        
     }
 
-    public function create(){
+    public function create()
+    {
         // get fc_sono dari t_domst fc_userid yang login
+        // if (empty($do_master)) {
+        //    // redirect ke route index
+        //     return redirect()->route('do_index');
+        // }
         $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
         $fc_sono_domst = $domst->fc_sono;
-        $data['data'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
+        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
         return view('apps.delivery-order.do', $data);
         // dd($data);
     }
 
-    public function datatables_so_payment(){
+    public function datatables_so_payment()
+    {
         $data = TempSoPay::where('fc_sono', session('fc_sono_global'))->get();
 
         return DataTables::of($data)
@@ -122,10 +129,11 @@ class DeliveryOrderController extends Controller
             ->make();
     }
 
-    public function datatables_stock_inventory($fc_stockcode){
+    public function datatables_stock_inventory($fc_stockcode)
+    {
         // get data from Invstore
 
-        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired','ASC')->get();
+        $data = Invstore::with('stock.sodtl')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired', 'ASC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -133,17 +141,17 @@ class DeliveryOrderController extends Controller
 
     public function datatables_so_detail()
     {
-        
+
 
         //  jika session fc_sono_global tidak sama dengan null
-        if(session('fc_sono_global') != null){
+        if (session('fc_sono_global') != null) {
             $fc_sono = session('fc_sono_global');
-        }else{
+        } else {
             $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
             $fc_sono_domst = $domst->fc_sono;
             $fc_sono = $fc_sono_domst;
         }
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', $fc_sono)->get();
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst')->where('fc_sono', $fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -154,49 +162,75 @@ class DeliveryOrderController extends Controller
         // dd($domst);
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $data = SoMaster::all();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
 
-    public function cart_stock(request $request){
+    public function cart_stock(request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_barcode' => 'required',
             'quantity' => 'required',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
             ];
         }
+        
 
         //CHECK DATA STOCK
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
-        if($data_stock->fn_quantity < $request->quantity){
-            return [
+        // dd($data_stock);
+        // get data from Invstore.stock.sodtl
+        $data_stock_sodtl = Invstore::with('stock.sodtl')->where('fc_barcode', $request->fc_barcode)->first();
+        $qty = $data_stock_sodtl->stock->sodtl[0]->fn_so_qty - $data_stock_sodtl->stock->sodtl[0]->fn_do_qty;
+        // dd($qty);
+        // dd($data_stock->fn_quantity);
+        if($qty >= $data_stock->fn_quantity){
+            if($request->quantity > $data_stock->fn_quantity){
+                return [
+                    'status' => 300,
+                    'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
+                ];
+            }
+        }
+        // dd($request);
+        if($request->quantity > $qty){
+             return [
                 'status' => 300,
-                'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
+                'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
             ];
         }
+        
+        
+        // if ($data_stock->fn_quantity < $request->quantity) {
+        //     return [
+        //         'status' => 300,
+        //         'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
+        //     ];
+        // }
 
 
-        // Stock kosong
-        if($data_stock->fn_quantity == 0){
+        // // // Stock kosong
+        if ($data_stock->fn_quantity == 0) {
             return [
                 'status' => 300,
                 'message' => 'Stock Kosong'
             ];
         }
 
-        // dd($data_stock);
+        // // // dd($data_stock);
 
-        //INSERT DoDetail dari data stock
+        // // //INSERT DoDetail dari data stock
         $do_dtl = DoDetail::create([
             'fc_divisioncode' => $data_stock->fc_divisioncode,
             'fc_branch' => $data_stock->fc_branch,
@@ -210,26 +244,26 @@ class DeliveryOrderController extends Controller
             'fd_expired' => $data_stock->fd_expired,
         ]);
 
-        //UPDATE STOCK
-        $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
-        ->update([
-            'fn_quantity' => $data_stock->fn_quantity - $request->quantity
-        ]);
+        // // //UPDATE STOCK
+        // // $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
+        // //     ->update([
+        // //         'fn_quantity' => $data_stock->fn_quantity - $request->quantity
+        // //     ]);
 
-        // jika $do_dtl dan $stock_update bisa
-        if($do_dtl && $stock_update){
+        // // jika $do_dtl dan $stock_update bisa
+        if ($do_dtl) {
             return [
                 'status' => 200,
                 'message' => 'Data berhasil ditambahkan'
             ];
-        }else{
+        } else {
             return [
                 'status' => 300,
                 'message' => 'Data gagal ditambahkan'
             ];
         }
     }
-    
+
     // datatable deliver item
     public function datatables_do_detail()
     {
@@ -241,13 +275,14 @@ class DeliveryOrderController extends Controller
         // dd(auth()->user()->fc_userid);
     }
 
-    public function delete_item($fc_barcode){
+    public function delete_item($fc_barcode)
+    {
         // validasi $fc_barcode require
         $validator = Validator::make(['fc_barcode' => $fc_barcode], [
             'fc_barcode' => 'required',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
@@ -259,20 +294,20 @@ class DeliveryOrderController extends Controller
         $data_invstore = Invstore::where('fc_barcode', $fc_barcode)->first();
 
         // update invstore kembalikan stock di invstore
-        $update_invstore = Invstore::where('fc_barcode', $fc_barcode)
-        ->update([
-            'fn_quantity' => $data_invstore->fn_quantity + $data_stock->fn_qty_do
-        ]);
+        // $update_invstore = Invstore::where('fc_barcode', $fc_barcode)
+        //     ->update([
+        //         'fn_quantity' => $data_invstore->fn_quantity + $data_stock->fn_qty_do
+        //     ]);
 
         // hapus
         $hapus_item = DoDetail::where('fc_barcode', $fc_barcode)->delete();
         // kemudian tambah
-        if($update_invstore && $hapus_item){
+        if ($hapus_item) {
             return [
                 'status' => 200,
                 'message' => 'Data berhasil dihapus'
             ];
-        }else{
+        } else {
             return [
                 'status' => 300,
                 'message' => 'Data gagal dihapus'
@@ -280,21 +315,23 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function pdf(){
+    public function pdf()
+    {
         $data['so_master'] = SoMaster::with('branch', 'sales')->where('fc_sono', auth()->user()->fc_userid)->first();
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', auth()->user()->fc_userid)->get();
 
         $pdf = PDF::loadView('pdf.preview-do', $data)->setPaper('a4');
         return $pdf->stream();
     }
-    
-    public function update_transport(Request $request,$fc_sono){
+
+    public function update_transport(Request $request, $fc_sono)
+    {
         // validasi $fc_sono require
         $validator = Validator::make(['fc_sono' => $fc_sono], [
             'fc_sono' => 'required',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
@@ -303,24 +340,50 @@ class DeliveryOrderController extends Controller
         // dd($request);
 
         $update_transport = DoMaster::where('fc_sono', $fc_sono)
-        ->update([
-            'fc_sotransport' => $request->fc_sotransport,
-            'fc_transporter' => $request->fc_transporter,
-            'fd_dodatesysinput' => $request->fd_dodatesysinput,
-            'fd_dodate' => $request->fd_dodate,
-            'fm_servpay' => $request->fm_servpay,
-        ]);
+            ->update([
+                'fc_sotransport' => $request->fc_sotransport,
+                'fc_transporter' => $request->fc_transporter,
+                'fd_dodatesysinput' => $request->fd_dodatesysinput,
+                'fd_dodate' => $request->fd_dodate,
+                'fm_servpay' => $request->fm_servpay,
+            ]);
 
         // jika $update_transport bisa
-        if($update_transport){
+        if ($update_transport) {
             return [
                 'status' => 201,
                 'message' => 'Data berhasil diupdate'
             ];
-        }else{
+        } else {
             return [
                 'status' => 300,
                 'message' => 'Data gagal diupdate'
+            ];
+        }
+    }
+
+    public function cancel_do()
+    {
+        DB::beginTransaction();
+
+        try {
+            DoDetail::where('fc_dono', auth()->user()->fc_userid)->delete();
+            DoMaster::where('fc_dono' , auth()->user()->fc_userid)->delete();
+
+            DB::commit();
+
+            return [
+                'status' => 201, // SUCCESS
+                'link' => '/apps/delivery-order/',
+                'message' => 'Berhasil Membatalkan Delivery Order'
+            ];
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
             ];
         }
     }

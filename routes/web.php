@@ -199,7 +199,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         });
 
         Route::prefix('delivery-order')->group(function () {
-            Route::get('/','Apps\DeliveryOrderController@index');
+            Route::get('/','Apps\DeliveryOrderController@index')->name('do_index');
             Route::get('/detail/{fc_sono}','Apps\DeliveryOrderController@detail');
             Route::post('/insert_do', 'Apps\DeliveryOrderController@insert_do');
             Route::get('/create_do','Apps\DeliveryOrderController@create')->name('create_do');
@@ -212,6 +212,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/cart_stock', 'Apps\DeliveryOrderController@cart_stock');
             Route::get('/create_do/pdf', 'Apps\DeliveryOrderController@pdf');
             Route::put('/update_transport/{fc_sono}', 'Apps\DeliveryOrderController@update_transport');
+            Route::delete('/cancel_do', 'Apps\DeliveryOrderController@cancel_do');
         });
     });
 });

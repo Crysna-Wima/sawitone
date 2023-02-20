@@ -225,13 +225,14 @@
                                         <label>Transporter</label>
                                         <div class="input-group">
                                             @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
-                                               <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="fc_transporter">
-                                                @else
-                                                <input type="text" class="form-control" value="{{ $data->domst->fc_transporter }}" fdprocessedid="hgh1fp"
-                                                name="fc_transporter">
+                                                <input type="text" class="form-control" fdprocessedid="hgh1fp"
+                                                    name="fc_transporter">
+                                            @else
+                                                <input type="text" class="form-control"
+                                                    value="{{ $data->domst->fc_transporter }}" fdprocessedid="hgh1fp"
+                                                    name="fc_transporter">
                                             @endif
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -249,12 +250,12 @@
                                                 id="fd_dodatesysinput" value="{{ date('d-m-Y') }}">
                                             @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                name="fd_dodate" required>
-                                                @else
+                                                    name="fd_dodate" required>
+                                            @else
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                name="fd_dodate" value="{{ $data->domst->fd_dodate }}" required>
+                                                    name="fd_dodate" value="{{ $data->domst->fd_dodate }}" required>
                                             @endif
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -286,55 +287,61 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6 place_detail">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Calculation</h4>
-                        </div>
-                        <div class="card-body" style="height: 180px">
-                            <div class="d-flex">
-                                <div class="flex-row-item" style="margin-right: 30px">
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Calculation</h4>
+                    </div>
+                    <div class="card-body" style="height: 180px">
+                        <div class="d-flex">
+                            <div class="flex-row-item" style="margin-right: 30px">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
                                 </div>
-                                <div class="flex-row-item">
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                        <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                        <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="flex-row-item"></p>
-                                        <p class="flex-row-item text-right"></p>
-                                    </div>
-                                    <div class="d-flex" style="gap: 5px; white-space: pre">
-                                        <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                        <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
-                                    </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                            </div>
+                            <div class="flex-row-item">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -342,11 +349,13 @@
                 </div>
             </div>
         </div>
-        <div class="button text-right mb-4">
-            <a href="#"><button type="button" class="btn btn-danger mr-2">Cancel DO</button></a>
-            <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button" class="btn btn-primary mr-2">Preview</button></a>
-            <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
-        </div>
+    </div>
+    <div class="button text-right mb-4">
+        <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
+        <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button"
+                class="btn btn-primary mr-2">Preview</button></a>
+        <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
+    </div>
     </div>
     </div>
 @endsection
@@ -407,6 +416,7 @@
 @section('js')
     <script>
         function pilih_inventory(fc_stockcode) {
+            console.log(fc_stockcode);
             // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
@@ -457,7 +467,14 @@
                     {
                         "data": null,
                         "render": function(data, type, full, meta) {
-                            return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            // console.log(data.stock);
+                            var qty = data.stock.sodtl[0].fn_so_qty - data.stock.sodtl[0].fn_do_qty;
+                            // console.log("qty"+qty);
+                            if (qty >= data.fn_quantity) {
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            } else {
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                            }
                         }
                     },
                     {
@@ -476,7 +493,26 @@
                     // $('#loading_data').hide();
                     // Tampilkan modal di sini
                     $('#modal_inventory').modal('show');
+                    // stock_inventory_table.DataTable().rows().eq(0).each(function(index) {
+                    //     var row = stock_inventory_table.DataTable().row(index);
+                    //     var data = row.data();
+                    //     if (data.fn_quantity == 0) {
+                    //         row.remove();
+                    //     }
+                    //     // console.log(data.fn_quantity );
+                    // });
+                    // stock_inventory_table.DataTable().draw();
+                    // reload
                     stock_inventory_table.DataTable().ajax.reload();
+                    var table = stock_inventory_table.DataTable();
+                    var rows = table.rows().nodes();
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = $(rows[i]);
+                        var fn_quantity = row.find('td:nth-child(4)').text();
+                        if (fn_quantity == 0) {
+                            table.row(row).remove().draw(false);
+                        }
+                    }
                 }
             });
         }
@@ -687,5 +723,53 @@
             },
             footerCallback: function(row, data, start, end, display) {}
         });
+
+        function click_delete() {
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan cancel data DO ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: '/apps/delivery-order/cancel_do',
+                            type: "DELETE",
+                            dataType: "JSON",
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status === 201) {
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    window.location.href = response.link;
+                                } else {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
+                            }
+                        });
+                    }
+                });
+        }
     </script>
 @endsection

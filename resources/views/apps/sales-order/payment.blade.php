@@ -441,7 +441,7 @@
                     }
 
                     var total_kurang = data.data[0].tempsomst.fm_brutto -
-                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? 0 :
+                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? data.data[0].tempsomst.fm_brutto :
                         data.data[0].tempsomst.fm_brutto - data.data[0].nominal;
 
                     // $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst

@@ -31,5 +31,7 @@ class Invstore extends Model
         return $this->hasMany(DoDetail::class, 'fc_barcode', 'fc_barcode');
     }
 
+ 
+
     
 }

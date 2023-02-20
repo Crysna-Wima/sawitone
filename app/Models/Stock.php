@@ -55,5 +55,10 @@ class Stock extends Model
         return $this->hasMany(Invstore::class, 'fc_stockcode', 'fc_stockcode');
     }
 
+    // sodtl
+    public function sodtl(){
+        return $this->hasMany(SoDetail::class, 'fc_barcode', 'fc_barcode');
+    }
+
     
 }

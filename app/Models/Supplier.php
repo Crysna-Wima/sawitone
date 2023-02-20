@@ -39,12 +39,13 @@ class Supplier extends Model
     }
 
     public function supplier_legal_status(){
-        return $this->belongsTo(TransaksiType::class, 'fc_supplierlegalstatus', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_supplierlegalstatus', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%CUST_LEGAL%');
     }
 
     public function supplier_nationality(){
         return $this->belongsTo(TransaksiType::class, 'fc_suppliernationality', 'fc_kode')->withTrashed();
     }
+    
 
     public function supplier_type_business(){
         return $this->belongsTo(TransaksiType::class, 'fc_suppliertypebusiness', 'fc_kode')->withTrashed();
