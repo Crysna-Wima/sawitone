@@ -60,9 +60,10 @@
       ],
       rowCallback : function(row, data){
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
-         if(data['fc_sostatus'] == 'I'){
-            $('td:eq(7)', row).html('<span class="badge badge-warning">Input</span>');
-         }else if(data['fc_sostatus'] == 'D'){
+         if(data['fc_dostatus'] == 'I'){
+            // $('td:eq(7)', row).html('<span class="badge badge-warning">Input</span>');
+            $(row).hide(); 
+         }else if(data['fc_dostatus'] == 'D'){
             $('td:eq(7)', row).html('<span class="badge badge-primary">Delivery</span>');
          }
          else{

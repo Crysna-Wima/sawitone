@@ -251,7 +251,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $data->domst->fm_servpay }}" required>
+                                                id="fm_servpay" value="{{ $data->fm_servpay }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -752,7 +752,7 @@
                                     },
                                     success: function() {
                                         deliver_item.ajax.reload();
-                                        tb.reload();
+                                        tb.ajax.reload();
                                         swal("Item telah dihapus!", {
                                             icon: "success",
                                         });
