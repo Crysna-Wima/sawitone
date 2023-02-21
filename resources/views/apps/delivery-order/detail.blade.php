@@ -46,15 +46,21 @@
                         <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-md-12 col-lg-12">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label>SONO : {{ $data->fc_sono }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Order : {{ date('d-m-Y', strtotime($data->fd_sodateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
+                                        <label>Exp. : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
                                         </label>
                                     </div>
                                 </div>

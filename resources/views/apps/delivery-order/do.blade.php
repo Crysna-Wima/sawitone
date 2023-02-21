@@ -48,13 +48,19 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
+                                        <label>SONO : {{ $data->fc_sono }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
                                         <label>Order : {{ date('d-m-Y', strtotime($data->fd_sodateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
+                                        <label>Exp. : {{ date('d-m-Y', strtotime($data->fd_soexpired)) }}
                                         </label>
                                     </div>
                                 </div>
@@ -171,7 +177,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Delivery Item</h4>
-
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -209,7 +214,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-12 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label>Transport</label>
                                         <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
@@ -220,7 +225,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label>Transporter</label>
                                         <div class="input-group">
@@ -233,6 +238,20 @@
                                                     name="fc_transporter">
                                             @endif
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Biaya Penanganan</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control format-rp" name="fm_servpay"
+                                                id="fm_servpay" value="{{ $data->fm_servpay }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -261,15 +280,10 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>Biaya Penanganan</label>
+                                        <label>Alamat Tujuan</label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    Rp.
-                                                </div>
-                                            </div>
-                                            <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $data->domst->fm_servpay }}" required>
+                                            <input type="text" class="form-control" name=""
+                                                id="" value="{{ $data->domst->fc_memberaddress_loading }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -290,12 +304,12 @@
                     <div class="card-header">
                         <h4>Calculation</h4>
                     </div>
-                    <div class="card-body" style="height: 180px">
+                    <div class="card-body" style="height: 190px">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -303,7 +317,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -311,13 +325,13 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -333,7 +347,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -346,27 +360,8 @@
             <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
         </div>
     </div>
-<<<<<<< HEAD
-    <div class="button text-right mb-4">
-        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
-        @else
-            <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
-        @endif
+    </div>
 
-        <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button"
-                class="btn btn-primary mr-2">Preview</button></a>
-        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
-            {{-- <button onclick="submit_do()" type="button" class="btn btn-secondary mr-2" disabled>Submit</button> --}}
-        @else
-            <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
-        @endif
-
-    </div>
-    </div>
-    </div>
-=======
-</div>
->>>>>>> bc46b7552f01fb8c77f22794edbc57ae71d24061
 @endsection
 
 @section('loading')
@@ -384,12 +379,14 @@
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="card-header-action">
+                        <select data-dismiss="modal" class="form-control select2 required-field" name="#" id="#">
+                            <option value="Regular">Regular&nbsp;&nbsp;</option>
+                            <option value="Bonus">Bonus&nbsp;&nbsp;</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="row place_alert_cart_stock">
-                </div>
+                <div class="row place_alert_cart_stock" style="align-content: center;"></div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -465,7 +462,13 @@
                         "data": "fc_catnumber"
                     },
                     {
-                        "data": "fd_expired"
+                        "data": "fd_expired",
+                        "render": function(data, type, row) {
+                            return moment(data).format(
+                                // format tanggal
+                                'DD MMMM YYYY'
+                            );
+                        }
                     },
                     {
                         "data": "fm_cogs"
@@ -496,7 +499,9 @@
                 "columnDefs": [{
                     "className": "text-center",
                     "targets": [0, 3, 4, 5]
-                }],
+                },
+                { className: 'text-nowrap', targets: [7] },  
+            ],
                 "initComplete": function() {
                     // hide loading_data
                     // $('#loading_data').hide();
@@ -613,15 +618,20 @@
             rowCallback: function(row, data) {
                 if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
                     // kosong
-                    $('td:eq(11)', row).html(`
-                   
-                `);
+                    $('td:eq(11)', row).html(``);
                 } else {
                     $('td:eq(11)', row).html(`
                     <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
                 `);
-                }
+                } 
 
+                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty != 0){
+                    $('td:eq(11)', row).html(`
+                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`);
+                } else {
+                    $('td:eq(11)', row).html(`
+                    <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+                }
             },
             footerCallback: function(row, data, start, end, display) {
 
@@ -647,8 +657,12 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11, 13]
                 },
+                {
+                    className: 'text-nowrap',
+                    targets: [9]
+                },  
                 {
                     targets: -1,
                     data: null,
@@ -685,16 +699,24 @@
                     data: 'fc_catnumber',
                 },
                 {
-                    data: 'fd_expired'
+                    data: 'fd_expired',
+                    "render": function(data, type, row) {
+                        return moment(data).format(
+                            // format tanggal
+                            'DD MMMM YYYY'
+                        );
+                    }
                 },
                 {
                     data: 'fn_price',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: 'fn_disc',
                 },
                 {
-                    data: 'fn_value'
+                    data: 'fn_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: null
@@ -704,7 +726,7 @@
             rowCallback: function(row, data) {
                 const item_barcode = data.fc_barcode;
                 $('td:eq(13)', row).html(`
-                <button class="btn btn-warning btn-sm delete-btn" data-id="${item_barcode}">Hapus Item</button>
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}">Hapus Item</button>
             `);
             },
             initComplete: function() {
@@ -729,6 +751,7 @@
                                     },
                                     success: function() {
                                         deliver_item.ajax.reload();
+                                        tb.ajax.reload();
                                         swal("Item telah dihapus!", {
                                             icon: "success",
                                         });
@@ -744,6 +767,50 @@
                 });
             },
             footerCallback: function(row, data, start, end, display) {
+                //   console.log('ini footer' + data[0].domst.fn_dodetail)
+                // jika data tidak sam dengan 0
+
+                if (data.length !== 0) {
+                    // count item
+                    $('#fn_dodetail').html(data[0].domst.fn_dodetail);
+                    $("#fn_dodetail").trigger("change");
+
+                    if (data[0].domst.fm_disctotal) {
+                        // fm_disctotal
+                        $('#fm_disctotal').html(data[0].domst.fm_disctotal);
+                        $("#fm_disctotal").trigger("change");
+                    }
+
+
+                    if (data[0].domst.fm_netto != null) {
+                        // fm_netto
+                        $('#fm_netto').html(data[0].domst.fm_netto);
+                        $("#fm_netto").trigger("change");
+                    }
+
+                    // fm_servpay
+                    $('#fm_servpay_calculate').html(
+                        // convert dengan RP data[0].domst.fm_servpay
+                        $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_servpay)
+                    );
+                    $("#fm_servpay_calculate").trigger("change");
+
+                    // fm_tax
+                    if (data[0].domst.fm_tax != null) {
+                        $('#fm_tax').html(data[0].domst.fm_tax)
+                        $("#fm_tax").trigger("change");
+                    }
+
+                    if (data[0].domst.fm_brutto != null) {
+                        $('#fm_brutto').html(
+                            // concat dengan RP
+                            $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_brutto)
+                        )
+                        $("#fm_brutto").trigger("change");
+                    }
+                    // fm_brutto
+
+                }
 
             }
         });

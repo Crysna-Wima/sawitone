@@ -200,7 +200,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('delivery-order')->group(function () {
             Route::get('/','Apps\DeliveryOrderController@index')->name('do_index');
-            Route::get('/detail/{fc_sono}','Apps\DeliveryOrderController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_sono}','Apps\DeliveryOrderController@detail');
             Route::post('/insert_do', 'Apps\DeliveryOrderController@insert_do');
             Route::get('/create_do','Apps\DeliveryOrderController@create')->name('create_do');
             Route::get('/datatables','Apps\DeliveryOrderController@datatables');

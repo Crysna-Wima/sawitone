@@ -45,14 +45,15 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,7,8] },
+         { className: 'text-center', targets: [0,6,7] },
+         { className: 'text-nowrap', targets: [8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_sono' },
          { data: 'fc_dono'},
          { data: 'fd_dodateinputuser', render: formatTimestamp },
-         { data: 'fc_membername1' },
+         { data: 'somst.customer.fc_membername1' },
          { data: 'fn_dodetail' },
          { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fc_dostatus' },
@@ -60,9 +61,10 @@
       ],
       rowCallback : function(row, data){
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
-         if(data['fc_sostatus'] == 'I'){
-            $('td:eq(7)', row).html('<span class="badge badge-warning">Input</span>');
-         }else if(data['fc_sostatus'] == 'D'){
+         if(data['fc_dostatus'] == 'I'){
+            // $('td:eq(7)', row).html('<span class="badge badge-warning">Input</span>');
+            $(row).hide(); 
+         }else if(data['fc_dostatus'] == 'D'){
             $('td:eq(7)', row).html('<span class="badge badge-primary">Delivery</span>');
          }
          else{

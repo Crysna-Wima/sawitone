@@ -94,7 +94,7 @@
                 if (data['fc_sostatus'] == 'F') {
                     $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
                     $('td:eq(9)', row).html(`
-                        <a href="/apps/delivery-order/detail/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
                      `);
                 } else if (data['fc_sostatus'] == 'C') {
                 //     $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
