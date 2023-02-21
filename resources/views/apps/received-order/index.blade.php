@@ -3,7 +3,7 @@
 @section('content')
     <div class="section-body">
         <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
+            <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Pencarian Delivery Order</h4>
@@ -26,7 +26,7 @@
 @section('js')
 <script>
     function click_cari_delivery_order(){
-        $('#button_cari').html('<i class="fa fa-refresh fa-spin"></i> Find..');
+        $('#button_cari').html('<i class="fa fa-refresh fa-spin"></i> Mencari..');
         $('#button_cari').prop('disabled',true);
 
         $.ajax({

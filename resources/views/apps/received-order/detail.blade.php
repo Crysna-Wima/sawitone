@@ -56,10 +56,10 @@
                                         <label>Customer</label>
                                         <div class="row">
                                             <div class="col-4 col-md-4 col-lg-4">
-                                                <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberlegalstatus }}" readonly>
+                                                <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberlegalstatus }}" disabled>
                                             </div>
                                             <div class="col-8 col-md-8 col-lg-8">
-                                                <input type="text" class="form-control" value="{{ $data->somst->customer->fc_membername1 }}" readonly>
+                                                <input type="text" class="form-control" value="{{ $data->somst->customer->fc_membername1 }}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label>Alamat Pengiriman</label>
-                                        <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberaddress_loading }}" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberaddress_loading }}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -90,20 +90,20 @@
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>Alamat Pengiriman</label>
-                                        <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberaddress_loading }}" readonly>
+                                        <label>Tanggal</label>
+                                        <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse( $data->fd_doarivaldate )->format('d/m/Y') }}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Transporter</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_transporter }}" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->fc_transporter }}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label>Penerima</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_custreceiver }}" readonly>
+                                        <input type="text" class="form-control" value="{{ $data->fc_custreceiver }}" disabled>
                                     </div>
                                 </div>
                             </div>
