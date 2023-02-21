@@ -315,6 +315,7 @@ class DeliveryOrderController extends Controller
         }
     }
 
+
     public function update_transport(Request $request, $fc_sono)
     {
         // validasi $fc_sono require
