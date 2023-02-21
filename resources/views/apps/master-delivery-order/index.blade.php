@@ -52,7 +52,7 @@
          { data: 'fc_sono' },
          { data: 'fc_dono'},
          { data: 'fd_dodateinputuser', render: formatTimestamp },
-         { data: 'fc_membername1' },
+         { data: 'somst.customer.fc_membername1' },
          { data: 'fn_dodetail' },
          { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fc_dostatus' },
