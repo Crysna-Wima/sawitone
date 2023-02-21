@@ -45,13 +45,14 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,7,8] },
+         { className: 'text-center', targets: [0,6,7] },
+         { className: 'text-nowrap', targets: [8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_sono' },
          { data: 'fc_dono'},
-         { data: 'fd_dodateinputuser', render: formatTimestamp },
+         { data: 'fd_dodate', render: formatTimestamp },
          { data: 'somst.customer.fc_membername1' },
          { data: 'fn_dodetail' },
          { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },

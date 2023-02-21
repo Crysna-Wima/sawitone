@@ -71,8 +71,10 @@
          }else if(data['fc_sostatus'] == 'C'){
             $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
          }
-         else{
+         else if(data['fc_sostatus'] == 'P'){
             $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+         } else {
+            $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
          }
 
          $('td:eq(9)', row).html(`

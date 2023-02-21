@@ -386,8 +386,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row place_alert_cart_stock">
-                </div>
+                <div class="place_alert_cart_stock text-center"></div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -547,11 +546,11 @@
                     $('.place_alert_cart_stock').empty();
                     if (response.status == '200') {
                         $('.place_alert_cart_stock').append(
-                            `<span class="badge badge-success">${response.message}</span>`)
+                            `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`)
                         location.reload();
                     } else {
                         $('.place_alert_cart_stock').append(
-                            `<span class="badge badge-danger">${response.message}</span>`)
+                            `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`)
                     }
                 },
                 error: function(jqXhr, textStatus, errorThrown) {
@@ -658,7 +657,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11]
+                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11, 13]
                 },
                 {
                     className: 'text-nowrap',
