@@ -38,13 +38,17 @@ class DeliveryOrderController extends Controller
         // dd($do_master);
     }
 
-    public function detail($fc_sono)
+    public function detail($fc_divisioncode, $fc_branch, $fc_sono)
     {
         session(['fc_sono_global' => $fc_sono]);
-        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
+        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
+        ->where('fc_sono', $fc_sono)
+        ->where('fc_divisioncode', $fc_divisioncode)
+        ->where('fc_branch', $fc_branch)
+        ->first();
 
         return view('apps.delivery-order.detail', $data);
-        // dd($data);
+        // dd($fc_divisioncode);
     }
 
     public function insert_do(Request $request)
@@ -185,7 +189,7 @@ class DeliveryOrderController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        
+
 
         //CHECK DATA STOCK
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
@@ -195,8 +199,8 @@ class DeliveryOrderController extends Controller
         $qty = $data_stock_sodtl->stock->sodtl[0]->fn_so_qty - $data_stock_sodtl->stock->sodtl[0]->fn_do_qty;
         // dd($qty);
         // dd($data_stock->fn_quantity);
-        if($qty >= $data_stock->fn_quantity){
-            if($request->quantity > $data_stock->fn_quantity){
+        if ($qty >= $data_stock->fn_quantity) {
+            if ($request->quantity > $data_stock->fn_quantity) {
                 return [
                     'status' => 300,
                     'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
@@ -204,14 +208,14 @@ class DeliveryOrderController extends Controller
             }
         }
         // dd($request);
-        if($request->quantity > $qty){
-             return [
+        if ($request->quantity > $qty) {
+            return [
                 'status' => 300,
                 'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
             ];
         }
-        
-        
+
+
         // if ($data_stock->fn_quantity < $request->quantity) {
         //     return [
         //         'status' => 300,
@@ -267,7 +271,7 @@ class DeliveryOrderController extends Controller
     // datatable deliver item
     public function datatables_do_detail()
     {
-        $data = DoDetail::with('invstore.stock','domst')->where('fc_dono', auth()->user()->fc_userid)->get();
+        $data = DoDetail::with('invstore.stock', 'domst')->where('fc_dono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -354,12 +358,13 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function cancel_do(){
+    public function cancel_do()
+    {
         DB::beginTransaction();
 
         try {
             DoDetail::where('fc_dono', auth()->user()->fc_userid)->delete();
-            DoMaster::where('fc_dono' , auth()->user()->fc_userid)->delete();
+            DoMaster::where('fc_dono', auth()->user()->fc_userid)->delete();
 
             DB::commit();
 
@@ -379,7 +384,8 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function submit_do(Request $request){
+    public function submit_do(Request $request)
+    {
         // validasi all request
         $validator = Validator::make($request->all(), [
             'fc_sostatus' => 'required',

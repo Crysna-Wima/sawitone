@@ -196,7 +196,7 @@
             <tr class="tp-1">
                 <td>Tanggal Expired</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $do_mst->fd_soexpired }}</td>
+                <td style="width: 28%">{{ \Carbon\Carbon::parse( $do_mst->somst->fd_soexpired )->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr class="tp-1 pb-1">
                 <td>Tanggal Delivery</td>
