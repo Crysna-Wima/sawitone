@@ -79,6 +79,11 @@ class DeliveryOrderController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
+        $so_master = SoMaster::where('fc_sono',$request->fc_sono)
+        ->where('fc_divisioncode',$request->fc_divisioncode)
+        ->where('fc_branch',$request->fc_branch)->first();
+        // dd($so_master->fc_salescode);
+
         // cek apakah Do sudah ada apa belum berdasarkan dono dari userid yang login
         $do_master = DoMaster::where('fc_dono', $request->fc_dono)->first();
         if (!empty($do_master)) {
@@ -98,9 +103,10 @@ class DeliveryOrderController extends Controller
             'fc_userid' => auth()->user()->fc_userid,
             'fc_dono' => $request->fc_dono,
             'fc_dostatus' => 'I',
+            'fc_salescode' =>$so_master->fc_salescode
         ]);
 
-        // jika validasi sukses dan $do_master berhasil response 200
+        // // jika validasi sukses dan $do_master berhasil response 200
         if ($create_do_master) {
             return response()->json(
                 [
@@ -352,18 +358,22 @@ class DeliveryOrderController extends Controller
                 // $request->fd_dodatesysinput convert format datetime,
                 'fd_dodate' => $request->fd_dodate,
                 'fm_servpay' => $request->fm_servpay,
+                'fc_memberaddress_loading' => $request->fc_memberaddress_loading
             ]);
 
         // jika $update_transport bisa
         if ($update_transport) {
             return [
                 'status' => 201,
-                'message' => 'Data berhasil diupdate'
+                'message' => 'Data berhasil diupdate',
+                'link' => '/apps/delivery-order/create_do'
             ];
         } else {
             return [
                 'status' => 300,
-                'message' => 'Data gagal diupdate'
+                'message' => 'Data gagal diupdate',
+                //link
+                
             ];
         }
     }
