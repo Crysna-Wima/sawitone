@@ -282,8 +282,8 @@
                                     <div class="form-group">
                                         <label>Alamat Tujuan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name=""
-                                                id="" value="{{ $data->domst->fc_memberaddress_loading }}" required>
+                                            <input type="text" class="form-control" name="fc_memberaddress_loading"
+                                                id="fc_memberaddress_loading" value="{{ $data->domst->fc_memberaddress_loading }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -386,7 +386,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row place_alert_cart_stock" style="align-content: center;"></div>
+                <div class="place_alert_cart_stock text-center"></div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -546,11 +546,11 @@
                     $('.place_alert_cart_stock').empty();
                     if (response.status == '200') {
                         $('.place_alert_cart_stock').append(
-                            `<span class="badge badge-success">${response.message}</span>`)
+                            `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`)
                         location.reload();
                     } else {
                         $('.place_alert_cart_stock').append(
-                            `<span class="badge badge-danger">${response.message}</span>`)
+                            `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`)
                     }
                 },
                 error: function(jqXhr, textStatus, errorThrown) {
@@ -641,8 +641,21 @@
                 } else {
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 }
+                
+                // if(data[0].somst.domst.fm_servpay != 0){
+                //     $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
+                // } 
 
+
+                if(data[0].somst.domst.fc_memberaddress_loading !== ""){
+                    $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
+                }else{
+                    $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
+                }
+
+                $("#fc_memberaddress_loading").trigger("change");
                 $("#fc_sotransport").trigger("change");
+                // $("#fm_servpay").trigger("change");
             }
         });
 

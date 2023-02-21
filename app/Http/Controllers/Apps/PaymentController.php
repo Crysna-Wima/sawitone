@@ -78,7 +78,9 @@ class PaymentController extends Controller
         return [
             'status' => 201,
             // 'data' => $data,
-            'message' => 'Data berhasil disimpan'
+            'message' => 'Data berhasil disimpan',
+            // link
+            'link' => route('payment.index')
         ];
     }
 
