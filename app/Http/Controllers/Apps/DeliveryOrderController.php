@@ -41,6 +41,14 @@ class DeliveryOrderController extends Controller
     public function detail($fc_divisioncode, $fc_branch, $fc_sono)
     {
         session(['fc_sono_global' => $fc_sono]);
+        $cek_status = SoMaster::where(
+            'fc_sono',$fc_sono
+        )->first();
+        // dd($cek_status->fc_sostatus);
+        // jika statusnya "L" dan "C" maka kirimkan warning
+        if ($cek_status->fc_sostatus == "L" || $cek_status->fc_sostatus == "C") {
+            return redirect()->route('do_index')->with('warning', 'SO sudah di proses');
+        }
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
         ->where('fc_sono', $fc_sono)
         ->where('fc_divisioncode', $fc_divisioncode)
