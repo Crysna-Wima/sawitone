@@ -731,6 +731,7 @@
                                     },
                                     success: function() {
                                         deliver_item.ajax.reload();
+                                        tb.reload();
                                         swal("Item telah dihapus!", {
                                             icon: "success",
                                         });
