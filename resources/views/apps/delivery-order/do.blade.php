@@ -295,7 +295,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -303,7 +304,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -311,29 +313,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -346,27 +353,8 @@
             <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
         </div>
     </div>
-<<<<<<< HEAD
-    <div class="button text-right mb-4">
-        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
-        @else
-            <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
-        @endif
+    </div>
 
-        <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button"
-                class="btn btn-primary mr-2">Preview</button></a>
-        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
-            {{-- <button onclick="submit_do()" type="button" class="btn btn-secondary mr-2" disabled>Submit</button> --}}
-        @else
-            <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
-        @endif
-
-    </div>
-    </div>
-    </div>
-=======
-</div>
->>>>>>> bc46b7552f01fb8c77f22794edbc57ae71d24061
 @endsection
 
 @section('loading')
@@ -465,7 +453,13 @@
                         "data": "fc_catnumber"
                     },
                     {
-                        "data": "fd_expired"
+                        "data": "fd_expired",
+                        "render": function(data, type, row) {
+                            return moment(data).format(
+                                // format tanggal
+                                'DD MMMM YYYY'
+                            );
+                        }
                     },
                     {
                         "data": "fm_cogs"
@@ -685,16 +679,24 @@
                     data: 'fc_catnumber',
                 },
                 {
-                    data: 'fd_expired'
+                    data: 'fd_expired',
+                    "render": function(data, type, row) {
+                        return moment(data).format(
+                            // format tanggal
+                            'DD MMMM YYYY'
+                        );
+                    }
                 },
                 {
                     data: 'fn_price',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: 'fn_disc',
                 },
                 {
-                    data: 'fn_value'
+                    data: 'fn_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
                     data: null
@@ -744,6 +746,50 @@
                 });
             },
             footerCallback: function(row, data, start, end, display) {
+                //   console.log('ini footer' + data[0].domst.fn_dodetail)
+                // jika data tidak sam dengan 0
+
+                if (data.length !== 0) {
+                    // count item
+                    $('#fn_dodetail').html(data[0].domst.fn_dodetail);
+                    $("#fn_dodetail").trigger("change");
+
+                    if (data[0].domst.fm_disctotal) {
+                        // fm_disctotal
+                        $('#fm_disctotal').html(data[0].domst.fm_disctotal);
+                        $("#fm_disctotal").trigger("change");
+                    }
+
+
+                    if (data[0].domst.fm_netto != null) {
+                        // fm_netto
+                        $('#fm_netto').html(data[0].domst.fm_netto);
+                        $("#fm_netto").trigger("change");
+                    }
+
+                    // fm_servpay
+                    $('#fm_servpay_calculate').html(
+                        // convert dengan RP data[0].domst.fm_servpay
+                        $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_servpay)
+                    );
+                    $("#fm_servpay_calculate").trigger("change");
+
+                    // fm_tax
+                    if (data[0].domst.fm_tax != null) {
+                        $('#fm_tax').html(data[0].domst.fm_tax)
+                        $("#fm_tax").trigger("change");
+                    }
+
+                    if (data[0].domst.fm_brutto != null) {
+                        $('#fm_brutto').html(
+                            // concat dengan RP
+                            $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_brutto)
+                        )
+                        $("#fm_brutto").trigger("change");
+                    }
+                    // fm_brutto
+
+                }
 
             }
         });

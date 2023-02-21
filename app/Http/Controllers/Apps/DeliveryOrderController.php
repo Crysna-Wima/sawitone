@@ -232,7 +232,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        // // // dd($data_stock);
+        // // // dd($data_stock_sodtl->stock->sodtl[0]->fm_so_price);
 
         // // //INSERT DoDetail dari data stock
         $do_dtl = DoDetail::create([
@@ -246,6 +246,8 @@ class DeliveryOrderController extends Controller
             'fc_batch' => $data_stock->fc_batch,
             'fc_catnumber' => $data_stock->fc_catnumber,
             'fd_expired' => $data_stock->fd_expired,
+            'fn_price' => $data_stock_sodtl->stock->sodtl[0]->fm_so_price ,
+            'fn_disc' => $data_stock_sodtl->stock->sodtl[0]->fm_so_disc,
         ]);
 
         // // //UPDATE STOCK
