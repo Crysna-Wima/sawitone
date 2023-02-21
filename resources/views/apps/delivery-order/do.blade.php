@@ -642,9 +642,9 @@
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 }
                 
-                if(data[0].somst.domst.fm_servpay != 0){
-                    $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
-                } 
+                // if(data[0].somst.domst.fm_servpay != 0){
+                //     $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
+                // } 
 
 
                 if(data[0].somst.domst.fc_memberaddress_loading !== ""){
@@ -655,7 +655,7 @@
 
                 $("#fc_memberaddress_loading").trigger("change");
                 $("#fc_sotransport").trigger("change");
-                $("#fm_servpay").trigger("change");
+                // $("#fm_servpay").trigger("change");
             }
         });
 
