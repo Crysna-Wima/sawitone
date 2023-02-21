@@ -26,7 +26,7 @@ class MasterDeliveryOrderController extends Controller
     }
 
     public function datatables(){
-        $data = DoMaster::all();
+        $data = DoMaster::with('somst.customer')->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
