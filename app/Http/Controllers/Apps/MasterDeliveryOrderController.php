@@ -40,5 +40,6 @@ class MasterDeliveryOrderController extends Controller
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
         $pdf = PDF::loadView('pdf.report-do', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($data['do_mst']->somst->fd_soexpired);
     }
 }
