@@ -220,6 +220,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
 
             Route::get('/pdf/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf');
+            Route::get('/pdf_sj/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf_sj');
         });
 
         Route::prefix('received-order')->group(function () {
