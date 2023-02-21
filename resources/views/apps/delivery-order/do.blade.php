@@ -282,8 +282,8 @@
                                     <div class="form-group">
                                         <label>Alamat Tujuan</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name=""
-                                                id="" value="{{ $data->domst->fc_memberaddress_loading }}" required>
+                                            <input type="text" class="form-control" name="fc_memberaddress_loading"
+                                                id="fc_memberaddress_loading" value="{{ $data->domst->fc_memberaddress_loading }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -641,8 +641,21 @@
                 } else {
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 }
+                
+                // if(data[0].somst.domst.fm_servpay != 0){
+                //     $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
+                // } 
 
+
+                if(data[0].somst.domst.fc_memberaddress_loading !== ""){
+                    $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
+                }else{
+                    $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
+                }
+
+                $("#fc_memberaddress_loading").trigger("change");
                 $("#fc_sotransport").trigger("change");
+                // $("#fm_servpay").trigger("change");
             }
         });
 
