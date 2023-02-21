@@ -221,6 +221,14 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::get('/pdf/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf');
         });
+
+        Route::prefix('received-order')->group(function () {
+            Route::get('/','Apps\ReceivedOrderController@index');
+            Route::get('/cari-do/{fc_dono}','Apps\ReceivedOrderController@cari_do');
+            Route::get('/detail/{fc_dono}','Apps\ReceivedOrderController@detail');
+            Route::get('/datatables', 'Apps\ReceivedOrderController@datatables');
+            Route::post('/action', 'Apps\ReceivedOrderController@action_confirm');
+        });
     });
 });
 

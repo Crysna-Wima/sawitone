@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Controllers\Apps;
+
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\NoDocument;
+use App\Helpers\Convert;
+
+use DataTables;
+use PDF;
+use Carbon\Carbon;
+use File;
+use DB;
+
+use App\Models\SoMaster;
+use App\Models\SoDetail;
+use App\Models\TempSoPay;
+use App\Models\Invstore;
+use App\Models\DoDetail;
+use App\Models\DoMaster;
+
+class ReceivedOrderController extends Controller
+{
+    public function index(){
+        return view('apps.received-order.index');
+    }
+
+    public function cari_do($fc_dono){
+        $do_master = DoMaster::where('fc_dono', $fc_dono)->first();
+        if(empty($do_master)){
+            return [
+                'status' => 300,
+                'message' => 'No Delivery Order Tidak ditemukan'
+            ];
+        }
+
+        return [
+            'status' => 201,
+            'link' => '/apps/received-order/detail/' . $fc_dono,
+            'message' => 'DO ditemukan, tunggu sebentar anda akan dialihkan ke halaman Detail',
+        ];
+    }
+
+    public function detail($fc_dono){;
+        $data['data'] = DoMaster::with('somst.customer','dodtl')->where('fc_dono', $fc_dono)->first();
+        return view('apps.received-order.detail', $data);
+    }
+
+    public function datatables(request $request){
+        $data = DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make();
+    }
+
+    public function action_confirm(request $request){
+        DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => 'R']);
+
+        return [
+            'status' => 201,
+            'link' => '/apps/received-order',
+            'message' => 'Data DO berhasil diterima'
+        ];
+    }
+}
