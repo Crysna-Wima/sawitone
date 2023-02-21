@@ -350,10 +350,19 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
+        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
+        @else
+            <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
+        @endif
+
         <a href="/apps/delivery-order/create_do/pdf" target="_blank"><button id="preview_do" type="button"
                 class="btn btn-primary mr-2">Preview</button></a>
-        <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
+        @if ($data->domst->fc_dostatus == 'D' && $data->domst->fc_sostatus == 'P')
+            {{-- <button onclick="submit_do()" type="button" class="btn btn-secondary mr-2" disabled>Submit</button> --}}
+        @else
+            <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
+        @endif
+
     </div>
     </div>
     </div>
@@ -601,19 +610,27 @@
 
             ],
             rowCallback: function(row, data) {
-                $('td:eq(11)', row).html(`
-                <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
-            `);
+                if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
+                    // kosong
+                    $('td:eq(11)', row).html(`
+                   
+                `);
+                } else {
+                    $('td:eq(11)', row).html(`
+                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
+                `);
+                }
+
             },
             footerCallback: function(row, data, start, end, display) {
 
-               // jika data[0].somst.domst.fc_sotransport tidak kosong
-               if(data[0].somst.domst.fc_sotransport !== ""){
-                $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
-               }else{
-                $("#fc_sotransport").val(data[0].somst.fc_sotransport);
-               }
-                
+                // jika data[0].somst.domst.fc_sotransport tidak kosong
+                if (data[0].somst.domst.fc_sotransport !== "") {
+                    $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
+                } else {
+                    $("#fc_sotransport").val(data[0].somst.fc_sotransport);
+                }
+
                 $("#fc_sotransport").trigger("change");
             }
         });
@@ -778,7 +795,7 @@
                 });
         }
 
-        function submit_do(){
+        function submit_do() {
             swal({
                     title: 'Apakah anda yakin?',
                     text: 'Apakah anda yakin akan submit data DO ini?',
