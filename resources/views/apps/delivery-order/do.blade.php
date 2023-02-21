@@ -251,7 +251,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $data->domst->fm_servpay }}" required>
+                                                id="fm_servpay" value="{{ $data->fm_servpay }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -386,8 +386,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row place_alert_cart_stock">
-                </div>
+                <div class="row place_alert_cart_stock" style="align-content: center;"></div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -658,7 +657,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11]
+                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11, 13]
                 },
                 {
                     className: 'text-nowrap',

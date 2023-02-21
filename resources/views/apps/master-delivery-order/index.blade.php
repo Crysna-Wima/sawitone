@@ -45,7 +45,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,7,8] },
+         { className: 'text-center', targets: [0,6,7] },
+         { className: 'text-nowrap', targets: [8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
