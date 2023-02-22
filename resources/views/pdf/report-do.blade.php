@@ -292,7 +292,7 @@
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->invstore->stock->fc_namepack }}</td>
                         <td>{{ $item->fn_qty_do }}</td>
-                        <td>{{ $item->fd_expired }}</td>
+                        <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ number_format($item->fn_price,0,',','.') }}</td>
                         <td>{{ number_format($item->fn_disc,0,',','.') }}</td>

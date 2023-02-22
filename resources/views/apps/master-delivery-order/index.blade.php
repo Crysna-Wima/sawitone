@@ -46,7 +46,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,6,7] },
-         { className: 'text-nowrap', targets: [8] },
+         { className: 'text-nowrap', targets: [3,8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -73,7 +73,7 @@
 
          $('td:eq(8)', row).html(`
             <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-            <a href="#" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
+            <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
          `);
       }
    });
