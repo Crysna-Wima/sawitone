@@ -229,12 +229,12 @@
                                     <div class="form-group">
                                         <label>Transporter</label>
                                         <div class="input-group">
-                                            @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                            @if ($domst->fm_servpay == 0.0 && empty($domst->fc_sotransport))
                                                 <input type="text" class="form-control" fdprocessedid="hgh1fp"
                                                     name="fc_transporter">
                                             @else
                                                 <input type="text" class="form-control"
-                                                    value="{{ $data->domst->fc_transporter }}" fdprocessedid="hgh1fp"
+                                                    value="{{ $domst->fc_transporter }}" fdprocessedid="hgh1fp"
                                                     name="fc_transporter">
                                             @endif
 
@@ -251,7 +251,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $data->fm_servpay }}" required>
+                                                id="fm_servpay" value="{{ $domst->fm_servpay }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -267,12 +267,12 @@
                                             {{-- input waktu sekarang format timestamp tipe hidden --}}
                                             <input type="hidden" class="form-control" name="fd_dodatesysinput"
                                                 id="fd_dodatesysinput" value="{{ date('d-m-Y') }}">
-                                            @if ($data->domst->fm_servpay == 0.0 && empty($data->domst->fc_sotransport))
+                                            @if ($domst->fm_servpay == 0.0 && empty($domst->fc_sotransport))
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
                                                     name="fd_dodate" required>
                                             @else
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                    name="fd_dodate" value="{{ $data->domst->fd_dodate }}" required>
+                                                    name="fd_dodate" value="{{ $domst->fd_dodate }}" required>
                                             @endif
 
                                         </div>
@@ -283,12 +283,12 @@
                                         <label>Alamat Tujuan</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="fc_memberaddress_loading"
-                                                id="fc_memberaddress_loading" value="{{ $data->domst->fc_memberaddress_loading }}" required>
+                                                id="fc_memberaddress_loading" value="{{ $domst->fc_memberaddress_loading }}" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    @if (empty($data->domst->fc_sotransport))
+                                    @if (empty($domst->fd_dodate))
                                         <button type="submit" class="btn btn-success">Save</button>
                                     @else
                                         <button type="submit" class="btn btn-success">Edit</button>
@@ -480,7 +480,13 @@
                         "data": null,
                         "render": function(data, type, full, meta) {
                             // console.log(data.stock);
-                            var qty = data.stock.sodtl[0].fn_so_qty - data.stock.sodtl[0].fn_do_qty;
+                            
+                           // looping data data.stock.sodtl[index].fn_so_qty
+                           
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
+                            }
+                           
                             // console.log("qty"+qty);
                             if (qty >= data.fn_quantity) {
                                 return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;

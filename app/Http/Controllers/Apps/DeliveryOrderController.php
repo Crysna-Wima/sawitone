@@ -95,6 +95,8 @@ class DeliveryOrderController extends Controller
             );
         }
 
+        // dd($so_master);
+
         $create_do_master = DoMaster::create([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
@@ -103,7 +105,10 @@ class DeliveryOrderController extends Controller
             'fc_userid' => auth()->user()->fc_userid,
             'fc_dono' => $request->fc_dono,
             'fc_dostatus' => 'I',
-            'fc_salescode' =>$so_master->fc_salescode
+            'fc_salescode' =>$so_master->fc_salescode,
+            'fc_sotransport' => $so_master->fc_sotransport,
+            'fm_servpay' => $so_master->fm_servpay,
+            'fc_memberaddress_loading' => $so_master->fc_memberaddress_loading1,
         ]);
 
         // // jika validasi sukses dan $do_master berhasil response 200
@@ -131,10 +136,11 @@ class DeliveryOrderController extends Controller
         //    // redirect ke route index
         //     return redirect()->route('do_index');
         // }
-        $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+        $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         $fc_sono_domst = $domst->fc_sono;
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
-        return view('apps.delivery-order.do', $data);
+        $data['domst'] = $domst;
+        return view('apps.delivery-order.do',$data);
         // dd($data);
     }
 
@@ -351,7 +357,7 @@ class DeliveryOrderController extends Controller
         }
         // dd($request);
 
-        $update_transport = DoMaster::where('fc_sono', $fc_sono)
+        $update_transport = DoMaster::where('fc_dono', auth()->user()->fc_userid)
             ->update([
                 'fc_sotransport' => $request->fc_sotransport,
                 'fc_transporter' => $request->fc_transporter,
@@ -421,6 +427,15 @@ class DeliveryOrderController extends Controller
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
+            ];
+        }
+
+        $do_dtl = DoDetail::where('fc_dono', auth()->user()->fc_userid)->get();
+        //jika do detail kosong
+        if ($do_dtl->isEmpty()) {
+            return [
+                'status' => 300,
+                'message' => 'Delivery Item Kosong'
             ];
         }
 
