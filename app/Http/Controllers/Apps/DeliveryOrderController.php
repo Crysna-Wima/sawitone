@@ -216,9 +216,11 @@ class DeliveryOrderController extends Controller
         // dd($data_stock);
         // get data from Invstore.stock.sodtl
         $data_stock_sodtl = Invstore::with('stock.sodtl')->where('fc_barcode', $request->fc_barcode)->first();
-        $qty = $data_stock_sodtl->stock->sodtl[0]->fn_so_qty - $data_stock_sodtl->stock->sodtl[0]->fn_do_qty;
-        // dd($qty);
-        // dd($data_stock->fn_quantity);
+        $sodtlLength = count($data_stock_sodtl->stock->sodtl);
+        $qty = 0;
+        for ($i = 0; $i < $sodtlLength; $i++) {
+            $qty += $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty; 
+        }
         if ($qty >= $data_stock->fn_quantity) {
             if ($request->quantity > $data_stock->fn_quantity) {
                 return [
@@ -431,6 +433,16 @@ class DeliveryOrderController extends Controller
         }
 
         $do_dtl = DoDetail::where('fc_dono', auth()->user()->fc_userid)->get();
+        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        // jika fd_dodate,fc_sotransport,fc_transporter,fc_memberaddress_loading, fm_servpay di domst masih kosong
+        if ($do_mst->fd_dodate == null || $do_mst->fc_sotransport == null || $do_mst->fc_transporter == null || $do_mst->fc_memberaddress_loading == null || $do_mst->fm_servpay == 0) {
+            return [
+                'status' => 300,
+                'message' => 'Data transport belum lengkap'
+            ];
+        }
+
+          
         //jika do detail kosong
         if ($do_dtl->isEmpty()) {
             return [

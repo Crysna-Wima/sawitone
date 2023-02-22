@@ -422,7 +422,7 @@
 @section('js')
     <script>
         function pilih_inventory(fc_stockcode) {
-            console.log(fc_stockcode);
+            // console.log(fc_stockcode);
             // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
@@ -479,7 +479,7 @@
                     {
                         "data": null,
                         "render": function(data, type, full, meta) {
-                            // console.log(data.stock);
+                            // console.log('data'+data.fn_sorrownum);
                             
                            // looping data data.stock.sodtl[index].fn_so_qty
                            
@@ -540,6 +540,7 @@
         function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
             console.log($('').val());
+            // console.log(fc_barcode);
             $.ajax({
                 url: '/apps/delivery-order/cart_stock',
                 type: "POST",
@@ -883,6 +884,7 @@
         }
 
         function submit_do() {
+            
             swal({
                     title: 'Apakah anda yakin?',
                     text: 'Apakah anda yakin akan submit data DO ini?',
