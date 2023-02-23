@@ -18,6 +18,10 @@
             color: #28a745 !important;
         }
 
+        .btn-secondary {
+            background-color: #A5A5A5 !important;
+        }
+
         @media (min-width: 992px) and (max-width: 1200px) {
             .flex-row-item {
                 font-size: 12px;
@@ -375,7 +379,7 @@
 
 @section('modal')
     <div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl" style="width:90%" role="document">
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
@@ -390,7 +394,7 @@
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="stock_inventory" width="100%">
+                            <table class="table table-striped" width="100%" id="stock_inventory">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -401,8 +405,6 @@
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">CAT</th>
                                         <th scope="col" class="text-center">Exp.</th>
-                                        <th scope="col" class="text-center">COGS</th>
-                                        <th scope="col" class="text-center">Pembelian</th>
                                         <th scope="col" class="text-center">Quantity</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
@@ -438,6 +440,10 @@
                         "fc_stockcode": fc_stockcode
                     }
                 },
+                "columnDefs": [{
+                    "className": "text-center",
+                    "targets": [11],
+                }, ],
                 "columns": [{
                         "data": 'DT_RowIndex',
                         "sortable": false,
@@ -471,12 +477,6 @@
                         }
                     },
                     {
-                        "data": "fm_cogs"
-                    },
-                    {
-                        "data": "fm_purchase"
-                    },
-                    {
                         "data": null,
                         "render": function(data, type, full, meta) {
                             // console.log('data'+data.fn_sorrownum);
@@ -499,6 +499,11 @@
                         "data": null,
                         "render": function(data, type, full, meta) {
                             return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            //if (qty = 0 || data.fn_so_bonusqty != 0){
+                            //    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            //} else {
+                            //    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            //}
                         }
                     } // definisi kolom fc_keterangan
                 ],
@@ -536,7 +541,6 @@
                 }
             });
         }
-
         function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
             console.log($('').val());
@@ -693,6 +697,7 @@
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
+                    
                 },
                 {
                     data: 'fc_barcode'
@@ -746,8 +751,14 @@
             rowCallback: function(row, data) {
                 const item_barcode = data.fc_barcode;
                 $('td:eq(13)', row).html(`
-                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}">Hapus Item</button>
-            `);
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}"><i class="fa fa-trash"></i> Hapus Item</button>`);
+                
+                $('td:eq(5)', row).html(`<i class="${data.fc_status}"></i>`);
+                if(data['fc_status'] == 'B'){
+                    $('td:eq(5)', row).html('<span class="badge badge-warning">Bonus</span>');
+                }else{
+                    $('td:eq(5)', row).html('<span class="badge badge-primary">Regular</span>');
+                }
             },
             initComplete: function() {
                 $('table').on('click', '.delete-btn', function(e) {
@@ -811,7 +822,7 @@
                     // fm_servpay
                     $('#fm_servpay_calculate').html(
                         // convert dengan RP data[0].domst.fm_servpay
-                        $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_servpay)
+                        $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst.fm_servpay)
                     );
                     $("#fm_servpay_calculate").trigger("change");
 
@@ -824,7 +835,7 @@
                     if (data[0].domst.fm_brutto != null) {
                         $('#fm_brutto').html(
                             // concat dengan RP
-                            $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_brutto)
+                            $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst.fm_brutto)
                         )
                         $("#fm_brutto").trigger("change");
                     }

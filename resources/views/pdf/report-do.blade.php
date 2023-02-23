@@ -162,7 +162,6 @@
     .content p {
         font-size: .8rem!important;
     }
-
 </style>
 
 <body>
@@ -222,7 +221,7 @@
                 <td style="width: 28%">{{ $do_mst->somst->fc_divisioncode }}</td>
                 <td>Customer Code</td>
                 <td style="width: 5px">:</td>
-                <td>{{ $do_mst->somst->customer->fc_membername1 }}</td>
+                <td>{{ $do_mst->somst->customer->fc_membercode }}</td>
             </tr>
             <tr class="pb-1">
                 <td>Operator</td>
@@ -237,7 +236,7 @@
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Customer</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
             <tr>
-                <td>NPWP</td>
+                <td class="form_text1">NPWP</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%">{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
                 <td>Tipe Bisnis</td>
@@ -303,7 +302,7 @@
 
             @else
             <tr>
-                <td colspan="10" class="text-center">Data Not Found</td>
+                <td colspan="12" class="text-center">Data Not Found</td>
             </tr>
             @endif
 
@@ -314,7 +313,7 @@
             <tr>
                 <td>Transport</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $do_mst->somst->fc_sotransport }}</td>
+                <td style="width: 28%">{{ $do_mst->fc_sotransport }}</td>
                 <td>Transporter</td>
                 <td style="width: 5px">:</td>
                 <td>{{ $do_mst->fc_transporter }}</td>
@@ -325,7 +324,7 @@
                 <td style="width: 28%">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</td>
                 <td>Biaya Transport</td>
                 <td style="width: 5px">:</td>
-                <td>{{ $do_mst->somst->fm_servpay }}</td>
+                <td>Rp. {{ number_format( $do_mst->fm_servpay,0,',','.')}}</td>
             </tr>
         </table>
 
@@ -336,24 +335,24 @@
                 <td style="width: 28%">{{  $do_mst->fn_dodetail }}</td>
                 <td>Biaya Service</td>
                 <td style="width: 5px">:</td>
-                <td>{{ number_format( $do_mst->somst->fm_servpay,0,',','.')}}</td>
+                <td>Rp. {{ number_format( $do_mst->somst->fm_servpay,0,',','.')}}</td>
             </tr>
 
             <tr>
                 <td>Diskon Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ number_format($do_mst->somst->fm_disctotal,0,',','.')}}</td>
+                <td style="width: 28%">Rp. {{ number_format($do_mst->somst->fm_disctotal,0,',','.')}}</td>
                 <td>Pajak</td>
                 <td style="width: 5px">:</td>
-                <td>{{ number_format($do_mst->somst->fm_tax,0,',','.')}}</td>
+                <td>Rp. {{ number_format($do_mst->somst->fm_tax,0,',','.')}}</td>
             </tr>
             <tr class="pb-1">
                 <td>Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ number_format($do_mst->somst->fm_netto,0,',','.')}}</td>
+                <td style="width: 28%">Rp. {{ number_format($do_mst->somst->fm_netto,0,',','.')}}</td>
                 <td>Grand</td>
                 <td style="width: 5px">:</td>
-                <td>{{ number_format($do_mst->somst->fm_brutto,0,',','.')}}</td>
+                <td>Rp. {{ number_format($do_mst->somst->fm_brutto,0,',','.')}}</td>
             </tr>
         </table>
 
