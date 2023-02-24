@@ -255,7 +255,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $domst->fm_servpay }}" required>
+                                                id="fm_servpay" value="{{ number_format($domst->fm_servpay,0,',','.') }}" onkeyup="return onkeyupRupiah(this.id);" required>
                                         </div>
                                     </div>
                                 </div>
@@ -276,7 +276,7 @@
                                                     name="fd_dodate" required>
                                             @else
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                    name="fd_dodate" value="{{ $domst->fd_dodate }}" required>
+                                                    name="fd_dodate" value="{{ date('d-m-Y', strtotime($domst->fd_dodate)) }}" required>
                                             @endif
 
                                         </div>
