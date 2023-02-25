@@ -96,30 +96,42 @@
                     .fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
                 var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data
                     .fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
-
+                    
                 $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'F') {
                     $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
                     $('td:eq(9)', row).html(`
-                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
-                     `);
+                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else if (data['fc_sostatus'] == 'P') {
+                    $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+                    $('td:eq(9)', row).html(`
+                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
+                } else {
+                    $(row).hide();
+                }
+                //$('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                //if (data['fc_sostatus'] == 'F') {
+                //    $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
+                //    $('td:eq(9)', row).html(`
+                //        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+                //     `);
+                //} else if (data['fc_sostatus'] == 'P') {
                     //     $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
                     //     $('td:eq(9)', row).html(`
                 //      <a href="/apps/delivery-order/detail/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
                 //   `);
                     //  $(row).hide(); 
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
-                    $('td:eq(9)', row).html(`
-                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
-                     `);
-                } else {
+               //     $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
+               //     $('td:eq(9)', row).html(`
+               //         <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+               //      `);
+               // } else {
                     //     $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
                     //     $('td:eq(9)', row).html(`
                 //      <button class="btn btn-light btn-sm mr-1" disabled><i class="fa fa-check"></i></button>
                 //   `);
-                    $(row).hide();
-                }
+               //     $(row).hide();
+               // }
             }
         });
     </script>

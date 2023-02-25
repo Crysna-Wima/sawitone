@@ -46,8 +46,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,7,9] },
-         { className: 'text-nowrap', targets: [3] },  
+         { className: 'text-center', targets: [0,6,7] },
+         { className: 'text-nowrap', targets: [3,9] },  
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -59,7 +59,7 @@
          { data: 'fn_sodetail' },
          { data: 'fc_sostatus' },
          { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
-         { data: 'fm_brutto' },
+         { data: null },
       ],
       rowCallback : function(row, data){
          var url_edit   = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;

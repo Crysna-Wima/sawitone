@@ -314,8 +314,7 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fn_dodetail">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -323,8 +322,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_disctotal">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -332,34 +330,29 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_netto">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_servpay_calculate">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <div class="d-flex" style="gap: 5px; white-space: pre" >
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
-                                        GRAND</p>
-                                    <p class="text-success flex-row-item text-right"
-                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -465,10 +458,6 @@
                         "fc_stockcode": fc_stockcode
                     }
                 },
-                "columnDefs": [{
-                    "className": "text-center",
-                    "targets": [11],
-                }, ],
                 "columns": [{
                         "data": 'DT_RowIndex',
                         "sortable": false,
@@ -551,7 +540,42 @@
                     {
                         "data": null,
                         "render": function(data, type, full, meta) {
-                            return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            var selectedOption = $('#category').val();
+                            if (selectedOption == "Bonus") {
+                                let qty = 0;
+                                // looping data stock.sodtl[index].fn_so_qty
+                                for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                    if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                        qty = data.stock.sodtl[index].fn_so_bonusqty;
+                                        break;
+                                    }
+                                }
+
+                                if (qty == 0) {
+                                    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                                }
+                                // reload datatable
+
+                            } else {
+                                for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                    if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                        var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                                index]
+                                            .fn_do_qty;
+                                        break;
+                                    }
+                                }
+
+                                // console.log("qty"+qty);
+                                if (qty == 0) {
+                                    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                                }
+                            }
+                            //return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
                             //if (qty = 0 || data.fn_so_bonusqty != 0){
                             //    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
                             //} else {
@@ -562,7 +586,7 @@
                 ],
                 "columnDefs": [{
                         "className": "text-center",
-                        "targets": [0, 3, 4, 5]
+                        "targets": [0, 3, 4, 5, 9]
                     },
                     {
                         className: 'text-nowrap',
@@ -693,7 +717,7 @@
                 `);
                 }
 
-                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty != 0) {
+                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonus_qty ) {
                     $('td:eq(11)', row).html(
                         `
                     <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
