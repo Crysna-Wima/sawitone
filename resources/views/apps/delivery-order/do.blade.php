@@ -512,7 +512,7 @@
                                 // looping data stock.sodtl[index].fn_so_qty
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
                                     if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                        qty = data.stock.sodtl[index].fn_so_bonusqty;
+                                        qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[index].fn_do_bonusqty;
                                         break;
                                     }
                                 }
