@@ -67,7 +67,7 @@
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label>Alamat Pengiriman</label>
-                                        <input type="text" class="form-control" value="{{ $data->somst->customer->fc_memberaddress_loading }}" disabled>
+                                        <input type="text" class="form-control" value="{{ $data->fc_memberaddress_loading }}" disabled>
                                     </div>
                                 </div>
                             </div>
