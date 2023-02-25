@@ -62,12 +62,20 @@ class SalesOrderDetailController extends Controller
         $stock = Stock::where(['fc_barcode' => $request->fc_barcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
+
+        // jika ada TempSoDetail yang fc_barcode == $request->fc_barcode
+        $count_barcode = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->where('fc_barcode', $request->fc_barcode)->get();
+        
+
+         
         
         // jika ada fc_barcode yang sama di $temp_detail 
         if (!empty($temp_detail)) {
-            if ($temp_detail->fc_barcode == $request->fc_barcode) {
+            // jika ditemukan $count_barcode error produk yang sama telah diinputkan
+            if (count($count_barcode) > 0) {
                 return [
                     'status' => 300,
+                    'total' => $total,
                     'message' => 'Produk yang sama telah diinputkan'
                 ];
             }

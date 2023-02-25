@@ -313,8 +313,8 @@ class DeliveryOrderController extends Controller
             'fc_batch' => $data_stock->fc_batch,
             'fc_catnumber' => $data_stock->fc_catnumber,
             'fd_expired' => $data_stock->fd_expired,
-            'fn_price' => $data_stock_sodtl->stock->sodtl[0]->fm_so_price ,
-            'fn_disc' => $data_stock_sodtl->stock->sodtl[0]->fm_so_disc,
+            'fn_price' => 0,
+            'fn_disc' => 0,
         ]);
        }
 
