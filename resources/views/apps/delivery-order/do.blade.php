@@ -259,7 +259,9 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ number_format($domst->fm_servpay,0,',','.') }}" onkeyup="return onkeyupRupiah(this.id);" required>
+                                                id="fm_servpay"
+                                                value="{{ number_format($domst->fm_servpay, 0, ',', '.') }}"
+                                                onkeyup="return onkeyupRupiah(this.id);" required>
                                         </div>
                                     </div>
                                 </div>
@@ -275,12 +277,16 @@
                                             {{-- input waktu sekarang format timestamp tipe hidden --}}
                                             <input type="hidden" class="form-control" name="fd_dodatesysinput"
                                                 id="fd_dodatesysinput" value="{{ date('d-m-Y') }}">
-                                            @if ($domst->fm_servpay == 0.0 && empty($domst->fc_sotransport))
+                                            @if (empty($domst->fc_sotransport) && empty($domst->fc_transporter))
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
                                                     name="fd_dodate" required>
                                             @else
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                    name="fd_dodate" value="{{ date('d-m-Y', strtotime($domst->fd_dodate)) }}" required>
+                                                    name="fd_dodate"
+                                                    @if ($domst->fd_dodate) value="{{ date('d-m-Y', strtotime($domst->fd_dodate)) }}"
+                                                @else
+                                                    value="" @endif
+                                                    required>
                                             @endif
 
                                         </div>
@@ -318,7 +324,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -326,7 +333,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -334,29 +342,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -429,6 +442,8 @@
 
 @section('js')
     <script>
+        
+
         function bonus_type() {
             var stock_inventory_table = $('#stock_inventory').DataTable();
             var selectedOption = $('#category').val();
@@ -447,6 +462,8 @@
 
         function pilih_inventory(fc_stockcode) {
             console.log(fc_stockcode);
+            $("#modal_loading").modal('show');
+            
             // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
@@ -505,7 +522,8 @@
                                 // looping data stock.sodtl[index].fn_so_qty
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
                                     if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                        qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[index].fn_do_bonusqty;
+                                        qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                            index].fn_do_bonusqty;
                                         break;
                                     }
                                 }
@@ -550,7 +568,8 @@
                                 // looping data stock.sodtl[index].fn_so_qty
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
                                     if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                        qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[index].fn_do_bonusqty;
+                                        qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                            index].fn_do_bonusqty;
                                         break;
                                     }
                                 }
@@ -560,7 +579,6 @@
                                 } else {
                                     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
                                 }
-                                // reload datatable
 
                             } else {
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
@@ -579,14 +597,9 @@
                                     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
                                 }
                             }
-                            //return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
-                            //if (qty = 0 || data.fn_so_bonusqty != 0){
-                            //    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            //} else {
-                            //    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
-                            //}
+
                         }
-                    } // definisi kolom fc_keterangan
+                    }
                 ],
                 "columnDefs": [{
                         "className": "text-center",
@@ -598,9 +611,8 @@
                     },
                 ],
                 "initComplete": function() {
-                    // hide loading_data
-                    // $('#loading_data').hide();
-                    // Tampilkan modal di sini
+                    // hidden modal loading
+                    $('#modal_loading').modal('hide');
                     $('#modal_inventory').modal('show');
 
                     stock_inventory_table.DataTable().ajax.reload();
@@ -627,6 +639,8 @@
             let stock_name = 'input[name="pname[]'
             console.log($('').val());
             // console.log(fc_barcode);
+            // modal loading
+            $('#modal_loading').modal('show');
             $.ajax({
                 url: '/apps/delivery-order/cart_stock',
                 type: "POST",
@@ -637,6 +651,8 @@
                 },
                 dataType: 'JSON',
                 success: function(response, textStatus, jQxhr) {
+                    // modal loading hide
+                    $('#modal_loading').modal('hide');
                     $('.place_alert_cart_stock').empty();
                     if (response.status == '200') {
                         $('.place_alert_cart_stock').append(
@@ -650,6 +666,7 @@
                     }
                 },
                 error: function(jqXhr, textStatus, errorThrown) {
+                    $('#modal_loading').modal('hide');
                     console.log(errorThrown);
                     console.warn(jqXhr.responseText);
                 },
@@ -724,8 +741,9 @@
                 `);
                 }
 
-                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty ) {
-                    $('td:eq(12)', row).html(`
+                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty) {
+                    $('td:eq(12)', row).html(
+                        `
                         <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
                     );
                 } else {
@@ -736,16 +754,13 @@
             footerCallback: function(row, data, start, end, display) {
 
                 // jika data[0].somst.domst.fc_sotransport tidak kosong
-                if (data[0].somst.domst.fc_sotransport !== "") {
+                if (data[0].somst.domst.fc_sotransport) {
                     $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
-                } else {
+                } else if (data[0].somst.fc_sotransport) {
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
+                } else {
+                    $("#fc_sotransport").val('');
                 }
-
-                // if(data[0].somst.domst.fm_servpay != 0){
-                //     $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
-                // } 
-
 
                 if (data[0].somst.domst.fc_memberaddress_loading !== "") {
                     $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
@@ -786,7 +801,7 @@
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
-                    
+
                 },
                 {
                     data: 'fc_barcode'
@@ -847,11 +862,11 @@
                 $('td:eq(13)', row).html(`
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}">Hapus Item</button>
                 `);
-                
+
                 $('td:eq(5)', row).html(`<i class="${data.fc_status_bonus_do}"></i>`);
-                if(data['fc_status_bonus_do'] == 'T'){
+                if (data['fc_status_bonus_do'] == 'T') {
                     $('td:eq(5)', row).html('<span class="badge badge-warning">Bonus</span>');
-                }else{
+                } else {
                     $('td:eq(5)', row).html('<span class="badge badge-primary">Regular</span>');
                 }
             },
@@ -869,15 +884,20 @@
                             dangerMode: true,
                         })
                         .then((willDelete) => {
+                            // modal loading
+                            $('#modal_loading').modal('show');
                             if (willDelete) {
                                 $.ajax({
-                                    url: '/apps/delivery-order/delete-item/' + barcode + '/' + row,
+                                    url: '/apps/delivery-order/delete-item/' + barcode +
+                                        '/' + row,
                                     type: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                             'content')
                                     },
                                     success: function() {
+                                        // tutup modal loading
+                                        $('#modal_loading').modal('hide');
                                         deliver_item.ajax.reload();
                                         tb.ajax.reload();
                                         swal("Item telah dihapus!", {
@@ -885,6 +905,7 @@
                                         });
                                     },
                                     error: function(xhr) {
+                                        $('#modal_loading').modal('hide');
                                         swal("Oops!",
                                             "Terjadi kesalahan saat menghapus item.",
                                             "error");
@@ -932,7 +953,8 @@
                     if (data[0].domst.fm_brutto != null) {
                         $('#fm_brutto').html(
                             // concat dengan RP
-                            $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst.fm_brutto)
+                            $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst
+                                .fm_brutto)
                         )
                         $("#fm_brutto").trigger("change");
                     }
