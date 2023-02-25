@@ -34,7 +34,7 @@
     <div class="section-body">
         <input type="text" hidden id="fc_dono" value="{{ $data->fc_dono }}">
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Umum</h4>
@@ -75,44 +75,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Pengiriman</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
-                                    class="fas fa-minus"></i></a>
-                        </div>
-                    </div>
-                    <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Tanggal</label>
-                                        <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse( $data->fd_doarivaldate )->format('d/m/Y') }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Transporter</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_transporter }}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label>Penerima</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_custreceiver }}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
@@ -144,9 +106,44 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Pengiriman</h4>
+                        <div class="card-header-action">
+                            <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
+                                    class="fas fa-minus"></i></a>
+                        </div>
+                    </div>
+                    <div class="collapse show" id="mycard-collapse2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tanggal</label>
+                                        <input type="text" class="form-control datepicker" name="fd_doarivaldate" id="fd_doarivaldate" value="{{ \Carbon\Carbon::parse( $data->fd_doarivaldate )->format('Y-m-d') }}" @if ($data->fc_dostatus == 'R') readonly @endif>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Transporter</label>
+                                        <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $data->fc_transporter }}" @if ($data->fc_dostatus == 'R') readonly @endif>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label>Penerima</label>
+                                        <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $data->fc_custreceiver }}" @if ($data->fc_dostatus == 'R') readonly @endif>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="button text-right mb-4">
-            <button type="button" onclick="click_insert_do()" id="button_confirm" class="btn btn-primary mr-2">Confirm</button>
+            <button type="button" onclick="click_insert_do()" @if ($data->fc_dostatus == 'R') hidden @endif id="button_confirm" class="btn btn-primary mr-2">Confirm</button>
         </div>
     </div>
 @endsection
@@ -211,6 +208,9 @@
                     url: '/apps/received-order/action',
                     data: {
                         'fc_dono': $('#fc_dono').val(),
+                        'fd_doarivaldate':$('#fd_doarivaldate').val(),
+                        'fc_transporter':$('#fc_transporter').val(),
+                        'fc_custreceiver':$('#fc_custreceiver').val(),
                     },
                     type: "POST",
                     dataType: 'JSON',

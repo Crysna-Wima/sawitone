@@ -58,7 +58,12 @@ class ReceivedOrderController extends Controller
     }
 
     public function action_confirm(request $request){
-        DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => 'R']);
+        DoMaster::where('fc_dono', $request->fc_dono)->update([
+            'fd_doarivaldate' => $request->fd_doarivaldate,
+            'fc_transporter' => $request->fc_transporter,
+            'fc_custreceiver' => $request->fc_custreceiver,
+            'fc_dostatus' => 'R'
+        ]);
 
         return [
             'status' => 201,
