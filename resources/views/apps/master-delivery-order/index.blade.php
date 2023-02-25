@@ -45,8 +45,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,6,7] },
-         { className: 'text-nowrap', targets: [3,8] },
+         { className: 'text-center', targets: [0,7,8] },
+         { className: 'text-nowrap', targets: [3,6,8] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -55,7 +55,7 @@
          { data: 'fd_dodate', render: formatTimestamp },
          { data: 'somst.customer.fc_membername1' },
          { data: 'fn_dodetail' },
-         { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ) },
          { data: 'fc_dostatus' },
          { data: null },
       ],
@@ -71,10 +71,19 @@
             $('td:eq(7)', row).html('<span class="badge badge-success">Received</span>');
          }
 
-         $('td:eq(8)', row).html(`
+         if(data['fc_dostatus'] == 'I'){
+            $(row).hide();
+         } else if (data['fc_dostatus'] == 'D'){
+            $('td:eq(8)', row).html(`
             <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-            <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
-         `);
+            <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+            );
+         } else {
+            $('td:eq(8)', row).html(`
+            <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+            <a href="#"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+            );
+         }
       }
    });
 

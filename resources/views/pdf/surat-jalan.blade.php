@@ -162,7 +162,6 @@
     .content p {
         font-size: .8rem!important;
     }
-
 </style>
 
 <body>
@@ -179,11 +178,11 @@
         </div>
         <div style="position: absolute; right: 100px; top: 0; text-align: left;" class="my-1">
             <p><b>SURAT JALAN</b></p>
-            <p>No.          : {{ $do_mst->fc_dono }}</p>
-            <p>Tanggal      : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
-            <p>No. SO       : {{ $do_mst->fc_sono }}</p>
-            <p>Jenis Order  : {{ $do_mst->somst->fc_sotype }}</p>
-            <p><b>Kepada    : {{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</b></p>
+            <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
+            <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
+            <p>No. SO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_sono }}</p>
+            <p>Jenis Order &nbsp;&nbsp;: {{ $do_mst->somst->fc_sotype }}</p>
+            <p><b>Kepada &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</b></p>
         </div>
     </div>
 </div>
@@ -191,6 +190,7 @@
 <div class="content">
         <br><br/>
         <br><br/>
+        <br>
         <p style="font-weight: bold; font-size: .8rem;">Delivery Item</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
@@ -216,11 +216,11 @@
 
             @else
             <tr>
-                <td colspan="10" class="text-center">Data Not Found</td>
+                <td colspan="12" class="text-center">Data Not Found</td>
             </tr>
             @endif
-
         </table>
+        
         <table style="width: 100%;   margin: auto; dashed black; cellspacing=15">
             <br><br/>
             <tr>
@@ -230,18 +230,18 @@
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 ">
             <br>
             <tr >
-                <td style="width: 50% !important; text-align: center;">Send By,</td>
-                <td style="width: 50% !important; text-align: center;">Received By,</td>
+                <td style="width: 50% !important; text-align: left;">Send By,</td>
+                <td style="width: 50% !important; text-align: right;">Received By,</td>
             </tr>
             <tr>
-                <td style="width: 50% !important; text-align: center;">PT DEXA ARFINDO PRATAMA</td>
-                <td style="width: 50% !important; text-align: center;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
+                <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
+                <td style="width: 50% !important; text-align: right;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
             </tr>
             <br><br/>
             <br><br/>
             <tr >
-                <td style="width: 50% !important; text-align: center;">(..............................)</td>
-                <td style="width: 50% !important; text-align: center;">(..............................)</td>
+                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: right;">(..................................................)</td>
             </tr>
         </table>
     <div>

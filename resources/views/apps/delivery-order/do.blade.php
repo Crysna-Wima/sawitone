@@ -18,6 +18,10 @@
             color: #28a745 !important;
         }
 
+        .btn-secondary {
+            background-color: #A5A5A5 !important;
+        }
+
         @media (min-width: 992px) and (max-width: 1200px) {
             .flex-row-item {
                 font-size: 12px;
@@ -189,7 +193,7 @@
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
-                                            <th scope="col" class="text-center">Bonus</th>
+                                            <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Rack</th>
                                             <th scope="col" class="text-center">Batch</th>
                                             <th scope="col" class="text-center">CAT</th>
@@ -251,7 +255,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                id="fm_servpay" value="{{ $domst->fm_servpay }}" required>
+                                                id="fm_servpay" value="{{ number_format($domst->fm_servpay,0,',','.') }}" onkeyup="return onkeyupRupiah(this.id);" required>
                                         </div>
                                     </div>
                                 </div>
@@ -272,7 +276,7 @@
                                                     name="fd_dodate" required>
                                             @else
                                                 <input type="text" id="fd_dodate" class="form-control datepicker"
-                                                    name="fd_dodate" value="{{ $domst->fd_dodate }}" required>
+                                                    name="fd_dodate" value="{{ date('d-m-Y', strtotime($domst->fd_dodate)) }}" required>
                                             @endif
 
                                         </div>
@@ -383,7 +387,7 @@
 
 @section('modal')
     <div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-xl" style="width:90%" role="document">
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
@@ -399,7 +403,7 @@
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="stock_inventory" width="100%">
+                            <table class="table table-striped" width="100%" id="stock_inventory">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -410,8 +414,6 @@
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">CAT</th>
                                         <th scope="col" class="text-center">Exp.</th>
-                                        <th scope="col" class="text-center">COGS</th>
-                                        <th scope="col" class="text-center">Pembelian</th>
                                         <th scope="col" class="text-center">Quantity</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
@@ -463,6 +465,10 @@
                         "fc_stockcode": fc_stockcode
                     }
                 },
+                "columnDefs": [{
+                    "className": "text-center",
+                    "targets": [11],
+                }, ],
                 "columns": [{
                         "data": 'DT_RowIndex',
                         "sortable": false,
@@ -494,12 +500,6 @@
                                 'DD MMMM YYYY'
                             );
                         }
-                    },
-                    {
-                        "data": "fm_cogs"
-                    },
-                    {
-                        "data": "fm_purchase"
                     },
                     {
                         "data": null,
@@ -552,6 +552,11 @@
                         "data": null,
                         "render": function(data, type, full, meta) {
                             return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            //if (qty = 0 || data.fn_so_bonusqty != 0){
+                            //    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            //} else {
+                            //    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            //}
                         }
                     } // definisi kolom fc_keterangan
                 ],
@@ -589,7 +594,6 @@
             });
 
         }
-
 
         function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
@@ -752,6 +756,7 @@
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
+                    
                 },
                 {
                     data: 'fc_barcode'
@@ -808,8 +813,14 @@
             rowCallback: function(row, data) {
                 const item_barcode = data.fc_barcode;
                 $('td:eq(13)', row).html(`
-                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}">Hapus Item</button>
-            `);
+                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}"><i class="fa fa-trash"></i> Hapus Item</button>`);
+                
+                $('td:eq(5)', row).html(`<i class="${data.fc_status_bonus_do}"></i>`);
+                if(data['fc_status_bonus_do'] == 'T'){
+                    $('td:eq(5)', row).html('<span class="badge badge-warning">Bonus</span>');
+                }else{
+                    $('td:eq(5)', row).html('<span class="badge badge-primary">Regular</span>');
+                }
             },
             initComplete: function() {
                 $('table').on('click', '.delete-btn', function(e) {
@@ -873,7 +884,7 @@
                     // fm_servpay
                     $('#fm_servpay_calculate').html(
                         // convert dengan RP data[0].domst.fm_servpay
-                        $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_servpay)
+                        $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst.fm_servpay)
                     );
                     $("#fm_servpay_calculate").trigger("change");
 
@@ -886,7 +897,7 @@
                     if (data[0].domst.fm_brutto != null) {
                         $('#fm_brutto').html(
                             // concat dengan RP
-                            $.fn.dataTable.render.number(',', '.', 0, 'Rp').display(data[0].domst.fm_brutto)
+                            $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data[0].domst.fm_brutto)
                         )
                         $("#fm_brutto").trigger("change");
                     }

@@ -404,7 +404,8 @@ class DeliveryOrderController extends Controller
             ];
         }
         // dd($request);
-
+        
+        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay)]);
         $update_transport = DoMaster::where('fc_dono', auth()->user()->fc_userid)
             ->update([
                 'fc_sotransport' => $request->fc_sotransport,
