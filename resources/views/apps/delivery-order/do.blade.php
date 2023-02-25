@@ -842,8 +842,11 @@
             ],
             rowCallback: function(row, data) {
                 const item_barcode = data.fc_barcode;
+                const item_row = data.fn_rownum;
+                // kirim 2 parameter di data-id di button hapus
                 $('td:eq(13)', row).html(`
-                <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}"><i class="fa fa-trash"></i> Hapus Item</button>`);
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}">Hapus Item</button>
+                `);
                 
                 $('td:eq(5)', row).html(`<i class="${data.fc_status_bonus_do}"></i>`);
                 if(data['fc_status_bonus_do'] == 'T'){
@@ -856,6 +859,8 @@
                 $('table').on('click', '.delete-btn', function(e) {
                     e.preventDefault();
                     var barcode = $(this).data('id');
+                    // data row
+                    var row = $(this).data('row');
                     // console.log(barcode);
                     swal({
                             title: "Anda yakin ingin menghapus item ini?",
@@ -866,7 +871,7 @@
                         .then((willDelete) => {
                             if (willDelete) {
                                 $.ajax({
-                                    url: '/apps/delivery-order/delete-item/' + barcode,
+                                    url: '/apps/delivery-order/delete-item/' + barcode + '/' + row,
                                     type: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(

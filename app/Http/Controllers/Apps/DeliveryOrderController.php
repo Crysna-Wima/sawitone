@@ -349,7 +349,7 @@ class DeliveryOrderController extends Controller
         // dd(auth()->user()->fc_userid);
     }
 
-    public function delete_item($fc_barcode)
+    public function delete_item($fc_barcode, $fn_rownum)
     {
         // validasi $fc_barcode require
         $validator = Validator::make(['fc_barcode' => $fc_barcode], [
@@ -374,7 +374,12 @@ class DeliveryOrderController extends Controller
         //     ]);
 
         // hapus
-        $hapus_item = DoDetail::where('fc_barcode', $fc_barcode)->delete();
+        $hapus_item = DoDetail::where(
+            [
+                'fc_barcode' => $fc_barcode,
+                'fn_rownum' => $fn_rownum
+            ]
+        )->delete();
         // kemudian tambah
         if ($hapus_item) {
             return [
