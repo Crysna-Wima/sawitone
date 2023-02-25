@@ -717,14 +717,13 @@
                 `);
                 }
 
-                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonus_qty ) {
-                    $('td:eq(11)', row).html(
-                        `
-                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
+                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty ) {
+                    $('td:eq(11)', row).html(`
+                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
                     );
                 } else {
                     $('td:eq(11)', row).html(`
-                    <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+                        <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
                 }
             },
             footerCallback: function(row, data, start, end, display) {
