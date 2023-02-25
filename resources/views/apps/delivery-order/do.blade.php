@@ -149,6 +149,9 @@
             {{-- TABLE --}}
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Order Item</h4>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="table-responsive">
@@ -162,6 +165,7 @@
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center">Bonus</th>
                                             <th scope="col" class="text-center">DO</th>
+                                            <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">INV</th>
                                             <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
@@ -687,6 +691,9 @@
                 },
                 {
                     data: 'fn_do_qty'
+                },
+                {
+                    data: 'fn_do_bonusqty'
                 },
                 {
                     data: 'fn_inv_qty'

@@ -18,6 +18,10 @@
         color: #28a745!important;
     }
 
+    .btn-secondary {
+            background-color: #A5A5A5 !important;
+        }
+
     @media (min-width: 992px) and (max-width: 1200px){
         .flex-row-item{
             font-size: 12px;
