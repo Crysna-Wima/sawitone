@@ -45,7 +45,7 @@ class ReceivedOrderController extends Controller
     }
 
     public function detail($fc_dono){;
-        $data['data'] = DoMaster::with('somst.customer','dodtl')->where('fc_dono', $fc_dono)->first();
+        $data['data'] = DoMaster::with('somst','dodtl')->where('fc_dono', $fc_dono)->first();
         return view('apps.received-order.detail', $data);
     }
 
