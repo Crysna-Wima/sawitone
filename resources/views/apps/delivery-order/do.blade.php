@@ -717,19 +717,19 @@
             rowCallback: function(row, data) {
                 if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
                     // kosong
-                    $('td:eq(11)', row).html(``);
+                    $('td:eq(12)', row).html(``);
                 } else {
-                    $('td:eq(11)', row).html(`
+                    $('td:eq(12)', row).html(`
                     <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
                 `);
                 }
 
                 if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty ) {
-                    $('td:eq(11)', row).html(`
+                    $('td:eq(12)', row).html(`
                         <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
                     );
                 } else {
-                    $('td:eq(11)', row).html(`
+                    $('td:eq(12)', row).html(`
                         <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
                 }
             },
