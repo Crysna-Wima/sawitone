@@ -189,7 +189,7 @@
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
-                                            <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center">Bonus</th>
                                             <th scope="col" class="text-center">Rack</th>
                                             <th scope="col" class="text-center">Batch</th>
                                             <th scope="col" class="text-center">CAT</th>
@@ -283,7 +283,8 @@
                                         <label>Alamat Tujuan</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="fc_memberaddress_loading"
-                                                id="fc_memberaddress_loading" value="{{ $domst->fc_memberaddress_loading }}" required>
+                                                id="fc_memberaddress_loading"
+                                                value="{{ $domst->fc_memberaddress_loading }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +310,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -317,7 +319,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -325,29 +328,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -380,7 +388,8 @@
                 <div class="modal-header br">
                     <h5 class="modal-title">Stock Inventory</h5>
                     <div class="card-header-action">
-                        <select data-dismiss="modal" class="form-control select2 required-field" name="#" id="#">
+                        <select data-dismiss="modal" onchange="bonus_type()" class="form-control select2 required-field"
+                            name="#" id="category">
                             <option value="Regular">Regular&nbsp;&nbsp;</option>
                             <option value="Bonus">Bonus&nbsp;&nbsp;</option>
                         </select>
@@ -421,8 +430,24 @@
 
 @section('js')
     <script>
+        function bonus_type() {
+            var stock_inventory_table = $('#stock_inventory').DataTable();
+            var selectedOption = $('#category').val();
+
+            // get the data rows from the table
+            var rows = stock_inventory_table.rows().nodes();
+
+            // loop through the rows and update the input values based on the selected option
+            rows.each(function(index, row) {
+                var data = stock_inventory_table.row(row).data();
+                var inputField = $(row).find('input[type="number"]');
+
+                console.log(selectedOption);
+            });
+        }
+
         function pilih_inventory(fc_stockcode) {
-            // console.log(fc_stockcode);
+            console.log(fc_stockcode);
             // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
@@ -480,19 +505,47 @@
                         "data": null,
                         "render": function(data, type, full, meta) {
                             // console.log('data'+data.fn_sorrownum);
-                            
-                           // looping data data.stock.sodtl[index].fn_so_qty
-                           
-                            for (let index = 0; index < data.stock.sodtl.length; index++) {
-                                var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
-                            }
-                           
-                            // console.log("qty"+qty);
-                            if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            var selectedOption = $('#category').val();
+                            // looping data data.stock.sodtl[index].fn_so_qty
+                            if (selectedOption == "Bonus") {
+                                let qty = 0;
+                                // looping data stock.sodtl[index].fn_so_qty
+                                for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                    if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                        qty = data.stock.sodtl[index].fn_so_bonusqty;
+                                        break;
+                                    }
+                                }
+
+                                if (qty >= data.fn_quantity) {
+                                    return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                                } else {
+                                    return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                }
+                                // reload datatable
+
                             } else {
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                    if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                        var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                                index]
+                                            .fn_do_qty;
+                                        break;
+                                    }
+
+                                }
+
+                                // console.log("qty"+qty);
+                                if (qty >= data.fn_quantity) {
+                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                                } else {
+                                    if (qty < 0) {
+                                        return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                                    }
+                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                }
                             }
+
                         }
                     },
                     {
@@ -503,26 +556,20 @@
                     } // definisi kolom fc_keterangan
                 ],
                 "columnDefs": [{
-                    "className": "text-center",
-                    "targets": [0, 3, 4, 5]
-                },
-                { className: 'text-nowrap', targets: [7] },  
-            ],
+                        "className": "text-center",
+                        "targets": [0, 3, 4, 5]
+                    },
+                    {
+                        className: 'text-nowrap',
+                        targets: [7]
+                    },
+                ],
                 "initComplete": function() {
                     // hide loading_data
                     // $('#loading_data').hide();
                     // Tampilkan modal di sini
                     $('#modal_inventory').modal('show');
-                    // stock_inventory_table.DataTable().rows().eq(0).each(function(index) {
-                    //     var row = stock_inventory_table.DataTable().row(index);
-                    //     var data = row.data();
-                    //     if (data.fn_quantity == 0) {
-                    //         row.remove();
-                    //     }
-                    //     // console.log(data.fn_quantity );
-                    // });
-                    // stock_inventory_table.DataTable().draw();
-                    // reload
+
                     stock_inventory_table.DataTable().ajax.reload();
                     var table = stock_inventory_table.DataTable();
                     var rows = table.rows().nodes();
@@ -535,7 +582,14 @@
                     }
                 }
             });
+
+            $('#category').on('change', function() {
+                // datatable reload
+                stock_inventory_table.DataTable().ajax.reload();
+            });
+
         }
+
 
         function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
@@ -547,17 +601,20 @@
                 data: {
                     'fc_barcode': fc_barcode,
                     'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
+                    'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val()
                 },
                 dataType: 'JSON',
                 success: function(response, textStatus, jQxhr) {
                     $('.place_alert_cart_stock').empty();
                     if (response.status == '200') {
                         $('.place_alert_cart_stock').append(
-                            `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`)
+                            `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`
+                        )
                         location.reload();
                     } else {
                         $('.place_alert_cart_stock').append(
-                            `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`)
+                            `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`
+                        )
                     }
                 },
                 error: function(jqXhr, textStatus, errorThrown) {
@@ -630,11 +687,13 @@
                     $('td:eq(11)', row).html(`
                     <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
                 `);
-                } 
+                }
 
-                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty != 0){
-                    $('td:eq(11)', row).html(`
-                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`);
+                if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty != 0) {
+                    $('td:eq(11)', row).html(
+                        `
+                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
+                    );
                 } else {
                     $('td:eq(11)', row).html(`
                     <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
@@ -648,15 +707,15 @@
                 } else {
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 }
-                
+
                 // if(data[0].somst.domst.fm_servpay != 0){
                 //     $("#fm_servpay").val(data[0].somst.domst.fm_servpay);
                 // } 
 
 
-                if(data[0].somst.domst.fc_memberaddress_loading !== ""){
+                if (data[0].somst.domst.fc_memberaddress_loading !== "") {
                     $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
-                }else{
+                } else {
                     $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
                 }
 
@@ -682,7 +741,7 @@
                 {
                     className: 'text-nowrap',
                     targets: [9]
-                },  
+                },
                 {
                     targets: -1,
                     data: null,
@@ -707,7 +766,10 @@
                     data: 'fn_qty_do'
                 },
                 {
-                    data: 'fc_status'
+                    data: 'fc_status_bonus_do',
+                    render: function(data, type, row) {
+                        return data === 'T' ? 'Ya' : 'Tidak';
+                    }
                 },
                 {
                     data: 'fc_rackcode'
@@ -884,7 +946,7 @@
         }
 
         function submit_do() {
-            
+
             swal({
                     title: 'Apakah anda yakin?',
                     text: 'Apakah anda yakin akan submit data DO ini?',

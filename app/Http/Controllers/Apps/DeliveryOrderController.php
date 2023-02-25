@@ -157,7 +157,7 @@ class DeliveryOrderController extends Controller
     {
         // get data from Invstore
 
-        $data = Invstore::with('stock.sodtl')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired', 'ASC')->get();
+        $data = Invstore::with('stock.sodtl.somst')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired', 'ASC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -198,10 +198,32 @@ class DeliveryOrderController extends Controller
 
     public function cart_stock(request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'fc_barcode' => 'required',
-            'quantity' => 'required',
-        ]);
+        if (session('fc_sono_global') != null) {
+            $fc_sono = session('fc_sono_global');
+        } else {
+            $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+            $fc_sono_domst = $domst->fc_sono;
+            $fc_sono = $fc_sono_domst;
+        }
+        // jika request ada 'quantity'
+        if($request->quantity){
+            $validator = Validator::make($request->all(), [
+                'fc_barcode' => 'required',
+                'quantity' => 'required',
+            ]);
+        }else if($request->bonus_quantity){
+            $validator = Validator::make($request->all(), [
+                'fc_barcode' => 'required',
+                'bonus_quantity' => 'required',
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'fc_barcode' => 'required',
+                'quantity' => 'required',
+                'bonus_quantity' => 'required',
+            ]);
+        }
+        
 
         if ($validator->fails()) {
             return [
@@ -215,7 +237,10 @@ class DeliveryOrderController extends Controller
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
         // dd($data_stock);
         // get data from Invstore.stock.sodtl
-        $data_stock_sodtl = Invstore::with('stock.sodtl')->where('fc_barcode', $request->fc_barcode)->first();
+        $data_stock_sodtl = Invstore::with('stock.sodtl')
+        ->where('fc_barcode', $request->fc_barcode)
+        ->first();
+        
         $sodtlLength = count($data_stock_sodtl->stock->sodtl);
         $qty = 0;
         for ($i = 0; $i < $sodtlLength; $i++) {
@@ -253,16 +278,20 @@ class DeliveryOrderController extends Controller
                 'message' => 'Stock Kosong'
             ];
         }
+        
 
         // // // dd($data_stock_sodtl->stock->sodtl[0]->fm_so_price);
+        // dd($request);
 
         // // //INSERT DoDetail dari data stock
+       if($request->quantity){
         $do_dtl = DoDetail::create([
             'fc_divisioncode' => $data_stock->fc_divisioncode,
             'fc_branch' => $data_stock->fc_branch,
             'fc_dono' => auth()->user()->fc_userid,
             'fc_barcode' => $request->fc_barcode,
             'fn_qty_do' => $request->quantity,
+            'fc_status_bonus_do' => 'F',
             'fc_namepack' => $data_stock->stock->fc_namepack,
             'fc_rackcode' => $data_stock->fc_rackcode,
             'fc_batch' => $data_stock->fc_batch,
@@ -271,14 +300,31 @@ class DeliveryOrderController extends Controller
             'fn_price' => $data_stock_sodtl->stock->sodtl[0]->fm_so_price ,
             'fn_disc' => $data_stock_sodtl->stock->sodtl[0]->fm_so_disc,
         ]);
+       }else{
+        $do_dtl = DoDetail::create([
+            'fc_divisioncode' => $data_stock->fc_divisioncode,
+            'fc_branch' => $data_stock->fc_branch,
+            'fc_dono' => auth()->user()->fc_userid,
+            'fc_barcode' => $request->fc_barcode,
+            'fn_qty_do' => $request->bonus_quantity,
+            'fc_status_bonus_do' => 'T',
+            'fc_namepack' => $data_stock->stock->fc_namepack,
+            'fc_rackcode' => $data_stock->fc_rackcode,
+            'fc_batch' => $data_stock->fc_batch,
+            'fc_catnumber' => $data_stock->fc_catnumber,
+            'fd_expired' => $data_stock->fd_expired,
+            'fn_price' => $data_stock_sodtl->stock->sodtl[0]->fm_so_price ,
+            'fn_disc' => $data_stock_sodtl->stock->sodtl[0]->fm_so_disc,
+        ]);
+       }
 
-        // // //UPDATE STOCK
-        // // $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
-        // //     ->update([
-        // //         'fn_quantity' => $data_stock->fn_quantity - $request->quantity
-        // //     ]);
+        // // // //UPDATE STOCK
+        // // // $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
+        // // //     ->update([
+        // // //         'fn_quantity' => $data_stock->fn_quantity - $request->quantity
+        // // //     ]);
 
-        // // jika $do_dtl dan $stock_update bisa
+        // // // jika $do_dtl dan $stock_update bisa
         if ($do_dtl) {
             return [
                 'status' => 200,

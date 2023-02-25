@@ -63,6 +63,16 @@ class SalesOrderDetailController extends Controller
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
         
+        // jika ada fc_barcode yang sama di $temp_detail 
+        if (!empty($temp_detail)) {
+            if ($temp_detail->fc_barcode == $request->fc_barcode) {
+                return [
+                    'status' => 300,
+                    'message' => 'Produk yang sama telah diinputkan'
+                ];
+            }
+        }
+
 
         $fn_sorownum = 1;
         if (!empty($temp_detail)) {
