@@ -62,7 +62,6 @@
       rowCallback : function(row, data){
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
          if(data['fc_dostatus'] == 'I'){
-            // $('td:eq(7)', row).html('<span class="badge badge-warning">Input</span>');
             $(row).hide(); 
          }else if(data['fc_dostatus'] == 'D'){
             $('td:eq(7)', row).html('<span class="badge badge-primary">Delivery</span>');
@@ -75,13 +74,13 @@
             $(row).hide();
          } else if (data['fc_dostatus'] == 'D'){
             $('td:eq(8)', row).html(`
-            <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-            <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+               <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+               <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
             );
          } else {
             $('td:eq(8)', row).html(`
-            <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-            <a href="#"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+               <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+               <a href="/apps/master-delivery-order/inv/${data.fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
             );
          }
       }
