@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use File;
 use DB;
 
+use App\Models\SoMaster;
+use App\Models\SoDetail;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
 
@@ -22,7 +24,9 @@ class MasterDeliveryOrderController extends Controller
 {
 
     public function index(){
-        return view('apps.master-delivery-order.index');
+        $data['do_mst']= DoMaster::with('somst.customer')->first();
+
+        return view('apps.master-delivery-order.index', $data);
     }
 
     public function datatables(){
@@ -56,7 +60,7 @@ class MasterDeliveryOrderController extends Controller
         session(['fc_dono_global' => $fc_dono]);
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $fc_dono)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
-        $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
     }
 }

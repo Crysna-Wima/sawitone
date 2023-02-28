@@ -165,12 +165,131 @@
 </style>
 
 <body>
-    <div class="container" id="sj-pdf">
-        <div class="header" style="height: 100px">
+<div class="container" id="so-pdf">
+    <div class="header" style="height: 100px">
+        <div style="position: absolute; left: 0; top: 0">
+            <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
+        </div>
+        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+            <p><b>Kepada Yth</b></p>
+            <p>{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</p>
+            <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+        </div>
+        <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
+            <p><b>PT DEXA ARFINDO PRATAMA</b></p>
+            <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
+            <p>Surabaya, Jawa Timur (60297)</p>
+            <p><b>dexa-arfindopratama.com</b></p>
         </div>
     </div>
+</div>
 
-    <div class="content">
+<div class="content">
+        <br><br><br>
+        <p style="text-align: center; font-weight:bold">INVOICE</p>
+        <br>
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            <tr>
+                <td>NPWP</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                <td>Tanggal</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%"></td>
+            </tr>
+            <tr class="pb-1">
+                <td>Nomor</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%"></td>
+                <td>Jatuh Tempo</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%"></td>
+            </tr>
+        </table>
+
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+            <tr>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Unity</th>
+                <th>Qty</th>
+                <th>Harga (Rp)</th>
+                <th>Diskon (Rp)</th>
+                <th>Total (Rp)</th>
+            </tr>
+
+            @if(isset($do_dtl))
+                @foreach ($do_dtl as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->invstore->stock->fc_namelong }}</td>
+                        <td>{{ $item->invstore->stock->fc_namepack }}</td>
+                        <td>{{ $item->fn_qty_do }}</td>
+                        <td>{{ $item->fn_price }}</td>
+                        <td>{{ $item->fn_disc }}</td>
+                        <td>{{ $item->fn_value }}</td>
+                    </tr>
+                @endforeach
+
+            @else
+            <tr>
+                <td colspan="12" class="text-center">Data Not Found</td>
+            </tr>
+            @endif
+
+        </table>
+
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;">
+            <tr class="pt-1">
+                <td>Item</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%">{{  $do_mst->fn_dodetail }}</td>
+                <td>Biaya Service</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format( $do_mst->somst->fm_servpay,0,',','.')}}</td>
+            </tr>
+
+            <tr>
+                <td>Diskon Total</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%">Rp. {{ number_format($do_mst->somst->fm_disctotal,0,',','.')}}</td>
+                <td>Pajak</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format($do_mst->somst->fm_tax,0,',','.')}}</td>
+            </tr>
+            <tr class="pb-1">
+                <td></td>
+                <td style="width: 5px"></td>
+                <td style="width: 28%"></td>
+                <td><b>Tagihan</b></td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format($do_mst->somst->fm_brutto,0,',','.')}}</td>
+            </tr>
+        </table>
+
+        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always">
+            <br><br/>
+            <tr>
+                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
+            </tr>
+        </table>
+        <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always ">
+            <br>
+            <tr >
+                <td style="width: 50% !important; text-align: left;">Send By,</td>
+                <td style="width: 50% !important; text-align: right;">Received By,</td>
+            </tr>
+            <tr>
+                <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
+                <td style="width: 50% !important; text-align: right;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
+            </tr>
+            <br><br/>
+            <br><br/>
+            <tr >
+                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: right;">(..................................................)</td>
+            </tr>
+        </table>
     <div>
 </body>
 

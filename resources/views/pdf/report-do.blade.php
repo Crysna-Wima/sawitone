@@ -356,7 +356,7 @@
             </tr>
         </table>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15; page-break-before:always ">
+        <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15; page-break-before:always page-break-after:always ">
             <br><br/>
             <tr class="pt-1">
                 <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
