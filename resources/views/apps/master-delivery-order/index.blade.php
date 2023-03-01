@@ -120,92 +120,78 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6 place_detail">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Calculation</h4>
-                                    </div>
-                                    <div class="card-body" style="height: 217px">
-                                        <div class="d-flex">
-                                            <div class="flex-row-item" style="margin-right: 30px">
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item
-                                                    </p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fn_dodetail">0,00</p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Disc.
-                                                        Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_disctotal">0,00</p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_netto">0,00</p>
-                                                </div>
-                                            </div>
-                                            <div class="flex-row-item">
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pelayanan</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_servpay">0,00</p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pajak</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_tax">0,00</p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <p class="flex-row-item"></p>
-                                                    <p class="flex-row-item text-right"></p>
-                                                </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item"
-                                                        style="font-weight: bold; font-size: medium">GRAND</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp.
-                                                        0,00</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-4">
-                                <div class="form-group">
+                              <div class="card">
+                                 <div class="card-header">
+                                       <h4>Calculation</h4>
+                                 </div>
+                                 <div class="card-body" style="height: 217px">
+                                       <div class="d-flex">
+                                          <div class="flex-row-item" style="margin-right: 30px">
+                                             <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                             </div>
+                                          </div>
+                                          <div class="flex-row-item">
+                                             <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex">
+                                                   <p class="flex-row-item"></p>
+                                                   <p class="flex-row-item text-right"></p>
+                                             </div>
+                                             <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                             </div>
+                                          </div>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-12 col-md-12 col-lg-4">
+                               <div class="form-group">
                                     <label>Tanggal Terbit</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <div class="input-group-prepend">
