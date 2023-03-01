@@ -25,8 +25,7 @@ use App\Models\DoMaster;
 class DeliveryOrderController extends Controller
 {
 
-    public function index()
-    {
+    public function index(){
         // cari di domst yang userid nya sama dengan userid yang login
         $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika $do_master tidak kosong return ke route create_do
@@ -38,8 +37,7 @@ class DeliveryOrderController extends Controller
         // dd($do_master);
     }
 
-    public function detail($fc_divisioncode, $fc_branch, $fc_sono)
-    {
+    public function detail($fc_divisioncode, $fc_branch, $fc_sono){
         session(['fc_sono_global' => $fc_sono]);
         $cek_status = SoMaster::where(
             'fc_sono',
@@ -60,8 +58,7 @@ class DeliveryOrderController extends Controller
         // dd($fc_divisioncode);
     }
 
-    public function insert_do(Request $request)
-    {
+    public function insert_do(Request $request){
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_sono' => 'required',

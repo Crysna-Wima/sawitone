@@ -36,6 +36,13 @@ class MasterDeliveryOrderController extends Controller
         ->addIndexColumn()
         ->make(true);
     }
+
+    public function datatables_detail(Request $request){
+        $data = DoMaster::with('somst.customer')->where('fc_dono', $request->fc_dono)->first();;
+
+        // return response json
+        return response()->json($data);
+    }
     
     public function pdf($fc_dono)
     {
@@ -62,5 +69,10 @@ class MasterDeliveryOrderController extends Controller
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function publish(Request $request){
+        // create or update
+        
     }
 }

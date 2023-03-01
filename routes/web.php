@@ -218,10 +218,12 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-delivery-order')->group(function () {
             Route::get('/','Apps\MasterDeliveryOrderController@index');
             Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
+            Route::get('/datatables/detail','Apps\MasterDeliveryOrderController@datatables_detail');
 
             Route::get('/pdf/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf');
             Route::get('/pdf_sj/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf_sj');
             Route::get('/inv/{fc_dono}', 'Apps\MasterDeliveryOrderController@inv');
+            Route::post('/inv/publish', 'Apps\MasterDeliveryOrderController@publish');
         });
 
         Route::prefix('received-order')->group(function () {
