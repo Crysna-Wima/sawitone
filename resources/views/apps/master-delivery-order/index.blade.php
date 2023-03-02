@@ -266,7 +266,7 @@
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
-                        <button type="submit" class="btn btn-success">Terbitkan</button>
+                        <button type="submit" class="btn btn-success btn-submit">Terbitkan</button>
                     </div>
                 </form>
             </div>
@@ -276,6 +276,12 @@
 
 @section('js')
     <script>
+        $(document).ready(function () {
+            $('.btn-submit').click(function () {
+                $('#modal_invoice').modal('hide');
+            });
+        });
+
         function click_modal_invoice(fc_dono) {
             // tambahkan text pada label dengan id fc_dono
             $('#fc_dono').text(fc_dono);
