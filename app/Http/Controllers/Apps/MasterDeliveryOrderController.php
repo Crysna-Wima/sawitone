@@ -104,6 +104,17 @@ class MasterDeliveryOrderController extends Controller
                 return response()->json(['errors' => $validator->errors()]);
             }
 
+        // apabila ada fc_dono yang sama di InvMaster
+        $cek = InvMaster::where('fc_dono', $request->fc_dono)->first();
+        if($cek){
+        return response()->json(
+            [
+                'status' => 300,
+                'message' => 'Terdapat DO nomor yang sama'
+            ]
+        );
+       }
+
         // create  data in InvMaster
         $inv_mst = InvMaster::Create(
             // ['fc_dono' => $request->fc_dono],
