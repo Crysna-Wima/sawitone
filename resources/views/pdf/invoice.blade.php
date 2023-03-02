@@ -195,15 +195,15 @@
                 <td style="width: 30%">{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%"></td>
+                <td style="width: 26%">{{ $invms->fd_inv_releasedate }}</td>
             </tr>
             <tr class="pb-1">
                 <td>Nomor</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%"></td>
+                <td style="width: 30%">{{ $invms->fc_invno }}</td>
                 <td>Jatuh Tempo</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%"></td>
+                <td style="width: 26%">{{ $invms->fd_inv_agingdate }}</td>
             </tr>
         </table>
 
