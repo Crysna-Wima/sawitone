@@ -258,8 +258,8 @@
                                             </div>
                                         </div>
 
-                                        <input type="text" id="fn_inv_agingdate" class="form-control datepicker"
-                                            name="fn_inv_agingdate" required>
+                                        <input type="text" id="fd_inv_agingdate" class="form-control datepicker"
+                                            name="fd_inv_agingdate" required>
                                     </div>
                                 </div>
                             </div>
@@ -332,8 +332,8 @@
                     $('#fn_inv_agingday').on('input', function() {
                         var fd_inv_releasedate = $('#fd_inv_releasedate').val();
                         var fn_inv_agingday = $('#fn_inv_agingday').val();
-                        var fn_inv_agingdate = moment(fd_inv_releasedate, 'YYYY-MM-DD').add(fn_inv_agingday, 'days').format('YYYY-MM-DD');
-                        $('#fn_inv_agingdate').val(fn_inv_agingdate);
+                        var fd_inv_agingdate = moment(fd_inv_releasedate, 'YYYY-MM-DD').add(fn_inv_agingday, 'days').format('YYYY-MM-DD');
+                        $('#fd_inv_agingdate').val(fd_inv_agingdate);
                     });
 
                     // set fn_dodetail
