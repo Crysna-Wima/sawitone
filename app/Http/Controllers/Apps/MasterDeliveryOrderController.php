@@ -15,10 +15,9 @@ use Carbon\Carbon;
 use File;
 use DB;
 
-use App\Models\SoMaster;
-use App\Models\SoDetail;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
+use App\Models\InvMaster;
 
 class MasterDeliveryOrderController extends Controller
 {
@@ -67,6 +66,7 @@ class MasterDeliveryOrderController extends Controller
         session(['fc_dono_global' => $fc_dono]);
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $fc_dono)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
+        $data['invms']= InvMaster::all();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
     }
