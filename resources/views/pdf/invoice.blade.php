@@ -267,13 +267,13 @@
             </tr>
         </table>
 
-        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always">
+        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
             <br><br/>
             <tr>
                 <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
             </tr>
         </table>
-        <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always ">
+        <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">Send By,</td>
