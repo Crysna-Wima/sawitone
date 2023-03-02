@@ -87,7 +87,7 @@ class MasterDeliveryOrderController extends Controller
           'fm_brutto' => 'required',
           'fd_inv_releasedate' => 'required',
           'fn_inv_agingday' => 'required',
-          'fd_inv_agingdate' => 'required'
+          'fn_inv_agingdate' => 'required'
          ],
          [
             // pesan validasi
@@ -96,7 +96,7 @@ class MasterDeliveryOrderController extends Controller
             // 'fn_dodateinputuser' => 'Tanggal DO tidak boleh kosong',
             'fd_inv_releasedate' => 'Tanggal Terbit Invoice tidak boleh kosong',
             'fn_inv_agingday' => 'Masa Invoice tidak boleh kosong',
-            'fd_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
+            'fn_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
          ]); 
 
          // apabila validasi tidak sesuai
@@ -104,18 +104,6 @@ class MasterDeliveryOrderController extends Controller
                 return response()->json(['errors' => $validator->errors()]);
             }
 
-        // apabila ada fc_dono yang sama di InvMaster
-        $cek = InvMaster::where('fc_dono', $request->fc_dono)->first();
-        if($cek){
-        return response()->json(
-            [
-                'status' => 300,
-                'message' => 'Terdapat DO nomor yang sama'
-            ]
-        );
-       }
-
-    //    dd($request);
         // create  data in InvMaster
         $inv_mst = InvMaster::Create(
             // ['fc_dono' => $request->fc_dono],
@@ -135,11 +123,11 @@ class MasterDeliveryOrderController extends Controller
                 'fm_brutto' => $request->fm_brutto,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
                 'fn_inv_agingday' => $request->fn_inv_agingday,
-                'fd_inv_agingdate' => $request->fd_inv_agingdate,
+                'fn_inv_agingdate' => $request->fn_inv_agingdate,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
             ]);
 
-        // // update data fc_invstatus in DoMaster
+        // update data fc_invstatus in DoMaster
         $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'Y']);
 
          // // jika validasi sukses dan $do_master berhasil response 200
