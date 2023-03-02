@@ -66,9 +66,11 @@ class MasterDeliveryOrderController extends Controller
         session(['fc_dono_global' => $fc_dono]);
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $fc_dono)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
-        $data['invms']= InvMaster::all();
+        // get data invmaster
+        $data['invms'] = InvMaster::where('fc_dono', $fc_dono)->first();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($data);
     }
 
     public function publish(Request $request){
