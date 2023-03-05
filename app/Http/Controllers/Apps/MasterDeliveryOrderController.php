@@ -142,7 +142,7 @@ class MasterDeliveryOrderController extends Controller
             ]);
 
         // // update data fc_invstatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'T']);
+        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'Y']);
 
          // // jika validasi sukses dan $do_master berhasil response 200
          if ($inv_mst && $do_mst) {
