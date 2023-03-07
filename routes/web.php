@@ -233,6 +233,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables', 'Apps\ReceivedOrderController@datatables');
             Route::post('/action', 'Apps\ReceivedOrderController@action_confirm');
         });
+
+        Route::prefix('purchase-order')->group(function () {
+            Route::get('/','Apps\PurchaseOrderController@index');
+            Route::get('/datatables','Apps\PurchaseOrderController@datatables');
+        });
     });
 });
 
