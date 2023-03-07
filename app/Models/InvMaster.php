@@ -21,6 +21,9 @@ class InvMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
+    public function domst(){
+        return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
+    }
 
     
 }

@@ -233,6 +233,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables', 'Apps\ReceivedOrderController@datatables');
             Route::post('/action', 'Apps\ReceivedOrderController@action_confirm');
         });
+
+        Route::prefix('master-invoice')->group(function(){
+            Route::get('/','Apps\MasterInvoiceController@index');
+            Route::get('/datatables','Apps\MasterInvoiceController@datatables');
+        });
     });
 });
 

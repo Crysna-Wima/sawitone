@@ -126,13 +126,13 @@ class MasterDeliveryOrderController extends Controller
                 'fc_branch' => $request->fc_branch,
                 'fc_invno' => auth()->user()->fc_userid,
                 'fc_sono' => $request->fc_sono,
+                'fc_invtype' => 'OTG',
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fn_invdetail' => $request->fn_dodetail,
                 'fm_disctotal' => $request->fm_disctotal,
                 'fm_netto' => $request->fm_netto,
                 'fc_userid' => auth()->user()->fc_userid,
                 'fm_servpay' => $request->fm_servpay,
-                'fc_status' => 'T',
                 'fm_tax' => $request->fm_tax,
                 'fm_brutto' => $request->fm_brutto,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
@@ -142,10 +142,10 @@ class MasterDeliveryOrderController extends Controller
             ]);
 
         // // update data fc_invstatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'Y']);
+        // $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'Y']);
 
          // // jika validasi sukses dan $do_master berhasil response 200
-         if ($inv_mst && $do_mst) {
+         if ($inv_mst) {
             return response()->json(
                 [
                     'status' => 200,

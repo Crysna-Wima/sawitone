@@ -29,5 +29,10 @@ class DoMaster extends Model
     public function dodtl(){
         return $this->hasMany(DoDetail::class, 'fc_dono', 'fc_dono');
     }
+    
+    public function invmst(){
+        return $this->hasOne(InvMaster::class, 'fc_dono', 'fc_dono');
+    }
+    
 
 }
