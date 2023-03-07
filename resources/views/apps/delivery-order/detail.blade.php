@@ -218,6 +218,8 @@
 @section('js')
     <script>
         function insert_do() {
+            // show modal loading
+            $('#modal_loading').modal('show');
             // Dapatkan data input dari elemen form
             var fc_sono = "{{ $data->fc_sono }}";
             var fc_divisioncode = "{{ $data->fc_divisioncode }}";
@@ -248,10 +250,14 @@
                 type: 'POST',
                 data: dataToSend,
                 success: function(response) {
+                    // hide modal loading
+                    $('#modal_loading').modal('hide');
                     // Alihkan halaman hanya jika data berhasil disimpan
                     window.location.href = "{{ route('create_do') }}";
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    // hide modal loading
+                    $('#modal_loading').modal('hide');
                     swal("Gagal Buat DO (" + jqXHR
                         .responseText + ")", {
                             icon: 'error',
