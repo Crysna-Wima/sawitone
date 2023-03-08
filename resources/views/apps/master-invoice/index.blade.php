@@ -22,6 +22,15 @@
             background-color: #A5A5A5 !important;
         }
 
+        .nav-tabs .nav-item .nav-link {
+            color: #A5A5A5;
+        }
+
+        .nav-tabs .nav-item .nav-link.active {
+            font-weight: bold;
+            color: #0A9447;
+        }
+
         @media (min-width: 992px) and (max-width: 1200px) {
             .flex-row-item {
                 font-size: 12px;
@@ -41,24 +50,58 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Data Master Invoice</h4>
+                        <div class="card-header-action">
+                            <button type="button" class="btn btn-success" onclick="#"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb_invoice" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Inv No</th>
-                                        <th scope="col" class="text-center">Dono</th>
-                                        <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center">Tgl Terbit</th>
-                                        <th scope="col" class="text-center">Tgl Berakhir</th>
-                                        <th scope="col" class="text-center">Item</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center" style="width: 22%">Actions</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active show" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">Incoming</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="outcoming-tab" data-toggle="tab" href="#outcoming" role="tab" aria-controls="outcoming" aria-selected="false">Outcoming</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade active show" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tb_incoming_invoice" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th scope="col" class="text-center">Inv No</th>
+                                                <th scope="col" class="text-center">Dono</th>
+                                                <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Tgl Terbit</th>
+                                                <th scope="col" class="text-center">Tgl Berakhir</th>
+                                                <th scope="col" class="text-center">Item</th>
+                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="outcoming" role="tabpanel" aria-labelledby="outcoming-tab">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="tb_outcoming_invoice" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th scope="col" class="text-center">Inv No</th>
+                                                <th scope="col" class="text-center">Dono</th>
+                                                <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Tgl Terbit</th>
+                                                <th scope="col" class="text-center">Tgl Berakhir</th>
+                                                <th scope="col" class="text-center">Item</th>
+                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,9 +110,242 @@
     </div>
 @endsection
 
+@section('modal')
+    <div class="modal fade" role="dialog" id="modal_update_invoice" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header br">
+                    <h5 class="modal-title">Update Invoice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form_submit" action="#" method="POST" autocomplete="off">
+                    @csrf
+                    <input type="text" name="type" id="type" hidden>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Informasi Umum</h4>
+                                    </div>
+                                    <input type="text" id="" value="" hidden>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12 col-md-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label>Tgl Rilis Invoice :</label>
+                                                    <span id="fd_inv_releasedate">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label>INV NO :</label>
+                                                    <span id="fc_invno">{{ $inv_mst->fc_invno }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label>DONO :</label>
+                                                    <span id="fc_dono">{{ $inv_mst->fc_dono }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <label>NPWP</label>
+                                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membernpwp_no }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label>Nama</label>
+                                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membername1 }}"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6 place_detail">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Calculation</h4>
+                                    </div>
+                                    <div class="card-body" style="height: 217px">
+                                        <div class="d-flex border-bottom">
+                                            <div class="flex-row-item" style="margin-right: 30px">
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                                </div>
+                                                <input type="text" name="fn_dodetail" id="fn_dodetail_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
+                                                </div>
+                                                <input type="text" name="fm_disctotal" id="fm_disctotal_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                                </div>
+                                                </div>
+                                                <input type="text" name="fm_netto" id="fm_netto_input" hidden>
+                                            <div class="flex-row-item">
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                                </div>
+                                                <input type="text" name="fm_servpay" id="fm_servpay_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                                </div>
+                                                <input type="text" name="fm_tax" id="fm_tax_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                                </div>
+                                                <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="flex-row-item" style="margin-right: 30px">
+                                                <div class="d-flex">
+                                                    <p class="flex-row-item"></p>
+                                                    <p class="flex-row-item text-right"></p>
+                                                </div>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                   <p class="text-secondary flex-row-item" style="font-size: medium">Terbayar</p>
+                                                   <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
+                                                </div>
+                                                <input type="text" name="" id="" hidden>
+                                            </div>
+                                            <div class="flex-row-item">
+                                                <div class="d-flex">
+                                                    <p class="flex-row-item"></p>
+                                                    <p class="flex-row-item text-right"></p>
+                                                </div>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">SISA</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                                </div>
+                                                <input type="text" name="" id=""hidden>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tanggal Berakhir</label>
+                                    <div class="input-group" data-date-format="dd-mm-yyyy">
+                                        <input type="text" class="form-control datepicker"
+                                            value="{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y'); }}" readonly> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tgl Pembayaran</label>
+                                    <div class="input-group" data-date-format="dd-mm-yyyy">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar"></i>
+                                            </div>
+                                        </div>
+
+                                        <input type="text" id="" class="form-control datepicker"
+                                            name="" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Metode Pembayaran</label>
+                                    <select class="form-control select2 " name="fc_kode" id="fc_kode" required>
+                                        <option value="">-- Pilih Metode --</option>
+                                        @foreach ($kode_bayar as $kode)
+                                            <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>No. Rekening</label>
+                                    <input type="text" id="fc_bankaccount" class="form-control"
+                                            name="" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nama Pembayar</label>
+                                    <input type="text" id="fc_payername" class="form-control"
+                                            name="" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nominal</label>
+                                    <div class="input-group format-rp">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div> 
+                                        <input type="text" id="fm_valuepayment" class="form-control"
+                                            name="" onkeyup="return onkeyupRupiah(this.id)" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('js')
     <script>
-        var tb = $('#tb_invoice').DataTable({
+        function click_modal_update_invoice(fc_dono) {
+            $('#modal_update_invoice').modal('show');
+        }
+        
+        $(document).ready(function() {
+                $('#fc_kode').on('change', function() {
+                    var option_id = $(this).val();
+                    $('#fv_description').empty();
+                    if (option_id != "") {
+                        $.ajax({
+                            url: "{{ url('/apps/sales-order/detail/payment/getdata') }}/" + option_id,
+                            type: "GET",
+                            dataType: "json",
+                            success: function(fc_kode) {
+                                $.each(fc_kode, function(key, value) {
+
+                                    $('#fv_description').append(
+                                        '<label>Deskripsi Bayar</label><input type="text" value="' +
+                                        value['fv_description'] +
+                                        '" class="form-control " name="fc_description" id="fv_description" readonly>'
+                                    );
+
+                                });
+                            }
+                        });
+                    } else {
+                        $('#fv_description').empty();
+                    }
+                });
+            });
+
+        var tb = $('#tb_incoming_invoice').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -128,13 +404,14 @@
                 } else {
                     $('td:eq(3)', row).html('<span class="badge badge-success">Installment</span>');
                 }
-
                 $('td:eq(8)', row).html(`
-                <a href="#" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <a href="#" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i> Updated Inv</button></a>
-            `);
+                    <a href="/apps/master-invoice/inv/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice('${data.fc_dono}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                );
             }
         });
+
+        $('.modal').css('overflow-y', 'auto');
     </script>
 
 @endsection
