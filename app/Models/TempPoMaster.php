@@ -10,20 +10,27 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Blameable;
 use App\Traits\CompositeKey;
 
-class InvMaster extends Model
+class TempPoMaster extends Model
 {
     use HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 
-    protected $table = 't_invmst';
-    protected $primaryKey = 'fc_invno';
+    protected $table = 't_temppomst';
+    protected $primaryKey = 'fc_pono';
     public $incrementing = false;
     protected $guarded = ['type'];
 
-    public function domst(){
-        return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
 
     
+
+    
+
 }

@@ -234,9 +234,14 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/action', 'Apps\ReceivedOrderController@action_confirm');
         });
 
+        Route::prefix('master-invoice')->group(function(){
+            Route::get('/','Apps\MasterInvoiceController@index');
+            Route::get('/datatables','Apps\MasterInvoiceController@datatables');
+        });
         Route::prefix('purchase-order')->group(function () {
             Route::get('/','Apps\PurchaseOrderController@index');
             Route::get('/datatables','Apps\PurchaseOrderController@datatables');
+            Route::get('/get-data-supplier-po-datatables/{fc_branch}','Apps\PurchaseOrderController@get_data_supplier_po_datatables');
         });
     });
 });
