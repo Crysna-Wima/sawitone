@@ -148,7 +148,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Hutang</label>
-                                    <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
+                                    <input type="text" class="form-control" name="" id="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -167,7 +167,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Hutang</label>
-                                    <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
+                                    <input type="text" class="form-control" name="" id="" readonly>
                                 </div>
                             </div>
                         </div>

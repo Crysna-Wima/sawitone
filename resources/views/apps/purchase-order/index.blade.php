@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
-                    <form id="form_submit" action="/apps/sales-order/store-update" method="POST" autocomplete="off">
+                    <form id="form_submit" action="/apps/purchase-order/store-update" method="POST" autocomplete="off">
                         <div class="collapse show" id="mycard-collapse">
                             <div class="card-body">
                                 <div class="row">
@@ -59,14 +59,14 @@
                                     <div class="col-12 col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <label>Operator</label>
-                                            <input type="text" class="form-control" name="" id="">
+                                            <input type="text" class="form-control" name="" id="" value="{{ auth()->user()->fc_username }}">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>PO Type</label>
-                                            <select class="form-control select2 required-field" name=""
-                                                id="">
+                                            <select class="form-control select2 required-field" name="fc_potype"
+                                                id="fc_potype">
                                                 <option value="" selected disabled>- Pilih -</option>
                                                 <option value="Consignment">Consignment</option>
                                                 <option value="Regular SO">Grochery</option>
@@ -78,8 +78,8 @@
                                         <div class="form-group">
                                             <label>Supplier Code</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" id="fc_membercode"
-                                                    name="fc_membercode" readonly>
+                                                <input type="text" class="form-control" id="fc_suppliercode"
+                                                    name="fc_suppliercode" readonly>
                                                 <div class="input-group-append">
                                                     <button class="btn btn-primary" onclick="click_modal_supplier()"
                                                         type="button"><i class="fa fa-search"></i></button>
@@ -94,7 +94,7 @@
                                         <option value="T">YES</option>
                                         <option selected="" value="F">NO</option>
                                     </select> --}}
-                                            <input type="text" class="form-control" id="status_pkp" name="fc_pkp"
+                                            <input type="text" class="form-control" id="status_pkp" name="fc_status_pkp"
                                                 readonly>
                                         </div>
                                     </div>
@@ -122,69 +122,69 @@
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>NPWP</label>
-                                        <input type="text" class="form-control" name="fc_membernpwp_no"
-                                            id="fc_membernpwp_no" readonly>
+                                        <input type="text" class="form-control" name="fc_supplierNPWP"
+                                            id="fc_supplierNPWP" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Cabang</label>
-                                        <input type="text" class="form-control" name="fc_member_branchtype"
-                                            id="fc_member_branchtype" readonly hidden>
-                                        <input type="text" class="form-control" name="fc_member_branchtype_desc"
-                                            id="fc_member_branchtype_desc" readonly>
+                                        <input type="text" class="form-control" name="fc_branchtype"
+                                            id="fc_branchtype" readonly hidden>
+                                        <input type="text" class="form-control" name="fc_branchtype_desc"
+                                            id="fc_branchtype_desc" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Bisnis</label>
-                                        <input type="text" class="form-control" name="fc_membertypebusiness"
-                                            id="fc_membertypebusiness" readonly hidden>
-                                        <input type="text" class="form-control" name="fc_membertypebusiness_desc"
-                                            id="fc_membertypebusiness_desc" readonly>
+                                        <input type="text" class="form-control" name="fc_suppliertypebusiness"
+                                            id="fc_suppliertypebusiness" readonly hidden>
+                                        <input type="text" class="form-control" name="fc_suppliertypebusiness_desc"
+                                            id="fc_suppliertypebusiness_desc" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control" name="fc_membername1"
-                                            id="fc_membername1" readonly>
+                                        <input type="text" class="form-control" name="fc_suppliername1"
+                                            id="fc_suppliername1" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control" name="fc_memberaddress1"
-                                            id="fc_memberaddress1" readonly>
+                                        <label>Telepon</label>
+                                        <input type="text" class="form-control" name="fc_supplierphone1"
+                                            id="fc_supplierphone1" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Masa Hutang</label>
-                                        <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode"
+                                        <input type="text" class="form-control" name="fn_supplierAgingAR" id="fn_supplierAgingAR"
                                             readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Legal Status</label>
-                                        <input type="text" class="form-control" name="fc_memberlegalstatus"
-                                            id="fc_memberlegalstatus" readonly hidden>
-                                        <input type="text" class="form-control" name="fc_memberlegalstatus_desc"
-                                            id="fc_memberlegalstatus_desc" readonly>
+                                        <input type="text" class="form-control" name="fc_supplierlegalstatus"
+                                            id="fc_supplierlegalstatus" readonly hidden>
+                                        <input type="text" class="form-control" name="fc_supplierlegalstatus_desc"
+                                            id="fc_supplierlegalstatus_desc" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Alamat Muat</label>
-                                        <input type="text" class="form-control" name="fc_memberaddress_loading1"
-                                            id="fc_memberaddress_loading1" readonly>
+                                        <label>Alamat</label>
+                                        <input type="text" class="form-control" name="fc_supplier_npwpaddress1"
+                                            id="fc_supplier_npwpaddress1" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Hutang</label>
-                                        <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode"
+                                        <input type="text" class="form-control" name="fm_supplierAR" id="fm_supplierAR"
                                             readonly>
                                     </div>
                                 </div>
@@ -375,7 +375,7 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            get_data_sales();
+            get_data_supplier();
             $('.place_detail').attr('hidden', true);
         })
 
@@ -389,15 +389,15 @@
             table_stock();
         }
 
-        function get_data_sales() {
+        function get_data_supplier() {
             $.ajax({
-                url: "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
+                url: "/apps/purchase-order/get-data-where-field-id-get/Supplier/fc_branch/" + $('#fc_branch').val(),
                 type: "GET",
                 dataType: "JSON",
                 success: function(response) {
                     if (response.status === 200) {
                         var data = response.data;
-                        $("#fc_salescode").empty();
+                        $("#fc_suppliercode").empty();
                         $("#fc_salescode").append(`<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_salescode").append(
@@ -419,18 +419,18 @@
             });
         }
 
-        function onchange_member_code(fc_membercode) {
+        function onchange_member_code(fc_suppliercode) {
             $.ajax({
-                url: "/master/data-customer-first/" + fc_membercode,
+                url: "/master/data-supplier-first/" + fc_suppliercode,
                 type: "GET",
                 dataType: "JSON",
                 success: function(response) {
                     if (response.status === 200) {
                         var data = response.data;
-                        $('#fc_membertaxcode').val(data.member_tax_code.fc_kode);
-                        $('#fc_membertaxcode_view').val(data.member_tax_code.fv_description);
-                        $('#fc_memberaddress_loading1').val(data.fc_memberaddress_loading1);
-                        $('#fc_memberaddress_loading2').val(data.fc_memberaddress_loading2);
+                        $('#fc_suppliertaxcode').val(data.supplier_tax_code.fc_kode);
+                        $('#fc_suppliertaxcode_view').val(data.supplier_tax_code.fv_description);
+                        $('#fc_supplieraddress_loading1').val(data.fc_memberaddress_loading1);
+                        $('#fc_supplieraddress_loading2').val(data.fc_memberaddress_loading2);
                     } else {
                         iziToast.error({
                             title: 'Error!',
@@ -471,47 +471,50 @@
                         data: 'fc_supplier_npwpaddress1'
                     },
                     {
-                        data: 'member_type_business.fv_description'
+                        data: 'fc_suppliertypebusiness'
                     },
                     {
-                        data: 'member_typebranch.fv_description'
+                        data: 'fc_branchtype'
                     },
                     {
-                        data: 'member_legal_status.fv_description'
+                        data: 'fc_supplierlegalstatus'
                     },
                     {
-                        data: 'fc_membernpwp_no'
+                        data: 'fc_supplierNPWP'
                     },
                     {
-                        data: 'fc_membernpwp_no'
+                        data: null
                     },
                 ],
                 rowCallback: function(row, data) {
                     $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_customer('${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_supplier('${data.fc_suppliercode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
             });
         }
 
-        function detail_customer($id) {
+        function detail_supplier($id) {
             $.ajax({
-                url: "/master/data-customer-first/" + $id,
+                url: "/master/data-supplier-first/" + $id,
                 type: "GET",
                 dataType: "JSON",
                 success: function(response) {
+                    console.log(data);
                     var data = response.data;
                     console.log(data);
-                    $("#modal_customer").modal('hide');
+                    $("#modal_supplier").modal('hide');
                     Object.keys(data).forEach(function(key) {
                         var elem_name = $('[name=' + key + ']');
                         elem_name.val(data[key]);
                     });
 
-                    $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
-                    $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
-                    $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-                    $('#status_pkp').val(data.member_tax_code.fv_description);
+                    $('#fn_supplierAgingAR').val(data.fn_supplierAgingAR);
+                    $('#fn_supplierAR').val(data.fn_supplierAR);
+                    $('#fc_branchtype_desc').val(data.supplier_typebranch.fv_description);
+                    $('#fc_suppliertypebusiness_desc').val(data.supplier_type_business.fv_description);
+                    $('#fc_supplierlegalstatus_desc').val(data.supplier_legal_status.fv_description);
+                    $('#status_pkp').val(data.supplier_tax_code.fv_description);
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

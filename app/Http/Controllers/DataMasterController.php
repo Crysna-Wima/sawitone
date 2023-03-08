@@ -17,6 +17,7 @@ use App\Helpers\ApiFormatter;
 use App\Models\Brand;
 use App\Models\Stock;
 use App\Models\Customer;
+use App\Models\Supplier;
 use App\Models\TransaksiType;
 
 class DataMasterCOntroller extends Controller
@@ -139,5 +140,10 @@ class DataMasterCOntroller extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function data_supplier_first($fc_suppliercode){
+        $data = Supplier::with('supplier_tax_code', 'supplier_typebranch', 'supplier_type_business', 'supplier_legal_status')->where('fc_suppliercode', $fc_suppliercode)->first();
+        return ApiFormatter::getResponse($data);
     }
 }
