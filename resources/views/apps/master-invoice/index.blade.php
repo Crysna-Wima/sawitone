@@ -51,7 +51,7 @@
                     <div class="card-header">
                         <h4>Data Master Invoice</h4>
                         <div class="card-header-action">
-                            <button type="button" class="btn btn-success" onclick="#"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
                         </div>
                     </div>
                     <div class="card-body">
