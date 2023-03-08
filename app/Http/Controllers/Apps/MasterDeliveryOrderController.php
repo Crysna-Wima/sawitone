@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
 use App\Helpers\Convert;
 
-use DataTables;
 use PDF;
 use Carbon\Carbon;
 use File;
@@ -18,6 +17,7 @@ use DB;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
 use App\Models\InvMaster;
+use Yajra\DataTables\DataTables as DataTables;
 
 class MasterDeliveryOrderController extends Controller
 {

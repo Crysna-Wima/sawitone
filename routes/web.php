@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
         Route::get('/data-stock-by-primary/{stockcode}/{barcode}','DataMasterController@data_stock_by_primary');
         Route::get('/data-customer-first/{fc_membercode}','DataMasterController@data_customer_first');
+        Route::get('/data-supplier-first/{fc_suppliercode}','DataMasterController@data_supplier_first');
         Route::get('/generate-no-document','DataMasterController@generate_no_document');
 
         Route::get('/get-data-customer-so-datatables/{fc_branch}','DataMasterController@get_data_customer_so_datatables');
@@ -243,6 +244,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\PurchaseOrderController@index');
             Route::get('/datatables','Apps\PurchaseOrderController@datatables');
             Route::get('/get-data-supplier-po-datatables/{fc_branch}','Apps\PurchaseOrderController@get_data_supplier_po_datatables');
+            Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','Apps\PurchaseOrderController@get_data_where_field_id_get');
+            Route::post('/store-update','Apps\PurchaseOrderController@store_update');
         });
     });
 });

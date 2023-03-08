@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Helpers\ApiFormatter;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,10 +12,10 @@ use App\Helpers\Convert;
 use App\Models\Supplier;
 use App\Models\TempPoDetail;
 use App\Models\TempPoMaster;
-use DataTables;
 use Carbon\Carbon;
 use File;
 use DB;
+use Yajra\DataTables\DataTables as DataTables;
 
 class PurchaseOrderController extends Controller
 {
@@ -35,7 +36,20 @@ class PurchaseOrderController extends Controller
 
     public function get_data_supplier_po_datatables($fc_branch){
         $data = Supplier::with('branch','supplier_legal_status','supplier_nationality','supplier_type_business','supplier_tax_code','supplier_bank1','supplier_bank2','supplier_bank2','supplier_bank3','supplier_typebranch')->where('fc_branch', $fc_branch)->get();
-        dd($data);
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+    }
+
+    public function get_data_where_field_id_get($model, $where_field, $id){
+        $model = 'App\\Models\\' . $model;
+        $data = $model::where($where_field, $id)->get();
+
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function store_update(Request $request){
+        dd($request);
     }
 }
 
