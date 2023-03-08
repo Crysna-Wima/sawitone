@@ -238,6 +238,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-invoice')->group(function(){
             Route::get('/','Apps\MasterInvoiceController@index');
             Route::get('/datatables','Apps\MasterInvoiceController@datatables');
+            Route::get('/inv/{fc_dono}', 'Apps\MasterInvoiceController@inv');
         });
         Route::prefix('purchase-order')->group(function () {
             Route::get('/','Apps\PurchaseOrderController@index');
