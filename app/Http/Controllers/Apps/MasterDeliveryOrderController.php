@@ -124,7 +124,7 @@ class MasterDeliveryOrderController extends Controller
                 'fm_brutto' => $request->fm_brutto,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
                 'fn_inv_agingday' => $request->fn_inv_agingday,
-                'fn_inv_agingdate' => $request->fn_inv_agingdate,
+                'fd_inv_agingdate' => $request->fd_inv_agingdate,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
             ]);
 
