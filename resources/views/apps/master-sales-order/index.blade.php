@@ -68,10 +68,11 @@
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
          if(data['fc_sostatus'] == 'F'){
             $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
-         }else if(data['fc_sostatus'] == 'C'){
+         } else if(data['fc_sostatus'] == 'C'){
             $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
-         }
-         else if(data['fc_sostatus'] == 'P'){
+         } else if(data['fc_sostatus'] == 'DD'){
+            $('td:eq(7)', row).html('<span class="badge badge-info">DO Done</span>');
+         } else if(data['fc_sostatus'] == 'P'){
             $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
          } else {
             $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
