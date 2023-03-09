@@ -59,7 +59,7 @@
                                     <div class="col-12 col-md-12 col-lg-6">
                                         <div class="form-group">
                                             <label>Operator</label>
-                                            <input type="text" class="form-control" name="" id="" value="{{ auth()->user()->fc_username }}">
+                                            <input type="text" class="form-control" name="" id="" value="{{ auth()->user()->fc_username }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6">
