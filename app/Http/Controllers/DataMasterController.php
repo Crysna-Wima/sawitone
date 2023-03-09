@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use App\Helpers\NoDocument;
 
-use DataTables;
 use Carbon\Carbon;
 
 use App\Helpers\ApiFormatter;
@@ -19,6 +18,7 @@ use App\Models\Stock;
 use App\Models\Customer;
 use App\Models\Supplier;
 use App\Models\TransaksiType;
+use Yajra\DataTables\DataTables;
 
 class DataMasterCOntroller extends Controller
 {
@@ -134,6 +134,15 @@ class DataMasterCOntroller extends Controller
     }
 
     public function get_data_stock_so_datatables()
+    {
+        $data = Stock::with('namepack')->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function get_data_stock_po_datatables()
     {
         $data = Stock::with('namepack')->get();
 

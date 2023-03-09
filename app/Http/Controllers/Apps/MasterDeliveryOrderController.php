@@ -88,7 +88,7 @@ class MasterDeliveryOrderController extends Controller
           'fm_brutto' => 'required',
           'fd_inv_releasedate' => 'required',
           'fn_inv_agingday' => 'required',
-          'fn_inv_agingdate' => 'required'
+          'fd_inv_agingdate' => 'required'
          ],
          [
             // pesan validasi
@@ -97,7 +97,7 @@ class MasterDeliveryOrderController extends Controller
             // 'fn_dodateinputuser' => 'Tanggal DO tidak boleh kosong',
             'fd_inv_releasedate' => 'Tanggal Terbit Invoice tidak boleh kosong',
             'fn_inv_agingday' => 'Masa Invoice tidak boleh kosong',
-            'fn_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
+            'fd_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
          ]); 
 
          // apabila validasi tidak sesuai
@@ -124,7 +124,7 @@ class MasterDeliveryOrderController extends Controller
                 'fm_brutto' => $request->fm_brutto,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
                 'fn_inv_agingday' => $request->fn_inv_agingday,
-                'fn_inv_agingdate' => $request->fn_inv_agingdate,
+                'fd_inv_agingdate' => $request->fd_inv_agingdate,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
             ]);
 
