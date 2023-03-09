@@ -246,6 +246,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-data-supplier-po-datatables/{fc_branch}','Apps\PurchaseOrderController@get_data_supplier_po_datatables');
             Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','Apps\PurchaseOrderController@get_data_where_field_id_get');
             Route::post('/store-update','Apps\PurchaseOrderController@store_update');
+            Route::delete('/delete','Apps\PurchaseOrderController@delete');
         });
     });
 });

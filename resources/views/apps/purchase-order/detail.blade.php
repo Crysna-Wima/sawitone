@@ -554,5 +554,53 @@
                 }
             });
         }
+
+        function click_delete() {
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan menghapus data Purchase Order ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: '/apps/purchase-order/delete',
+                            type: "DELETE",
+                            dataType: "JSON",
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status === 201) {
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    window.location.href = response.link;
+                                } else {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
+                            }
+                        });
+                    }
+                });
+        }
     </script>
 @endsection

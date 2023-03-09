@@ -94,20 +94,31 @@ class PurchaseOrderController extends Controller
     }
 
     public function delete(){
-        $delete_temppomst = TempPoMaster::where('fc_pono',auth()->user()->fc_userid)->delete();
-        $delete_temppodtl = TempPoDetail::where('fc_pono',auth()->user()->fc_userid)->delete();
-        if($delete_temppomst && $delete_temppodtl){
-            return [
-                'status' => 201,
+        DB::beginTransaction();
+
+		try{
+            TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->delete();
+            TempPoMaster::where('fc_pono', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
                 'link' => '/apps/purchase-order',
-                'message' => 'Data berhasil dihapus'
-            ];
-        }else{
-            return [
-                'status' => 300,
-                'message' => 'Data gagal dihapus'
-            ];
-        }
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }
 

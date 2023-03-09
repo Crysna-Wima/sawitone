@@ -741,14 +741,18 @@
                 // servpay
                 if (data.length != 0) {
                     $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
+                    $("#fm_servpay").trigger("change");
                     $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
+                    $("#fm_tax").trigger("change");
                     $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
+                    $("#grand_total").trigger("change");
                     $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
+                    $("#total_harga").trigger("change");
                     $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
+                    $("#fm_so_disc").trigger("change");
                     $('#count_item').html(data[0].tempsomst.fn_sodetail);
+                    $("#count_item").trigger("change");
                 }
-
-
             }
         });
 
@@ -817,7 +821,6 @@
                 type: $('#form_submit_custom').attr('method'),
                 data: $('#form_submit_custom').serialize(),
                 success: function(response) {
-
 
                     setTimeout(function() {
                         $('#modal_loading').modal('hide');
