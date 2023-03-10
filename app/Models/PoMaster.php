@@ -25,20 +25,20 @@ class PoMaster extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
-    public function member_tax_code(){
-        return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%TAX%');
+    public function supplier_tax_code(){
+        return $this->belongsTo(TransaksiType::class, 'fc_suppliertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%TAX%');
     }
 
     public function sales(){
         return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
 
-    public function customer(){
-        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    public function supplier(){
+        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
 
     public function temppodtl(){
-        return $this->hasMany(TempSoDetail::class, 'fc_sono', 'fc_sono')->withTrashed();
+        return $this->hasMany(TempPoDetail::class, 'fc_pono', 'fc_pono')->withTrashed();
     }
 
 }
