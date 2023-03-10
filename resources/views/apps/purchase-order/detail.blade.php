@@ -968,7 +968,7 @@
                 })
                 .then((save) => {
 
-                    $("#modal_loading").modal('show');
+                    // $("#modal_loading").modal('show');
                     if (save) {
 
                         var data = {
