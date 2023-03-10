@@ -98,7 +98,7 @@ class SalesOrderDetailController extends Controller
         $request->merge(['fm_so_price' => Convert::convert_to_double($stock->fm_price_default)]);
         $request->merge(['fm_so_price_edit' => Convert::convert_to_double($request->fm_so_price_edit)]);
 
-        TempSoDetail::create([
+        $insert_so_detail = TempSoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_sono' => auth()->user()->fc_userid,
@@ -142,13 +142,19 @@ class SalesOrderDetailController extends Controller
         // $data['discount_view'] = "Rp " . number_format($so_discount,0,',','.');
         // $data['total_view'] = "Rp " . number_format($so_total,0,',','.');
         // $data['grand_view'] = "Rp " . number_format($so_grand,0,',','.');
-
-        return [
+        if($insert_so_detail){
+         return response()->json([
             'status' => 200,
             'total' => $total,
             'link' => '/apps/sales-order',
             'message' => 'Data berhasil disimpan'
-        ];
+        ]);
+        }
+         return [
+            'status' => 300,
+            'link' => '/apps/sales-order',
+            'message' => 'Error'
+            ];
     }
 
     public function delete($fc_sono, $fn_sorownum)

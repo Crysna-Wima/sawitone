@@ -741,11 +741,17 @@
                 // servpay
                 if (data.length != 0) {
                     $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
+                    $("#fm_servpay").trigger("change");
                     $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
+                    $("#fm_tax").trigger("change");
                     $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
+                    $("#grand_total").trigger("change");
                     $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
+                    $("#total_harga").trigger("change");
                     $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
+                    $("#fm_so_disc").trigger("change");
                     $('#count_item').html(data[0].tempsomst.fn_sodetail);
+                    $("#count_item").trigger("change");
                 }
 
 
@@ -818,35 +824,44 @@
                 data: $('#form_submit_custom').serialize(),
                 success: function(response) {
 
-
                     setTimeout(function() {
-                        $('#modal_loading').modal('hide');
-                    }, 500);
-                    if (response.status == 200) {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                    var data = response;
+
+                    //menguraikan respons JSON
+                    console.log(data.status);
+                    var jsonResponse = JSON.parse(data);
+                    // console.log(jsonResponse.status)
+                    if (jsonResponse.status == 200) {
+                        // console.log("Connect");
                         // swal(response.message, { icon: 'success', });
-                        $("#modal").modal('hide');
+                        // $("#modal_loading").modal('hide');
                         $("#form_submit_custom")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
-                        if (response.total < 1) {
-                            window.location.href = response.link;
+                        if (jsonResponse.total < 1) {
+                            window.location.href = jsonResponse.link;
                         }
-                    } else if (response.status == 201) {
-                        swal(response.message, {
+                       
+                    } else if (jsonResponse.status == 201) {
+                        swal(jsonResponse.message, {
                             icon: 'success',
                         });
                         $("#modal").modal('hide');
                         location.href = location.href;
-                    } else if (response.status == 203) {
+                        // tb.ajax.reload(null, false);
+                    } else if (jsonResponse.status == 203) {
                         swal(response.message, {
                             icon: 'success',
                         });
                         $("#modal").modal('hide');
                         tb.ajax.reload(null, false);
-                    } else if (response.status == 300) {
-                        swal(response.message, {
+                    } else {
+                        swal(jsonResponse.message, {
                             icon: 'error',
                         });
+                        // console.log('error');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
