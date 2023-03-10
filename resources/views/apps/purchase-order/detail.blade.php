@@ -335,7 +335,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Tanggal PO</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -350,7 +350,36 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Masa</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <input type="number" id="" class="form-control" name=""
+                                                required>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Hari
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Tanggal PO Berakhir</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-calendar"></i>
+                                                </div>
+                                            </div>
+
+                                            <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                name="fd_poexpired" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Transport</label>
                                         @if (empty($data->fc_potransport))
@@ -373,7 +402,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Perkiraan Penanganan</label>
                                         <div class="input-group format-rp">
@@ -387,7 +416,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <label>Alamat Tujuan</label>
                                     <div class="form-group">
                                         <input type="text" id="fc_address_loading1" class="form-control"
@@ -768,7 +797,7 @@
                     $("#total_harga").trigger("change");
                     $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].temppomst.fn_disctotal));
                     $("#fm_so_disc").trigger("change");
-                    $('#count_item').html(data[0].temppomst.fn_sodetail);
+                    $('#count_item').html(data[0].temppomst.fn_podetail);
                     $("#count_item").trigger("change");
                 }
             }
