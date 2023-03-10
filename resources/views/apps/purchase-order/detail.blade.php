@@ -89,8 +89,8 @@
                                         <option value="T">YES</option>
                                         <option selected="" value="F">NO</option>
                                     </select> --}}
-                                        <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_tax_code->fv_description }}" readonly>
+                                        <input type="text" class="form-control" style="font-size: 12px"
+                                            value="{{ $data->supplier->supplier_tax_code->fv_description }} ({{ $data->supplier->supplier_tax_code->fc_action }}%)" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">

@@ -839,6 +839,7 @@
                             icon: 'success',
                         });
                         $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
                         location.href = location.href;
                     } else if (response.status == 203) {
                         swal(response.message, {
