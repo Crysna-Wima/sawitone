@@ -203,19 +203,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <label>Nama Produk</label>
-                                    <div class="form-group">
-                                        <input type="text" min="0" class="form-control" name=""
-                                            id="">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <label>Unity</label>
-                                    <div class="form-group">
-                                        <input type="number" min="0" class="form-control" name=""
-                                            id="">
-                                    </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <label>Harga</label>
+                                    <div class="input-group format-rp">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
+                                            </div> 
+                                            <input type="text" id="" class="form-control"
+                                                name="" onkeyup="return onkeyupRupiah(this.id)" required>
+                                        </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
                                     <div class="form-group">
@@ -309,9 +307,13 @@
                                     <thead style="white-space: nowrap">
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
+                                            <th scope="col" class="text-center">Stock Code</th>
                                             <th scope="col" class="text-center">Nama Produk</th>
-                                            <th scope="col" class="text-center">Quantity</th>
                                             <th scope="col" class="text-center">Unity</th>
+                                            <th scope="col" class="text-center">Harga</th>
+                                            <th scope="col" class="text-center">Disc</th>
+                                            <th scope="col" class="text-center">Qty</th>
+                                            <th scope="col" class="text-center">Total</th>
                                             <th scope="col" class="text-center justify-content-center">Action</th>
                                         </tr>
                                     </thead>
