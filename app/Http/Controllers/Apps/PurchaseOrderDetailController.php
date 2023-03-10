@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use App\Models\TempPoDetail;
 use App\Models\TempPoMaster;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Validator;
 use Yajra\DataTables\DataTables;
@@ -175,5 +177,93 @@ class PurchaseOrderDetailController extends Controller
         'status' => 300,
         'message' => 'Error'
       ];
+    }
+
+    public function submit(Request $request){
+
+        // jumlah item PO detail
+        $temp_detail = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->get();
+        $total = count($temp_detail);
+
+        // get total pembayaran
+        $data_bayar = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->get();
+        $total_bayar = 0;
+        foreach ($data_bayar as $key => $value) {
+            $total_bayar += $value->fm_po_price * $value->fn_po_qty;
+        }
+
+
+        // validasi
+        $validator = Validator::make($request->all(), [
+            'fd_sodateinputuser' => 'required',
+        ], [
+            'fd_sodateinputuser.required' => 'Date Order harus diisi',
+        ]);
+
+        // jika validasi gagal
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => 'Date Order atau Date Expired Kosong',
+            ];
+        } else {
+            // insert into TempSoMaster
+            if ($total == 0) {
+                return [
+                    'status' => 300,
+                    'message' => 'Tambahkan Item terlebih dahulu',
+                ];
+            }
+
+            DB::beginTransaction();
+         
+            try {
+                $temp_so_master = TempPoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
+                    'fc_postatus' => 'F',
+                    'fd_podateinputuser' => date("Y-m-d H:i:s",strtotime($request->fd_sodateinputuser)),
+                    'fd_poexpired' => date("Y-m-d H:i:s",strtotime($request->fd_soexpired)),
+
+                    'fd_podatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                // dd($request);
+                // tampilkan data yang di update dari $temp_so_master
+
+
+                TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->delete();
+                TempPoMaster::where(['fc_pono' => auth()->user()->fc_userid])->delete();
+
+                DB::commit();
+                if ($temp_so_master) {
+                    return [
+                        'status' => 201, // SUCCESS
+                        'link' => '/apps/purchase-order',
+                        'message' => 'Submit Pembayaran Berhasil'
+                    ];
+                }
+            } catch (\Exception $e) {
+
+                DB::rollBack();
+
+                return [
+                    'status'     => 300, // GAGAL
+                    'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+                ];
+            }
+
+            // jika update berhasil
+            // if ($temp_so_master) {
+            //     // Tambahkan session flash message
+            //     // session()->flash("message", "Pembayaran Berhasil"); 
+
+            //     // // Kirim data message yang didapat dari session
+            //     // $message = session()->get("message");
+            //     return response()->json(["status" => 200, "message" => "Pembayaran Berhasil"]);
+            // }
+
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan',
+            ];
+        }
     }
 }

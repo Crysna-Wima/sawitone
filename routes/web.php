@@ -257,6 +257,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::put('/received-update/{fc_pono}','Apps\PurchaseOrderDetailController@received_update');
                 Route::get('/datatables','Apps\PurchaseOrderDetailController@datatables');
                 Route::delete('/delete/{fc_pono}/{fc_porownum}','Apps\PurchaseOrderDetailController@delete');
+                Route::post('/submit','Apps\PurchaseOrderDetailController@submit');
             });
         });
 

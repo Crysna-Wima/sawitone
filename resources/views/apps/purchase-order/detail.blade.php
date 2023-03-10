@@ -336,9 +336,8 @@
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit"
-                            action="/apps/purchase-order/detail/received-update/{{ $data->fc_pono }}" method="POST"
-                            autocomplete="off">
+                        <form id="form_submit" action="/apps/purchase-order/detail/received-update/{{ $data->fc_pono }}"
+                            method="POST" autocomplete="off">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -351,9 +350,14 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-
+                                            @if (empty($data->fd_podateinputuser))
                                             <input type="text" id="fd_podateinputuser" class="form-control datepicker"
                                                 name="fd_podateinputuser" required>
+                                                @else
+                                                <input type="text" id="fd_podateinputuser" class="form-control datepicker"
+                                                name="fd_podateinputuser" value="{{ $data->fd_podateinputuser }}" required>  
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +375,8 @@
                                         @else
                                             <select class="form-control select2" name="fc_potransport"
                                                 id="fc_potransport">
-                                                <option value="{{ $data->fc_potransport }}" selected>{{ $data->fc_potransport }}
+                                                <option value="{{ $data->fc_potransport }}" selected>
+                                                    {{ $data->fc_potransport }}
                                                 </option>
                                                 <option value="By Dexa">By Dexa</option>
                                                 <option value="By Paket">By Paket</option>
@@ -389,8 +394,15 @@
                                                     Rp.
                                                 </div>
                                             </div>
-                                            <input type="text" id="fm_servpay" class="form-control" name="fm_servpay"
-                                                onkeyup="return onkeyupRupiah(this.id)" required>
+                                            @if ($data->fm_servpay == 0)
+                                                <input type="text" class="form-control format-rp" name="fm_servpay"
+                                                    id="fm_servpay" fdprocessedid="hgh1fp"
+                                                    onkeyup="return onkeyupRupiah(this.id);" required>
+                                            @else
+                                                <input type="text" class="form-control format-rp" name="fm_servpay"
+                                                    id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);"
+                                                    value="{{ $data->fm_servpay }}">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -412,9 +424,11 @@
                         </form>
                     </div>
                 </div>
-                <div class="button text-right mb-4">
-                    <a href="#" class="btn btn-success">Submit</a>
-                </div>
+                @if ($data->fc_sostatus === 'F')
+                    <button id="submit_button" class="btn btn-success" disabled>Submit</button>
+                @else
+                    <button id="submit_button" class="btn btn-success">Submit</button>
+                @endif
             </div>
         </div>
     </div>
@@ -887,6 +901,50 @@
                     });
                 }
             });
+        });
+
+        $("#submit_button").click(function() {
+            swal({
+                    title: 'Apakah anda yakin?',
+                    text: 'Apakah anda yakin akan menyimpan data SO ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((save) => {
+                    if (save) {
+                        // $("#modal_loading").modal('show');
+                        var data = {
+                            'fd_podateinputuser': $('#fd_podateinputuser').val(),
+                        };
+                        $.ajax({
+                            type: 'POST',
+                            url: '/apps/purchase-order/detail/submit',
+                            data: data,
+                            success: function(response) {
+                                // tampilkan modal section alert
+                                if (response.status == 300 || response.status == 301) {
+                                    $('#alert-message').html(response.message);
+                                    $('#alertModal').modal('show');
+                                } else {
+                                    // tampilkan flas message bootstrap id alert-bayar
+                                    $('#alert-bayar').append(
+                                        '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
+                                        response.message + '</div></div>');
+                                    // redirect ke halaman sales order
+                                    // hapus local storage
+                                    localStorage.removeItem('fd_sodateinputuser');
+                                    localStorage.removeItem('fd_soexpired');
+                                    window.location.href = "/apps/sales-order";
+
+
+                                }
+                            }
+                        });
+                    }
+                });
+
+
         });
     </script>
 @endsection
