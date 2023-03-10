@@ -350,7 +350,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
                                         <label>Transport</label>
                                         @if (empty($data->fc_potransport))
@@ -387,7 +387,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-3">
                                     <label>Alamat Tujuan</label>
                                     <div class="form-group">
                                         <input type="text" id="fc_address_loading1" class="form-control"
