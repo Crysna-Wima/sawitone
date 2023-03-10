@@ -465,7 +465,7 @@
                     </div>
                 </div>
                 <div class="button text-right mb-4">
-                @if ($data->fc_sostatus === 'F')
+                @if ($data->fc_postatus === 'F')
                     <button id="submit_button" class="btn btn-success" disabled>Submit</button>
                 @else
                     <button id="submit_button" class="btn btn-success">Submit</button>
@@ -976,10 +976,10 @@
                             data: data,
                             success: function(response) {
                                 // tampilkan modal section alert
+                                console.log(response.status);
                                 if (response.status == 300 || response.status == 301) {
                                     $('#modal_loading').modal('hide');
-                                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                    .responseText + ")", {
+                                    swal(response.message, {
                                         icon: 'error',
                                     });
                                 } else {

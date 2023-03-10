@@ -224,8 +224,6 @@ class PurchaseOrderDetailController extends Controller
             try {
                 $temp_po_master = TempPoMaster::where('fc_pono', auth()->user()->fc_userid)->update([
                     'fc_postatus' => 'F',
-                    'fd_podateinputuser' => date("Y-m-d H:i:s",strtotime($request->fd_sodateinputuser)),
-                    'fd_poexpired' => date("Y-m-d H:i:s",strtotime($request->fd_poexpired)),
                     'fd_podatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 // dd($request);
