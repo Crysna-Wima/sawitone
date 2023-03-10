@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-    Route::get('/','LoginController@index')->name('login');
+    Route::get('/','LandingPageController@index');
     Route::post('/login','LoginController@login');
     Route::get('/logout','LoginController@logout');
+
+    Route::prefix('login')->group(function () {
+        Route::get('/','LoginController@index')->name('login');
+    });
 
     Route::prefix('master')->group(function () {
         Route::get('/get-data-all/{model}','DataMasterController@get_data_all');
