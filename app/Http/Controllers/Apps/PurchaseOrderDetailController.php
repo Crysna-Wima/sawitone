@@ -134,11 +134,12 @@ class PurchaseOrderDetailController extends Controller
             'fd_podateinputuser' => 'required',
             'fc_potransport' => 'required',
             'fc_address_loading1' => 'required',
-        
+            'fd_poexpired' => 'required'
         ], [
             'fd_podateinputuser' => 'Tanggal harus diisi',
             'fc_potransport.required' => 'Transport harus diisi',
             'fc_address_loading1.required' => 'Alamat Tujuan harus diisi',
+            'fd_poexpired.required' => 'Tanggal Expired harus diisi'
         ]);
 
         if ($validator->fails()) {
@@ -153,7 +154,8 @@ class PurchaseOrderDetailController extends Controller
             'fd_podateinputuser' => $request->fd_podateinputuser,
             'fc_potransport' => $request->fc_potransport,
             'fm_servpay' => $request->fm_servpay,
-            'fc_memberaddress_loading1' => $request->fc_memberaddress_loading1
+            'fc_memberaddress_loading1' => $request->fc_memberaddress_loading1,
+            'fd_poexpired' => $request->fd_poexpired,
         ]);
 
         $temp_po_master = TempPoMaster::with('branch', 'supplier_tax_code', 'sales', 'supplier.supplier_type_business', 'supplier.supplier_typebranch', 'supplier.supplier_legal_status')->where('fc_pono', auth()->user()->fc_userid)->first();
@@ -195,9 +197,11 @@ class PurchaseOrderDetailController extends Controller
 
         // validasi
         $validator = Validator::make($request->all(), [
-            'fd_sodateinputuser' => 'required',
+            'fd_podateinputuser' => 'required',
+            'fd_poexpired' => 'required',
         ], [
-            'fd_sodateinputuser.required' => 'Date Order harus diisi',
+            'fd_podateinputuser.required' => 'Date Order harus diisi',
+            'fd_poexpired.required' => 'Date Expired harus diisi',
         ]);
 
         // jika validasi gagal
@@ -218,11 +222,10 @@ class PurchaseOrderDetailController extends Controller
             DB::beginTransaction();
          
             try {
-                $temp_so_master = TempPoMaster::where('fc_sono', auth()->user()->fc_userid)->update([
+                $temp_po_master = TempPoMaster::where('fc_pono', auth()->user()->fc_userid)->update([
                     'fc_postatus' => 'F',
                     'fd_podateinputuser' => date("Y-m-d H:i:s",strtotime($request->fd_sodateinputuser)),
-                    'fd_poexpired' => date("Y-m-d H:i:s",strtotime($request->fd_soexpired)),
-
+                    'fd_poexpired' => date("Y-m-d H:i:s",strtotime($request->fd_poexpired)),
                     'fd_podatesysinput' => Carbon::now()->format('Y-m-d H:i:s'),
                 ]);
                 // dd($request);
@@ -233,11 +236,11 @@ class PurchaseOrderDetailController extends Controller
                 TempPoMaster::where(['fc_pono' => auth()->user()->fc_userid])->delete();
 
                 DB::commit();
-                if ($temp_so_master) {
+                if ($temp_po_master) {
                     return [
                         'status' => 201, // SUCCESS
                         'link' => '/apps/purchase-order',
-                        'message' => 'Submit Pembayaran Berhasil'
+                        'message' => 'Submit Purchase Order Berhasil'
                     ];
                 }
             } catch (\Exception $e) {
@@ -265,5 +268,6 @@ class PurchaseOrderDetailController extends Controller
                 'message' => 'Data gagal disimpan',
             ];
         }
+        // dd($request);
     }
 }

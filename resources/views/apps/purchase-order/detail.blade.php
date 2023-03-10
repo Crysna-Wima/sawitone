@@ -254,7 +254,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -262,7 +263,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -270,29 +272,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -344,13 +351,14 @@
                                                 </div>
                                             </div>
                                             @if (empty($data->fd_podateinputuser))
-                                            <input type="text" id="fd_podateinputuser" class="form-control datepicker"
-                                                name="fd_podateinputuser" required>
-                                                @else
-                                                <input type="text" id="fd_podateinputuser" class="form-control datepicker"
-                                                name="fd_podateinputuser" value="{{ $data->fd_podateinputuser }}" required>  
+                                                <input type="text" id="fd_podateinputuser"
+                                                    class="form-control datepicker" name="fd_podateinputuser" required>
+                                            @else
+                                                <input type="text" id="fd_podateinputuser"
+                                                    class="form-control datepicker" name="fd_podateinputuser"
+                                                    value="{{ $data->fd_podateinputuser }}" required>
                                             @endif
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -358,8 +366,8 @@
                                     <div class="form-group">
                                         <label>Masa</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
-                                            <input type="number" id="" class="form-control" name=""
-                                                required>
+                                            <input type="number" id="fn_inv_agingday" class="form-control"
+                                                name="fn_inv_agingday" required>
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">
                                                     Hari
@@ -378,8 +386,14 @@
                                                 </div>
                                             </div>
 
-                                            <input type="text" id="fd_poexpired" class="form-control datepicker"
-                                                name="fd_poexpired" required>
+                                            @if (empty($data->fd_poexpired))
+                                                <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                    name="fd_poexpired" required>
+                                            @else
+                                                <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                    name="fd_poexpired" value="{{ $data->fd_poexpired }}" required>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
@@ -439,11 +453,11 @@
                                 </div>
                             </div>
                             <div class="text-right">
-                            @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            @else
-                                <button type="submit" class="btn btn-warning">Edit</button>
-                            @endif
+                                @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                @else
+                                    <button type="submit" class="btn btn-warning">Edit</button>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -814,6 +828,14 @@
                     $('#count_item').html(data[0].temppomst.fn_podetail);
                     $("#count_item").trigger("change");
                 }
+
+                $('#fn_inv_agingday').on('input', function() {
+                    var fd_podateinputuser = $('#fd_podateinputuser').val();
+                    var fn_inv_agingday = $('#fn_inv_agingday').val();
+                    var fd_poexpired = moment(fd_podateinputuser, 'YYYY-MM-DD').add(fn_inv_agingday,
+                        'days').format('YYYY-MM-DD');
+                    $('#fd_poexpired').val(fd_poexpired);
+                });
             }
 
         });
@@ -930,16 +952,19 @@
         $("#submit_button").click(function() {
             swal({
                     title: 'Apakah anda yakin?',
-                    text: 'Apakah anda yakin akan menyimpan data SO ini?',
+                    text: 'Apakah anda yakin akan menyimpan data Purchase Order ini?',
                     icon: 'warning',
                     buttons: true,
                     dangerMode: true,
                 })
                 .then((save) => {
+                   
+                    $("#modal_loading").modal('show');
                     if (save) {
-                        // $("#modal_loading").modal('show');
+                        
                         var data = {
                             'fd_podateinputuser': $('#fd_podateinputuser').val(),
+                            'fd_poexpired': $('#fd_poexpired').val(),
                         };
                         $.ajax({
                             type: 'POST',
@@ -952,17 +977,26 @@
                                     $('#alertModal').modal('show');
                                 } else {
                                     // tampilkan flas message bootstrap id alert-bayar
-                                    $('#alert-bayar').append(
-                                        '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
-                                        response.message + '</div></div>');
+                                    swal(response.message, {
+                                        icon: 'success',
+                                    });
                                     // redirect ke halaman sales order
                                     // hapus local storage
-                                    localStorage.removeItem('fd_sodateinputuser');
-                                    localStorage.removeItem('fd_soexpired');
-                                    window.location.href = "/apps/sales-order";
 
+                                    
+                                    setTimeout(function() {
+                                        window.location.href = "/apps/purchase-order";
+                                    }, 500);
 
                                 }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                    icon: 'error',
+                                });
                             }
                         });
                     }
