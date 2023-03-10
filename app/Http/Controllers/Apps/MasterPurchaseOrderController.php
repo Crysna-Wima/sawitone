@@ -25,7 +25,7 @@ class MasterPurchaseOrderController extends Controller
     }
     
     public function datatables(){
-        $data = PoMaster::all();
+        $data = PoMaster::with('supplier');
 
         return DataTables::of($data)
         ->addIndexColumn()
