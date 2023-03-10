@@ -605,7 +605,9 @@
                 ],
                 "initComplete": function() {
                     // hidden modal loading
-                    $('#modal_loading').modal('hide');
+                    setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
                     $('#modal_inventory').modal('show');
 
                     stock_inventory_table.DataTable().ajax.reload();

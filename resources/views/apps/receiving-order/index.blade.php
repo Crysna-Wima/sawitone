@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Purchase Order')
+@section('title', 'Receiving Order')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -40,7 +40,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Master Purchase Order</h4>
+                        <h4>List Purchase Order</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -49,7 +49,7 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">PONO</th>
-                                        <th scope="col" class="text-center">Tgl</th>
+                                        <th scope="col" class="text-center">Order</th>
                                         <th scope="col" class="text-center">Expired</th>
                                         <th scope="col" class="text-center">Tipe</th>
                                         <th scope="col" class="text-center">Supplier</th>
@@ -74,6 +74,6 @@
 
 @section('js')
     <script>
-        
+
     </script>
 @endsection

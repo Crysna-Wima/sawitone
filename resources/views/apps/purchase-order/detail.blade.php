@@ -48,7 +48,7 @@
                     </div>
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     {{-- <form id="form_submit" action="/apps/purchase-order/store-update" method="POST" autocomplete="off"> --}}
-                    <div class="collapse show" id="mycard-collapse">
+                    <div class="collapse" id="mycard-collapse">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
@@ -111,7 +111,7 @@
                                     class="fas fa-minus"></i></a>
                         </div>
                     </div>
-                    <div class="collapse show" id="mycard-collapse2">
+                    <div class="collapse" id="mycard-collapse2">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
