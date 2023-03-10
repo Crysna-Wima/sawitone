@@ -26,7 +26,7 @@ class TempPoDetail extends Model
     }
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_barcode', 'fc_barcode')->withTrashed();
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
 
     public function warehouse(){
@@ -35,5 +35,9 @@ class TempPoDetail extends Model
 
     public function namepack(){
         return $this->belongsTo(TransaksiType::class, 'fc_namepack', 'fc_kode')->withTrashed();
+    }
+
+    public function temppomst(){
+        return $this->belongsTo(TempPoMaster::class, 'fc_pono', 'fc_pono');
     }
 }

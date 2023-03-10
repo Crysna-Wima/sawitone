@@ -823,44 +823,34 @@
                 success: function(response) {
 
                     setTimeout(function() {
-                            $('#modal_loading').modal('hide');
-                        }, 500);
-                    var data = response;
-
-                    //menguraikan respons JSON
-                    console.log(data.status);
-                    var jsonResponse = JSON.parse(data);
-                    // console.log(jsonResponse.status)
-                    if (jsonResponse.status == 200) {
-                        // console.log("Connect");
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    if (response.status == 200) {
                         // swal(response.message, { icon: 'success', });
-                        // $("#modal_loading").modal('hide');
+                        $("#modal").modal('hide');
                         $("#form_submit_custom")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
-                        if (jsonResponse.total < 1) {
-                            window.location.href = jsonResponse.link;
+                        if (response.total < 1) {
+                            window.location.href = response.link;
                         }
-                       
-                    } else if (jsonResponse.status == 201) {
-                        swal(jsonResponse.message, {
-                            icon: 'success',
-                        });
-                        $("#modal").modal('hide');
-                        tb.ajax.reload(null, false);
-                        location.href = location.href;
-                        // tb.ajax.reload(null, false);
-                    } else if (jsonResponse.status == 203) {
+                    } else if (response.status == 201) {
                         swal(response.message, {
                             icon: 'success',
                         });
                         $("#modal").modal('hide');
                         tb.ajax.reload(null, false);
-                    } else {
-                        swal(jsonResponse.message, {
+                        location.href = location.href;
+                    } else if (response.status == 203) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                    } else if (response.status == 300) {
+                        swal(response.message, {
                             icon: 'error',
                         });
-                        // console.log('error');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {

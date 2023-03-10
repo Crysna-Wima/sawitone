@@ -187,7 +187,7 @@
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST"
+                        <form id="form_submit_custom" action="/apps/purchase-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -196,6 +196,8 @@
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_barcode" name="fc_barcode"
                                                 readonly>
+                                            <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode"
+                                                readonly hidden>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="button"
                                                     onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
@@ -211,16 +213,16 @@
                                                     Rp.
                                                 </div>
                                             </div> 
-                                            <input type="text" id="" class="form-control"
-                                                name="" onkeyup="return onkeyupRupiah(this.id)" required>
+                                            <input type="text" id="fm_po_price" class="form-control"
+                                                name="fm_po_price" onkeyup="return onkeyupRupiah(this.id)" required>
                                         </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
                                     <div class="form-group">
                                         <label>Qty</label>
                                         <div class="form-group">
-                                            <input type="number" min="0" class="form-control" name=""
-                                                id="">
+                                            <input type="number" min="0" class="form-control" name="fn_po_qty"
+                                                id="fn_po_qty">
                                         </div>
                                     </div>
                                 </div>
@@ -229,12 +231,12 @@
                                         <label>Deskripsi</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="">
+                                                name="fv_description" id="fv_description">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button class="btn btn-success">Add Item</button>
+                                    <button type="submit" class="btn btn-success">Add Item</button>
                                 </div>
                             </div>
                         </form>
@@ -303,7 +305,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="table-responsive">
-                                <table class="table table-striped" id="tb" width="100%">
+                                <table class="table table-striped" id="po_detail" width="100%">
                                     <thead style="white-space: nowrap">
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
@@ -603,6 +605,44 @@
             });
         }
 
+        function detail_stock($id) {
+            $.ajax({
+                url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
+                type: "GET",
+                dataType: "JSON",
+                success: function(response) {
+                    var data = response.data;
+                    // console.log(data.tempsodetail[0].fm_so_price);
+                    var tipe_bisnis  = "{{ $data->supplier->supplier_type_business->fv_description }}";
+                    if(tipe_bisnis == 'DISTRIBUTOR'){
+                        $('#fm_po_price').val(data.fm_price_distributor);
+                    }else if(tipe_bisnis == 'RETAIL'){
+                        $('#fm_po_price').val(data.fm_price_default);
+                    }else if(tipe_bisnis == 'HOSPITAL'){
+                        $('#fm_po_price').val(data.fm_price_project);
+                    }else if(tipe_bisnis == 'PERSONAL'){
+                        $('#fm_po_price').val(data.fm_price_enduser);
+                    }else if(tipe_bisnis == 'ENDUSER'){
+                        $('#fm_po_price').val(data.fm_price_enduser);
+                    }else{
+                        $('#fm_po_price').val("");
+                    }
+                    $('#fc_barcode').val(data.fc_barcode);
+                    $('#fc_stockcode').val(data.fc_stockcode);
+
+                    $("#modal_stock").modal('hide');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                        icon: 'error',
+                    });
+                }
+            });
+        }
+
         function detail_supplier($id) {
             $.ajax({
                 url: "/master/data-supplier-first/" + $id,
@@ -633,6 +673,92 @@
                 }
             });
         }
+
+        // tabel po detail
+        var tb = $('#po_detail').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/purchase-order/detail/datatables",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 4, 5, 6, 7, 8]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_nameshort'
+                },
+                {
+                    data: 'fc_namepack'
+                },
+                {
+                    data: 'fm_po_price'
+                },
+                {
+                    data: 'fm_po_disc'
+                },
+                {
+                    data: 'fn_po_qty',
+                },
+                {
+                    data: 'fn_po_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null,
+                },
+            ],
+
+            rowCallback: function(row, data) {
+                var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
+
+                $('td:eq(10)', row).html(`
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+                `);
+            },
+            footerCallback: function(row, data, start, end, display) {
+
+                let count_quantity = 0;
+                let total_harga = 0;
+                let grand_total = 0;
+
+                for (var i = 0; i < data.length; i++) {
+                    count_quantity += data[i].fn_po_qty;
+                    total_harga += data[i].total_harga;
+                    grand_total += data[i].total_harga;
+                }
+
+                $('#count_quantity').html(count_quantity);
+                // $('#total_harga').html(fungsiRupiah(grand_total));
+                // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
+                // servpay
+                if (data.length != 0) {
+                    $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].temppomst.fm_servpay));
+                    $("#fm_servpay").trigger("change");
+                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].temppomst.fm_tax));
+                    $("#fm_tax").trigger("change");
+                    $('#grand_total').html("Rp. " + fungsiRupiah(data[0].temppomst.fm_brutto));
+                    $("#grand_total").trigger("change");
+                    $('#total_harga').html("Rp. " + fungsiRupiah(data[0].temppomst.fm_netto));
+                    $("#total_harga").trigger("change");
+                    $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].temppomst.fn_disctotal));
+                    $("#fm_so_disc").trigger("change");
+                    $('#count_item').html(data[0].temppomst.fn_sodetail);
+                    $("#count_item").trigger("change");
+                }
+            }
+            
+        });
 
         function click_delete() {
             swal({
@@ -681,5 +807,65 @@
                     }
                 });
         }
+
+        $('#form_submit_custom').on('submit', function(e) {
+            e.preventDefault();
+
+            var form_id = $(this).attr("id");
+            if (check_required(form_id) === false) {
+                swal("Oops! Mohon isi field yang kosong", {
+                    icon: 'warning',
+                });
+                return;
+            }
+
+            $("#modal_loading").modal('show');
+            $.ajax({
+                url: $('#form_submit_custom').attr('action'),
+                type: $('#form_submit_custom').attr('method'),
+                data: $('#form_submit_custom').serialize(),
+                success: function(response) {
+
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    if (response.status == 200) {
+                        // swal(response.message, { icon: 'success', });
+                        $("#modal").modal('hide');
+                        $("#form_submit_custom")[0].reset();
+                        reset_all_select();
+                        tb.ajax.reload(null, false);
+                        if (response.total < 1) {
+                            window.location.href = response.link;
+                        }
+                    } else if (response.status == 201) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                        location.href = location.href;
+                    } else if (response.status == 203) {
+                        swal(response.message, {
+                            icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                    } else if (response.status == 300) {
+                        swal(response.message, {
+                            icon: 'error',
+                        });
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                        icon: 'error',
+                    });
+                }
+            });
+        });
     </script>
 @endsection

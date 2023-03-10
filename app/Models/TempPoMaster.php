@@ -29,8 +29,9 @@ class TempPoMaster extends Model
         return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
 
-    
-
-    
+    public function tempsodtl(){
+        return $this->hasMany(TempPoDetail::class, 'fc_pono', 'fc_pono')->withTrashed();
+    }
+ 
 
 }

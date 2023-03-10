@@ -37,8 +37,7 @@ class SalesOrderDetailController extends Controller
             ->make(true);
     }
 
-    public function store_update(request $request)
-    {
+    public function store_update(request $request){
         $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
         $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
@@ -142,21 +141,6 @@ class SalesOrderDetailController extends Controller
         // $data['discount_view'] = "Rp " . number_format($so_discount,0,',','.');
         // $data['total_view'] = "Rp " . number_format($so_total,0,',','.');
         // $data['grand_view'] = "Rp " . number_format($so_grand,0,',','.');
-<<<<<<< HEAD
-        if($insert_so_detail){
-         return response()->json([
-            'status' => 200,
-            'total' => $total,
-            'link' => '/apps/sales-order',
-            'message' => 'Data berhasil disimpan'
-        ]);
-        }
-         return [
-            'status' => 300,
-            'link' => '/apps/sales-order',
-            'message' => 'Error'
-            ];
-=======
             
         if($insert_so_detail){
             return response()->json([
@@ -171,7 +155,6 @@ class SalesOrderDetailController extends Controller
                'link' => '/apps/sales-order',
                'message' => 'Error'
                ];
->>>>>>> 30cd0f7f484f73a7a7bd970c679f0a95c33b5d6b
     }
 
     public function delete($fc_sono, $fn_sorownum)

@@ -247,7 +247,6 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('purchase-order')->group(function () {
             Route::get('/','Apps\PurchaseOrderController@index');
-            Route::get('/datatables','Apps\PurchaseOrderController@datatables');
             Route::get('/get-data-supplier-po-datatables/{fc_branch}','Apps\PurchaseOrderController@get_data_supplier_po_datatables');
             Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','Apps\PurchaseOrderController@get_data_where_field_id_get');
             Route::post('/store-update','Apps\PurchaseOrderController@store_update');
@@ -255,11 +254,13 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::prefix('detail')->group(function () {
                 Route::post('/store-update','Apps\PurchaseOrderDetailController@store_update');
+                Route::get('/datatables','Apps\PurchaseOrderDetailController@datatables');
             });
         });
 
         Route::prefix('master-purchase-order')->group(function(){
             Route::get('/','Apps\MasterPurchaseOrderController@index');
+            Route::get('/datatables','Apps\MasterPurchaseOrderController@datatables');
         });
 
         Route::prefix('receiving-order')->group(function(){

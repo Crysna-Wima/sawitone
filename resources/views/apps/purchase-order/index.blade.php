@@ -315,28 +315,6 @@
                 </div>
             </div>
 
-            {{-- TABLE --}}
-            <div class="col-12 col-md-12 col-lg-12 place_detail">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="tb" width="100%">
-                                    <thead style="white-space: nowrap">
-                                        <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Nama Produk</th>
-                                            <th scope="col" class="text-center">Quantity</th>
-                                            <th scope="col" class="text-center">Unity</th>
-                                            <th scope="col" class="text-center justify-content-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
