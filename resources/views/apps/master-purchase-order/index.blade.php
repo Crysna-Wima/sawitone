@@ -44,7 +44,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="tb" width="100%">
+                            <table class="table table-striped" id="po_master" width="100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
@@ -74,6 +74,60 @@
 
 @section('js')
     <script>
-        
+        var tb = $('#po_master').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/master-purchase-order/datatables",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 4, 5, 6, 7, 8, 9]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_nameshort'
+                },
+                {
+                    data: 'fc_namepack'
+                },
+                {
+                    data: 'fm_po_price'
+                },
+                {
+                    data: 'fm_po_disc'
+                },
+                {
+                    data: 'fn_po_qty',
+                },
+                {
+                    data: 'fc_postatus',
+                },  
+                {
+                    data: 'fn_po_value',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null,
+                },
+            ], 
+            
+            rowCallback: function(row, data) {
+                var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
+
+                $('td:eq(9)', row).html(`
+                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"> </i> Detail</button>
+                `);
+            },
+        });
     </script>
 @endsection

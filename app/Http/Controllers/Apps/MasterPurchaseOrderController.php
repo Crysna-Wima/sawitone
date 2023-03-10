@@ -14,9 +14,7 @@ use Carbon\Carbon;
 use File;
 use DB;
 
-use App\Models\DoDetail;
-use App\Models\DoMaster;
-use App\Models\InvMaster;
+use App\Models\PoMaster;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterPurchaseOrderController extends Controller
@@ -26,6 +24,13 @@ class MasterPurchaseOrderController extends Controller
         return view('apps.master-purchase-order.index');
     }
     
+    public function datatables(){
+        $data = PoMaster::all();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+    }
     // public function pdf($fc_dono)
     // {
         // session(['fc_dono_global' => $fc_dono]);

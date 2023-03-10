@@ -244,7 +244,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6 place_detail">
-            <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <h4>Prediksi Tagihan</h4>
                     </div>
