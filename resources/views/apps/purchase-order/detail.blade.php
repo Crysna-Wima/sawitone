@@ -982,9 +982,13 @@
                             success: function(response) {
                                 // tampilkan modal section alert
                                 if (response.status == 300 || response.status == 301) {
-                                    $('#alert-message').html(response.message);
-                                    $('#alertModal').modal('show');
+                                    $('#modal_loading').modal('hide');
+                                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
                                 } else {
+                                    $('#modal_loading').modal('hide');
                                     // tampilkan flas message bootstrap id alert-bayar
                                     swal(response.message, {
                                         icon: 'success',
@@ -1000,9 +1004,9 @@
                                 }
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
-                                setTimeout(function() {
+                                
                                     $('#modal_loading').modal('hide');
-                                }, 500);
+                              
                                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
                                     .responseText + ")", {
                                         icon: 'error',
