@@ -73,8 +73,6 @@ class PurchaseOrderController extends Controller
             'fc_potype' => $request->fc_potype,
             'fc_suppliercode' => $request->fc_suppliercode,
             'fc_suppliertaxcode' => $supplier->fc_suppliertaxcode,
-            'fc_address_loading1' => $supplier->fc_supplier_npwpaddress1,
-            'fc_address_loading2' => $supplier->fc_supplier_npwpaddress2,
             'fd_podatesysinput' => Carbon::now(),
             'fc_userid' => auth()->user()->fc_userid,
         ], $request->all());
