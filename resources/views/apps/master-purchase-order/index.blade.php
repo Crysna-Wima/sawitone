@@ -48,7 +48,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Dono</th>
+                                        <th scope="col" class="text-center">PONO</th>
                                         <th scope="col" class="text-center">Tgl</th>
                                         <th scope="col" class="text-center">Expired</th>
                                         <th scope="col" class="text-center">Tipe</th>
@@ -74,6 +74,6 @@
 
 @section('js')
     <script>
-
+        
     </script>
 @endsection
