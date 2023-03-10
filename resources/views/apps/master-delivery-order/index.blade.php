@@ -285,10 +285,11 @@
                     'fc_dono': fc_dono
                 },
                 success: function(data) {
-
-                    // hilangkan modal loading
-                    $('#modal_loading').modal('hide');
-
+                      // hilangkan modal loading
+                    setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                    
                     // set fc_dono
                     $('#fc_dono').text(data.fc_dono);
                     // set fc_dono input
@@ -367,10 +368,12 @@
 
                     // tampilkan modal_invoice
                     $('#modal_invoice').modal('show');
+                    
+
                 },
                 error: function() {
-                    // hilangkan modal loading
-                    $('#modal_loading').modal('hide');
+                    // // hilangkan modal loading
+                    // $('#modal_loading').modal('hide');
 
                     console.log('Error retrieving fd_dodateinputuser');
                 }
