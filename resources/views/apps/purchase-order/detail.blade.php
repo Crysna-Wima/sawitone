@@ -1013,6 +1013,8 @@
                                     });
                             }
                         });
+                    }else{
+                        $('#modal_loading').modal('hide');
                     }
                 });
 
