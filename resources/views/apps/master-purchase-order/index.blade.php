@@ -56,7 +56,7 @@
                                         <th scope="col" class="text-center">Item</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -85,35 +85,43 @@
             columnDefs: [{
                 className: 'text-center',
                 targets: [0, 4, 5, 6, 7, 8, 9]
-            }, ],
+            },{
+                className: 'text-nowrap',
+                targets: [2, 3, 5, 9]
+            }],
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
                 },
                 {
-                    data: 'fc_stockcode'
+                    data: 'fc_pono'
                 },
                 {
-                    data: 'stock.fc_nameshort'
+                    data: 'fd_podateinputuser',
+                    render: formatTimestamp
                 },
                 {
-                    data: 'fc_namepack'
+                    data: 'fd_poexpired',
+                    render: formatTimestamp
                 },
                 {
-                    data: 'fm_po_price'
+                    data: 'fc_potype'
                 },
                 {
-                    data: 'fm_po_disc'
+                    data: null,
+                    render: function ( data, type, row ) {
+                        return row.supplier.fc_supplierlegalstatus+' '+row.supplier.fc_suppliername1;
+                    }
                 },
                 {
-                    data: 'fn_po_qty',
+                    data: 'fn_podetail',
                 },
                 {
                     data: 'fc_postatus',
                 },  
                 {
-                    data: 'fn_po_value',
+                    data: 'fm_brutto',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
@@ -122,10 +130,22 @@
             ], 
             
             rowCallback: function(row, data) {
-                var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
+                $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+                if (data['fc_postatus'] == 'F') {
+                    $('td:eq(7)', row).html('<span class="badge badge-primary">Ordered</span>');
+                } else if (data['fc_postatus'] == 'P') {
+                    $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+                } else if (data['fc_postatus'] == 'L') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
+                } else if (data['fc_postatus'] == 'S') {
+                    $('td:eq(7)', row).html('<span class="badge badge-info">Sent</span>');
+                } else {
+                    $('td:eq(7)', row).html('<span class="badge badge-success">Complete</span>');
+                }
 
                 $('td:eq(9)', row).html(`
-                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"> </i> Detail</button>
+                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"> </i> Detail</button>
+                    <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"> </i> PDF</button>
                 `);
             },
         });
