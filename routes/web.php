@@ -257,6 +257,10 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-purchase-order')->group(function(){
             Route::get('/','Apps\MasterPurchaseOrderController@index');
         });
+
+        Route::prefix('receiving-order')->group(function(){
+            Route::get('/','Apps\ReceivingOrderController@index');
+        });
     });
 });
 
