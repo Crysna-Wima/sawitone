@@ -106,5 +106,19 @@ class PurchaseOrderDetailController extends Controller
                'link' => '/apps/purchase-order',
                'message' => 'Error'
                ];
-    }
+     }
+
+     public function delete($fc_pono, $fn_porownum){
+        $delete = TempPoDetail::where('fc_pono', $fc_pono)->where('fn_porownum', $fn_porownum)->delete();
+        if($delete){
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+     }
 }

@@ -255,6 +255,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('detail')->group(function () {
                 Route::post('/store-update','Apps\PurchaseOrderDetailController@store_update');
                 Route::get('/datatables','Apps\PurchaseOrderDetailController@datatables');
+                Route::delete('/delete/{fc_pono}/{fc_porownum}','Apps\PurchaseOrderDetailController@delete');
             });
         });
 

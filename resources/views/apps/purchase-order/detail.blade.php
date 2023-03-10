@@ -720,10 +720,12 @@
             ],
 
             rowCallback: function(row, data) {
-                var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
+                // console.log(data.fc_pono);
+                // console.log(data.fn_porownum);
+                var url_delete = "/apps/purchase-order/detail/delete/" + data.fc_pono + '/' + data.fn_porownum;
 
-                $('td:eq(10)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+                $('td:eq(8)', row).html(`
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Purchase Order Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
             },
             footerCallback: function(row, data, start, end, display) {
@@ -760,6 +762,7 @@
             
         });
 
+       
         function click_delete() {
             swal({
                     title: 'Apakah anda yakin?',
