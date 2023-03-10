@@ -753,8 +753,6 @@
                     $('#count_item').html(data[0].tempsomst.fn_sodetail);
                     $("#count_item").trigger("change");
                 }
-
-
             }
         });
 
@@ -849,6 +847,7 @@
                             icon: 'success',
                         });
                         $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
                         location.href = location.href;
                         // tb.ajax.reload(null, false);
                     } else if (jsonResponse.status == 203) {

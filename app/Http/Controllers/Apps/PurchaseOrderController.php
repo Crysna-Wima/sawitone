@@ -27,7 +27,7 @@ class PurchaseOrderController extends Controller
             $data['data'] = $temp_po_master;
             $data['total'] = $total;
             // return view('apps.purchase-order.detail',$data);
-            return view('apps.purchase-order.index');
+            return view('apps.purchase-order.detail',$data);
             // dd($data);
         }
         // dd($temp_po_detail);
@@ -49,7 +49,76 @@ class PurchaseOrderController extends Controller
     }
 
     public function store_update(Request $request){
-        dd($request);
+        $validator = Validator::make($request->all(), [
+            'fc_potype' => 'required',
+            'fc_suppliercode' => 'required',
+            'fc_status_pkp' => 'required'
+        ]);
+        // dd($request);
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $request->request->add(['fc_pono' => auth()->user()->fc_userid]);
+
+        $supplier = Supplier::where('fc_suppliercode', $request->fc_suppliercode)->first();
+
+        $insert_temppomst = TempPoMaster::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_pono' => $request->fc_pono,
+            'fc_potype' => $request->fc_potype,
+            'fc_suppliercode' => $request->fc_suppliercode,
+            'fc_suppliertaxcode' => $supplier->fc_suppliertaxcode,
+            'fc_address_loading1' => $supplier->fc_supplier_npwpaddress1,
+            'fc_address_loading2' => $supplier->fc_supplier_npwpaddress2,
+            'fd_podatesysinput' => Carbon::now(),
+            'fc_userid' => auth()->user()->fc_userid,
+        ], $request->all());
+
+        if($insert_temppomst){
+            return [
+                'status' => 201,
+                'link' => '/apps/purchase-order',
+                'message' => 'Data berhasil disimpan'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan'
+            ];
+        }
+    }
+
+    public function delete(){
+        DB::beginTransaction();
+
+		try{
+            TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->delete();
+            TempPoMaster::where('fc_pono', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/purchase-order',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }
 

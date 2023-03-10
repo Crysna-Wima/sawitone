@@ -67,7 +67,6 @@ class SalesOrderController extends Controller
             'fc_memberaddress_loading1' => $customer->fc_memberaddress_loading1,
             'fc_memberaddress_loading2' => $customer->fc_memberaddress_loading2,
             'fd_sodatesysinput' => Carbon::now(),
-            'fd_sodatesysinput' => Carbon::now(),
             'fc_salescode' => $request->fc_salescode,
             'fc_userid' => auth()->user()->fc_userid,
         ], $request->all());

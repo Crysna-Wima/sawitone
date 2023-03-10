@@ -50,9 +50,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>Data Master Invoice</h4>
-                        <div class="card-header-action">
-                            <button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -60,11 +57,14 @@
                                 <a class="nav-link active show" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">Incoming</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="outcoming-tab" data-toggle="tab" href="#outcoming" role="tab" aria-controls="outcoming" aria-selected="false">Outcoming</a>
+                                <a class="nav-link" id="outgoing-tab" data-toggle="tab" href="#outgoing" role="tab" aria-controls="outgoing" aria-selected="false">Outgoing</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
+                                <div class="text-right mb-3">
+                                    <button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="tb_incoming_invoice" width="100%">
                                         <thead>
@@ -83,9 +83,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="outcoming" role="tabpanel" aria-labelledby="outcoming-tab">
+                            <div class="tab-pane fade" id="outgoing" role="tabpanel" aria-labelledby="outgoing-tab">
                                 <div class="table-responsive">
-                                    <table class="table table-striped" id="tb_outcoming_invoice" width="100%">
+                                    <table class="table table-striped" id="tb_outgoing_invoice" width="100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
@@ -359,6 +359,72 @@
                 {
                     className: 'text-nowrap',
                     targets: [3, 6, 8]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_invno'
+                },
+                {
+                    data: 'fc_dono'
+                },
+                {
+                    data: 'fc_status'
+                },
+                {
+                    data: 'fd_inv_releasedate',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fd_inv_agingdate',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fn_invdetail'
+                },
+                {
+                    data: 'fm_brutto',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
+
+                $('td:eq(3)', row).html(`<i class="${data.fc_status}"></i>`);
+                if (data['fc_status'] == 'R') {
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Released</span>');
+                } else if (data['fc_status'] == 'P') {
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                } else {
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Installment</span>');
+                }
+                $('td:eq(8)', row).html(`
+                    <a href="/apps/master-invoice/inv/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice('${data.fc_dono}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                );
+            }
+        });
+
+        var tb = $('#tb_outgoing_invoice').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/apps/master-invoice/datatables',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 7, 8]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [1, 3, 6, 8]
                 },
             ],
             columns: [{

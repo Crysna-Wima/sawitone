@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Masukkan Nomor DO</label>
+                            <label>Masukkan Nomor Surat Jalan</label>
                             <input type="text" id="fc_dono" class="form-control">
                         </div>
                     </div>

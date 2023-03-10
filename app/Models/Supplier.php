@@ -51,7 +51,7 @@ class Supplier extends Model
     }
 
     public function supplier_tax_code(){
-        return $this->belongsTo(TransaksiType::class, 'fc_suppliertaxcode', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_suppliertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%CUST_TAXTYPE%');
     }
 
     public function supplier_bank1(){
