@@ -254,8 +254,7 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -263,8 +262,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -272,34 +270,29 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_servpay">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <div class="d-flex" style="gap: 5px; white-space: pre" >
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
-                                        GRAND</p>
-                                    <p class="text-success flex-row-item text-right"
-                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -341,7 +334,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Tanggal PO</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -361,7 +354,36 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Masa</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <input type="number" id="" class="form-control" name=""
+                                                required>
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Hari
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Tanggal PO Berakhir</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-calendar"></i>
+                                                </div>
+                                            </div>
+
+                                            <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                name="fd_poexpired" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Transport</label>
                                         @if (empty($data->fc_potransport))
@@ -385,7 +407,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <div class="form-group">
                                         <label>Perkiraan Penanganan</label>
                                         <div class="input-group format-rp">
@@ -406,7 +428,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-md-12 col-lg-4">
                                     <label>Alamat Tujuan</label>
                                     <div class="form-group">
                                         <input type="text" id="fc_address_loading1" class="form-control"
@@ -415,11 +437,13 @@
                                             required>
                                     </div>
                                 </div>
-                                @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
-                                    <button type="submit" class="btn btn-success">Save</button>
-                                @else
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                @endif
+                            </div>
+                            <div class="text-right">
+                            @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            @else
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
                             </div>
                         </form>
                     </div>
@@ -787,7 +811,7 @@
                     $("#total_harga").trigger("change");
                     $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].temppomst.fn_disctotal));
                     $("#fm_so_disc").trigger("change");
-                    $('#count_item').html(data[0].temppomst.fn_sodetail);
+                    $('#count_item').html(data[0].temppomst.fn_podetail);
                     $("#count_item").trigger("change");
                 }
             }
