@@ -438,10 +438,19 @@
                                 <div class="col-12 col-md-12 col-lg-4">
                                     <label>Alamat Tujuan</label>
                                     <div class="form-group">
+                                        @if (empty($data->fc_address_loading1))
+                                            <input type="text" id="fc_address_loading1" class="form-control"
+                                                name="fc_address_loading1"
+                                                value="Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo, Kota SBY, Jawa Timur 60297"
+                                                required>
+                                        @else
                                         <input type="text" id="fc_address_loading1" class="form-control"
-                                            name="fc_address_loading1"
-                                            value="Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo, Kota SBY, Jawa Timur 60297"
-                                            required>
+                                        name="fc_address_loading1"
+                                        value="{{ $data->fc_address_loading1 }}"
+                                        required>
+                                        @endif
+
+
                                     </div>
                                 </div>
                             </div>
@@ -953,10 +962,10 @@
                     dangerMode: true,
                 })
                 .then((save) => {
-                   
+
                     $("#modal_loading").modal('show');
                     if (save) {
-                        
+
                         var data = {
                             'fd_podateinputuser': $('#fd_podateinputuser').val(),
                             'fd_poexpired': $('#fd_poexpired').val(),
@@ -978,7 +987,7 @@
                                     // redirect ke halaman sales order
                                     // hapus local storage
 
-                                    
+
                                     setTimeout(function() {
                                         window.location.href = "/apps/purchase-order";
                                     }, 500);
@@ -989,9 +998,10 @@
                                 setTimeout(function() {
                                     $('#modal_loading').modal('hide');
                                 }, 500);
-                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
-                                    icon: 'error',
-                                });
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                    .responseText + ")", {
+                                        icon: 'error',
+                                    });
                             }
                         });
                     }
