@@ -90,7 +90,8 @@
                                         <option selected="" value="F">NO</option>
                                     </select> --}}
                                         <input type="text" class="form-control" style="font-size: 12px"
-                                            value="{{ $data->supplier->supplier_tax_code->fv_description }} ({{ $data->supplier->supplier_tax_code->fc_action }}%)" readonly>
+                                            value="{{ $data->supplier->supplier_tax_code->fv_description }} ({{ $data->supplier->supplier_tax_code->fc_action }}%)"
+                                            readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -196,8 +197,8 @@
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_barcode" name="fc_barcode"
                                                 readonly>
-                                            <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode"
-                                                readonly hidden>
+                                            <input type="text" class="form-control" id="fc_stockcode"
+                                                name="fc_stockcode" readonly hidden>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="button"
                                                     onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
@@ -208,14 +209,14 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <label>Harga</label>
                                     <div class="input-group format-rp">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    Rp.
-                                                </div>
-                                            </div> 
-                                            <input type="text" id="fm_po_price" class="form-control"
-                                                name="fm_po_price" onkeyup="return onkeyupRupiah(this.id)" required>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
                                         </div>
+                                        <input type="text" id="fm_po_price" class="form-control" name="fm_po_price"
+                                            onkeyup="return onkeyupRupiah(this.id)" required>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
                                     <div class="form-group">
@@ -244,7 +245,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 col-lg-6 place_detail">
-            <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <h4>Prediksi Tagihan</h4>
                     </div>
@@ -253,7 +254,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -261,7 +263,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -269,29 +272,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -328,8 +336,11 @@
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit_custom" action="/apps/purchase-order/detail/store-update" method="POST"
+                        <form id="form_submit"
+                            action="/apps/purchase-order/detail/received-update/{{ $data->fc_pono }}" method="POST"
                             autocomplete="off">
+                            @csrf
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
@@ -341,31 +352,34 @@
                                                 </div>
                                             </div>
 
-                                            <input type="text" id="" class="form-control datepicker"
-                                                name="" required>
+                                            <input type="text" id="fd_podateinputuser" class="form-control datepicker"
+                                                name="fd_podateinputuser" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="form-group">
-                                            <label>Transport</label>
-                                            @if (empty($data->fc_sotransport))
-                                                <select class="form-control select2" name="" id="">
-                                                    <option value="" selected disabled>- Pilih Transport -</option>
-                                                    <option value="By Dexa">By Dexa</option>
-                                                    <option value="By Paket">By Paket</option>
-                                                    <option value="By Customer">By Customer</option>
-                                                </select>
-                                            @else
-                                                <select class="form-control select2" name="" id="">
-                                                    <option value="#" selected disabled></option>
-                                                    <option value="By Dexa">By Dexa</option>
-                                                    <option value="By Paket">By Paket</option>
-                                                    <option value="By Customer">By Customer</option>
-                                                </select>
-                                            @endif
-                                        </div>
+                                        <label>Transport</label>
+                                        @if (empty($data->fc_potransport))
+                                            <select class="form-control select2" name="fc_potransport"
+                                                id="fc_potransport">
+                                                <option value="" selected disabled>- Pilih Transport -</option>
+                                                <option value="By Dexa">By Dexa</option>
+                                                <option value="By Paket">By Paket</option>
+                                                <option value="By Customer">By Customer</option>
+                                            </select>
+                                        @else
+                                            <select class="form-control select2" name="fc_potransport"
+                                                id="fc_potransport">
+                                                <option value="{{ $data->fc_potransport }}" selected>{{ $data->fc_potransport }}
+                                                </option>
+                                                <option value="By Dexa">By Dexa</option>
+                                                <option value="By Paket">By Paket</option>
+                                                <option value="By Customer">By Customer</option>
+                                            </select>
+                                        @endif
                                     </div>
+                                </div>
                                 <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
                                         <label>Perkiraan Penanganan</label>
@@ -374,22 +388,26 @@
                                                 <div class="input-group-text">
                                                     Rp.
                                                 </div>
-                                            </div> 
-                                            <input type="text" id="" class="form-control"
-                                                name="" onkeyup="return onkeyupRupiah(this.id)" required>
+                                            </div>
+                                            <input type="text" id="fm_servpay" class="form-control" name="fm_servpay"
+                                                onkeyup="return onkeyupRupiah(this.id)" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <label>Alamat Tujuan</label>
                                     <div class="form-group">
-                                        <input type="text" id="" class="form-control"
-                                                name="" required>
+                                        <input type="text" id="fc_address_loading1" class="form-control"
+                                            name="fc_address_loading1"
+                                            value="Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo, Kota SBY, Jawa Timur 60297"
+                                            required>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button class="btn btn-success">Save</button>
-                                </div>
+                                @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                @else
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -613,18 +631,18 @@
                 success: function(response) {
                     var data = response.data;
                     // console.log(data.tempsodetail[0].fm_so_price);
-                    var tipe_bisnis  = "{{ $data->supplier->supplier_type_business->fv_description }}";
-                    if(tipe_bisnis == 'DISTRIBUTOR'){
+                    var tipe_bisnis = "{{ $data->supplier->supplier_type_business->fv_description }}";
+                    if (tipe_bisnis == 'DISTRIBUTOR') {
                         $('#fm_po_price').val(data.fm_price_distributor);
-                    }else if(tipe_bisnis == 'RETAIL'){
+                    } else if (tipe_bisnis == 'RETAIL') {
                         $('#fm_po_price').val(data.fm_price_default);
-                    }else if(tipe_bisnis == 'HOSPITAL'){
+                    } else if (tipe_bisnis == 'HOSPITAL') {
                         $('#fm_po_price').val(data.fm_price_project);
-                    }else if(tipe_bisnis == 'PERSONAL'){
+                    } else if (tipe_bisnis == 'PERSONAL') {
                         $('#fm_po_price').val(data.fm_price_enduser);
-                    }else if(tipe_bisnis == 'ENDUSER'){
+                    } else if (tipe_bisnis == 'ENDUSER') {
                         $('#fm_po_price').val(data.fm_price_enduser);
-                    }else{
+                    } else {
                         $('#fm_po_price').val("");
                     }
                     $('#fc_barcode').val(data.fc_barcode);
@@ -711,7 +729,7 @@
                     data: 'fn_po_qty',
                 },
                 {
-                    data: 'fn_po_value',
+                    data: 'fm_po_value',
                     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
                 },
                 {
@@ -759,10 +777,10 @@
                     $("#count_item").trigger("change");
                 }
             }
-            
+
         });
 
-       
+
         function click_delete() {
             swal({
                     title: 'Apakah anda yakin?',

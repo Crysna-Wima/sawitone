@@ -246,7 +246,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         });
 
         Route::prefix('purchase-order')->group(function () {
-            Route::get('/','Apps\PurchaseOrderController@index');
+            Route::get('/','Apps\PurchaseOrderController@index')->name('po_index');
             Route::get('/get-data-supplier-po-datatables/{fc_branch}','Apps\PurchaseOrderController@get_data_supplier_po_datatables');
             Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','Apps\PurchaseOrderController@get_data_where_field_id_get');
             Route::post('/store-update','Apps\PurchaseOrderController@store_update');
@@ -254,6 +254,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::prefix('detail')->group(function () {
                 Route::post('/store-update','Apps\PurchaseOrderDetailController@store_update');
+                Route::put('/received-update/{fc_pono}','Apps\PurchaseOrderDetailController@received_update');
                 Route::get('/datatables','Apps\PurchaseOrderDetailController@datatables');
                 Route::delete('/delete/{fc_pono}/{fc_porownum}','Apps\PurchaseOrderDetailController@delete');
             });

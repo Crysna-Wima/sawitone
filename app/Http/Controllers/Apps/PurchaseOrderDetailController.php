@@ -6,23 +6,26 @@ use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use App\Models\TempPoDetail;
+use App\Models\TempPoMaster;
 use Illuminate\Http\Request;
 use Validator;
 use Yajra\DataTables\DataTables;
 
 class PurchaseOrderDetailController extends Controller
 {
-    public function datatables(){
-        $data = TempPoDetail::with('branch', 'warehouse', 'stock', 'namepack','temppomst')->where('fc_pono', auth()->user()->fc_userid)->get();
+    public function datatables()
+    {
+        $data = TempPoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'temppomst')->where('fc_pono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function store_update(Request $request){
+    public function store_update(Request $request)
+    {
         //  validasi request
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             // 'fc_barcode' => 'required',
             'fc_stockcode' => 'required',
             'fn_po_qty' => 'required|integer|min:1',
@@ -50,8 +53,8 @@ class PurchaseOrderDetailController extends Controller
 
         // jika ada TempSoDetail yang fc_barcode == $request->fc_barcode
         $count_barcode = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
-         
-        
+
+
         // jika ada fc_barcode yang sama di $temppodtl
         if (!empty($temp_detail)) {
             // jika ditemukan $count_barcode error produk yang sama telah diinputkan
@@ -89,28 +92,29 @@ class PurchaseOrderDetailController extends Controller
             'fc_namepack' => $stock->fc_namepack,
             'fn_po_qty' => $request->fn_po_qty,
             'fn_po_value' => $request->fn_po_qty * $request->fm_po_price_edit,
-            'fm_po_price' => $request-> fm_po_price,
-            'fv_description' => $request-> fv_description
+            'fm_po_price' => $request->fm_po_price,
+            'fv_description' => $request->fv_description
         ]);
-            
-        if($insert_po_detail){
-            return response()->json([
-               'status' => 200,
-               'total' => $total,
-               'link' => '/apps/purchase-order',
-               'message' => 'Data berhasil disimpan'
-           ]);
-           }
-            return [
-               'status' => 300,
-               'link' => '/apps/purchase-order',
-               'message' => 'Error'
-               ];
-     }
 
-     public function delete($fc_pono, $fn_porownum){
+        if ($insert_po_detail) {
+            return response()->json([
+                'status' => 200,
+                'total' => $total,
+                'link' => '/apps/purchase-order',
+                'message' => 'Data berhasil disimpan'
+            ]);
+        }
+        return [
+            'status' => 300,
+            'link' => '/apps/purchase-order',
+            'message' => 'Error'
+        ];
+    }
+
+    public function delete($fc_pono, $fn_porownum)
+    {
         $delete = TempPoDetail::where('fc_pono', $fc_pono)->where('fn_porownum', $fn_porownum)->delete();
-        if($delete){
+        if ($delete) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil dihapus'
@@ -120,5 +124,56 @@ class PurchaseOrderDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
-     }
+    }
+
+    public function received_update($fc_pono, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'fd_podateinputuser' => 'required',
+            'fc_potransport' => 'required',
+            'fc_address_loading1' => 'required',
+        
+        ], [
+            'fd_podateinputuser' => 'Tanggal harus diisi',
+            'fc_potransport.required' => 'Transport harus diisi',
+            'fc_address_loading1.required' => 'Alamat Tujuan harus diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        $temp_po_master = TempPoMaster::where('fc_pono', $fc_pono)->first();
+        $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay)]);
+        $update_tempomst = $temp_po_master->update([
+            'fd_podateinputuser' => $request->fd_podateinputuser,
+            'fc_potransport' => $request->fc_potransport,
+            'fm_servpay' => $request->fm_servpay,
+            'fc_memberaddress_loading1' => $request->fc_memberaddress_loading1
+        ]);
+
+        $temp_po_master = TempPoMaster::with('branch', 'supplier_tax_code', 'sales', 'supplier.supplier_type_business', 'supplier.supplier_typebranch', 'supplier.supplier_legal_status')->where('fc_pono', auth()->user()->fc_userid)->first();
+        $data = [];
+        if (!empty($temp_po_master)) {
+            $data['data'] = $temp_po_master;
+        }
+
+     if($update_tempomst){
+        return [
+            'status' => 201,
+            // 'data' => $data,
+            'message' => 'Data berhasil disimpan',
+            // link
+            'link' => route('po_index')
+        ];
+        // dd($request);
+      }
+
+      return [
+        'status' => 300,
+        'message' => 'Error'
+      ];
+    }
 }
