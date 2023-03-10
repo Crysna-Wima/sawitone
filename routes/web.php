@@ -264,10 +264,16 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-purchase-order')->group(function(){
             Route::get('/','Apps\MasterPurchaseOrderController@index');
             Route::get('/datatables','Apps\MasterPurchaseOrderController@datatables');
+            Route::get('/datatables-po-detail','Apps\MasterPurchaseOrderController@datatables_po_detail');
+            Route::get('/datatables-ro','Apps\MasterPurchaseOrderController@datatables_ro');
+            Route::get('/pdf/{fc_pono}', 'Apps\MasterPurchaseOrderController@pdf');
+            Route::get('/detail/{fc_pono}','Apps\MasterPurchaseOrderController@detail');
         });
 
         Route::prefix('receiving-order')->group(function(){
             Route::get('/','Apps\ReceivingOrderController@index');
+            Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
+            Route::get('/create','Apps\ReceivingOrderController@create');
         });
     });
 });

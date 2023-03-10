@@ -144,8 +144,8 @@
                 }
 
                 $('td:eq(9)', row).html(`
-                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"> </i> Detail</button>
-                    <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"> </i> PDF</button>
+                    <a href="/apps/master-purchase-order/detail/${data.fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-purchase-order/pdf/${data.fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
             },
         });
