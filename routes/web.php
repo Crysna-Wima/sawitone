@@ -252,6 +252,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}','Apps\PurchaseOrderController@get_data_where_field_id_get');
             Route::post('/store-update','Apps\PurchaseOrderController@store_update');
             Route::delete('/delete','Apps\PurchaseOrderController@delete');
+
+            Route::prefix('detail')->group(function () {
+                Route::post('/store-update','Apps\PurchaseOrderDetailController@store_update');
+            });
         });
 
         Route::prefix('master-purchase-order')->group(function(){

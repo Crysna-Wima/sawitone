@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
 
 use App\Helpers\Convert;
-use DataTables;
 use Carbon\Carbon;
 use File;
 
@@ -19,6 +18,7 @@ use App\Models\Customer;
 use App\Models\Stock;
 use App\Models\TempSoPay;
 use App\Models\Warehouse;
+use Yajra\DataTables\DataTables;
 
 class SalesOrderDetailController extends Controller
 {

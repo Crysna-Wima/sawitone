@@ -326,7 +326,7 @@
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST"
+                        <form id="form_submit_custom" action="/apps/purchase-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-3">
