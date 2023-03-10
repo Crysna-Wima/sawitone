@@ -254,8 +254,7 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -263,8 +262,7 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -272,34 +270,29 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_servpay">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <div class="d-flex" style="gap: 5px; white-space: pre" >
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
-                                        id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
-                                        GRAND</p>
-                                    <p class="text-success flex-row-item text-right"
-                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -403,11 +396,13 @@
                                             required>
                                     </div>
                                 </div>
-                                @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
-                                    <button type="submit" class="btn btn-success">Save</button>
-                                @else
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                @endif
+                            </div>
+                            <div class="text-right">
+                            @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            @else
+                                <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
                             </div>
                         </form>
                     </div>
