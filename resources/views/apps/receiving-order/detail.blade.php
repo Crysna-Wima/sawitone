@@ -221,7 +221,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/master-purchase-order/datatables-po-detail",
+                url: "/apps/receiving-order/datatables/po_detail",
                 type: 'GET',
             },
             columnDefs: [{
@@ -231,12 +231,12 @@
             columns: [
                 { data: 'DT_RowIndex', searchable: false, orderable: false },
                 { data: 'fc_stockcode' },
-                { data: 'fc_nameshort' },
+                { data: 'stock.fc_nameshort' },
                 { data: 'namepack.fv_description' },
                 { data: 'fn_po_qty' },
                 { data: 'fn_ro_qty' },
                 { data: 'fn_po_bonusqty' },
-                { data: 'fc_postatus' },
+                { data: 'fc_status' },
             ],
         });
 

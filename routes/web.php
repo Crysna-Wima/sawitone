@@ -274,6 +274,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\ReceivingOrderController@index');
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
             Route::get('/create','Apps\ReceivingOrderController@create');
+            Route::get('/datatables/po_detail','Apps\ReceivingOrderController@datatables_po_detail');
         });
     });
 });

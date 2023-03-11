@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
 use App\Helpers\Convert;
-
-use DataTables;
+use App\Models\PoDetail;
 use PDF;
 use Carbon\Carbon;
 use File;
 use DB;
 
 use App\Models\PoMaster;
+use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
 {
@@ -28,6 +28,22 @@ class ReceivingOrderController extends Controller
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
         return view('apps.receiving-order.detail', $data);
         // dd($data);
+    }
+
+    public function datatables_po_detail(){
+         //  jika session fc_sono_global tidak sama dengan null
+         if (session('fc_pono_global') != null) {
+            $fc_pono = session('fc_pono_global');
+        } else {
+            $pomst = PoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+            $fc_pono_pomst = $pomst->fc_pono;
+            $fc_pono = $fc_pono_pomst;
+        }
+
+        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function create(){
