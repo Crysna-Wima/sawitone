@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
 use App\Helpers\Convert;
 
-use DataTables;
 use PDF;
 use Carbon\Carbon;
 use File;
@@ -21,6 +20,7 @@ use App\Models\TempSoPay;
 use App\Models\Invstore;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
+use Yajra\DataTables\DataTables;
 
 class DeliveryOrderController extends Controller
 {

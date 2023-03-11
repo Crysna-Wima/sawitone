@@ -240,13 +240,13 @@
             ],
         });
 
-        var tb_sopay = $('#tb_ro').DataTable({
+        var tb_ro = $('#tb_ro').DataTable({
             // apabila data kosong
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/master-purchase-order/datatables-ro",
+                url: "/apps/receiving-order/datatables/ro",
                 type: 'GET',
             },
             columnDefs: [{

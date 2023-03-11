@@ -33,7 +33,7 @@ class MasterPurchaseOrderController extends Controller
     }
     
     public function datatables(){
-        $data = PoMaster::with('supplier');
+        $data = PoMaster::with('supplier')->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -49,15 +49,16 @@ class MasterPurchaseOrderController extends Controller
         ->make(true);
     }
 
-    public function datatables_ro()
-    {
-        $data = RoMaster::with('supplier')->where('fc_pono', session('fc_pono_global'))->first();
-        // $data = PoDetail::where('fc_pono', session('fc_pono_global'))->get();
+    // public function datatables_ro()
+    // {
+    //     $data = RoMaster::with('supplier')->where('fc_pono', session('fc_pono_global'))->first();
+    //     // $data = PoDetail::where('fc_pono', session('fc_pono_global'))->get();
 
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
-    }
+    //     return DataTables::of($data)
+    //     ->addIndexColumn()
+    //     ->make(true);
+    // }
+    
 
     public function pdf($fc_pono)
     {
