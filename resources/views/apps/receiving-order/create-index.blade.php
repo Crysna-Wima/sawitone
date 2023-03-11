@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Detail Purchase Order')
+@section('title', 'New Receiving Order')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -43,23 +43,24 @@
                     </div>
                     <div class="collapse show" id="mycard-collapse">
                         <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                        <form id="form_submit" action="/apps/purchase-order/store-update" method="POST" autocomplete="off">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>PO No : {{ $data->fc_pono }}
+                                        <label>Order :
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_podateinputuser)) }}
+                                        <label>PO No :
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
                                     <div class="form-group">
-                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_poexpired)) }}
+                                        <label>Tipe :
                                         </label>
                                     </div>
                                 </div>
@@ -72,12 +73,36 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>PO Type</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_potype }}" readonly>
+                                        <label>No. Surat Jalan</label>
+                                        <input type="text" class="form-control">
                                     </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Penerima</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Diterima</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" id="" class="form-control datepicker"
+                                                name="" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 text-right">
+                                    <button type="submit" class="btn btn-success">Buat RO</button>
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -97,49 +122,49 @@
                                     <div class="form-group">
                                         <label>NPWP</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplierNPWP }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Cabang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_typebranch->fv_description }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Bisnis</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_type_business->fv_description }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_suppliername1 }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Telepon</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplierphone1 }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Legal Status</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_legal_status->fv_description }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-12">
                                     <div class="form-group">
                                         <label>Alamat Muat</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->fc_address_loading1 }}" readonly>
+                                            value="" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -147,65 +172,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- TABLE --}}
-            <div class="col-12 col-md-12 col-lg-12 place_detail">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Item Purchase Order</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="po_detail" width="100%">
-                                    <thead style="white-space: nowrap">
-                                        <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Stockcode</th>
-                                            <th scope="col" class="text-center">Nama Produk</th>
-                                            <th scope="col" class="text-center">Unity</th>
-                                            <th scope="col" class="text-center">Qty</th>
-                                            <th scope="col" class="text-center">Qty RO</th>
-                                            <th scope="col" class="text-center">Bonus</th>
-                                            <th scope="col" class="text-center">Status</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- TABLE SO PAY --}}
-            <div class="col-12 col-md-12 col-lg-12 place_detail">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Receiving Order</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="tb_ro" width="100%">
-                                    <thead style="white-space: nowrap">
-                                        <tr>
-                                            <th scope="col" class="text-center">No.</th>
-                                            <th scope="col" class="text-center">RONO</th>
-                                            <th scope="col" class="text-center">Tgl RO</th>
-                                            <th scope="col" class="text-center">Item</th>
-                                            <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center">Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-right mb-4">
-            <a href="/apps/master-purchase-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
         </div>
     </div>
 @endsection
@@ -218,7 +184,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/master-purchase-order/datatables/po_detail",
+                url: "/apps/master-purchase-order/datatables-po-detail",
                 type: 'GET',
             },
             columnDefs: [{
@@ -228,12 +194,12 @@
             columns: [
                 { data: 'DT_RowIndex', searchable: false, orderable: false },
                 { data: 'fc_stockcode' },
-                { data: 'stock.fc_nameshort' },
+                { data: 'fc_nameshort' },
                 { data: 'namepack.fv_description' },
                 { data: 'fn_po_qty' },
                 { data: 'fn_ro_qty' },
                 { data: 'fn_po_bonusqty' },
-                { data: 'fc_status' },
+                { data: 'fc_postatus' },
             ],
         });
 

@@ -264,7 +264,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-purchase-order')->group(function(){
             Route::get('/','Apps\MasterPurchaseOrderController@index');
             Route::get('/datatables','Apps\MasterPurchaseOrderController@datatables');
-            Route::get('/datatables-po-detail','Apps\MasterPurchaseOrderController@datatables_po_detail');
+            Route::get('/datatables/po_detail','Apps\MasterPurchaseOrderController@datatables_po_detail');
             Route::get('/pdf/{fc_pono}', 'Apps\MasterPurchaseOrderController@pdf');
             Route::get('/detail/{fc_pono}','Apps\MasterPurchaseOrderController@detail');
         });
@@ -272,9 +272,13 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('receiving-order')->group(function(){
             Route::get('/','Apps\ReceivingOrderController@index');
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
-            Route::get('/create','Apps\ReceivingOrderController@create');
             Route::get('/datatables/po_detail','Apps\ReceivingOrderController@datatables_po_detail');
             Route::get('/datatables/ro','Apps\ReceivingOrderController@datatables_receiving_order');
+
+            Route::prefix('create')->group(function () {
+                Route::get('/','Apps\ReceivingDetailOrderController@index');
+                Route::get('/create','Apps\Apps\ReceivingDetailOrderController@create');
+            });
         });
     });
 });
