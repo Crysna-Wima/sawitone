@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Detail Purchase Order')
+@section('title', 'New Receiving Order')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -41,25 +41,26 @@
                             <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                         </div>
                     </div>
-                    <div class="collapse show" id="mycard-collapse">
+                    <div class="collapse" id="mycard-collapse">
                         <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                        <form id="form_submit" action="/apps/purchase-order/store-update" method="POST" autocomplete="off">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label>PO No : {{ $data->fc_pono }}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Order : {{ date('d-m-Y', strtotime ($data->fd_podateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>PO No : {{ $data->fc_pono }}
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
                                     <div class="form-group">
-                                        <label>Expired : {{ date('d-m-Y', strtotime($data->fd_poexpired)) }}
+                                        <label>Tipe : {{ $data->fc_pono }}
                                         </label>
                                     </div>
                                 </div>
@@ -72,12 +73,36 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
-                                        <label>PO Type</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_potype }}" readonly>
+                                        <label>No. Surat Jalan</label>
+                                        <input type="text" value="{{ $ro_master->fc_sjno }}" class="form-control" readonly>
                                     </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Penerima</label>
+                                        <input type="text" value="{{ $ro_master->fc_receiver }}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Diterima</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" id="" class="form-control datepicker"
+                                                name="fd_roarivaldate" value="{{ $ro_master->fd_roarivaldate }}" required readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 text-right">
+                                    <button type="submit" class="btn btn-success" disabled>Buat RO</button>
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -90,7 +115,7 @@
                                     class="fas fa-minus"></i></a>
                         </div>
                     </div>
-                    <div class="collapse show" id="mycard-collapse2">
+                    <div class="collapse" id="mycard-collapse2">
                         <div class="card-body"  style="height: 303px">
                             <div class="row">
                                 <div class="col-4 col-md-4 col-lg-4">
@@ -118,7 +143,7 @@
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_suppliername1 }}" readonly>
+                                            value="{{  $data->supplier->fc_suppliername1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
@@ -151,9 +176,6 @@
             {{-- TABLE --}}
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Item Purchase Order</h4>
-                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="table-responsive">
@@ -181,10 +203,7 @@
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Receiving Order</h4>
-                        <div class="card-header-action">
-                            <a href="/apps/receiving-order/create/{{ $data->fc_pono }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan RO</button></a>
-                        </div>
+                        <h4>Item Receiving</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -208,7 +227,7 @@
             </div>
         </div>
         <div class="text-right mb-4">
-            <a href="/apps/receiving-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
+            <a href="#"><button type="button" class="btn btn-success mr-2">Submit</button></a>
         </div>
     </div>
 @endsection
@@ -240,13 +259,13 @@
             ],
         });
 
-        var tb_ro = $('#tb_ro').DataTable({
+        var tb_sopay = $('#tb_ro').DataTable({
             // apabila data kosong
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/receiving-order/datatables/ro",
+                url: "/apps/master-purchase-order/datatables-ro",
                 type: 'GET',
             },
             columnDefs: [{

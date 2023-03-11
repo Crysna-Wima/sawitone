@@ -56,14 +56,6 @@ class ReceivingOrderController extends Controller
             ->make(true);
     }
 
-    public function create(){
-        // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();
-        return view('apps.receiving-order.create');
-        // $romst = RoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
-        // $data['romst'] = $romst;
-        // dd($data);
-    }
-
     public function datatables(){
         $data = PoMaster::with('supplier');
 

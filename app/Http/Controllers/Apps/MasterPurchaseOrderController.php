@@ -29,6 +29,7 @@ class MasterPurchaseOrderController extends Controller
         session(['fc_pono_global' => $fc_pono]);
         $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
         $data['po_detail'] = PoDetail::where('fc_pono', $fc_pono)->get();
+
         return view('apps.master-purchase-order.detail', $data);
         // dd($data);
     }
@@ -42,14 +43,22 @@ class MasterPurchaseOrderController extends Controller
         // dd($data);
     }
 
-    public function datatables_po_detail()
-    {
-        $data = PoDetail::with('stock','namepack')->where('fc_pono', session('fc_pono_global'))->get();
 
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
-    }
+    public function datatables_po_detail(){
+        //  jika session fc_sono_global tidak sama dengan null
+        if (session('fc_pono_global') != null) {
+           $fc_pono = session('fc_pono_global');
+       } else {
+           $pomst = PoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
+           $fc_pono_pomst = $pomst->fc_pono;
+           $fc_pono = $fc_pono_pomst;
+       }
+
+       $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
+       return DataTables::of($data)
+       ->addIndexColumn()
+       ->make(true);
+   }
 
     public function pdf($fc_pono)
     {

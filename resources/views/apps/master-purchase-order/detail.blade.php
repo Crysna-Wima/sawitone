@@ -218,7 +218,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/master-purchase-order/datatables-po-detail",
+                url: "/apps/master-purchase-order/datatables/po_detail",
                 type: 'GET',
             },
             columnDefs: [{
