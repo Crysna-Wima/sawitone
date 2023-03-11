@@ -27,8 +27,8 @@ class MasterPurchaseOrderController extends Controller
 
     public function detail($fc_pono){
         session(['fc_pono_global' => $fc_pono]);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
-        $data['data'] = PoDetail::where('fc_pono', $fc_pono)->get();
+        $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
+        $data['po_detail'] = PoDetail::where('fc_pono', $fc_pono)->get();
         return view('apps.master-purchase-order.detail', $data);
         // dd($data);
     }
@@ -44,7 +44,7 @@ class MasterPurchaseOrderController extends Controller
 
     public function datatables_po_detail()
     {
-        $data = PoDetail::where('fc_pono', session('fc_pono_global'))->get();
+        $data = PoDetail::with('stock','namepack')->where('fc_pono', session('fc_pono_global'))->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
