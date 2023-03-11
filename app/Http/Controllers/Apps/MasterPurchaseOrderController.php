@@ -33,11 +33,12 @@ class MasterPurchaseOrderController extends Controller
     }
     
     public function datatables(){
-        $data = PoMaster::with('supplier');
+        $data = PoMaster::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+        // dd($data);
     }
 
     public function datatables_po_detail(){
