@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Helpers\Convert;
 
 use Validator;
-use DataTables;
 use PDF;
 
 use App\Models\TempSoDetail;
@@ -16,6 +15,7 @@ use App\Models\TempSoPay;
 use App\Models\TransaksiType;
 use Carbon\Carbon;
 use DB;
+use Yajra\DataTables\DataTables;
 
 class PaymentController extends Controller
 {

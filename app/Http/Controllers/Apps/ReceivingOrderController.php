@@ -15,6 +15,7 @@ use File;
 use DB;
 
 use App\Models\PoMaster;
+use App\Models\RoMaster;
 use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
@@ -44,6 +45,15 @@ class ReceivingOrderController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function datatables_receiving_order(){
+        
+        $data = RoMaster::with('supplier')->where('fc_pono', session('fc_pono_global'))->get();
+         
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function create(){
