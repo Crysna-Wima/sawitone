@@ -15,6 +15,7 @@ class ReceivingDetailOrderController extends Controller
     //     return view('apps.receiving-order.create-index');
     // }
 
+
     
     public function create($fc_pono){
         // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();

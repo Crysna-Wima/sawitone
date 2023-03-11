@@ -219,12 +219,12 @@
                 <th>Unity</th>
             </tr>
 
-            <!-- @if(isset($po_dtl))
+            @if(isset($po_dtl))
                 @foreach ($po_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fc_stockcode }}</td>
-                        <td>{{ $item->fc_namelong }}</td>
+                        <td>{{ $item->stock->fc_nameshort }}</td>
                         <td>{{ $item->fn_po_qty }}</td>
                         <td>{{ $item->fc_namepack }}</td>
                     </tr>
@@ -234,7 +234,7 @@
             <tr>
                 <td colspan="12" class="text-center">Data Not Found</td>
             </tr>
-            @endif -->
+            @endif
 
         </table>
 
