@@ -28,6 +28,7 @@ class MasterPurchaseOrderController extends Controller
     public function detail($fc_pono){
         session(['fc_pono_global' => $fc_pono]);
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
+        $data['data'] = PoDetail::where('fc_pono', $fc_pono)->get();
         return view('apps.master-purchase-order.detail', $data);
         // dd($data);
     }
@@ -63,7 +64,7 @@ class MasterPurchaseOrderController extends Controller
     {
         session(['fc_pono_global' => $fc_pono]);
         $data['po_mst']= PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
-        // $data['po_dtl']= PoDetail::where('fc_pono', $fc_pono)->get();
+        $data['po_dtl']= PoDetail::where('fc_pono', $fc_pono)->get();
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
     }
