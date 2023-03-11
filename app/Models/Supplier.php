@@ -70,9 +70,11 @@ class Supplier extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branchtype', 'fc_kode')->withTrashed();
     }
 
-    // // pomst
+
+    // pomst
     public function pomst(){
         return $this->hasMany(PoMaster::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
     
+
 }
