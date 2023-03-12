@@ -282,6 +282,11 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::post('/store-update','Apps\ReceivingDetailOrderController@store');
             });
         });
+
+        Route::prefix('master-receiving-order')->group(function(){
+            Route::get('/','Apps\MasterReceivingOrderController@index');
+            Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
+        });
     });
 });
 
