@@ -16,15 +16,27 @@ class MasterInvoiceController extends Controller
 {
     public function index(){
         $do_mst= DoMaster::with('somst.customer')->first();
-        $inv_mst = InvMaster::all()->first();
+        $inv_mst = InvMaster::all();
 
         $temp_so_pay = TransaksiType::where('fc_trx', "PAYMENTCODE")->get();
 
-        return view('apps.master-invoice.index', [
-            'kode_bayar' => $temp_so_pay,
-            'inv_mst'  => $inv_mst,
-            'do_mst' => $do_mst 
-        ]);
+        // jika $inv_mst kosong arahkan kehalaman lain
+        if($inv_mst->isEmpty()){
+            return view('apps.master-invoice.empty', [
+                'kode_bayar' => $temp_so_pay,
+                'inv_mst'  => $inv_mst,
+                'do_mst' => $do_mst 
+            ]);
+        }else{
+            return view('apps.master-invoice.index', [
+                'kode_bayar' => $temp_so_pay,
+                'inv_mst'  => $inv_mst,
+                'do_mst' => $do_mst 
+            ]);
+        }
+
+        
+        // dd($inv_mst);
     }
 
     public function inv($fc_dono)
