@@ -31,7 +31,6 @@ class MasterPurchaseOrderController extends Controller
     {
         session(['fc_pono_global' => $fc_pono]);
         $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
-        $data['po_detail'] = PoDetail::where('fc_pono', $fc_pono)->get();
 
         return view('apps.master-purchase-order.detail', $data);
         // dd($data);

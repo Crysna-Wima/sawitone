@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        {{-- TABLE SO PAY --}}
+        {{-- TABLE RO --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
