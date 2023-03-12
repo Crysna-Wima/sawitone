@@ -16,6 +16,7 @@ use DB;
 
 use App\Models\PoMaster;
 use App\Models\RoMaster;
+use App\Models\TempRoDetail;
 use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
@@ -63,4 +64,6 @@ class ReceivingOrderController extends Controller
         ->addIndexColumn()
         ->make(true);
     }
+
+   
 }

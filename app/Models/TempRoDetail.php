@@ -22,9 +22,9 @@ class TempRoDetail extends Model
     protected $guarded = ['type'];
     public $timestamps = true;
 
-    // public function pomst(){
-    //     return $this->belongsTo(PoMaster::class, 'fc_pono', 'fc_pono');
-    // }
+    public function stock(){
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+    }
 
     // public function rodtl(){
     //     return $this->hasMany(DoDetail::class, 'fc_dono', 'fc_dono');

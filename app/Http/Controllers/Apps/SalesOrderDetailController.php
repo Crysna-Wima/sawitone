@@ -198,7 +198,5 @@ class SalesOrderDetailController extends Controller
         }
     }
 
-    public function submit(){
-        
-    }
+  
 }

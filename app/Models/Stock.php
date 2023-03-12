@@ -60,5 +60,15 @@ class Stock extends Model
         return $this->hasMany(SoDetail::class, 'fc_barcode', 'fc_barcode');
     }
 
+    // RoDetail
+    public function rodetail(){
+        return $this->hasMany(RoDetail::class, 'fc_stockcode', 'fc_stockcode');
+    }
+
+    // TempRoDetail
+    public function temprodetail(){
+        return $this->hasMany(TempRoDetail::class, 'fc_stockcode', 'fc_stockcode');
+    }
+
     
 }
