@@ -287,6 +287,11 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::delete('/delete/temprodetail/{fn_rownum}','Apps\ReceivingDetailOrderController@delete_item');
             });
         });
+
+        Route::prefix('master-receiving-order')->group(function(){
+            Route::get('/','Apps\MasterReceivingOrderController@index');
+            Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
+        });
     });
 });
 
