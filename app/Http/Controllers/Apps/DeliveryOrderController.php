@@ -176,7 +176,7 @@ class DeliveryOrderController extends Controller
     }
 
     public function datatables(){
-        $data = SoMaster::all();
+        $data = SoMaster::where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
