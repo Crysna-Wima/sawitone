@@ -55,7 +55,7 @@
                                         <th scope="col" class="text-center">Item</th>
                                         <th scope="col" class="text-center">Tgl Diterima</th>
                                         <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -86,7 +86,7 @@
                 targets: [0, 4, 5, 6, 7, 8]
             },{
                 className: 'text-nowrap',
-                targets: []
+                targets: [2, 6]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -94,25 +94,29 @@
                     orderable: false
                 },
                 {
-                    data: null
+                    data: 'fc_rono'
                 },
                 {
-                    data: null
+                    data: 'fc_sjno'
                 },
                 {
-                    data: null
+                    data: 'fc_pono'
                 },
                 {
-                    data: null
+                    data: null,
+                    render: function ( data, type, row ) {
+                        return row.pomst.supplier.fc_supplierlegalstatus+' '+row.pomst.supplier.fc_suppliername1;
+                    }
                 },
                 {
-                    data: null
+                    data: 'pomst.fn_podetail'
                 },
                 {
-                    data: null
+                    data: 'fd_roarivaldate',
+                    render: formatTimestamp
                 },
                 {
-                    data: null
+                    data: 'fc_rostatus'
                 },  
                 {
                     data: null,

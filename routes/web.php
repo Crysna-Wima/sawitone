@@ -292,6 +292,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-receiving-order')->group(function(){
             Route::get('/','Apps\MasterReceivingOrderController@index');
             Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
+            Route::get('/pdf/{fc_pono}', 'Apps\MasterReceivingOrderController@pdf');
         });
     });
 });
