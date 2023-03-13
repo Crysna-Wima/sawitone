@@ -157,9 +157,13 @@ class ReceivingDetailOrderController extends Controller
         }
     }
 
-    public function datatables_temp_ro_detail()
+    public function datatables_temp_ro_detail($fc_pono)
     {
-        $data = TempRoDetail::with('stock')->where('fc_rono', auth()->user()->fc_userid)->get();
+       
+         $data = TempRoDetail::with('stock')->where('fc_rono', auth()->user()->fc_userid)->whereHas('tempromst', function ($query) use ($fc_pono) {
+             $query->where('fc_pono', $fc_pono);
+         })->get();
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);

@@ -589,7 +589,7 @@
                 serverSide: true,
                 destroy: true,
                 ajax: {
-                    url: "/apps/receiving-order/create/datatables/temprodetail",
+                    url: "/apps/receiving-order/create/datatables/temprodetail/" + "{{ $data->fc_pono }}",
                     type: 'GET',
                 },
                 columnDefs: [{

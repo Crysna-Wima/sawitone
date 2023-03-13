@@ -282,7 +282,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/{fc_pono}','Apps\ReceivingDetailOrderController@create');
                 Route::post('/store-update','Apps\ReceivingDetailOrderController@store');
                 Route::get('/detail-item/{fc_stockcode}/{fc_pono}','Apps\ReceivingDetailOrderController@detail_item');
-                Route::get('/datatables/temprodetail','Apps\ReceivingDetailOrderController@datatables_temp_ro_detail');
+                Route::get('/datatables/temprodetail/{fc_pono}','Apps\ReceivingDetailOrderController@datatables_temp_ro_detail');
                 Route::post('/insert-item','Apps\ReceivingDetailOrderController@insert_item');
                 Route::put('/submit-ro','Apps\ReceivingDetailOrderController@submit_ro');
                 Route::delete('/delete/temprodetail/{fn_rownum}','Apps\ReceivingDetailOrderController@delete_item');

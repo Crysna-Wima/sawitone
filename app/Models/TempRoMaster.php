@@ -26,6 +26,11 @@ class TempRoMaster extends Model
         return $this->belongsTo(PoMaster::class, 'fc_pono', 'fc_pono');
     }
 
+    // relasi TempRoDetail
+    public function temprodtl(){
+        return $this->hasMany(TempRoDetail::class, 'fc_rono', 'fc_rono');
+    }
+
     // public function rodtl(){
     //     return $this->hasMany(DoDetail::class, 'fc_dono', 'fc_dono');
     // }

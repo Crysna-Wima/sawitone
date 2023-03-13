@@ -26,6 +26,11 @@ class TempRoDetail extends Model
         return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
     }
 
+    
+    public function tempromst(){
+        return $this->belongsTo(TempRoMaster::class, 'fc_rono', 'fc_rono');
+    }
+
     // public function rodtl(){
     //     return $this->hasMany(DoDetail::class, 'fc_dono', 'fc_dono');
     // }
