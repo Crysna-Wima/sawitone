@@ -135,12 +135,12 @@
                     $('td:eq(7)', row).html('<span class="badge badge-primary">Ordered</span>');
                 } else if (data['fc_postatus'] == 'P') {
                     $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
-                } else if (data['fc_postatus'] == 'L') {
-                    $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
+                } else if (data['fc_postatus'] == 'C') {
+                    $('td:eq(7)', row).html('<span class="badge badge-success">Complete</span>');;
                 } else if (data['fc_postatus'] == 'S') {
                     $('td:eq(7)', row).html('<span class="badge badge-info">Sent</span>');
                 } else {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Complete</span>');
+                    $(row).hide(); 
                 }
 
                 $('td:eq(9)', row).html(`
