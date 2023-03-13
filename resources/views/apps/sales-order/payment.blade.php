@@ -129,7 +129,8 @@
                                     </select>
                                 @else
                                     <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
-                                        <option value="{{ $data->fc_sotransport }}" selected disabled>{{ $data->fc_sotransport }}
+                                        <option value="{{ $data->fc_sotransport }}" selected disabled>
+                                            {{ $data->fc_sotransport }}
                                         </option>
                                         <option value="By Dexa">By Dexa</option>
                                         <option value="By Paket">By Paket</option>
@@ -445,8 +446,12 @@
                     }
 
                     var total_kurang = data.data[0].tempsomst.fm_brutto -
-                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? data.data[0].tempsomst.fm_brutto :
+                        data.data[0].nominal == data.data[0].tempsomst.fm_brutto ? data.data[0].tempsomst
+                        .fm_brutto :
                         data.data[0].tempsomst.fm_brutto - data.data[0].nominal;
+
+                    console.log(data.data[0].nominal);
+                    console.log(data.data[0].tempsomst.fm_brutto);
 
                     // $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
                     //     .fm_servpay)));
@@ -456,16 +461,18 @@
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
                         $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0]
                             .tempsomst.fm_brutto)));
-                    }
-		    $('#label_kekurangan').html('<b>Kekurangan</b>');
-                    $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
-                    // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
-                    if(data.data[0].nominal - data.data[0].tempsomst.fm_brutto != 0){
-                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0].tempsomst.fm_brutto)));
                     }else{
+                        $('#label_kekurangan').html('<b>Kekurangan</b>');
+                        $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
+                    }
+                    // console.log(grand_total + data.data[0].tempsomst.fm_servpay);
+                    if (data.data[0].nominal - data.data[0].tempsomst.fm_brutto != 0) {
+                        $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0]
+                            .tempsomst.fm_brutto)));
+                    } else {
                         $('#fm_valuepayment').val(fungsiRupiah(parseFloat(data.data[0].tempsomst.fm_brutto)));
                     }
-                   
+
                 }
             });
 

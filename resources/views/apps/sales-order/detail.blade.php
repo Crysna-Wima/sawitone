@@ -570,7 +570,7 @@
                         orderable: false
                     },
                     {
-                        data: 'fc_stockcode'
+                        data: 'fc_barcode'
                     },
                     {
                         data: 'fc_nameshort'
