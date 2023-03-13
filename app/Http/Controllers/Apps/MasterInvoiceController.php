@@ -61,7 +61,7 @@ class MasterInvoiceController extends Controller
     }
 
     public function datatables_outgoing(){
-        $data = InvMaster::with('domst')->where('fc_invtype', 'OTG')->get();
+        $data = InvMaster::with('domst')->where('fc_invtype', 'OTG')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
