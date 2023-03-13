@@ -547,7 +547,7 @@
                                 case 'RETAIL':
                                     row.fm_price_default = row.fm_price_default;
                                     break;
-                                case 'HOSPITAL':
+                                case 'RUMAH SAKIT':
                                     row.fm_price_default = row.fm_price_project;
                                     break;
                                 case 'END USER':
@@ -607,7 +607,7 @@
                         $('#fm_so_price').val(data.fm_price_distributor);
                     }else if(tipe_bisnis == 'RETAIL'){
                         $('#fm_so_price').val(data.fm_price_default);
-                    }else if(tipe_bisnis == 'HOSPITAL'){
+                    }else if(tipe_bisnis == 'RUMAH SAKIT'){
                         $('#fm_so_price').val(data.fm_price_project);
                     }else if(tipe_bisnis == 'PERSONAL'){
                         $('#fm_so_price').val(data.fm_price_enduser);

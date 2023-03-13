@@ -16,12 +16,12 @@ class MasterInvoiceController extends Controller
 {
     public function index(){
         $do_mst= DoMaster::with('somst.customer')->first();
-        $inv_mst = InvMaster::all();
+        $inv_mst = InvMaster::where('fc_branch', auth()->user()->fc_branch)->get();
 
         $temp_so_pay = TransaksiType::where('fc_trx', "PAYMENTCODE")->get();
 
         // jika $inv_mst kosong arahkan kehalaman lain
-        if($inv_mst->isEmpty()){
+        if(empty($inv_mst)){
             return view('apps.master-invoice.empty', [
                 'kode_bayar' => $temp_so_pay,
                 'inv_mst'  => $inv_mst,
@@ -33,7 +33,9 @@ class MasterInvoiceController extends Controller
                 'inv_mst'  => $inv_mst,
                 'do_mst' => $do_mst 
             ]);
+            // dd($inv_mst);
         }
+        
 
         
         // dd($inv_mst);
@@ -50,8 +52,16 @@ class MasterInvoiceController extends Controller
         return $pdf->stream();
     }
 
-    public function datatables(){
-        $data = InvMaster::with('domst')->get();
+    public function datatables_incoming(){
+        $data = InvMaster::with('domst')->where('fc_invtype', 'INC')->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+    }
+
+    public function datatables_outgoing(){
+        $data = InvMaster::with('domst')->where('fc_invtype', 'OTG')->get();
 
         return DataTables::of($data)
         ->addIndexColumn()

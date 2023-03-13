@@ -136,33 +136,31 @@
                                             <div class="col-12 col-md-12 col-lg-12">
                                                 <div class="form-group">
                                                     <label>Tgl Rilis Invoice :</label>
-                                                    <span id="fd_inv_releasedate">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</span>
+                                                    <span id="fd_inv_releasedate"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
-                                                    <span id="fc_invno">{{ $inv_mst->fc_invno }}</span>
+                                                    <span id="fc_invno"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>DONO :</label>
-                                                    <span id="fc_dono">{{ $inv_mst->fc_dono }}</span>
+                                                    <span id="fc_dono"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>NPWP</label>
-                                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membernpwp_no }}"
-                                                        readonly>
+                                                    <input type="text" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label>Nama</label>
-                                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membername1 }}"
-                                                        readonly>
+                                                    <input type="text" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,8 +240,7 @@
                                 <div class="form-group">
                                     <label>Tanggal Berakhir</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="text" class="form-control datepicker"
-                                            value="{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y'); }}" readonly> 
+                                        <input type="text" class="form-control datepicker"  readonly> 
                                     </div>
                                 </div>
                             </div>
@@ -349,7 +346,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/apps/master-invoice/datatables',
+                url: '/apps/master-invoice/datatables/incoming',
                 type: 'GET'
             },
             columnDefs: [{
@@ -415,7 +412,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/apps/master-invoice/datatables',
+                url: '/apps/master-invoice/datatables/outgoing',
                 type: 'GET'
             },
             columnDefs: [{
