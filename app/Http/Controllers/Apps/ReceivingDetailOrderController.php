@@ -142,6 +142,7 @@ class ReceivingDetailOrderController extends Controller
             'fd_expired_date' => $request->fd_expired_date,
             'fc_batch' => $request->fc_batch,
             'fc_catnumber' => $request->fc_catnumber,
+            'fc_status' => 'Reguler'
         ], $request->all());
 
         if ($insert_temprodtl) {
@@ -160,7 +161,9 @@ class ReceivingDetailOrderController extends Controller
     public function datatables_temp_ro_detail($fc_pono)
     {
        
-         $data = TempRoDetail::with('stock')->where('fc_rono', auth()->user()->fc_userid)->whereHas('tempromst', function ($query) use ($fc_pono) {
+         $data = TempRoDetail::with('stock','tempromst')
+         ->where('fc_rono', auth()->user()->fc_userid)
+         ->whereHas('tempromst', function ($query) use ($fc_pono) {
              $query->where('fc_pono', $fc_pono);
          })->get();
 

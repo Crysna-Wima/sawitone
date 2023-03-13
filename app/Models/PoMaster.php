@@ -41,4 +41,9 @@ class PoMaster extends Model
         return $this->hasMany(TempPoDetail::class, 'fc_pono', 'fc_pono')->withTrashed();
     }
 
+  
+    public function romst(){
+        return $this->hasMany(RoMaster::class, 'fc_pono', 'fc_pono');
+    }
+
 }
