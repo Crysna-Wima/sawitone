@@ -58,7 +58,7 @@ class ReceivingOrderController extends Controller
     }
 
     public function datatables(){
-        $data = PoMaster::with('supplier');
+        $data = PoMaster::with('supplier')->get();
 
         return DataTables::of($data)
         ->addIndexColumn()

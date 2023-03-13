@@ -50,7 +50,7 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">RONO</th>
                                         <th scope="col" class="text-center">Surat Jalan</th>
-                                        <th scope="col" class="text-center">PONO</th>>
+                                        <th scope="col" class="text-center">PONO</th>
                                         <th scope="col" class="text-center">Supplier</th>
                                         <th scope="col" class="text-center">Item</th>
                                         <th scope="col" class="text-center">Tgl Diterima</th>
