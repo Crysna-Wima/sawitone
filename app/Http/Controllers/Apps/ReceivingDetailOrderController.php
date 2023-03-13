@@ -195,7 +195,13 @@ class ReceivingDetailOrderController extends Controller
         }
 
 
-        $request->request->add(['fc_rono' => auth()->user()->fc_userid]);
+        // jika ada tidak ada data di temp_ro_detail yang fc_rono sama dengan yang login
+        if (TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->count() == 0) {
+            return [
+                'status' => 300,
+                'message' => 'Item Receiving Kosong'
+            ];
+        }
 
         // update
         DB::beginTransaction();
@@ -210,9 +216,10 @@ class ReceivingDetailOrderController extends Controller
             TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->delete();
             TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->delete();
 
+            DB::commit();
             if ($update_tempromst) {
                 return [
-                    'status' => 200,
+                    'status' => 201,
                     'message' => 'Data berhasil disimpan',
                     'link' => '/apps/receiving-order'
                 ];

@@ -231,8 +231,7 @@
                     </div>
                 </div>
             </div>
-            <form id="form_submit_custom" action="/apps/receiving-order/create/submit-ro" method="POST"
-                autocomplete="off">
+            <form id="form_submit_edit" action="/apps/receiving-order/create/submit-ro" method="POST" autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="col-12 col-md-12 col-lg-12 place_detail">
@@ -261,7 +260,7 @@
                                             </div>
                                             <!-- {{-- input waktu sekarang format timestamp tipe hidden --}} -->
                                             <!-- <input type="hidden" class="form-control" name="fd_sodatesysinput"
-                                                        id="fd_sodatesysinput" value="{{ date('d-m-Y') }}"> -->
+                                                                id="fd_sodatesysinput" value="{{ date('d-m-Y') }}"> -->
                                             <input type="text" id="fd_rosjdate" class="form-control datepicker"
                                                 name="fd_rosjdate" required>
                                         </div>
@@ -296,7 +295,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form_submit_custom" action="/apps/receiving-order/create/insert-item" method="post"
+                    <form id="form_submit_item" action="/apps/receiving-order/create/insert-item" method="post"
                         autocomplete="off">
                         <div class="modal-body">
                             <div class="row">
@@ -373,7 +372,8 @@
 
     @section('js')
         <script>
-            $('#form_submit_custom').on('submit', function(e) {
+            // jika ada form submit
+            $('#form_submit_item').on('submit', function(e) {
                 e.preventDefault();
 
                 var form_id = $(this).attr("id");
@@ -391,13 +391,13 @@
                         buttons: true,
                         dangerMode: true,
                     })
-                    .then((willDelete) => {
-                        if (willDelete) {
+                    .then((willSubmit) => {
+                        if (willSubmit) {
                             $("#modal_loading").modal('show');
                             $.ajax({
-                                url: $('#form_submit').attr('action'),
-                                type: $('#form_submit').attr('method'),
-                                data: $('#form_submit').serialize(),
+                                url: $('#form_submit_item').attr('action'),
+                                type: $('#form_submit_item').attr('method'),
+                                data: $('#form_submit_item').serialize(),
                                 success: function(response) {
                                     setTimeout(function() {
                                         $('#modal_loading').modal('hide');
@@ -406,21 +406,21 @@
                                         swal(response.message, {
                                             icon: 'success',
                                         });
-                                        $("#modal").modal('hide');
-                                        $("#form_submit")[0].reset();
+                                        $("#modal_select").modal('hide');
+                                        $("#form_submit_item")[0].reset();
                                         reset_all_select();
-                                        tb.ajax.reload(null, false);
+                                        tb_ro.ajax.reload(null, false);
                                     } else if (response.status == 201) {
                                         swal(response.message, {
                                             icon: 'success',
                                         });
-                                        $("#modal").modal('hide');
+                                        $("#modal_select").modal('hide');
                                         location.href = response.link;
                                     } else if (response.status == 203) {
                                         swal(response.message, {
                                             icon: 'success',
                                         });
-                                        $("#modal").modal('hide');
+                                        $("#modal_select").modal('hide');
                                         tb.ajax.reload(null, false);
                                     } else if (response.status == 300) {
                                         swal(response.message, {
@@ -428,19 +428,19 @@
                                         });
                                     }
                                 },
-                                error: function(jqXHR, textStatus, errorThrown) {
+                                error: function(xhr, status, error) {
                                     setTimeout(function() {
                                         $('#modal_loading').modal('hide');
                                     }, 500);
-                                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                        .responseText + ")", {
-                                            icon: 'error',
-                                        });
+                                    swal("Oops! Terjadi kesalahan saat menyimpan data.", {
+                                        icon: 'error',
+                                    });
                                 }
                             });
                         }
                     });
             });
+
 
             function delete_item(url, nama) {
                 swal({
