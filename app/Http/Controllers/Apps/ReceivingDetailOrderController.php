@@ -25,7 +25,7 @@ class ReceivingDetailOrderController extends Controller
         $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->get();
 
         $count = count($temp_ro_detail);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
+        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_master'] = $temp_ro_master;
         if (!empty($temp_ro_master)) {
             return view('apps.receiving-order.create-detail', $data);
