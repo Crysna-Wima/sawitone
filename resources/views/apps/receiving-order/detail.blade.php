@@ -129,8 +129,8 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
-                                    <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $data->fc_address_loading1 }}" readonly>
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $data->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                 </div>
                             </div>
                         </div>
