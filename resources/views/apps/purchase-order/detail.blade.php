@@ -147,9 +147,9 @@
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Telepon</label>
+                                        <label>Alamat</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplierphone1 }}" readonly>
+                                            value="{{ $data->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
@@ -168,9 +168,9 @@
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Alamat</label>
+                                        <label>Alamat Muat</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                            value="{{ $data->fc_address_loading1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
