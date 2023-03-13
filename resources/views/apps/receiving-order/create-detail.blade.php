@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
                                     <div class="form-group">
-                                        <label>Tipe : {{ $data->fc_pono }}
+                                        <label>Tipe : {{ $data->fc_potype }}
                                         </label>
                                     </div>
                                 </div>
@@ -258,7 +258,7 @@
                     </div>
                 </div>
                 <div class="text-right mb-4">
-                    <button type="button" onclick="" class="btn btn-danger mr-2">Cancel RO</button>
+                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ $data->fc_pono }}', 'Receiving Order')" class="btn btn-danger mr-2">Cancel RO</button>
                     <button class="btn btn-success mr-2">Submit</button>
                 </div>
             </form>
@@ -307,7 +307,7 @@
                                 <div class="form-group">
                                     <label>Qty</label>
                                     <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro">
-                                    <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_po" hidden>
+                                    <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
@@ -410,7 +410,6 @@
                     }
                 });
         });
-
 
         function delete_item(url, nama) {
             swal({
@@ -555,9 +554,6 @@
                     $('td:eq(7)', row).html(`
                         <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
                 }
-                // $('td:eq(7)', row).html(`
-                // <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>
-                // `);
             },
         });
 

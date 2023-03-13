@@ -17,17 +17,25 @@ use DB;
 use App\Models\PoMaster;
 use App\Models\RoMaster;
 use App\Models\TempRoDetail;
+use App\Models\TempRoMaster;
 use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
 {
     public function index(){
-        return view('apps.receiving-order.index');
+        $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
+
+        $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();
+        if($count === 0){
+            return view('apps.receiving-order.index');
+        }else{
+            return redirect('/apps/receiving-order/create/'.$data->fc_pono);
+        }
     }
 
     public function detail($fc_pono){
         session(['fc_pono_global' => $fc_pono]);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
+        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.receiving-order.detail', $data);
         // dd($data);
     }
@@ -63,6 +71,34 @@ class ReceivingOrderController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function cancel_ro($fc_pono){
+        DB::beginTransaction();
+
+		try{
+            TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->delete();
+            TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/receiving-order',
+				'message' => 'Receiving Order dibatalkan'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 
    

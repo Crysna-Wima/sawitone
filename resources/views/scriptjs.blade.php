@@ -309,6 +309,11 @@
                          $("#modal").modal('hide');
                          tb.ajax.reload(null, false);
                          location.href = location.href;
+                      }else if(response.status === 201){
+                        swal(response.message, {  icon: 'success', });
+                         $("#modal").modal('hide');
+                         tb.ajax.reload(null, false);
+                         window.location.href = response.link;
                       }else{
                          swal(response.message, {  icon: 'error', });
                       }

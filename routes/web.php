@@ -276,6 +276,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
             Route::get('/datatables/po_detail','Apps\ReceivingOrderController@datatables_po_detail');
             Route::get('/datatables/ro','Apps\ReceivingOrderController@datatables_receiving_order');
+            Route::delete('/cancel_ro/{fc_pono}','Apps\ReceivingOrderController@cancel_ro');
 
             Route::prefix('create')->group(function () {
                 // Route::get('/','Apps\ReceivingDetailOrderController@index');
