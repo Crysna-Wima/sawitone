@@ -170,12 +170,12 @@
         <div style="position: absolute; left: 0; top: 0">
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
-        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+        <!-- <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
             <p><b>Kepada :</b></p>
-            <p>{{ $po_mst->supplier->fc_supplierlegalstatus }} {{ $po_mst->supplier-> fc_suppliername1 }}</p>
-            <p>{{ $po_mst->supplier->fc_supplier_npwpaddress1 }}</p>
-            <p>{{ $po_mst->supplier->fc_supplieremail1 }} / {{ $po_mst->supplier->fc_supplierphone1 }}
-        </div>
+            <p>{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</p>
+            <p>{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</p>
+            <p>{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}
+        </div> -->
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
@@ -186,23 +186,54 @@
 </div>
 
 <div class="content">
-        <br><br><br><br>
         <p style="text-align: center; font-weight:bold">Received Order</p>
-        <p style="text-align: center;"></p>
+        <p style="text-align: center;">{{ $ro_mst->fc_rono }}</p>
         <br>
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
-                <td>Tanggal PO</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 26%"></td>
+                <td style="font-weight: bold">{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</td>
                 <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 26%"></td>
+                <td></td>
+                <td>No. Surat Jalan</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ $ro_mst->fc_sjno }}</td>
+            </tr>
+            <tr>
+                <td style="width: 30%">{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</td>
+                <td></td>
+                <td></td>
+                <td>Tgl Diterima</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ $ro_mst->fd_roarivaldate }}</td>
             </tr>
             <tr class="pb-1">
-                <td>Tanggal Expired</td>
+                <td style="width: 40%">{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}</td>
+                <td></td>
+                <td></td>
+                <td>No. PO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%"></td>
+                <td style="width: 26%">{{ $ro_mst->fc_pono }}</td>
+            </tr>
+        </table>
+
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+            <tr>
+                <td style="font-weight: bold">Penerima</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ $ro_mst->fc_receiver }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Alamat Pengiriman</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $ro_mst->fc_address_loading }}</td>
+            </tr>
+            <tr class="pb-1">
+                <td style="font-weight: bold">By</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $ro_mst->fc_potransport }}</td>
                 <td></td>
                 <td style="width: 5px"></td>
                 <td style="width: 26%"></td>
@@ -221,12 +252,14 @@
                 <th>Unity</th>
             </tr>
 
-            <!-- @if(isset($po_dtl))
-                @foreach ($po_dtl as $item)
+            @if(isset($ro_dtl))
+                @foreach ($ro_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fc_stockcode }}</td>
-                        <td>{{ $item->stock->fc_nameshort }}</td>
+                        <td>{{ $item->invstore->stock->fc_namelong }}</td>
+                        <td>{{ $item->fc_batch }}</td>
+                        <td>{{ $item->fd_expired_date }}</td>
                         <td>{{ $item->fn_po_qty }}</td>
                         <td>{{ $item->fc_namepack }}</td>
                     </tr>
@@ -236,12 +269,9 @@
             <tr>
                 <td colspan="12" class="text-center">Data Not Found</td>
             </tr>
-            @endif -->
+            @endif
 
         </table>
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman</p>
-        <p style="font-size: .8rem; margin-left: 5%"></p>
 
         <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
             <br><br/>

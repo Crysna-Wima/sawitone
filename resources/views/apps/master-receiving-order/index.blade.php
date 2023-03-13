@@ -132,7 +132,7 @@
                 }
 
                 $('td:eq(8)', row).html(`
-                    <a href="/apps/master-receiving-order/pdf/${data.fc_rono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-receiving-order/pdf/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 `);
             },
         });

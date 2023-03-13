@@ -31,116 +31,48 @@
 @endsection
 @section('content')
 
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Informasi Umum</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
-                        </div>
-                    </div>
-                    <div class="collapse show" id="mycard-collapse">
-                        <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label>PO No : {{ $po_master->fc_pono }}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Order : {{ date('d-m-Y', strtotime ($po_master->fd_podateinputuser)) }}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
-                                    <div class="form-group">
-                                        <label>Expired : {{ date('d-m-Y', strtotime($po_master->fd_poexpired)) }}
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Operator</label>
-                                        <input type="text" class="form-control" value="{{ auth()->user()->fc_username }}"
-                                            readonly>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>PO Type</label>
-                                        <input type="text" class="form-control" value="{{ $po_master->fc_potype }}" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Informasi Umum</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-8 col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Detail Supplier</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
-                                    class="fas fa-minus"></i></a>
-                        </div>
-                    </div>
-                    <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 303px">
-                            <div class="row">
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>NPWP</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->fc_supplierNPWP }}" readonly>
-                                    </div>
+                <div class="collapse show" id="mycard-collapse">
+                    <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>PO No : {{ $po_master->fc_pono }}
+                                    </label>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Cabang</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->supplier_typebranch->fv_description }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Order : {{ date('d-m-Y', strtotime ($po_master->fd_podateinputuser)) }}
+                                    </label>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Bisnis</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->supplier_type_business->fv_description }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
+                                <div class="form-group">
+                                    <label>Expired : {{ date('d-m-Y', strtotime($po_master->fd_poexpired)) }}
+                                    </label>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->fc_suppliername1 }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Operator</label>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Telepon</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->fc_supplierphone1 }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Legal Status</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->supplier_legal_status->fv_description }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-4 col-md-4 col-lg-12">
-                                    <div class="form-group">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $po_master->supplier->fc_supplier_npwpaddress1 }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>PO Type</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->fc_potype }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -148,66 +80,125 @@
                 </div>
             </div>
         </div>
-
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
+        <div class="col-12 col-md-8 col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <h4>Item Purchase Order</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="po_detail" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Stockcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Qty RO</th>
-                                        <th scope="col" class="text-center">Bonus</th>
-                                        <th scope="col" class="text-center">Status</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                    <h4>Detail Supplier</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        {{-- TABLE SO PAY --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Receiving Order</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb_ro" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No.</th>
-                                        <th scope="col" class="text-center">RONO</th>
-                                        <th scope="col" class="text-center">Tgl RO</th>
-                                        <th scope="col" class="text-center">Item</th>
-                                        <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                <div class="collapse show" id="mycard-collapse2">
+                    <div class="card-body" style="height: 303px">
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>NPWP</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->fc_supplierNPWP }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Cabang</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->supplier_typebranch->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Bisnis</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->supplier_type_business->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->fc_suppliername1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Telepon</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->fc_supplierphone1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Legal Status</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->supplier_legal_status->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-12">
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $po_master->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="text-right mb-4">
-        <a href="/apps/master-purchase-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
+
+    {{-- TABLE --}}
+    <div class="col-12 col-md-12 col-lg-12 place_detail">
+        <div class="card">
+            <div class="card-header">
+                <h4>Item Purchase Order</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="po_detail" width="100%">
+                            <thead style="white-space: nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Stockcode</th>
+                                    <th scope="col" class="text-center">Nama Produk</th>
+                                    <th scope="col" class="text-center">Unity</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Qty RO</th>
+                                    <th scope="col" class="text-center">Bonus</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    {{-- TABLE SO PAY --}}
+    <div class="col-12 col-md-12 col-lg-12 place_detail">
+        <div class="card">
+            <div class="card-header">
+                <h4>Receiving Order</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_ro" width="100%">
+                            <thead style="white-space: nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">No.</th>
+                                    <th scope="col" class="text-center">RONO</th>
+                                    <th scope="col" class="text-center">Tgl RO</th>
+                                    <th scope="col" class="text-center">Item</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-right mb-4">
+    <a href="/apps/master-purchase-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
+</div>
 </div>
 @endsection
 
@@ -276,7 +267,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, ]
+            targets: [0, 1, 2, 3, 4, 5]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -284,23 +275,34 @@
                 orderable: false
             },
             {
-                data: null,
+                data: 'fc_rono',
             },
             {
-                data: null,
-            },
-            {
-                data: null,
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
-            },
-            {
-                data: null,
+                data: 'fd_roarivaldate',
                 render: formatTimestamp
+            },
+            {
+                data: 'pomst.fn_podetail'
+            },
+            {
+                data: 'fc_rostatus'
             },
             {
                 data: null,
             },
         ],
+        rowCallback: function(row, data) {
+            $('td:eq(4)', row).html(`<i class="${data.fc_postatus}"></i>`);
+                if (data['fc_rostatus'] == 'P') {
+                    $('td:eq(4)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                } else {
+                    $('td:eq(4)', row).html('<span class="badge badge-success">Received</span>');
+                }
+
+            $('td:eq(5)', row).html(`
+                <a href="#" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            `);
+        },
     });
 </script>
 @endsection

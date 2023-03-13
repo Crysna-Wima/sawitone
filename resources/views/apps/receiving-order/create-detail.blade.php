@@ -547,9 +547,17 @@
                 },
             ],
             rowCallback: function(row, data) {
-                $('td:eq(7)', row).html(`
-            <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>
-            `);
+                if (data.fn_po_qty > data.fn_ro_qty || data.fn_po_bonusqty > data.fn_po_bonusqty) {
+                    $('td:eq(7)', row).html(`
+                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>`
+                    );
+                } else {
+                    $('td:eq(7)', row).html(`
+                        <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+                }
+                // $('td:eq(7)', row).html(`
+                // <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>
+                // `);
             },
         });
 
