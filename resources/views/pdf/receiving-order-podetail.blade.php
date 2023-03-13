@@ -170,12 +170,6 @@
         <div style="position: absolute; left: 0; top: 0">
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
-        <!-- <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
-            <p><b>Kepada :</b></p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}
-        </div> -->
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>

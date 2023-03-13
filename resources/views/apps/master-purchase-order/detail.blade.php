@@ -138,67 +138,64 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    {{-- TABLE --}}
-    <div class="col-12 col-md-12 col-lg-12 place_detail">
-        <div class="card">
-            <div class="card-header">
-                <h4>Item Purchase Order</h4>
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Item Purchase Order</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="po_detail" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Stockcode</th>
+                                        <th scope="col" class="text-center">Nama Produk</th>
+                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Qty RO</th>
+                                        <th scope="col" class="text-center">Bonus</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="po_detail" width="100%">
-                            <thead style="white-space: nowrap">
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Stockcode</th>
-                                    <th scope="col" class="text-center">Nama Produk</th>
-                                    <th scope="col" class="text-center">Unity</th>
-                                    <th scope="col" class="text-center">Qty</th>
-                                    <th scope="col" class="text-center">Qty RO</th>
-                                    <th scope="col" class="text-center">Bonus</th>
-                                    <th scope="col" class="text-center">Status</th>
-                                </tr>
-                            </thead>
-                        </table>
+        </div>
+        {{-- TABLE RO --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Receiving Order</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_ro" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No.</th>
+                                        <th scope="col" class="text-center">RONO</th>
+                                        <th scope="col" class="text-center">Tgl RO</th>
+                                        <th scope="col" class="text-center">Item</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- TABLE SO PAY --}}
-    <div class="col-12 col-md-12 col-lg-12 place_detail">
-        <div class="card">
-            <div class="card-header">
-                <h4>Receiving Order</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_ro" width="100%">
-                            <thead style="white-space: nowrap">
-                                <tr>
-                                    <th scope="col" class="text-center">No.</th>
-                                    <th scope="col" class="text-center">RONO</th>
-                                    <th scope="col" class="text-center">Tgl RO</th>
-                                    <th scope="col" class="text-center">Item</th>
-                                    <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="text-right mb-4">
+        <a href="/apps/master-purchase-order"><button type="button" class="btn btn-info">Back</button></a>
     </div>
-</div>
-<div class="text-right mb-4">
-    <a href="/apps/master-purchase-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-</div>
 </div>
 @endsection
 
@@ -300,7 +297,7 @@
                 }
 
             $('td:eq(5)', row).html(`
-                <a href="#" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-purchase-order/pdf_ro/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             `);
         },
     });

@@ -17,6 +17,7 @@ use DB;
 use App\Models\PoMaster;
 use App\Models\PoDetail;
 use App\Models\RoMaster;
+use App\Models\RoDetail;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterPurchaseOrderController extends Controller
@@ -67,7 +68,7 @@ class MasterPurchaseOrderController extends Controller
     public function datatables_receiving_order()
     {
 
-        $data = RoMaster::with('supplier')->where('fc_pono', session('fc_pono_global'))->get();
+        $data = RoMaster::with('supplier')->where('fc_pono', $fc_pono)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -80,6 +81,15 @@ class MasterPurchaseOrderController extends Controller
         $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
         $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
+        return $pdf->stream();
+    }
+
+    public function pdf_ro($fc_rono)
+    {
+        session(['fc_rono_global' => $fc_rono]);
+        $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
+        $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->get();
+        $pdf = PDF::loadView('pdf.receiving-order-podetail', $data)->setPaper('a4');
         return $pdf->stream();
     }
 }
