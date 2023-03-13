@@ -22,27 +22,30 @@ use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
 
         $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();
-        if($count === 0){
+        if ($count === 0) {
             return view('apps.receiving-order.index');
-        }else{
-            return redirect('/apps/receiving-order/create/'.$data->fc_pono);
+        } else {
+            return redirect('/apps/receiving-order/create/' . $data->fc_pono);
         }
     }
 
-    public function detail($fc_pono){
+    public function detail($fc_pono)
+    {
         session(['fc_pono_global' => $fc_pono]);
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.receiving-order.detail', $data);
         // dd($data);
     }
 
-    public function datatables_po_detail(){
-         //  jika session fc_sono_global tidak sama dengan null
-         if (session('fc_pono_global') != null) {
+    public function datatables_po_detail()
+    {
+        //  jika session fc_sono_global tidak sama dengan null
+        if (session('fc_pono_global') != null) {
             $fc_pono = session('fc_pono_global');
         } else {
             $pomst = PoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
@@ -50,56 +53,54 @@ class ReceivingOrderController extends Controller
             $fc_pono = $fc_pono_pomst;
         }
 
-        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
-    }
-
-    public function datatables_receiving_order(){
-        
-        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->get();
-         
+        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables(){
+    public function datatables_receiving_order()
+    {
+
+        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables()
+    {
         $data = PoMaster::with('supplier')->get();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function cancel_ro($fc_pono){
+    public function cancel_ro($fc_pono)
+    {
         DB::beginTransaction();
 
-		try{
+        try {
             TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->delete();
             TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->delete();
 
-			DB::commit();
+            DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/receiving-order',
-				'message' => 'Receiving Order dibatalkan'
-			];
-		}
+                'message' => 'Receiving Order dibatalkan'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
-
-   
 }
