@@ -38,6 +38,8 @@ class TempRoMaster extends Model
     // public function invmst(){
     //     return $this->hasOne(InvMaster::class, 'fc_dono', 'fc_dono');
     // }
+
+   
     
 
 }
