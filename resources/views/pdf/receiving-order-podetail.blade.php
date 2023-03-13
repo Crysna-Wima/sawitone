@@ -198,7 +198,7 @@
                 <td></td>
                 <td>Tgl Diterima</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $ro_mst->fd_roarivaldate }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $ro_mst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr class="pb-1">
                 <td style="width: 40%">{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}</td>
