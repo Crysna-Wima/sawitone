@@ -278,18 +278,16 @@
                 orderable: false
             },
             {
-                data: null,
+                data: 'fc_rono',
             },
             {
-                data: null,
+                data: 'fd_roarivaldate',
             },
             {
-                data: null,
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
+                data: 'fn_rodetail',
             },
             {
-                data: null,
-                render: formatTimestamp
+                data: 'fc_rostatus',
             },
             {
                 data: null,
