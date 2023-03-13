@@ -254,7 +254,7 @@
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ $item->fd_expired_date }}</td>
-                        <td>{{ $item->fn_po_qty }}</td>
+                        <td>{{ $item->fn_qty_ro }}</td>
                         <td>{{ $item->fc_namepack }}</td>
                     </tr>
                 @endforeach
