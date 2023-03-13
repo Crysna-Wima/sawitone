@@ -137,9 +137,9 @@
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-12">
                                     <div class="form-group">
-                                        <label>Alamat Muat</label>
+                                        <label>Alamat</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $po_master->fc_address_loading1 }}" readonly>
+                                            value="{{ $po_master->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                     </div>
                                 </div>
                             </div>
