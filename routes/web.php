@@ -243,6 +243,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\MasterInvoiceController@index');
             Route::get('/datatables/incoming','Apps\MasterInvoiceController@datatables_incoming');
             Route::get('/datatables/outgoing','Apps\MasterInvoiceController@datatables_outgoing');
+            Route::get('/datatables/add-invoice','Apps\MasterInvoiceController@add_invoice');
             Route::get('/inv/{fc_dono}', 'Apps\MasterInvoiceController@inv');
         });
 

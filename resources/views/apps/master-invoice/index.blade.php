@@ -63,7 +63,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
                                 <div class="text-right mb-3">
-                                    <button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
+                                    <button type="button" class="btn btn-success" onclick="click_modal_add_invoice()"><i class="fa fa-plus mr-1"></i> Tambah Invoice</button>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="tb_incoming_invoice" width="100%">
@@ -307,6 +307,40 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" role="dialog" id="modal_add_invoice" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl" style="width:90%" role="document">
+            <div class="modal-content">
+                <div class="modal-header br">
+                    <h5 class="modal-title">Receiving Order</h5>
+                </div>
+                <div class="place_alert_cart_stock text-center"></div>
+                <form id="form_ttd" autocomplete="off">
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" width="100%" id="add_invoice">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">RONO</th>
+                                        <th scope="col" class="text-center">Surat Jalan</th>
+                                        <th scope="col" class="text-center">PONO</th>
+                                        <th scope="col" class="text-center">Supplier</th>
+                                        <th scope="col" class="text-center">Item</th>
+                                        <th scope="col" class="text-center">Tgl Diterima</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -314,7 +348,65 @@
         function click_modal_update_invoice(fc_dono) {
             $('#modal_update_invoice').modal('show');
         }
+
+        function click_modal_add_invoice() {
+            $('#modal_add_invoice').modal('show');
+        }
         
+        var tb = $('#add_invoice').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/master-invoice/datatables/add-invoice",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            },{
+                className: 'text-nowrap',
+                targets: [2, 6]
+            }],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_rono'
+                },
+                {
+                    data: 'fc_sjno'
+                },
+                {
+                    data: 'fc_pono'
+                },
+                {
+                    data: null,
+                    render: function ( data, type, row ) {
+                        return row.pomst.supplier.fc_supplierlegalstatus+' '+row.pomst.supplier.fc_suppliername1;
+                    }
+                },
+                {
+                    data: 'pomst.fn_podetail'
+                },
+                {
+                    data: 'fd_roarivaldate',
+                    render: formatTimestamp
+                },
+                {
+                    data: null,
+                },
+            ], 
+            
+            rowCallback: function(row, data) {
+                $('td:eq(7)', row).html(`
+                    <a href="#"><button class="btn btn-warning">Pilih</button></a>
+                `);
+            },
+        });
+
         $(document).ready(function() {
                 $('#fc_kode').on('change', function() {
                     var option_id = $(this).val();
