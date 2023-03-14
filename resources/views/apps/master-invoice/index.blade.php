@@ -403,7 +403,7 @@
             
             rowCallback: function(row, data) {
                 $('td:eq(7)', row).html(`
-                    <a href="#"><button class="btn btn-warning">Pilih</button></a>
+                    <a href="/apps/master-invoice/create" class="btn btn-warning">Pilih</a>
                 `);
             },
         });
