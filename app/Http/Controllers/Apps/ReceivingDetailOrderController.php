@@ -21,8 +21,8 @@ class ReceivingDetailOrderController extends Controller
     public function create($fc_pono)
     {
         // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();
-        $temp_ro_master = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
-        $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->get();
+        $temp_ro_master = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         $count = count($temp_ro_detail);
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();

@@ -247,7 +247,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/inv/{fc_dono}', 'Apps\MasterInvoiceController@inv');
 
             Route::prefix('create')->group(function () {
-                Route::get('/','Apps\MasterInvoiceDetailController@create');
+                Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');
             });
         });
 
