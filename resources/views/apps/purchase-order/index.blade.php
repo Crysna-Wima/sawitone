@@ -69,7 +69,7 @@
                                                 id="fc_potype">
                                                 <option value="" selected disabled>- Pilih -</option>
                                                 <option value="Consignment">Consignment</option>
-                                                <option value="Regular SO">Grochery</option>
+                                                <option value="Grochery">Grochery</option>
                                                 <option value="Retailer">Retailer</option>
                                             </select>
                                         </div>
