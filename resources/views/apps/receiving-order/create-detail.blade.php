@@ -353,7 +353,6 @@
                 });
                 return;
             }
-
             swal({
                     title: 'Yakin?',
                     text: 'Apakah anda yakin akan menyimpan data ini?',
@@ -380,6 +379,7 @@
                                     $("#form_submit_item")[0].reset();
                                     reset_all_select();
                                     tb_ro.ajax.reload(null, false);
+                                    tb.ajax.reload(null, false);
                                 } else if (response.status == 201) {
                                     swal(response.message, {
                                         icon: 'success',
