@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 use PDF;
+use App\Models\RoMaster;
 use App\Models\DoMaster;
 use App\Models\DoDetail;
 use App\Models\InvMaster;
@@ -50,6 +51,14 @@ class MasterInvoiceController extends Controller
         $data['inv_mst'] = InvMaster::where('fc_dono', $fc_dono)->first();
         $pdf = PDF::loadView('pdf.invoice-master', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+    
+    public function add_invoice(){
+        $data = RoMaster::with('pomst.supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function datatables_incoming(){
