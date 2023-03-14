@@ -22,4 +22,14 @@ class MasterInvoiceDetailController extends Controller
         return view('apps.master-invoice.create-index', $data);
         // dd($data);
     }
+
+    public function datatables_ro()
+    {
+
+        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
 }

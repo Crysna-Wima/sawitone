@@ -326,7 +326,7 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>CAT Number</label>
-                                    <input type="text" id="fc_catnumber" class="form-control" name="fc_catnumber" required>
+                                    <input type="text" id="fc_catnumber" class="form-control" name="fc_catnumber">
                                 </div>
                             </div>
                         </div>

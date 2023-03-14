@@ -33,44 +33,43 @@
 
 <div class="section-body">
     <div class="row">
-    <div class="col-12 col-md-4 col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Informasi Umum</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
-                        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Informasi Umum</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
-                    <div class="collapse show" id="mycard-collapse">
-                        <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                </div>
+                <div class="collapse" id="mycard-collapse">
+                    <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     <form id="form_submit" action="/apps/receiving-order/create/store-update" method="POST" autocomplete="off">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>PO No : 
+                                        <label>PO No : {{ $ro_mst->fc_pono }}
                                         </label>
-                                        <input type="text" name="fc_pono" value="" hidden>
+                                        <input type="text" name="fc_pono" value="{{ $ro_mst->fc_pono }}" hidden>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>RO No: 
+                                        <label>RO No: {{ $ro_mst->fc_rono }}
                                         </label>
-                                        <input type="text" name="fc_rono" value="" hidden>
+                                        <input type="text" name="fc_rono" value="{{ $ro_mst->fc_rono }}" hidden>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Operator</label>
-                                        <input name="fc_userid" id="fc_userid" type="text" class="form-control" value="{{ auth()->user()->fc_username }}"
-                                            readonly>
+                                        <input name="fc_userid" id="fc_userid" type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input name="" type="text" id="" class="form-control">
+                                        <input name="" type="text" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }}" id="" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
@@ -82,8 +81,8 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" id="" class="form-control datepicker"
-                                                name="" required>
+                                            <input type="text" class="form-control datepicker" name="fd_inv_releasedate" id="fd_inv_releasedate" 
+                                            value="" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -96,81 +95,80 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" id="" class="form-control datepicker"
-                                                name="" required>
+                                            <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" 
+                                            value="" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button type="submit" class="btn btn-success">Buat INV</button>
-                                </div>
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-8 col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Detail Supplier</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
-                                    class="fas fa-minus"></i></a>
-                        </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detail Supplier</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
-                    <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 303px">
-                            <div class="row">
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>NPWP</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                </div>
+                <div class="collapse" id="mycard-collapse2">
+                    <div class="card-body" style="height: 303px">
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>NPWP</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Cabang</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Cabang</label>
+                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Bisnis</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Bisnis</label>
+                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_type_business->fv_description }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Telepon</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Telepon</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Legal Status</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Masa Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->fn_supplierAgingAR }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-12">
-                                    <div class="form-group">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control"
-                                            value="" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Legal Status</label>
+                                    <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fm_supplierAR }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -178,34 +176,7 @@
                 </div>
             </div>
         </div>
-
         {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="po_detail" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Stockcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Qty RO</th>
-                                        <th scope="col" class="text-center">Bonus</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- TABLE SO PAY --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
@@ -214,16 +185,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="tb_ro" width="100%">
+                            <table class="table table-striped" id="ro_detail" width="100%">
                                 <thead style="white-space: nowrap">
                                     <tr>
-                                        <th scope="col" class="text-center">No.</th>
+                                        <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Unity</th>
-                                        <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Batch</th>
-                                        <th scope="col" class="text-center">Expired Date</th>
+                                        <th scope="col" class="text-center">Exp. Date</th>
+                                        <th scope="col" class="text-center">Harga</th>
+                                        <th scope="col" class="text-center">Disc.</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -233,399 +207,180 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <form id="form_submit_edit" action="/apps/receiving-order/create/submit-ro" method="POST" autocomplete="off">
-                @csrf
-                @method('put')
-                <div class="card">
-                    <div class="card-body">
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_submit" action="#" method="POST" autocomplete="off">
+                        @csrf
+                        @method('PUT')
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-3">
+                            <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Transport</label>
-                                    <select class="form-control select2" name="fc_potransport" id="fc_potransport">
-                                        <option value="" selected disabled>- Pilih Transport -</option>
+                                    <select class="form-control select2" name="fc_rotransport" id="fc_rotransport">
+                                        <option value="">- Pilih Transport -</option>
                                         <option value="By Dexa">By Dexa</option>
                                         <option value="By Paket">By Paket</option>
                                         <option value="By Customer">By Customer</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-4">
+                            <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tanggal Surat Jalan</label>
-                                    <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <label>Biaya</label>
+                                    <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
-                                                <i class="fas fa-calendar"></i>
+                                                Rp.
                                             </div>
                                         </div>
-                                        <!-- {{-- input waktu sekarang format timestamp tipe hidden --}} -->
-                                        <!-- <input type="hidden" class="form-control" name="fd_sodatesysinput"
-                                                                id="fd_sodatesysinput" value="{{ date('d-m-Y') }}"> -->
-                                        <input type="text" id="fd_rosjdate" class="form-control datepicker" name="fd_rosjdate" required>
+                                        <input type="text" class="form-control format-rp" name="fm_servpay" id="fm_servpay" 
+                                            value="" onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-5">
+                            <div class="col-12 col-md-6 col-lg-12">
                                 <div class="form-group">
-                                    <label>Alamat</label>
-                                    <input type="text" name="fc_address_loading" class="form-control" value="{{ $data->fc_address_loading1 }}">
+                                    <label>Alamat Pengiriman</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="" id="" value="" required>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="text-right mb-4">
-                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ $data->fc_pono }}', 'Receiving Order')" class="btn btn-danger mr-2">Cancel RO</button>
-                    <button class="btn btn-success mr-2">Submit</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-    @endsection
-
-    @section('modal')
-    <div class="modal fade" role="dialog" id="modal_select" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header br">
-                    <h5 class="modal-title">Detail Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <div class="col-12 col-md-12 col-lg-6 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Calculation</h4>
                 </div>
-                <form id="form_submit_item" action="/apps/receiving-order/create/insert-item" method="post" autocomplete="off">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Stock Code</label>
-                                    <div class="input-group">
-                                        <input type="text" id="fc_stockcode" class="form-control" name="fc_stockcode" required>
-                                        <input type="text" id="fc_pono" class="form-control" name="fc_pono" hidden>
-                                        <input type="text" id="fc_namepack" class="form-control" name="fc_namepack" hidden>
-                                    </div>
-                                </div>
+                <div class="card-body" style="height: 180px">
+                    <div class="d-flex">
+                        <div class="flex-row-item" style="margin-right: 30px">
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Nama Produk</label>
-                                    <div class="input-group">
-                                        <input type="text" id="fc_nameshort" class="form-control" name="fc_nameshort" required>
-                                    </div>
-                                </div>
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Batch</label>
-                                    <input type="text" id="fc_batch" class="form-control" name="fc_batch" required>
-                                </div>
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Qty</label>
-                                    <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro">
-                                    <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
-                                </div>
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Expired Date</label>
-                                    <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="fas fa-calendar"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" id="fd_expired_date" class="form-control datepicker" name="fd_expired_date" required>
-                                    </div>
-                                </div>
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>CAT Number</label>
-                                    <input type="text" id="fc_catnumber" class="form-control" name="fc_catnumber" required>
-                                </div>
+                        </div>
+                        <div class="flex-row-item">
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
+                            </div>
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                            </div>
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
+                            </div>
+                            <div class="d-flex" style="gap: 5px; white-space: pre">
+                                <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-    @endsection
+    <div class="text-right mb-4">
+        <button type="button" onclick="" class="btn btn-danger mr-2">Cancel INV</button>
+        <button class="btn btn-success mr-2">Submit</button>
+    </div>
+</div>
+</div>
+@endsection
 
-    @section('js')
-    <script>
-        // jika ada form submit
-        $('#form_submit_item').on('submit', function(e) {
-            e.preventDefault();
-
-            var form_id = $(this).attr("id");
-            if (check_required(form_id) === false) {
-                swal("Oops! Mohon isi field yang kosong", {
-                    icon: 'warning',
-                });
-                return;
-            }
-            swal({
-                    title: 'Yakin?',
-                    text: 'Apakah anda yakin akan menyimpan data ini?',
-                    icon: 'warning',
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willSubmit) => {
-                    if (willSubmit) {
-                        $("#modal_loading").modal('show');
-                        $.ajax({
-                            url: $('#form_submit_item').attr('action'),
-                            type: $('#form_submit_item').attr('method'),
-                            data: $('#form_submit_item').serialize(),
-                            success: function(response) {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-                                if (response.status == 200) {
-                                    swal(response.message, {
-                                        icon: 'success',
-                                    });
-                                    $("#modal_select").modal('hide');
-                                    $("#form_submit_item")[0].reset();
-                                    reset_all_select();
-                                    tb_ro.ajax.reload(null, false);
-                                    tb.ajax.reload(null, false);
-                                } else if (response.status == 201) {
-                                    swal(response.message, {
-                                        icon: 'success',
-                                    });
-                                    $("#modal_select").modal('hide');
-                                    location.href = response.link;
-                                } else if (response.status == 203) {
-                                    swal(response.message, {
-                                        icon: 'success',
-                                    });
-                                    $("#modal_select").modal('hide');
-                                    tb.ajax.reload(null, false);
-                                } else if (response.status == 300) {
-                                    swal(response.message, {
-                                        icon: 'error',
-                                    });
-                                }
-                            },
-                            error: function(xhr, status, error) {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-                                swal("Oops! Terjadi kesalahan saat menyimpan data.", {
-                                    icon: 'error',
-                                });
-                            }
-                        });
-                    }
-                });
-        });
-
-        function delete_item(url, nama) {
-            swal({
-                    title: 'Apakah anda yakin?',
-                    text: 'Apakah anda yakin akan menghapus data ' + nama + "?",
-                    icon: 'warning',
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $("#modal_loading").modal('show');
-                        $.ajax({
-                            url: url,
-                            type: "DELETE",
-                            dataType: "JSON",
-                            success: function(response) {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-
-                                if (response.status === 200) {
-                                    swal(response.message, {
-                                        icon: 'success',
-                                    });
-                                    $("#modal").modal('hide');
-                                    tb_ro.ajax.reload(null, false);
-                                    //  location.href = location.href;
-                                } else {
-                                    swal(response.message, {
-                                        icon: 'error',
-                                    });
-                                }
-
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                    .responseText + ")", {
-                                        icon: 'error',
-                                    });
-                            }
-                        });
-                    }
-                });
-        }
-
-        function click_modal_select(data) {
-            var stockcode = $(data).data('stockcode');
-            // pono
-            var pono = $(data).data('pono');
-
-            $('#fc_catnumber').val('');
-            $('#fc_batch').val('');
-
-            // modal_loading show
-            $('#modal_loading').modal('show');
-
-            // value id fc_stockcode
-            $('#fc_stockcode').val(stockcode);
-
-            $.ajax({
-                url: '/apps/receiving-order/create/detail-item/' + stockcode + '/' + pono,
-                type: "GET",
-
-                success: function(data) {
-                    var qty = data.fn_po_qty - data.fn_ro_qty
-
-                    $('#fc_nameshort').val(data.stock.fc_nameshort);
-                    $('#fc_nameshort').trigger('change');
-
-                    // fc_namepack
-                    $('#fc_namepack').val(data.stock.fc_namepack);
-
-                    $('#fc_pono').val(data.fc_pono);
-
-                    $('#fn_qty_ro').val(qty);
-
-                    $('#fn_qty_po').val(data.fn_po_qty);
-                    $('#fn_qty_po').trigger('change');
-
-                    // modal_loading hide
-                    $('#modal_loading').modal('hide');
-                    $('#modal_select').modal('show');
-                },
-
-                error: function(data) {
-                    $('#modal_loading').modal('hide');
-                    console.log('Error:', data);
-                }
-            });
-        }
-
-        var tb = $('#po_detail').DataTable({
-            // apabila data kosong
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/apps/receiving-order/datatables/po_detail",
-                type: 'GET',
+@section('js')
+<script>
+    var tb = $('#ro_detail').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/master-invoice/create/datatables/ro-detail",
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 3, 4, 5, 6, 7, 10]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
             },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7]
-            }, ],
-            columns: [{
-                    data: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false
-                },
-                {
-                    data: 'fc_stockcode'
-                },
-                {
-                    data: 'stock.fc_nameshort'
-                },
-                {
-                    data: 'namepack.fv_description'
-                },
-                {
-                    data: 'fn_po_qty'
-                },
-                {
-                    data: 'fn_ro_qty'
-                },
-                {
-                    data: 'fn_po_bonusqty'
-                },
-                {
-                    data: null
-                },
-            ],
-            rowCallback: function(row, data) {
-                if (data.fn_po_qty > data.fn_ro_qty || data.fn_po_bonusqty > data.fn_po_bonusqty) {
-                    $('td:eq(7)', row).html(`
-                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>`
-                    );
-                } else {
-                    $('td:eq(7)', row).html(`
-                        <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'invstore.stock.fc_nameshort'
+            },
+            {
+                data: 'invstore.stock.fc_namepack'
+            },
+            {
+                data: 'fc_batch'
+            },
+            {
+                data: 'fd_expired_date'
+            },
+            {
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<input type="number" id="" min="0" class="form-control" value="">`;
                 }
             },
-        });
-
-        var tb_ro = $('#tb_ro').DataTable({
-            // apabila data kosong
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/apps/receiving-order/create/datatables/temprodetail/" + "{{ $data->fc_pono }}",
-                type: 'GET',
-            },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5, ]
-            }, ],
-            columns: [{
-                    data: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false
-                },
-                {
-                    data: 'fc_stockcode',
-                },
-                {
-                    data: 'stock.fc_nameshort',
-                },
-                {
-                    data: 'fc_namepack',
-                },
-                {
-                    data: 'fn_qty_ro',
-                },
-                {
-                    data: 'fc_batch',
-                },
-                {
-                    data: 'fd_expired_date',
-                },
-                {
-                    data: null
+            {
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<input type="number" id="" min="0" class="form-control" value="">`;
                 }
-            ],
-
-            rowCallback: function(row, data) {
-                var url_delete = '/apps/receiving-order/create/delete/temprodetail/' + data.fn_rownum;
-                $('td:eq(7)', row).html(`
-                <button class="btn btn-danger btn-sm"  onclick="delete_item(
-                    '${url_delete}','Item Receiving')"><i class="fa fa-trash"></i> Hapus Item</button>
-                `);
             },
-        });
-        
-        $('.modal').css('overflow-y', 'auto');
-    </script>
-    @endsection
+            {
+                data: 'fn_qty_ro'
+            },
+            {
+                data: 'fn_price',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(10)', row).html(`
+            <button class="btn btn-success" onclick="">Save</button>`);
+        },
+    });
+</script>
+@endsection
