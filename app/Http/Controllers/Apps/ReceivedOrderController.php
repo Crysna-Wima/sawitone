@@ -45,12 +45,12 @@ class ReceivedOrderController extends Controller
     }
 
     public function detail($fc_dono){;
-        $data['data'] = DoMaster::with('somst','dodtl')->where('fc_dono', $fc_dono)->first();
+        $data['data'] = DoMaster::with('somst','dodtl')->where('fc_dono', $fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.received-order.detail', $data);
     }
 
     public function datatables(request $request){
-        $data = DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->get();
+        $data = DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
