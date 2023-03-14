@@ -78,8 +78,8 @@ class MasterPurchaseOrderController extends Controller
     public function pdf($fc_pono)
     {
         session(['fc_pono_global' => $fc_pono]);
-        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->first();
-        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
+        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
     }
