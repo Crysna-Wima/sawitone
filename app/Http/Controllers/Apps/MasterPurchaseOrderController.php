@@ -68,7 +68,7 @@ class MasterPurchaseOrderController extends Controller
     public function datatables_receiving_order()
     {
 
-        $data = RoMaster::with('supplier')->where('fc_pono', $fc_pono)->get();
+        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -89,7 +89,7 @@ class MasterPurchaseOrderController extends Controller
         session(['fc_rono_global' => $fc_rono]);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->get();
-        $pdf = PDF::loadView('pdf.receiving-order-podetail', $data)->setPaper('a4');
+        $pdf = PDF::loadView('pdf.purchase-order-rodetail', $data)->setPaper('a4');
         return $pdf->stream();
     }
 }

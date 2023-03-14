@@ -16,6 +16,7 @@ use DB;
 
 use App\Models\PoMaster;
 use App\Models\RoMaster;
+use App\Models\RoDetail;
 use App\Models\TempRoDetail;
 use App\Models\TempRoMaster;
 use Yajra\DataTables\DataTables;
@@ -57,6 +58,15 @@ class ReceivingOrderController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function pdf_ro($fc_rono)
+    {
+        session(['fc_rono_global' => $fc_rono]);
+        $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
+        $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->get();
+        $pdf = PDF::loadView('pdf.receiving-order-podetail', $data)->setPaper('a4');
+        return $pdf->stream();
     }
 
     public function datatables_receiving_order()
