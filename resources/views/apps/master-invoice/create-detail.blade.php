@@ -82,7 +82,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" class="form-control datepicker" name="fd_inv_releasedate" id="fd_inv_releasedate" 
-                                            value="" readonly>
+                                            value="{{ $inv_mst->fd_inv_releasedate }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                                 </div>
                                             </div>
                                             <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" 
-                                            value="" readonly>
+                                            value="{{ $inv_mst->fd_inv_agingdate }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -312,7 +312,7 @@
         </div>
     </div>
     <div class="text-right mb-4">
-        <button type="button" onclick="" class="btn btn-danger mr-2">Cancel INV</button>
+        <button type="button" onclick="delete_action('/apps/master-invoice/delete/{{ $inv_mst->fc_invno  }}','Invoice')" class="btn btn-danger mr-2">Cancel INV</button>
         <button class="btn btn-success mr-2">Submit</button>
     </div>
 </div>

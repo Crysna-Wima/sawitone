@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apps;
 
 use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
+use App\Models\InvDetail;
 use App\Models\InvMaster;
 use App\Models\RoDetail;
 use App\Models\RoMaster;
@@ -21,6 +22,7 @@ class MasterInvoiceDetailController extends Controller
         $data['tipe_cabang'] = RoMaster::with('pomst.supplier.supplier_typebranch')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['tipe_bisnis'] = RoMaster::with('pomst.supplier.supplier_type_business')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['legal_status'] = RoMaster::with('pomst.supplier.supplier_legal_status')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvMaster::where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         // jika ada InvMaster dimana 'fc_rono' sama dengan $fc_rono
         $count_inv_mst = InvMaster::where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->count();
@@ -99,6 +101,32 @@ class MasterInvoiceDetailController extends Controller
             ->addIndexColumn()
             ->make(true);
         // dd($data);
+    }
+
+    public function delete_inv($fc_invno){
+
+        DB::beginTransaction();
+        try{
+            InvMaster::where('fc_invno', $fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
+            // InvDetail::where('fc_invno', $fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
+
+            DB::commit();
+            return [
+                'status' => 201,
+                'message' => 'Hapus Invoice berhasil',
+                'link' => '/apps/master-invoice'
+            ];
+        }catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+        
     }
 
 

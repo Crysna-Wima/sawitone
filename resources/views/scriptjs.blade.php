@@ -61,8 +61,8 @@
              buttons: true,
              dangerMode: true,
        })
-       .then((willDelete) => {
-             if (willDelete) {
+       .then((save) => {
+             if (save) {
                 $("#modal_loading").modal('show');
                 $.ajax({
                    url:  $('#form_submit').attr('action'),
@@ -115,8 +115,8 @@
              buttons: true,
              dangerMode: true,
        })
-       .then((willDelete) => {
-             if (willDelete) {
+       .then((save) => {
+             if (save) {
                 $("#modal_loading").modal('show');
                 $.ajax({
                    url:  $('#form_submit_edit').attr('action'),
