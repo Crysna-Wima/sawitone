@@ -72,7 +72,7 @@ class MasterInvoiceDetailController extends Controller
             'fc_userid' => $request->fc_userid,
             'fd_inv_releasedate' => $request->fd_inv_releasedate,
             'fd_inv_agingdate' => $request->fd_inv_agingdate,
-            'fc_status' => 'R',
+            'fc_status' => 'I',
             'fc_invtype' => 'INC',
             'fn_inv_agingday' => $fn_inv_agingday,
         ]);
@@ -126,7 +126,105 @@ class MasterInvoiceDetailController extends Controller
 			];
 
 		}
-        
+    }
+
+    public function incoming_edit_ro(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_rono' => 'required',
+            'fn_rownum' => 'required',
+            'fc_stockcode' => 'required',
+            'fn_price' => 'required',
+            'fn_disc' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update rodetail
+        $update_rodetail = RoDetail::where('fc_rono', $request->fc_rono)->where('fc_branch', auth()->user()->fc_branch)->where('fn_rownum', $request->fn_rownum)->update([
+            'fn_price' => $request->fn_price,
+            'fn_disc' => $request->fn_disc,
+        ]);
+
+        if($update_rodetail){
+            return [
+                'status' => 200,
+                'message' => 'Update Item Receiving berhasil berhasil',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Gagal update RO Detail'
+        ];
+    }
+
+    public function delivery_update(Request $request){
+        //  update InvMaster dimana fc_branch sama dengan login, dan fc_status sama dengan I dan fc_rono sama dengan $request->fc_rono
+        // validasi
+        $validator = Validator::make($request->all(), [
+            'fm_servpay' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        $update_inv_mst = InvMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_status', 'I')->where('fc_invno', $request->fc_invno)->update([
+            'fm_servpay' => $request->fm_servpay,
+        ]);
+
+        if($update_inv_mst){
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil disimpan',
+                'link' => '/apps/master-invoice/create/'.$request->fc_rono
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal disimpan'
+        ];
+    }
+
+
+    public function submit_invoice(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_invno' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update inv master
+        $update_inv_mst = InvMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_status', 'I')->where('fc_invno', $request->fc_invno)->update([
+            'fc_status' => 'R',
+        ]);
+
+        if($update_inv_mst){
+            return [
+                'status' => 201,
+                'message' => 'Data Invoice berhasil disubmit',
+                'link' => '/apps/master-invoice'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal disimpan'
+        ];
     }
 
 

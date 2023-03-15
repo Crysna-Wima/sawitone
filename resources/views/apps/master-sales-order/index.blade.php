@@ -7,7 +7,7 @@
       <div class="col-12 col-md-12 col-lg-12">
          <div class="card">
             <div class="card-header">
-                <h4>Data Master Sales Order</h4>
+               <h4>Data Master Sales Order</h4>
             </div>
             <div class="card-body">
                <div class="table-responsive">
@@ -37,7 +37,6 @@
 
 @section('js')
 <script>
-
    var tb = $('#tb').DataTable({
       processing: true,
       serverSide: true,
@@ -45,34 +44,64 @@
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
       },
-      columnDefs: [
-         { className: 'text-center', targets: [0,6,7] },
-         { className: 'text-nowrap', targets: [3,9] },  
+      columnDefs: [{
+            className: 'text-center',
+            targets: [0, 6, 7]
+         },
+         {
+            className: 'text-nowrap',
+            targets: [3, 9]
+         },
       ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_sono' },
-         { data: 'fd_sodatesysinput', render: formatTimestamp },
-         { data: 'fd_soexpired', render: formatTimestamp },
-         { data: 'fc_sotype' },
-         { data: 'fc_membercode' },
-         { data: 'fn_sodetail' },
-         { data: 'fc_sostatus' },
-         { data: 'fm_brutto', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
-         { data: null },
+      columns: [{
+            data: 'DT_RowIndex',
+            searchable: false,
+            orderable: false
+         },
+         {
+            data: 'fc_sono'
+         },
+         {
+            data: 'fd_sodatesysinput',
+            render: formatTimestamp
+         },
+         {
+            data: 'fd_soexpired',
+            render: formatTimestamp
+         },
+         {
+            data: 'fc_sotype'
+         },
+         {
+            data: 'fc_membercode'
+         },
+         {
+            data: 'fn_sodetail'
+         },
+         {
+            data: 'fc_sostatus'
+         },
+         {
+            data: 'fm_brutto',
+            render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+         },
+         {
+            data: null
+         },
       ],
-      rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
+
+      rowCallback: function(row, data) {
+         var url_edit = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
-         if(data['fc_sostatus'] == 'F'){
+         if (data['fc_sostatus'] == 'F') {
             $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
-         } else if(data['fc_sostatus'] == 'C'){
+         } else if (data['fc_sostatus'] == 'C') {
             $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
-         } else if(data['fc_sostatus'] == 'DD'){
+         } else if (data['fc_sostatus'] == 'DD') {
             $('td:eq(7)', row).html('<span class="badge badge-info">DO Done</span>');
-         } else if(data['fc_sostatus'] == 'P'){
+         } else if (data['fc_sostatus'] == 'P') {
             $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
          } else {
             $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
@@ -84,6 +113,23 @@
          `);
       }
    });
+
+   var dropdown = $('<select></select>')
+      .appendTo('.dataTables_length')
+      .addClass('form-control select1')
+      .attr('aria-controls', 'tb')
+      .on('change', function() {
+         var value = $(this).val();
+         $('tb').DataTable().page.len(value).draw();
+      })
+      .attr('style', 'margin-left: 20px; width:140px;');
+
+   dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
+   dropdown.append($('<option value="Semua">Semua</option>'));
+   dropdown.append($('<option value="Waiting">Waiting</option>'));
+   dropdown.append($('<option value="Pending">Pending</option>'));
+   dropdown.append($('<option value="DO Done">DO Done</option>'));
+   dropdown.append($('<option value="Complete">Complete</option>'));
 
 </script>
 @endsection
