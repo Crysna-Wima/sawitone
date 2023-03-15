@@ -1,48 +1,48 @@
 @extends('partial.app')
 @section('title', 'New Invoice Incoming')
 @section('css')
-    <style>
-        #tb_wrapper .row:nth-child(2) {
-            overflow-x: auto;
+<style>
+    #tb_wrapper .row:nth-child(2) {
+        overflow-x: auto;
+    }
+
+    .d-flex .flex-row-item {
+        flex: 1 1 30%;
+    }
+
+    .text-secondary {
+        color: #969DA4 !important;
+    }
+
+    .text-success {
+        color: #28a745 !important;
+    }
+
+    @media (min-width: 992px) and (max-width: 1200px) {
+        .flex-row-item {
+            font-size: 12px;
         }
 
-        .d-flex .flex-row-item {
-            flex: 1 1 30%;
+        .grand-text {
+            font-size: .9rem;
         }
-
-        .text-secondary {
-            color: #969DA4 !important;
-        }
-
-        .text-success {
-            color: #28a745 !important;
-        }
-
-        @media (min-width: 992px) and (max-width: 1200px) {
-            .flex-row-item {
-                font-size: 12px;
-            }
-
-            .grand-text {
-                font-size: .9rem;
-            }
-        }
-    </style>
+    }
+</style>
 @endsection
 @section('content')
 
-    <div class="section-body">
-        <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Informasi Umum</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
-                        </div>
+<div class="section-body">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Informasi Umum</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
-                    <div class="collapse show" id="mycard-collapse">
-                        <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
+                </div>
+                <div class="collapse show" id="mycard-collapse">
+                    <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     <form id="form_submit" action="/apps/receiving-order/create/store-update" method="POST" autocomplete="off">
                         <div class="card-body">
                             <div class="row">
@@ -63,8 +63,7 @@
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>Operator</label>
-                                        <input name="fc_userid" id="fc_userid" type="text" class="form-control" value="{{ auth()->user()->fc_username }}"
-                                            readonly>
+                                        <input name="fc_userid" id="fc_userid" type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -82,8 +81,7 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control datepicker"
-                                                name="fd_inv_releasedate" id="fd_inv_releasedate" required>
+                                            <input type="text" class="form-control datepicker" name="fd_inv_releasedate" id="fd_inv_releasedate" required>
                                         </div>
                                     </div>
                                 </div>
@@ -96,8 +94,7 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" id="fd_inv_agingdate" class="form-control datepicker"
-                                                name="fd_inv_agingdate" required>
+                                            <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" required>
                                         </div>
                                     </div>
                                 </div>
@@ -106,70 +103,73 @@
                                 </div>
                             </div>
                         </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-12 col-md-8 col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Detail Supplier</h4>
-                        <div class="card-header-action">
-                            <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
-                                    class="fas fa-minus"></i></a>
-                        </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detail Supplier</h4>
+                    <div class="card-header-action">
+                        <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
-                    <div class="collapse show" id="mycard-collapse2">
-                        <div class="card-body"  style="height: 303px">
-                            <div class="row">
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>NPWP</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
-                                    </div>
+                </div>
+                <div class="collapse show" id="mycard-collapse2">
+                    <div class="card-body" style="height: 303px">
+                        <div class="row">
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>NPWP</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Cabang</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $tipe_cabang->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Cabang</label>
+                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Tipe Bisnis</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $tipe_cabang->pomst->supplier->supplier_type_business->fv_description }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tipe Bisnis</label>
+                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_type_business->fv_description }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Telepon</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Telepon</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Legal Status</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $legal_status->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Masa Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->fn_supplierAgingAR }}" readonly>
                                 </div>
-                                <div class="col-4 col-md-4 col-lg-12">
-                                    <div class="form-group">
-                                        <label>Alamat</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
-                                    </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Legal Status</label>
+                                    <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fm_supplierAR }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -178,10 +178,11 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('js')
-    <script>
+<script>
 
-    </script>
+</script>
 @endsection
