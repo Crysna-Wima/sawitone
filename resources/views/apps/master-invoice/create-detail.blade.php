@@ -327,7 +327,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/master-invoice/create/datatables/ro-detail",
+            url: "/apps/master-invoice/create/datatables/ro-detail/" + "{{ $ro_mst->fc_rono }}",
             type: 'GET',
         },
         columnDefs: [{

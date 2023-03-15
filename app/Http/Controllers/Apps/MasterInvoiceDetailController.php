@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
 use App\Models\InvMaster;
 use App\Models\RoDetail;
 use App\Models\RoMaster;
-
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -39,6 +40,13 @@ class MasterInvoiceDetailController extends Controller
             'fc_userid' => 'required',
             'fd_inv_releasedate' => 'required',
             'fd_inv_agingdate' => 'required',
+        ],
+        [
+            'fc_pono.required' => 'Purchase Order Number is required',
+            'fc_rono.required' => 'Receiving Order Number is required',
+            'fc_userid.required' => 'User ID is required',
+            'fd_inv_releasedate.required' => 'Release Date is required',
+            'fd_inv_agingdate.required' => 'Aging Date is required',
         ]);
 
         if ($validator->fails()) {
@@ -49,33 +57,48 @@ class MasterInvoiceDetailController extends Controller
         }
 
         // fc_inv_agingday = $request->fd_inv_agingdate - $request->fd_inv_releasedate, konvert jumlah harinya
-        $date1 = strtotime($request->fd_inv_releasedate);
-        $date2 = strtotime($request->fd_inv_agingdate);
-        $diff = abs($date2 - $date1);
-        dd($diff);
-
+        $invAgingDate = Carbon::parse($request->fd_inv_agingdate);
+        $invReleaseDate = Carbon::parse($request->fd_inv_releasedate);
+        $fn_inv_agingday = $invAgingDate->diffInDays($invReleaseDate);
+    
         // insert into inv master
-        // $insert_inv_mst = InvMaster::create([
-        //     'fc_divisioncode' => auth()->user()->fc_divisioncode,
-        //     'fc_branch' => auth()->user()->fc_branch,
-        //     'fc_pono' => $request->fc_pono,
-        //     'fc_rono' => $request->fc_rono,
-        //     'fc_userid' => $request->fc_userid,
-        //     'fd_inv_releasedate' => $request->fd_inv_releasedate,
-        //     'fd_inv_agingdate' => $request->fd_inv_agingdate,
-        //     'fc_status' => 'R',
-        //     'fc_invtype' => 'INC',
-        // ]);
+        $insert_inv_mst = InvMaster::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_pono' => $request->fc_pono,
+            'fc_rono' => $request->fc_rono,
+            'fc_userid' => $request->fc_userid,
+            'fd_inv_releasedate' => $request->fd_inv_releasedate,
+            'fd_inv_agingdate' => $request->fd_inv_agingdate,
+            'fc_status' => 'R',
+            'fc_invtype' => 'INC',
+            'fn_inv_agingday' => $fn_inv_agingday,
+        ]);
+
+        if($insert_inv_mst){
+            return [
+                'status' => 201,
+                'message' => 'Buat Invoice berhasil',
+                'link' => '/apps/master-invoice/create/'.$request->fc_rono
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Gagal buat Invoice'
+        ];
+
     }
 
-    public function datatables_ro()
+    public function datatables_ro($fc_rono)
     {
 
-        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+        // dd($data);
     }
 
 
