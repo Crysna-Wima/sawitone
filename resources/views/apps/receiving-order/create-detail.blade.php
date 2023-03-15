@@ -228,7 +228,7 @@
                                         <option value="" selected disabled>- Pilih Transport -</option>
                                         <option value="By Dexa">By Dexa</option>
                                         <option value="By Paket">By Paket</option>
-                                        <option value="By Customer">By Customer</option>
+                                        <option value="By Supplier">By Supplier</option>
                                     </select>
                                 </div>
                             </div>
