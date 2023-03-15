@@ -59,7 +59,7 @@ class MasterPurchaseOrderController extends Controller
             $fc_pono = $fc_pono_pomst;
         }
 
-        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->get();
+        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);

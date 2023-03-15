@@ -32,33 +32,41 @@ class MasterInvoiceDetailController extends Controller
     }
 
     // incoming_insert
-    // public function incoming_insert(Request $request){
-    //     $validator = Validator::make($request->all(), [
-    //         'fc_pono' => 'required',
-    //         'fc_rono' => 'required',
-    //         'fc_userid' => 'required',
-    //         'fd_inv_releasedate' => 'required',
-    //         'fd_inv_agingdate' => 'required',
-    //     ]);
+    public function incoming_insert(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_pono' => 'required',
+            'fc_rono' => 'required',
+            'fc_userid' => 'required',
+            'fd_inv_releasedate' => 'required',
+            'fd_inv_agingdate' => 'required',
+        ]);
 
-    //     if ($validator->fails()) {
-    //         return [
-    //             'status' => 300,
-    //             'message' => $validator->errors()->first()
-    //         ];
-    //     }
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
 
-    //     // insert into inv master
-    //     $insert_inv_mst = InvMaster::create([
-    //         'fc_pono' => $request->fc_pono,
-    //         'fc_rono' => $request->fc_rono,
-    //         'fc_userid' => $request->fc_userid,
-    //         'fd_inv_releasedate' => $request->fd_inv_releasedate,
-    //         'fd_inv_agingdate' => $request->fd_inv_agingdate,
-    //         'fc_branch' => auth()->user()->fc_branch,
-    //         'fc_divisioncode' => auth()->user()->fc_divisioncode,
-    //     ]);
-    // }
+        // fc_inv_agingday = $request->fd_inv_agingdate - $request->fd_inv_releasedate, konvert jumlah harinya
+        $date1 = strtotime($request->fd_inv_releasedate);
+        $date2 = strtotime($request->fd_inv_agingdate);
+        $diff = abs($date2 - $date1);
+        dd($diff);
+
+        // insert into inv master
+        // $insert_inv_mst = InvMaster::create([
+        //     'fc_divisioncode' => auth()->user()->fc_divisioncode,
+        //     'fc_branch' => auth()->user()->fc_branch,
+        //     'fc_pono' => $request->fc_pono,
+        //     'fc_rono' => $request->fc_rono,
+        //     'fc_userid' => $request->fc_userid,
+        //     'fd_inv_releasedate' => $request->fd_inv_releasedate,
+        //     'fd_inv_agingdate' => $request->fd_inv_agingdate,
+        //     'fc_status' => 'R',
+        //     'fc_invtype' => 'INC',
+        // ]);
+    }
 
     public function datatables_ro()
     {
