@@ -360,7 +360,7 @@
                 data: 'fn_qty_ro'
             },
             {
-                data: 'fn_price',
+                data: 'fn_value',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
             },
             {
@@ -369,7 +369,18 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(10)', row).html(`
-            <button class="btn btn-success" onclick="">Save</button>`);
+            <form id="form_submit" action="" method="POST" autocomplete="off">
+            @csrf
+            @method('PUT')
+                <input type="text" id="fc_stockcode" value="${data.fc_stockcode}" hidden>
+                <input type="text" id="fc_nameshort" value="${data.invstore.stock.fc_nameshort}" hidden>
+                <input type="text" id="fc_namepack" value="${data.invstore.stock.fc_namepack}" hidden>
+                <input type="text" id="fc_batch" value="${data.fc_batch}" hidden>
+                <input type="text" id="fd_expired_date" value="${data.fd_expired_date}" hidden>
+                <input type="text" id="fn_qty_ro" value="${data.fn_qty_ro}" hidden>
+                <input type="text" id="fn_value" value="${data.fn_value}" hidden>
+                    <button type="submit" class="btn btn-success" onclick="">Save</button>
+            </form>`);
         },
     });
 </script>
