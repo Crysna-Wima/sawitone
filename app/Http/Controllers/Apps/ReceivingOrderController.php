@@ -72,7 +72,7 @@ class ReceivingOrderController extends Controller
     public function datatables_receiving_order()
     {
 
-        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->get();
+        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
