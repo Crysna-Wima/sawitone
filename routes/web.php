@@ -249,6 +249,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('create')->group(function () {
                 Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');
                 Route::get('/datatables/ro-detail','Apps\MasterInvoiceDetailController@datatables_ro');
+                Route::post('/incoming-insert','Apps\MasterInvoiceDetailController@incoming_insert');
             });
         });
 

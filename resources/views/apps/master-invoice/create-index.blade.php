@@ -43,7 +43,7 @@
                 </div>
                 <div class="collapse show" id="mycard-collapse">
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
-                    <form id="form_submit" action="/apps/receiving-order/create/store-update" method="POST" autocomplete="off">
+                    <form id="form_submit" action="/apps/master-invoice/create/incoming-insert" method="POST" autocomplete="off">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-6">
@@ -69,7 +69,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input name="" type="text" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }}" id="" class="form-control">
+                                        <input name="status_pkp" type="text" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }}" id="" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">

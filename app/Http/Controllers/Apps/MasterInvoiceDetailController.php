@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
+use App\Models\InvMaster;
 use App\Models\RoDetail;
 use App\Models\RoMaster;
 
@@ -15,22 +16,49 @@ class MasterInvoiceDetailController extends Controller
 {
     public function create($fc_rono)
     {
-        $data['ro_mst'] = RoMaster::with('pomst.supplier.supplier_tax_code')->where('fc_rono', '12344')->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_mst'] = RoMaster::with('pomst.supplier.supplier_tax_code')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['tipe_cabang'] = RoMaster::with('pomst.supplier.supplier_typebranch')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['tipe_bisnis'] = RoMaster::with('pomst.supplier.supplier_type_business')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['legal_status'] = RoMaster::with('pomst.supplier.supplier_legal_status')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
 
-        // jika ada RoMaster dimana 'fc_pono' sama dengan $fc_pono
-        if ($data['ro_mst']) {
-            // maka ambil RoDetail dimana 'fc_rono' sama dengan $fc_rono
-            $data['ro_dtl'] = RoDetail::where('fc_rono', $fc_rono)->get();
-            // dan tampilkan view 'apps.master_invoice_detail.create'
-            return view('apps.master-invoice.create-detail', $data);
-        } 
+        // jika ada InvMaster dimana 'fc_rono' sama dengan $fc_rono
+        $count_inv_mst = InvMaster::where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->count();
 
+        if ($count_inv_mst === 0) {
             return view('apps.master-invoice.create-index', $data);
+        }
+         return view('apps.master-invoice.create-detail', $data);       
         // dd($data);
     }
+
+    // incoming_insert
+    // public function incoming_insert(Request $request){
+    //     $validator = Validator::make($request->all(), [
+    //         'fc_pono' => 'required',
+    //         'fc_rono' => 'required',
+    //         'fc_userid' => 'required',
+    //         'fd_inv_releasedate' => 'required',
+    //         'fd_inv_agingdate' => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return [
+    //             'status' => 300,
+    //             'message' => $validator->errors()->first()
+    //         ];
+    //     }
+
+    //     // insert into inv master
+    //     $insert_inv_mst = InvMaster::create([
+    //         'fc_pono' => $request->fc_pono,
+    //         'fc_rono' => $request->fc_rono,
+    //         'fc_userid' => $request->fc_userid,
+    //         'fd_inv_releasedate' => $request->fd_inv_releasedate,
+    //         'fd_inv_agingdate' => $request->fd_inv_agingdate,
+    //         'fc_branch' => auth()->user()->fc_branch,
+    //         'fc_divisioncode' => auth()->user()->fc_divisioncode,
+    //     ]);
+    // }
 
     public function datatables_ro()
     {
@@ -41,4 +69,6 @@ class MasterInvoiceDetailController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+
 }
