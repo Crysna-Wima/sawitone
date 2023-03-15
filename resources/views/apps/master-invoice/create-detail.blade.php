@@ -76,11 +76,6 @@
                                     <div class="form-group">
                                         <label>Tgl Terbit</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-calendar"></i>
-                                                </div>
-                                            </div>
                                             <input type="text" class="form-control datepicker" name="fd_inv_releasedate" id="fd_inv_releasedate" 
                                             value="" readonly>
                                         </div>
@@ -90,11 +85,6 @@
                                     <div class="form-group">
                                         <label>Tgl Berakhir</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-calendar"></i>
-                                                </div>
-                                            </div>
                                             <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" 
                                             value="" readonly>
                                         </div>

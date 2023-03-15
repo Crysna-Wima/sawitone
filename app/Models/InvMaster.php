@@ -25,5 +25,8 @@ class InvMaster extends Model
         return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
     }
 
-    
+    // coba fess
+    public function romst(){
+        return $this->belongsTo(RoMaster::class, 'fc_rono', 'fc_rono');
+    }
 }
