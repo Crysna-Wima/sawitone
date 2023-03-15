@@ -436,6 +436,7 @@
                                         icon: 'success',
                                     });
                                     $("#modal").modal('hide');
+                                    tb.ajax.reload(null, false);
                                     tb_ro.ajax.reload(null, false);
                                     //  location.href = location.href;
                                 } else {
