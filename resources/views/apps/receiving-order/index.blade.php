@@ -135,8 +135,6 @@
                 $('td:eq(7)', row).html('<span class="badge badge-primary">Ordered</span>');
             } else if (data['fc_postatus'] == 'P') {
                 $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
-            } else if (data['fc_postatus'] == 'C') {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Complete</span>');
             } else {
                 $(row).hide();
             }
