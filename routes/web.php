@@ -244,6 +244,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables/incoming','Apps\MasterInvoiceController@datatables_incoming');
             Route::get('/datatables/outgoing','Apps\MasterInvoiceController@datatables_outgoing');
             Route::get('/datatables/add-invoice','Apps\MasterInvoiceController@add_invoice');
+            Route::delete('/delete/{fc_invno}', 'Apps\MasterInvoiceDetailController@delete_inv');
             Route::get('/inv_do/{fc_dono}', 'Apps\MasterInvoiceController@inv_do');
             Route::get('/inv_ro/{fc_rono}', 'Apps\MasterInvoiceController@inv_ro');
 
@@ -251,6 +252,9 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');
                 Route::get('/datatables/ro-detail/{fc_rono}','Apps\MasterInvoiceDetailController@datatables_ro');
                 Route::post('/incoming-insert','Apps\MasterInvoiceDetailController@incoming_insert');
+                Route::put('/edit/incoming-edit-ro-detail','Apps\MasterInvoiceDetailController@incoming_edit_ro');
+                Route::put('/deliver-update', 'Apps\MasterInvoiceDetailController@delivery_update');
+                Route::put('/submit-invoice','Apps\MasterInvoiceDetailController@submit_invoice');
             });
         });
 
