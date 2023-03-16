@@ -244,11 +244,11 @@
         rowCallback: function(row, data) {
             $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
             if (data['fc_status'] == 'W') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary"><i class="fa fa-hourglass"></i> Waiting</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-primary"><i class="fa fa-hourglass"></i> Menunggu</span>');
             } else if (data['fc_status'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning"><i class="fa fa-spinner"></i> Process</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-warning"><i class="fa fa-spinner"></i> Pending</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success"><i class="fa fa-check"></i> Complete</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-success"><i class="fa fa-check"></i> Selesai</span>');
             }
         }
     });
@@ -291,9 +291,9 @@
         rowCallback: function(row, data) {
             $('td:eq(4)', row).html(`<i class="${data.fc_postatus}"></i>`);
                 if (data['fc_rostatus'] == 'P') {
-                    $('td:eq(4)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                    $('td:eq(4)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {
-                    $('td:eq(4)', row).html('<span class="badge badge-success">Received</span>');
+                    $('td:eq(4)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
             $('td:eq(5)', row).html(`

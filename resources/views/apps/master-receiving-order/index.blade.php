@@ -126,9 +126,9 @@
         rowCallback: function(row, data) {
             $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
             if (data['fc_rostatus'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Received</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-success">Diterima</span>');
             }
 
             $('td:eq(8)', row).html(`
@@ -149,7 +149,7 @@
 
     dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
     dropdown.append($('<option value="Semua">Semua</option>'));
-    dropdown.append($('<option value="Paid Of">Paid Of</option>'));
-    dropdown.append($('<option value="Received">Received</option>'));
+    dropdown.append($('<option value="Terbayarf">Terbayar</option>'));
+    dropdown.append($('<option value="Diterima">Diterima</option>'));
 </script>
 @endsection

@@ -220,7 +220,8 @@
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <form id="form_submit_edit" action="/apps/master-invoice/create/deliver-update" method="POST" autocomplete="off">
+                        <form id="form_submit_edit" action="/apps/master-invoice/create/deliver-update" method="POST"
+                            autocomplete="off">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -228,10 +229,12 @@
                                     <div class="form-group">
                                         <label>Transport</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fc_potransport" id="fc_potransport"
-                                                value="{{ $ro_mst->fc_potransport }}" readonly>
-                                            <input type="text" class="form-control" name="fc_invno" value="{{ $inv_mst->fc_invno }}" id="fc_invno" hidden>
-                                            <input type="text" class="form-control" name="fc_rono" value="{{ $ro_mst->fc_rono }}" id="fc_rono" hidden>
+                                            <input type="text" class="form-control" name="fc_potransport"
+                                                id="fc_potransport" value="{{ $ro_mst->fc_potransport }}" readonly>
+                                            <input type="text" class="form-control" name="fc_invno"
+                                                value="{{ $inv_mst->fc_invno }}" id="fc_invno" hidden>
+                                            <input type="text" class="form-control" name="fc_rono"
+                                                value="{{ $ro_mst->fc_rono }}" id="fc_rono" hidden>
                                         </div>
                                     </div>
                                 </div>
@@ -253,19 +256,20 @@
                                     <div class="form-group">
                                         <label>Alamat Pengiriman</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading"
-                                                value="{{ $ro_mst->fc_address_loading }}" readonly>
+                                            <input type="text" class="form-control" name="fc_address_loading"
+                                                id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}"
+                                                readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
                                     @if ($inv_mst->fm_servpay == 0)
-                                      <button type="submit" class="btn btn-success">Save</button>
-                                        @elseif ($inv_mst->fc_status === 'R')
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    @elseif ($inv_mst->fc_status === 'R')
                                         {{-- hapus button --}}
                                         <button type="submit" class="btn btn-success" disabled>Edit</button>
-                                        @else 
-                                            <button type="submit" class="btn btn-success">Edit</button>
+                                    @else
+                                        <button type="submit" class="btn btn-success">Edit</button>
                                     @endif
                                 </div>
                             </div>
@@ -336,22 +340,21 @@
                 </div>
             </div>
         </div>
-        <div class="text-right mb-4">
+        <div class="d-flex d-flex inline justify-content-end mb-4">
             @if ($inv_mst->fc_status === 'I')
                 <button type="button"
-                onclick="delete_action('/apps/master-invoice/delete/{{ $inv_mst->fc_invno }}','Invoice')"
-                class="btn btn-danger mr-2">Cancel INV</button>
+                    onclick="delete_action('/apps/master-invoice/delete/{{ $inv_mst->fc_invno }}','Invoice')"
+                    class="btn btn-danger mr-2">Cancel INV</button>
             @endif
-                @if ($inv_mst->fc_status === 'I')
-                    <form id="form_submit_custom" action="/apps/master-invoice/create/submit-invoice" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="text" name="fc_invno" value="{{ $inv_mst->fc_invno }}" hidden>
-                        <button type="submit" class="btn btn-success mr-2">Submit</button>
-                    </form>
-                @endif
+            @if ($inv_mst->fc_status === 'I')
+                <form id="form_submit_custom" action="/apps/master-invoice/create/submit-invoice" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="fc_invno" value="{{ $inv_mst->fc_invno }}" hidden>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            @endif
         </div>
-    </div>
     </div>
 @endsection
 
@@ -414,13 +417,13 @@
                 },
             ],
             rowCallback: function(row, data) {
-                if(data.fn_price == 0 && data.fn_disc == 0){
+                if (data.fn_price == 0 && data.fn_disc == 0) {
                     $('td:eq(10)', row).html(`
                     <button type="submit" class="btn btn-success">Save</button>`);
-                 }
-                     $('td:eq(10)', row).html(`
+                } else {
+                    $('td:eq(10)', row).html(`
                     <button type="submit" class="btn btn-warning">Edit</button>`);
-                 
+                }
             },
         });
 

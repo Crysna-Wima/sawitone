@@ -53,7 +53,6 @@
                                     <th scope="col" class="text-center">Tgl DO</th>
                                     <th scope="col" class="text-center">Customer</th>
                                     <th scope="col" class="text-center">Item</th>
-                                    <th scope="col" class="text-center">Total</th>
                                     <th scope="col" class="text-center">Status</th>
                                     <th scope="col" class="text-center" style="width: 22%">Actions</th>
                                 </tr>
@@ -382,11 +381,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 7, 8]
+                targets: [0, 7,]
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 6, 8]
+                targets: [3, 6, 7]
             },
         ],
         columns: [{
@@ -411,10 +410,6 @@
                 data: 'fn_dodetail'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
-            },
-            {
                 data: 'fc_dostatus'
             },
             {
@@ -422,32 +417,32 @@
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_sostatus}"></i>`);
             if (data['fc_dostatus'] == 'I') {
                 $(row).hide();
             } else if (data['fc_dostatus'] == 'D') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Delivery</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-primary">Pengiriman</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Received</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
             }
 
             if (data['fc_dostatus'] == 'I') {
                 $(row).hide();
             } else if (data['fc_dostatus'] == 'D') {
-                $('td:eq(8)', row).html(
+                $('td:eq(7)', row).html(
                     `
                <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                 );
             } else {
                 if (data['fc_invstatus'] == 'N') {
-                    $('td:eq(8)', row).html(
+                    $('td:eq(7)', row).html(
                         `
                      <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                      <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                     );
                 } else {
-                    $('td:eq(8)', row).html(
+                    $('td:eq(7)', row).html(
                         `
                      <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                      <a href="/apps/master-delivery-order/inv/${data.fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
@@ -470,7 +465,7 @@
 
     dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
     dropdown.append($('<option value="Semua">Semua</option>'));
-    dropdown.append($('<option value="Delivery">Delivery</option>'));
-    dropdown.append($('<option value="Received">Received</option>'));
+    dropdown.append($('<option value="Pengiriman">Pengiriman</option>'));
+    dropdown.append($('<option value="Diterima">Diterima</option>'));
 </script>
 @endsection

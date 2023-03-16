@@ -132,15 +132,15 @@
         rowCallback: function(row, data) {
             $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Ordered</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-primary">Pemesanan</span>');
             } else if (data['fc_postatus'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
             } else if (data['fc_postatus'] == 'L') {
                 $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
             } else if (data['fc_postatus'] == 'S') {
-                $('td:eq(7)', row).html('<span class="badge badge-info">Sent</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-info">Terkirim</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Complete</span>');
+                $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
             }
 
             $('td:eq(9)', row).html(`
@@ -162,8 +162,8 @@
 
     dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
     dropdown.append($('<option value="Semua">Semua</option>'));
-    dropdown.append($('<option value="Ordered">Ordered</option>'));
-    dropdown.append($('<option value="Process">Process</option>'));
-    dropdown.append($('<option value="Complete">Complete</option>'));
+    dropdown.append($('<option value="Pemesanan">Pemesanan</option>'));
+    dropdown.append($('<option value="Pending">Pending</option>'));
+    dropdown.append($('<option value="Selesai">Selesai</option>'));
 </script>
 @endsection

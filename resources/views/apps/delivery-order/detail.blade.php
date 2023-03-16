@@ -196,9 +196,9 @@
                                             <th scope="col" class="text-center">Bonus</th>
                                             <th scope="col" class="text-center">DO</th>
                                             <th scope="col" class="text-center">INV</th>
-                                            <th scope="col" class="text-center">Harga</th>
+                                            <!-- <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
-                                            <th scope="col" class="text-center">Total</th>
+                                            <th scope="col" class="text-center">Total</th> -->
                                         </tr>
                                     </thead>
                                 </table>
@@ -277,7 +277,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
+                targets: [0, 3, 4, 5, 6, 7]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -305,17 +305,17 @@
                 {
                     data: 'fn_inv_qty'
                 },
-                {
-                    data: 'fm_so_oriprice',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
-                {
-                    data: 'fm_so_disc'
-                },
-                {
-                    data: 'total_harga',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
+                // {
+                //     data: 'fm_so_oriprice',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
+                // {
+                //     data: 'fm_so_disc'
+                // },
+                // {
+                //     data: 'total_harga',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
             ],
         });
     </script>

@@ -17,7 +17,7 @@ use App\Models\TransaksiType;
 class MasterInvoiceController extends Controller
 {
     public function index(){
-        $do_mst= DoMaster::with('somst.customer')->first();
+        $do_mst= DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->first();
         $inv_mst = InvMaster::where('fc_branch', auth()->user()->fc_branch)->get();
 
         $temp_so_pay = TransaksiType::where('fc_trx', "PAYMENTCODE")->get();
@@ -57,10 +57,10 @@ class MasterInvoiceController extends Controller
     public function inv_ro($fc_rono)
     {
         session(['fc_rono_global' => $fc_rono]);
-        $data['ro_mst']= RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
-        $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono', $fc_rono)->get();
+        $data['ro_mst']= RoMaster::with('pomst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // get data invmaster
-        $data['inv_mst'] = InvMaster::with('romst')->where('fc_rono', $fc_rono)->first();
+        $data['inv_mst'] = InvMaster::with('romst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.invoice-ro', $data)->setPaper('a4');
         return $pdf->stream();
     }
@@ -74,7 +74,7 @@ class MasterInvoiceController extends Controller
     }
 
     public function datatables_incoming(){
-        $data = InvMaster::with('domst')->where('fc_invtype', 'INC')->get();
+        $data = InvMaster::with('domst')->where('fc_invtype', 'INC')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -87,6 +87,29 @@ class MasterInvoiceController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+
+    // update_inv
+    public function get_update(Request $request){
+        // dd($request->fc_invno);
+        $data = InvMaster::with('romst.pomst.supplier')->where('fc_invno', $request->fc_invno)
+        ->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Data berhasil diupdate',
+            'data' => $data
+        ]);
+        // dd($data);
+    }
+
+    public function update_invoice_incoming(Request $request){
+        // validator
+        // $validator = $request->validate([
+        //     'fc_invno' => 'required',
+        //     'fd_invdate' => 'required',
+        // ]);
+        dd($request);
     }
     
 }

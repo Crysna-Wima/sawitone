@@ -167,10 +167,10 @@
                                             <th scope="col" class="text-center">DO</th>
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">INV</th>
-                                            <th scope="col" class="text-center">Harga</th>
+                                            <!-- <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
-                                            <th scope="col" class="text-center">Total</th>
-                                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                            <th scope="col" class="text-center">Total</th> -->
+                                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -202,9 +202,9 @@
                                             <th scope="col" class="text-center">Batch</th>
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
-                                            <th scope="col" class="text-center">Harga</th>
+                                            <!-- <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.</th>
-                                            <th scope="col" class="text-center">Total</th>
+                                            <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -679,7 +679,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -710,17 +710,17 @@
                 {
                     data: 'fn_inv_qty'
                 },
-                {
-                    data: 'fm_so_oriprice',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
-                {
-                    data: 'fm_so_disc'
-                },
-                {
-                    data: 'total_harga',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
+                // {
+                //     data: 'fm_so_oriprice',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
+                // {
+                //     data: 'fm_so_disc'
+                // },
+                // {
+                //     data: 'total_harga',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
                 {
                     data: null
                 },
@@ -729,20 +729,20 @@
             rowCallback: function(row, data) {
                 if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
                     // kosong
-                    $('td:eq(12)', row).html(``);
+                    $('td:eq(9)', row).html(``);
                 } else {
-                    $('td:eq(12)', row).html(`
+                    $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
                 `);
                 }
 
                 if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty) {
-                    $('td:eq(12)', row).html(
+                    $('td:eq(9)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
                     );
                 } else {
-                    $('td:eq(12)', row).html(`
+                    $('td:eq(9)', row).html(`
                         <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
                 }
             },
@@ -780,7 +780,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 3, 4, 5, 6, 7, 8, 10, 11, 13]
+                    targets: [0, 3, 4, 5, 6, 7, 8, 10]
                 },
                 {
                     className: 'text-nowrap',
@@ -834,17 +834,17 @@
                         );
                     }
                 },
-                {
-                    data: 'fn_price',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
-                {
-                    data: 'fn_disc',
-                },
-                {
-                    data: 'fn_value',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-                },
+                // {
+                //     data: 'fn_price',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
+                // {
+                //     data: 'fn_disc',
+                // },
+                // {
+                //     data: 'fn_value',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
                 {
                     data: null
                 }
@@ -854,7 +854,7 @@
                 const item_barcode = data.fc_barcode;
                 const item_row = data.fn_rownum;
                 // kirim 2 parameter di data-id di button hapus
-                $('td:eq(13)', row).html(`
+                $('td:eq(10)', row).html(`
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}">Hapus Item</button>
                 `);
 

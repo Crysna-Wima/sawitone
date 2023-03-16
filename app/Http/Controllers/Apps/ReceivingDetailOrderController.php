@@ -108,14 +108,16 @@ class ReceivingDetailOrderController extends Controller
                 'fc_stockcode' => 'required',
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
-                'fd_expired_date' => 'required',
+                // 'fd_expired_date' => 'required',
+                'fc_catnumber' => 'required',
                 'fc_batch' => 'required',
             ],
             [
                 'fc_stockcode.required' => 'Kode Barang tidak boleh kosong',
                 'fc_nameshort.required' => 'Nama Barang tidak boleh kosong',
                 'fn_qty_ro.required' => 'Qty tidak boleh kosong',
-                'fd_expired_date.required' => 'Expired Date tidak boleh kosong',
+                // 'fd_expired_date.required' => 'Expired Date tidak boleh kosong',
+                'fc_catnumber.required' => 'CAT number tidak boleh kosong',
                 'fc_batch.required' => 'Batch tidak boleh kosong',
             ]
         );

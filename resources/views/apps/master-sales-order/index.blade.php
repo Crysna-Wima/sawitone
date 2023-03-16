@@ -96,13 +96,13 @@
 
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
          if (data['fc_sostatus'] == 'F') {
-            $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
+            $('td:eq(7)', row).html('<span class="badge badge-primary">Menunggu</span>');
          } else if (data['fc_sostatus'] == 'C') {
-            $('td:eq(7)', row).html('<span class="badge badge-success">Clear</span>');
+            $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
          } else if (data['fc_sostatus'] == 'DD') {
-            $('td:eq(7)', row).html('<span class="badge badge-info">DO Done</span>');
+            $('td:eq(7)', row).html('<span class="badge badge-info">DO Tuntas</span>');
          } else if (data['fc_sostatus'] == 'P') {
-            $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+            $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
          } else {
             $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
          }
@@ -126,10 +126,10 @@
 
    dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
    dropdown.append($('<option value="Semua">Semua</option>'));
-   dropdown.append($('<option value="Waiting">Waiting</option>'));
+   dropdown.append($('<option value="Menunggu">Menunggu</option>'));
    dropdown.append($('<option value="Pending">Pending</option>'));
-   dropdown.append($('<option value="DO Done">DO Done</option>'));
-   dropdown.append($('<option value="Complete">Complete</option>'));
+   dropdown.append($('<option value="DO Tuntas">DO Tuntas</option>'));
+   dropdown.append($('<option value="Selesai">Selesai</option>'));
 
 </script>
 @endsection

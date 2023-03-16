@@ -27,9 +27,9 @@
                                         <th scope="col" class="text-center">Expired</th>
                                         <th scope="col" class="text-center">Tipe</th>
                                         <th scope="col" class="text-center">Customer</th>
-                                        <th scope="col" class="text-center">Item</th>
                                         <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Item</th>
+                                        <!-- <th scope="col" class="text-center">Total</th> -->
                                         <th scope="col" class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -53,7 +53,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 6, 7, 9]
+                targets: [0, 6, 7, 8]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -78,15 +78,15 @@
                     data: 'fc_membercode'
                 },
                 {
-                    data: 'fn_sodetail'
-                },
-                {
                     data: 'fc_sostatus'
                 },
                 {
-                    data: 'fm_brutto',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                    data: 'fn_sodetail'
                 },
+                // {
+                //     data: 'fm_brutto',
+                //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                // },
                 {
                     data: null
                 },
@@ -97,14 +97,14 @@
                 var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data
                     .fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
                     
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(6)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'F') {
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Waiting</span>');
-                    $('td:eq(9)', row).html(`
+                    $('td:eq(6)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                    $('td:eq(8)', row).html(`
                         <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else if (data['fc_sostatus'] == 'P') {
-                    $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
-                    $('td:eq(9)', row).html(`
+                    $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
+                    $('td:eq(8)', row).html(`
                         <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else {
                     $(row).hide();

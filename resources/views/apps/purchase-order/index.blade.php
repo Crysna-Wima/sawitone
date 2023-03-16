@@ -65,13 +65,8 @@
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label>PO Type</label>
-                                            <select class="form-control select2 required-field" name="fc_potype"
-                                                id="fc_potype">
-                                                <option value="" selected disabled>- Pilih -</option>
-                                                <option value="Consignment">Consignment</option>
-                                                <option value="Grochery">Grochery</option>
-                                                <option value="Retailer">Retailer</option>
-                                            </select>
+                                            <input type="text" class="form-control" id="fc_potype"
+                                                    name="fc_potype" value="PO Beli" readonly>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6">
