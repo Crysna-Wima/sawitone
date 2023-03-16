@@ -57,7 +57,7 @@ class MasterInvoiceController extends Controller
     public function inv_ro($fc_rono)
     {
         session(['fc_rono_global' => $fc_rono]);
-        $data['ro_mst']= RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
+        $data['ro_mst']= RoMaster::with('pomst.sales')->where('fc_rono', $fc_rono)->first();
         $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono', $fc_rono)->get();
         // get data invmaster
         $data['inv_mst'] = InvMaster::with('romst')->where('fc_rono', $fc_rono)->first();

@@ -167,34 +167,33 @@
 <body>
 <div class="container" id="sj-pdf">
     <div class="header" style="height: 100px">
-        <div style="position: absolute; left: 0; top: 0; text-align: left;" class="my-1">
+        <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
             <p>Surabaya, Jawa Timur (60297)</p>
             <p><b>dexa-arfindopratama.com</b></p>
             <br>
+            <p><b>Kepada</b></p>
+            <p>{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</p>
             <p><b>Alamat Pengiriman</b></p>
             <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
         </div>
-        <div style="position: absolute; right: 100px; top: 0; text-align: left;" class="my-1">
+        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
             <p><b>SURAT JALAN</b></p>
             <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
             <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
             <p>No. SO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_sono }}</p>
-            <p>Jenis Order &nbsp;&nbsp;: {{ $do_mst->somst->fc_sotype }}</p>
-            <p><b>Kepada &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</b></p>
         </div>
     </div>
 </div>
 
 <div class="content">
-        <br><br/>
-        <br><br/>
-        <br>
-        <p style="font-weight: bold; font-size: .8rem;">Delivery Item</p>
+    <br>
+        <p style="font-weight: bold; font-size: .8rem;">Pengiriman Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
+                <th>CAT Number</th>
                 <th>Barcode</th>
                 <th>Nama Barang</th>
                 <th>Batch</th>
@@ -206,6 +205,7 @@
                 @foreach ($do_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->invstore->stock->fc_catnumber }}</td>
                         <td>{{ $item->invstore->stock->fc_barcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->fc_batch }}</td>
@@ -213,7 +213,6 @@
                         <td>{{ $item->fn_qty_do }} {{ $item->invstore->stock->fc_namepack }}</td>
                     </tr>
                 @endforeach
-
             @else
             <tr>
                 <td colspan="12" class="text-center">Data Not Found</td>
@@ -221,17 +220,12 @@
             @endif
         </table>
         
-        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15">
-            <br><br/>
-            <tr>
-                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
-            </tr>
-        </table>
+        <br><br>
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 ">
             <br>
             <tr >
-                <td style="width: 50% !important; text-align: left;">Send By,</td>
-                <td style="width: 50% !important; text-align: right;">Received By,</td>
+                <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
+                <td style="width: 50% !important; text-align: right;">Diterima Oleh,</td>
             </tr>
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>

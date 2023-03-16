@@ -17,6 +17,7 @@ use DB;
 
 use App\Models\SoMaster;
 use App\Models\SoDetail;
+use App\Models\DoDetail;
 use App\Models\TempSoPay;
 
 class MasterSalesOrderController extends Controller
@@ -54,7 +55,7 @@ class MasterSalesOrderController extends Controller
     }
 
     public function datatables(){
-        $data = SoMaster::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = SoMaster::with('customer')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -67,6 +68,8 @@ class MasterSalesOrderController extends Controller
         $data['so_master'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $fc_sono)->first();
         $data['so_detail'] = SoDetail::with('stock')->where('fc_sono', $fc_sono)->get();
         $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', $fc_sono)->get();
+
+        $data['do_dtl']= DoDetail::with('invstore.stock')->first();
         $pdf = PDF::loadView('pdf.download-pdf', $data)->setPaper('a4');
         return $pdf->stream();
     }
