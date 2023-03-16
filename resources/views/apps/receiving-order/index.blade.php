@@ -53,9 +53,9 @@
                                     <th scope="col" class="text-center">Expired</th>
                                     <th scope="col" class="text-center">Tipe</th>
                                     <th scope="col" class="text-center">Supplier</th>
-                                    <th scope="col" class="text-center">Item</th>
                                     <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Total</th>
+                                    <th scope="col" class="text-center">Item</th>
+                                    <!-- <th scope="col" class="text-center">Total</th> -->
                                     <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                 </tr>
                             </thead>
@@ -84,10 +84,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 4, 5, 6, 7, 8, 9]
+            targets: [0, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -115,31 +115,31 @@
                 }
             },
             {
-                data: 'fn_podetail',
-            },
-            {
                 data: 'fc_postatus',
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: 'fn_podetail',
             },
+            // {
+            //     data: 'fm_brutto',
+            //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            // },
             {
                 data: null,
             },
         ],
 
         rowCallback: function(row, data) {
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Ordered</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-primary">Pemesanan</span>');
             } else if (data['fc_postatus'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning">Process</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(8)', row).html(`
                 <a href="/apps/receiving-order/detail/${data.fc_pono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
                 `);
         },

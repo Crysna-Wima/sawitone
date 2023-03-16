@@ -689,11 +689,11 @@
 
                 $('td:eq(3)', row).html(`<i class="${data.fc_status}"></i>`);
                 if (data['fc_status'] == 'R') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Released</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Installment</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
                 }
                 $('td:eq(8)', row).html(`
                     <a href="/apps/master-invoice/inv_ro/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
@@ -755,11 +755,11 @@
 
                 $('td:eq(3)', row).html(`<i class="${data.fc_status}"></i>`);
                 if (data['fc_status'] == 'R') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Released</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Paid Of</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Installment</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
                 }
                 $('td:eq(8)', row).html(`
                     <a href="/apps/master-invoice/inv_do/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>

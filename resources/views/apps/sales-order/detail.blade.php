@@ -312,6 +312,7 @@
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">Barcode</th>
+                                            <th scope="col" class="text-center">CAT Number</th>
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Qty</th>
@@ -394,9 +395,13 @@
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Pilih Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="card-header-action">
+                        <select data-dismiss="modal" onchange="" class="form-control select2 required-field"
+                            name="#" id="category">
+                            <option value="Khusus">Khusus&nbsp;&nbsp;</option>
+                            <option value="Semua">Semua&nbsp;&nbsp;</option>
+                        </select>
+                    </div>
                 </div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">
@@ -405,6 +410,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">CAT Number</th>
                                         <th scope="col" class="text-center">Kode Produk</th>
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Unity</th>
@@ -570,6 +576,9 @@
                         orderable: false
                     },
                     {
+                        data: null
+                    },
+                    {
                         data: 'fc_barcode'
                     },
                     {
@@ -587,7 +596,7 @@
                     },
                 ],
                 rowCallback: function(row, data) {
-                    $('td:eq(5)', row).html(`
+                    $('td:eq(6)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
@@ -685,6 +694,9 @@
                     data: 'fc_barcode'
                 },
                 {
+                    data: null
+                },
+                {
                     data: 'stock.fc_nameshort'
                 },
                 {
@@ -719,7 +731,7 @@
             rowCallback: function(row, data) {
                 var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-                $('td:eq(10)', row).html(`
+                $('td:eq(11)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
             },
