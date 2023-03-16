@@ -75,7 +75,7 @@
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
                                                 <th scope="col" class="text-center">Inv No</th>
-                                                <th scope="col" class="text-center">Dono</th>
+                                                <th scope="col" class="text-center">Rono</th>
                                                 <th scope="col" class="text-center">Status</th>
                                                 <th scope="col" class="text-center">Tgl Terbit</th>
                                                 <th scope="col" class="text-center">Tgl Berakhir</th>
