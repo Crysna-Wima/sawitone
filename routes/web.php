@@ -247,6 +247,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/delete/{fc_invno}', 'Apps\MasterInvoiceDetailController@delete_inv');
             Route::get('/inv_do/{fc_dono}', 'Apps\MasterInvoiceController@inv_do');
             Route::get('/inv_ro/{fc_rono}', 'Apps\MasterInvoiceController@inv_ro');
+            Route::get('/get-update', 'Apps\MasterInvoiceController@get_update');
+            Route::post('/update-invoice-incoming', 'Apps\MasterInvoiceController@update_invoice_incoming');
 
             Route::prefix('create')->group(function () {
                 Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');

@@ -165,8 +165,7 @@ class MasterInvoiceDetailController extends Controller
     }
 
     public function delivery_update(Request $request){
-        //  update InvMaster dimana fc_branch sama dengan login, dan fc_status sama dengan I dan fc_rono sama dengan $request->fc_rono
-        // validasi
+
         $validator = Validator::make($request->all(), [
             'fm_servpay' => 'required',
         ]);

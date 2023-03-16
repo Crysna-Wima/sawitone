@@ -181,7 +181,7 @@
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit_custom" action="/apps/sales-order/detail/store-update" method="POST"
+                        <form id="form_submit_noconfirm" action="/apps/sales-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -816,7 +816,7 @@
                 });
         }
 
-        $('#form_submit_custom').on('submit', function(e) {
+        $('#form_submit_noconfirm').on('submit', function(e) {
             e.preventDefault();
 
             var form_id = $(this).attr("id");
@@ -829,9 +829,9 @@
 
             $("#modal_loading").modal('show');
             $.ajax({
-                url: $('#form_submit_custom').attr('action'),
-                type: $('#form_submit_custom').attr('method'),
-                data: $('#form_submit_custom').serialize(),
+                url: $('#form_submit_noconfirm').attr('action'),
+                type: $('#form_submit_noconfirm').attr('method'),
+                data: $('#form_submit_noconfirm').serialize(),
                 success: function(response) {
 
                     setTimeout(function() {
@@ -840,7 +840,7 @@
                     if (response.status == 200) {
                         // swal(response.message, { icon: 'success', });
                         $("#modal").modal('hide');
-                        $("#form_submit_custom")[0].reset();
+                        $("#form_submit_noconfirm")[0].reset();
                         reset_all_select();
                         tb.ajax.reload(null, false);
                         if (response.total < 1) {

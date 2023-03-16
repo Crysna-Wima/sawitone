@@ -188,7 +188,7 @@
             <div class="col-12 col-md-12 col-lg-6 place_detail">
                 <div class="card">
                     <div class="card-body" style="padding-top: 30px!important;">
-                        <form id="form_submit_custom" action="/apps/purchase-order/detail/store-update" method="POST"
+                        <form id="add_item" action="/apps/purchase-order/detail/store-update" method="POST"
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -254,7 +254,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -262,7 +263,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -270,29 +272,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -384,7 +391,8 @@
                                                     name="fd_poexpired" required readonly>
                                             @else
                                                 <input type="text" id="fd_poexpired" class="form-control datepicker"
-                                                    name="fd_poexpired" value="{{ $data->fd_poexpired }}" required readonly>
+                                                    name="fd_poexpired" value="{{ $data->fd_poexpired }}" required
+                                                    readonly>
                                             @endif
 
                                         </div>
@@ -444,10 +452,9 @@
                                                 value="Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo, Kota SBY, Jawa Timur 60297"
                                                 required>
                                         @else
-                                        <input type="text" id="fc_address_loading1" class="form-control"
-                                        name="fc_address_loading1"
-                                        value="{{ $data->fc_address_loading1 }}"
-                                        required>
+                                            <input type="text" id="fc_address_loading1" class="form-control"
+                                                name="fc_address_loading1" value="{{ $data->fc_address_loading1 }}"
+                                                required>
                                         @endif
 
 
@@ -465,11 +472,11 @@
                     </div>
                 </div>
                 <div class="button text-right mb-4">
-                @if ($data->fc_postatus === 'F')
-                    <button id="submit_button" class="btn btn-success" disabled>Submit</button>
-                @else
-                    <button id="submit_button" class="btn btn-success">Submit</button>
-                @endif
+                    @if ($data->fc_postatus === 'F')
+                        <button id="submit_button" class="btn btn-success" disabled>Submit</button>
+                    @else
+                        <button id="submit_button" class="btn btn-success">Submit</button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -871,7 +878,7 @@
                                         message: response.message,
                                         position: 'topRight'
                                     });
-                                    window.location.href = response.link;
+                                    tb.ajax.reload(null, false);
                                 } else {
                                     swal(response.message, {
                                         icon: 'error',
@@ -893,7 +900,7 @@
                 });
         }
 
-        $('#form_submit_custom').on('submit', function(e) {
+        $('#add_item').on('submit', function(e) {
             e.preventDefault();
 
             var form_id = $(this).attr("id");
@@ -906,9 +913,9 @@
 
             $("#modal_loading").modal('show');
             $.ajax({
-                url: $('#form_submit_custom').attr('action'),
-                type: $('#form_submit_custom').attr('method'),
-                data: $('#form_submit_custom').serialize(),
+                url: $('#add_item').attr('action'),
+                type: $('#add_item').attr('method'),
+                data: $('#add_item').serialize(),
                 success: function(response) {
 
                     setTimeout(function() {
@@ -917,8 +924,8 @@
                     if (response.status == 200) {
                         // swal(response.message, { icon: 'success', });
                         $("#modal").modal('hide');
-                        $("#form_submit_custom")[0].reset();
-                        reset_all_select();
+                        $("#add_item")[0].reset();
+                        // reset_all_select();
                         tb.ajax.reload(null, false);
                         if (response.total < 1) {
                             window.location.href = response.link;
@@ -954,66 +961,47 @@
         });
 
         $("#submit_button").click(function() {
-            swal({
-                    title: 'Apakah anda yakin?',
-                    text: 'Apakah anda yakin akan menyimpan data Purchase Order ini?',
-                    icon: 'warning',
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((save) => {
 
-                    // $("#modal_loading").modal('show');
-                    if (save) {
-
-                        var data = {
-                            'fd_podateinputuser': $('#fd_podateinputuser').val(),
-                            'fd_poexpired': $('#fd_poexpired').val(),
-                        };
-                        $.ajax({
-                            type: 'POST',
-                            url: '/apps/purchase-order/detail/submit',
-                            data: data,
-                            success: function(response) {
-                                // tampilkan modal section alert
-                                console.log(response.status);
-                                if (response.status == 300 || response.status == 301) {
-                                    $('#modal_loading').modal('hide');
-                                    swal(response.message, {
-                                        icon: 'error',
-                                    });
-                                } else {
-                                    $('#modal_loading').modal('hide');
-                                    // tampilkan flas message bootstrap id alert-bayar
-                                    swal(response.message, {
-                                        icon: 'success',
-                                    });
-                                    // redirect ke halaman sales order
-                                    // hapus local storage
-
-
-                                    setTimeout(function() {
-                                        window.location.href = "/apps/purchase-order";
-                                    }, 500);
-
-                                }
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                
-                                    $('#modal_loading').modal('hide');
-                              
-                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                    .responseText + ")", {
-                                        icon: 'error',
-                                    });
-                            }
-                        });
-                    }else{
+            var data = {
+                'fd_podateinputuser': $('#fd_podateinputuser').val(),
+                'fd_poexpired': $('#fd_poexpired').val(),
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/apps/purchase-order/detail/submit',
+                data: data,
+                success: function(response) {
+                    // tampilkan modal section alert
+                    console.log(response.status);
+                    if (response.status == 300 || response.status == 301) {
                         $('#modal_loading').modal('hide');
+                        swal(response.message, {
+                            icon: 'error',
+                        });
+                    } else {
+                        $('#modal_loading').modal('hide');
+                        // tampilkan flas message bootstrap id alert-bayar
+                        swal(response.message, {
+                            icon: 'success',
+                        });
+                        // redirect ke halaman sales order
+                        // hapus local storage
+
+
+                        setTimeout(function() {
+                            window.location.href = "/apps/purchase-order";
+                        }, 500);
+
                     }
-                });
-
-
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#modal_loading').modal('hide');
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                        .responseText + ")", {
+                            icon: 'error',
+                        });
+                }
+            });
         });
     </script>
 @endsection
