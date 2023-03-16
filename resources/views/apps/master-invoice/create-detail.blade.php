@@ -357,7 +357,7 @@
 
 @section('js')
     <script>
-        var tb_ro_detail = $('#ro_detail').DataTable({
+        var tb = $('#ro_detail').DataTable({
             // apabila data kosong
             processing: true,
             serverSide: true,
@@ -425,7 +425,7 @@
         });
 
         $('#ro_detail tbody').on('click', 'button', function() {
-            var data = tb_ro_detail.row($(this).parents('tr')).data();
+            var data = tb.row($(this).parents('tr')).data();
             var price = $(this).parents('tr').find('input:eq(0)').val();
             var disc = $(this).parents('tr').find('input:eq(1)').val();
             // console.log(data.fc_rono);
@@ -453,7 +453,7 @@
                             icon: 'success',
                         });
                         // reload table
-                        tb_ro_detail.ajax.reload(null, false);
+                        tb.ajax.reload(null, false);
                     }
                 },
                 error: function(xhr, status, error) {

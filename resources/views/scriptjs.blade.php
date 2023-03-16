@@ -357,17 +357,17 @@
                    dataType: "JSON",
                    success: function(response){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-
-                      if(response.status === 200){
+                      console.log(response.status);
+                      if(response.status == 200){
                          swal(response.message, {  icon: 'success', });
                          $("#modal").modal('hide');
                          tb.ajax.reload(null, false);
-                         location.href = location.href;
-                      }else if(response.status === 201){
+                        //  location.href = location.href;
+                      }else if(response.status == 201){
                         swal(response.message, {  icon: 'success', });
                          $("#modal").modal('hide');
                          tb.ajax.reload(null, false);
-                         window.location.href = response.link;
+                         location.href = response.link;
                       }else{
                          swal(response.message, {  icon: 'error', });
                       }
