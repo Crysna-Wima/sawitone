@@ -645,7 +645,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 7, 8]
+                    targets: [0, 3, 7, 8]
                 },
                 {
                     className: 'text-nowrap',
@@ -711,7 +711,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [2]
+                    targets: [2, 3]
                 },
                 {
                     className: 'text-nowrap',

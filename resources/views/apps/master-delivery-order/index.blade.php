@@ -465,7 +465,7 @@
 
     dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
     dropdown.append($('<option value="Semua">Semua</option>'));
-    dropdown.append($('<option value="Delivery">Delivery</option>'));
-    dropdown.append($('<option value="Received">Received</option>'));
+    dropdown.append($('<option value="Pengiriman">Pengiriman</option>'));
+    dropdown.append($('<option value="Diterima">Diterima</option>'));
 </script>
 @endsection
