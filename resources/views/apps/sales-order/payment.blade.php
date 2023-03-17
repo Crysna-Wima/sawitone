@@ -379,7 +379,7 @@
                     })
                     .then((save) => {
                         if (save) {
-                            // $("#modal_loading").modal('show');
+                            $("#modal_loading").modal('show');
                             var data = {
                                 'fd_sodateinputuser': $('#fd_sodateinputuser').val(),
                                 'fd_soexpired': $('#fd_soexpired').val()
@@ -391,9 +391,12 @@
                                 success: function(response) {
                                     // tampilkan modal section alert
                                     if (response.status == 300 || response.status == 301) {
+                                        // hide loading
+                                        $("#modal_loading").modal('hide');
                                         $('#alert-message').html(response.message);
                                         $('#alertModal').modal('show');
                                     } else {
+                                        $("#modal_loading").modal('hide');
                                         // tampilkan flas message bootstrap id alert-bayar
                                         $('#alert-bayar').append(
                                             '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +

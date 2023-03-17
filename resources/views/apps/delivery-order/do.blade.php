@@ -217,7 +217,7 @@
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <form id="form_submit" action="/apps/delivery-order/update_transport/{{ $data->fc_sono }}"
+                        <form id="form_submit" action="/apps/delivery-order/update_transport/{{ base64_encode($data->fc_sono) }}"
                             method="POST" autocomplete="off">
                             @csrf
                             @method('PUT')

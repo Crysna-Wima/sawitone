@@ -94,6 +94,9 @@
          var url_edit = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
+         var fc_sono = window.btoa(data.fc_sono);
+         // console.log(fc_sono);
+
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
          if (data['fc_sostatus'] == 'F') {
             $('td:eq(7)', row).html('<span class="badge badge-primary">Menunggu</span>');
@@ -108,8 +111,8 @@
          }
 
          $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${data.fc_sono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <a href="/apps/master-sales-order/pdf/${data.fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-sales-order/pdf/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
          `);
       }
    });

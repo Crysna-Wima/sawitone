@@ -38,10 +38,13 @@ class DeliveryOrderController extends Controller
     }
 
     public function detail($fc_divisioncode, $fc_branch, $fc_sono){
-        session(['fc_sono_global' => $fc_sono]);
+        $encode_fc_divisioncode = base64_decode($fc_divisioncode);
+        $encode_fc_branch = base64_decode($fc_branch);
+        $encode_fc_sono = base64_decode($fc_sono);
+        session(['fc_sono_global' => $encode_fc_sono]);
         $cek_status = SoMaster::where(
             'fc_sono',
-            $fc_sono
+            $encode_fc_sono
         )->first();
         // dd($cek_status->fc_sostatus);
         // jika statusnya "L" dan "C" maka kirimkan warning
@@ -49,9 +52,9 @@ class DeliveryOrderController extends Controller
             return redirect()->route('do_index')->with('warning', 'SO sudah di proses');
         }
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
-            ->where('fc_sono', $fc_sono)
-            ->where('fc_divisioncode', $fc_divisioncode)
-            ->where('fc_branch', $fc_branch)
+            ->where('fc_sono', $encode_fc_sono)
+            ->where('fc_divisioncode', $encode_fc_divisioncode)
+            ->where('fc_branch', $encode_fc_branch)
             ->first();
 
         return view('apps.delivery-order.detail', $data);
@@ -130,7 +133,9 @@ class DeliveryOrderController extends Controller
     public function create(){
         $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         $fc_sono_domst = $domst->fc_sono;
-        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')->where('fc_sono', $fc_sono_domst)->first();
+        $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')
+                                 ->where('fc_sono', $fc_sono_domst)
+                                 ->first();
         $data['domst'] = $domst;
         return view('apps.delivery-order.do', $data);
         // dd($data);
@@ -304,14 +309,7 @@ class DeliveryOrderController extends Controller
                 'fn_disc' => 0,
             ]);
         }
-
-        // // // //UPDATE STOCK
-        // // // $stock_update = Invstore::where('fc_barcode', $request->fc_barcode)
-        // // //     ->update([
-        // // //         'fn_quantity' => $data_stock->fn_quantity - $request->quantity
-        // // //     ]);
-
-        // // // jika $do_dtl dan $stock_update bisa
+        
         if ($do_dtl) {
             return [
                 'status' => 200,
@@ -375,7 +373,7 @@ class DeliveryOrderController extends Controller
         // validasi $fc_sono require
         $validator = Validator::make(
             [
-                'fc_sono' => $fc_sono,
+                'fc_sono' => base64_decode($fc_sono),
                 'fc_transporter' => $request->fc_transporter,
                 'fm_servpay' => $request->fm_servpay,
                 'fc_sotransport' => $request->fc_sotransport,

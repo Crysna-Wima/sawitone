@@ -417,6 +417,7 @@
             },
         ],
         rowCallback: function(row, data) {
+            var fc_dono = window.btoa(data.fc_dono);
             $('td:eq(6)', row).html(`<i class="${data.fc_sostatus}"></i>`);
             if (data['fc_dostatus'] == 'I') {
                 $(row).hide();
@@ -431,8 +432,8 @@
             } else if (data['fc_dostatus'] == 'D') {
                 $('td:eq(7)', row).html(
                     `
-               <a href="/apps/master-delivery-order/pdf/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-               <a href="/apps/master-delivery-order/pdf_sj/${data.fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+               <a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+               <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                 );
             } else {
                 if (data['fc_invstatus'] == 'N') {

@@ -96,16 +96,20 @@
                     .fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
                 var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data
                     .fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
+
+                var fc_divisioncode = window.btoa(data.fc_divisioncode);
+                var fc_branch = window.btoa(data.fc_branch);
+                var fc_sono = window.btoa(data.fc_sono);
                     
                 $('td:eq(6)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'F') {
                     $('td:eq(6)', row).html('<span class="badge badge-primary">Menunggu</span>');
                     $('td:eq(8)', row).html(`
-                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
+                        <a href="/apps/delivery-order/detail/${fc_divisioncode}/${fc_branch}/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else if (data['fc_sostatus'] == 'P') {
                     $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
                     $('td:eq(8)', row).html(`
-                        <a href="/apps/delivery-order/detail/${data.fc_divisioncode}/${data.fc_branch}/${data.fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
+                        <a href="/apps/delivery-order/detail/${fc_divisioncode}/${fc_branch}/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else {
                     $(row).hide();
                 }
