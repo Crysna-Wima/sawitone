@@ -258,7 +258,7 @@
                     </div>
                 </div>
                 <div class="text-right mb-4">
-                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ $data->fc_pono }}', 'Receiving Order')" class="btn btn-danger mr-2">Cancel RO</button>
+                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ base64_encode($data->fc_pono) }}', 'Receiving Order')" class="btn btn-danger mr-2">Cancel RO</button>
                     <button class="btn btn-success mr-2">Submit</button>
                 </div>
             </form>
@@ -463,7 +463,7 @@
         function click_modal_select(data) {
             var stockcode = $(data).data('stockcode');
             // pono
-            var pono = $(data).data('pono');
+            var pono = window.btoa($(data).data('pono'));
 
             $('#fc_catnumber').val('');
             $('#fc_batch').val('');
@@ -564,7 +564,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/receiving-order/create/datatables/temprodetail/" + "{{ $data->fc_pono }}",
+                url: "/apps/receiving-order/create/datatables/temprodetail/" + "{{ base64_encode($data->fc_pono) }}",
                 type: 'GET',
             },
             columnDefs: [{

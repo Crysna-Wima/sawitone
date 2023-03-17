@@ -174,7 +174,7 @@
                 <div class="card-header">
                     <h4>Receiving Order</h4>
                     <div class="card-header-action">
-                        <a href="/apps/receiving-order/create/{{ $data->fc_pono }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan RO</button></a>
+                        <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan RO</button></a>
                     </div>
                 </div>
                 <div class="card-body">

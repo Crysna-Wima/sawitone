@@ -20,12 +20,13 @@ class ReceivingDetailOrderController extends Controller
 
     public function create($fc_pono)
     {
+        $decode_fc_pono = base64_decode($fc_pono);
         // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();
         $temp_ro_master = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         $count = count($temp_ro_detail);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_master'] = $temp_ro_master;
         if (!empty($temp_ro_master)) {
             return view('apps.receiving-order.create-detail', $data);
@@ -79,7 +80,7 @@ class ReceivingDetailOrderController extends Controller
         if ($insert_tempromst) {
             return [
                 'status' => 201,
-                'link' => '/apps/receiving-order/create/' . $request->fc_pono,
+                'link' => '/apps/receiving-order/create/' . base64_encode($request->fc_pono),
                 'message' => 'Data berhasil disimpan'
             ];
         } else {
@@ -92,8 +93,9 @@ class ReceivingDetailOrderController extends Controller
 
     public function detail_item($fc_stockcode, $fc_pono)
     {
+        $decode_fc_pono = base64_decode($fc_pono);
         $data = PoDetail::with('stock')->where('fc_stockcode', $fc_stockcode)
-            ->where('fc_pono', $fc_pono)
+            ->where('fc_pono', $decode_fc_pono)
             ->first();
         // kirim dalam bentuk json
         return response()->json($data);
@@ -161,11 +163,11 @@ class ReceivingDetailOrderController extends Controller
 
     public function datatables_temp_ro_detail($fc_pono)
     {
-       
+        $decode_fc_pono = base64_decode($fc_pono);
          $data = TempRoDetail::with('stock','tempromst')
          ->where('fc_rono', auth()->user()->fc_userid)
-         ->whereHas('tempromst', function ($query) use ($fc_pono) {
-             $query->where('fc_pono', $fc_pono);
+         ->whereHas('tempromst', function ($query) use ($decode_fc_pono) {
+             $query->where('fc_pono', $decode_fc_pono);
          })->get();
 
         return DataTables::of($data)
