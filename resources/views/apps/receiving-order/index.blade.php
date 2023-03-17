@@ -130,6 +130,7 @@
         ],
 
         rowCallback: function(row, data) {
+            var fc_pono = window.btoa(data.fc_pono);
             $('td:eq(6)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
                 $('td:eq(6)', row).html('<span class="badge badge-primary">Pemesanan</span>');
@@ -140,7 +141,7 @@
             }
 
             $('td:eq(8)', row).html(`
-                <a href="/apps/receiving-order/detail/${data.fc_pono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+                <a href="/apps/receiving-order/detail/${fc_pono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
                 `);
         },
     });

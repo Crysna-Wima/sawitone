@@ -37,8 +37,9 @@ class ReceivingOrderController extends Controller
 
     public function detail($fc_pono)
     {
-        session(['fc_pono_global' => $fc_pono]);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $decode_fc_pono = base64_decode($fc_pono);
+        session(['fc_pono_global' => $decode_fc_pono]);
+        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.receiving-order.detail', $data);
         // dd($data);
     }
