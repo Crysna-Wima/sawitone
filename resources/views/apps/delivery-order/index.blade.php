@@ -105,11 +105,11 @@
                 if (data['fc_sostatus'] == 'F') {
                     $('td:eq(6)', row).html('<span class="badge badge-primary">Menunggu</span>');
                     $('td:eq(8)', row).html(`
-                        <a href="/apps/delivery-order/detail/${fc_divisioncode}/${fc_branch}/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
+                        <a href="/apps/delivery-order/detail/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else if (data['fc_sostatus'] == 'P') {
                     $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
                     $('td:eq(8)', row).html(`
-                        <a href="/apps/delivery-order/detail/${fc_divisioncode}/${fc_branch}/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
+                        <a href="/apps/delivery-order/detail/${fc_sono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>`);
                 } else {
                     $(row).hide();
                 }

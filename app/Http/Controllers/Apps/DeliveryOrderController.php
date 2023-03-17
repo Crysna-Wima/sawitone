@@ -37,9 +37,7 @@ class DeliveryOrderController extends Controller
         // dd($do_master);
     }
 
-    public function detail($fc_divisioncode, $fc_branch, $fc_sono){
-        $encode_fc_divisioncode = base64_decode($fc_divisioncode);
-        $encode_fc_branch = base64_decode($fc_branch);
+    public function detail($fc_sono){
         $encode_fc_sono = base64_decode($fc_sono);
         session(['fc_sono_global' => $encode_fc_sono]);
         $cek_status = SoMaster::where(
@@ -53,8 +51,8 @@ class DeliveryOrderController extends Controller
         }
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
             ->where('fc_sono', $encode_fc_sono)
-            ->where('fc_divisioncode', $encode_fc_divisioncode)
-            ->where('fc_branch', $encode_fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
             ->first();
 
         return view('apps.delivery-order.detail', $data);
@@ -309,7 +307,7 @@ class DeliveryOrderController extends Controller
                 'fn_disc' => 0,
             ]);
         }
-        
+
         if ($do_dtl) {
             return [
                 'status' => 200,
