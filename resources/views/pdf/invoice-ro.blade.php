@@ -305,6 +305,20 @@
                 <td style="width: 50% !important; text-align: right;">(..................................................)</td>
             </tr>
         </table>
+
+        <div class="container" id="so-pdf">
+            <div class="footer" style="height: 100px">
+                <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
+                    <p><b>Syarat Pembayaran :</b></p>
+                    <p>- Pembayaran harap di selesaikan dalam waktu 30 hari dari tanggal Faktur</p>
+                    <p>- Pembayaran harap dilakukan dengan Giro Bilyet / Cross Cheque atau transfer ke bank kami.</p>
+                    <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
+                    <p>&nbsp;&nbsp;Bank BCA kcp Rungkut Mapan</p>
+                    <p>&nbsp;&nbsp;A/C 6750320030</p>
+                    <p>- Pembayaran di anggap lunas apabila sudah CAIR</p>
+                </div>
+            </div>
+        </div>
     <div>
 </body>
 </html>

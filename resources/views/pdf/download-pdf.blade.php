@@ -262,7 +262,6 @@
                         <td>{{ number_format($item->fn_so_value,0,',','.')}}</td>
                     </tr>
                 @endforeach
-
             @else
             <tr>
                 <td colspan="9" class="text-center">Data Not Found</td>
@@ -302,7 +301,7 @@
 
             @else
             <tr>
-                <td colspan="9" class="text-center">Data Not Found</td>
+                <td colspan="9" class="text-center">Belum Ada Pengiriman Barang</td>
             </tr>
             @endif
 
