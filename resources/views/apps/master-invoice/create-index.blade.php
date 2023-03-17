@@ -69,7 +69,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Status PKP</label>
-                                        <input name="status_pkp" type="text" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }}" id="" class="form-control" readonly>
+                                        <input name="status_pkp" type="text" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }}" id="fv_description" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">

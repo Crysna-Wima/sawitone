@@ -489,8 +489,8 @@
                                             </div>
                                         </div>
 
-                                        <input type="text" id="" class="form-control datepicker"
-                                            name="" required>
+                                        <input type="text" id="fd_datepayment" class="form-control datepicker"
+                                            name="fd_datepayment" required>
                                     </div>
                                 </div>
                             </div>
@@ -515,7 +515,7 @@
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama Pembayar</label>
-                                    <input type="text" id="fc_payername" class="form-control" name=""
+                                    <input type="text" id="fc_payername" class="form-control" name="fc_payername"
                                         required>
                                 </div>
                             </div>
@@ -528,7 +528,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" id="fm_valuepayment" class="form-control" name=""
+                                        <input type="text" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
                                             onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>

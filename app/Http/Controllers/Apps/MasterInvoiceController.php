@@ -108,11 +108,13 @@ class MasterInvoiceController extends Controller
 
     public function update_invoice_incoming(Request $request){
         // validator
-        // $validator = $request->validate([
-        //     'fc_invno' => 'required',
-        //     'fd_invdate' => 'required',
-        // ]);
-        dd($request);
+        $validator = $request->validate([
+            'fd_inv_agingdate' => 'required',
+            'fd_datepayment' => 'required',
+            'fc_kode_incoming' => 'required',
+            'fd_invdate' => 'required',
+        ]);
+        // dd($request);
     }
     
 }

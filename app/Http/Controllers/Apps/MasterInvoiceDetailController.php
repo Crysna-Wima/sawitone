@@ -18,15 +18,15 @@ class MasterInvoiceDetailController extends Controller
 {
     public function create($fc_rono)
     {
-        
-        $data['ro_mst'] = RoMaster::with('pomst.supplier.supplier_tax_code')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['tipe_cabang'] = RoMaster::with('pomst.supplier.supplier_typebranch')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['tipe_bisnis'] = RoMaster::with('pomst.supplier.supplier_type_business')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['legal_status'] = RoMaster::with('pomst.supplier.supplier_legal_status')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['inv_mst'] = InvMaster::where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $decode_fc_rono = base64_decode($fc_rono);
+        $data['ro_mst'] = RoMaster::with('pomst.supplier.supplier_tax_code')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['tipe_cabang'] = RoMaster::with('pomst.supplier.supplier_typebranch')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['tipe_bisnis'] = RoMaster::with('pomst.supplier.supplier_type_business')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['legal_status'] = RoMaster::with('pomst.supplier.supplier_legal_status')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvMaster::where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         // jika ada InvMaster dimana 'fc_rono' sama dengan $fc_rono
-        $count_inv_mst = InvMaster::where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->count();
+        $count_inv_mst = InvMaster::where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->count();
 
         if ($count_inv_mst === 0) {
             return view('apps.master-invoice.create-index', $data);
@@ -82,7 +82,7 @@ class MasterInvoiceDetailController extends Controller
             return [
                 'status' => 201,
                 'message' => 'Buat Invoice berhasil',
-                'link' => '/apps/master-invoice/create/'.$request->fc_rono
+                'link' => '/apps/master-invoice/create/'. base64_decode($request->fc_rono)
             ];
         }
 
@@ -95,8 +95,8 @@ class MasterInvoiceDetailController extends Controller
 
     public function datatables_ro($fc_rono)
     {
-
-        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $decode_fc_rono = base64_decode($fc_rono);
+        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -185,7 +185,7 @@ class MasterInvoiceDetailController extends Controller
             return [
                 'status' => 201,
                 'message' => 'Data berhasil disimpan',
-                'link' => '/apps/master-invoice/create/'.$request->fc_rono
+                'link' => '/apps/master-invoice/create/'. base64_encode($request->fc_rono)
             ];
         }
 

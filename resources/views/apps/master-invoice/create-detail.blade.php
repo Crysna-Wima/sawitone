@@ -417,12 +417,16 @@
                 },
             ],
             rowCallback: function(row, data) {
+                // console.log(data.romst.fc_invstatus);
                 if (data.fn_price == 0 && data.fn_disc == 0) {
                     $('td:eq(10)', row).html(`
                     <button type="submit" class="btn btn-success">Save</button>`);
-                } else {
+                } else if(data.romst.fc_invstatus === 'R'){
                     $('td:eq(10)', row).html(`
-                    <button type="submit" class="btn btn-warning">Edit</button>`);
+                    <button type="submit" class="btn btn-warning" disabled>Edit</button>`);
+                }else{
+                    $('td:eq(10)', row).html(`
+                    <button type="submit" class="btn btn-success">Edit</button>`);
                 }
             },
         });
