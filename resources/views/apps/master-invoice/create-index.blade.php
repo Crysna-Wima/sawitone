@@ -54,7 +54,7 @@
                                         <input type="text" name="fn_rodetail" value="{{ $ro_mst->fn_rodetail }}" hidden>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
+                                <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
                                         <label>RO No: {{ $ro_mst->fc_rono }}
                                         </label>
