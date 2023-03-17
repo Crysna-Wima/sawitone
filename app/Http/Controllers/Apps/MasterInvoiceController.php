@@ -11,8 +11,10 @@ use App\Models\RoMaster;
 use App\Models\RoDetail;
 use App\Models\DoMaster;
 use App\Models\DoDetail;
+use App\Models\InvDetail;
 use App\Models\InvMaster;
 use App\Models\TransaksiType;
+use Validator;
 
 class MasterInvoiceController extends Controller
 {
@@ -108,12 +110,60 @@ class MasterInvoiceController extends Controller
 
     public function update_invoice_incoming(Request $request){
         // validator
-        $validator = $request->validate([
+        $validator = Validator::make($request->all(), [
+            'fc_invno_incoming' => 'required',
             'fd_inv_agingdate' => 'required',
             'fd_datepayment' => 'required',
             'fc_kode_incoming' => 'required',
-            'fd_invdate' => 'required',
+            'fc_payername' => 'required',
+            'fm_valuepayment' => 'required',
+        ],[
+            'fc_invno_incoming.required' => 'Nomor Invoice tidak boleh kosong',
+            'fd_inv_agingdate.required' => 'Tanggal Berakhir tidak boleh kosong',
+            'fd_datepayment.required' => 'Tanggal Pembayaran tidak boleh kosong',
+            'fc_kode_incoming.required' => 'Kode Pembayaran tidak boleh kosong',
+            'fc_payername.required' => 'Nama Pembayar tidak boleh kosong',
+            'fm_valuepayment.required' => 'Nilai Pembayaran tidak boleh kosong',
         ]);
+
+        // jika validator tidak terpenuhi
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // insert data ke InvDetail
+        $insert_inv_dtl = InvDetail::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => $request->fc_invno_incoming,
+            'fc_paymentcode' => $request->fc_kode_incoming,
+            'fc_payername' => $request->fc_payername,
+            'fd_datepayment' => $request->fd_datepayment,
+            'fm_valuepayment' => $request->fm_valuepayment,
+            'fc_bankaccount' => $request->fc_bankaccount_incoming,
+            // 'fc_keterangan' => $request->fc_keterangan,
+        ]);
+
+
+        // jika insert inv detail berhasil berikan respon 200
+        if ($insert_inv_dtl) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Update Invoice Berhasil',
+                'link' => '/apps/master-invoice'
+            ]);
+        }
+
+        // jika insert inv detail gagal berikan respon 300
+        return response()->json([
+            'status' => 300,
+            'message' => 'Update Invoice Gagal',
+        ]);
+
+
         // dd($request);
     }
     

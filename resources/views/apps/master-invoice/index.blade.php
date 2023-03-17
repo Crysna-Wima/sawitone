@@ -361,6 +361,7 @@
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
                                                     <span id="fc_invno_incoming"></span>
+                                                    <input type="text" name="fc_invno_incoming" id="fc_invno_input" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
@@ -603,6 +604,7 @@
                         $('#modal_update_invoice_ro').modal('show');
 
                         $('#fc_invno_incoming').html(data.fc_invno);
+                        $('#fc_invno_input').val(data.fc_invno);
                         $('#fd_inv_releasedate_incoming').html(data.fd_inv_releasedate);
                         $('#fc_rono_incoming').html(data.fc_rono);
                         $('#fc_supplierNPWP').val(data.romst.pomst.supplier.fc_supplierNPWP);
