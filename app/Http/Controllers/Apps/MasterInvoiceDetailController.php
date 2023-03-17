@@ -68,6 +68,7 @@ class MasterInvoiceDetailController extends Controller
         $insert_inv_mst = InvMaster::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => auth()->user()->fc_userid,
             'fc_pono' => $request->fc_pono,
             'fc_rono' => $request->fc_rono,
             'fc_userid' => $request->fc_userid,
@@ -76,13 +77,14 @@ class MasterInvoiceDetailController extends Controller
             'fc_status' => 'I',
             'fc_invtype' => 'INC',
             'fn_inv_agingday' => $fn_inv_agingday,
+            'fn_invdetail' => $request->fn_rodetail
         ]);
 
         if($insert_inv_mst){
             return [
                 'status' => 201,
                 'message' => 'Buat Invoice berhasil',
-                'link' => '/apps/master-invoice/create/'. base64_decode($request->fc_rono)
+                'link' => '/apps/master-invoice/create/'. base64_encode($request->fc_rono)
             ];
         }
 
@@ -106,9 +108,10 @@ class MasterInvoiceDetailController extends Controller
 
     public function delete_inv($fc_invno){
 
+        $decode_fc_invno = base64_decode($fc_invno);
         DB::beginTransaction();
         try{
-            InvMaster::where('fc_invno', $fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
+            InvMaster::where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
             // InvDetail::where('fc_invno', $fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
 
             DB::commit();

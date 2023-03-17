@@ -51,6 +51,7 @@
                                         <label>PO No : {{ $ro_mst->fc_pono }}
                                         </label>
                                         <input type="text" name="fc_pono" value="{{ $ro_mst->fc_pono }}" hidden>
+                                        <input type="text" name="fn_rodetail" value="{{ $ro_mst->fn_rodetail }}" hidden>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">

@@ -134,37 +134,37 @@
                                     <div class="card-header">
                                         <h4>Informasi Umum</h4>
                                     </div>
-                                    <input type="text" id="" value="" hidden>
+                                    {{-- <input type="text" id="" value="" hidden> --}}
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12 col-md-12 col-lg-12">
                                                 <div class="form-group">
                                                     <label>Tgl Rilis Invoice :</label>
-                                                    <span id="fd_inv_releasedate_form"></span>
+                                                    <span id="fd_inv_releasedate_outgoing"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
-                                                    <span id="fc_invno_form"></span>
+                                                    <span id="fc_invno_outgoing"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>DONO :</label>
-                                                    <span id="fc_dono"></span>
+                                                    <span id="fc_dono_outgoing"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>NPWP</label>
-                                                    <input type="text" class="form-control" readonly>
+                                                    <input type="text" id="fc_supplierNPWP_outgoing" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label>Nama</label>
-                                                    <input type="text" class="form-control" readonly>
+                                                    <input type="text" id="fc_suppliername1_outgoing" name="fc_suppliername1_outgoing" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,21 +183,21 @@
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item
                                                     </p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fn_dodetail">0,00</p>
+                                                        style="font-size: medium" id="fn_dodetail_outgoing">0,00</p>
                                                 </div>
                                                 <input type="text" name="fn_dodetail" id="fn_dodetail_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">
                                                         Disc. Total</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_disctotal">0,00</p>
+                                                        style="font-size: medium" id="fm_disctotal_outgoing">0,00</p>
                                                 </div>
                                                 <input type="text" name="fm_disctotal" id="fm_disctotal_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">
                                                         Total</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_netto">0,00</p>
+                                                        style="font-size: medium" id="fm_netto_outgoing">0,00</p>
                                                 </div>
                                             </div>
                                             <input type="text" name="fm_netto" id="fm_netto_input" hidden>
@@ -206,21 +206,21 @@
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">
                                                         Pelayanan</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_servpay">0,00</p>
+                                                        style="font-size: medium" id="fm_servpay_outgoing">0,00</p>
                                                 </div>
                                                 <input type="text" name="fm_servpay" id="fm_servpay_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">
                                                         Pajak</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_tax">0,00</p>
+                                                        style="font-size: medium" id="fm_tax_outgoing">0,00</p>
                                                 </div>
                                                 <input type="text" name="fm_tax" id="fm_tax_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item"
                                                         style="font-weight: bold; font-size: medium">GRAND</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp.
+                                                        style="font-weight: bold; font-size:medium" id="fm_brutto_outgoing">Rp.
                                                         0,00</p>
                                                 </div>
                                                 <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
@@ -361,6 +361,7 @@
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
                                                     <span id="fc_invno_incoming"></span>
+                                                    <input type="text" name="fc_invno_incoming" id="fc_invno_input" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
@@ -555,12 +556,8 @@
 
 @section('js')
     <script>
-        function click_modal_update_invoice_do(fc_dono) {
-            $('#modal_update_invoice_do').modal('show');
-        }
-
-        function click_modal_update_invoice_incoming(fc_invno) {
-            // modal_loading show
+        function click_modal_update_invoice_outgoing(fc_dono) {
+          
             $('#modal_loading').modal('show');
 
             $.ajax({
@@ -574,10 +571,49 @@
 
                     if(response.status == 200){
                         // modal_loading hide
+                        // $('#modal_loading').modal('hide');
+                        // $('#modal_update_invoice_do').modal('show');
+
+                        // $('#fc_invno_incoming').html(data.fc_invno);
+                        // $('#fc_invno_input').val(data.fc_invno);
+                        // $('#fd_inv_releasedate_incoming').html(data.fd_inv_releasedate);
+                        // $('#fc_rono_incoming').html(data.fc_rono);
+                        // $('#fc_supplierNPWP').val(data.romst.pomst.supplier.fc_supplierNPWP);
+                        // $('#fc_suppliername1').val(data.romst.pomst.supplier.fc_suppliername1);
+                        // $('#fd_inv_agingdate').val(data.fd_inv_agingdate);
+
+                        // console.log();
+                    }
+                    
+
+                },
+                error: function() {
+                    alert('Terjadi kesalahan pada server');
+                }
+            });
+        }
+
+        function click_modal_update_invoice_incoming(fc_invno) {
+            // modal_loading show
+            $('#modal_loading').modal('show');
+
+            $.ajax({
+                url: '/apps/master-invoice/get-update/incoming',
+                type: 'GET',
+                data: {
+                    fc_invno: fc_invno
+                },
+                success: function(response) {
+                    var data = response.data;
+
+                    if(response.status == 200){
+                        // modal_loading hide
                         $('#modal_loading').modal('hide');
                         $('#modal_update_invoice_ro').modal('show');
 
-                        $('#fc_invno_incoming').val(data.fc_invno);
+                        $('#fc_invno_incoming').html(data.fc_invno);
+                        $('#fc_invno_input').val(data.fc_invno);
+
                         $('#fd_inv_releasedate_incoming').html(data.fd_inv_releasedate);
                         $('#fc_rono_incoming').html(data.fc_rono);
                         $('#fc_supplierNPWP').val(data.romst.pomst.supplier.fc_supplierNPWP);
@@ -812,7 +848,7 @@
                 $('td:eq(8)', row).html(
                     `
                     <a href="/apps/master-invoice/inv_do/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_do('${data.fc_dono}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_outgoing('${data.fc_dono}')"><i class="fa fa-edit"></i> Update Inv</button>`
                 );
             }
         });

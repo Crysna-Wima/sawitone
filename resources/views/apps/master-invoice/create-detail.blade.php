@@ -343,7 +343,7 @@
         <div class="d-flex d-flex inline justify-content-end mb-4">
             @if ($inv_mst->fc_status === 'I')
                 <button type="button"
-                    onclick="delete_action('/apps/master-invoice/delete/{{ $inv_mst->fc_invno }}','Invoice')"
+                    onclick="delete_action('/apps/master-invoice/delete/{{ base64_encode($inv_mst->fc_invno) }}','Invoice')"
                     class="btn btn-danger mr-2">Cancel INV</button>
             @endif
             @if ($inv_mst->fc_status === 'I')
