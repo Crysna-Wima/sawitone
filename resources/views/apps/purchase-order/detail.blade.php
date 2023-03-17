@@ -879,7 +879,16 @@
                                         position: 'topRight'
                                     });
                                     tb.ajax.reload(null, false);
-                                } else {
+                                } else if(response.status === 200){
+                                    $("#modal").modal('hide');
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
+                                    });
+                                    // arahkan ke link
+                                    location.href = response.link;
+                                }else{
                                     swal(response.message, {
                                         icon: 'error',
                                     });

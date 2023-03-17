@@ -101,7 +101,7 @@ class PurchaseOrderController extends Controller
 			DB::commit();
 
 			return [
-				'status' => 201, // SUCCESS
+				'status' => 200, // SUCCESS
                 'link' => '/apps/purchase-order',
 				'message' => 'Data berhasil dihapus'
 			];
