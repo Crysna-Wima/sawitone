@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -102,7 +103,20 @@ class MasterInvoiceController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Data berhasil diupdate',
+            'message' => 'Sukses',
+            'data' => $data
+        ]);
+        // dd($data);
+    }
+
+    public function get_update_outgoing(Request $request){
+        // dd($request->fc_invno);
+        $data = InvMaster::with('domst.somst.customer')->where('fc_invno', $request->fc_invno)
+        ->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Sukses',
             'data' => $data
         ]);
         // dd($data);
@@ -112,14 +126,12 @@ class MasterInvoiceController extends Controller
         // validator
         $validator = Validator::make($request->all(), [
             'fc_invno_incoming' => 'required',
-            'fd_inv_agingdate' => 'required',
             'fd_datepayment' => 'required',
             'fc_kode_incoming' => 'required',
             'fc_payername' => 'required',
             'fm_valuepayment' => 'required',
         ],[
             'fc_invno_incoming.required' => 'Nomor Invoice tidak boleh kosong',
-            'fd_inv_agingdate.required' => 'Tanggal Berakhir tidak boleh kosong',
             'fd_datepayment.required' => 'Tanggal Pembayaran tidak boleh kosong',
             'fc_kode_incoming.required' => 'Kode Pembayaran tidak boleh kosong',
             'fc_payername.required' => 'Nama Pembayar tidak boleh kosong',
@@ -134,6 +146,7 @@ class MasterInvoiceController extends Controller
             ];
         }
 
+        $request->merge(['fm_valuepayment' => Convert::convert_to_double($request->fm_valuepayment)]);
         // insert data ke InvDetail
         $insert_inv_dtl = InvDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -144,6 +157,65 @@ class MasterInvoiceController extends Controller
             'fd_datepayment' => $request->fd_datepayment,
             'fm_valuepayment' => $request->fm_valuepayment,
             'fc_bankaccount' => $request->fc_bankaccount_incoming,
+            // 'fc_keterangan' => $request->fc_keterangan,
+        ]);
+
+
+        // jika insert inv detail berhasil berikan respon 200
+        if ($insert_inv_dtl) {
+            return response()->json([
+                'status' => 201,
+                'message' => 'Update Invoice Berhasil',
+                'link' => '/apps/master-invoice'
+            ]);
+        }
+
+        // jika insert inv detail gagal berikan respon 300
+        return response()->json([
+            'status' => 300,
+            'message' => 'Update Invoice Gagal',
+        ]);
+
+
+        // dd($request);
+    }
+
+    public function update_invoice_outgoing(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_invno_outgoing' => 'required',
+            'fd_datepayment' => 'required',
+            'fc_kode' => 'required',
+            'fc_payername' => 'required',
+            'fm_valuepayment' => 'required',
+        ],[
+            'fc_invno_outgoing.required' => 'Nomor Invoice tidak boleh kosong',
+            'fd_datepayment.required' => 'Tanggal Pembayaran tidak boleh kosong',
+            'fc_kode.required' => 'Kode Pembayaran tidak boleh kosong',
+            'fc_payername.required' => 'Nama Pembayar tidak boleh kosong',
+            'fm_valuepayment.required' => 'Nilai Pembayaran tidak boleh kosong',
+        ]);
+
+        // jika validator tidak terpenuhi
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $request->merge(['fm_valuepayment' => Convert::convert_to_double($request->fm_valuepayment)]);
+
+        // insert data ke InvDetail
+        $insert_inv_dtl = InvDetail::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => $request->fc_invno_outgoing,
+            'fc_paymentcode' => $request->fc_kode,
+            'fc_payername' => $request->fc_payername,
+            'fd_datepayment' => $request->fd_datepayment,
+            'fm_valuepayment' => $request->fm_valuepayment,
+            'fc_bankaccount' => $request->fc_bankaccount_outgoing,
             // 'fc_keterangan' => $request->fc_keterangan,
         ]);
 
