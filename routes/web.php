@@ -172,7 +172,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-so-detail','Apps\MasterSalesOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\MasterSalesOrderController@datatables_so_payment');
 
-            Route::get('/pdf/{fc_sono}', 'Apps\MasterSalesOrderController@pdf');
+            Route::get('/pdf/{fc_dono}/{fc_sono}', 'Apps\MasterSalesOrderController@pdf');
         });
 
         Route::prefix('sales-order')->group(function () {
