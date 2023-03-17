@@ -64,11 +64,12 @@ class MasterDeliveryOrderController extends Controller
 
     public function inv($fc_dono)
     {
-        session(['fc_dono_global' => $fc_dono]);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $fc_dono)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $fc_dono)->get();
+        $decode_fc_dono = base64_decode($fc_dono);
+        session(['fc_dono_global' => $decode_fc_dono]);
+        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->first();
+        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->get();
         // get data invmaster
-        $data['inv_mst'] = InvMaster::where('fc_dono', $fc_dono)->first();
+        $data['inv_mst'] = InvMaster::where('fc_dono', $decode_fc_dono)->first();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
     }
