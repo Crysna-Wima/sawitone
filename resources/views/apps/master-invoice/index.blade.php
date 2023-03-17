@@ -124,7 +124,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="/apps/master-invoice/update-invoice-outgoing" method="POST" autocomplete="off">
+                <form id="form_submit_edit" action="/apps/master-invoice/update-invoice-outgoing" method="POST"
+                    autocomplete="off">
                     @csrf
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
@@ -147,6 +148,8 @@
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
                                                     <span id="fc_invno_outgoing"></span>
+                                                    <input type="text" name="fc_invno_outgoing"
+                                                        id="fc_invno_input_outgoing" hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
@@ -158,13 +161,15 @@
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>NPWP</label>
-                                                    <input type="text" id="fc_supplierNPWP_outgoing" class="form-control" readonly>
+                                                    <input type="text" id="fc_membernpwp_no_outgoing"
+                                                        class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label>Nama</label>
-                                                    <input type="text" id="fc_suppliername1_outgoing" name="fc_suppliername1_outgoing" class="form-control" readonly>
+                                                    <input type="text" id="fc_membername1_outgoing"
+                                                        name="fc_membername1_outgoing" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,7 +225,8 @@
                                                     <p class="text-secondary flex-row-item"
                                                         style="font-weight: bold; font-size: medium">GRAND</p>
                                                     <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium" id="fm_brutto_outgoing">Rp.
+                                                        style="font-weight: bold; font-size:medium"
+                                                        id="fm_brutto_outgoing">Rp.
                                                         0,00</p>
                                                 </div>
                                                 <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
@@ -261,7 +267,8 @@
                                 <div class="form-group">
                                     <label>Tanggal Berakhir</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_inv_agingdate_outgoing" name="fd_inv_agingdate_outgoing" class="form-control datepicker" readonly>
+                                        <input type="text" id="fd_inv_agingdate_outgoing"
+                                            name="fd_inv_agingdate_outgoing" class="form-control datepicker" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -275,15 +282,15 @@
                                             </div>
                                         </div>
 
-                                        <input type="text" id="" class="form-control datepicker"
-                                            name="" required>
+                                        <input type="text" id="fd_datepayment" class="form-control datepicker"
+                                            name="fd_datepayment" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>Metode Pembayaran</label>
-                                    <select class="form-control select2 " name="fc_kode" id="fc_kode" required>
+                                    <select class="form-control select2 " name="fc_kode" id="fc_kode_outgoing" required>
                                         <option value="">-- Pilih Metode --</option>
                                         @foreach ($kode_bayar as $kode)
                                             <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
@@ -294,15 +301,15 @@
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>No. Rekening</label>
-                                    <input type="text" id="fc_bankaccount" class="form-control" name="fc_bankaccount"
+                                    <input type="text" id="fc_bankaccount_outgoing" class="form-control" name="fc_bankaccount_outgoing"
                                         required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama Pembayar</label>
-                                    <input type="text" id="fc_payername_incoming" class="form-control" name="fc_payername_incoming"
-                                        required>
+                                    <input type="text" id="fc_payername_outgoing" class="form-control"
+                                        name="fc_payername" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
@@ -314,7 +321,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" id="fm_valuepayment" class="form-control" name=""
+                                        <input type="text" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
                                             onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
@@ -338,7 +345,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="/apps/master-invoice/update-invoice-incoming" method="POST" autocomplete="off">
+                <form id="form_submit" action="/apps/master-invoice/update-invoice-incoming" method="POST"
+                    autocomplete="off">
                     @csrf
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
@@ -361,7 +369,8 @@
                                                 <div class="form-group">
                                                     <label>INV NO :</label>
                                                     <span id="fc_invno_incoming"></span>
-                                                    <input type="text" name="fc_invno_incoming" id="fc_invno_input" hidden>
+                                                    <input type="text" name="fc_invno_incoming" id="fc_invno_input"
+                                                        hidden>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-12 col-lg-6">
@@ -373,13 +382,15 @@
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>NPWP</label>
-                                                    <input type="text" id="fc_supplierNPWP" class="form-control" readonly>
+                                                    <input type="text" id="fc_supplierNPWP" class="form-control"
+                                                        readonly>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-6">
                                                 <div class="form-group">
                                                     <label>Nama</label>
-                                                    <input id="fc_suppliername1" name="fc_suppliername1" type="text" class="form-control" readonly>
+                                                    <input id="fc_suppliername1" name="fc_suppliername1" type="text"
+                                                        class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -451,7 +462,8 @@
                                 <div class="form-group">
                                     <label>Tanggal Berakhir</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control datepicker" readonly>
+                                        <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate"
+                                            class="form-control datepicker" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -473,7 +485,8 @@
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>Metode Pembayaran</label>
-                                    <select class="form-control select2 " name="fc_kode_incoming" id="fc_kode_incoming" required>
+                                    <select class="form-control select2 " name="fc_kode_incoming" id="fc_kode_incoming"
+                                        required>
                                         <option value="">-- Pilih Metode --</option>
                                         @foreach ($kode_bayar as $kode)
                                             <option value="{{ $kode->fc_kode }}">{{ $kode->fc_kode }}</option>
@@ -484,8 +497,8 @@
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>No. Rekening</label>
-                                    <input type="text" id="fc_bankaccount_incoming" class="form-control" name="fc_bankaccount_incoming"
-                                        required>
+                                    <input type="text" id="fc_bankaccount_incoming" class="form-control"
+                                        name="fc_bankaccount_incoming" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
@@ -504,7 +517,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
+                                        <input type="number" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
                                             onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
@@ -556,35 +569,35 @@
 
 @section('js')
     <script>
-        function click_modal_update_invoice_outgoing(fc_dono) {
-          
+        function click_modal_update_invoice_outgoing(fc_invno) {
+
             $('#modal_loading').modal('show');
 
             $.ajax({
-                url: '/apps/master-invoice/get-update',
+                url: '/apps/master-invoice/get-update/outgoing',
                 type: 'GET',
                 data: {
                     fc_invno: fc_invno
                 },
                 success: function(response) {
                     var data = response.data;
-
-                    if(response.status == 200){
+                    console.log(data);
+                    if (response.status == 200) {
                         // modal_loading hide
-                        // $('#modal_loading').modal('hide');
-                        // $('#modal_update_invoice_do').modal('show');
+                        $('#modal_loading').modal('hide');
+                        $('#modal_update_invoice_do').modal('show');
 
-                        // $('#fc_invno_incoming').html(data.fc_invno);
-                        // $('#fc_invno_input').val(data.fc_invno);
-                        // $('#fd_inv_releasedate_incoming').html(data.fd_inv_releasedate);
-                        // $('#fc_rono_incoming').html(data.fc_rono);
-                        // $('#fc_supplierNPWP').val(data.romst.pomst.supplier.fc_supplierNPWP);
-                        // $('#fc_suppliername1').val(data.romst.pomst.supplier.fc_suppliername1);
-                        // $('#fd_inv_agingdate').val(data.fd_inv_agingdate);
+                        $('#fc_invno_outgoing').html(data.fc_invno);
+                        $('#fc_invno_input_outgoing').val(data.fc_invno);
+                        $('#fd_inv_releasedate_outgoing').html(data.fd_inv_releasedate);
+                        $('#fc_dono_outgoing').html(data.fc_dono);
+                        $('#fc_membernpwp_no_outgoing').val(data.domst.somst.customer.fc_membernpwp_no);
+                        $('#fc_membername1_outgoing').val(data.domst.somst.customer.fc_membername1);
+                        $('#fd_inv_agingdate_outgoing').val(data.fd_inv_agingdate);
 
                         // console.log();
                     }
-                    
+
 
                 },
                 error: function() {
@@ -606,7 +619,7 @@
                 success: function(response) {
                     var data = response.data;
 
-                    if(response.status == 200){
+                    if (response.status == 200) {
                         // modal_loading hide
                         $('#modal_loading').modal('hide');
                         $('#modal_update_invoice_ro').modal('show');
@@ -628,7 +641,6 @@
                         $('#fm_tax_incoming').html(data.fm_tax);
                         $('#fm_brutto_incoming').html(data.fm_brutto);
                         $('#fm_paidvalue_incoming').html(data.fm_paidvalue);
-
                         $('#sisa').html(data.fm_brutto - data.fm_paidvalue);
                     }
                 },
@@ -692,7 +704,7 @@
                     data: null,
                 },
             ],
-            createdRow: function( row, data, type ) {
+            createdRow: function(row, data, type) {
                 if (data.fc_invstatus == 'R') {
                     $(row).hide();
                 }
@@ -705,8 +717,19 @@
             },
         });
 
-      
-            $('#fc_kode_incoming').on('change', function() {
+
+        $('#fc_kode_outgoing').on('change', function() {
+            // Check if the selected value is BCA Trans or Mandiri Trans
+            if (this.value === 'BCA TRANS' || this.value === 'MANDIRI TRANS') {
+                // Enable the No Rekening input
+                $('#fc_bankaccount_outgoing').prop('disabled', false);
+            } else {
+                // Disable the No Rekening input and clear its value
+                $('#fc_bankaccount_outgoing').prop('disabled', true).val('');
+            }
+        });
+
+        $('#fc_kode_incoming').on('change', function() {
             // Check if the selected value is BCA Trans or Mandiri Trans
             if (this.value === 'BCA TRANS' || this.value === 'MANDIRI TRANS') {
                 // Enable the No Rekening input
@@ -715,8 +738,8 @@
                 // Disable the No Rekening input and clear its value
                 $('#fc_bankaccount_incoming').prop('disabled', true).val('');
             }
-            });
-        
+        });
+
 
         var tb = $('#tb_incoming_invoice').DataTable({
             processing: true,
@@ -836,7 +859,7 @@
                 },
             ],
             rowCallback: function(row, data) {
-
+                var fc_dono = window.btoa(data.fc_dono);
                 $('td:eq(3)', row).html(`<i class="${data.fc_status}"></i>`);
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
@@ -847,8 +870,8 @@
                 }
                 $('td:eq(8)', row).html(
                     `
-                    <a href="/apps/master-invoice/inv_do/${data.fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_outgoing('${data.fc_dono}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                    <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_outgoing('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
                 );
             }
         });
