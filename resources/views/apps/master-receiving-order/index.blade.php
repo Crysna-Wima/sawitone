@@ -124,6 +124,7 @@
         ],
 
         rowCallback: function(row, data) {
+            var fc_rono = window.btoa(data.fc_rono);
             $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
             if (data['fc_rostatus'] == 'P') {
                 $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
@@ -132,7 +133,7 @@
             }
 
             $('td:eq(8)', row).html(`
-                    <a href="/apps/master-receiving-order/pdf/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 `);
         },
     });
