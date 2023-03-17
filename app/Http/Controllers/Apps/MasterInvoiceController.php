@@ -22,22 +22,37 @@ class MasterInvoiceController extends Controller
     public function index(){
         $do_mst= DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->first();
         $inv_mst = InvMaster::where('fc_branch', auth()->user()->fc_branch)->get();
+        // $inv_mst_temp = InvMaster::where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        // dd( $inv_mst_temp->fc_invno);
+        $exist_cek = InvMaster::where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         $temp_so_pay = TransaksiType::where('fc_trx', "PAYMENTCODE")->get();
 
         // jika $inv_mst kosong arahkan kehalaman lain
+        
         if(empty($inv_mst)){
             return view('apps.master-invoice.empty', [
                 'kode_bayar' => $temp_so_pay,
                 'inv_mst'  => $inv_mst,
-                'do_mst' => $do_mst 
+                'do_mst' => $do_mst,
+                'fc_rono' => null 
             ]);
         }else{
+            if(empty($exist_cek)){
             return view('apps.master-invoice.index', [
                 'kode_bayar' => $temp_so_pay,
                 'inv_mst'  => $inv_mst,
-                'do_mst' => $do_mst 
-            ]);
+                'do_mst' => $do_mst,
+                'fc_rono' => null
+              ]);
+            }else{
+                return view('apps.master-invoice.index', [
+                    'kode_bayar' => $temp_so_pay,
+                    'inv_mst'  => $inv_mst,
+                    'do_mst' => $do_mst,
+                    'fc_rono' => $exist_cek->fc_rono
+                  ]);
+            }
             // dd($inv_mst);
         }
         

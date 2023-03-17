@@ -66,8 +66,18 @@
                             <div class="tab-pane fade active show" id="incoming" role="tabpanel"
                                 aria-labelledby="incoming-tab">
                                 <div class="text-right mb-3">
-                                    <button type="button" class="btn btn-success" onclick="click_modal_add_invoice()"><i
-                                            class="fa fa-plus mr-1"></i> Tambah Invoice</button>
+
+                                    @if ($fc_rono)
+                                            <a href="/apps/master-invoice/create/{{ base64_encode($fc_rono) }}" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah
+                                                Invoice</a>
+                                    @else
+                                        <button type="button" class="btn btn-success"
+                                            onclick="click_modal_add_invoice()"><i class="fa fa-plus mr-1"></i> Tambah
+                                            Invoice</button>
+                                    @endif
+                                    {{-- @dd($fc_rono) --}}
+
+
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="tb_incoming_invoice" width="100%">
@@ -301,8 +311,8 @@
                             <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group">
                                     <label>No. Rekening</label>
-                                    <input type="text" id="fc_bankaccount_outgoing" class="form-control" name="fc_bankaccount_outgoing"
-                                        required>
+                                    <input type="text" id="fc_bankaccount_outgoing" class="form-control"
+                                        name="fc_bankaccount_outgoing" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
@@ -321,8 +331,8 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
-                                            onkeyup="return onkeyupRupiah(this.id)" required>
+                                        <input type="text" id="fm_valuepayment" class="form-control"
+                                            name="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
                             </div>
@@ -406,30 +416,43 @@
                                         <div class="d-flex border-bottom">
                                             <div class="flex-row-item" style="margin-right: 30px">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_invdetail_incoming">0,00</p>
-                                                </div>                                             
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item
+                                                    </p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fn_invdetail_incoming">0,00</p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
+                                                        Disc. Total</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fm_disctotal_incoming">0,00</p>
+                                                </div>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
+                                                        Total</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fm_netto_incoming">0,00</p>
                                                 </div>
                                             </div>
                                             <div class="flex-row-item">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_incoming">0,00</p>
-                                                </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
+                                                        Pelayanan</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fm_servpay_incoming">0,00</p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto_incoming">Rp. 0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
+                                                        Pajak</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fm_tax_incoming">0,00</p>
+                                                </div>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                                    <p class="text-secondary flex-row-item"
+                                                        style="font-weight: bold; font-size: medium">GRAND</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-weight: bold; font-size:medium"
+                                                        id="fm_brutto_incoming">Rp. 0,00</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -440,8 +463,10 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Terbayar</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_paidvalue_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
+                                                        Terbayar</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-size: medium" id="fm_paidvalue_incoming">0,00</p>
                                                 </div>
                                             </div>
                                             <div class="flex-row-item">
@@ -450,11 +475,14 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">SISA</p>
-                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="sisa">Rp. 0,00</p>
+                                                    <p class="text-secondary flex-row-item"
+                                                        style="font-weight: bold; font-size: medium">SISA</p>
+                                                    <p class="text-success flex-row-item text-right"
+                                                        style="font-weight: bold; font-size:medium" id="sisa">Rp.
+                                                        0,00</p>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -517,8 +545,8 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="number" id="fm_valuepayment" class="form-control" name="fm_valuepayment"
-                                            onkeyup="return onkeyupRupiah(this.id)" required>
+                                        <input type="number" id="fm_valuepayment" class="form-control"
+                                            name="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
                             </div>
