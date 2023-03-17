@@ -17,6 +17,7 @@ use DB;
 
 use App\Models\SoMaster;
 use App\Models\SoDetail;
+use App\Models\DoDetail;
 use App\Models\TempSoPay;
 
 class MasterSalesOrderController extends Controller
@@ -57,7 +58,7 @@ class MasterSalesOrderController extends Controller
     }
 
     public function datatables(){
-        $data = SoMaster::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = SoMaster::with('customer')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -66,6 +67,7 @@ class MasterSalesOrderController extends Controller
     
     public function pdf($fc_sono)
     {
+
         $encoded_fc_sono = base64_decode($fc_sono);
         session(['fc_sono_global' => $encoded_fc_sono]);
         $data['so_master'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $encoded_fc_sono)->first();

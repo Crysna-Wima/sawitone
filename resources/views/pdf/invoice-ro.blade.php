@@ -239,23 +239,23 @@
 
         </table>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;">
+        <table style="width: 90%; border-collapse: collapse; margin: auto;">
             <tr class="pt-1">
-                <td>Item</td>
+                <td>Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{  $ro_mst->fn_rodetail }}</td>
-                <td>Biaya Service</td>
+                <td style="width: 28%">Rp. {{ number_format($ro_mst->fm_netto,0,',','.')}}</td>
+                <td>Biaya Kirim</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format( $ro_mst->pomst->fm_servpay,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($ro_mst->pomst->fm_servpay,0,',','.')}}</td>
             </tr>
 
             <tr>
-                <td>Diskon Total</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">Rp. {{ number_format($ro_mst->pomst->fm_disctotal,0,',','.')}}</td>
                 <td>Pajak</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. {{ number_format($ro_mst->pomst->fm_tax,0,',','.')}}</td>
+                <td>Biaya Materai</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. 0</td>
             </tr>
             <tr class="pb-1">
                 <td></td>
@@ -267,17 +267,32 @@
             </tr>
         </table>
 
-        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
-            <br><br/>
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
-                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
+                <td>Terbilang :</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td style="width: 50%;"><i>"{{ terbilang($ro_mst->pomst->fm_brutto) }} Rupiah"</i></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </table>
+
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
-            <br>
+            <br><br>
+            <br><br>
             <tr >
-                <td style="width: 50% !important; text-align: left;">Send By,</td>
-                <td style="width: 50% !important; text-align: right;">Received By,</td>
+                <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
+                <td style="width: 50% !important; text-align: right;">Diterima Oleh,</td>
             </tr>
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
@@ -292,5 +307,43 @@
         </table>
     <div>
 </body>
-
 </html>
+
+<?php
+    function penyebut($nilai) {
+        $nilai = abs($nilai);
+        $huruf = array("", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas");
+        $temp = "";
+        if ($nilai < 12) {
+            $temp = " ". $huruf[$nilai];
+        } else if ($nilai <20) {
+            $temp = penyebut($nilai - 10). " Belas";
+        } else if ($nilai < 100) {
+            $temp = penyebut($nilai/10)." Puluh". penyebut($nilai % 10);
+        } else if ($nilai < 200) {
+            $temp = " Seratus" . penyebut($nilai - 100);
+        } else if ($nilai < 1000) {
+            $temp = penyebut($nilai/100) . " Ratus" . penyebut($nilai % 100);
+        } else if ($nilai < 2000) {
+            $temp = " Seribu" . penyebut($nilai - 1000);
+        } else if ($nilai < 1000000) {
+            $temp = penyebut($nilai/1000) . " Ribu" . penyebut($nilai % 1000);
+        } else if ($nilai < 1000000000) {
+            $temp = penyebut($nilai/1000000) . " Juta" . penyebut($nilai % 1000000);
+        } else if ($nilai < 1000000000000) {
+            $temp = penyebut($nilai/1000000000) . " Milyar" . penyebut(fmod($nilai,1000000000));
+        } else if ($nilai < 1000000000000000) {
+            $temp = penyebut($nilai/1000000000000) . " Trilyun" . penyebut(fmod($nilai,1000000000000));
+        }     
+        return $temp;
+    }
+
+    function terbilang($nilai) {
+        if($nilai<0) {
+            $hasil = "Minus ". trim(penyebut($nilai));
+        } else {
+            $hasil = trim(penyebut($nilai));
+        }     		
+        return $hasil;
+    }
+?>

@@ -182,42 +182,25 @@
     </div>
 
     <div class="content">
-        <p style="text-align: center">{{ $so_master->fc_sotype }}</p>
-        <p style="text-align: center">({{ $so_master->fc_sono }})</p>
+        <p style="text-align: center"><b>Sales Order</b></p>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
-            <tr class="tp-1">
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            <tr>
                 <td> Tanggal SO</td>
                 <td style="width: 5px"> :</td>
                 <td style="width: 28%" colspan="3">{{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr>
-                <td>Cabang</td>
+                <td>No. SO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->branch->fv_description }}</td>
+                <td style="width: 28%">{{ $so_master->fc_sono }}</td>
                 <td>Sales</td>
                 <td style="width: 5px">:</td>
                 <td>{{ $so_master->sales->fc_salesname1 }}</td>
             </tr>
-            <tr>
-                <td>Divisi</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->fc_divisioncode }}</td>
-                <td>Customer Code</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->customer->fc_membername1 }}</td>
-            </tr>
-            <tr class="pb-1">
-                <td>Operator</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ auth()->user()->fc_username }}</td>
-                <td>PKP</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->member_tax_code->fv_description }}</td>
-            </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Customer</p>
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%;">Customer</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
             <tr>
                 <td>NPWP</td>
@@ -236,17 +219,12 @@
                 <td>{{ $so_master->customer->fn_memberAgingAP ?? 0 }}</td>
             </tr>
             <tr>
-                <td>Legalitas</td>
+                <td>Alamat</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->customer->fc_memberlegalstatus }}</td>
+                <td style="width: 28%">{{ $so_master->customer->fc_memberaddress1 }}</td>
                 <td>Hutang</td>
                 <td style="width: 5px">:</td>
                 <td>{{ $so_master->customer->fm_memberAP }}</td>
-            </tr>
-             <tr>
-                <td>Alamat</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress1 }}</td>
             </tr>
              <tr class="pb-1">
                 <td>Alamat Tujuan</td>
@@ -256,13 +234,13 @@
             </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Order</p>
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pemesanan Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Barcode</th>
                 <th>Nama Produk</th>
-                <th>Unity</th>
+                <th>Satuan</th>
                 <th>Qty</th>
                 <th>Bonus</th>
                 <th>Harga (Rp)</th>
@@ -293,16 +271,55 @@
 
         </table>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-top: 1px dashed black;">
-            <tr class="pt-1">
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman Barang</p>
+        <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
+            <tr>
+                <th>No</th>
+                <th>Katalog</th>
+                <th>Barcode</th>
+                <th>Nama Produk</th>
+                <th>Satuan</th>
+                <th>Qty</th>
+                <th>Bonus</th>
+                <th>Exp. Date</th>
+                <th>Batch</th>
+            </tr>
+
+            <!-- @if(isset($do_detail))
+                @foreach ($do_detail as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->stock->fc_barcode}}</td>
+                        <td>{{ $item->stock->fc_namelong}}</td>
+                        <td>{{ $item->stock->fc_namepack}}</td>
+                        <td>{{ $item->fn_so_qty}}</td>
+                        <td>{{ $item->fn_so_bonusqty}}</td>
+                        <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
+                        <td>{{ number_format($item->fm_so_disc,0,',','.')}}</td>
+                        <td>{{ number_format($item->fn_so_value,0,',','.')}}</td>
+                    </tr>
+                @endforeach
+
+            @else
+            <tr>
+                <td colspan="9" class="text-center">Data Not Found</td>
+            </tr>
+            @endif -->
+
+        </table>
+
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;"></table>
+
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%;">Kalkulasi</p>
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            <tr>
                 <td>Item</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%">{{ $so_master->fn_sodetail ?? '-' }}</td>
-                <td>Biaya Service</td>
+                <td>Lain-lain</td>
                 <td style="width: 5px">:</td>
                 <td>{{ number_format($so_master->fm_servpay,0,',','.')}}</td>
             </tr>
-
             <tr>
                 <td>Diskon Total</td>
                 <td style="width: 5px">:</td>
@@ -321,38 +338,11 @@
             </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Payment Method</p>
-
-        <table style="width: 90%; border-collapse: collapse; margin: auto;" border="1">
-            <tr>
-                <th>Metode</th>
-                <th>Nominal (Rp)</th>
-                <th>Tanggal</th>
-                <th>Keterangan</th>
-            </tr>
-
-            @if (isset($so_payment))
-                @foreach ($so_payment as $item)
-                    <tr>
-                        <td>{{ $item->transaksitype->fv_description }}</td>
-                        <td>{{ number_format($item->fm_valuepayment,0,',','.')}}</td>
-                        <td>{{ \Carbon\Carbon::parse( $item->fd_paymentdate )->isoFormat('D MMMM Y'); }}</td>
-                        <td>{{ $item->fc_description }}</td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="4" class="text-center">Data Not Found</td>
-                </tr>
-            @endif
-        </table>
         <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15 ">
             <br><br/>
-            <tr class="pt-1">
-                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
-            </tr>
+            <br><br/>
             <tr>
-                <td style="text-align: right;">Sales Operator, PT. DEXA ARFINDO PRATAMA</td>
+                <td style="text-align: right;">PT DEXA ARFINDO PRATAMA</td>
             </tr>
             <br><br/>
             <br><br/>
