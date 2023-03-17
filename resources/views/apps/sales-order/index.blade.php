@@ -452,7 +452,7 @@
             dataType: "JSON",
             success: function(response){
                 var data = response.data;
-                console.log(data);
+                // console.log(data);
                 $("#modal_customer").modal('hide');
                 Object.keys(data).forEach(function (key) {
                     var elem_name = $('[name=' + key + ']');

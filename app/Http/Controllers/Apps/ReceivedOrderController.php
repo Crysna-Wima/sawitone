@@ -29,7 +29,9 @@ class ReceivedOrderController extends Controller
     }
 
     public function cari_do($fc_dono){
-        $do_master = DoMaster::where('fc_dono', $fc_dono)->first();
+        $decode_fc_dono = base64_decode($fc_dono);
+        // dd($decode_fc_dono);
+        $do_master = DoMaster::where('fc_dono', $decode_fc_dono)->first();
         if(empty($do_master)){
             return [
                 'status' => 300,
@@ -44,8 +46,9 @@ class ReceivedOrderController extends Controller
         ];
     }
 
-    public function detail($fc_dono){;
-        $data['data'] = DoMaster::with('somst','dodtl')->where('fc_dono', $fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+    public function detail($fc_dono){
+        $decode_fc_dono = base64_decode($fc_dono);
+        $data['data'] = DoMaster::with('somst','dodtl')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.received-order.detail', $data);
     }
 

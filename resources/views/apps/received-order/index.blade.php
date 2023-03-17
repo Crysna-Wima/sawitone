@@ -28,9 +28,9 @@
     function click_cari_delivery_order(){
         $('#button_cari').html('<i class="fa fa-refresh fa-spin"></i> Mencari..');
         $('#button_cari').prop('disabled',true);
-
+        var fc_dono = window.btoa($('#fc_dono').val());
         $.ajax({
-        url: '/apps/received-order/cari-do/' + $('#fc_dono').val(),
+        url: '/apps/received-order/cari-do/' + fc_dono,
         type: "GET",
         dataType: 'JSON',
         success: function( response, textStatus, jQxhr ){
