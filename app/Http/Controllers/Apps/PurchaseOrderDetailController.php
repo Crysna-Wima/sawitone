@@ -118,7 +118,7 @@ class PurchaseOrderDetailController extends Controller
         $delete = TempPoDetail::where('fc_pono', $fc_pono)->where('fn_porownum', $fn_porownum)->delete();
         if ($delete) {
             return response()->json([
-                'status' => 201,
+                'status' => 200,
                 'message' => 'Data berhasil dihapus'
             ]);
         }
