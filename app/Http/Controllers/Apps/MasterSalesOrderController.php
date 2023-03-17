@@ -65,15 +65,20 @@ class MasterSalesOrderController extends Controller
         ->make(true);
     }
     
-    public function pdf($fc_sono)
+    public function pdf($fc_dono,$fc_sono)
     {
-
+        $encoded_fc_dono = base64_decode($fc_dono);
         $encoded_fc_sono = base64_decode($fc_sono);
         session(['fc_sono_global' => $encoded_fc_sono]);
         $data['so_master'] = SoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', $encoded_fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['so_detail'] = SoDetail::with('stock')->where('fc_sono', $encoded_fc_sono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', $encoded_fc_sono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['do_detail'] = DoDetail::with('domst.somst')
+                                        ->where('fc_dono', $encoded_fc_dono)
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->get();
         $pdf = PDF::loadView('pdf.download-pdf', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($do_detail)
     }
 }
