@@ -95,7 +95,7 @@ class MasterInvoiceController extends Controller
     }
 
     // update_inv
-    public function get_update(Request $request){
+    public function get_update_incoming(Request $request){
         // dd($request->fc_invno);
         $data = InvMaster::with('romst.pomst.supplier')->where('fc_invno', $request->fc_invno)
         ->where('fc_branch', auth()->user()->fc_branch)->first();
