@@ -75,7 +75,7 @@ class MasterSalesOrderController extends Controller
         $data['so_detail'] = SoDetail::with('stock')->where('fc_sono', $decoded_fc_sono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['so_payment'] = TempSoPay::with('transaksitype')->where('fc_sono', $decoded_fc_sono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
-        $data['do_detail'] = DoDetail::with('domst.somst')
+        $data['do_detail'] = DoDetail::with('invstore.stock')
                                         ->where('fc_dono', $decoded_fc_dono)
                                         ->where('fc_branch', auth()->user()->fc_branch)
                                         ->get();

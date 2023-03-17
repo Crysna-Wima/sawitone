@@ -285,18 +285,18 @@
                 <th>Batch</th>
             </tr>
 
-            <!-- @if(isset($do_detail))
+            @if(isset($do_detail))
                 @foreach ($do_detail as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->stock->fc_barcode}}</td>
-                        <td>{{ $item->stock->fc_namelong}}</td>
-                        <td>{{ $item->stock->fc_namepack}}</td>
-                        <td>{{ $item->fn_so_qty}}</td>
-                        <td>{{ $item->fn_so_bonusqty}}</td>
-                        <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
-                        <td>{{ number_format($item->fm_so_disc,0,',','.')}}</td>
-                        <td>{{ number_format($item->fn_so_value,0,',','.')}}</td>
+                        <td>{{ $item->invstore->fc_catnumber ?? '-' }}</td>
+                        <td>{{ $item->invstore->stock->fc_barcode}}</td>
+                        <td>{{ $item->invstore->stock->fc_namelong}}</td>
+                        <td>{{ $item->invstore->stock->fc_namepack}}</td>
+                        <td>{{ $item->fn_qty_do}}</td>
+                        <td>{{ $item->fn_qty_do_bonus}}</td>
+                        <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ $item->fc_batch }}</td>
                     </tr>
                 @endforeach
 
@@ -304,7 +304,7 @@
             <tr>
                 <td colspan="9" class="text-center">Data Not Found</td>
             </tr>
-            @endif -->
+            @endif
 
         </table>
 
