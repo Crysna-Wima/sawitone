@@ -709,7 +709,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 6, 8]
+                    targets: [3, 4, 5, 6, 8]
                 },
             ],
             columns: [{

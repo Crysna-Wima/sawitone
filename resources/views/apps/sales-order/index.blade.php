@@ -66,7 +66,8 @@
                                         <label>SO Type</label>
                                         <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
                                             <option value="" selected disabled>- Pilih -</option>
-                                            <option value="SO Jual">SO Jual</option>
+                                            <option value="Grosir">Grosir</option>
+                                            <option value="Retail">Retail</option>
                                             <option value="Cost Per Test">Cost Per Test</option>
                                         </select>
                                     </div>
