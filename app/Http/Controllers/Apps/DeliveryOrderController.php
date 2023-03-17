@@ -472,7 +472,7 @@ class DeliveryOrderController extends Controller
         $do_dtl = DoDetail::where('fc_dono', auth()->user()->fc_userid)->get();
         $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika fd_dodate,fc_sotransport,fc_transporter,fc_memberaddress_loading, fm_servpay di domst masih kosong
-        if ($do_mst->fd_dodate == null || $do_mst->fc_sotransport == null || $do_mst->fc_transporter == null || $do_mst->fc_memberaddress_loading == null || $do_mst->fm_servpay == null) {
+        if ($do_mst->fd_dodate == null || $do_mst->fc_sotransport == null || $do_mst->fc_transporter == null || $do_mst->fc_memberaddress_loading == null || $do_mst->fm_servpay === null) {
             return [
                 'status' => 300,
                 'message' => 'Data transport belum lengkap'
