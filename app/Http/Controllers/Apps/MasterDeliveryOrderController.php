@@ -56,8 +56,8 @@ class MasterDeliveryOrderController extends Controller
     {
         $decode_fc_dono = base64_decode($fc_dono);
         session(['fc_dono_global' => $decode_fc_dono]);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->get();
+        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('a4', 'landscape');
         return $pdf->stream();
     }

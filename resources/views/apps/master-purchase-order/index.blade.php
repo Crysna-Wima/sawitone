@@ -130,6 +130,7 @@
         ],
 
         rowCallback: function(row, data) {
+            var fc_pono = window.btoa(data.fc_pono);
             $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
                 $('td:eq(7)', row).html('<span class="badge badge-primary">Pemesanan</span>');
@@ -144,8 +145,8 @@
             }
 
             $('td:eq(9)', row).html(`
-                    <a href="/apps/master-purchase-order/detail/${data.fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${data.fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
         },
     });

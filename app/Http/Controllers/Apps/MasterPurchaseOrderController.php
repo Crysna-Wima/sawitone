@@ -30,8 +30,9 @@ class MasterPurchaseOrderController extends Controller
 
     public function detail($fc_pono)
     {
-        session(['fc_pono_global' => $fc_pono]);
-        $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $decode_fc_pono = base64_decode($fc_pono);
+        session(['fc_pono_global' => $decode_fc_pono]);
+        $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         return view('apps.master-purchase-order.detail', $data);
         // dd($data);
@@ -75,11 +76,11 @@ class MasterPurchaseOrderController extends Controller
             ->make(true);
     }
 
-    public function pdf($fc_pono)
-    {
-        session(['fc_pono_global' => $fc_pono]);
-        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function pdf($fc_pono){
+        $decode_fc_pono = base64_decode($fc_pono);
+        session(['fc_pono_global' => $decode_fc_pono]);
+        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
     }
