@@ -31,7 +31,7 @@ class ReceivedOrderController extends Controller
     public function cari_do($fc_dono){
         $decode_fc_dono = base64_decode($fc_dono);
         // dd($decode_fc_dono);
-        $do_master = DoMaster::where('fc_dono', $decode_fc_dono)->first();
+        $do_master = DoMaster::where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         if(empty($do_master)){
             return [
                 'status' => 300,
