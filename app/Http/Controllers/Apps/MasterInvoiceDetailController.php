@@ -18,6 +18,7 @@ class MasterInvoiceDetailController extends Controller
 {
     public function create($fc_rono)
     {
+        
         $data['ro_mst'] = RoMaster::with('pomst.supplier.supplier_tax_code')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['tipe_cabang'] = RoMaster::with('pomst.supplier.supplier_typebranch')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['tipe_bisnis'] = RoMaster::with('pomst.supplier.supplier_type_business')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();

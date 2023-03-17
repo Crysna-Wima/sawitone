@@ -94,9 +94,9 @@
          var url_edit = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
-         var fc_dono = window.btoa(data.fc_dono);
+         var fc_dono = window.btoa(data.domst.fc_dono);
          var fc_sono = window.btoa(data.fc_sono);
-         // console.log(fc_sono);
+         // console.log(data);
 
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
          if (data['fc_sostatus'] == 'F') {
