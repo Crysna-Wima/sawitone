@@ -94,7 +94,14 @@
          var url_edit = "/data-master/master-brand/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
-         var fc_dono = window.btoa(data.domst.fc_dono);
+         // jika object data.domst tidak kosong
+         if (data.domst) {
+            var fc_dono = window.btoa(data.domst.fc_dono);
+         }else{
+            // undefine
+            var fc_dono = window.btoa(undefined);
+         }
+           
          var fc_sono = window.btoa(data.fc_sono);
          // console.log(data);
 
