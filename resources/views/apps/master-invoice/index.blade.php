@@ -674,7 +674,11 @@
                     data: null,
                 },
             ],
-
+            createdRow: function( row, data, type ) {
+                if (data.fc_invstatus == 'R') {
+                    $(row).hide();
+                }
+            },
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
                 $('td:eq(7)', row).html(`
