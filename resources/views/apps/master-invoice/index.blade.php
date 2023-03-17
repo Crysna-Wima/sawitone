@@ -676,8 +676,9 @@
             ],
 
             rowCallback: function(row, data) {
+                var fc_rono = window.btoa(data.fc_rono);
                 $('td:eq(7)', row).html(`
-                    <a href="/apps/master-invoice/create/${data.fc_rono}" class="btn btn-warning">Pilih</a>
+                    <a href="/apps/master-invoice/create/${fc_rono}" class="btn btn-warning">Pilih</a>
                 `);
             },
         });
@@ -746,6 +747,7 @@
             ],
             rowCallback: function(row, data) {
 
+                var fc_rono = window.btoa(data.fc_rono);
                 $('td:eq(3)', row).html(`<i class="${data.fc_status}"></i>`);
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
@@ -756,7 +758,7 @@
                 }
                 $('td:eq(8)', row).html(
                     `
-                    <a href="/apps/master-invoice/inv_ro/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-invoice/inv_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_incoming('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
                 );
             }

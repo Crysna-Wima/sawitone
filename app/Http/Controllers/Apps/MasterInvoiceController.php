@@ -54,16 +54,16 @@ class MasterInvoiceController extends Controller
         return $pdf->stream();
     }
     
-    public function inv_ro($fc_rono)
-    {
-        session(['fc_rono_global' => $fc_rono]);
+    public function inv_ro($fc_rono){
+        $decode_fc_rono = base64_decode($fc_rono);
+        session(['fc_rono_global' => $decode_fc_rono]);
         // $data['ro_mst']= RoMaster::with('pomst.sales')->where('fc_rono', $fc_rono)->first();
         // $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono', $fc_rono)->get();
 
-        $data['ro_mst']= RoMaster::with('pomst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['ro_mst']= RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_dtl']= RoDetail::with('invstore.stock')->where('fc_rono',  $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // get data invmaster
-        $data['inv_mst'] = InvMaster::with('romst')->where('fc_rono', $fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvMaster::with('romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.invoice-ro', $data)->setPaper('a4');
         return $pdf->stream();
     }
