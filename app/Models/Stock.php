@@ -70,5 +70,10 @@ class Stock extends Model
         return $this->hasMany(TempRoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
+    // StockCustomer
+    public function stockcustomer(){
+        return $this->hasMany(StockCustomer::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();;
+    }
+
     
 }
