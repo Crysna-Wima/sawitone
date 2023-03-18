@@ -714,13 +714,14 @@
                     data: null,
                 },
             ],
-            createdRow: function(row, data, type) {
-                if (data.fc_invstatus == 'R') {
-                    $(row).hide();
-                }
-            },
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
+                if (data['fc_invstatus'] != 'N') {
+                    $(row).hide();
+                } else {
+                    $(row).show();
+                }
+
                 $('td:eq(7)', row).html(`
                     <a href="/apps/master-invoice/create/${fc_rono}" class="btn btn-warning">Pilih</a>
                 `);
@@ -807,9 +808,11 @@
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Terbayar</span>');
+                } else if (data['fc_status'] == 'IS') {
+                    $('td:eq(3)', row).html('<span class="badge badge-info">Angsuran</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
+                    $(row).hide();
                 }
                 $('td:eq(8)', row).html(
                     `
@@ -874,10 +877,13 @@
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Terbayar</span>');
+                } else if (data['fc_status'] == 'IS') {
+                    $('td:eq(3)', row).html('<span class="badge badge-info">Angsuran</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
+                    $(row).hide();
                 }
+                
                 $('td:eq(8)', row).html(
                     `
                     <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
