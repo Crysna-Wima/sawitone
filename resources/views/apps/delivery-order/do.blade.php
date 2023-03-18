@@ -632,6 +632,8 @@
 
         function select_stock(fc_barcode) {
             let stock_name = 'input[name="pname[]'
+            // ambil 8 string fc_barcode dari depan
+            let fc_barcode_8 = fc_barcode.substring(0, 8);
             console.log($('').val());
             // console.log(fc_barcode);
             // modal loading
@@ -641,8 +643,10 @@
                 type: "POST",
                 data: {
                     'fc_barcode': fc_barcode,
+                    'short_barcode': fc_barcode_8,
                     'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
-                    'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val()
+                    'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val(),
+                    'fc_sono': '{{ $data->fc_sono }}',
                 },
                 dataType: 'JSON',
                 success: function(response, textStatus, jQxhr) {

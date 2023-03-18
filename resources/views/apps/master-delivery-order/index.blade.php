@@ -503,7 +503,7 @@
             }
         });
 
-        var tb = $('#tb_pengiriman').DataTable({
+        var tb_pengiriman = $('#tb_pengiriman').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -583,7 +583,7 @@
             }
         });
 
-        var tb = $('#tb_diterima').DataTable({
+        var tb_diterima = $('#tb_diterima').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
