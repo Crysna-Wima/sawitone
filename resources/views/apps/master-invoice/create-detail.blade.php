@@ -280,7 +280,7 @@
                         <div class="flex-row-item">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
