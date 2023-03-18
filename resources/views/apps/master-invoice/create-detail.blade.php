@@ -385,10 +385,10 @@
                     <button type="submit" class="btn btn-success">Save</button>`);
                 } else if (data.romst.fc_invstatus === 'R') {
                     $('td:eq(10)', row).html(`
-                    <button type="submit" class="btn btn-warning" disabled>Edit</button>`);
+                    <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
                 } else {
                     $('td:eq(10)', row).html(`
-                    <button type="submit" class="btn btn-success">Edit</button>`);
+                    <button type="submit" class="btn btn-warning">Edit</button>`);
                 }
 
                 $('#fn_invdetail').html(data.romst.invmst.fn_invdetail);
