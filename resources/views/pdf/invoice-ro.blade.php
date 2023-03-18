@@ -243,16 +243,16 @@
             <tr class="pt-1">
                 <td>Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">Rp. {{ number_format($ro_mst->fm_netto,0,',','.')}}</td>
+                <td style="width: 28%">Rp. {{ number_format($inv_mst->fm_netto,0,',','.')}}</td>
                 <td>Biaya Kirim</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($ro_mst->pomst->fm_servpay,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_servpay,0,',','.')}}</td>
             </tr>
 
             <tr>
                 <td>Pajak</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($ro_mst->pomst->fm_tax,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_tax,0,',','.')}}</td>
                 <td>Biaya Materai</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. 0</td>
@@ -263,7 +263,7 @@
                 <td style="width: 28%"></td>
                 <td><b>Tagihan</b></td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($ro_mst->pomst->fm_brutto,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_brutto,0,',','.')}}</td>
             </tr>
         </table>
 
@@ -278,7 +278,7 @@
             </tr>
 
             <tr>
-                <td style="width: 50%;"><i>"{{ terbilang($ro_mst->pomst->fm_brutto) }} Rupiah"</i></td>
+                <td style="width: 50%;"><i>"{{ terbilang($inv_mst->fm_brutto) }} Rupiah"</i></td>
                 <td></td>
                 <td></td>
                 <td></td>

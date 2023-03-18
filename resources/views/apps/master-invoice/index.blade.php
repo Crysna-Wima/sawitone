@@ -91,7 +91,7 @@
                                                 <th scope="col" class="text-center">Tgl Berakhir</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Total</th>
-                                                <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                                <th scope="col" class="text-center" style="width: 25%">Actions</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -191,55 +191,35 @@
                                     <div class="card-header">
                                         <h4>Calculation</h4>
                                     </div>
-                                    <div class="card-body" style="height: 217px">
+                                    <div class="card-body" style="height: 215px">
                                         <div class="d-flex border-bottom">
                                             <div class="flex-row-item" style="margin-right: 30px">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item
-                                                    </p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fn_dodetail_outgoing">0,00</p>
-                                                </div>
-                                                <input type="text" name="fn_dodetail" id="fn_dodetail_input" hidden>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_invdetail_outgoing">0,00</p>
+                                                </div>                                             
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Disc. Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_disctotal_outgoing">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal_outgoing">0,00</p>
                                                 </div>
-                                                <input type="text" name="fm_disctotal" id="fm_disctotal_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_netto_outgoing">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto_outgoing">0,00</p>
                                                 </div>
                                             </div>
-                                            <input type="text" name="fm_netto" id="fm_netto_input" hidden>
                                             <div class="flex-row-item">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pelayanan</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_servpay_outgoing">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_outgoing">0,00</p>
                                                 </div>
-                                                <input type="text" name="fm_servpay" id="fm_servpay_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax_outgoing">0,00</p>
+                                                </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pajak</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_tax_outgoing">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto_outgoing">Rp. 0,00</p>
                                                 </div>
-                                                <input type="text" name="fm_tax" id="fm_tax_input" hidden>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item"
-                                                        style="font-weight: bold; font-size: medium">GRAND</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium"
-                                                        id="fm_brutto_outgoing">Rp.
-                                                        0,00</p>
-                                                </div>
-                                                <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
                                             </div>
                                         </div>
                                         <div class="d-flex">
@@ -249,12 +229,9 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Terbayar</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Terbayar</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_paidvalue_outgoing">0,00</p>
                                                 </div>
-                                                <input type="text" name="" id="" hidden>
                                             </div>
                                             <div class="flex-row-item">
                                                 <div class="d-flex">
@@ -262,14 +239,11 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">SISA
-                                                    </p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_servpay">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">SISA</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="sisa_outgoing">Rp. 0,00</p>
                                                 </div>
-                                                <input type="text" name="" id=""hidden>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
@@ -623,7 +597,15 @@
                         $('#fc_membername1_outgoing').val(data.domst.somst.customer.fc_membername1);
                         $('#fd_inv_agingdate_outgoing').val(data.fd_inv_agingdate);
 
-                        // console.log();
+                        //calculation
+                        $('#fn_invdetail_outgoing').html(data.fn_invdetail);
+                        $('#fm_disctotal_outgoing').html(data.fm_disctotal);
+                        $('#fm_netto_incoming').html(data.fm_netto);
+                        $('#fm_servpay_outgoing').html(data.fm_servpay);
+                        $('#fm_tax_outgoing').html(data.fm_tax);
+                        $('#fm_brutto_outgoing').html(data.fm_brutto);
+                        $('#fm_paidvalue_outgoing').html(data.fm_paidvalue);
+                        $('#sisa_outgoing').html(data.fm_brutto - data.fm_paidvalue);
                     }
 
 
@@ -732,13 +714,14 @@
                     data: null,
                 },
             ],
-            createdRow: function(row, data, type) {
-                if (data.fc_invstatus == 'R') {
-                    $(row).hide();
-                }
-            },
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
+                if (data['fc_invstatus'] != 'N') {
+                    $(row).hide();
+                } else {
+                    $(row).show();
+                }
+
                 $('td:eq(7)', row).html(`
                     <a href="/apps/master-invoice/create/${fc_rono}" class="btn btn-warning">Pilih</a>
                 `);
@@ -778,11 +761,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 3, 7, 8]
+                    targets: [0, 3, 8]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 4, 5, 6, 8]
+                    targets: [3, 4, 5, 6, 7]
                 },
             ],
             columns: [{
@@ -825,9 +808,11 @@
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Terbayar</span>');
+                } else if (data['fc_status'] == 'IS') {
+                    $('td:eq(3)', row).html('<span class="badge badge-info">Angsuran</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
+                    $(row).hide();
                 }
                 $('td:eq(8)', row).html(
                     `
@@ -892,10 +877,13 @@
                 if (data['fc_status'] == 'R') {
                     $('td:eq(3)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_status'] == 'P') {
-                    $('td:eq(3)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Terbayar</span>');
+                } else if (data['fc_status'] == 'IS') {
+                    $('td:eq(3)', row).html('<span class="badge badge-info">Angsuran</span>');
                 } else {
-                    $('td:eq(3)', row).html('<span class="badge badge-success">Angsuran</span>');
+                    $(row).hide();
                 }
+                
                 $('td:eq(8)', row).html(
                     `
                     <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
