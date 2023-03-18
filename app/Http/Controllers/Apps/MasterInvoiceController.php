@@ -61,6 +61,28 @@ class MasterInvoiceController extends Controller
         // dd($inv_mst);
     }
 
+    public function detail_ro($fc_rono){
+        $decode_fc_rono = base64_decode($fc_rono);
+        session(['fc_rono_global' => $decode_fc_rono]);
+
+        $data['data'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['data'] = InvMaster::with('romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        
+        return view('apps.master-invoice.detail-ro', $data);
+        // dd($fc_divisioncode);
+    }
+
+    public function detail_do($fc_dono){
+        $decode_fc_dono = base64_decode($fc_dono);
+        session(['fc_dono_global' => $decode_fc_dono]);
+
+        $data['data'] = DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['data'] = InvMaster::with('domst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        
+        return view('apps.master-invoice.detail-do', $data);
+        // dd($fc_divisioncode);
+    }
+
     public function inv_do($fc_dono)
     {
         $decode_fc_dono = base64_decode($fc_dono);
