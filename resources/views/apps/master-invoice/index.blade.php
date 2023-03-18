@@ -305,7 +305,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" id="fm_valuepayment" class="form-control"
+                                        <input type="text" id="fm_valuepayment_outgoing" class="form-control"
                                             name="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
@@ -595,6 +595,7 @@
                         $('#fm_brutto_outgoing').html(data.fm_brutto);
                         $('#fm_paidvalue_outgoing').html(data.fm_paidvalue);
                         $('#sisa_outgoing').html(data.fm_brutto - data.fm_paidvalue);
+                        $('#fm_valuepayment_outgoing').val(data.fm_brutto - data.fm_paidvalue)
                     }
 
 
@@ -641,6 +642,7 @@
                         $('#fm_brutto_incoming').html(data.fm_brutto);
                         $('#fm_paidvalue_incoming').html(data.fm_paidvalue);
                         $('#sisa').html(data.fm_brutto - data.fm_paidvalue);
+                        $('#fm_valuepayment').val(data.fm_brutto - data.fm_paidvalue)
                     }
                 },
                 error: function() {

@@ -232,7 +232,7 @@
                                         <label>Deskripsi</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="fv_description" >
+                                                name="fv_description">
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +255,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -263,7 +264,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -271,29 +273,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -396,10 +403,10 @@
                 <div class="modal-header br">
                     <h5 class="modal-title">Pilih Item</h5>
                     <div class="card-header-action">
-                        <select data-dismiss="modal" onchange="" class="form-control select2 required-field"
-                            name="#" id="category">
-                            <option value="Khusus">Khusus&nbsp;&nbsp;</option>
+                        <select data-dismiss="modal" name="category" onchange=""
+                            class="form-control select2 required-field" name="Category" id="category">
                             <option value="Semua">Semua&nbsp;&nbsp;</option>
+                            <option value="Khusus">Khusus&nbsp;&nbsp;</option>
                         </select>
                     </div>
                 </div>
@@ -541,6 +548,9 @@
                 ajax: {
                     url: "/master/get-data-stock-so-datatables",
                     type: 'GET',
+                    data: function(d) {
+                        d.category = $('#category').val();
+                    },
                     dataSrc: function(data) {
                         data.data.forEach(function(row) {
                             switch (tipe_bisnis) {
@@ -565,11 +575,12 @@
                         });
                         return data.data;
                     }
+
                 },
                 columnDefs: [{
                     className: 'text-center',
                     targets: [0, 5]
-                }, ],
+                }],
                 columns: [{
                         data: 'DT_RowIndex',
                         searchable: false,
@@ -582,10 +593,22 @@
                         data: 'fc_barcode'
                     },
                     {
-                        data: 'fc_nameshort'
+                        data: 'fc_nameshort',
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return row.stock.fc_nameshort;
+                            }
+                            return data;
+                        }
                     },
                     {
-                        data: 'namepack.fv_description'
+                        data: 'namepack.fv_description',
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return row.stock.namepack.fv_description;
+                            }
+                            return data;
+                        }
                     },
                     {
                         data: 'fm_price_default',
@@ -596,10 +619,19 @@
                     },
                 ],
                 rowCallback: function(row, data) {
+                    if (!data.fc_nameshort) {
+                        data.fc_nameshort = data.stock.fc_nameshort;
+                    }
                     $('td:eq(6)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
+                <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+            `);
                 }
+            });
+            // Reload datatable when category is changed
+            $('#category').on('change', function() {
+                var url = $(this).val() === 'Semua' ? '/master/get-data-stock-so-datatables' :
+                    '/master/get-data-stock_customer-so-datatables';
+                tb_stock.ajax.url(url).load();
             });
         }
 
@@ -611,18 +643,18 @@
                 success: function(response) {
                     var data = response.data;
                     // console.log(data.tempsodetail[0].fm_so_price);
-                    var tipe_bisnis  = "{{ $data->customer->member_type_business->fv_description }}";
-                    if(tipe_bisnis == 'DISTRIBUTOR'){
+                    var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
+                    if (tipe_bisnis == 'DISTRIBUTOR') {
                         $('#fm_so_price').val(data.fm_price_distributor);
-                    }else if(tipe_bisnis == 'RETAIL'){
+                    } else if (tipe_bisnis == 'RETAIL') {
                         $('#fm_so_price').val(data.fm_price_default);
-                    }else if(tipe_bisnis == 'RUMAH SAKIT'){
+                    } else if (tipe_bisnis == 'RUMAH SAKIT') {
                         $('#fm_so_price').val(data.fm_price_project);
-                    }else if(tipe_bisnis == 'PERSONAL'){
+                    } else if (tipe_bisnis == 'PERSONAL') {
                         $('#fm_so_price').val(data.fm_price_enduser);
-                    }else if(tipe_bisnis == 'ENDUSER'){
+                    } else if (tipe_bisnis == 'ENDUSER') {
                         $('#fm_so_price').val(data.fm_price_enduser);
-                    }else{
+                    } else {
                         $('#fm_so_price').val("");
                     }
                     $('#fc_barcode').val(data.fc_barcode);

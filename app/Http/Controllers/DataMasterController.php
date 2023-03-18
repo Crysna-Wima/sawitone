@@ -16,7 +16,9 @@ use App\Helpers\ApiFormatter;
 use App\Models\Brand;
 use App\Models\Stock;
 use App\Models\Customer;
+use App\Models\StockCustomer;
 use App\Models\Supplier;
+use App\Models\TempSoMaster;
 use App\Models\TransaksiType;
 use Yajra\DataTables\DataTables;
 
@@ -141,6 +143,15 @@ class DataMasterCOntroller extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function get_data_stock_customer_so_datatables(){
+        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first()->fc_membercode;
+    $data = StockCustomer::with(['stock.namepack'])->where('fc_membercode', $fc_membercode)->get();
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);   
+    }
+    
 
     public function get_data_stock_po_datatables()
     {

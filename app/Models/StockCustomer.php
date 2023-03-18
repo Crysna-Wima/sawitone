@@ -46,4 +46,13 @@ class StockCustomer extends Model
     public function customer(){
         return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
+    
+    // TransaksiType
+    public function namepack(){
+        return $this->belongsTo(TransaksiType::class, 'fc_type', 'fc_kode')->withTrashed();
+    }
+
+    
+
+    
 }
