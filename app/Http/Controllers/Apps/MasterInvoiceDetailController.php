@@ -98,7 +98,7 @@ class MasterInvoiceDetailController extends Controller
     public function datatables_ro($fc_rono)
     {
         $decode_fc_rono = base64_decode($fc_rono);
-        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = RoDetail::with('invstore.stock', 'romst.invmst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -111,6 +111,10 @@ class MasterInvoiceDetailController extends Controller
         $decode_fc_invno = base64_decode($fc_invno);
         DB::beginTransaction();
         try{
+            RoDetail::where('fc_rono', InvMaster::where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first()->fc_rono)->update([
+                'fn_price' => 0,
+                'fn_disc' => 0
+            ]);
             InvMaster::where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
             // InvDetail::where('fc_invno', $fc_invno)->where('fc_branch', auth()->user()->fc_branch)->delete();
 

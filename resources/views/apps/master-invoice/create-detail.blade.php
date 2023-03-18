@@ -111,28 +111,47 @@
                                     <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 place_detail">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Calculation</h4>
+                    </div>
+                    <div class="card-body" style="height: 180px">
+                        <div class="d-flex">
+                            <div class="flex-row-item" style="margin-right: 30px">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fn_invdetail">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_disctotal">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_netto">0,00</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $tipe_cabang->pomst->supplier->supplier_type_business->fv_description }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Telepon</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
+                            <div class="flex-row-item">
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay_calculate">0,00</p>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -140,23 +159,20 @@
                                     <label>Masa Hutang</label>
                                     <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->fn_supplierAgingAR }}" readonly>
                                 </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $legal_status->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
                                 </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
                                 </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Hutang</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fm_supplierAR }}" readonly>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -383,60 +399,27 @@
             if (data.fn_price == 0 && data.fn_disc == 0) {
                 $('td:eq(10)', row).html(`
                     <button type="submit" class="btn btn-success">Save</button>`);
-            } else if (data.romst.fc_invstatus === 'R') {
-                $('td:eq(10)', row).html(`
-                    <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
-            } else {
-                $('td:eq(10)', row).html(`
-                    <button type="submit" class="btn btn-warning">Edit</button>`);
-            }
-        },
-
-        // Coba calculation fess
-        // footerCallback: function(row, data, start, end, display) {
-        //     //calculation
-        //     $('#fn_invdetail').html(data.fn_invdetail);
-        //     $('#fm_disctotal').html(data.fm_disctotal);
-        //     $('#fm_netto').html(data.fm_netto);
-        //     $('#fm_servpay').html(data.fm_servpay);
-        //     $('#fm_tax').html(data.fm_tax);
-        //     $('#fm_brutto').html(data.fm_brutto);
-
-        //     console.log(data);
-        // }
-    });
-
-    $('#ro_detail tbody').on('click', 'button', function() {
-        var data = tb.row($(this).parents('tr')).data();
-        var price = $(this).parents('tr').find('input:eq(0)').val();
-        var disc = $(this).parents('tr').find('input:eq(1)').val();
-        // console.log(data.fc_rono);
-
-        // modal loading
-        $("#modal_loading").modal('show');
-
-        $.ajax({
-            url: '/apps/master-invoice/create/edit/incoming-edit-ro-detail',
-            method: 'PUT',
-            data: {
-                fc_rono: data.fc_rono,
-                fn_rownum: data.fn_rownum,
-                fc_stockcode: data.fc_stockcode,
-                fn_price: price,
-                fn_disc: disc
-            },
-            success: function(response) {
-                // ketika response sukses
-                if (response.status == 200) {
-
-                    $("#modal_loading").modal('hide');
-
-                    swal(response.message, {
-                        icon: 'success',
-                    });
-                    // reload table
-                    tb.ajax.reload(null, false);
+                } else if (data.romst.fc_invstatus === 'R') {
+                    $('td:eq(10)', row).html(`
+                    <button type="submit" class="btn btn-warning" disabled>Edit</button>`);
+                } else {
+                    $('td:eq(10)', row).html(`
+                    <button type="submit" class="btn btn-success">Edit</button>`);
                 }
+
+                $('#fn_invdetail').html(data.romst.invmst.fn_invdetail);
+                $('#fn_invdetail').trigger('change');
+                $('#fm_disctotal').html(data.romst.invmst.fm_disctotal);
+                $('#fm_disctotal').trigger('change');
+                $('#fm_netto').html(data.romst.invmst.fm_netto);
+                $('#fm_netto').trigger('change');
+                $('#fm_servpay_calculate').html(data.romst.invmst.fm_servpay);
+                $('#fm_servpay_calculate').trigger('change');
+                $('#fm_tax').html(data.romst.invmst.fm_tax);
+                $('#fm_tax').trigger('change');
+                $('#fm_brutto').html(data.romst.invmst.fm_brutto);
+                $('#fm_brutto').trigger('change');
+
             },
             error: function(xhr, status, error) {
                 // ketika response error
@@ -446,6 +429,48 @@
                 });
             }
         });
-    });
-</script>
+
+        $('#ro_detail tbody').on('click', 'button', function() {
+            var data = tb.row($(this).parents('tr')).data();
+            var price = $(this).parents('tr').find('input:eq(0)').val();
+            var disc = $(this).parents('tr').find('input:eq(1)').val();
+            // console.log(data.fc_rono);
+
+            // modal loading
+            $("#modal_loading").modal('show');
+
+            $.ajax({
+                url: '/apps/master-invoice/create/edit/incoming-edit-ro-detail',
+                method: 'PUT',
+                data: {
+                    fc_rono: data.fc_rono,
+                    fn_rownum: data.fn_rownum,
+                    fc_stockcode: data.fc_stockcode,
+                    fn_price: price,
+                    fn_disc: disc
+                },
+                success: function(response) {
+                    // ketika response sukses
+                    if (response.status == 200) {
+
+                        $("#modal_loading").modal('hide');
+
+                        swal(response.message, {
+                            icon: 'success',
+                        });
+                        // reload table
+                        tb.ajax.reload(null, false);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // ketika response error
+                    $("#modal_loading").modal('hide');
+                    swal(xhr.responseJSON.message, {
+                        icon: 'error',
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
+
