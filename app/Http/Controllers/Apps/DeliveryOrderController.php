@@ -20,12 +20,14 @@ use App\Models\TempSoPay;
 use App\Models\Invstore;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
+use App\Models\Stock;
 use Yajra\DataTables\DataTables;
 
 class DeliveryOrderController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         // cari di domst yang userid nya sama dengan userid yang login
         $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika $do_master tidak kosong return ke route create_do
@@ -37,7 +39,8 @@ class DeliveryOrderController extends Controller
         // dd($do_master);
     }
 
-    public function detail($fc_sono){
+    public function detail($fc_sono)
+    {
         $encode_fc_sono = base64_decode($fc_sono);
         session(['fc_sono_global' => $encode_fc_sono]);
         $cek_status = SoMaster::where(
@@ -59,7 +62,8 @@ class DeliveryOrderController extends Controller
         // dd($fc_divisioncode);
     }
 
-    public function insert_do(Request $request){
+    public function insert_do(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_sono' => 'required',
@@ -128,18 +132,20 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function create(){
+    public function create()
+    {
         $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         $fc_sono_domst = $domst->fc_sono;
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')
-                                 ->where('fc_sono', $fc_sono_domst)
-                                 ->first();
+            ->where('fc_sono', $fc_sono_domst)
+            ->first();
         $data['domst'] = $domst;
         return view('apps.delivery-order.do', $data);
         // dd($data);
     }
 
-    public function datatables_so_payment(){
+    public function datatables_so_payment()
+    {
         $data = TempSoPay::where('fc_sono', session('fc_sono_global'))->get();
 
         return DataTables::of($data)
@@ -147,7 +153,8 @@ class DeliveryOrderController extends Controller
             ->make();
     }
 
-    public function datatables_stock_inventory($fc_stockcode){
+    public function datatables_stock_inventory($fc_stockcode)
+    {
         // get data from Invstore
 
         $data = Invstore::with('stock.sodtl.somst')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired', 'ASC')->get();
@@ -156,7 +163,8 @@ class DeliveryOrderController extends Controller
             ->make(true);
     }
 
-    public function datatables_so_detail(){
+    public function datatables_so_detail()
+    {
 
 
         //  jika session fc_sono_global tidak sama dengan null
@@ -178,7 +186,8 @@ class DeliveryOrderController extends Controller
         // dd($domst);
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $data = SoMaster::where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
@@ -187,7 +196,8 @@ class DeliveryOrderController extends Controller
     }
 
 
-    public function cart_stock(request $request){
+    public function cart_stock(request $request)
+    {
         if (session('fc_sono_global') != null) {
             $fc_sono = session('fc_sono_global');
         } else {
@@ -227,10 +237,11 @@ class DeliveryOrderController extends Controller
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
         // dd($data_stock);
         // get data from Invstore.stock.sodtl
-        $data_stock_sodtl = Invstore::with('stock.sodtl')
-            ->where('fc_barcode', $request->fc_barcode)
-            ->first();
-
+        $data_stock_sodtl = SoDetail::where('fc_barcode', $request->short_barcode)
+                                      ->where('fc_sono', $request->fc_sono)
+                                      ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->first();
+        // dd($data_stock_sodtl);
         $sodtlLength = count($data_stock_sodtl->stock->sodtl);
         $qty = 0;
         for ($i = 0; $i < $sodtlLength; $i++) {
@@ -287,8 +298,8 @@ class DeliveryOrderController extends Controller
                 'fc_batch' => $data_stock->fc_batch,
                 'fc_catnumber' => $data_stock->fc_catnumber,
                 'fd_expired' => $data_stock->fd_expired,
-                'fn_price' => $data_stock_sodtl->stock->sodtl[0]->fm_so_price,
-                'fn_disc' => $data_stock_sodtl->stock->sodtl[0]->fm_so_disc,
+                'fn_price' => $data_stock_sodtl->fm_so_price,
+                'fn_disc' => $data_stock_sodtl->fm_so_disc,
             ]);
         } else {
             $do_dtl = DoDetail::create([
@@ -322,7 +333,8 @@ class DeliveryOrderController extends Controller
     }
 
     // datatable deliver item
-    public function datatables_do_detail(){
+    public function datatables_do_detail()
+    {
         $data = DoDetail::with('invstore.stock', 'domst')->where('fc_dono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
@@ -331,12 +343,14 @@ class DeliveryOrderController extends Controller
         // dd(auth()->user()->fc_userid);
     }
 
-    public function delete_item($fc_barcode, $fn_rownum){
-    
+    public function delete_item($fc_barcode, $fn_rownum)
+    {
+
         // validasi $fc_barcode require
         $validator = Validator::make(
-            ['fc_barcode' => $fc_barcode], 
-            ['fc_barcode' => 'required',]);
+            ['fc_barcode' => $fc_barcode],
+            ['fc_barcode' => 'required',]
+        );
 
         if ($validator->fails()) {
             return [
@@ -367,7 +381,8 @@ class DeliveryOrderController extends Controller
     }
 
 
-    public function update_transport(Request $request, $fc_sono){
+    public function update_transport(Request $request, $fc_sono)
+    {
         // validasi $fc_sono require
         $validator = Validator::make(
             [
@@ -377,16 +392,16 @@ class DeliveryOrderController extends Controller
                 'fc_sotransport' => $request->fc_sotransport,
                 'fd_dodate' => $request->fd_dodate,
                 'fc_memberaddress_loading' => $request->fc_memberaddress_loading,
-            ], 
+            ],
             [
-              'fc_sono' => 'required',
+                'fc_sono' => 'required',
                 'fc_transporter' => 'required',
                 'fm_servpay' => 'required',
                 'fc_sotransport' => 'required',
                 'fd_dodate' => 'required',
                 'fc_memberaddress_loading' => 'required',
             ]
-    );
+        );
 
         if ($validator->fails()) {
             return [
@@ -425,7 +440,8 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function cancel_do(){
+    public function cancel_do()
+    {
         DB::beginTransaction();
 
         try {
@@ -450,7 +466,8 @@ class DeliveryOrderController extends Controller
         }
     }
 
-    public function submit_do(Request $request){
+    public function submit_do(Request $request)
+    {
         // validasi all request
         $validator = Validator::make($request->all(), [
             'fc_sostatus' => 'required',
