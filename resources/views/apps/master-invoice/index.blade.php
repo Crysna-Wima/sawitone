@@ -390,44 +390,37 @@
                                         <div class="d-flex border-bottom">
                                             <div class="flex-row-item" style="margin-right: 30px">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item
-                                                    </p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fn_invdetail_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_invdetail_incoming">0,00</p>
                                                 </div>
+                                                <input type="text" name="fn_dodetail" id="fn_dodetail_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Disc. Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_disctotal_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal_incoming">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_disctotal" id="fm_disctotal_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Total</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_netto_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto_incoming">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_netto" id="fm_netto_input" hidden>
                                             </div>
                                             <div class="flex-row-item">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pelayanan</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_servpay_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_incoming">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_servpay" id="fm_servpay_input" hidden>
+                                                <div class="d-flex" style="gap: 5px; white-space: pre" >
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax_incoming">0,00</p>
+                                                </div>
+                                                <input type="text" name="fm_tax" id="fm_tax_input" hidden>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Pajak</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_tax_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto_incoming">Rp. 0,00</p>
                                                 </div>
-                                                <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item"
-                                                        style="font-weight: bold; font-size: medium">GRAND</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium"
-                                                        id="fm_brutto_incoming">Rp. 0,00</p>
-                                                </div>
+                                                <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
                                             </div>
                                         </div>
                                         <div class="d-flex">
@@ -437,11 +430,10 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item" style="font-size: medium">
-                                                        Terbayar</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-size: medium" id="fm_paidvalue_incoming">0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-size: medium">Terbayar</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_paidvalue_incoming">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_paidvalue" id="fm_paidvalue_input" hidden>
                                             </div>
                                             <div class="flex-row-item">
                                                 <div class="d-flex">
@@ -449,14 +441,11 @@
                                                     <p class="flex-row-item text-right"></p>
                                                 </div>
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                                    <p class="text-secondary flex-row-item"
-                                                        style="font-weight: bold; font-size: medium">SISA</p>
-                                                    <p class="text-success flex-row-item text-right"
-                                                        style="font-weight: bold; font-size:medium" id="sisa">Rp.
-                                                        0,00</p>
+                                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">SISA</p>
+                                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="sisa">Rp. 0,00</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                 </div>
                             </div>
