@@ -110,7 +110,7 @@
                                                 <th scope="col" class="text-center">Tgl Berakhir</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Total</th>
-                                                <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                                <th scope="col" class="text-center" style="width: 25%">Actions</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -803,11 +803,21 @@
                 } else {
                     $(row).hide();
                 }
-                $('td:eq(8)', row).html(
-                    `
-                    <a href="/apps/master-invoice/inv_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_incoming('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
-                );
+
+                if (data['fc_status'] != 'P') {
+                    $('td:eq(8)', row).html(
+                        `
+                        <a href="/apps/master-invoice/detail_ro/${fc_rono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                        <a href="/apps/master-invoice/inv_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                        <button class="btn btn-info btn-sm" onclick="click_modal_update_invoice_incoming('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                    );
+                } else {
+                    $('td:eq(8)', row).html(
+                        `
+                        <a href="/apps/master-invoice/detail_ro/${fc_rono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                        <a href="/apps/master-invoice/inv_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>`
+                    );
+                }
             }
         });
 
@@ -820,11 +830,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [2, 3]
+                    targets: [0, 3, 8]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [1, 3, 4, 5, 6, 7, 8]
+                    targets: [3, 4, 5, 6, 7]
                 },
             ],
             columns: [{
@@ -873,11 +883,20 @@
                     $(row).hide();
                 }
                 
-                $('td:eq(8)', row).html(
-                    `
-                    <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <button class="btn btn-primary btn-sm" onclick="click_modal_update_invoice_outgoing('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
-                );
+                if (data['fc_status'] != 'P') {
+                    $('td:eq(8)', row).html(
+                        `
+                        <a href="/apps/master-invoice/detail_do/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                        <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                        <button class="btn btn-info btn-sm" onclick="click_modal_update_invoice_outgoing('${data.fc_invno}')"><i class="fa fa-edit"></i> Update Inv</button>`
+                    );
+                } else {
+                    $('td:eq(8)', row).html(
+                        `
+                        <a href="/apps/master-invoice/detail_do/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                        <a href="/apps/master-invoice/inv_do/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>`
+                    );
+                }
             }
         });
 

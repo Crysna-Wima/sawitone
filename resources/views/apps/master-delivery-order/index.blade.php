@@ -596,7 +596,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: []
+                    targets: [3]
                 },
             ],
             columns: [{
