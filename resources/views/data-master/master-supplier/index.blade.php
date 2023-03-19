@@ -343,7 +343,7 @@
         get_data_nationality();
         get_data_type_business();
         get_data_tax_code();
-        get_data_lock_code();
+        get_data_supplier_lock_code();
         get_data_supplier_bank();
     })
 
@@ -529,7 +529,7 @@
         });
     }
 
-    function get_data_lock_code(){
+    function get_data_supplier_lock_code(){
         $("#modal_loading").modal('show');
         $.ajax({
             url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_LOCKTYPE",
