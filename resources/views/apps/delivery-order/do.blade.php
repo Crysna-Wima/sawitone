@@ -168,8 +168,8 @@
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">INV</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                            <th scope="col" class="text-center">Disc.(Rp)</th>
-                                            <th scope="col" class="text-center">Total</th> -->
+                                                            <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                            <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
@@ -203,8 +203,8 @@
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                            <th scope="col" class="text-center">Disc.</th>
-                                            <th scope="col" class="text-center">Total</th> -->
+                                                            <th scope="col" class="text-center">Disc.</th>
+                                                            <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -217,7 +217,8 @@
             <div class="col-12 col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <form id="form_submit" action="/apps/delivery-order/update_transport/{{ base64_encode($data->fc_sono) }}"
+                        <form id="form_submit"
+                            action="/apps/delivery-order/update_transport/{{ base64_encode($data->fc_sono) }}"
                             method="POST" autocomplete="off">
                             @csrf
                             @method('PUT')
@@ -324,7 +325,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fn_dodetail">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -332,7 +334,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_disctotal">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -340,29 +343,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_netto">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay_calculate">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -435,8 +443,6 @@
 
 @section('js')
     <script>
-        
-
         function bonus_type() {
             var stock_inventory_table = $('#stock_inventory').DataTable();
             var selectedOption = $('#category').val();
@@ -456,7 +462,7 @@
         function pilih_inventory(fc_stockcode) {
             console.log(fc_stockcode);
             $("#modal_loading").modal('show');
-            
+
             // tampilkan loading_data
             var stock_inventory_table = $('#stock_inventory');
             if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
@@ -606,8 +612,8 @@
                 "initComplete": function() {
                     // hidden modal loading
                     setTimeout(function() {
-                            $('#modal_loading').modal('hide');
-                        }, 500);
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     $('#modal_inventory').modal('show');
 
                     stock_inventory_table.DataTable().ajax.reload();
@@ -894,14 +900,30 @@
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                             'content')
                                     },
-                                    success: function() {
+                                    success: function(response) {
                                         // tutup modal loading
-                                        $('#modal_loading').modal('hide');
-                                        deliver_item.ajax.reload();
-                                        tb.ajax.reload();
-                                        swal("Item telah dihapus!", {
-                                            icon: "success",
-                                        });
+                                        if (response.status == 200) {
+                                            setTimeout(function() {
+                                                $('#modal_loading').modal(
+                                                    'hide');
+                                            }, 500);
+                                            deliver_item.ajax.reload();
+                                            tb.ajax.reload();
+                                            swal("Item telah dihapus!", {
+                                                icon: "success",
+                                            });
+                                        } else if (response.status == 201) {
+                                            setTimeout(function() {
+                                                $('#modal_loading').modal(
+                                                    'hide');
+                                            }, 500);
+                                            deliver_item.ajax.reload();
+                                            tb.ajax.reload();
+                                            swal("Item telah dihapus!", {
+                                                icon: "success",
+                                            });
+                                            location.href = response.link;
+                                        }
                                     },
                                     error: function(xhr) {
                                         $('#modal_loading').modal('hide');
@@ -980,11 +1002,11 @@
                             type: "DELETE",
                             dataType: "JSON",
                             success: function(response) {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
+
                                 if (response.status === 201) {
-                                    $("#modal").modal('hide');
+                                    setTimeout(function() {
+                                        $('#modal_loading').modal('hide');
+                                    }, 500);
                                     iziToast.success({
                                         title: 'Success!',
                                         message: response.message,
