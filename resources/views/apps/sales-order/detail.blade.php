@@ -250,7 +250,7 @@
                     <div class="card-header">
                         <h4>Calculation</h4>
                     </div>
-                    <div class="card-body" style="height: 180px">
+                    <div class="card-body" style="height: 190px">
                         <div class="d-flex">
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
