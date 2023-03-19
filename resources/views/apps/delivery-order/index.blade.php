@@ -75,7 +75,7 @@
                     data: 'fc_sotype'
                 },
                 {
-                    data: 'fc_membercode'
+                    data: 'customer.fc_membername1'
                 },
                 {
                     data: 'fc_sostatus'
