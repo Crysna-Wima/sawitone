@@ -850,7 +850,11 @@
         serverSide: true,
         ajax: {
             url: '/data-master/master-customer/datatables',
-            type: 'GET'
+            type: 'GET',
+            datatype: 'json',
+            lengthMenu: [10],
+            paging: true,
+            pageLength: 10,
         },
         columnDefs: [
             {
