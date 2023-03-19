@@ -495,12 +495,12 @@
                     $('#fn_qty_po').trigger('change');
 
                     // modal_loading hide
-                    $('#modal_loading').modal('hide');
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                     $('#modal_select').modal('show');
                 },
 
                 error: function(data) {
-                    $('#modal_loading').modal('hide');
+                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
                     console.log('Error:', data);
                 }
             });
