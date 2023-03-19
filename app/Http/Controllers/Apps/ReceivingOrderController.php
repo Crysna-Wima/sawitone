@@ -31,7 +31,7 @@ class ReceivingOrderController extends Controller
         if ($count === 0) {
             return view('apps.receiving-order.index');
         } else {
-            return redirect('/apps/receiving-order/create/' . $data->fc_pono);
+            return redirect('/apps/receiving-order/create/' . base64_encode($data->fc_pono));
         }
     }
 
