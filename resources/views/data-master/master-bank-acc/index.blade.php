@@ -25,16 +25,16 @@
                      <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Bank Name</th>
-                           <th scope="col" class="text-center">Bank Type</th>
-                           <th scope="col" class="text-center">Bank Code</th>
-                           <th scope="col" class="text-center">Bank Branch</th>
-                           <th scope="col" class="text-center">Bank Username</th>
-                           <th scope="col" class="text-center">Bank Hold</th>
-                           <th scope="col" class="text-center">Bank Address 1</th>
-                           <th scope="col" class="text-center">Bank Address 2</th>
+                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Cabang</th>
+                           <th scope="col" class="text-center">Nama Bank</th>
+                           <th scope="col" class="text-center">Tipe Bank</th>
+                           <th scope="col" class="text-center">No. Rekening</th>
+                           <th scope="col" class="text-center">Cabang Bank</th>
+                           <th scope="col" class="text-center">Username Bank</th>
+                           <th scope="col" class="text-center">Bank Terkunci</th>
+                           <th scope="col" class="text-center">Alamat Bank 1</th>
+                           <th scope="col" class="text-center">Alamat Bank 2</th>
                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                      </thead>
@@ -66,25 +66,25 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
-                                <label>Division Code</label>
+                                <label>Kode Divisi</label>
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Bank Name</label>
+                                <label>Nama Bank</label>
                                 <input type="text" class="form-control required-field" name="fv_bankname" id="fv_bankname">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
-                                <label>Bank Type</label>
+                                <label>Tipe Bank</label>
                                 <select class="form-control select2" name="fc_banktype" id="fc_banktype">
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option>1</option>
@@ -107,7 +107,7 @@
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
-                                <label>Bank Hold</label>
+                                <label>Bank Terkunci</label>
                                 <select class="form-control select2" name="fl_bankhold" id="fl_bankhold">
                                     <option value="T">YES</option>
                                     <option selected value="F">NO</option>
@@ -116,20 +116,20 @@
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Bank Branch</label>
+                                <label>Cabang Bank</label>
                                 <input type="text" class="form-control" name="fv_bankbranch" id="fv_bankbranch">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Bank Address 1</label>
+                                <label>Alamat Bank 1</label>
                                 <textarea class="form-control" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Bank Address 2</label>
+                                <label>Alamat Bank 2</label>
                                 <textarea class="form-control" name="fv_bankaddress2" id="fv_bankaddress2" style="height: 100px"></textarea>
                             </div>
                         </div>
