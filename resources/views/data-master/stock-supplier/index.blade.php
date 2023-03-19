@@ -394,7 +394,7 @@
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
          { data: 'branch.fv_description' },
-         { data: 'stock.fc_nameshort' },
+         { data: 'stock.fc_nameshort', defaultContent: '' },
          { data: 'fc_barcode' },
          { data: 'supplier.fc_suppliername1', defaultContent: '', },
          { data: 'fm_price_customer', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
