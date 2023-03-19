@@ -938,34 +938,34 @@
             {
                 data: 'member_typebranch.fv_description'
             },
-            // {
-            //     data: 'fl_memberreseller',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'member_legal_status.fv_description',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'member_tax_code.fv_description',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_membernpwp_no',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_membernpwp_name',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_member_npwpaddress1',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_member_npwpaddress2',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'fl_memberreseller',
+                defaultContent: '',
+            },
+            {
+                data: 'member_legal_status.fv_description',
+                defaultContent: '',
+            },
+            {
+                data: 'member_tax_code.fv_description',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_membernpwp_no',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_membernpwp_name',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_member_npwpaddress1',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_member_npwpaddress2',
+                defaultContent: '',
+            },
             // {
             //     data: 'member_nationality.fv_description',
             //     defaultContent: '',
