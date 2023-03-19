@@ -392,11 +392,15 @@
                                     // tampilkan modal section alert
                                     if (response.status == 300 || response.status == 301) {
                                         // hide loading
-                                        $("#modal_loading").modal('hide');
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal('hide');
+                                        }, 500);
                                         $('#alert-message').html(response.message);
                                         $('#alertModal').modal('show');
                                     } else {
-                                        $("#modal_loading").modal('hide');
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal('hide');
+                                        }, 500);
                                         // tampilkan flas message bootstrap id alert-bayar
                                         $('#alert-bayar').append(
                                             '<div class="alert alert-success alert-dismissible show fade"><div class="alert-body"><button class="close" data-dismiss="alert"><span>&times;</span></button>' +
@@ -453,8 +457,8 @@
                         .fm_brutto :
                         data.data[0].tempsomst.fm_brutto - data.data[0].nominal;
 
-                    console.log(data.data[0].nominal);
-                    console.log(data.data[0].tempsomst.fm_brutto);
+                    // console.log(data.data[0].nominal);
+                    // console.log(data.data[0].tempsomst.fm_brutto);
 
                     // $('#grand_total').html("Rp. " + fungsiRupiah(parseFloat(grand_total + data.data[0].tempsomst
                     //     .fm_servpay)));
@@ -464,7 +468,7 @@
                         $('#label_kekurangan').html('<b>Kelebihan Pembayaran</b>');
                         $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(data.data[0].nominal - data.data[0]
                             .tempsomst.fm_brutto)));
-                    }else{
+                    } else {
                         $('#label_kekurangan').html('<b>Kekurangan</b>');
                         $('#kekurangan').html("Rp. " + fungsiRupiah(parseFloat(total_kurang)));
                     }
