@@ -852,7 +852,8 @@
             url: '/data-master/master-customer/datatables',
             type: 'GET'
         },
-        columnDefs: [{
+        columnDefs: [
+            {
                 className: 'text-center',
                 targets: [0]
             },
@@ -871,169 +872,223 @@
                 orderable: false
             },
             {
-                data: 'fc_divisioncode'
+                data: 'fc_divisioncode',
+                defaultContent: '',
             },
             {
-                data: 'branch.fv_description'
+                data: 'branch.fv_description',
+                defaultContent: '',
             },
             {
-                data: 'fc_membercode'
+                data: 'fc_membercode',
+                defaultContent: '',
             },
             {
-                data: 'fc_membername1'
+                data: 'fc_membername1',
+                defaultContent: '',
             },
             {
-                data: 'fc_membername2'
+                data: 'fc_membername2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberaddress1'
+                data: 'fc_memberaddress1',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberaddress2'
+                data: 'fc_memberaddress2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberaddress_loading1'
+                data: 'fc_memberaddress_loading1',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberaddress_loading2'
+                data: 'fc_memberaddress_loading2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberphone1'
+                data: 'fc_memberphone1',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberphone2'
+                data: 'fc_memberphone2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberphone3'
+                data: 'fc_memberphone3',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberweb'
+                data: 'fc_memberweb',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberemail1'
+                data: 'fc_memberemail1',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberemail2'
+                data: 'fc_memberemail2',
+                defaultContent: '',
             },
             {
-                data: 'member_type_business.fv_description'
+                data: 'member_type_business.fv_description',
+                defaultContent: '',
             },
             {
                 data: 'member_typebranch.fv_description'
             },
             {
-                data: 'fl_memberreseller'
+                data: 'fl_memberreseller',
+                defaultContent: '',
             },
             {
-                data: 'member_legal_status.fv_description'
+                data: 'member_legal_status.fv_description',
+                defaultContent: '',
             },
             {
-                data: 'member_tax_code.fv_description'
+                data: 'member_tax_code.fv_description',
+                defaultContent: '',
             },
             {
-                data: 'fc_membernpwp_no'
+                data: 'fc_membernpwp_no',
+                defaultContent: '',
             },
             {
-                data: 'fc_membernpwp_name'
+                data: 'fc_membernpwp_name',
+                defaultContent: '',
             },
             {
-                data: 'fc_member_npwpaddress1'
+                data: 'fc_member_npwpaddress1',
+                defaultContent: '',
             },
             {
-                data: 'fc_member_npwpaddress2'
+                data: 'fc_member_npwpaddress2',
+                defaultContent: '',
             },
             {
-                data: 'member_nationality.fv_description'
+                data: 'member_nationality.fv_description',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberforex'
+                data: 'fc_memberforex',
+                defaultContent: '',
             },
             {
-                data: 'fm_memberAP'
+                data: 'fm_memberAP',
+                defaultContent: '',
             },
             {
-                data: 'fn_memberAgingAP'
+                data: 'fn_memberAgingAP',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberlockTransType'
+                data: 'fc_memberlockTransType',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicname'
+                data: 'fc_memberpicname',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicname2'
+                data: 'fc_memberpicname2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicname3'
+                data: 'fc_memberpicname3',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicname4'
+                data: 'fc_memberpicname4',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicname5'
+                data: 'fc_memberpicname5',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicphone'
+                data: 'fc_memberpicphone',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicphone2'
+                data: 'fc_memberpicphone2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicphone3'
+                data: 'fc_memberpicphone3',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicphone4'
+                data: 'fc_memberpicphone4',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicphone5'
+                data: 'fc_memberpicphone5',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos'
+                data: 'fc_memberpicpos',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos2'
+                data: 'fc_memberpicpos2',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos3'
+                data: 'fc_memberpicpos3',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos4'
+                data: 'fc_memberpicpos4',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos5'
+                data: 'fc_memberpicpos5',
+                defaultContent: '',
             },
             {
-                data: 'fd_memberjoindate'
+                data: 'fd_memberjoindate',
+                defaultContent: '',
             },
             {
-                data: 'fl_membercontract'
+                data: 'fl_membercontract',
+                defaultContent: '',
             },
             {
-                data: 'member_bank1.fv_bankname'
+                data: 'member_bank1.fv_bankname',
+                defaultContent: '',
             },
             {
-                data: 'member_bank2.fv_bankname'
+                data: 'member_bank2.fv_bankname',
+                defaultContent: '',
             },
             {
-                data: 'member_bank3.fv_bankname'
+                data: 'member_bank3.fv_bankname',
+                defaultContent: '',
             },
             {
-                data: 'fc_membervirtualac'
+                data: 'fc_membervirtualac',
+                defaultContent: '',
             },
             {
-                data: 'fc_membernorek1'
+                data: 'fc_membernorek1',
+                defaultContent: '',
             },
             {
-                data: 'fc_membernorek2'
+                data: 'fc_membernorek2',
+                defaultContent: '',
             },
             {
-                data: 'fc_membernorek3'
+                data: 'fc_membernorek3',
+                defaultContent: '',
             },
             {
-                data: 'fv_memberdescription'
+                data: 'fv_memberdescription',
+                defaultContent: '',
             },
             {
-                data: 'fc_memberpicpos'
+                data: 'fc_memberpicpos',
+                defaultContent: '',
             },
         ],
         rowCallback: function(row, data) {
