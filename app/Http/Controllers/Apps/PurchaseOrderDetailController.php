@@ -39,7 +39,6 @@ class PurchaseOrderDetailController extends Controller
             'fm_po_price' => 'Harga harus diisi'
         ]);
 
-
         if ($validator->fails()) {
             return [
                 'status' => 300,
@@ -82,8 +81,8 @@ class PurchaseOrderDetailController extends Controller
 
         $request->merge(['fn_po_qty' => Convert::convert_to_double($request->fn_po_qty)]);
         $request->merge(['fn_po_value' => Convert::convert_to_double($total_harga)]);
-        $request->merge(['fm_po_price' => Convert::convert_to_double($stock->fm_price_default)]);
-
+        $request->merge(['fm_po_price' => Convert::convert_to_double($request->fm_po_price)]);
+        // dd($request->fm_po_price);
         $insert_po_detail = TempPoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
