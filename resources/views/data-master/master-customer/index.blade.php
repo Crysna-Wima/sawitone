@@ -966,66 +966,66 @@
                 data: 'fc_member_npwpaddress2',
                 defaultContent: '',
             },
-            // {
-            //     data: 'member_nationality.fv_description',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberforex',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fm_memberAP',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fn_memberAgingAP',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberlockTransType',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicname',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicname2',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicname3',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicname4',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicname5',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicphone',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicphone2',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicphone3',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicphone4',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberpicphone5',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'member_nationality.fv_description',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberforex',
+                defaultContent: '',
+            },
+            {
+                data: 'fm_memberAP',
+                defaultContent: '',
+            },
+            {
+                data: 'fn_memberAgingAP',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberlockTransType',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicname',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicname2',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicname3',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicname4',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicname5',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicphone',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicphone2',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicphone3',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicphone4',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberpicphone5',
+                defaultContent: '',
+            },
             // {
             //     data: 'fc_memberpicpos',
             //     defaultContent: '',
