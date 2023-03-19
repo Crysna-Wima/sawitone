@@ -887,26 +887,26 @@
                 data: 'fc_membername1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_membername2',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_membername2',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberaddress1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberaddress2',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberaddress2',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberaddress_loading1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberaddress_loading2',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberaddress_loading2',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberphone1',
                 defaultContent: '',
@@ -927,10 +927,10 @@
                 data: 'fc_memberemail1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberemail2',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberemail2',
+            //     defaultContent: '',
+            // },
             {
                 data: 'member_type_business.fv_description',
                 defaultContent: '',
@@ -962,10 +962,10 @@
                 data: 'fc_member_npwpaddress1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_member_npwpaddress2',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_member_npwpaddress2',
+            //     defaultContent: '',
+            // },
             {
                 data: 'member_nationality.fv_description',
                 defaultContent: '',
@@ -1074,14 +1074,14 @@
                 data: 'fc_membernorek1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_membernorek2',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_membernorek3',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_membernorek2',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_membernorek3',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fv_memberdescription',
                 defaultContent: '',
