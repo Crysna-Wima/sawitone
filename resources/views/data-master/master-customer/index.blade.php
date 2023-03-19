@@ -911,14 +911,14 @@
                 data: 'fc_memberphone1',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberphone2',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberphone3',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberphone2',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberphone3',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberweb',
                 defaultContent: '',
@@ -990,62 +990,62 @@
                 data: 'fc_memberpicname',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberpicname2',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicname3',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicname4',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicname5',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberpicname2',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicname3',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicname4',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicname5',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberpicphone',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberpicphone2',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicphone3',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicphone4',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicphone5',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberpicphone2',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicphone3',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicphone4',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicphone5',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fc_memberpicpos',
                 defaultContent: '',
             },
-            {
-                data: 'fc_memberpicpos2',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicpos3',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicpos4',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicpos5',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberpicpos2',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicpos3',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicpos4',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicpos5',
+            //     defaultContent: '',
+            // },
             {
                 data: 'fd_memberjoindate',
                 defaultContent: '',
