@@ -887,38 +887,38 @@
                 data: 'fc_membername1',
                 defaultContent: '',
             },
-            // {
-            //     data: 'fc_membername2',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'fc_membername2',
+                defaultContent: '',
+            },
             {
                 data: 'fc_memberaddress1',
                 defaultContent: '',
             },
-            // {
-            //     data: 'fc_memberaddress2',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'fc_memberaddress2',
+                defaultContent: '',
+            },
             {
                 data: 'fc_memberaddress_loading1',
                 defaultContent: '',
             },
-            // {
-            //     data: 'fc_memberaddress_loading2',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'fc_memberaddress_loading2',
+                defaultContent: '',
+            },
             {
                 data: 'fc_memberphone1',
                 defaultContent: '',
             },
-            // {
-            //     data: 'fc_memberphone2',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'fc_memberphone3',
-            //     defaultContent: '',
-            // },
+            {
+                data: 'fc_memberphone2',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_memberphone3',
+                defaultContent: '',
+            },
             {
                 data: 'fc_memberweb',
                 defaultContent: '',
@@ -931,37 +931,37 @@
             //     data: 'fc_memberemail2',
             //     defaultContent: '',
             // },
-            {
-                data: 'member_type_business.fv_description',
-                defaultContent: '',
-            },
-            {
-                data: 'member_typebranch.fv_description'
-            },
-            {
-                data: 'fl_memberreseller',
-                defaultContent: '',
-            },
-            {
-                data: 'member_legal_status.fv_description',
-                defaultContent: '',
-            },
-            {
-                data: 'member_tax_code.fv_description',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_membernpwp_no',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_membernpwp_name',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_member_npwpaddress1',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'member_type_business.fv_description',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_typebranch.fv_description'
+            // },
+            // {
+            //     data: 'fl_memberreseller',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_legal_status.fv_description',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_tax_code.fv_description',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_membernpwp_no',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_membernpwp_name',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_member_npwpaddress1',
+            //     defaultContent: '',
+            // },
             // {
             //     data: 'fc_member_npwpaddress2',
             //     defaultContent: '',
