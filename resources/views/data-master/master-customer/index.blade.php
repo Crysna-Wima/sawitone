@@ -927,17 +927,17 @@
                 data: 'fc_memberemail1',
                 defaultContent: '',
             },
-            // {
-            //     data: 'fc_memberemail2',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'member_type_business.fv_description',
-            //     defaultContent: '',
-            // },
-            // {
-            //     data: 'member_typebranch.fv_description'
-            // },
+            {
+                data: 'fc_memberemail2',
+                defaultContent: '',
+            },
+            {
+                data: 'member_type_business.fv_description',
+                defaultContent: '',
+            },
+            {
+                data: 'member_typebranch.fv_description'
+            },
             // {
             //     data: 'fl_memberreseller',
             //     defaultContent: '',
