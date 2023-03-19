@@ -966,30 +966,30 @@
             //     data: 'fc_member_npwpaddress2',
             //     defaultContent: '',
             // },
-            {
-                data: 'member_nationality.fv_description',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberforex',
-                defaultContent: '',
-            },
-            {
-                data: 'fm_memberAP',
-                defaultContent: '',
-            },
-            {
-                data: 'fn_memberAgingAP',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberlockTransType',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicname',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'member_nationality.fv_description',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberforex',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fm_memberAP',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fn_memberAgingAP',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberlockTransType',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicname',
+            //     defaultContent: '',
+            // },
             // {
             //     data: 'fc_memberpicname2',
             //     defaultContent: '',
@@ -1006,10 +1006,10 @@
             //     data: 'fc_memberpicname5',
             //     defaultContent: '',
             // },
-            {
-                data: 'fc_memberpicphone',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberpicphone',
+            //     defaultContent: '',
+            // },
             // {
             //     data: 'fc_memberpicphone2',
             //     defaultContent: '',
@@ -1026,10 +1026,10 @@
             //     data: 'fc_memberpicphone5',
             //     defaultContent: '',
             // },
-            {
-                data: 'fc_memberpicpos',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fc_memberpicpos',
+            //     defaultContent: '',
+            // },
             // {
             //     data: 'fc_memberpicpos2',
             //     defaultContent: '',
@@ -1046,34 +1046,34 @@
             //     data: 'fc_memberpicpos5',
             //     defaultContent: '',
             // },
-            {
-                data: 'fd_memberjoindate',
-                defaultContent: '',
-            },
-            {
-                data: 'fl_membercontract',
-                defaultContent: '',
-            },
-            {
-                data: 'member_bank1.fv_bankname',
-                defaultContent: '',
-            },
-            {
-                data: 'member_bank2.fv_bankname',
-                defaultContent: '',
-            },
-            {
-                data: 'member_bank3.fv_bankname',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_membervirtualac',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_membernorek1',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fd_memberjoindate',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fl_membercontract',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_bank1.fv_bankname',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_bank2.fv_bankname',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'member_bank3.fv_bankname',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_membervirtualac',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_membernorek1',
+            //     defaultContent: '',
+            // },
             // {
             //     data: 'fc_membernorek2',
             //     defaultContent: '',
@@ -1082,14 +1082,14 @@
             //     data: 'fc_membernorek3',
             //     defaultContent: '',
             // },
-            {
-                data: 'fv_memberdescription',
-                defaultContent: '',
-            },
-            {
-                data: 'fc_memberpicpos',
-                defaultContent: '',
-            },
+            // {
+            //     data: 'fv_memberdescription',
+            //     defaultContent: '',
+            // },
+            // {
+            //     data: 'fc_memberpicpos',
+            //     defaultContent: '',
+            // },
         ],
         rowCallback: function(row, data) {
             var url_edit = "/data-master/master-customer/detail/" + data.fc_divisioncode + '/' + data
