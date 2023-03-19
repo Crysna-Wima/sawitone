@@ -25,27 +25,27 @@
                      <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Sales Code</th>
-                           <th scope="col" class="text-center">Sales Name 1</th>
-                           <th scope="col" class="text-center">Sales Name 2</th>
-                           <th scope="col" class="text-center">Sales Type</th>
-                           <th scope="col" class="text-center">Sales Level</th>
+                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Cabang</th>
+                           <th scope="col" class="text-center">Kode Sales</th>
+                           <th scope="col" class="text-center">Nama Sales 1</th>
+                           <th scope="col" class="text-center">Nama Sales 2</th>
+                           <th scope="col" class="text-center">Tipe Sales</th>
+                           <th scope="col" class="text-center">Level Sales</th>
                            <th scope="col" class="text-center">Sales BlackList</th>
-                           <th scope="col" class="text-center">Sales Phone 1</th>
-                           <th scope="col" class="text-center">Sales Phone 2</th>
-                           <th scope="col" class="text-center">Sales Phone 3</th>
-                           <th scope="col" class="text-center">Sales Email 1</th>
-                           <th scope="col" class="text-center">Sales Email 2</th>
-                           <th scope="col" class="text-center">Sales Bank 1</th>
-                           <th scope="col" class="text-center">Sales Bank 2</th>
-                           <th scope="col" class="text-center">Sales Bank 3</th>
-                           <th scope="col" class="text-center">Sales Virtual Acc</th>
-                           <th scope="col" class="text-center">Sales NoRek 1</th>
-                           <th scope="col" class="text-center">Sales NoRek 2</th>
-                           <th scope="col" class="text-center">Sales NoRek 3</th>
-                           <th scope="col" class="text-center">Sales Description</th>
+                           <th scope="col" class="text-center">No. HP Sales 1</th>
+                           <th scope="col" class="text-center">No. HP Sales 2</th>
+                           <th scope="col" class="text-center">No. HP Sales 3</th>
+                           <th scope="col" class="text-center">Email Sales 1</th>
+                           <th scope="col" class="text-center">Email Sales 2</th>
+                           <th scope="col" class="text-center">Bank Sales 1</th>
+                           <th scope="col" class="text-center">Bank Sales 2</th>
+                           <th scope="col" class="text-center">Bank Sales 3</th>
+                           <th scope="col" class="text-center">Virtual Acc Sales</th>
+                           <th scope="col" class="text-center">No. Rek Sales 1</th>
+                           <th scope="col" class="text-center">No. Rek Sales 2</th>
+                           <th scope="col" class="text-center">No. Rek Sales 3</th>
+                           <th scope="col" class="text-center">Deskripsi Sales</th>
                            <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
@@ -77,44 +77,44 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
-                                <label>Division Code</label>
+                                <label>Kode Divisi</label>
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Code</label>
+                                <label>Kode Sales</label>
                                 <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Name 1</label>
+                                <label>Nama Sales 1</label>
                                 <input type="text" class="form-control required-field" name="fc_salesname1" id="fc_salesname1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Name 2</label>
+                                <label>Nama Sales 2</label>
                                 <input type="text" class="form-control" name="fc_salesname2" id="fc_salesname2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Type</label>
+                                <label>Tipe Sales</label>
                                 <select class="form-control select2" name="fc_salestype" id="fc_salestype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Sales Level</label>
+                                <label>Level Sales</label>
                                 <select class="form-control select2" name="fn_saleslevel" id="fn_saleslevel"></select>
                             </div>
                         </div>
@@ -134,83 +134,83 @@
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Mail 1</label>
+                                <label>Email Sales 1</label>
                                 <input type="text" class="form-control" name="fc_salesemail1" id="fc_salesemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Sales Mail 2</label>
+                                <label>Email Sales 2</label>
                                 <input type="text" class="form-control" name="fc_salesemail2" id="fc_salesemail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 1</label>
+                                <label>No. HP Sales 1</label>
                                 <input type="text" class="form-control required-field" name="fc_salesphone1" id="fc_salesphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 2</label>
+                                <label>No. HP Sales 2</label>
                                 <input type="text" class="form-control" name="fc_salesphone2" id="fc_salesphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Phone 3</label>
+                                <label>No. HP Sales 3</label>
                                 <input type="text" class="form-control" name="fc_salesphone3" id="fc_salesphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 1</label>
+                                <label>Bank Sales 1</label>
                                 <select class="form-control select2" name="fc_salesbank1" id="fc_salesbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 2</label>
+                                <label>Bank Sales 2</label>
                                 <select class="form-control select2" name="fc_salesbank2" id="fc_salesbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales Bank 3</label>
+                                <label>Bank Sales 3</label>
                                 <select class="form-control select2" name="fc_salesbank3" id="fc_salesbank3"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 1</label>
+                                <label>No. Rekening Sales 1</label>
                                 <input type="text" class="form-control" name="fc_salesnorek1" id="fc_salesnorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 2</label>
+                                <label>No. Rekening Sales 2</label>
                                 <input type="text" class="form-control" name="fc_salesnorek2" id="fc_salesnorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Sales No Rekening 3</label>
+                                <label>No. Rekening Sales 3</label>
                                 <input type="text" class="form-control" name="fc_salesnorek3" id="fc_salesnorek3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Sales Virtual AC</label>
+                                <label>Virtual AC Sales</label>
                                 <input name="fc_salesvirtualac" id="fc_salesvirtualac" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Sales Description</label>
+                                <label>Deskripsi Sales</label>
                                 <textarea name="fv_salesdescription" id="fv_salesdescription" class="form-control" style="height: 80px"></textarea>
                             </div>
                         </div>

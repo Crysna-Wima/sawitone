@@ -25,42 +25,42 @@
                      <thead style="white-space: nowrap">
                         <tr>
                            <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Supplier Code</th>
-                           <th scope="col" class="text-center">Supplier Legal Status</th>
-                           <th scope="col" class="text-center">Supplier Name 1</th>
-                           <th scope="col" class="text-center">Supplier Name 2</th>
-                           <th scope="col" class="text-center">Supplier Phone 1</th>
-                           <th scope="col" class="text-center">Supplier Phone 2</th>
-                           <th scope="col" class="text-center">Supplier Phone 3</th>
-                           <th scope="col" class="text-center">Supplier Email 1</th>
-                           <th scope="col" class="text-center">Supplier Email 2</th>
-                           <th scope="col" class="text-center">Supplier Nationality</th>
+                           <th scope="col" class="text-center">Divisi</th>
+                           <th scope="col" class="text-center">Cabang</th>
+                           <th scope="col" class="text-center">Kode Supplier</th>
+                           <th scope="col" class="text-center">Legal Status Supplier</th>
+                           <th scope="col" class="text-center">Nama Supplier 1</th>
+                           <th scope="col" class="text-center">Nama Supplier 2</th>
+                           <th scope="col" class="text-center">No. HP Supplier 1</th>
+                           <th scope="col" class="text-center">No. HP Supplier 2</th>
+                           <th scope="col" class="text-center">No. HP Supplier 3</th>
+                           <th scope="col" class="text-center">Email Supplier 1</th>
+                           <th scope="col" class="text-center">Email Supplier 2</th>
+                           <th scope="col" class="text-center">Kebangsaan Supplier</th>
                            <th scope="col" class="text-center">Supplier Forex</th>
-                           <th scope="col" class="text-center">Supplier Type Business</th>
+                           <th scope="col" class="text-center">Tipe Bisnis Supplier</th>
                            <th scope="col" class="text-center">Supplier Reseller</th>
-                           <th scope="col" class="text-center">Supplier Tax Code</th>
-                           <th scope="col" class="text-center">Supplier NPWP</th>
-                           <th scope="col" class="text-center">Supplier NPWP Name</th>
-                           <th scope="col" class="text-center">Supplier NPWP Address 1</th>
-                           <th scope="col" class="text-center">Supplier NPWP Address 2</th>
-                           <th scope="col" class="text-center">Supplier AR</th>
-                           <th scope="col" class="text-center">Supplier Aging AR</th>
-                           <th scope="col" class="text-center">Supplier Lock</th>
-                           <th scope="col" class="text-center">Supplier Pic Name</th>
-                           <th scope="col" class="text-center">Supplier Pic Phone</th>
-                           <th scope="col" class="text-center">Supplier Pic Pos</th>
-                           <th scope="col" class="text-center">Supplier Join Date</th>
+                           <th scope="col" class="text-center">Kode Pajak Supplier</th>
+                           <th scope="col" class="text-center">NPWP Supplier</th>
+                           <th scope="col" class="text-center">Nama NPWP Supplier</th>
+                           <th scope="col" class="text-center">Alamat NPWP Supplier 1</th>
+                           <th scope="col" class="text-center">Alamat NPWP Supplier 2</th>
+                           <th scope="col" class="text-center">Hutang Supplier</th>
+                           <th scope="col" class="text-center">Masa Hutang Supplier</th>
+                           <th scope="col" class="text-center">Kunci Supplier</th>
+                           <th scope="col" class="text-center">Nama PIC Supplier</th>
+                           <th scope="col" class="text-center">No. HP PIC Supplier</th>
+                           <th scope="col" class="text-center">Pos PIC Supplier</th>
+                           <th scope="col" class="text-center">Tanggal Join Supplier</th>
                            <th scope="col" class="text-center">Supplier Expired</th>
-                           <th scope="col" class="text-center">Supplier Bank 1</th>
-                           <th scope="col" class="text-center">Supplier Bank 2</th>
-                           <th scope="col" class="text-center">Supplier Bank 3</th>
-                           <th scope="col" class="text-center">Supplier Virtual Acc</th>
-                           <th scope="col" class="text-center">Supplier Norek 1</th>
-                           <th scope="col" class="text-center">Supplier Norek 2</th>
-                           <th scope="col" class="text-center">Supplier Norek 3</th>
-                           <th scope="col" class="text-center">Supplier Description</th>
+                           <th scope="col" class="text-center">Bank Supplier 1</th>
+                           <th scope="col" class="text-center">Bank Supplier 2</th>
+                           <th scope="col" class="text-center">Bank Supplier 3</th>
+                           <th scope="col" class="text-center">Virtual Acc Supplier</th>
+                           <th scope="col" class="text-center">Norek Supplier 1</th>
+                           <th scope="col" class="text-center">Norek Supplier 2</th>
+                           <th scope="col" class="text-center">Norek Supplier 3</th>
+                           <th scope="col" class="text-center">Deskripsi Supplier</th>
                            <th scope="col" class="justify-content-center">Actions</th>
                         </tr>
                      </thead>
@@ -92,64 +92,64 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
-                                <label>Division Code</label>
+                                <label>Kode Divisi</label>
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Code</label>
+                                <label>Kode Supplier</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliercode" id="fc_suppliercode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Name 1</label>
+                                <label>Nama Supplier 1</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliername1" id="fc_suppliername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Name 2</label>
+                                <label>Nama Supplier 2</label>
                                 <input type="text" class="form-control" name="fc_suppliername2" id="fc_suppliername2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Pic Name</label>
+                                <label>Nama PIC Supplier</label>
                                 <input type="text" class="form-control" name="fc_supplierpicname" id="fc_supplierpicname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Pic Phone</label>
+                                <label>No. HP PIC Supplier</label>
                                 <input type="text" class="form-control" name="fc_supplierpicphone" id="fc_supplierpicphone">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Pic Pos</label>
+                                <label>Pos PIC Supplier</label>
                                 <input type="text" class="form-control" name="fc_supplierpicpos" id="fc_supplierpicpos">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Legal Status</label>
+                                <label>Legal Status Supplier</label>
                                 <select class="select2" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Nationality</label>
+                                <label>Kebangsaaan Supplier</label>
                                 <select class="select2" name="fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()"></select>
                             </div>
                         </div>
@@ -161,13 +161,13 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Type Business</label>
+                                <label>Tipe Bisnis Supplier</label>
                                 <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Join Date</label>
+                                <label>Tanggal Join Supplier</label>
                                 <input type="text"   class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
                             </div>
                         </div>
@@ -194,131 +194,131 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Tax Code</label>
+                                <label>Kode Pajak Supplier</label>
                                 <select class="select2" name="fc_suppliertaxcode" id="fc_suppliertaxcode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier NPWP</label>
+                                <label>NPWP Supplier</label>
                                 <input type="text" class="form-control" name="fc_supplierNPWP" id="fc_supplierNPWP">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier NPWP Name</label>
+                                <label>Nama NPWP Supplier</label>
                                 <input type="text" class="form-control" name="fc_suppliernpwp_name" id="fc_suppliernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier NPWP Address 1</label>
+                                <label>Alamat NPWP Supplier 1</label>
                                 <textarea type="text" class="form-control" name="fc_supplier_npwpaddress1" id="fc_supplier_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier NPWP Address 2</label>
+                                <label>Alamat NPWP Supplier 2</label>
                                 <textarea type="text" class="form-control" name="fc_supplier_npwpaddress2" id="fc_supplier_npwpaddress2" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Email 1</label>
+                                <label>Email Supplier 1</label>
                                 <input type="text" class="form-control" name="fc_supplieremail1" id="fc_supplieremail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Supplier Email 2</label>
+                                <label>Email Supplier 2</label>
                                 <input type="text" class="form-control" name="fc_supplieremail2" id="fc_supplieremail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Phone 1</label>
+                                <label>No. HP Supplier 1</label>
                                 <input type="text" class="form-control" name="fc_supplierphone1" id="fc_supplierphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Phone 2</label>
+                                <label>No. HP Supplier 2</label>
                                 <input type="text" class="form-control" name="fc_supplierphone2" id="fc_supplierphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Phone 3</label>
+                                <label>No. HP Supplier 3</label>
                                 <input type="text" class="form-control" name="fc_supplierphone3" id="fc_supplierphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Bank 1</label>
+                                <label>Bank Supplier 1</label>
                                 <select class="form-control select2" name="fc_supplierbank1" id="fc_supplierbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Bank 2</label>
+                                <label>Bank Supplier 2</label>
                                 <select class="form-control select2" name="fc_supplierbank2" id="fc_supplierbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Bank 3</label>
+                                <label>Bank Supplier 3</label>
                                 <select class="form-control select2" name="fc_supplierbank3" id="fc_supplierbank3"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier No Rekening 1</label>
+                                <label>No Rekening Supplier 1</label>
                                 <input type="text" class="form-control" name="fc_suppliernorek1" id="fc_suppliernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier No Rekening 2</label>
+                                <label>No Rekening Supplier 2</label>
                                 <input type="text" class="form-control" name="fc_suppliernorek2" id="fc_suppliernorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier No Rekening 3</label>
+                                <label>No Rekening Supplier 3</label>
                                 <input type="text" class="form-control" name="fc_suppliernorek3" id="fc_suppliernorek3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Supplier Virtual AC</label>
+                                <label>Virtual AC Supplier</label>
                                 <input type="text" class="form-control" name="fc_suppliervirtualac" id="fc_suppliervirtualac">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Supplier Hutang</label>
+                                <label>Hutang Supplier</label>
                                 <input type="text" class="form-control" readonly name="fm_supplierAR" id="fm_supplierAR" value="0">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
-                                <label>Supplier Aging AP</label>
+                                <label>Masa Hutang Supplier</label>
                                 <input type="number" class="form-control" name="fn_supplierAgingAR" id="fn_supplierAgingAR">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Lock Transaksi</label>
+                                <label>Kunci Transaksi</label>
                                 <select class="form-control select2" name="fn_supplierlockTrans" id="fn_supplierlockTrans"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Deskripsi Supplier</label>
                                 <textarea name="fv_supplierdescription" id="fv_supplierdescription" style="height: 90px" class="form-control"></textarea>
                             </div>
                         </div>
