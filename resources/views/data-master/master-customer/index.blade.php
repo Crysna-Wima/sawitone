@@ -26,60 +26,60 @@
                             <thead style="white-space: nowrap">
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Division</th>
-                                    <th scope="col" class="text-center">Branch</th>
-                                    <th scope="col" class="text-center">Member Code</th>
-                                    <th scope="col" class="text-center">Member Name 1</th>
-                                    <th scope="col" class="text-center">Member Name 2</th>
-                                    <th scope="col" class="text-center">Member Address 1</th>
-                                    <th scope="col" class="text-center">Member Address 2</th>
-                                    <th scope="col" class="text-center">Member Address Loading 1</th>
-                                    <th scope="col" class="text-center">Member Address Loading 2</th>
-                                    <th scope="col" class="text-center">Member Phone 1</th>
-                                    <th scope="col" class="text-center">Member Phone 2</th>
-                                    <th scope="col" class="text-center">Member Phone 3</th>
-                                    <th scope="col" class="text-center">Member Web</th>
-                                    <th scope="col" class="text-center">Member Email 1</th>
-                                    <th scope="col" class="text-center">Member Email 2</th>
-                                    <th scope="col" class="text-center">Member Type Buisness</th>
-                                    <th scope="col" class="text-center">Member Branch Type</th>
-                                    <th scope="col" class="text-center">Member Reseller</th>
-                                    <th scope="col" class="text-center">Member Legal Status</th>
-                                    <th scope="col" class="text-center">Member Tax Code</th>
-                                    <th scope="col" class="text-center">Member NPWP No</th>
-                                    <th scope="col" class="text-center">Member NPWP Name</th>
-                                    <th scope="col" class="text-center">Member NPWP Address 1</th>
-                                    <th scope="col" class="text-center">Member NPWP Address 2</th>
-                                    <th scope="col" class="text-center">Member Nationality</th>
-                                    <th scope="col" class="text-center">Member Forex</th>
-                                    <th scope="col" class="text-center">Member AP</th>
-                                    <th scope="col" class="text-center">Member Aging AP</th>
-                                    <th scope="col" class="text-center">Member Lock Trans Type</th>
+                                    <th scope="col" class="text-center">Divisi</th>
+                                    <th scope="col" class="text-center">Cabang</th>
+                                    <th scope="col" class="text-center">Kode Customer</th>
+                                    <th scope="col" class="text-center">Nama Customer 1</th>
+                                    <th scope="col" class="text-center">Nama Customer 2</th>
+                                    <th scope="col" class="text-center">Alamat Customer 1</th>
+                                    <th scope="col" class="text-center">Alamat Customer 2</th>
+                                    <th scope="col" class="text-center">Alamat Customer Loading 1</th>
+                                    <th scope="col" class="text-center">Alamat Customer Loading 2</th>
+                                    <th scope="col" class="text-center">No. HP Customer 1</th>
+                                    <th scope="col" class="text-center">No. HP Customer 2</th>
+                                    <th scope="col" class="text-center">No. HP Customer 3</th>
+                                    <th scope="col" class="text-center">Web Customer</th>
+                                    <th scope="col" class="text-center">Email Customer 1</th>
+                                    <th scope="col" class="text-center">Email Customer 2</th>
+                                    <th scope="col" class="text-center">Tipe Bisnis Customer</th>
+                                    <th scope="col" class="text-center">Tipe Cabang Customer</th>
+                                    <th scope="col" class="text-center">Customer Reseller</th>
+                                    <th scope="col" class="text-center">Legal Status Customer</th>
+                                    <th scope="col" class="text-center">Kode Pajak Customer</th>
+                                    <th scope="col" class="text-center">No. NPWP Customer</th>
+                                    <th scope="col" class="text-center">Nama NPWP Customer</th>
+                                    <th scope="col" class="text-center">Alamat NPWP Customer 1</th>
+                                    <th scope="col" class="text-center">Alamat NPWP Customer 2</th>
+                                    <th scope="col" class="text-center">Kebangsaan Customer</th>
+                                    <th scope="col" class="text-center">Customer Forex</th>
+                                    <th scope="col" class="text-center">Hutang Customer</th>
+                                    <th scope="col" class="text-center">Masa Hutang Customer</th>
+                                    <th scope="col" class="text-center">Kunci Transaksi Customer</th>
                                     <th scope="col" class="text-center">Contact Person 1</th>
                                     <th scope="col" class="text-center">Contact Person 2</th>
                                     <th scope="col" class="text-center">Contact Person 3</th>
                                     <th scope="col" class="text-center">Contact Person 4</th>
                                     <th scope="col" class="text-center">Contact Person 5</th>
-                                    <th scope="col" class="text-center">Member CP Phone 1</th>
-                                    <th scope="col" class="text-center">Member CP Phone 2</th>
-                                    <th scope="col" class="text-center">Member CP Phone 3</th>
-                                    <th scope="col" class="text-center">Member CP Phone 4</th>
-                                    <th scope="col" class="text-center">Member CP Phone 5</th>
-                                    <th scope="col" class="text-center">Member CP Pos 1</th>
-                                    <th scope="col" class="text-center">Member CP Pos 2</th>
-                                    <th scope="col" class="text-center">Member CP Pos 3</th>
-                                    <th scope="col" class="text-center">Member CP Pos 4</th>
-                                    <th scope="col" class="text-center">Member CP Pos 5</th>
-                                    <th scope="col" class="text-center">Member Join Date</th>
-                                    <th scope="col" class="text-center">Member Contract</th>
-                                    <th scope="col" class="text-center">Member Bank 1</th>
-                                    <th scope="col" class="text-center">Member Bank 2</th>
-                                    <th scope="col" class="text-center">Member Bank 3</th>
-                                    <th scope="col" class="text-center">Member Virtual Acc</th>
-                                    <th scope="col" class="text-center">Member Norek 1</th>
-                                    <th scope="col" class="text-center">Member Norek 2</th>
-                                    <th scope="col" class="text-center">Member Norek 3</th>
-                                    <th scope="col" class="text-center">Member Desciption</th>
+                                    <th scope="col" class="text-center">No. HP CP Customer 1</th>
+                                    <th scope="col" class="text-center">No. HP CP Customer 2</th>
+                                    <th scope="col" class="text-center">No. HP CP Customer 3</th>
+                                    <th scope="col" class="text-center">No. HP CP Customer 4</th>
+                                    <th scope="col" class="text-center">No. HP CP Customer 5</th>
+                                    <th scope="col" class="text-center">Pos CP Customer 1</th>
+                                    <th scope="col" class="text-center">Pos CP Customer 2</th>
+                                    <th scope="col" class="text-center">Pos CP Customer 3</th>
+                                    <th scope="col" class="text-center">Pos CP Customer 4</th>
+                                    <th scope="col" class="text-center">Pos CP Customer 5</th>
+                                    <th scope="col" class="text-center">Tanggal Join Customer</th>
+                                    <th scope="col" class="text-center">Kontrak Customer</th>
+                                    <th scope="col" class="text-center">Bank Customer 1</th>
+                                    <th scope="col" class="text-center">Bank Customer 2</th>
+                                    <th scope="col" class="text-center">Bank Customer 3</th>
+                                    <th scope="col" class="text-center">Virtual Ac Customer</th>
+                                    <th scope="col" class="text-center">Norek Customer 1</th>
+                                    <th scope="col" class="text-center">Norek Customer 2</th>
+                                    <th scope="col" class="text-center">Norek Customer 3</th>
+                                    <th scope="col" class="text-center">Deskripsi Customer</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -112,56 +112,56 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
-                                <label>Division Code</label>
+                                <label>Kode Divisi</label>
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Code</label>
+                                <label>Kode Customer</label>
                                 <input type="text" class="form-control required-field" readonly name="fc_membercode" id="fc_membercode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Name 1</label>
+                                <label>Nama Customer 1</label>
                                 <input type="text" class="form-control required-field" name="fc_membername1" id="fc_membername1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Name 2</label>
+                                <label>Nama Customer 2</label>
                                 <input type="text" class="form-control" name="fc_membername2" id="fc_membername2">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Address 1</label>
+                                <label>Alamat Customer 1</label>
                                 <textarea type="text" class="form-control" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Address 2</label>
+                                <label>Alamat Customer 2</label>
                                 <textarea type="text" class="form-control" name="fc_memberaddress2" id="fc_memberaddress2" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Address Loading 1</label>
+                                <label>Alamat Customer Loading 1</label>
                                 <textarea type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Address Loading 2</label>
+                                <label>Alamat Customer Loading 2</label>
                                 <textarea type="text" class="form-control" name="fc_memberaddress_loading2" id="fc_memberaddress_loading2" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -179,19 +179,19 @@
                         <div class="row w-100 ml-2">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label>Contact Person Name 1</label>
+                                    <label>Nama Contact Person 1</label>
                                     <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-4">
                                 <div class="form-group">
-                                    <label>Customer CP Phone 1</label>
+                                    <label>No. HP CP Customer 1</label>
                                     <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label>Customer CP Pos 1</label>
+                                    <label>Pos CP Customer 1</label>
                                     <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
                             </div>
@@ -209,13 +209,13 @@
                     <div class="row">
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Legal Status</label>
+                                <label>Legal Status Customer</label>
                                 <select class="select2 required-field" name="fc_memberlegalstatus" id="fc_memberlegalstatus"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Nationality</label>
+                                <label>Kebangsaan Customer</label>
                                 <select class="select2" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()"></select>
                             </div>
                         </div>
@@ -227,19 +227,19 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Type Business</label>
+                                <label>Tipe Bisnis Customer</label>
                                 <select class="select2 required-field" name="fc_membertypebusiness" id="fc_membertypebusiness"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Join Date</label>
+                                <label>Tanggal Join Customer</label>
                                 <input type="text" class="form-control datepicker" name="fd_memberjoindate" id="fd_memberjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Contract</label>
+                                <label>Kontrak Customer</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input">
@@ -269,137 +269,137 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Tax Code</label>
+                                <label>Kode Pajak Customer</label>
                                 <select class="select2" name="fc_membertaxcode" id="fc_membertaxcode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
-                                <label>Branch Type</label>
+                                <label>Tipe Cabang</label>
                                 <select class="select2" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
-                                <label>Customer NPWP</label>
+                                <label>NPWP Customer</label>
                                 <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label>Customer NPWP Name</label>
+                                <label>Nama NPWP Customer</label>
                                 <input type="text" class="form-control" name="fc_membernpwp_name" id="fc_membernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer NPWP Address 1</label>
+                                <label>Alamat NPWP Customer 1</label>
                                 <textarea type="text" class="form-control" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer NPWP Address 2</label>
+                                <label>>Alamat NPWP Customer 2</label>
                                 <textarea type="text" class="form-control" name="fc_member_npwpaddress2" id="fc_member_npwpaddress2" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Email 1</label>
+                                <label>Email Customer 1</label>
                                 <input type="text" class="form-control" name="fc_memberemail1" id="fc_memberemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Customer Email 2</label>
+                                <label>Email Customer 2</label>
                                 <input type="text" class="form-control" name="fc_memberemail2" id="fc_memberemail2">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Phone 1</label>
+                                <label>No. HP Customer 1</label>
                                 <input type="text" class="form-control" name="fc_memberphone1" id="fc_memberphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Phone 2</label>
+                                <label>No. HP Customer 2</label>
                                 <input type="text" class="form-control" name="fc_memberphone2" id="fc_memberphone2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Phone 3</label>
+                                <label>No. HP Customer 3</label>
                                 <input type="text" class="form-control" name="fc_memberphone3" id="fc_memberphone3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Bank 1</label>
+                                <label>Bank Customer 1</label>
                                 <select class="form-control select2" name="fc_memberbank1" id="fc_memberbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Bank 2</label>
+                                <label>Bank Customer 2</label>
                                 <select class="form-control select2" name="fc_memberbank2" id="fc_memberbank2"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Bank 3</label>
+                                <label>Bank Customer 3</label>
                                 <select class="form-control select2" name="fc_memberbank3" id="fc_memberbank3"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer No Rekening 1</label>
+                                <label>No Rekening Customer 1</label>
                                 <input type="text" class="form-control" name="fc_membernorek1" id="fc_membernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer No Rekening 2</label>
+                                <label>No Rekening Customer 2</label>
                                 <input type="text" class="form-control" name="fc_membernorek2" id="fc_membernorek2">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer No Rekening 3</label>
+                                <label>No Rekening Customer 3</label>
                                 <input type="text" class="form-control" name="fc_membernorek3" id="fc_membernorek3">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
-                                <label>Customer Virtual AC</label>
+                                <label>Virtual AC Customer</label>
                                 <input type="text" class="form-control" name="fc_membervirtualac" id="fc_membervirtualac">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Customer Hutang</label>
+                                <label>Hutang Customer</label>
                                 <input type="text" class="form-control" readonly name="fm_memberAP" id="fm_memberAP" value="0">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
-                                <label>Customer Aging AP</label>
+                                <label>Masa Hutang Customer</label>
                                 <input type="number" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Lock Transaksi</label>
+                                <label>Kunci Transaksi</label>
                                 <select class="form-control select2" name="fc_memberlockTransType" id="fc_memberlockTransType"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Deskripsi Customer</label>
                                 <textarea name="fv_memberdescription" id="fv_memberdescription" style="height: 90px" class="form-control"></textarea>
                             </div>
                         </div>
