@@ -58,7 +58,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Kode</label>
-                                <input type="text" class="form-control required-field" name="fc_code" id="fc_code">
+                                <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -70,7 +70,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Action</label>
-                                <textarea class="form-control required-field" name="fc_action" id="fc_action" style="height: 70px"></textarea>
+                                <textarea class="form-control" name="fc_action" id="fc_action" style="height: 70px"></textarea>
                             </div>
                         </div>
                     </div>
@@ -83,6 +83,55 @@
        </div>
     </div>
  </div>
+
+ <!-- Modal -->
+<div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
+   <div class="modal-dialog modal-xs" role="document">
+      <div class="modal-content">
+         <div class="modal-header br">
+            <h5 class="modal-title"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+           <form id="form_submit_edit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+               <input type="text" name="type" id="type" hidden>
+               <div class="modal-body">
+                   <div class="row">
+                       <div class="col-12 col-md-12 col-lg-12">
+                           <div class="form-group">
+                               <label>TRX</label>
+                               <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx" readonly>
+                           </div>
+                       </div>
+                       <div class="col-12 col-md-12 col-lg-12">
+                           <div class="form-group">
+                               <label>Kode</label>
+                               <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode" readonly>
+                           </div>
+                       </div>
+                       <div class="col-12 col-md-12 col-lg-12">
+                           <div class="form-group">
+                               <label>Deskipsi</label>
+                               <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 100px"></textarea>
+                           </div>
+                       </div>
+                       <div class="col-12 col-md-12 col-lg-12">
+                           <div class="form-group">
+                               <label>Action</label>
+                               <textarea class="form-control" name="fc_action" id="fc_action" style="height: 70px"></textarea>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="modal-footer bg-whitesmoke br">
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary">Simpan</button>
+               </div>
+           </form>
+      </div>
+   </div>
+</div>
 
 @endsection
 
@@ -124,7 +173,7 @@
    });
 
    function edit(url){
-      edit_action(url, 'Edit Data Meta Data');
+      edit_action2(url, 'Edit Data Meta Data');
       $("#type").val('update');
    }
 </script>
