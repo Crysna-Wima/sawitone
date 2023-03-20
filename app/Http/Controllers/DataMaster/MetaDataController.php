@@ -20,9 +20,9 @@ class MetaDataController extends Controller
         return view('data-master.meta-data.index');
     }
 
-    public function detail($fc_kode)
+    public function detail($fc_trx,$fc_kode)
     {
-        return TransaksiType::where('fc_kode', $fc_kode)->first();
+        return TransaksiType::where('fc_kode', $fc_kode)->where('fc_trx', $fc_trx)->first();
     }
 
     public function datatables()

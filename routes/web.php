@@ -57,7 +57,7 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::prefix('data-master')->group(function () {
         Route::prefix('meta-data')->group(function () {
             Route::get('/','DataMaster\MetaDataController@index');
-            Route::get('/detail/{id}','DataMaster\MetaDataController@detail');
+            Route::get('/detail/{fc_trx}/{fc_kode}','DataMaster\MetaDataController@detail');
             Route::get('/datatables','DataMaster\MetaDataController@datatables');
             Route::post('/store-transaksi','DataMaster\MetaDataController@add_transaksi_type');
             Route::put('/store-update','DataMaster\MetaDataController@store_update');

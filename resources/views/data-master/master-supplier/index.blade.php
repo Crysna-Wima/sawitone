@@ -291,7 +291,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Bank Supplier 1</label>
-                                <select class="form-control select2 required-field"" name=" fc_supplierbank1" id="fc_supplierbank1"></select>
+                                <select class="form-control select2 required-field" name="fc_supplierbank1" id="fc_supplierbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
