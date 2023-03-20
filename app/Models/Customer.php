@@ -32,7 +32,7 @@ class Customer extends Model
     }
 
     public function member_typebranch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_member_branchtype', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_member_branchtype', 'fc_kode')->where('fc_trx', 'CUST_TYPEOFFICE');
     }
 
     public function member_legal_status(){
