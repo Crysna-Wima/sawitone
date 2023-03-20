@@ -847,6 +847,7 @@
              $('#fc_subgroup_dummy').val(response.fc_subgroup);
 
              Object.keys(response).forEach(function (key) {
+                // console.log(response.fm_price_distributor);
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {
                    elem_name.val(response[key]).change().selectric('refresh');
@@ -865,6 +866,27 @@
                 }else if(elem_name.hasClass('format-rp')){
                    var nominal = response[key].toString();
                    elem_name.val(nominal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+
+                   // tampilkan nilai fm_price_default
+                   var nominal_default = response.fm_price_default.toString();
+                   $('#fm_price_default').val(nominal_default.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+
+                   // tampilkan nilai fm_price_distributor
+                     var nominal_distributor = response.fm_price_distributor.toString();
+                        $('#fm_price_distributor').val(nominal_distributor.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+
+                   // tampilkan nilai fm_price_project
+                        var nominal_project = response.fm_price_project.toString();
+                        $('#fm_price_project').val(nominal_project.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+
+                    // tampilkan nilai fm_price_dealer
+                        var nominal_dealer = response.fm_price_dealer.toString();
+                        $('#fm_price_dealer').val(nominal_dealer.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+
+                     // tampilkan nilai fm_price_enduser
+                        var nominal_enduser = response.fm_price_enduser.toString();
+                        $('#fm_price_enduser').val(nominal_enduser.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                   
                 }else{
                    elem_name.val(response[key]);
                 }
