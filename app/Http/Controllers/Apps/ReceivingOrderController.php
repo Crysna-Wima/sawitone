@@ -63,9 +63,10 @@ class ReceivingOrderController extends Controller
 
     public function pdf_ro($fc_rono)
     {
-        session(['fc_rono_global' => $fc_rono]);
-        $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $fc_rono)->first();
-        $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $fc_rono)->get();
+        $decode_fc_rono = base64_decode($fc_rono);
+        session(['fc_rono_global' =>$decode_fc_rono]);
+        $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->first();
+        $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->get();
         $pdf = PDF::loadView('pdf.receiving-order-podetail', $data)->setPaper('a4');
         return $pdf->stream();
     }

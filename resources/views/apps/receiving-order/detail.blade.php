@@ -295,6 +295,7 @@
             },
         ],
         rowCallback: function(row, data) {
+            let fc_rono = window.btoa(data.fc_rono)
             $('td:eq(4)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_rostatus'] == 'P') {
                 $('td:eq(4)', row).html('<span class="badge badge-primary">Paid Of</span>');
@@ -303,7 +304,7 @@
             }
 
             $('td:eq(5)', row).html(`
-            <a href="/apps/receiving-order/pdf_ro/${data.fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/receiving-order/pdf_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             `);
         }
     });

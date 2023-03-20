@@ -81,9 +81,9 @@ class CustomerController extends Controller
             'fc_membercode' => $request->fc_membercode,
         ], $request->all());
         //  dd($request->all());
-        if(empty($request->type)){
-            NoDocument::update('CUSTOMER');
-        }
+        // if(empty($request->type)){
+        //     NoDocument::update('CUSTOMER');
+        // }
 
 		return [
 			'status' => 200, // SUCCESS

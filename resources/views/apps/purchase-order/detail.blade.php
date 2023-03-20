@@ -635,7 +635,7 @@
                                 case 'HOSPITAL':
                                     row.fm_price_default = row.fm_price_project;
                                     break;
-                                case 'END USER':
+                                case 'ENDUSER':
                                     row.fm_price_default = row.fm_price_enduser;
                                     break;
                                 default:
