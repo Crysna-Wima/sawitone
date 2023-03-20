@@ -196,7 +196,7 @@
                 <td></td>
                 <td>No. Surat Jalan</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $ro_mst->fc_sjno }}</td>
+                <td style="width: 32%">{{ $ro_mst->fc_sjno }}</td>
             </tr>
             <tr>
                 <td style="width: 30%">{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</td>
@@ -204,7 +204,7 @@
                 <td></td>
                 <td>Tgl Diterima</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $ro_mst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}</td>
+                <td style="width: 32%">{{ \Carbon\Carbon::parse( $ro_mst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr class="pb-1">
                 <td style="width: 40%">{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}</td>
@@ -212,7 +212,7 @@
                 <td></td>
                 <td>No. PO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $ro_mst->fc_pono }}</td>
+                <td style="width: 32%">{{ $ro_mst->fc_pono }}</td>
             </tr>
         </table>
 

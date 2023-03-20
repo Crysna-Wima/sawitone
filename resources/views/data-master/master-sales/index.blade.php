@@ -250,6 +250,7 @@
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].fc_kode == $('#fc_branch_view').val()){
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
+                            $("#fc_branch").prop("disabled", true);
                         }else{
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
