@@ -943,7 +943,7 @@
             var url_edit = "/data-master/master-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
             var url_delete = "/data-master/master-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
 
-            $('td:eq(37)', row).html(`
+            $('td:eq(49)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_suppliername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
