@@ -57,7 +57,7 @@ class SupplierController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-
+        // dd($request);
         $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = Supplier::where([
