@@ -2,7 +2,7 @@
 @section('title','Master Sales')
 @section('css')
 <style>
-    #tb_wrapper .row:nth-child(2){
+    #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
 </style>
@@ -10,51 +10,51 @@
 @section('content')
 
 <div class="section-body">
-   <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                <h4>Data Master Sales</h4>
-                <div class="card-header-action">
-                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales</button>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Data Master Sales</h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb" width="100%">
+                            <thead style="white-space: nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Divisi</th>
+                                    <th scope="col" class="text-center">Cabang</th>
+                                    <th scope="col" class="text-center">Kode Sales</th>
+                                    <th scope="col" class="text-center">Nama Sales 1</th>
+                                    <th scope="col" class="text-center">Nama Sales 2</th>
+                                    <th scope="col" class="text-center">Tipe Sales</th>
+                                    <th scope="col" class="text-center">Level Sales</th>
+                                    <th scope="col" class="text-center">Sales BlackList</th>
+                                    <th scope="col" class="text-center">No. HP Sales 1</th>
+                                    <th scope="col" class="text-center">No. HP Sales 2</th>
+                                    <th scope="col" class="text-center">No. HP Sales 3</th>
+                                    <th scope="col" class="text-center">Email Sales 1</th>
+                                    <th scope="col" class="text-center">Email Sales 2</th>
+                                    <th scope="col" class="text-center">Bank Sales 1</th>
+                                    <th scope="col" class="text-center">Bank Sales 2</th>
+                                    <th scope="col" class="text-center">Bank Sales 3</th>
+                                    <th scope="col" class="text-center">Virtual Acc Sales</th>
+                                    <th scope="col" class="text-center">No. Rek Sales 1</th>
+                                    <th scope="col" class="text-center">No. Rek Sales 2</th>
+                                    <th scope="col" class="text-center">No. Rek Sales 3</th>
+                                    <th scope="col" class="text-center">Deskripsi Sales</th>
+                                    <th scope="col" class="justify-content-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-               <div class="table-responsive">
-                  <table class="table table-striped" id="tb" width="100%">
-                     <thead style="white-space: nowrap">
-                        <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Divisi</th>
-                           <th scope="col" class="text-center">Cabang</th>
-                           <th scope="col" class="text-center">Kode Sales</th>
-                           <th scope="col" class="text-center">Nama Sales 1</th>
-                           <th scope="col" class="text-center">Nama Sales 2</th>
-                           <th scope="col" class="text-center">Tipe Sales</th>
-                           <th scope="col" class="text-center">Level Sales</th>
-                           <th scope="col" class="text-center">Sales BlackList</th>
-                           <th scope="col" class="text-center">No. HP Sales 1</th>
-                           <th scope="col" class="text-center">No. HP Sales 2</th>
-                           <th scope="col" class="text-center">No. HP Sales 3</th>
-                           <th scope="col" class="text-center">Email Sales 1</th>
-                           <th scope="col" class="text-center">Email Sales 2</th>
-                           <th scope="col" class="text-center">Bank Sales 1</th>
-                           <th scope="col" class="text-center">Bank Sales 2</th>
-                           <th scope="col" class="text-center">Bank Sales 3</th>
-                           <th scope="col" class="text-center">Virtual Acc Sales</th>
-                           <th scope="col" class="text-center">No. Rek Sales 1</th>
-                           <th scope="col" class="text-center">No. Rek Sales 2</th>
-                           <th scope="col" class="text-center">No. Rek Sales 3</th>
-                           <th scope="col" class="text-center">Deskripsi Sales</th>
-                           <th scope="col" class="justify-content-center">Actions</th>
-                        </tr>
-                     </thead>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -81,16 +81,16 @@
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group">
                                 <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
                                 <label>Kode Sales</label>
-                                <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode" readonly>
+                                <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode" value="fc_salescode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -120,16 +120,16 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <label>Blacklist</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input">
-                                        <span class="selectgroup-button">Active</span>
-                                    </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fn_salesblacklist" value="F" class="selectgroup-input" checked="">
-                                        <span class="selectgroup-button">Non Active</span>
-                                    </label>
-                                </div>
+                            <div class="selectgroup w-100">
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fn_salesblacklist" value="T" class="selectgroup-input">
+                                    <span class="selectgroup-button">Active</span>
+                                </label>
+                                <label class="selectgroup-item" style="margin: 0!important">
+                                    <input type="radio" name="fn_salesblacklist" value="F" class="selectgroup-input" checked="">
+                                    <span class="selectgroup-button">Non Active</span>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
@@ -228,114 +228,136 @@
 
 @section('js')
 <script>
-
-    $(document).ready(function(){
+    $(document).ready(function() {
         get_data_branch();
         get_data_sales_type();
         get_data_sales_level();
         get_data_sales_bank();
     });
 
-    function get_data_branch(){
+    function get_data_branch() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
-                        if(data[i].fc_kode == $('#fc_branch_view').val()){
+                        if (data[i].fc_kode == $('#fc_branch_view').val()) {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
                             $("#fc_branch").prop("disabled", true);
-                        }else{
+                        } else {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function get_data_sales_type(){
+    function get_data_sales_type() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESTYPE",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESTYPE",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_salestype").empty();
                     $("#fc_salestype").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salestype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function get_data_sales_level(){
+    function get_data_sales_level() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESlEVEL",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/SALESlEVEL",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fn_saleslevel").empty();
                     $("#fn_saleslevel").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fn_saleslevel").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function get_data_sales_bank(){
+    function get_data_sales_bank() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-all/BankAcc",
+            url: "/master/get-data-all/BankAcc",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_salesbank1").empty();
                     $("#fc_salesbank1").append(`<option value="" selected readonly> - Pilih - </option>`);
@@ -348,77 +370,143 @@
                         $("#fc_salesbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                         $("#fc_salesbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function add(){
-      $("#modal").modal('show');
-      $(".modal-title").text('Tambah Master Sales');
-      $("#form_submit")[0].reset();
+    function add() {
+        $("#modal").modal('show');
+        $(".modal-title").text('Tambah Master Sales');
+        $("#form_submit")[0].reset();
     }
 
-   var tb = $('#tb').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-         url: '/data-master/master-sales/datatables',
-         type: 'GET'
-      },
-      columnDefs: [
-         { className: 'text-center', targets: [0] },
-         { className: 'd-flex', targets: [22] },
-      ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
-         { data: 'fc_salescode' },
-         { data: 'fc_salesname1' },
-         { data: 'fc_salesname2' },
-         { data: 'sales_type.fv_description' },
-         { data: 'sales_level.fv_description' },
-         { data: 'fn_salesblacklist' },
-         { data: 'fc_salesphone1' },
-         { data: 'fc_salesphone2' },
-         { data: 'fc_salesphone3' },
-         { data: 'fc_salesemail1' },
-         { data: 'fc_salesemail2' },
-         { data: 'sales_bank1.fv_bankname', defaultContent: '' },
-         { data: 'sales_bank2.fv_bankname', defaultContent: '' },
-         { data: 'sales_bank3.fv_bankname', defaultContent: '' },
-         { data: 'fc_salesvirtualac' },
-         { data: 'fc_salesnorek1' },
-         { data: 'fc_salesnorek2' },
-         { data: 'fc_salesnorek3' },
-         { data: 'fv_salesdescription' },
-         { data: 'fc_salestype' },
-      ],
-      rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-sales/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
-         var url_delete = "/data-master/master-sales/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
+    var tb = $('#tb').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/data-master/master-sales/datatables',
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 8]
+            },
+            {
+                className: 'd-flex',
+                targets: [22]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_divisioncode'
+            },
+            {
+                data: 'branch.fv_description'
+            },
+            {
+                data: 'fc_salescode'
+            },
+            {
+                data: 'fc_salesname1'
+            },
+            {
+                data: 'fc_salesname2'
+            },
+            {
+                data: 'sales_type.fv_description'
+            },
+            {
+                data: 'sales_level.fv_description'
+            },
+            {
+                data: 'fn_salesblacklist'
+            },
+            {
+                data: 'fc_salesphone1'
+            },
+            {
+                data: 'fc_salesphone2'
+            },
+            {
+                data: 'fc_salesphone3'
+            },
+            {
+                data: 'fc_salesemail1'
+            },
+            {
+                data: 'fc_salesemail2'
+            },
+            {
+                data: 'sales_bank1.fv_bankname',
+                defaultContent: ''
+            },
+            {
+                data: 'sales_bank2.fv_bankname',
+                defaultContent: ''
+            },
+            {
+                data: 'sales_bank3.fv_bankname',
+                defaultContent: ''
+            },
+            {
+                data: 'fc_salesvirtualac'
+            },
+            {
+                data: 'fc_salesnorek1'
+            },
+            {
+                data: 'fc_salesnorek2'
+            },
+            {
+                data: 'fc_salesnorek3'
+            },
+            {
+                data: 'fv_salesdescription'
+            },
+            {
+                data: 'fc_salestype'
+            },
+        ],
+        rowCallback: function(row, data) {
+            var url_edit = "/data-master/master-sales/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
+            var url_delete = "/data-master/master-sales/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode;
 
-         $('td:eq(22)', row).html(`
+            if (data.fn_salesblacklist == 'T') {
+                $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);
+            } else {
+                $('td:eq(8)', row).html(`<span class="badge badge-danger">NO</span>`);
+            }
+
+            $('td:eq(22)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_salesname1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
-      }
-   });
+        }
+    });
 
-   function edit(url){
-      edit_action(url, 'Edit Data Master Sales');
-      $("#type").val('update');
-      $("#fc_branch").prop("disabled", true);
-   }
+    function edit(url) {
+        edit_action(url, 'Edit Data Master Sales');
+        $("#type").val('update');
+        $("#fc_branch").prop("disabled", true);
+    }
 </script>
 @endsection

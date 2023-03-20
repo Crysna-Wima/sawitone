@@ -26,11 +26,11 @@
                         <tr>
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Divisi</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Stock Code</th>
+                           <th scope="col" class="text-center">Cabang</th>
+                           <th scope="col" class="text-center">Kode Stock</th>
                            <th scope="col" class="text-center">Barcode</th>
-                           <th scope="col" class="text-center">Name Short</th>
-                           <th scope="col" class="text-center">Name Long</th>
+                           <th scope="col" class="text-center">Nama Pendek</th>
+                           <th scope="col" class="text-center">Nama Panjang</th>
                            <th scope="col" class="text-center">Batch</th>
                            <th scope="col" class="text-center">Expired</th>
                            <th scope="col" class="text-center">Serial Number</th>
@@ -41,8 +41,8 @@
                            <th scope="col" class="text-center">Brand</th>
                            <th scope="col" class="text-center">Group</th>
                            <th scope="col" class="text-center">Subgroup</th>
-                           <th scope="col" class="text-center">Type Stock 1</th>
-                           <th scope="col" class="text-center">Type Stock 2</th>
+                           <th scope="col" class="text-center">Tipe Stock 1</th>
+                           <th scope="col" class="text-center">Tipe Stock 2</th>
                            <th scope="col" class="text-center">Name Pack</th>
                            <th scope="col" class="text-center">Reorder Level</th>
                            <th scope="col" class="text-center">Max</th>
@@ -102,31 +102,31 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
                                 <label>Barcode</label>
-                                <input type="text" maxlength = "8" class="form-control required-field" name="fc_barcode" id="fc_barcode">
+                                <input type="text" maxlength = "8" class="form-control required-field" name="fc_barcode" id="fc_barcode" value="fc_barcode">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-9">
                             <div class="form-group">
-                                <label>Stock Code</label>
+                                <label>Kode Stock</label>
                                 <input type="text" class="form-control required-field" name="fc_stockcode" id="fc_stockcode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Name Short</label>
+                                <label>Nama Pendek</label>
                                 <input type="text" class="form-control required-field" name="fc_nameshort" id="fc_nameshort">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Name Long</label>
+                                <label>Nama Panjang</label>
                                 <input type="text" class="form-control required-field" name="fc_namelong" id="fc_namelong">
                             </div>
                         </div>
@@ -266,13 +266,13 @@
                         <div class="col-12 col-md-3 col-lg-3"></div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Type Stock 1</label>
+                                <label>Tipe Stock 1</label>
                                 <select class="form-control select2" name="fc_typestock1" id="fc_typestock1" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Type Stock 2</label>
+                                <label>Tipe Stock 2</label>
                                 <select class="form-control select2" name="fc_typestock2" id="fc_typestock2" required></select>
                             </div>
                         </div>
