@@ -382,7 +382,7 @@
        });
     }
 
-    function edit_action_sales_customer(url,salesname, modal_text){
+    function edit_action_sales_customer(url,modal_text){
        save_method = 'edit';
        $("#modal_edit").modal('show');
        $(".modal-title").text(modal_text);
