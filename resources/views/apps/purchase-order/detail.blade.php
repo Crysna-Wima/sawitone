@@ -723,9 +723,9 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function(response) {
-                    console.log(data);
+                    // console.log(data);
                     var data = response.data;
-                    console.log(data);
+                    // console.log(data);
                     $("#modal_supplier").modal('hide');
                     Object.keys(data).forEach(function(key) {
                         var elem_name = $('[name=' + key + ']');

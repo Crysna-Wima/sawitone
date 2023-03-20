@@ -356,12 +356,12 @@
         function edit(url) {
             edit_action(url, 'Edit Data User');
             $("#type").val('update');
-            // $('#fc_branch').attr('disabled', true);
+            $('#fc_branch').attr('disabled', true);
         }
 
-        // $('#form_submit').on('submit', function() {
-        //     $('#fc_branch').prop('disabled', false);
-        // });
+        $('#form_submit').on('submit', function() {
+            $('#fc_branch').prop('disabled', false);
+        });
 
         $('.modal').css('overflow-y', 'auto');
     </script>
