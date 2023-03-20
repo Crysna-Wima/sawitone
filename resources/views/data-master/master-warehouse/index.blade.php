@@ -180,7 +180,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,9] },
+         { className: 'text-center', targets: [0] },
+         { className: 'text-nowrap', targets: [9] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -209,7 +210,7 @@
       edit_action(url, 'Edit Data Master Warehouse');
       $("#type").val('update');
       $("#fc_branch").prop("disabled", true);
-
+      document.getElementById("fc_warehousecode").readOnly = true;
    }
 </script>
 @endsection
