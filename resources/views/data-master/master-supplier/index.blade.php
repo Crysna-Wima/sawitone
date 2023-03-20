@@ -178,13 +178,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Legal Status Supplier</label>
-                                <select class="select2 required-field"" name=" fc_supplierlegalstatus" id="fc_supplierlegalstatus"></select>
+                                <select class="select2 required-field" name=" fc_supplierlegalstatus" id="fc_supplierlegalstatus"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kebangsaaan Supplier</label>
-                                <select class="select2 required-field"" name=" fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()"></select>
+                                <select class="select2 required-field" name=" fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
