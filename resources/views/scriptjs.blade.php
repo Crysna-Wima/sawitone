@@ -350,8 +350,8 @@
           type: "GET",
           dataType: "JSON",
           success: function(response){
-             setTimeout(function () {  $('#modal_loading').modal('hide');}, 600);
              Object.keys(response).forEach(function (key) {
+               // console.log(response);
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {
                    elem_name.val(response[key]).change().selectric('refresh');

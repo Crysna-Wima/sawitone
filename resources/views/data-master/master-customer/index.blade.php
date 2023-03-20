@@ -119,7 +119,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Cabang</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" ></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
@@ -144,7 +144,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat Customer 1</label>
-                                <textarea type="text" class="form-control required-field" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -156,7 +156,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat Customer Loading 1</label>
-                                <textarea type="text" class="form-control required-field" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -176,23 +176,23 @@
                         </div>
                     </div>
                     <div class="row contact-person-row">
-                        <div class="row w-100 ml-1">
+                        <div class="row w-100 ml-2">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama Contact Person 1</label>
-                                    <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
+                                    <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-4">
                                 <div class="form-group">
                                     <label>No. HP CP Customer 1</label>
-                                    <input type="text" class="form-control required-field" name="fc_memberpicphone" id="fc_memberpicphone">
+                                    <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>Pos CP Customer 1</label>
-                                    <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
+                                    <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-1">
@@ -216,7 +216,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kebangsaan Customer</label>
-                                <select class="select2 required-field" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()"></select>
+                                <select class="select2" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -234,7 +234,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tanggal Join Customer</label>
-                                <input type="text" class="form-control datepicker required-field" name="fd_memberjoindate" id="fd_memberjoindate">
+                                <input type="text" class="form-control datepicker" name="fd_memberjoindate" id="fd_memberjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -242,11 +242,11 @@
                                 <label>Kontrak Customer</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input required-field">
+                                        <input type="radio" name="fl_membercontract" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">YES</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_membercontract" value="F" class="selectgroup-input required-field" checked="">
+                                        <input type="radio" name="fl_membercontract" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">NO</span>
                                     </label>
                                 </div>
@@ -257,11 +257,11 @@
                                 <label>Customer Reseller</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_memberreseller" value="T" class="selectgroup-input required-field">
+                                        <input type="radio" name="fl_memberreseller" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_memberreseller" value="F" class="selectgroup-input required-field" checked="">
+                                        <input type="radio" name="fl_memberreseller" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Non Active</span>
                                     </label>
                                 </div>
@@ -270,31 +270,31 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kode Pajak Customer</label>
-                                <select class="select2 required-field" name="fc_membertaxcode" id="fc_membertaxcode"></select>
+                                <select class="select2" name="fc_membertaxcode" id="fc_membertaxcode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>Tipe Cabang</label>
-                                <select class="select2 required-field" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
+                                <select class="select2" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>NPWP Customer</label>
-                                <input type="text" class="form-control required-field" name="fc_membernpwp_no" id="fc_membernpwp_no">
+                                <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Nama NPWP Customer</label>
-                                <input type="text" class="form-control required-field" name="fc_membernpwp_name" id="fc_membernpwp_name">
+                                <input type="text" class="form-control" name="fc_membernpwp_name" id="fc_membernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat NPWP Customer 1</label>
-                                <textarea type="text" class="form-control required-field" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -306,7 +306,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Email Customer 1</label>
-                                <input type="text" class="form-control required-field" name="fc_memberemail1" id="fc_memberemail1">
+                                <input type="text" class="form-control" name="fc_memberemail1" id="fc_memberemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -319,7 +319,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No. HP Customer 1</label>
-                                <input type="text" class="form-control required-field" name="fc_memberphone1" id="fc_memberphone1">
+                                <input type="text" class="form-control" name="fc_memberphone1" id="fc_memberphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -338,7 +338,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Bank Customer 1</label>
-                                <select class="form-control select2 required-field" name="fc_memberbank1" id="fc_memberbank1"></select>
+                                <select class="form-control select2" name="fc_memberbank1" id="fc_memberbank1"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -357,7 +357,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No Rekening Customer 1</label>
-                                <input type="text" class="form-control required-field" name="fc_membernorek1" id="fc_membernorek1">
+                                <input type="text" class="form-control" name="fc_membernorek1" id="fc_membernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -540,8 +540,8 @@
                     $("#fc_branch").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].fc_kode == $('#fc_branch_view').val()) {
-                            $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
-                            $("#fc_branch").prop("disabled", true);
+                            $("#fc_branch").append(
+                                `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         } else {
                             $("#fc_branch").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
