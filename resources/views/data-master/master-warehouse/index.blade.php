@@ -76,7 +76,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Warehouse Pos</label>
-                                <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos">
+                                <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos" required>
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option value="INTERNAL">Internal</option>
                                     <option value="EXTERNAL">External</option>
@@ -86,7 +86,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Status</label>
-                                <select class="form-control select2" name="fl_status" id="fl_status">
+                                <select class="form-control select2" name="fl_status" id="fl_status" required>
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option value="G">Gudang</option>
                                     <option value="D">Display</option>
@@ -97,13 +97,13 @@
                         <div class="col-12 col-md-9 col-lg-9">
                             <div class="form-group">
                                 <label>Rackname</label>
-                                <input type="text" class="form-control" name="fc_rackname" id="fc_rackname">
+                                <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Capacity</label>
-                                <input type="number" class="form-control" name="fn_capacity" id="fn_capacity">
+                                <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
                             </div>
                         </div>
 
@@ -147,6 +147,7 @@
                     for (var i = 0; i < data.length; i++) {
                         if(data[i].fc_kode == $('#fc_branch_view').val()){
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
+                            $("#fc_branch").prop("disabled", true);
                         }else{
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
