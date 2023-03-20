@@ -5,6 +5,14 @@
     #tb_wrapper .row:nth-child(2){
         overflow-x: auto;
     }
+
+    select.select2 {
+        display: block;
+        visibility: visible;
+        position: absolute;
+        top: 40px;
+        left: 30px;
+    }
 </style>
 @endsection
 @section('content')
@@ -85,7 +93,7 @@
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Tipe Bank</label>
-                                <select class="form-control select2" name="fc_banktype" id="fc_banktype">
+                                <select class="form-control select2" name="fc_banktype" id="fc_banktype" required>
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option>1</option>
                                     <option>2</option>
@@ -95,14 +103,14 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No. Rekening</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode">
+                                <input type="text" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Nama Pemilik Rekening</label>
-                                <input type="text" class="form-control" name="fv_bankusername" id="fv_bankusername">
+                                <input type="text" class="form-control required-field" name="fv_bankusername" id="fv_bankusername">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
@@ -117,14 +125,14 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Cabang Bank</label>
-                                <input type="text" class="form-control" name="fv_bankbranch" id="fv_bankbranch">
+                                <input type="text" class="form-control required-field" name="fv_bankbranch" id="fv_bankbranch">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Alamat Bank 1</label>
-                                <textarea class="form-control" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
+                                <textarea class="form-control required-field" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">

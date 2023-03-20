@@ -732,11 +732,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 8]
+                targets: [0, 3]
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 4, 5, 6, 7]
+                targets: [3, 4, 5, 6, 7, 8]
             },
         ],
         columns: [{
@@ -812,11 +812,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 8]
+                targets: [0, 3]
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 4, 5, 6, 7]
+                targets: [3, 4, 5, 6, 7, 8]
             },
         ],
         columns: [{

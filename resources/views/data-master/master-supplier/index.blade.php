@@ -5,6 +5,13 @@
     #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
+
+    select.select2 {
+        display: block;
+        visibility: visible;
+        position: absolute;
+        top: 40px;
+    }
 </style>
 @endsection
 @section('content')
@@ -73,7 +80,7 @@
                                     <th scope="col" class="text-center">Norek Supplier 2</th>
                                     <th scope="col" class="text-center">Norek Supplier 3</th>
                                     <th scope="col" class="text-center">Deskripsi Supplier</th>
-                                    <th scope="col" class="justify-content-center">Actions</th>
+                                    <th scope="col" class="text-center" style="width: 20%;">Actions</th>
                                 </tr>
                             </thead>
                         </table>
@@ -111,7 +118,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Cabang</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2" name="fc_branch" id="fc_branch" required></select>
                             </div>
                         </div>
 
@@ -196,13 +203,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tipe Bisnis Supplier</label>
-                                <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness"></select>
+                                <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tanggal Join Supplier</label>
-                                <input type="text" class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                                <input type="text" class="form-control datepicker required-field" name="fd_supplierjoindate" id="fd_supplierjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -229,6 +236,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kode Pajak Supplier</label>
+
                                 <select class="select2 required-field" name="fc_suppliertaxcode" id="fc_suppliertaxcode"></select>
                             </div>
                         </div>
@@ -246,7 +254,7 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Alamat NPWP Supplier 1</label>
+                                <label>Alamat NPWP Supplier 1</label>AD
                                 <textarea type="text" class="form-control required-field" name="fc_supplier_npwpaddress1" id="fc_supplier_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -291,7 +299,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Bank Supplier 1</label>
-                                <select class="form-control select2 required-field" name="fc_supplierbank1" id="fc_supplierbank1"></select>
+                                <select class="form-control select2 required-field" name="fc_supplierbank1" id="fc_supplierbank1" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -756,8 +764,8 @@
                 targets: [0, 5]
             },
             {
-                className: 'd-flex',
-                targets: [37]
+                className: 'text-nowrap',
+                targets: [49]
             },
         ],
         columns: [{

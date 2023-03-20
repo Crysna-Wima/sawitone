@@ -20,9 +20,9 @@
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Division</th>
                            <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">User Id</th>
+                           <th scope="col" class="text-center text-nowrap">User Id</th>
                            <th scope="col" class="text-center">Username</th>
-                           <th scope="col" class="text-center">Group User</th>
+                           <th scope="col" class="text-center text-nowrap">Group User</th>
                            <th scope="col" class="text-center">Level</th>
                            <th scope="col" class="text-center">Hold</th>
                            <th scope="col" class="text-center">Expired</th>
@@ -217,7 +217,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,7,10] },
+         { className: 'text-center', targets: [0,7] },
+         { className: 'text-nowrap', targets: [10] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
