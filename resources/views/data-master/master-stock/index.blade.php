@@ -109,7 +109,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Barcode</label>
-                                <input type="text" class="form-control required-field" name="fc_barcode" id="fc_barcode">
+                                <input type="text" maxlength = "8" class="form-control required-field" name="fc_barcode" id="fc_barcode">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -133,7 +133,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Name Pack</label>
-                                <select class="form-control select2" name="fc_namepack" id="fc_namepack"></select>
+                                <select class="form-control select2" name="fc_namepack" id="fc_namepack" required></select>
                             </div>
                         </div>
                         <input type="text" hidden id="fc_brand_dummy">
@@ -267,25 +267,25 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Type Stock 1</label>
-                                <select class="form-control select2" name="fc_typestock1" id="fc_typestock1"></select>
+                                <select class="form-control select2" name="fc_typestock1" id="fc_typestock1" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Type Stock 2</label>
-                                <select class="form-control select2" name="fc_typestock2" id="fc_typestock2"></select>
+                                <select class="form-control select2" name="fc_typestock2" id="fc_typestock2" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Reorder Level</label>
-                                <input type="number" class="form-control" name="fn_reorderlevel" id="fn_reorderlevel">
+                                <input type="number" class="form-control required-field" name="fn_reorderlevel" id="fn_reorderlevel">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Max on Hand</label>
-                                <input type="number" class="form-control" name="fn_maxonhand" id="fn_maxonhand">
+                                <input type="number" class="form-control required-field" name="fn_maxonhand" id="fn_maxonhand">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -297,7 +297,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Cogs</label>
-                                <input type="text" class="form-control format-rp" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control format-rp required-field" name="fm_cogs" id="fm_cogs" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -392,31 +392,31 @@
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="text" class="form-control format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Distributor</label>
-                                <input type="text" class="form-control format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Price Project</label>
-                                <input type="text" class="form-control format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price Dealer</label>
-                                <input type="text" class="form-control format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
                             <div class="form-group">
                                 <label>Price End User</label>
-                                <input type="text" class="form-control format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
+                                <input type="text" class="form-control required-field format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -710,7 +710,7 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0] },
+         { className: 'text-center', targets: [0,7,8,9,10,11,12,13,25,30] },
          { className: 'text-nowrap', targets: [41] },
       ],
       columns: [
@@ -761,46 +761,58 @@
          var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode + '/' + data.fc_barcode;
          var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode + '/' + data.fc_barcode;
 
-        if(data.fl_batch == 'T'){
+         if(data.fl_batch == 'T'){
+            $('td:eq(7)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(7)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_expired == 'T'){
             $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(8)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_expired == 'T'){
+        if(data.fl_serialnumber == 'T'){
             $('td:eq(9)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(9)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_serialnumber == 'T'){
+        if(data.fl_catnumber == 'T'){
             $('td:eq(10)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(10)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_catnumber == 'T'){
+        if(data.fl_blacklist == 'T'){
             $('td:eq(11)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(11)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_blacklist == 'T'){
+        if(data.fl_taxtype == 'T'){
             $('td:eq(12)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(12)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_taxtype == 'T'){
+        if(data.fl_repsupplier == 'T'){
             $('td:eq(13)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(13)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_repsupplier == 'T'){
-            $('td:eq(14)', row).html(`<span class="badge badge-success">YES</span>`);
+        if(data.fl_disc_date == 'T'){
+            $('td:eq(25)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(14)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(25)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_disc_time == 'T'){
+            $('td:eq(30)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(30)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
         $('td:eq(41)', row).html(`
@@ -814,6 +826,8 @@
         reset_all_select()
         edit_action_custom(url, 'Edit Data Master Stock');
         $("#type").val('update');
+        document.getElementById("fc_barcode").readOnly = true;
+        document.getElementById("fc_stockcode").readOnly = true;
    }
 
    function edit_action_custom(url, modal_text){
