@@ -5,6 +5,12 @@
     #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
+    select.select2 {
+        display: block;
+        visibility: visible;
+        position: absolute;
+        top: 40px;
+    }
 </style>
 @endsection
 @section('content')
@@ -210,13 +216,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Legal Status Customer</label>
-                                <select class="select2 required-field" name="fc_memberlegalstatus" id="fc_memberlegalstatus"></select>
+                                <select class="select2 required-field" name="fc_memberlegalstatus" id="fc_memberlegalstatus" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kebangsaan Customer</label>
-                                <select class="select2 required-field" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()"></select>
+                                <select class="select2 required-field" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -228,7 +234,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tipe Bisnis Customer</label>
-                                <select class="select2 required-field" name="fc_membertypebusiness" id="fc_membertypebusiness"></select>
+                                <select class="select2" name="fc_membertypebusiness" id="fc_membertypebusiness" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -270,13 +276,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kode Pajak Customer</label>
-                                <select class="select2 required-field" name="fc_membertaxcode" id="fc_membertaxcode"></select>
+                                <select class="select2 required-field" name="fc_membertaxcode" id="fc_membertaxcode" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>Tipe Cabang</label>
-                                <select class="select2 required-field" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype"></select>
+                                <select class="select2 required-field" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
@@ -338,7 +344,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>Bank Customer 1</label>
-                                <select class="form-control select2 required-field" name="fc_memberbank1" id="fc_memberbank1"></select>
+                                <select class="form-control select2 required-field" name="fc_memberbank1" id="fc_memberbank1" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
