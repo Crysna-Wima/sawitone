@@ -8,7 +8,7 @@ use App\Models\MasterMenu;
 
 class NoDocument {
 
-    Public static function generate($tahun, $no_doc, $branch = null, $part = null){
+    Public static function generate($tahun, $no_doc, $branch, $part = null){
         $where_text = "fv_document = '$no_doc'";
         if(!empty($branch)){
             $where_text .= "and fc_branch = '$branch'"; 
