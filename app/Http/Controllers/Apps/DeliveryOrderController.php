@@ -359,6 +359,9 @@ class DeliveryOrderController extends Controller
             ];
         }
 
+        // jumlah DoDetail
+        $count_do_detail = DoDetail::where('fc_barcode', $fc_barcode)->where('fc_branch', auth()->user()->fc_branch)->count();
+
         // hapus
         $hapus_item = DoDetail::where(
             [
@@ -368,6 +371,13 @@ class DeliveryOrderController extends Controller
         )->delete();
         // kemudian tambah
         if ($hapus_item) {
+            if($count_do_detail < 2){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/delivery-order/create_do'
+                ];
+            }
             return [
                 'status' => 200,
                 'message' => 'Data berhasil dihapus'

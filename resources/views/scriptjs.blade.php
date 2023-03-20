@@ -382,6 +382,52 @@
        });
     }
 
+    function edit_action_sales_customer(url,salesname, modal_text){
+       save_method = 'edit';
+       $("#modal_edit").modal('show');
+       $(".modal-title").text(modal_text);
+       $("#modal_loading").modal('show');
+       $.ajax({
+          url : url,
+          type: "GET",
+          dataType: "JSON",
+          success: function(response){
+            // tampilkan input value #fc_salescode dari salesname
+            // $('#fc_salescode').val(salesname);
+            // console.log(response);
+             Object.keys(response).forEach(function (key) {
+                var elem_name = $('[name=' + key + ']');
+                if (elem_name.hasClass('selectric')) {
+                   elem_name.val(response[key]).change().selectric('refresh');
+                }else if(elem_name.hasClass('select2')){
+                  console.log(response[key]);
+                   elem_name.select2("trigger", "select", { data: { id: response[key] } });
+                }else if(elem_name.hasClass('selectgroup-input')){
+                   $("input[name="+key+"][value=" + response[key] + "]").prop('checked', true);
+                }else if(elem_name.hasClass('my-ckeditor')){
+                   CKEDITOR.instances[key].setData(response[key]);
+                }else if(elem_name.hasClass('summernote')){
+                  elem_name.summernote('code', response[key]);
+                }else if(elem_name.hasClass('custom-control-input')){
+                   $("input[name="+key+"][value=" + response[key] + "]").prop('checked', true);
+                }else if(elem_name.hasClass('time-format')){
+                   elem_name.val(response[key].substr(0, 5));
+                }else if(elem_name.hasClass('format-rp')){
+                   var nominal = response[key].toString();
+                   elem_name.val(nominal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                }else{
+                   elem_name.val(response[key]);
+                }
+             });
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 600);
+          },error: function (jqXHR, textStatus, errorThrown){
+             setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+             swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+          }
+       });
+    }
+
+
     function delete_action(url, nama){
        swal({
              title: 'Apakah anda yakin?',
@@ -399,7 +445,8 @@
                    dataType: "JSON",
                    success: function(response){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      console.log(response.status);
+                     //  tb.ajax.reload(null, false);
+                     //  console.log(response.status);
                       if(response.status == 200){
                          swal(response.message, {  icon: 'success', });
                          $("#modal").modal('hide');

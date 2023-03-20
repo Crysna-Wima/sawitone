@@ -47,7 +47,7 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xs" role="document">
         <div class="modal-content">
             <div class="modal-header br">
@@ -283,7 +283,7 @@
     }
 
     function add() {
-        $("#modal").modal('show');
+        $("#modal_edit").modal('show');
         $(".modal-title").text('Tambah Sales Customer');
         $("#form_submit")[0].reset();
     }
@@ -354,7 +354,7 @@
     });
 
     function edit(url) {
-        edit_action(url, 'Edit Data Sales Customer');
+        edit_action_sales_customer(url, 'Edit Data Sales Customer');
         $("#type").val('update');
         $("#fc_branch").prop("disabled", true);
     }

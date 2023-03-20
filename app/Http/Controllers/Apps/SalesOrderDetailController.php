@@ -159,11 +159,26 @@ class SalesOrderDetailController extends Controller
 
     public function delete($fc_sono, $fn_sorownum)
     {
-        TempSoDetail::where(['fc_sono' => $fc_sono, 'fn_sorownum' => $fn_sorownum])->delete();
+        // hitung jumlah TempSoDetail
+        $count_sodtl = TempSoDetail::where('fc_sono', $fc_sono)->count();
+        $insert_tempsodetail = TempSoDetail::where(['fc_sono' => $fc_sono, 'fn_sorownum' => $fn_sorownum])->delete();
 
+        if($insert_tempsodetail){
+            if($count_sodtl < 2){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/sales-order'
+                ];
+            }
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dihapus',
+            ];
+        }
         return [
-            'status' => 200,
-            'message' => 'Data berhasil dihapus',
+            'status' => 300,
+            'message' => 'Error',
         ];
     }
 

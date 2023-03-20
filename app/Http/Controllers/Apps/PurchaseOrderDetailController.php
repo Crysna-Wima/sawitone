@@ -114,8 +114,17 @@ class PurchaseOrderDetailController extends Controller
 
     public function delete($fc_pono, $fn_porownum)
     {
+        // hitung jumlah data di TempPoDetail
+        $count_po_dtl = TempPoDetail::where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->count();
         $delete = TempPoDetail::where('fc_pono', $fc_pono)->where('fn_porownum', $fn_porownum)->delete();
         if ($delete) {
+            if($count_po_dtl < 2){
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/purchase-order'
+                ]);
+            }
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil dihapus'
