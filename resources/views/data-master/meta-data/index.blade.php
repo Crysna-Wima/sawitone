@@ -164,7 +164,7 @@
          { data: 'fc_kode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/meta-data/detail/" + data.fc_kode;
+         var url_edit   = "/data-master/meta-data/detail/" + data.fc_trx + "/" + data.fc_kode;
          var url_delete = "/data-master/meta-data/delete/" + data.fc_kode;
 
          $('td:eq(4)', row).html(`
