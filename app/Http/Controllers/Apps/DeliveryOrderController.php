@@ -287,8 +287,8 @@ class DeliveryOrderController extends Controller
         // // //INSERT DoDetail dari data stock
         if ($request->quantity) {
             $do_dtl = DoDetail::create([
-                'fc_divisioncode' => $data_stock->fc_divisioncode,
-                'fc_branch' => $data_stock->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
                 'fc_dono' => auth()->user()->fc_userid,
                 'fc_barcode' => $request->fc_barcode,
                 'fn_qty_do' => $request->quantity,
