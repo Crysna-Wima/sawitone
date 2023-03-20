@@ -119,7 +119,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Cabang</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" ></select>
                             </div>
                         </div>
 
@@ -540,8 +540,8 @@
                     $("#fc_branch").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         if (data[i].fc_kode == $('#fc_branch_view').val()) {
-                            $("#fc_branch").append(
-                                `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                            $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
+                            $("#fc_branch").prop("disabled", true);
                         } else {
                             $("#fc_branch").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
