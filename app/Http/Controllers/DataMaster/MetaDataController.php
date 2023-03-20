@@ -49,7 +49,7 @@ class MetaDataController extends Controller
             $cek_data = TransaksiType::where([
                 'fc_trx' => $request->fc_trx,
                 'fc_kode' => $request->fc_kode,
-                'fv_description' => $request->fv_description,
+                // 'fv_description' => $request->fv_description,
             ])->withTrashed()->count();
 
             if($cek_data > 0){
@@ -58,6 +58,20 @@ class MetaDataController extends Controller
                     'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
                 ];
             }
+        }
+
+        // cek jika ada fc_trx dan fc_kode yang sama dengan request
+        $exist_data = TransaksiType::where([
+            'fc_trx' => $request->fc_trx,
+            'fc_kode' => $request->fc_kode,
+        ])->withTrashed()->count();
+
+        // munculkan pesan 300
+        if($exist_data > 0){
+            return [
+                'status' => 300,
+                'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+            ];
         }
 
         TransaksiType::updateOrCreate(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode],[
