@@ -2,7 +2,7 @@
 @section('title','Master Sales Customer')
 @section('css')
 <style>
-    #tb_wrapper .row:nth-child(2){
+    #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
 </style>
@@ -10,37 +10,37 @@
 @section('content')
 
 <div class="section-body">
-   <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                <h4>Data Master Sales Customer</h4>
-                <div class="card-header-action">
-                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales Customer</button>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Data Master Sales Customer</h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales Customer</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb" width="100%">
+                            <thead style="white-space: nowrap">
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Divisi</th>
+                                    <th scope="col" class="text-center">Branch</th>
+                                    <th scope="col" class="text-center">Sales Code</th>
+                                    <th scope="col" class="text-center">Member Code</th>
+                                    <th scope="col" class="text-center">Member Join Date</th>
+                                    <th scope="col" class="text-center">Active</th>
+                                    <th scope="col" class="text-center">Sales Customer Description</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-               <div class="table-responsive">
-                  <table class="table table-striped" id="tb" width="100%">
-                     <thead style="white-space: nowrap">
-                        <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Divisi</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Sales Code</th>
-                           <th scope="col" class="text-center">Member Code</th>
-                           <th scope="col" class="text-center">Member Join Date</th>
-                           <th scope="col" class="text-center">Active</th>
-                           <th scope="col" class="text-center">Sales Customer Description</th>
-                           <th scope="col" class="text-center">Actions</th>
-                        </tr>
-                     </thead>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -96,8 +96,7 @@
                                 <label>Status</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_active" value="T" class="selectgroup-input"
-                                            checked="">
+                                        <input type="radio" name="fl_active" value="T" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">Active</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
@@ -129,175 +128,235 @@
 
 @section('js')
 <script>
-
-    $(document).ready(function(){
+    $(document).ready(function() {
         get_data_branch();
         get_data_sales_code();
         get_data_member_code();
     })
 
-    function get_data_branch(){
+    function get_data_branch() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
-                        if(data[i].fc_kode == $('#fc_branch_view').val()){
+                        if (data[i].fc_kode == $('#fc_branch_view').val()) {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
-                        }else{
+                            $("#fc_branch").prop("disabled", true);
+                        } else {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function change_branch(){
+    function change_branch() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
+            url: "/master/get-data-where-field-id-get/Sales/fc_branch/" + $('#fc_branch').val(),
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_salescode").empty();
                     $("#fc_salescode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function get_data_sales_code(){
+    function get_data_sales_code() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-all/Sales",
+            url: "/master/get-data-all/Sales",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_salescode").empty();
                     $("#fc_salescode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_salescode").append(`<option value="${data[i].fc_salescode}">${data[i].fc_salesname1}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function get_data_member_code(){
+    function get_data_member_code() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-all/Customer",
+            url: "/master/get-data-all/Customer",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_membercode").empty();
                     $("#fc_membercode").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function add(){
-      $("#modal").modal('show');
-      $(".modal-title").text('Tambah Sales Customer');
-      $("#form_submit")[0].reset();
+    function add() {
+        $("#modal").modal('show');
+        $(".modal-title").text('Tambah Sales Customer');
+        $("#form_submit")[0].reset();
     }
 
-   var tb = $('#tb').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-         url: '/data-master/sales-customer/datatables',
-         type: 'GET'
-      },
-      columnDefs: [
-         { className: 'text-center', targets: [0] },
-         { className: 'text-nowrap', targets: [8] },
-      ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
-         { data: 'sales.fc_salesname1', defaultContent: '', },
-         { data: 'customer.fc_membername1', defaultContent: '', },
-         { data: 'fd_memberjoindate' },
-         { data: 'fl_active' },
-         { data: 'fv_salescustomerdescription' },
-         { data: 'fd_memberjoindate' },
-      ],
-      rowCallback : function(row, data){
-         var url_edit   = "/data-master/sales-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
-         var url_delete = "/data-master/sales-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
+    var tb = $('#tb').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/data-master/sales-customer/datatables',
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0]
+            },
+            {
+                className: 'text-nowrap',
+                targets: [8]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_divisioncode'
+            },
+            {
+                data: 'branch.fv_description'
+            },
+            {
+                data: 'sales.fc_salesname1',
+                defaultContent: '',
+            },
+            {
+                data: 'customer.fc_membername1',
+                defaultContent: '',
+            },
+            {
+                data: 'fd_memberjoindate'
+            },
+            {
+                data: 'fl_active'
+            },
+            {
+                data: 'fv_salescustomerdescription'
+            },
+            {
+                data: 'fd_memberjoindate'
+            },
+        ],
+        rowCallback: function(row, data) {
+            var url_edit = "/data-master/sales-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
+            var url_delete = "/data-master/sales-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
 
-         $('td:eq(8)', row).html(`
+            if (data.fl_active == 'T') {
+                $('td:eq(6)', row).html(`<span class="badge badge-success">YES</span>`);
+            } else {
+                $('td:eq(6)', row).html(`<span class="badge badge-danger">NO</span>`);
+            }
+
+            $('td:eq(8)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
-      }
-   });
+        }
+    });
 
-   function edit(url){
-      edit_action(url, 'Edit Data Sales Customer');
-      $("#type").val('update');
-      $("#fc_branch").prop("disabled", true);
-   }
+    function edit(url) {
+        edit_action(url, 'Edit Data Sales Customer');
+        $("#type").val('update');
+        $("#fc_branch").prop("disabled", true);
+    }
 </script>
 @endsection
