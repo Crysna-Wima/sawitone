@@ -73,7 +73,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Group</label>
-                                <select class="form-control select2 required-field" name="fc_group" id="fc_group"></select>
+                                <input type="text" class="form-control required-field" name="fc_group" id="fc_group">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -99,37 +99,7 @@
 
     $(document).ready(function(){
         get_data_branch();
-        get_data_group();
     });
-
-    function get_data_group(){
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/GOODSMATERY",
-            type: "GET",
-            dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
-                    var data = response.data;
-                    $("#fc_group").empty();
-                    $("#fc_group").append(`<option value="" selected readonly> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_group").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                    }
-                }else{
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
-            }
-        });
-    }
 
     function get_data_branch(){
         $("#modal_loading").modal('show');
