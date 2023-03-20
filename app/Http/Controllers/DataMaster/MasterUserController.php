@@ -36,6 +36,7 @@ class MasterUserController extends Controller
 
         $validation_array = [
             'fc_divisioncode' => 'required',
+            'fc_branch' => 'required',
             'fc_userid' => 'required',
             'fc_username' => 'required'
         ];
@@ -71,30 +72,16 @@ class MasterUserController extends Controller
         }
 
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
-        if($request->fc_branch){
-            User::updateOrCreate([
-                'fc_divisioncode' => $request->fc_divisioncode,
-                'fc_branch' => $request->fc_branch,
-                'fc_userid' => $request->fc_userid,
-            ], $request->all());
+        User::updateOrCreate([
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_userid' => $request->fc_userid,
+        ], $request->all());
 
-            return [
-                'status' => 200, // SUCCESS
-                'message' => 'Data berhasil disimpan'
-            ];
-        }else{
-            User::updateOrCreate([
-                'fc_divisioncode' => $request->fc_divisioncode,
-                'fc_branch' => $request->fc_branch_value,
-                'fc_userid' => $request->fc_userid,
-            ], $request->all());
-
-            return [
-                'status' => 200, // SUCCESS
-                'message' => 'Data berhasil disimpan'
-            ];
-        }
-        
+		return [
+			'status' => 200, // SUCCESS
+			'message' => 'Data berhasil disimpan'
+		];
     }
 
     public function delete($fc_username){
