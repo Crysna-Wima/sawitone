@@ -309,7 +309,6 @@
           type: "GET",
           dataType: "JSON",
           success: function(response){
-             setTimeout(function () {  $('#modal_loading').modal('hide');}, 500);
              Object.keys(response).forEach(function (key) {
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {
@@ -333,6 +332,7 @@
                    elem_name.val(response[key]);
                 }
              });
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 600);
           },error: function (jqXHR, textStatus, errorThrown){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
              swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
@@ -350,7 +350,7 @@
           type: "GET",
           dataType: "JSON",
           success: function(response){
-             setTimeout(function () {  $('#modal_loading').modal('hide');}, 500);
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 600);
              Object.keys(response).forEach(function (key) {
                 var elem_name = $('[name=' + key + ']');
                 if (elem_name.hasClass('selectric')) {
@@ -374,6 +374,7 @@
                    elem_name.val(response[key]);
                 }
              });
+             setTimeout(function () {  $('#modal_loading').modal('hide');}, 600);
           },error: function (jqXHR, textStatus, errorThrown){
              setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
              swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
