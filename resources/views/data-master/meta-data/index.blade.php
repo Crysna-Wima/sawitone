@@ -45,7 +45,7 @@
              <span aria-hidden="true">&times;</span>
              </button>
           </div>
-            <form id="form_submit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/meta-data/store-transaksi" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -95,6 +95,8 @@
             </button>
          </div>
            <form id="form_submit_edit" action="/data-master/meta-data/store-update" method="POST" autocomplete="off">
+             @csrf
+               @method('PUT')
                <input type="text" name="type" id="type" hidden>
                <div class="modal-body">
                    <div class="row">
