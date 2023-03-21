@@ -34,7 +34,7 @@ class MasterStockController extends Controller
             'namepack',
             'type_stock1',
             'type_stock2',
-        )->orderBy('created_at', 'DESC')->get();
+        )->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

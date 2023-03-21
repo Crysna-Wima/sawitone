@@ -27,7 +27,7 @@ class DataMasterCOntroller extends Controller
     public function get_data_all($model)
     {
         $model = 'App\\Models\\' . $model;
-        $data = $model::all();
+        $data = $model::where('fc_branch', auth()->user()->fc_branch)->get();
 
         return ApiFormatter::getResponse($data);
     }
@@ -76,7 +76,7 @@ class DataMasterCOntroller extends Controller
 
     public function data_stock_by_primary($stockcode, $barcode)
     {
-        $data = Stock::where(['fc_stockcode' => $stockcode, 'fc_barcode' => $barcode])->first();
+        $data = Stock::where(['fc_stockcode' => $stockcode, 'fc_barcode' => $barcode])->where('fc_branch', auth()->user()->fc_branch)->first();
         return ApiFormatter::getResponse($data);
     }
 
