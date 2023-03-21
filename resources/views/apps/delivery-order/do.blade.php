@@ -453,7 +453,7 @@
         }
 
         function pilih_inventory(fc_stockcode) {
-            console.log(fc_stockcode);
+            // console.log(fc_stockcode);
             $("#modal_loading").modal('show');
 
             // tampilkan loading_data

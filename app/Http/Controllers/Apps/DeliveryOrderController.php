@@ -157,7 +157,7 @@ class DeliveryOrderController extends Controller
     {
         // get data from Invstore
 
-        $data = Invstore::with('stock.sodtl.somst')->where('fc_stockcode', $fc_stockcode)->orderBy('fd_expired', 'ASC')->get();
+        $data = Invstore::with('stock.sodtl.somst')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->orderBy('fd_expired', 'ASC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);

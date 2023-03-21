@@ -155,7 +155,7 @@ class DataMasterCOntroller extends Controller
 
     public function get_data_stock_po_datatables()
     {
-        $data = Stock::with('namepack')->get();
+        $data = Stock::with('namepack')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
