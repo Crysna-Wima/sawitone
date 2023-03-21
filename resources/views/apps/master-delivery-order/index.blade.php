@@ -472,6 +472,8 @@
                     $(row).hide();
                 } else if (data['fc_dostatus'] == 'D') {
                     $('td:eq(6)', row).html('<span class="badge badge-primary">Pengiriman</span>');
+                } else if (data['fc_dostatus'] == 'P') {
+                    $('td:eq(6)', row).html('<span class="badge badge-info">Terbayar</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
