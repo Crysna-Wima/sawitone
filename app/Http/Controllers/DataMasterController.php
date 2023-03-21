@@ -137,7 +137,7 @@ class DataMasterCOntroller extends Controller
 
     public function get_data_stock_so_datatables()
     {
-        $data = Stock::with('namepack')->get();
+        $data = Stock::with('namepack')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -145,7 +145,7 @@ class DataMasterCOntroller extends Controller
     }
 
     public function get_data_stock_customer_so_datatables(){
-        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->first()->fc_membercode;
+        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first()->fc_membercode;
     $data = StockCustomer::with(['stock.namepack'])->where('fc_membercode', $fc_membercode)->get();
         return DataTables::of($data)
         ->addIndexColumn()
