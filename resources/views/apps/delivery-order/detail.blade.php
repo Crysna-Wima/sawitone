@@ -217,6 +217,7 @@
 
 @section('js')
     <script>
+        let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
         function insert_do() {
             // show modal loading
             $('#modal_loading').modal('show');
@@ -272,7 +273,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/delivery-order/datatables-so-detail",
+                url: "/apps/delivery-order/datatables-so-detail/" + encode_fc_sono,
                 type: 'GET',
             },
             columnDefs: [{
