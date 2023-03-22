@@ -78,6 +78,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',

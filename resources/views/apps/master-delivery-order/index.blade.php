@@ -424,6 +424,7 @@
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
+            order: [[3, 'desc']],
             ajax: {
                 url: '/apps/master-delivery-order/datatables',
                 type: 'GET'
@@ -508,6 +509,7 @@
         var tb_pengiriman = $('#tb_pengiriman').DataTable({
             processing: true,
             serverSide: true,
+            order: [[3, 'desc']],
             ajax: {
                 url: '/apps/master-delivery-order/datatables',
                 type: 'GET'
@@ -588,6 +590,7 @@
         var tb_diterima = $('#tb_diterima').DataTable({
             processing: true,
             serverSide: true,
+            order: [[3, 'desc']],
             ajax: {
                 url: '/apps/master-delivery-order/datatables',
                 type: 'GET'

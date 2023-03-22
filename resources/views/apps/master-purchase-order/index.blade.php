@@ -70,7 +70,8 @@
                                             <th scope="col" class="text-center">Tgl</th>
                                             <th scope="col" class="text-center">Expired</th>
                                             <th scope="col" class="text-center">Tipe</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Total</th>
@@ -90,7 +91,8 @@
                                             <th scope="col" class="text-center">Tgl</th>
                                             <th scope="col" class="text-center">Expired</th>
                                             <th scope="col" class="text-center">Tipe</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Total</th>
@@ -110,7 +112,8 @@
                                             <th scope="col" class="text-center">Tgl</th>
                                             <th scope="col" class="text-center">Expired</th>
                                             <th scope="col" class="text-center">Tipe</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Total</th>
@@ -130,7 +133,8 @@
                                             <th scope="col" class="text-center">Tgl</th>
                                             <th scope="col" class="text-center">Expired</th>
                                             <th scope="col" class="text-center">Tipe</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Total</th>
@@ -150,7 +154,8 @@
                                             <th scope="col" class="text-center">Tgl</th>
                                             <th scope="col" class="text-center">Expired</th>
                                             <th scope="col" class="text-center">Tipe</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Total</th>
@@ -178,6 +183,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -187,7 +193,7 @@
             targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5, 10]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -209,10 +215,10 @@
                 data: 'fc_potype'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
+                data: 'supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'supplier.fc_suppliername1',
             },
             {
                 data: 'fn_podetail',
@@ -231,20 +237,20 @@
 
         rowCallback: function(row, data) {
             var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(8)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Pemesanan</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-primary">Pemesanan</span>');
             } else if (data['fc_postatus'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-warning">Pending</span>');
             } else if (data['fc_postatus'] == 'L') {
-                $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-danger">Lock</span>');
             } else if (data['fc_postatus'] == 'S') {
-                $('td:eq(7)', row).html('<span class="badge badge-info">Terkirim</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-info">Terkirim</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-success">Selesai</span>');
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
@@ -255,6 +261,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -264,7 +271,7 @@
             targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5, 10]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -286,10 +293,10 @@
                 data: 'fc_potype'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
+                data: 'supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'supplier.fc_suppliername1',
             },
             {
                 data: 'fn_podetail',
@@ -308,14 +315,14 @@
 
         rowCallback: function(row, data) {
             var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(8)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'F') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary">Pemesanan</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-primary">Pemesanan</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
@@ -326,6 +333,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -335,7 +343,7 @@
             targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5, 10]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -357,10 +365,10 @@
                 data: 'fc_potype'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
+                data: 'supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'supplier.fc_suppliername1',
             },
             {
                 data: 'fn_podetail',
@@ -379,14 +387,14 @@
 
         rowCallback: function(row, data) {
             var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(8)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-warning">Pending</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
@@ -397,6 +405,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -406,7 +415,7 @@
             targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5, 10]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -428,10 +437,10 @@
                 data: 'fc_potype'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
+                data: 'supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'supplier.fc_suppliername1',
             },
             {
                 data: 'fn_podetail',
@@ -450,14 +459,14 @@
 
         rowCallback: function(row, data) {
             var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(8)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'S') {
-                $('td:eq(7)', row).html('<span class="badge badge-info">Terkirim</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-info">Terkirim</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
@@ -468,6 +477,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [[2, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -477,7 +487,7 @@
             targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
-            targets: [2, 3, 5, 9]
+            targets: [2, 3, 5, 10]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -499,10 +509,10 @@
                 data: 'fc_potype'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
+                data: 'supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'supplier.fc_suppliername1',
             },
             {
                 data: 'fn_podetail',
@@ -521,34 +531,18 @@
 
         rowCallback: function(row, data) {
             var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(7)', row).html(`<i class="${data.fc_postatus}"></i>`);
+            $('td:eq(8)', row).html(`<i class="${data.fc_postatus}"></i>`);
             if (data['fc_postatus'] == 'C') {
-                $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
+                $('td:eq(8)', row).html('<span class="badge badge-success">Selesai</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
                 `);
         },
     });
-
-    // var dropdown = $('<select></select>')
-    //     .appendTo('.dataTables_length')
-    //     .addClass('form-control select1')
-    //     .attr('aria-controls', 'tb')
-    //     .on('change', function() {
-    //         var value = $(this).val();
-    //         $('tb').DataTable().page.len(value).draw();
-    //     })
-    //     .attr('style', 'margin-left: 20px; width:140px;');
-
-    // dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
-    // dropdown.append($('<option value="Semua">Semua</option>'));
-    // dropdown.append($('<option value="Pemesanan">Pemesanan</option>'));
-    // dropdown.append($('<option value="Pending">Pending</option>'));
-    // dropdown.append($('<option value="Selesai">Selesai</option>'));
 </script>
 @endsection

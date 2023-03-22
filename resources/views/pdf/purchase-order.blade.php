@@ -187,25 +187,24 @@
 
 <div class="content">
         <br><br><br><br>
-        <p style="text-align: center; font-weight:bold">Purchase Order</p>
-        <p style="text-align: center;">({{ $po_mst->fc_pono }})</p>
+        <p style="text-align: center; font-weight:bold;">PURCHASE ORDER</p>
         <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
             <tr>
-                <td>Tanggal PO</td>
+                <td>Nomor PO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $po_mst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}</td>
+                <td style="width: 26%">{{ $po_mst->fc_pono }}</td>
                 <td></td>
                 <td style="width: 5px"></td>
                 <td style="width: 26%"></td>
             </tr>
             <tr class="pb-1">
+                <td>Tanggal PO</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ \Carbon\Carbon::parse( $po_mst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}</td>
                 <td>Tanggal Expired</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ \Carbon\Carbon::parse( $po_mst->fd_poexpired )->isoFormat('D MMMM Y'); }}</td>
-                <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 26%"></td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $po_mst->fd_poexpired )->isoFormat('D MMMM Y'); }}</td>
             </tr>
         </table>
 
@@ -247,7 +246,7 @@
                 <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr >
-                <td style="width: 50% !important; text-align: right;">Operator, PT DEXA ARFINDO PRATAMA</td>
+                <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
             </tr>
             <br><br/>
             <br><br/>
