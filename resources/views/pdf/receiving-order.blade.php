@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: .8rem!important;
+        font-size: .8rem;
     }
 </style>
 
@@ -170,12 +170,6 @@
         <div style="position: absolute; left: 0; top: 0">
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
-        <!-- <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
-            <p><b>Kepada :</b></p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</p>
-            <p>{{ $ro_mst->pomst->supplier->fc_supplieremail1 }} / {{ $ro_mst->pomst->supplier->fc_supplierphone1 }}
-        </div> -->
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
@@ -186,12 +180,12 @@
 </div>
 
 <div class="content">
-        <p style="text-align: center; font-weight:bold">Received Order</p>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">BUKTI PENERIMAAN BARANG</p>
         <p style="text-align: center;">{{ $ro_mst->fc_rono }}</p>
         <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
-                <td style="font-weight: bold">{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</td>
+                <td style="font-weight: bold;">{{ $ro_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $ro_mst->pomst->supplier-> fc_suppliername1 }}</td>
                 <td></td>
                 <td></td>
                 <td>No. Surat Jalan</td>
@@ -279,7 +273,7 @@
                 <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr >
-                <td style="width: 50% !important; text-align: right;">Operator, PT DEXA ARFINDO PRATAMA</td>
+                <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
             </tr>
             <br><br/>
             <br><br/>

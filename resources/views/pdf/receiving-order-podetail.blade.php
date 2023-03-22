@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: .8rem!important;
+        font-size: .8rem;
     }
 </style>
 
@@ -180,7 +180,7 @@
 </div>
 
 <div class="content">
-        <p style="text-align: center; font-weight:bold">Received Order</p>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">BUKTI PENERIMAAN BARANG</p>
         <p style="text-align: center;">{{ $ro_mst->fc_rono }}</p>
         <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
@@ -273,7 +273,7 @@
                 <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
             </tr>
             <tr >
-                <td style="width: 50% !important; text-align: right;">Operator, PT DEXA ARFINDO PRATAMA</td>
+                <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
             </tr>
             <br><br/>
             <br><br/>

@@ -165,6 +165,7 @@
    var tb = $('#tb_semua').DataTable({
       processing: true,
       serverSide: true,
+      order: [[2, 'desc']],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -252,6 +253,7 @@
    var tb = $('#tb_menunggu').DataTable({
       processing: true,
       serverSide: true,
+      order: [[2, 'desc']],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -326,6 +328,7 @@
    var tb = $('#tb_pending').DataTable({
       processing: true,
       serverSide: true,
+      order: [[2, 'desc']],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -400,6 +403,7 @@
    var tb = $('#tb_selesai').DataTable({
       processing: true,
       serverSide: true,
+      order: [[2, 'desc']],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -474,6 +478,7 @@
    var tb = $('#tb_do_done').DataTable({
       processing: true,
       serverSide: true,
+      order: [[2, 'desc']],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'

@@ -155,7 +155,7 @@
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Qty RO</th>
+                                        <th scope="col" class="text-center">BPB</th>
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">Status</th>
                                     </tr>
