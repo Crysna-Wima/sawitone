@@ -44,18 +44,20 @@ class ReceivingOrderController extends Controller
         // dd($data);
     }
 
-    public function datatables_po_detail()
+    public function datatables_po_detail($fc_pono)
     {
+        $decode_fc_pono = base64_decode($fc_pono);
+        // dd($decode_fc_pono);
         //  jika session fc_sono_global tidak sama dengan null
         if (session('fc_pono_global') != null) {
             $fc_pono = session('fc_pono_global');
-        } else {
-            $pomst = PoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
-            $fc_pono_pomst = $pomst->fc_pono;
-            $fc_pono = $fc_pono_pomst;
+            $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
         }
 
-        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -64,17 +66,17 @@ class ReceivingOrderController extends Controller
     public function pdf_ro($fc_rono)
     {
         $decode_fc_rono = base64_decode($fc_rono);
-        session(['fc_rono_global' =>$decode_fc_rono]);
+        session(['fc_rono_global' => $decode_fc_rono]);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->get();
         $pdf = PDF::loadView('pdf.receiving-order-podetail', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
-    public function datatables_receiving_order()
+    public function datatables_receiving_order($fc_pono)
     {
-
-        $data = RoMaster::with('pomst.supplier')->where('fc_pono', session('fc_pono_global'))->where('fc_branch', auth()->user()->fc_branch)->get();
+        $decode_fc_pono = base64_decode($fc_pono);
+        $data = RoMaster::with('pomst.supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

@@ -163,19 +163,10 @@ class DeliveryOrderController extends Controller
             ->make(true);
     }
 
-    public function datatables_so_detail()
+    public function datatables_so_detail($fc_sono)
     {
-
-
-        //  jika session fc_sono_global tidak sama dengan null
-        if (session('fc_sono_global') != null) {
-            $fc_sono = session('fc_sono_global');
-        } else {
-            $domst = DoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
-            $fc_sono_domst = $domst->fc_sono;
-            $fc_sono = $fc_sono_domst;
-        }
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.domst')->where('fc_sono', $fc_sono)->get();
+        $decode_fc_sono = base64_decode($fc_sono);
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.domst')->where('fc_sono', $decode_fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {

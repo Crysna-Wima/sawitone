@@ -436,6 +436,7 @@
 
 @section('js')
     <script>
+        let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
         function bonus_type() {
             var stock_inventory_table = $('#stock_inventory').DataTable();
             var selectedOption = $('#category').val();
@@ -677,7 +678,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/delivery-order/datatables-so-detail",
+                url: "/apps/delivery-order/datatables-so-detail/" + encode_fc_sono,
                 type: 'GET',
             },
             columnDefs: [{

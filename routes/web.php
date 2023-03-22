@@ -212,7 +212,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/insert_do', 'Apps\DeliveryOrderController@insert_do');
             Route::get('/create_do','Apps\DeliveryOrderController@create')->name('create_do');
             Route::get('/datatables','Apps\DeliveryOrderController@datatables');
-            Route::get('/datatables-so-detail','Apps\DeliveryOrderController@datatables_so_detail');
+            Route::get('/datatables-so-detail/{fc_sono}','Apps\DeliveryOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\DeliveryOrderController@datatables_so_payment');
             Route::get('/datatables-do-detail','Apps\DeliveryOrderController@datatables_do_detail');
             Route::get('/datatables-stock-inventory/{fc_stockcode}','Apps\DeliveryOrderController@datatables_stock_inventory');
@@ -297,8 +297,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\ReceivingOrderController@index');
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
             Route::get('/pdf_ro/{fc_pono}', 'Apps\ReceivingOrderController@pdf_ro');
-            Route::get('/datatables/po_detail','Apps\ReceivingOrderController@datatables_po_detail');
-            Route::get('/datatables/ro','Apps\ReceivingOrderController@datatables_receiving_order');
+            Route::get('/datatables/po_detail/{fc_pono}','Apps\ReceivingOrderController@datatables_po_detail');
+            Route::get('/datatables/ro/{fc_pono}','Apps\ReceivingOrderController@datatables_receiving_order');
             Route::delete('/cancel_ro/{fc_pono}','Apps\ReceivingOrderController@cancel_ro');
 
             Route::prefix('create')->group(function () {

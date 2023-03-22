@@ -342,6 +342,7 @@
 
     @section('js')
     <script>
+        let encode_fc_pono = "{{ base64_encode($data->fc_pono) }}";
         // jika ada form submit
         $('#form_submit_item').on('submit', function(e) {
             e.preventDefault();
@@ -512,7 +513,7 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/receiving-order/datatables/po_detail",
+                url: "/apps/receiving-order/datatables/po_detail/" + encode_fc_pono,
                 type: 'GET',
             },
             columnDefs: [{
