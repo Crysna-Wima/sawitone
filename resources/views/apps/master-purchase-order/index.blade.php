@@ -174,16 +174,65 @@
 @endsection
 
 @section('modal')
-
+<div class="modal fade" role="dialog" id="modal_nama" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Penanda Tangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="" method="POST" autocomplete="off">
+                @csrf
+                <input type="text" name="type" id="type" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label class="d-block">Nama</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" checked="">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        {{ auth()->user()->fc_username }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" checked="">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Lainnya
+                                    </label>
+                                    <div class="form-group">
+                                        <label>Nama PJ</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function click_modal_nama() {
+        $('#modal_nama').modal('show');
+    };
+
     var tb = $('#tb_semua').DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [
+            [2, 'desc']
+        ],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -252,8 +301,13 @@
 
             $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama()"><i class="fa fa-file"></i> PDF</button>
                 `);
+
+            // $('td:eq(10)', row).html(`
+            //         <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            //         <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+            //     `);
         },
     });
 
@@ -261,7 +315,9 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [
+            [2, 'desc']
+        ],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -333,7 +389,9 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [
+            [2, 'desc']
+        ],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -405,7 +463,9 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [
+            [2, 'desc']
+        ],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',
@@ -477,7 +537,9 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [
+            [2, 'desc']
+        ],
         ajax: {
             url: "/apps/master-purchase-order/datatables",
             type: 'GET',

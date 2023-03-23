@@ -692,17 +692,18 @@
                 // console.log(data.tempsodetail[0].fm_so_price);
                 var tipe_bisnis = "{{ $data->supplier->supplier_type_business->fv_description }}";
                 if (tipe_bisnis == 'DISTRIBUTOR') {
-                    $('#fm_po_price').val(data.fm_price_distributor);
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_price_distributor));
+                    // $('#fm_po_price').val(data.fm_price_distributor);
                 } else if (tipe_bisnis == 'RETAIL') {
-                    $('#fm_po_price').val(data.fm_price_default);
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_price_default));
                 } else if (tipe_bisnis == 'HOSPITAL') {
-                    $('#fm_po_price').val(data.fm_price_project);
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_price_project));
                 } else if (tipe_bisnis == 'PERSONAL') {
-                    $('#fm_po_price').val(data.fm_price_enduser);
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_price_enduser));
                 } else if (tipe_bisnis == 'ENDUSER') {
-                    $('#fm_po_price').val(data.fm_price_enduser);
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_price_enduser));   
                 } else {
-                    $('#fm_po_price').val("");
+                    $('#fm_po_price').val(fungsiRupiah(""));
                 }
                 $('#fc_barcode').val(data.fc_barcode);
                 $('#fc_stockcode').val(data.fc_stockcode);
