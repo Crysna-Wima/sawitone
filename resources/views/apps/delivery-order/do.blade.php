@@ -449,7 +449,7 @@
                 var data = stock_inventory_table.row(row).data();
                 var inputField = $(row).find('input[type="number"]');
 
-                console.log(selectedOption);
+                // console.log(selectedOption);
             });
         }
 
@@ -634,7 +634,7 @@
             let stock_name = 'input[name="pname[]'
             // ambil 8 string fc_barcode dari depan
             let fc_barcode_8 = fc_barcode.substring(0, 8);
-            console.log($('').val());
+            // console.log($('').val());
             // console.log(fc_barcode);
             // modal loading
             $('#modal_loading').modal('show');
