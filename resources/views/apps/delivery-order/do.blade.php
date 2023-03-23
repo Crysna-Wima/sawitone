@@ -651,7 +651,9 @@
                 dataType: 'JSON',
                 success: function(response, textStatus, jQxhr) {
                     // modal loading hide
-                    $('#modal_loading').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     $('.place_alert_cart_stock').empty();
                     if (response.status == '200') {
                         $('.place_alert_cart_stock').append(
@@ -665,7 +667,9 @@
                     }
                 },
                 error: function(jqXhr, textStatus, errorThrown) {
-                    $('#modal_loading').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     console.log(errorThrown);
                     console.warn(jqXhr.responseText);
                 },
