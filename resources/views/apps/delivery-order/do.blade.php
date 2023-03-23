@@ -966,6 +966,9 @@
                     });
                     location.reload();
                 } else {
+                     setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     iziToast.error({
                         title: 'Gagal!',
                         message: response.message,
