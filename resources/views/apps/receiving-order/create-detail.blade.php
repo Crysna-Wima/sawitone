@@ -373,8 +373,10 @@
                                     $('#modal_loading').modal('hide');
                                 }, 500);
                                 if (response.status == 200) {
-                                    swal(response.message, {
-                                        icon: 'success',
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
                                     });
                                     $("#modal_select").modal('hide');
                                     $("#form_submit_item")[0].reset();
@@ -382,20 +384,26 @@
                                     tb_ro.ajax.reload(null, false);
                                     tb.ajax.reload(null, false);
                                 } else if (response.status == 201) {
-                                    swal(response.message, {
-                                        icon: 'success',
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
                                     });
                                     $("#modal_select").modal('hide');
                                     location.href = response.link;
                                 } else if (response.status == 203) {
-                                    swal(response.message, {
-                                        icon: 'success',
+                                    iziToast.success({
+                                        title: 'Success!',
+                                        message: response.message,
+                                        position: 'topRight'
                                     });
                                     $("#modal_select").modal('hide');
                                     tb.ajax.reload(null, false);
                                 } else if (response.status == 300) {
-                                    swal(response.message, {
-                                        icon: 'error',
+                                    iziToast.error({
+                                        title: 'Gagal!',
+                                        message: response.message,
+                                        position: 'topRight'
                                     });
                                 }
                             },
@@ -496,12 +504,16 @@
                     $('#fn_qty_po').trigger('change');
 
                     // modal_loading hide
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     $('#modal_select').modal('show');
                 },
 
                 error: function(data) {
-                    setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     console.log('Error:', data);
                 }
             });
@@ -550,8 +562,7 @@
             rowCallback: function(row, data) {
                 if (data.fn_po_qty > data.fn_ro_qty || data.fn_po_bonusqty > data.fn_po_bonusqty) {
                     $('td:eq(7)', row).html(`
-                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>`
-                    );
+                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>`);
                 } else {
                     $('td:eq(7)', row).html(`
                         <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
@@ -608,7 +619,7 @@
                 `);
             },
         });
-        
+
         $('.modal').css('overflow-y', 'auto');
     </script>
     @endsection
