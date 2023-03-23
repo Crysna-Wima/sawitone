@@ -201,6 +201,7 @@
 
 @section('js')
 <script>
+    let encode_fc_pono = "{{ base64_encode($po_master->fc_pono) }}";
     var tb = $('#po_detail').DataTable({
         // apabila data kosong
         processing: true,
@@ -259,7 +260,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/receiving-order/datatables/ro",
+            url: "/apps/receiving-order/datatables/ro/" + encode_fc_pono,
             type: 'GET',
         },
         columnDefs: [{
