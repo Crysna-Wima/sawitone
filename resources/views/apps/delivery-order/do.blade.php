@@ -427,8 +427,333 @@
             var inputField = $(row).find('input[type="number"]');
 
             console.log(selectedOption);
+            // console.log(selectedOption);
         });
     }
+
+    function pilih_inventory(fc_stockcode) {
+        // console.log(fc_stockcode);
+        $("#modal_loading").modal('show');
+
+        // tampilkan loading_data
+        var stock_inventory_table = $('#stock_inventory');
+        if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
+            stock_inventory_table.DataTable().destroy();
+        }
+        stock_inventory_table.DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
+                "type": "GET",
+                "data": {
+                    "fc_stockcode": fc_stockcode
+                }
+            },
+            "columns": [{
+                    "data": 'DT_RowIndex',
+                    "sortable": false,
+                    "searchable": false
+                },
+                {
+                    "data": "fc_barcode"
+                },
+                {
+                    "data": "stock.fc_namelong"
+                },
+                {
+                    "data": "fn_quantity"
+                },
+                {
+                    "data": "fc_rackcode"
+                },
+                {
+                    "data": "fc_batch"
+                },
+                {
+                    "data": "fc_catnumber"
+                },
+                {
+                    "data": "fd_expired",
+                    "render": function(data, type, row) {
+                        return moment(data).format(
+                            // format tanggal
+                            'DD MMMM YYYY'
+                        );
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function(data, type, full, meta) {
+                        // console.log('data'+data.fn_sorrownum);
+                        var selectedOption = $('#category').val();
+                        // looping data data.stock.sodtl[index].fn_so_qty
+                        if (selectedOption == "Bonus") {
+                            let qty = 0;
+                            // looping data stock.sodtl[index].fn_so_qty
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                        index].fn_do_bonusqty;
+                                    break;
+                                }
+                            }
+
+                            if (qty >= data.fn_quantity) {
+                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            } else {
+                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                            }
+                            // reload datatable
+
+                        } else {
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                            index]
+                                        .fn_do_qty;
+                                    break;
+                                }
+
+                            }
+
+                            // console.log("qty"+qty);
+                            if (qty >= data.fn_quantity) {
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            } else {
+                                if (qty < 0) {
+                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                                }
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                            }
+                        }
+
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function(data, type, full, meta) {
+                        var selectedOption = $('#category').val();
+                        if (selectedOption == "Bonus") {
+                            let qty = 0;
+                            // looping data stock.sodtl[index].fn_so_qty
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                        index].fn_do_bonusqty;
+                                    break;
+                                }
+                            }
+
+                            if (qty == 0) {
+                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            } else {
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            }
+
+                        } else {
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                            index]
+                                        .fn_do_qty;
+                                    break;
+                                }
+                            }
+
+                            // console.log("qty"+qty);
+                            if (qty == 0) {
+                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            } else {
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                            }
+                        }
+
+                    }
+                }
+            ],
+            "columnDefs": [{
+                    "className": "text-center",
+                    "targets": [0, 3, 4, 5, 9]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [7]
+                },
+            ],
+            "initComplete": function() {
+                // hidden modal loading
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                $('#modal_inventory').modal('show');
+
+                stock_inventory_table.DataTable().ajax.reload();
+                var table = stock_inventory_table.DataTable();
+                var rows = table.rows().nodes();
+                for (var i = 0; i < rows.length; i++) {
+                    var row = $(rows[i]);
+                    var fn_quantity = row.find('td:nth-child(4)').text();
+                    if (fn_quantity == 0) {
+                        table.row(row).remove().draw(false);
+                    }
+                }
+            }
+        });
+
+        $('#category').on('change', function() {
+            // datatable reload
+            stock_inventory_table.DataTable().ajax.reload();
+        });
+
+    }
+
+    function select_stock(fc_barcode) {
+        let stock_name = 'input[name="pname[]'
+        // ambil 8 string fc_barcode dari depan
+        let fc_barcode_8 = fc_barcode.substring(0, 8);
+        // console.log($('').val());
+        // console.log(fc_barcode);
+        // modal loading
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: '/apps/delivery-order/cart_stock',
+            type: "POST",
+            data: {
+                'fc_barcode': fc_barcode,
+                'short_barcode': fc_barcode_8,
+                'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
+                'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val(),
+                'fc_sono': '{{ $data->fc_sono }}',
+            },
+            dataType: 'JSON',
+            success: function(response, textStatus, jQxhr) {
+                // modal loading hide
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                $('.place_alert_cart_stock').empty();
+                if (response.status == '200') {
+                    $('.place_alert_cart_stock').append(
+                        `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`
+                    )
+                    location.reload();
+                } else {
+                    $('.place_alert_cart_stock').append(
+                        `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`
+                    )
+                }
+            },
+            error: function(jqXhr, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                console.log(errorThrown);
+                console.warn(jqXhr.responseText);
+            },
+        });
+    }
+
+    var tb = $('#tb').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/delivery-order/datatables-so-detail/" + encode_fc_sono,
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 3, 4, 5, 6, 7, 8, 9]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_barcode'
+            },
+            {
+                data: 'stock.fc_nameshort'
+            },
+            {
+                data: 'namepack.fv_description'
+            },
+            {
+                data: 'fn_so_qty'
+            },
+            {
+                data: 'fn_so_bonusqty'
+            },
+            {
+                data: 'fn_do_qty'
+            },
+            {
+                data: 'fn_do_bonusqty'
+            },
+            {
+                data: 'fn_inv_qty'
+            },
+            // {
+            //     data: 'fm_so_oriprice',
+            //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            // },
+            // {
+            //     data: 'fm_so_disc'
+            // },
+            // {
+            //     data: 'total_harga',
+            //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            // },
+            {
+                data: null
+            },
+
+        ],
+        rowCallback: function(row, data) {
+            if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
+                // kosong
+                $('td:eq(9)', row).html(``);
+            } else {
+                $('td:eq(9)', row).html(`
+                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
+                `);
+            }
+
+            if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty) {
+                $('td:eq(9)', row).html(
+                    `
+                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
+                );
+            } else {
+                $('td:eq(9)', row).html(`
+                        <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+            }
+        },
+        footerCallback: function(row, data, start, end, display) {
+
+            // jika data[0].somst.domst.fc_sotransport tidak kosong
+            if (data[0].somst.domst.fc_sotransport) {
+                $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
+            } else if (data[0].somst.fc_sotransport) {
+                $("#fc_sotransport").val(data[0].somst.fc_sotransport);
+            } else {
+                $("#fc_sotransport").val('');
+            }
+
+            if (data[0].somst.domst.fc_memberaddress_loading !== "") {
+                $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
+            } else {
+                $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
+            }
+
+            $("#fc_memberaddress_loading").trigger("change");
+            $("#fc_sotransport").trigger("change");
+            // $("#fm_servpay").trigger("change");
+        }
+    });
 
     function pilih_inventory(fc_stockcode) {
         // console.log(fc_stockcode);
