@@ -75,6 +75,9 @@
                                     <input type="text" class="form-control" value="{{ $po_master->fc_potype }}" readonly>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button type="" class="btn btn-danger">Cancel PO</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -292,11 +295,11 @@
         rowCallback: function(row, data) {
             var fc_rono = window.btoa(data.fc_rono);
             $('td:eq(4)', row).html(`<i class="${data.fc_postatus}"></i>`);
-                if (data['fc_rostatus'] == 'P') {
-                    $('td:eq(4)', row).html('<span class="badge badge-primary">Terbayar</span>');
-                } else {
-                    $('td:eq(4)', row).html('<span class="badge badge-success">Diterima</span>');
-                }
+            if (data['fc_rostatus'] == 'P') {
+                $('td:eq(4)', row).html('<span class="badge badge-primary">Terbayar</span>');
+            } else {
+                $('td:eq(4)', row).html('<span class="badge badge-success">Diterima</span>');
+            }
 
             $('td:eq(5)', row).html(`
             <a href="/apps/master-purchase-order/pdf_ro/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
