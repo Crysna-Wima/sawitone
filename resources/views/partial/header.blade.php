@@ -26,8 +26,11 @@
   </nav>
   <div class="main-sidebar">
     <aside id="sidebar-wrapper">
-      <div class="sidebar-brand">
-        <a href="index.html">DEXA</a>
+      <div class="sidebar-brand mb-4">
+        {{-- <a href="index.html">DEXA</a> --}}
+        <a href="index.html">    
+          <img src="{{ asset('/assets/img/logo-dexa.png') }}" width="70%" height="90%">
+        </a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
         <a href="index.html">DEXA</a>
