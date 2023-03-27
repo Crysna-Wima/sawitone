@@ -76,13 +76,18 @@ class MasterPurchaseOrderController extends Controller
             ->make(true);
     }
 
-    public function pdf($fc_pono){
-        $decode_fc_pono = base64_decode($fc_pono);
-        session(['fc_pono_global' => $decode_fc_pono]);
-        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function pdf(Request $request){
+        // dd($request);
+        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $request->fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $request->fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        if($request->name_pj){
+            $data['nama_pj'] = $request->name_pj;
+        }else{
+            $data['nama_pj'] = auth()->user()->fc_username;
+        }
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($data);
     }
 
     public function pdf_ro($fc_rono)
