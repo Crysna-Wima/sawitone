@@ -78,6 +78,7 @@ class MasterPurchaseOrderController extends Controller
 
     public function pdf(Request $request){
         // dd($request);
+        $encode_fc_pono = base64_encode($request->fc_pono);
         $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $request->fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $request->fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
         if($request->name_pj){
@@ -85,9 +86,25 @@ class MasterPurchaseOrderController extends Controller
         }else{
             $data['nama_pj'] = auth()->user()->fc_username;
         }
+        // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
+        // return $pdf->stream();
+        // dd($data);
+
+        //redirect ke /apps/master-purchase-order/pdf dengan mengirimkan $data
+        return [
+            'status' => 201,
+            'message' => 'Invoice Berhasil ditampilkan',
+            'link' => '/apps/master-purchase-order/get_pdf/' . $encode_fc_pono . '/' . $data['nama_pj'],
+        ];
+    }
+
+    public function get_pdf($fc_pono,$nama_pj){
+        $decode_fc_pono = base64_decode($fc_pono);
+        $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
-        // dd($data);
     }
 
     public function pdf_ro($fc_rono)
