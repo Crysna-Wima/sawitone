@@ -45,9 +45,9 @@ class MasterDeliveryOrderController extends Controller
 
     public function pdf(Request $request){
         // dd($request);
-        $decode_fc_dono = base64_encode($request->fc_dono);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $encode_fc_dono = base64_encode($request->fc_dono);
+        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         if($request->name_pj){
             $data['nama_pj'] = $request->name_pj;
         }else{
@@ -61,8 +61,9 @@ class MasterDeliveryOrderController extends Controller
         return [
             'status' => 201,
             'message' => 'PDF Berhasil ditampilkan',
-            'link' => '/apps/master-receiving-order/get_pdf/' . $decode_fc_dono . '/' . $data['nama_pj'],
+            'link' => '/apps/master-delivery-order/get_pdf/' . $encode_fc_dono . '/' . $data['nama_pj'],
         ];
+        // dd($request);
     }
 
     public function get_pdf($fc_dono,$nama_pj){
@@ -70,7 +71,7 @@ class MasterDeliveryOrderController extends Controller
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
-        $pdf = PDF::loadView('pdf.receiving-order', $data)->setPaper('a4');
+        $pdf = PDF::loadView('pdf.report-do', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
