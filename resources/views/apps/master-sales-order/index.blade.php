@@ -160,12 +160,66 @@
 </div>
 @endsection
 
+@section('modal')
+    <div class="modal fade" role="dialog" id="modal_nama" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header br">
+                    <h5 class="modal-title">Pilih Penanda Tangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form_submit" action="/apps/master-purchase-order/pdf" method="POST" autocomplete="off">
+                    @csrf
+                    <input type="text" name="fc_pono" id="fc_pono_input" hidden>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label class="d-block">Nama</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="name_user" id="name_user"
+                                            checked="">
+                                        <label class="form-check-label" for="name_user">
+                                            {{ auth()->user()->fc_username }}
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="name_user_lainnya"
+                                            id="name_user_lainnya">
+                                        <label class="form-check-label" for="name_user_lainnya">
+                                            Lainnya
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('js')
 <script>
+   // untuk memunculkan nama penanggung jawab
+   function click_modal_nama(fc_sono) {
+      // #fc_pono_input value
+      $('#fc_sono_input').val(fc_sono);
+      $('#modal_nama').modal('show');
+   };
+
    var tb = $('#tb_semua').DataTable({
       processing: true,
       serverSide: true,
-      order: [[2, 'desc']],
+      order: [
+         [2, 'desc']
+      ],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -225,9 +279,9 @@
 
          // jika data.domst tidak kosong
          if (data.domst) {
-           var fc_dono = window.btoa(data.domst.fc_dono);
+            var fc_dono = window.btoa(data.domst.fc_dono);
          } else {
-             var fc_dono = window.btoa(undefined);
+            var fc_dono = window.btoa(undefined);
          }
 
          $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
@@ -244,17 +298,20 @@
          }
 
          $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <a href="/apps/master-sales-order/pdf/${fc_dono}/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close SO</button>
          `);
+         // <a href="/apps/master-sales-order/pdf/${fc_dono}/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
       }
    });
 
    var tb = $('#tb_menunggu').DataTable({
       processing: true,
       serverSide: true,
-      order: [[2, 'desc']],
+      order: [
+         [2, 'desc']
+      ],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -330,7 +387,9 @@
    var tb = $('#tb_pending').DataTable({
       processing: true,
       serverSide: true,
-      order: [[2, 'desc']],
+      order: [
+         [2, 'desc']
+      ],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -406,7 +465,9 @@
    var tb = $('#tb_selesai').DataTable({
       processing: true,
       serverSide: true,
-      order: [[2, 'desc']],
+      order: [
+         [2, 'desc']
+      ],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -482,7 +543,9 @@
    var tb = $('#tb_do_done').DataTable({
       processing: true,
       serverSide: true,
-      order: [[2, 'desc']],
+      order: [
+         [2, 'desc']
+      ],
       ajax: {
          url: '/apps/master-sales-order/datatables',
          type: 'GET'
@@ -554,6 +617,5 @@
          `);
       }
    });
-   
 </script>
 @endsection

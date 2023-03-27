@@ -228,7 +228,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
             Route::get('/datatables/detail','Apps\MasterDeliveryOrderController@datatables_detail');
 
-            Route::get('/pdf/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf');
+            Route::post('/pdf', 'Apps\MasterDeliveryOrderController@pdf');
+            Route::get('/get_pdf/{fc_dono}/{nama_pj}', 'Apps\MasterDeliveryOrderController@get_pdf');
             Route::get('/pdf_sj/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf_sj');
             Route::get('/inv/{fc_dono}', 'Apps\MasterDeliveryOrderController@inv');
             Route::post('/inv/publish', 'Apps\MasterDeliveryOrderController@publish');
@@ -317,7 +318,8 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-receiving-order')->group(function(){
             Route::get('/','Apps\MasterReceivingOrderController@index');
             Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
-            Route::get('/pdf/{fc_pono}', 'Apps\MasterReceivingOrderController@pdf');
+            Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
+            Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
         });
     });
 });

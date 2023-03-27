@@ -93,7 +93,7 @@ class MasterPurchaseOrderController extends Controller
         //redirect ke /apps/master-purchase-order/pdf dengan mengirimkan $data
         return [
             'status' => 201,
-            'message' => 'Invoice Berhasil ditampilkan',
+            'message' => 'PDF Berhasil ditampilkan',
             'link' => '/apps/master-purchase-order/get_pdf/' . $encode_fc_pono . '/' . $data['nama_pj'],
         ];
     }

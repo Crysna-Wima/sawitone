@@ -367,7 +367,7 @@
             <br><br/>
             <br><br/>
             <tr >
-                <td style="text-align: right;">(..............................)</td>
+                <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
             </tr>
         </table>
     <div>

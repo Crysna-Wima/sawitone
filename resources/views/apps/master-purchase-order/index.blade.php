@@ -425,7 +425,7 @@
 
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
@@ -500,7 +500,7 @@
 
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
@@ -575,7 +575,7 @@
 
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
@@ -650,7 +650,7 @@
 
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                    <a href="/apps/master-purchase-order/pdf/${fc_pono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
                 `);
             },

@@ -42,13 +42,35 @@ class MasterDeliveryOrderController extends Controller
         // return response json
         return response()->json($data);
     }
-    
-    public function pdf($fc_dono){
-        $decode_fc_dono = base64_decode($fc_dono);
-        session(['fc_dono_global' => $decode_fc_dono]);
+
+    public function pdf(Request $request){
+        // dd($request);
+        $decode_fc_dono = base64_encode($request->fc_dono);
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        $pdf = PDF::loadView('pdf.report-do', $data)->setPaper('a4');
+        if($request->name_pj){
+            $data['nama_pj'] = $request->name_pj;
+        }else{
+            $data['nama_pj'] = auth()->user()->fc_username;
+        }
+        // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
+        // return $pdf->stream();
+        // dd($data);
+
+        //redirect ke /apps/master-receiving-order/pdf dengan mengirimkan $data
+        return [
+            'status' => 201,
+            'message' => 'PDF Berhasil ditampilkan',
+            'link' => '/apps/master-receiving-order/get_pdf/' . $decode_fc_dono . '/' . $data['nama_pj'],
+        ];
+    }
+
+    public function get_pdf($fc_dono,$nama_pj){
+        $decode_fc_dono = base64_decode($fc_dono);
+        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['nama_pj'] = $nama_pj;
+        $pdf = PDF::loadView('pdf.receiving-order', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
