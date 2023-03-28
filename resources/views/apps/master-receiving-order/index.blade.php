@@ -63,9 +63,10 @@
                                             <th scope="col" class="text-center">RONO</th>
                                             <th scope="col" class="text-center">Surat Jalan</th>
                                             <th scope="col" class="text-center">PONO</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center text-nowrap">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
-                                            <th scope="col" class="text-center">Tgl Diterima</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                         </tr>
@@ -82,9 +83,10 @@
                                             <th scope="col" class="text-center">RONO</th>
                                             <th scope="col" class="text-center">Surat Jalan</th>
                                             <th scope="col" class="text-center">PONO</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center text-nowrap">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
-                                            <th scope="col" class="text-center">Tgl Diterima</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                         </tr>
@@ -101,9 +103,10 @@
                                             <th scope="col" class="text-center">RONO</th>
                                             <th scope="col" class="text-center">Surat Jalan</th>
                                             <th scope="col" class="text-center">PONO</th>
-                                            <th scope="col" class="text-center">Supplier</th>
+                                            <th scope="col" class="text-center text-nowrap">Legal Status</th>
+                                            <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                             <th scope="col" class="text-center">Item</th>
-                                            <th scope="col" class="text-center">Tgl Diterima</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                         </tr>
@@ -235,10 +238,10 @@
                     data: 'fc_pono'
                 },
                 {
-                    data: null,
-                    render: function(data, type, row) {
-                        return row.pomst.supplier.fc_supplierlegalstatus + ' ' + row.pomst.supplier.fc_suppliername1;
-                    }
+                    data: 'pomst.supplier.fc_supplierlegalstatus'
+                },
+                {
+                    data: 'pomst.supplier.fc_suppliername1',
                 },
                 {
                     data: 'pomst.fn_podetail'
@@ -257,14 +260,14 @@
 
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
-                $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                 if (data['fc_rostatus'] == 'P') {
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Diterima</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
@@ -301,10 +304,10 @@
                     data: 'fc_pono'
                 },
                 {
-                    data: null,
-                    render: function(data, type, row) {
-                        return row.pomst.supplier.fc_supplierlegalstatus + ' ' + row.pomst.supplier.fc_suppliername1;
-                    }
+                    data: 'pomst.supplier.fc_supplierlegalstatus'
+                },
+                {
+                    data: 'pomst.supplier.fc_suppliername1',
                 },
                 {
                     data: 'pomst.fn_podetail'
@@ -323,14 +326,14 @@
 
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
-                $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                 if (data['fc_rostatus'] == 'P') {
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
             },
@@ -366,10 +369,10 @@
                     data: 'fc_pono'
                 },
                 {
-                    data: null,
-                    render: function(data, type, row) {
-                        return row.pomst.supplier.fc_supplierlegalstatus + ' ' + row.pomst.supplier.fc_suppliername1;
-                    }
+                    data: 'pomst.supplier.fc_supplierlegalstatus'
+                },
+                {
+                    data: 'pomst.supplier.fc_suppliername1',
                 },
                 {
                     data: 'pomst.fn_podetail'
@@ -388,32 +391,17 @@
 
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
-                $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                 if (data['fc_rostatus'] == 'R') {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Diterima</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
             },
         });
-
-        // var dropdown = $('<select></select>')
-        //     .appendTo('.dataTables_length')
-        //     .addClass('form-control select1')
-        //     .attr('aria-controls', 'tb')
-        //     .on('change', function() {
-        //         var value = $(this).val();
-        //         $('tb').DataTable().page.len(value).draw();
-        //     })
-        //     .attr('style', 'margin-left: 20px; width:140px;');
-
-        // dropdown.append($('<option value="" selected disabled>Filter Status...</option>'));
-        // dropdown.append($('<option value="Semua">Semua</option>'));
-        // dropdown.append($('<option value="Terbayarf">Terbayar</option>'));
-        // dropdown.append($('<option value="Diterima">Diterima</option>'));
     </script>
     @endsection
