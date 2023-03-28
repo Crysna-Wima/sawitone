@@ -322,6 +322,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
         });
+
+        Route::prefix('penerimaan-barang')->group(function(){
+            Route::get('/','Apps\PenerimaanBarangController@index');
+            Route::get('/get-data-supplier-pb-datatables/{fc_branch}','Apps\PenerimaanBarangController@get_data_supplier_pb_datatables');
+        });
     });
 });
 
