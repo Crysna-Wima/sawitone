@@ -29,7 +29,7 @@
       <div class="sidebar-brand mb-4">
         {{-- <a href="index.html">DEXA</a> --}}
         <a href="index.html">    
-          <img src="{{ asset('/assets/img/logo-dexa.png') }}" width="70%" height="90%">
+          <img src="{{ asset('/assets/img/logo-dexa.png') }}" alt="logo" width="160" class="mb-4 mt-3">
         </a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
