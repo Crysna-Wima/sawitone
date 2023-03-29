@@ -328,6 +328,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('penerimaan-barang')->group(function(){
             Route::get('/','Apps\PenerimaanBarangController@index');
             Route::get('/get-data-supplier-pb-datatables/{fc_branch}','Apps\PenerimaanBarangController@get_data_supplier_pb_datatables');
+            Route::post('/insert_good_reception','Apps\PenerimaanBarangController@insert_good_reception');
         });
     });
 });

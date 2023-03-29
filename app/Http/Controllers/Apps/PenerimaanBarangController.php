@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
+use App\Models\GoodReception;
 use App\Models\Supplier;
 use DB;
+use Illuminate\Http\Request;
+use Validator;
 use Yajra\DataTables\DataTables;
 
 class PenerimaanBarangController extends Controller
@@ -18,5 +21,47 @@ class PenerimaanBarangController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function insert_good_reception(Request $request){
+        // validation
+        $validator = Validator::make($request->all(), [
+            'fd_arrivaldate' => 'required',
+            'fc_recipient' => 'required',
+            'fc_suppliercode' => 'required',
+            'fn_qtyitem' => 'required',
+            'fc_unit' => 'required',
+        ]);
+
+        // jika validasi gagal
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+
+        $insert_good_reception = GoodReception::create([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_grno' => auth()->user()->fc_userid,
+            'fd_arrivaldate' => $request->fd_arrivaldate,
+            'fc_recipient' => $request->fc_recipient,
+            'fc_suppliercode' => $request->fc_suppliercode,
+            'fn_qtyitem' => $request->fn_qtyitem,
+            'fc_unit' => $request->fc_unit,
+        ], $request->all());
+
+        if ($insert_good_reception) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil disimpan',
+                'link' => '/apps/penerimaan-barang'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan',
+            ];
+        }
+        // dd($request);
     }
 }

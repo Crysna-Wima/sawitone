@@ -32,8 +32,11 @@
 @section('content')
 
 <div class="section-body">
+    <form id="form_submit" action="/apps/penerimaan-barang/insert_good_reception" method="POST">
+        @csrf
     <div class="row">
         <div class="col-12 col-md-4 col-lg-6">
+        
             <div class="card">
                 <div class="card-header">
                     <h4>Informasi Umum</h4>
@@ -153,10 +156,11 @@
                 </div>
             </div>
             <div class="button text-right">
-                <button id="" class="btn btn-success">Konfirmasi</button>
+                <button  type="submit" class="btn btn-success">Konfirmasi</button>
             </div>
         </div>
     </div>
+ </form>
 </div>
 @endsection
 
