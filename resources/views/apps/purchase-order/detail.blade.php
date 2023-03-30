@@ -330,7 +330,14 @@
                                 <div class="form-group">
                                     <label>Masa</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
+                                        @if (empty($data->fd_poexpired) || empty($data->fd_podateinputuser))
                                         <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" required>
+                                        @else
+                                        @php
+                                            $fn_inv_aging_day = strtotime($data->fd_poexpired) - strtotime($data->fd_podateinputuser);
+                                        @endphp
+                                            <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" value="{{ round(abs($fn_inv_aging_day / (60 * 60 * 24))) }}" required>
+                                        @endif
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 Hari
@@ -405,7 +412,11 @@
                             <div class="col-12 col-md-12 col-lg-3">
                                 <label>Alamat Tujuan</label>
                                 <div class="form-group">
+                                    @if (empty($data->fc_address_loading1))
                                     <input type="text" id="fc_memberaddress_loading1" class="form-control" name="fc_memberaddress_loading1" readonly>
+                                    @else
+                                    <input type="text" id="fc_memberaddress_loading1" class="form-control" name="fc_memberaddress_loading1" value="{{ $data->fc_address_loading1 }}" readonly>
+                                    @endif
                                 </div>
                             </div>
                             <!-- <div class="col-12 col-md-12 col-lg-3">
@@ -548,7 +559,16 @@
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membername1").append(`<option value="${data[i].fc_membername1}">${data[i].fc_membername1}</option>`);
                     }
-                    $('#fc_memberaddress_loading1').val(data.fc_memberaddress_loading1);
+       
+                    $("#fc_membername1").change(function() {
+                        var fc_membername1 = $(this).val();
+                        var data = response.data;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].fc_membername1 === fc_membername1) {
+                                $('#fc_memberaddress_loading1').val(data[i].fc_memberaddress_loading1);
+                            }
+                        }
+                    });
                 } else {
                     iziToast.error({
                         title: 'Error!',
