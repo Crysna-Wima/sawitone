@@ -113,7 +113,7 @@
             rowCallback: function(row, data) {
                 var fc_grno = window.btoa(data.fc_grno);
                 $('td:eq(7)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"></i> Pilih</button>
+                    <a href="/apps/receiving-order/penerimaan-barang/${fc_grno}/${data.fc_suppliercode}" class="btn btn-warning btn-sm"><i class="fa fa-check"></i> Pilih</a>
                 `);
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             },

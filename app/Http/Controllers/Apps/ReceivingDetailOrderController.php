@@ -65,17 +65,33 @@ class ReceivingDetailOrderController extends Controller
 
         $request->request->add(['fc_rono' => auth()->user()->fc_userid]);
 
-        $insert_tempromst = TempRoMaster::create([
-            'fc_divisioncode' => auth()->user()->fc_divisioncode,
-            'fc_branch' => auth()->user()->fc_branch,
-            'fc_rono' => auth()->user()->fc_userid,
-            'fc_pono' => $request->fc_pono,
-            'fc_sjno' => $request->fc_sjno,
-            'fc_receiver' => $request->fc_receiver,
-            'fd_roarivaldate' => $request->fd_roarivaldate,
-            'fc_userid' => $request->fc_userid,
-            'fc_rostatus' => 'I'
-        ], $request->all());
+        // jika session fc_grno_global samadengan null
+        if (session('fc_grno_global') == null) {
+            $insert_tempromst = TempRoMaster::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_rono' => auth()->user()->fc_userid,
+                'fc_pono' => $request->fc_pono,
+                'fc_sjno' => $request->fc_sjno,
+                'fc_receiver' => $request->fc_receiver,
+                'fd_roarivaldate' => $request->fd_roarivaldate,
+                'fc_userid' => $request->fc_userid,
+                'fc_rostatus' => 'I'
+            ], $request->all());
+        }else{
+            $insert_tempromst = TempRoMaster::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_rono' => auth()->user()->fc_userid,
+                'fc_pono' => $request->fc_pono,
+                'fc_sjno' => $request->fc_sjno,
+                'fc_grno' => session('fc_grno_global'),
+                'fc_receiver' => $request->fc_receiver,
+                'fd_roarivaldate' => $request->fd_roarivaldate,
+                'fc_userid' => $request->fc_userid,
+                'fc_rostatus' => 'I'
+            ], $request->all());
+        }
 
         if ($insert_tempromst) {
             return [

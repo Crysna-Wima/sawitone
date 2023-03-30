@@ -38,9 +38,17 @@ class MasterPurchaseOrderController extends Controller
         // dd($data);
     }
 
-    public function datatables()
-    {
+    public function datatables(){
         $data = PoMaster::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
+
+    public function datatables_good_reception($fc_suppliercode){
+        $data = PoMaster::with('supplier')->where('fc_suppliercode', $fc_suppliercode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

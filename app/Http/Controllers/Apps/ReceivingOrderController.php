@@ -23,8 +23,7 @@ use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
 
         $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();
@@ -35,8 +34,26 @@ class ReceivingOrderController extends Controller
         }
     }
 
-    public function detail($fc_pono)
-    {
+    public function good_reception($fc_grno,$fc_suppliercode){
+        $decode_fc_grno = base64_decode($fc_grno);
+        $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
+
+        $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();
+        $data['fc_grno'] = $decode_fc_grno ;
+        $data['fc_suppliercode'] = $fc_suppliercode;
+
+        //session fc_grno
+        session(['fc_grno_global' => $decode_fc_grno]);
+        // dd($data);
+        if ($count === 0) {
+            return view('apps.receiving-order.index_good_reception',$data);
+        } else {
+            return redirect('/apps/receiving-order/create/' . base64_encode($data->fc_pono));
+        }
+        // dd($fc_suppliercode);
+    }
+
+    public function detail($fc_pono){
         $decode_fc_pono = base64_decode($fc_pono);
         session(['fc_pono_global' => $decode_fc_pono]);
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
