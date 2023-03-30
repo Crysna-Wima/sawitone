@@ -292,7 +292,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables/ro','Apps\MasterPurchaseOrderController@datatables_receiving_order');
             Route::post('/pdf', 'Apps\MasterPurchaseOrderController@pdf');
             Route::get('/get_pdf/{fc_pono}/{nama_pj}', 'Apps\MasterPurchaseOrderController@get_pdf');
-            Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf_ro');
+            // Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf_ro');
             Route::get('/get_pdf_ro/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf_ro');
             Route::get('/detail/{fc_pono}','Apps\MasterPurchaseOrderController@detail');
         });
