@@ -555,7 +555,7 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fc_membername1").empty();
-                    $("#fc_membername1").append(`<option value="" selected readonly> - Pilih - </option>`);
+                    $("#fc_membername1").append(`<option value="DEXA" selected readonly>DEXA</option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_membername1").append(`<option value="${data[i].fc_membername1}">${data[i].fc_membername1}</option>`);
                     }
