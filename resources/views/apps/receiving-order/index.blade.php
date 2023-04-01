@@ -70,13 +70,16 @@
             processing: true,
             serverSide: true,
             destroy: true,
+            order: [
+                [3, 'desc']
+            ],
             ajax: {
                 url: "/apps/master-penerimaan-barang/datatables",
                 type: 'GET',
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7]
+                targets: [0, 2, 3, 4, 5, 6, 7]
             }, {
                 className: 'text-nowrap',
                 targets: [] 
@@ -90,7 +93,7 @@
                     data: 'fc_grno'
                 },
                 {
-                    data: 'fc_suppliercode'
+                    data: 'supplier.fc_suppliername1'
                 },
                 {
                     data: 'fd_arrivaldate',
