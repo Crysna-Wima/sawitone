@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Receiving Order')
+@section('title', 'Receiving / SPB')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -22,14 +22,13 @@
         background-color: #A5A5A5 !important;
     }
 
-    @media (min-width: 992px) and (max-width: 1200px) {
-        .flex-row-item {
-            font-size: 12px;
-        }
+    .nav-tabs .nav-item .nav-link {
+        color: #A5A5A5;
+    }
 
-        .grand-text {
-            font-size: .9rem;
-        }
+    .nav-tabs .nav-item .nav-link.active {
+        font-weight: bold;
+        color: #0A9447;
     }
 </style>
 @endsection
@@ -40,22 +39,20 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>List Purchase Order</h4>
+                    <h4>Data Penerimaan Barang</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="po_master" width="100%">
+                        <table class="table table-striped" id="tb" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">PONO</th>
-                                    <th scope="col" class="text-center">Order</th>
-                                    <th scope="col" class="text-center">Expired</th>
-                                    <th scope="col" class="text-center">Tipe</th>
+                                    <th scope="col" class="text-center">GR NO</th>
                                     <th scope="col" class="text-center">Supplier</th>
-                                    <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Item</th>
-                                    <!-- <th scope="col" class="text-center">Total</th> -->
+                                    <th scope="col" class="text-center">Tgl Penerimaan</th>
+                                    <th scope="col" class="text-center">Jumlah</th>
+                                    <th scope="col" class="text-center">Satuan</th>
+                                    <th scope="col" class="text-center">Penerima</th>
                                     <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                 </tr>
                             </thead>
@@ -65,86 +62,60 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection
 
-@section('modal')
+    @section('js')
+    <script>
+    var tb = $('#tb').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/master-penerimaan-barang/datatables",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 3, 4, 5, 6, 7]
+            }, {
+                className: 'text-nowrap',
+                targets: [] 
+            }],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_grno'
+                },
+                {
+                    data: 'fc_suppliercode'
+                },
+                {
+                    data: 'fd_arrivaldate',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fn_qtyitem'
+                },
+                {
+                    data: 'fc_unit',
+                },
+                {
+                    data: 'fc_recipient'
+                },
+                {
+                    data: null,
+                },
+            ],
 
-@endsection
-
-@section('js')
-<script>
-    var tb = $('#po_master').DataTable({
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        order: [[2, 'desc']],
-        ajax: {
-            url: "/apps/master-purchase-order/datatables",
-            type: 'GET',
-        },
-        columnDefs: [{
-            className: 'text-center',
-            targets: [0, 4, 5, 6, 7, 8]
-        }, {
-            className: 'text-nowrap',
-            targets: [2, 3, 5]
-        }],
-        columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                orderable: false
-            },
-            {
-                data: 'fc_pono'
-            },
-            {
-                data: 'fd_podateinputuser',
-                render: formatTimestamp
-            },
-            {
-                data: 'fd_poexpired',
-                render: formatTimestamp
-            },
-            {
-                data: 'fc_potype'
-            },
-            {
-                data: null,
-                render: function(data, type, row) {
-                    return row.supplier.fc_supplierlegalstatus + ' ' + row.supplier.fc_suppliername1;
-                }
-            },
-            {
-                data: 'fc_postatus',
-            },
-            {
-                data: 'fn_podetail',
-            },
-            // {
-            //     data: 'fm_brutto',
-            //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-            // },
-            {
-                data: null,
-            },
-        ],
-
-        rowCallback: function(row, data) {
-            var fc_pono = window.btoa(data.fc_pono);
-            $('td:eq(6)', row).html(`<i class="${data.fc_postatus}"></i>`);
-            if (data['fc_postatus'] == 'F') {
-                $('td:eq(6)', row).html('<span class="badge badge-primary">Pemesanan</span>');
-            } else if (data['fc_postatus'] == 'P') {
-                $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
-            } else {
-                $(row).hide();
-            }
-
-            $('td:eq(8)', row).html(`
-                <a href="/apps/receiving-order/detail/${fc_pono}"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+            rowCallback: function(row, data) {
+                var fc_grno = window.btoa(data.fc_grno);
+                $('td:eq(7)', row).html(`
+                    <a href="/apps/receiving-order/penerimaan-barang/${fc_grno}/${data.fc_suppliercode}" class="btn btn-warning btn-sm"><i class="fa fa-check"></i> Pilih</a>
                 `);
-        },
-    });
-</script>
-@endsection
+            },
+        });
+    </script>
+    @endsection

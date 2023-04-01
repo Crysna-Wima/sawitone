@@ -22,6 +22,8 @@ class GoodReception extends Model
     protected $guarded = ['type'];
     public $timestamps = true;
 
-    
+    public function supplier(){
+        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
+    }
 
 }
