@@ -49,7 +49,8 @@ class MasterPenerimaanBarangController extends Controller
 
     public function get_pdf($fc_grno,$nama_pj){
         $decode_fc_grno = base64_decode($fc_grno);
-        $data['gr_mst']= GoodReception::where('fc_grno', $decode_fc_grno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['gr_mst']= GoodReception::with('supplier')->where('fc_grno', $decode_fc_grno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['gr_dtl']= GoodReception::where('fc_grno', $decode_fc_grno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.penerimaan-barang', $data)->setPaper('a4');
         return $pdf->stream();
