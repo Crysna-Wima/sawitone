@@ -221,7 +221,7 @@
                 targets: [0, 4, 5, 6, 7, 8]
             }, {
                 className: 'text-nowrap',
-                targets: [2, 6]
+                targets: [2, 6, 9]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -269,6 +269,7 @@
 
                 $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>
                 `);
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             },
@@ -287,7 +288,7 @@
                 targets: [0, 4, 5, 6, 7, 8]
             }, {
                 className: 'text-nowrap',
-                targets: [2, 6]
+                targets: [2, 9]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -335,6 +336,7 @@
 
                 $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>
                 `);
             },
         });
@@ -352,7 +354,7 @@
                 targets: [0, 4, 5, 6, 7, 8]
             }, {
                 className: 'text-nowrap',
-                targets: [2, 6]
+                targets: [2, 6, 9]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -400,6 +402,7 @@
 
                 $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>
                 `);
             },
         });
