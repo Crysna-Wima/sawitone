@@ -166,7 +166,7 @@
 
 <body>
 <div class="container" id="sj-pdf">
-    {{ $qrcode }}
+    <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
 </body>
 
 </html>
