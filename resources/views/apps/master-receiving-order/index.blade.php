@@ -267,6 +267,8 @@
                     $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
+                 console.log(data.rodtl)
+
                 $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>

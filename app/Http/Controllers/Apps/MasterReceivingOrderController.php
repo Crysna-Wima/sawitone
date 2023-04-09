@@ -29,7 +29,7 @@ class MasterReceivingOrderController extends Controller
     public function datatables()
     {
 
-        $data = RoMaster::with('pomst.supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = RoMaster::with('pomst.supplier', 'rodtl.invstore')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

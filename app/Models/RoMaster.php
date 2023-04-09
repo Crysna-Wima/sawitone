@@ -27,7 +27,7 @@ class RoMaster extends Model
     }
 
     public function rodtl(){
-        return $this->hasMany(RoDetail::class, 'fc_pono', 'fc_pono');
+        return $this->hasMany(RoDetail::class, 'fc_rono', 'fc_rono');
     }
     
     public function invmst(){
