@@ -323,7 +323,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-receiving-order')->group(function(){
             Route::get('/','Apps\MasterReceivingOrderController@index');
             Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
-            Route::post('/generate-qr','Apps\MasterReceivingOrderController@generateQRCodePDF');
+            Route::get('/generate-qr/{fc_barcode}','Apps\MasterReceivingOrderController@generateQRCodePDF');
             Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
         });

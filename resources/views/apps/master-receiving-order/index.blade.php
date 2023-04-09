@@ -166,6 +166,7 @@
                         </div>
                     </form>
                 </div>
+               
             </div>
         </div>
     @endsection
@@ -264,6 +265,7 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
+                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
                     $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'P') {
                         $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
@@ -275,7 +277,7 @@
 
                     $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-primary btn-sm" data-barcode="${data.rodtl[0].invstore.fc_barcode}" onclick="generateQR(event)"><i class="fa fa-qrcode"></i> Generate QR</button>
+                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                     // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 },
@@ -413,23 +415,5 @@
                 },
             });
 
-            function generateQR(event) {
-                event.preventDefault();
-                var fc_barcode = $(event.currentTarget).data('barcode');
-                $.ajax({
-                    url: "/apps/master-receiving-order/generate-qr",
-                    type: "POST",
-                    data: {
-                        fc_barcode: fc_barcode,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        // Tampilkan QR Code di sini
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            }
         </script>
     @endsection

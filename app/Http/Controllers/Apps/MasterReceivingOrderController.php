@@ -37,10 +37,10 @@ class MasterReceivingOrderController extends Controller
             ->make(true);
     }
 
-    public function generateQRCodePDF(Request $request){
-        $fc_barcode = $request->fc_barcode;
+    public function generateQRCodePDF($fc_barcode){
+        $fc_barcode_decode = base64_decode($fc_barcode);
 
-        $qrcode = QrCode::format('png')->size(250)->generate($fc_barcode);
+        $qrcode = QrCode::format('png')->size(250)->generate($fc_barcode_decode);
 
         // generate qrcode ke pdf
         $pdf = PDF::loadView('pdf.qr-code', $qrcode)->setPaper('a4');
