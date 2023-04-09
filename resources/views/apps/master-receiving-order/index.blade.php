@@ -267,7 +267,7 @@
                     $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
-                 console.log(data.rodtl)
+                 console.log(data.rodtl.invstore.fc_barcode)
 
                 $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
