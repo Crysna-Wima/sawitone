@@ -16,6 +16,7 @@ use DB;
 
 use App\Models\RoMaster;
 use App\Models\RoDetail;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterReceivingOrderController extends Controller
@@ -34,6 +35,17 @@ class MasterReceivingOrderController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function generateQRCodePDF(Request $request){
+        $fc_barcode = $request->fc_barcode;
+
+        $qrcode = QrCode::format('png')->size(250)->generate($fc_barcode);
+
+        // generate qrcode ke pdf
+        $pdf = PDF::loadView('pdf.qr-code', $qrcode)->setPaper('a4');
+        return $pdf->stream();
+
     }
 
     public function pdf(Request $request){
