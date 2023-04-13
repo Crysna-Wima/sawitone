@@ -157,7 +157,7 @@
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">DO</th>
                                         <th scope="col" class="text-center">Bonus DO</th>
-                                        <th scope="col" class="text-center">INV</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                         <!-- <th scope="col" class="text-center">Harga</th>
                                                                 <th scope="col" class="text-center">Disc.(Rp)</th>
                                                                 <th scope="col" class="text-center">Total</th> -->
@@ -680,6 +680,8 @@
             type: 'GET',
         },
         columnDefs: [{
+            targets: [8],
+            defaultContent: "-",
             className: 'text-center',
             targets: [0, 3, 4, 5, 6, 7, 8, 9]
         }, ],
@@ -710,7 +712,7 @@
                 data: 'fn_do_bonusqty'
             },
             {
-                data: 'fn_inv_qty'
+                data: 'fv_description'
             },
             // {
             //     data: 'fm_so_oriprice',

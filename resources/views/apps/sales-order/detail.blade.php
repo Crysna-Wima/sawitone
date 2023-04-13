@@ -206,7 +206,7 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-7">
                                 <div class="form-group">
-                                    <label>Deskripsi</label>
+                                    <label>Catatan</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description">
                                     </div>

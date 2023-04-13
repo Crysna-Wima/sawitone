@@ -34,7 +34,8 @@
                            <th scope="col" class="text-center">Batch</th>
                            <th scope="col" class="text-center">Expired</th>
                            <th scope="col" class="text-center">Serial Number</th>
-                           <th scope="col" class="text-center">Cat Number</th>
+                           <th scope="col" class="text-center">Status CAT Number</th>
+                           <th scope="col" class="text-center">CAT Number</th>
                            <th scope="col" class="text-center">BlackList</th>
                            <th scope="col" class="text-center">Tax Type</th>
                            <th scope="col" class="text-center">Resupplier</th>
@@ -205,7 +206,7 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Cat Number</label>
+                                <label>Status CAT Number</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fl_catnumber" value="T" class="selectgroup-input">
@@ -263,7 +264,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3"></div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Detail CAT Number</label>
+                                <input type="text" class="form-control required-field" name="fc_catnumber" id="fc_catnumber">
+                            </div>
+                        </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tipe Stock 1</label>
@@ -710,8 +716,8 @@
          type: 'GET'
       },
       columnDefs: [
-         { className: 'text-center', targets: [0,7,8,9,10,11,12,13,25,30] },
-         { className: 'text-nowrap', targets: [41] },
+         { className: 'text-center', targets: [0,7,8,9,10,11,12,13,14,25,30] },
+         { className: 'text-nowrap', targets: [42] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -725,6 +731,7 @@
          { data: 'fl_expired' },
          { data: 'fl_serialnumber' },
          { data: 'fl_catnumber' },
+         { data: 'fc_catnumber' },
          { data: 'fl_blacklist' },
          { data: 'fl_taxtype' },
          { data: 'fl_repsupplier' },
@@ -786,36 +793,36 @@
         }
 
         if(data.fl_blacklist == 'T'){
-            $('td:eq(11)', row).html(`<span class="badge badge-success">YES</span>`);
-        }else{
-            $('td:eq(11)', row).html(`<span class="badge badge-danger">NO</span>`);
-        }
-
-        if(data.fl_taxtype == 'T'){
             $('td:eq(12)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(12)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_repsupplier == 'T'){
+        if(data.fl_taxtype == 'T'){
             $('td:eq(13)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(13)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_disc_date == 'T'){
-            $('td:eq(25)', row).html(`<span class="badge badge-success">YES</span>`);
+        if(data.fl_repsupplier == 'T'){
+            $('td:eq(14)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(25)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(14)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_disc_date == 'T'){
+            $('td:eq(26)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(26)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
         if(data.fl_disc_time == 'T'){
-            $('td:eq(30)', row).html(`<span class="badge badge-success">YES</span>`);
+            $('td:eq(31)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(30)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(31)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        $('td:eq(41)', row).html(`
+        $('td:eq(42)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_nameshort}')"><i class="fa fa-trash"> </i> Hapus</button>
         `);

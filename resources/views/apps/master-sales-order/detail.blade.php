@@ -184,7 +184,7 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">DO</th>
-                                        <th scope="col" class="text-center">INV</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center">Harga</th>
                                         <th scope="col" class="text-center">Disc.(Rp)</th>
                                         <th scope="col" class="text-center">Total</th>
@@ -350,6 +350,8 @@
             type: 'GET',
         },
         columnDefs: [{
+            targets: [7],
+            defaultContent: "-",
             className: 'text-center',
             targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
         }, ],
@@ -377,7 +379,7 @@
                 data: 'fn_do_qty'
             },
             {
-                data: 'fn_inv_qty'
+                data: 'fv_description'
             },
             {
                 data: 'fm_so_oriprice',

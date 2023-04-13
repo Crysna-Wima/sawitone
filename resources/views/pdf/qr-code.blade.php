@@ -165,8 +165,9 @@
 </style>
 
 <body>
-<div class="container" id="sj-pdf">
-    <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
+    <div class="container" id="qr">
+        <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
+    </div>
 </body>
 
 </html>
