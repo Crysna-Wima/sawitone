@@ -254,6 +254,59 @@
             $('#modal_nama').modal('show');
         };
 
+        function closeSO(fc_sono) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin menutup sales order ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/master-sales-order/close',
+                        type: 'PUT',
+                        data: {
+                            fc_sostatus: 'CL',
+                            fc_sono: fc_sono
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                                tb_menunggu.ajax.reload();
+                                tb_pending.ajax.reload();
+                                tb_selesai.ajax.reload();
+                                tb_done.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
@@ -342,13 +395,13 @@
                 $('td:eq(9)', row).html(`
             <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
-            <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close SO</button>
+            <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
                 // <a href="/apps/master-sales-order/pdf/${fc_dono}/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
             }
         });
 
-        var tb = $('#tb_menunggu').DataTable({
+        var tb_menunggu = $('#tb_menunggu').DataTable({
             processing: true,
             serverSide: true,
             order: [
@@ -428,7 +481,7 @@
             }
         });
 
-        var tb = $('#tb_pending').DataTable({
+        var tb_pending = $('#tb_pending').DataTable({
             processing: true,
             serverSide: true,
             order: [
@@ -508,7 +561,7 @@
             }
         });
 
-        var tb = $('#tb_selesai').DataTable({
+        var tb_selesai = $('#tb_selesai').DataTable({
             processing: true,
             serverSide: true,
             order: [
@@ -588,7 +641,7 @@
             }
         });
 
-        var tb = $('#tb_do_done').DataTable({
+        var tb_done = $('#tb_do_done').DataTable({
             processing: true,
             serverSide: true,
             order: [

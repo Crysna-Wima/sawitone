@@ -174,6 +174,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterSalesOrderController@datatables');
             Route::get('/datatables-so-detail','Apps\MasterSalesOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\MasterSalesOrderController@datatables_so_payment');
+            Route::put('/close','Apps\MasterSalesOrderController@close_so');
+            Route::put('/cancel_so','Apps\MasterSalesOrderController@cancel_so');
 
             Route::post('/pdf', 'Apps\MasterSalesOrderController@pdf');
             Route::get('/get_pdf/{fc_dono}/{fc_sono}/{nama_pj}', 'Apps\MasterSalesOrderController@get_pdf');
@@ -296,6 +298,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             // Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf_ro');
             Route::get('/get_pdf_ro/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf_ro');
             Route::get('/detail/{fc_pono}','Apps\MasterPurchaseOrderController@detail');
+            Route::put('/close','Apps\MasterPurchaseOrderController@close_po');
+            Route::put('/cancel_po','Apps\MasterPurchaseOrderController@cancel_po');
         });
 
         Route::prefix('receiving-order')->group(function(){

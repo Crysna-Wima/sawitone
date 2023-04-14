@@ -266,6 +266,59 @@
             $('#modal_nama').modal('show');
         };
 
+        function closePO(fc_pono) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin menutup sales order ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/master-purchase-order/close',
+                        type: 'PUT',
+                        data: {
+                            fc_postatus: 'CL',
+                            fc_pono: fc_pono
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                                tb_pemesanan.ajax.reload();
+                                tb_pending.ajax.reload();
+                                tb_terkirim.ajax.reload();
+                                tb_selesai.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
@@ -346,7 +399,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
 
                 // $('td:eq(10)', row).html(`
@@ -356,7 +409,7 @@
             },
         });
 
-        var tb = $('#tb_pemesanan').DataTable({
+        var tb_pemesanan = $('#tb_pemesanan').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -431,7 +484,7 @@
             },
         });
 
-        var tb = $('#tb_pending').DataTable({
+        var tb_pending = $('#tb_pending').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -506,7 +559,7 @@
             },
         });
 
-        var tb = $('#tb_terkirim').DataTable({
+        var tb_terkirim = $('#tb_terkirim').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -581,7 +634,7 @@
             },
         });
 
-        var tb = $('#tb_selesai').DataTable({
+        var tb_selesai = $('#tb_selesai').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -651,7 +704,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
         });

@@ -90,7 +90,11 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button type="" class="btn btn-danger">Cancel SO</button>
+                                <form id="form_cancel" action="/apps/master-sales-order/cancel_so" method="PUT">
+                                    @csrf
+                                    <input type="hidden" name="fc_sono" value="{{ $data->fc_sono }}">
+                                    <button type="submit" class="btn btn-danger">Cancel SO</button>
+                                </form>
                             </div>
                         </div>
                     </div>

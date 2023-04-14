@@ -145,4 +145,58 @@ class MasterPurchaseOrderController extends Controller
         $pdf = PDF::loadView('pdf.receiving-order', $data)->setPaper('a4');
         return $pdf->stream();
     }
+
+    public function close_po(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_pono = $request->fc_pono;
+        $fc_postatus = $request->fc_postatus;
+
+        // update
+        $po_master = PoMaster::where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $po_master->update([
+            'fc_postatus' => $fc_postatus,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diclose',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal diclose'
+        ];
+    }
+
+    public function cancel_po(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_pono = $request->fc_pono;
+
+        // update
+        $po_master = PoMaster::where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $po_master->update([
+            'fc_postatus' => 'CC',
+        ]);
+
+        if ($update_status) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil dicancel',
+                'link' => '/apps/master-purchase-order'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dicancel'
+        ];
+    }
+
 }

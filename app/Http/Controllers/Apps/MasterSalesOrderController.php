@@ -118,4 +118,57 @@ class MasterSalesOrderController extends Controller
         $pdf = PDF::loadView('pdf.download-pdf', $data)->setPaper('a4');
         return $pdf->stream();
     }
+
+    public function close_so(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_sono = $request->fc_sono;
+        $fc_sostatus = $request->fc_sostatus;
+
+        // update
+        $so_master = SoMaster::where('fc_sono', $fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $so_master->update([
+            'fc_sostatus' => $fc_sostatus,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diclose',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal diclose'
+        ];
+    }
+
+    public function cancel_so(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_sono = $request->fc_sono;
+
+        // update
+        $so_master = SoMaster::where('fc_sono', $fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $so_master->update([
+            'fc_sostatus' => 'CC',
+        ]);
+
+        if ($update_status) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil dicancel',
+                'link' => '/apps/master-sales-order'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dicancel'
+        ];
+    }
 }
