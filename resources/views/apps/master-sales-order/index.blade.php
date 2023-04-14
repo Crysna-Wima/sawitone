@@ -388,6 +388,10 @@
                     $('td:eq(7)', row).html('<span class="badge badge-info">DO Tuntas</span>');
                 } else if (data['fc_sostatus'] == 'P') {
                     $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
+                } else if (data['fc_sostatus'] == 'CC') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Cancel</span>');
+                } else if (data['fc_sostatus'] == 'CL') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Close</span>');
                 } else {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
                 }
