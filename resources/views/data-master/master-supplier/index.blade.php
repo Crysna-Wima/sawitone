@@ -147,7 +147,7 @@
 
                     <div class="col-12 col-md-6 col-lg-12 text-right">
                         <div class="button mb-2">
-                            <button type="button" id="contact-person" class="btn btn-success" onclick=""><i class="fa fa-plus mr-1"></i> Tambah PIC</button>
+                            <button type="button" id="contact-person" class="btn btn-success" onclick=""><i class="fa fa-plus"></i> Tambah PIC</button>
                         </div>
                     </div>
                     <div class="row contact-person-row">
@@ -185,13 +185,13 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Legal Status Supplier</label>
-                                <select class="select2 required-field" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus"></select>
+                                <select class="select2 required-field" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Kebangsaaan Supplier</label>
-                                <select class="select2 required-field" name="fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()"></select>
+                                <select class="select2 required-field" name="fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -209,7 +209,7 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tanggal Join Supplier</label>
-                                <input type="text" class="form-control datepicker required-field" name="fd_supplierjoindate" id="fd_supplierjoindate">
+                                <input type="text" class="form-control datepicker" name="fd_supplierjoindate" id="fd_supplierjoindate">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
@@ -237,7 +237,7 @@
                             <div class="form-group">
                                 <label>Kode Pajak Supplier</label>
 
-                                <select class="select2 required-field" name="fc_suppliertaxcode" id="fc_suppliertaxcode"></select>
+                                <select class="select2 required-field" name="fc_suppliertaxcode" id="fc_suppliertaxcode" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">

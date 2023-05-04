@@ -67,7 +67,7 @@
                                 <div class="form-group">
                                     <label>Branch</label>
                                     <select class="form-control select2 required-field" name="fc_branch"
-                                        id="fc_branch"></select>
+                                        id="fc_branch" required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -87,14 +87,14 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="text" class="form-control" name="fc_password" id="fc_password">
+                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Group User</label>
                                     <select class="form-control select2 required-field" name="fc_groupuser"
-                                        id="fc_groupuser"></select>
+                                        id="fc_groupuser" required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">

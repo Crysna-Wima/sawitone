@@ -55,13 +55,19 @@
                         <label>Nama Menu</label>
                         <input type="text" hidden class="form-control" name="id" id="id">
                         <input type="text" hidden class="form-control" name="type" id="type">
-                        <input type="text" class="form-control required-field" name="nama_menu" id="nama_menu">
+                        <input type="text" class="form-control required-field" name="nama_menu" id="nama_menu" required>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <input type="text" class="form-control" name="kategori" id="kategori" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
                     <div class="form-group">
                         <label>Icon</label>
-                        <input type="text" class="form-control" name="icon" id="icon">
+                        <input type="text" class="form-control" name="icon" id="icon" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-3 col-lg-3">
@@ -79,20 +85,20 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Menu</label>
-                        <input type="text" class="form-control required-field" name="menu" id="menu">
+                        <input type="text" class="form-control required-field" name="menu" id="menu" required>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Sub-Menu</label>
-                        <input type="text" class="form-control" name="submenu" id="submenu">
+                        <input type="text" class="form-control" name="submenu" id="submenu" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Url</label>
-                        <input type="text" class="form-control" name="link" id="link">
+                        <input type="text" class="form-control" name="link" id="link" required>
                     </div>
                 </div>
             </div>

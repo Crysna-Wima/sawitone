@@ -681,18 +681,18 @@
             } else if (data['fc_dostatus'] == 'D') {
                 $('td:eq(7)', row).html(
                     `
-                                                               <a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-                                                               <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                 );
             } else {
                 if (data['fc_invstatus'] == 'N') {
                     $('td:eq(7)', row).html(
-                        `<a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                        `<button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                          <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                     );
                 } else {
                     $('td:eq(7)', row).html(
-                        `<a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+                        `<button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                          <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                     );
                 }
@@ -762,21 +762,21 @@
                     } else if (data['fc_dostatus'] == 'D') {
                         $('td:eq(7)', row).html(
                             `
-               <a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-               <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                            <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                         );
                     } else {
                         if (data['fc_invstatus'] == 'N') {
                             $('td:eq(7)', row).html(
                                 `
-                     <a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-                     <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
+                                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                                <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                             );
                         } else {
                             $('td:eq(7)', row).html(
                                 `
-                     <a href="/apps/master-delivery-order/pdf/${fc_dono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
-                     <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+                                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                                <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                             );
                         }
                     }

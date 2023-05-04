@@ -151,7 +151,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat Customer 1</label>
-                                <textarea type="text" class="form-control" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control required-field" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -163,7 +163,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat Customer Loading 1</label>
-                                <textarea type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control required-field" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -187,19 +187,19 @@
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama Contact Person 1</label>
-                                    <input type="text" class="form-control" name="fc_memberpicname" id="fc_memberpicname">
+                                    <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-4">
                                 <div class="form-group">
                                     <label>No. HP CP Customer 1</label>
-                                    <input type="text" class="form-control" name="fc_memberpicphone" id="fc_memberpicphone">
+                                    <input type="text" class="form-control required-field" name="fc_memberpicphone" id="fc_memberpicphone">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
                                     <label>Pos CP Customer 1</label>
-                                    <input type="text" class="form-control" name="fc_memberpicpos" id="fc_memberpicpos">
+                                    <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-1">
@@ -289,19 +289,19 @@
                         <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group">
                                 <label>NPWP Customer</label>
-                                <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no">
+                                <input type="text" class="form-control required-field" name="fc_membernpwp_no" id="fc_membernpwp_no">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Nama NPWP Customer</label>
-                                <input type="text" class="form-control" name="fc_membernpwp_name" id="fc_membernpwp_name">
+                                <input type="text" class="form-control required-field" name="fc_membernpwp_name" id="fc_membernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat NPWP Customer 1</label>
-                                <textarea type="text" class="form-control" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
+                                <textarea type="text" class="form-control required-field" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -313,7 +313,7 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Email Customer 1</label>
-                                <input type="text" class="form-control" name="fc_memberemail1" id="fc_memberemail1">
+                                <input type="text" class="form-control required-field" name="fc_memberemail1" id="fc_memberemail1">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -326,7 +326,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No. HP Customer 1</label>
-                                <input type="text" class="form-control" name="fc_memberphone1" id="fc_memberphone1">
+                                <input type="text" class="form-control required-field" name="fc_memberphone1" id="fc_memberphone1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
@@ -364,7 +364,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No Rekening Customer 1</label>
-                                <input type="text" class="form-control" name="fc_membernorek1" id="fc_membernorek1">
+                                <input type="text" class="form-control required-field" name="fc_membernorek1" id="fc_membernorek1">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">

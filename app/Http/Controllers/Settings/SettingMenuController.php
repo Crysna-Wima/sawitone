@@ -31,6 +31,7 @@ class SettingMenuController extends Controller
         foreach($master_menu as $key => $value){
             $array[$count]['id'] = $value->id;
             $array[$count]['nama'] = $value->nama_menu;
+            $array[$count]['kategori'] = $value->kategori;
             $array[$count]['index'] = $value->index;
             $array[$count]['icon'] = $value->icon;
             $array[$count]['link'] = $value->link;
@@ -42,6 +43,7 @@ class SettingMenuController extends Controller
             foreach($sub_menu as $value2){
                 $array[$count]['id'] = $value2->id;
                 $array[$count]['nama'] = $value2->nama_menu;
+                $array[$count]['kategori'] = $value->kategori;
                 $array[$count]['index'] = $value2->index;
                 $array[$count]['icon'] = $value2->icon;
                 $array[$count]['link'] = $value2->link;
