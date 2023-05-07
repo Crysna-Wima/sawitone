@@ -344,7 +344,7 @@
 
                     $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>
+                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },
             });
@@ -410,7 +410,7 @@
 
                     $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-qrcode"></i> Generate QR</button>
+                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },
             });
