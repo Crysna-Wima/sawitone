@@ -622,7 +622,7 @@
             success: function(response) {
                 var data = response.data;
                 // console.log(data.tempsodetail[0].fm_so_price);
-                var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
+                var tipe_bisnis = "{{ $data->customer->member_type_business->fc_kode }}";
                 if (tipe_bisnis == 'DISTRIBUTOR') {
                     $('#fm_so_price').val(fungsiRupiah(data.fm_price_distributor));
                 } else if (tipe_bisnis == 'RETAIL') {
