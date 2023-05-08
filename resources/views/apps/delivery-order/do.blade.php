@@ -611,7 +611,7 @@
     function select_stock(fc_barcode) {
         let stock_name = 'input[name="pname[]'
         // ambil 8 string fc_barcode dari depan
-        let fc_barcode_8 = fc_barcode.substring(0, 50);
+        let fc_barcode_8 = fc_barcode.substring(0, 40);
         console.log($('').val());
         // console.log(fc_barcode);
         // modal loading
