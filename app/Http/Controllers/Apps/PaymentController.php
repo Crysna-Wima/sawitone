@@ -160,8 +160,9 @@ class PaymentController extends Controller
         $temp_so_pay = TempSoPay::where('fn_sopayrownum', $fn_sopayrownum)->delete();
         if ($temp_so_pay) {
             return [
-                'status' => 200,
+                'status' => 201,
                 'message' => 'Data berhasil dihapus',
+                'link' => '/apps/sales-order/detail/payment'
             ];
         }
 

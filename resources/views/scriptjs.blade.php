@@ -524,6 +524,49 @@
        });
     }
 
+    function delete_action_replace(url, nama){
+       swal({
+             title: 'Apakah anda yakin?',
+             text: 'Apakah anda yakin akan menghapus data ' + nama + "?",
+             icon: 'warning',
+             buttons: true,
+             dangerMode: true,
+       })
+       .then((willDelete) => {
+             if (willDelete) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                   url : url,
+                   type: "DELETE",
+                   dataType: "JSON",
+                   success: function(response){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                     //  tb.ajax.reload(null, false);
+                     //  console.log(response.status);
+                      if(response.status == 200){
+                        // console.log(response);
+                         swal(response.message, {  icon: 'success', });
+                         $("#modal").modal('hide');
+                         tb.ajax.reload(null, false);
+                         $("#kekurangan").load(location.href + " #kekurangan");
+                      }else if(response.status == 201){
+                        swal(response.message, {  icon: 'success', });
+                         $("#modal").modal('hide');
+                         tb.ajax.reload(null, false);
+                         location.href = response.link;
+                      }else{
+                         swal(response.message, {  icon: 'error', });
+                      }
+
+                   },error: function (jqXHR, textStatus, errorThrown){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                   }
+                });
+             }
+       });
+    }
+
     function reload(){
        tb.ajax.reload(null,false);
     }
