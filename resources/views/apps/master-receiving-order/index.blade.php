@@ -265,6 +265,7 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
+                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
                     var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
                     $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'P') {
@@ -277,7 +278,7 @@
 
                     $('td:eq(9)', row).html(`
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
+                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                     // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 },

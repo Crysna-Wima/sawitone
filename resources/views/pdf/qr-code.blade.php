@@ -165,9 +165,13 @@
 </style>
 
 <body>
+    @for ($i = 0; $i < $count; $i++)
     <div class="container" id="qr">
-        <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
+            <img src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
     </div>
+    <br>
+    <br>
+    @endfor
 </body>
 
 </html>
