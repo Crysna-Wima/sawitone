@@ -137,7 +137,7 @@
                           <th scope="col" class="text-center">Stock Code</th>
                           <th scope="col" class="text-center">Barcode</th>
                           <th scope="col" class="text-center">Supplier Code</th>
-                          <th scope="col" class="text-center">Price Customer</th>
+                          <th scope="col" class="text-center">Price Supplier</th>
                           <th scope="col" class="text-center">Price Default</th>
                           <th scope="col" class="text-center">Price Distributor</th>
                           <th scope="col" class="text-center">Price Project</th>

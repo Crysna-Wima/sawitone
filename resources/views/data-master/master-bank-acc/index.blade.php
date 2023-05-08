@@ -87,7 +87,8 @@
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Nama Bank</label>
-                                <input type="text" class="form-control required-field" name="fv_bankname" id="fv_bankname">
+                                <select class="form-control select2 required-field" name="fv_bankname"
+                                    id="fv_bankname" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
@@ -103,7 +104,7 @@
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="form-group">
                                 <label>No. Rekening</label>
-                                <input type="text" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
+                                <input type="number" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
                             </div>
                         </div>
 
@@ -158,7 +159,45 @@
 <script>
     $(document).ready(function() {
         get_data_branch();
+        get_data_bankname();
     })
+
+    function get_data_bankname() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BANKNAME",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fv_bankname").empty();
+                    $("#fv_bankname").append(`<option value="" selected readonly> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fv_bankname").append(
+                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function get_data_branch() {
         $("#modal_loading").modal('show');
