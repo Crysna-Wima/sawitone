@@ -554,7 +554,7 @@
                     orderable: false
                 },
                 {
-                    data: null,
+                    data: 'fc_catnumber',
                     defaultContent: '-',
                 },
                 {
