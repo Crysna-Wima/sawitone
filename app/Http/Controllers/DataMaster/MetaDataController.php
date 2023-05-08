@@ -80,6 +80,7 @@ class MetaDataController extends Controller
             'fc_trx' => $request->fc_trx,
             'fc_kode' => $request->fc_kode,
             'fv_description' => $request->fv_description,
+            'fc_action' => $request->fc_action
         ] );
 
         if ($add_transaksi) {
@@ -93,6 +94,7 @@ class MetaDataController extends Controller
             'status' => 300, // SUCCESS
             'message' => 'Data gagal disimpan'
         ];
+        // dd($request);
     }
 
     public function store_update(request $request){
@@ -112,6 +114,7 @@ class MetaDataController extends Controller
         $transaksi_type = TransaksiType::where(['fc_trx' => $request->fc_trx, 'fc_kode' => $request->fc_kode])->first();
         $update_transaksi_type = $transaksi_type->update([
             'fv_description' => $request->fv_description,
+            'fc_action' => $request->fc_action
         ]);
 
         if ($update_transaksi_type) {
