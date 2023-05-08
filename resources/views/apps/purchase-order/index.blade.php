@@ -561,8 +561,11 @@
                         var elem_name = $('[name=' + key + ']');
                         elem_name.val(data[key]);
                     });
-
-                    $('#fn_supplierAgingAR').val(data.fn_supplierAgingAR);
+                    if(data.fn_supplierAgingAR === null){
+                        $('#fn_supplierAgingAR').val("-");
+                    } else{
+                        $('#fn_supplierAgingAR').val(data.fn_supplierAgingAR);
+                    }
                     $('#fn_supplierAR').val(data.fn_supplierAR);
                     $('#fc_branchtype_desc').val(data.supplier_typebranch.fv_description);
                     $('#fc_suppliertypebusiness_desc').val(data.supplier_type_business.fv_description);
