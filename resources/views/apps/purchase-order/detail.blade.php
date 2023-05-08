@@ -254,7 +254,8 @@
                             <div class="flex-row-item" style="margin-right: 30px">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="count_item">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -262,7 +263,8 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_so_disc">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
@@ -270,29 +272,34 @@
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="total_harga">0,00</p>
                                 </div>
                             </div>
                             <div class="flex-row-item">
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
-                                </div>
-                                <div class="d-flex">
-                                    <p class="flex-row-item"></p>
-                                    <p class="flex-row-item text-right"></p>
-                                </div>
-                                <div class="d-flex" style="gap: 5px; white-space: pre" >
-                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
-                                    <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_servpay">0,00</p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="flex-row-item"></p>
                                     <p class="flex-row-item text-right"></p>
                                 </div>
                                 <div class="d-flex" style="gap: 5px; white-space: pre">
-                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                    <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
+                                    <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
+                                    <p class="text-success flex-row-item text-right" style="font-size: medium"
+                                        id="fm_tax">0,00</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="flex-row-item"></p>
+                                    <p class="flex-row-item text-right"></p>
+                                </div>
+                                <div class="d-flex" style="gap: 5px; white-space: pre">
+                                    <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">
+                                        GRAND</p>
+                                    <p class="text-success flex-row-item text-right"
+                                        style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                                 </div>
                             </div>
                         </div>
@@ -464,15 +471,15 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-12 col-md-12 col-lg-3">
-                                        <label>Alamat Tujuan</label>
-                                        <div class="form-group">
-                                            @if (empty($data->fc_address_loading1))
+                                            <label>Alamat Tujuan</label>
+                                            <div class="form-group">
+                                                @if (empty($data->fc_address_loading1))
     <input type="text" id="fc_address_loading1" class="form-control" name="fc_address_loading1" value="Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo, Kota SBY, Jawa Timur 60297" required>
 @else
     <input type="text" id="fc_address_loading1" class="form-control" name="fc_address_loading1" value="{{ $data->fc_address_loading1 }}" required>
     @endif
-                                        </div>
-                                    </div> -->
+                                            </div>
+                                        </div> -->
                             </div>
                             <div class="text-right">
                                 @if ($data->fm_servpay == 0 && empty($data->fc_potransport))
@@ -608,7 +615,7 @@
                         for (var i = 0; i < staticAddress.length; i++) {
                             $("#fc_membername1").append(
                                 `<option value="${staticAddress[i].text}">${staticAddress[i].text}</option>`
-                                );
+                            );
                         }
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membername1").append(
@@ -1056,44 +1063,54 @@
 
         $("#submit_button").click(function() {
 
-            var data = {
-                'fd_podateinputuser': $('#fd_podateinputuser').val(),
-                'fd_poexpired': $('#fd_poexpired').val(),
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/apps/purchase-order/detail/submit',
-                data: data,
-                success: function(response) {
-                    // tampilkan modal section alert
-                    console.log(response.status);
-                    if (response.status == 300 || response.status == 301) {
-                        $('#modal_loading').modal('hide');
-                        swal(response.message, {
-                            icon: 'error',
-                        });
-                    } else {
-                        $('#modal_loading').modal('hide');
-                        // tampilkan flas message bootstrap id alert-bayar
-                        swal(response.message, {
-                            icon: 'success',
-                        });
-                        // redirect ke halaman sales order
-                        // hapus local storage
-
-
-                        setTimeout(function() {
-                            window.location.href = "/apps/purchase-order";
-                        }, 500);
-
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $('#modal_loading').modal('hide');
-                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                        .responseText + ")", {
-                            icon: 'error',
-                        });
+            swal({
+                title: "Are you sure?",
+                text: "Once submitted, you will not be able to edit the data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willSubmit) => {
+                if (willSubmit) {
+                    // Proceed with submission
+                    var data = {
+                        'fd_podateinputuser': $('#fd_podateinputuser').val(),
+                        'fd_poexpired': $('#fd_poexpired').val(),
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/apps/purchase-order/detail/submit',
+                        data: data,
+                        success: function(response) {
+                            // tampilkan modal section alert
+                            console.log(response.status);
+                            if (response.status == 300 || response.status == 301) {
+                                $('#modal_loading').modal('hide');
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            } else {
+                                $('#modal_loading').modal('hide');
+                                // tampilkan flas message bootstrap id alert-bayar
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                // redirect ke halaman sales order
+                                // hapus local storage
+                                setTimeout(function() {
+                                    window.location.href = "/apps/purchase-order";
+                                }, 500);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            $('#modal_loading').modal('hide');
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                } else {
+                    // Do nothing
                 }
             });
         });

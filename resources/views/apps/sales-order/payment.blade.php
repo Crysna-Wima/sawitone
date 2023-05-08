@@ -129,8 +129,8 @@
                                     </select>
                                 @else
                                     <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
-                                        <option value="{{ $data->fc_sotransport }}" selected disabled>
-                                            {{ $data->fc_sotransport }}
+                                        <option value="{{ $data->fc_sotransport }}" selected>
+                                           -- {{ $data->fc_sotransport }} --
                                         </option>
                                         <option value="By Dexa">By Dexa</option>
                                         <option value="By Paket">By Paket</option>
