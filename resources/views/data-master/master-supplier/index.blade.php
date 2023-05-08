@@ -46,6 +46,7 @@
                                     <th scope="col" class="text-center">Kebangsaan Supplier</th>
                                     <th scope="col" class="text-center">Supplier Forex</th>
                                     <th scope="col" class="text-center">Tipe Bisnis Supplier</th>
+                                    <th scope="col" class="text-center">Tipe Cabang Supplier</th>
                                     <th scope="col" class="text-center">Supplier Reseller</th>
                                     <th scope="col" class="text-center">Kode Pajak Supplier</th>
                                     <th scope="col" class="text-center">NPWP Supplier</th>
@@ -145,7 +146,7 @@
                     {{-- contact person input --}}
 
 
-                    <div class="col-12 col-md-6 col-lg-12 text-right">
+                    <div class="col-12 col-md-6 col-lg-12 mr-0 text-right">
                         <div class="button mb-2">
                             <button type="button" id="contact-person" class="btn btn-success" onclick=""><i class="fa fa-plus"></i> Tambah PIC</button>
                         </div>
@@ -206,6 +207,13 @@
                                 <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness" required></select>
                             </div>
                         </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>Tipe Cabang Supplier</label>
+                                <select class="select2 required-field" name="fc_branchtype" id="fc_branchtype" required></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-9"></div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
                                 <label>Tanggal Join Supplier</label>
@@ -384,6 +392,7 @@
         get_data_legal_status();
         get_data_nationality();
         get_data_type_business();
+        get_data_type_branch()
         get_data_tax_code();
         get_data_supplier_lock_code();
         get_data_supplier_bank();
@@ -502,6 +511,43 @@
                         } else {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    
+    function get_data_type_branch() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/CUST_TYPEOFFICE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_branchtype").empty();
+                    $("#fc_branchtype").append(`<option value="" selected readonly> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_branchtype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
@@ -761,11 +807,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 5]
+                targets: [0, 4, 5, 16]
             },
             {
                 className: 'text-nowrap',
-                targets: [49]
+                targets: [50]
             },
         ],
         columns: [{
@@ -820,6 +866,10 @@
             },
             {
                 data: 'supplier_type_business.fv_description',
+                defaultContent: '',
+            },
+            {
+                data: 'fc_branchtype',
                 defaultContent: '',
             },
             {
@@ -951,7 +1001,13 @@
             var url_edit = "/data-master/master-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
             var url_delete = "/data-master/master-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_suppliercode;
 
-            $('td:eq(49)', row).html(`
+            if (data['fl_supplierreseller'] == 'F') {
+                $('td:eq(16)', row).html('<span class="badge badge-danger">No</span>');
+            } else {
+                $('td:eq(16)', row).html('<span class="badge badge-success">Yes</span>');
+            }
+
+            $('td:eq(50)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_suppliername1}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
