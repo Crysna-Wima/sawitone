@@ -67,7 +67,7 @@ class Supplier extends Model
     }
 
     public function supplier_typebranch(){
-        return $this->belongsTo(TransaksiType::class, 'fc_branchtype', 'fc_kode')->withTrashed();
+        return $this->belongsTo(TransaksiType::class, 'fc_branchtype', 'fc_kode')->withTrashed()->where('fc_trx','CUST_TYPEOFFICE');
     }
 
 
