@@ -393,15 +393,15 @@
 
             $('#fn_invdetail').html(data.romst.invmst.fn_invdetail);
             $('#fn_invdetail').trigger('change');
-            $('#fm_disctotal').html(data.romst.invmst.fm_disctotal);
+            $('#fm_disctotal').html("Rp. " + fungsiRupiah(data.romst.invmst.fm_disctotal));
             $('#fm_disctotal').trigger('change');
-            $('#fm_netto').html(data.romst.invmst.fm_netto);
+            $('#fm_netto').html("Rp. " + fungsiRupiah(data.romst.invmst.fm_netto));
             $('#fm_netto').trigger('change');
-            $('#fm_servpay_calculate').html(data.romst.invmst.fm_servpay);
+            $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data.romst.invmst.fm_servpay));
             $('#fm_servpay_calculate').trigger('change');
-            $('#fm_tax').html(data.romst.invmst.fm_tax);
+            $('#fm_tax').html("Rp. " + fungsiRupiah(data.romst.invmst.fm_tax));
             $('#fm_tax').trigger('change');
-            $('#fm_brutto').html(data.romst.invmst.fm_brutto);
+            $('#fm_brutto').html("Rp. " + fungsiRupiah(data.romst.invmst.fm_brutto));
             $('#fm_brutto').trigger('change');
 
         },

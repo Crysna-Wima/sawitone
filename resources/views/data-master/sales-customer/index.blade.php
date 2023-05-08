@@ -286,6 +286,7 @@
         $("#modal_edit").modal('show');
         $(".modal-title").text('Tambah Sales Customer');
         $("#form_submit")[0].reset();
+        $("#modal_edit").modal('hide');
     }
 
     var tb = $('#tb').DataTable({

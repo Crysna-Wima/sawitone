@@ -863,7 +863,7 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0]
+                targets: [0, 18, 46]
             },
             {
                 className: 'd-flex',
@@ -1104,7 +1104,19 @@
                 .fc_branch + '/' + data.fc_membercode;
             var url_delete = "/data-master/master-customer/delete/" + data.fc_divisioncode + '/' + data
                 .fc_branch + '/' + data.fc_membercode;
+            
+            if (data['fl_memberreseller'] == 'F') {
+                $('td:eq(18)', row).html('<span class="badge badge-danger">No</span>');
+            } else {
+                $('td:eq(18)', row).html('<span class="badge badge-success">Yes</span>');
+            }
 
+            if (data['fl_membercontract'] == 'F') {
+                $('td:eq(46)', row).html('<span class="badge badge-danger">No</span>');
+            } else {
+                $('td:eq(46)', row).html('<span class="badge badge-success">Yes</span>');
+            }
+            
             $('td:eq(55)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membername1}')"><i class="fa fa-trash"> </i> Hapus</button>
