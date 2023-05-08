@@ -262,7 +262,7 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Alamat NPWP Supplier 1</label>AD
+                                <label>Alamat NPWP Supplier 1</label>
                                 <textarea type="text" class="form-control required-field" name="fc_supplier_npwpaddress1" id="fc_supplier_npwpaddress1" style="height: 100px"></textarea>
                             </div>
                         </div>
@@ -869,7 +869,7 @@
                 defaultContent: '',
             },
             {
-                data: 'fc_branchtype',
+                data: 'supplier_typebranch.fv_description',
                 defaultContent: '',
             },
             {

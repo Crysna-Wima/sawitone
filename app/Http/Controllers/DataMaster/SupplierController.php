@@ -35,6 +35,7 @@ class SupplierController extends Controller
             'supplier_nationality',
             'supplier_type_business',
             'supplier_tax_code',
+            'supplier_typebranch',
             'supplier_bank1',
             'supplier_bank2',
             'supplier_bank3',
