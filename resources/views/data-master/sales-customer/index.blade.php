@@ -70,7 +70,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Branch</label>
-                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" onchange="change_branch()"></select>
+                                <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
