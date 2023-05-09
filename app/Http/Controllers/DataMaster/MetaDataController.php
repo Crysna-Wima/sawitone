@@ -94,7 +94,7 @@ class MetaDataController extends Controller
             'status' => 300, // SUCCESS
             'message' => 'Data gagal disimpan'
         ];
-        // dd($request);
+        // dd($request->fc_action);
     }
 
     public function store_update(request $request){

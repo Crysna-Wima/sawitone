@@ -19,7 +19,7 @@ class TransaksiType extends Model
     protected $primaryKey = 'fc_kode';
     // protected $primaryKey = ['fc_trx', 'fc_kode'];
     public $incrementing = false;
-    protected $fillable = ['fc_trx', 'fc_kode', 'fv_description'];
+    protected $fillable = ['fc_trx', 'fc_kode', 'fv_description', 'fc_action'];
     protected $appends = [];
 
     public function tempsopay(){
