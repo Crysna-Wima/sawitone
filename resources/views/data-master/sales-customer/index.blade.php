@@ -57,7 +57,7 @@
                 </button>
             </div>
             <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
+            <form id="form_submit_edit_sales_custom" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -359,5 +359,60 @@
         $("#type").val('update');
         $("#fc_branch").prop("disabled", true);
     }
+
+    $('#form_submit_edit_sales_custom').on('submit', function(e){
+       e.preventDefault();
+
+       var form_id = $(this).attr("id");
+       if(check_required(form_id) === false){
+          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+          return;
+       }
+
+       swal({
+             title: 'Yakin?',
+             text: 'Apakah anda yakin akan menyimpan data ini?',
+             icon: 'warning',
+             buttons: true,
+             dangerMode: true,
+       })
+       .then((save) => {
+             if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                   url:  $('#form_submit_edit_sales_custom').attr('action'),
+                   type: $('#form_submit_edit_sales_custom').attr('method'),
+                   data: $('#form_submit_edit_sales_custom').serialize(),
+                   success: function(response){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      if(response.status == 200){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal_edit").modal('hide');
+                         $("#form_submit_edit_sales_custom")[0].reset();
+                         reset_all_select();
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 201){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal_edit").modal('hide');
+                         location.href = response.link;
+                      }
+                      else if(response.status == 203){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal_edit").modal('hide');
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 300){
+                         swal(response.message, { icon: 'error', });
+                      }
+                   },error: function (jqXHR, textStatus, errorThrown){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                   }
+                });
+             }
+       });
+    });
+
 </script>
 @endsection
