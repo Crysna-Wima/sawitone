@@ -88,7 +88,7 @@ class DataMasterCOntroller extends Controller
 
     public function generate_no_document(request $request)
     {
-        $data = NoDocument::generate(Carbon::now()->format('Y'), $request->fv_document, $request->fc_branch, $request->fv_part);
+        $data = NoDocument::generate(Carbon::now()->format('Y'), $request->fv_document, $request->fc_branch, $request->fv_part, $request->fc_divisioncode);
         return ApiFormatter::getResponse($data);
     }
 

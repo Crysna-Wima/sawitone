@@ -47,8 +47,10 @@ class SupplierController extends Controller
     }
 
     public function store_update(request $request){
+        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
+            'fc_branch' => 'required',
             'fc_suppliercode' => 'required',
         ]);
 
@@ -59,7 +61,6 @@ class SupplierController extends Controller
             ];
         }
         // dd($request);
-        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = Supplier::where([
                 'fc_divisioncode' => $request->fc_divisioncode,

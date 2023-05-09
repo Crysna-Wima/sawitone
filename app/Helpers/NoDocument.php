@@ -8,7 +8,7 @@ use App\Models\MasterMenu;
 
 class NoDocument {
 
-    Public static function generate($tahun, $no_doc, $branch, $part = null){
+    Public static function generate($tahun, $no_doc, $branch, $part = null, $divisioncode){
         $where_text = "fv_document = '$no_doc'";
         if(!empty($branch)){
             $where_text .= "and fc_branch = '$branch'"; 
@@ -20,7 +20,7 @@ class NoDocument {
 
         $data = DB::select(DB::raw("
             SELECT CONCAT(
-            fv_prefix, '$tahun',                                                             
+            fv_prefix, '$tahun', '$branch', '$divisioncode',                                                             
             REPEAT('0', fn_count3-( 4 + LENGTH(fv_prefix) + LENGTH(fn_docno + 1)) ),
                   fn_docno + 1) AS NomorIs 
             FROM t_nomor 
