@@ -305,6 +305,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('receiving-order')->group(function(){
             Route::get('/','Apps\ReceivingOrderController@index');
             Route::get('/penerimaan-barang/{fc_grno}/{fc_suppliercode}','Apps\ReceivingOrderController@good_reception');
+            Route::get('/list-po','Apps\ReceivingOrderController@index_all_po');
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
             Route::post('/pdf', 'Apps\ReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\ReceivingOrderController@get_pdf');
@@ -340,9 +341,10 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-penerimaan-barang')->group(function(){
             Route::get('/','Apps\MasterPenerimaanBarangController@index');
+            Route::put('/clear', 'Apps\MasterPenerimaanBarangController@clear');
             Route::get('/datatables','Apps\MasterPenerimaanBarangController@datatables');
             Route::post('/pdf', 'Apps\MasterPenerimaanBarangController@pdf');
-            Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');
+            Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');    
         });
     });
 });

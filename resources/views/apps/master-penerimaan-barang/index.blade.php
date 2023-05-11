@@ -53,7 +53,8 @@
                                     <th scope="col" class="text-center">Jumlah</th>
                                     <th scope="col" class="text-center">Satuan</th>
                                     <th scope="col" class="text-center">Penerima</th>
-                                    <th scope="col" class="text-center" style="width: 15%">Actions</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                 </tr>
                             </thead>
                         </table>
@@ -161,7 +162,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 2, 3, 4, 5, 6, 7]
+                targets: [0, 2, 3, 4, 5, 6, 7, 8]
             }, {
                 className: 'text-nowrap',
                 targets: []
@@ -191,17 +192,79 @@
                     data: 'fc_recipient'
                 },
                 {
+                    data: 'fc_status',
+                },
+                {
                     data: null,
                 },
             ],
 
             rowCallback: function(row, data) {
                 var fc_grno = window.btoa(data.fc_grno);
-                $('td:eq(7)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
+
+                $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
+                    if (data['fc_status'] == 'R') {
+                        $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
+                    } else {
+                        $('td:eq(7)', row).html('<span class="badge badge-success">Tuntas</span>');
+                    }
+                $('td:eq(8)', row).html(`
+                <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
+                <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')">Tuntaskan</button>
                 `);
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             },
         });
+        
+
+        function tuntaskan_gr(fc_grno) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin menuntaskan penerimaan barang ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/master-penerimaan-barang/clear',
+                        type: 'PUT',
+                        data: {
+                            fc_status: 'C',
+                            fc_grno: fc_grno
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
     </script>
     @endsection

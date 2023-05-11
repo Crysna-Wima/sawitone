@@ -34,6 +34,19 @@ class ReceivingOrderController extends Controller
         }
     }
 
+    public function index_all_po(){
+        Session::forget('fc_grno_global');
+
+        $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
+
+        $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();
+        if ($count === 0) {
+            return view('apps.receiving-order.index-all-po');
+        } else {
+            return redirect('/apps/receiving-order/create/' . base64_encode($data->fc_pono));
+        }
+    }
+
     public function good_reception($fc_grno,$fc_suppliercode){
         $decode_fc_grno = base64_decode($fc_grno);
         $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
