@@ -162,6 +162,7 @@ class PurchaseOrderDetailController extends Controller
             'fd_podateinputuser' => $request->fd_podateinputuser,
             'fc_potransport' => $request->fc_potransport,
             'fm_servpay' => $request->fm_servpay,
+            'fc_destination' => $request->fc_membername1,
             'fc_address_loading1' => $request->fc_memberaddress_loading1,
             'fd_poexpired' => $request->fd_poexpired,
         ]);

@@ -20,8 +20,7 @@ class MasterPenerimaanBarangController extends Controller
         return view('apps.master-penerimaan-barang.index');
     }
 
-    public function datatables()
-{
+    public function datatables(){
         $data = GoodReception::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_status', 'R')->get();
 
         return DataTables::of($data)
@@ -29,6 +28,7 @@ class MasterPenerimaanBarangController extends Controller
             ->make(true);
         // dd($data);
     }
+
     public function pdf(Request $request){
         // dd($request);
         $encode_fc_grno = base64_encode($request->fc_grno);
@@ -55,5 +55,29 @@ class MasterPenerimaanBarangController extends Controller
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.penerimaan-barang', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function clear(Request $request){
+        // dd($request);
+        $fc_grno = $request->fc_grno;
+        $fc_status = $request->fc_status;
+        $data = GoodReception::where('fc_grno', $fc_grno)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $data->update([
+            'fc_status' => $fc_status,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dituntaskan',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dituntaskan'
+        ];
     }
 }
