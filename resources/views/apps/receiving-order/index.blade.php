@@ -60,13 +60,16 @@
                     </div>
                 </div>
             </div>
+            <div class="button text-right">
+                <a href="/apps/receiving-order/list-po"><button class="btn btn-success"></i>List Semua PO</button></a>
+            </div>
         </div>
     </div>
     @endsection
 
     @section('js')
     <script>
-    var tb = $('#tb').DataTable({
+        var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -82,7 +85,7 @@
                 targets: [0, 2, 3, 4, 5, 6, 7]
             }, {
                 className: 'text-nowrap',
-                targets: [] 
+                targets: []
             }],
             columns: [{
                     data: 'DT_RowIndex',
