@@ -435,12 +435,12 @@
                                             </div>
                                             @if ($data->fm_servpay == 0)
                                                 <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                    id="fm_servpay" value="0" fdprocessedid="hgh1fp"
+                                                    id="fm_servpay_po" value="0" fdprocessedid="hgh1fp"
                                                     onkeyup="return onkeyupRupiah(this.id);" required>
                                             @else
                                                 <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                    id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);"
-                                                    value="{{ $data->fm_servpay }}">
+                                                    id="fm_servpay_po" onkeyup="return onkeyupRupiah(this.id);"
+                                                    value="{{ number_format($data->fm_servpay,0,',','.') }}">
                                             @endif
                                         </div>
                                     </div>

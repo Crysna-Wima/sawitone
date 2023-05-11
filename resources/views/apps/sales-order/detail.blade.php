@@ -200,7 +200,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control format-rp" name="fm_so_price_edit" id="fm_so_price" onkeyup="return onkeyupRupiah(this.id);" required>
+                                        <input type="text" class="form-control format-rp" name="fm_so_price_edit" id="  " onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                             </div>
@@ -621,7 +621,7 @@
             dataType: "JSON",
             success: function(response) {
                 var data = response.data;
-                // console.log(data.tempsodetail[0].fm_so_price);
+                // console.log(data.tempsodetail[0].    );
                 var tipe_bisnis = "{{ $data->customer->member_type_business->fc_kode }}";
                 if (tipe_bisnis == 'DISTRIBUTOR') {
                     $('#fm_so_price').val(fungsiRupiah(data.fm_price_distributor));
