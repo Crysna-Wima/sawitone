@@ -22,11 +22,12 @@ class MasterPenerimaanBarangController extends Controller
 
     public function datatables()
 {
-        $data = GoodReception::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = GoodReception::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_status', 'R')->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+        // dd($data);
     }
     public function pdf(Request $request){
         // dd($request);
