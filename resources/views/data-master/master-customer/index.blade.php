@@ -498,8 +498,9 @@
             type: "GET",
             data: {
                 'fv_document': 'CUSTOMER',
-                'fc_branch': null,
+                'fc_branch': "{{ auth()->user()->fc_branch }}",
                 'fv_part': null,
+                'fc_divisioncode': "{{ auth()->user()->fc_divisioncode}}"
             },
             dataType: "JSON",
             success: function(response) {
