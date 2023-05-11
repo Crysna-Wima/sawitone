@@ -35,6 +35,8 @@ class ReceivingOrderController extends Controller
     }
 
     public function index_all_po(){
+        Session::forget('fc_grno_global');
+
         $data = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->first();
 
         $count = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->count();

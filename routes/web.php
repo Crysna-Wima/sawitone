@@ -341,9 +341,10 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-penerimaan-barang')->group(function(){
             Route::get('/','Apps\MasterPenerimaanBarangController@index');
+            Route::put('/clear', 'Apps\MasterPenerimaanBarangController@clear');
             Route::get('/datatables','Apps\MasterPenerimaanBarangController@datatables');
             Route::post('/pdf', 'Apps\MasterPenerimaanBarangController@pdf');
-            Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');
+            Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');    
         });
     });
 });

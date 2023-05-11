@@ -703,6 +703,7 @@
       $("#modal").modal('show');
       $(".modal-title").text('Tambah Master Stock');
       $("#form_submit")[0].reset();
+      document.getElementById("fc_stockcode").readOnly = false;
       reset_all_select();
       click_diskon_tanggal();
       click_diskon_waktu();

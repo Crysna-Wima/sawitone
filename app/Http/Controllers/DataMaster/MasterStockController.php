@@ -70,16 +70,16 @@ class MasterStockController extends Controller
         }
 
         // cek exist data
-        $exist_data = Stock::where('fc_stockcode' , $request->fc_stockcode)
-        ->where('fc_branch', auth()->user()->fc_branch)->count();
+        // $exist_data = Stock::where('fc_stockcode' , $request->fc_stockcode)
+        // ->where('fc_branch', auth()->user()->fc_branch)->count();
         
-        // jika exist data lebih besar dari 0
-        if($exist_data > 0){
-            return [
-                'status' => 300,
-                'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
-            ];
-        }
+        // // jika exist data lebih besar dari 0
+        // if($exist_data > 0){
+        //     return [
+        //         'status' => 300,
+        //         'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+        //     ];
+        // }
             
         $request->merge(['fn_reorderlevel' => Convert::convert_to_double($request->fn_reorderlevel) ]);
         $request->merge(['fn_maxonhand' => Convert::convert_to_double($request->fn_maxonhand) ]);

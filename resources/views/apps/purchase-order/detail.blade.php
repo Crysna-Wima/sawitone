@@ -447,6 +447,7 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
                                     <label>Dikirim Ke</label>
+                                    
                                     @if (empty($data->fc_membername1))
                                         <select class="form-control select2" name="fc_membername1"
                                         id="fc_membername1"></select>
@@ -612,6 +613,7 @@
                     }, 500);
                     if (response.status === 200) {
                         var data = response.data;
+                        // console.log(data);
                         $("#fc_membername1").empty();
                         $("#fc_membername1").append(`<option value="" selected readonly>-- Select --</option>`);
                         for (var i = 0; i < staticAddress.length; i++) {
@@ -624,10 +626,19 @@
                                 `<option value="${data[i].fc_membername1}">${data[i].fc_membername1}</option>`
                             );
                         }
+                        
+                        var fc_destination = "{{ $data->fc_destination }}";
+                        if( fc_destination != ''){
+                            $("#fc_membername1").val('{{ $data->fc_destination }}');
+                        }
+                        
+                        // $("#fc_membername1").val(data[i].fc_membername1)
+                        // data[i].fc_membername1
 
                         $("#fc_membername1").change(function() {
                             var fc_membername1 = $(this).val();
                             var data = response.data;
+                            // console.log(data);
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].fc_membername1 === fc_membername1) {
                                     $('#fc_memberaddress_loading1').val(data[i]
