@@ -28,6 +28,15 @@ class MasterPenerimaanBarangController extends Controller
             ->make(true);
         // dd($data);
     }
+    
+    public function datatables_master_transit(){
+        $data = GoodReception::with('supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
 
     public function pdf(Request $request){
         // dd($request);
