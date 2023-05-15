@@ -599,20 +599,20 @@
                         $('td:eq(7)', row).html(
                             `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                        <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                        <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                         );
                     } else {
                         if (data['fc_invstatus'] == 'N') {
                             $('td:eq(7)', row).html(
                                 `
                             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                            <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
+                            <button class="btn btn-info btn-sm ml-1" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                             );
                         } else {
                             $('td:eq(7)', row).html(
                                 `
                             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                            <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+                            <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm ml-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                             );
                         }
                     }

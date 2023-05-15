@@ -546,9 +546,12 @@
             <div class="modal-content">
                 <div class="modal-header br">
                     <h5 class="modal-title">Pilih Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="card-header-action">
+                        <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" name="Category" id="category">
+                            <option value="Semua">Semua&nbsp;&nbsp;</option>
+                            <option value="Khusus">Khusus&nbsp;&nbsp;</option>
+                        </select>
+                    </div>
                 </div>
                 <form id="form_ttd" autocomplete="off">
                     <div class="modal-body">

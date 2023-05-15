@@ -16,6 +16,7 @@ use App\Models\TempSoMaster;
 use App\Models\TempSoDetail;
 use App\Models\Customer;
 use App\Models\Stock;
+use App\Models\Invstore;
 use App\Models\TempSoPay;
 use App\Models\Warehouse;
 use Yajra\DataTables\DataTables;
@@ -33,6 +34,15 @@ class SalesOrderDetailController extends Controller
             })->addColumn('nominal', function () use($nominal){
                 return $nominal;
             })
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_inventory()
+    {
+        $data = Invstore::with('branch', 'stock')->where('fc_sono', auth()->user()->fc_userid)->get();
+
+        return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }

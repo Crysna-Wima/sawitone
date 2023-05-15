@@ -60,9 +60,6 @@
                     </div>
                 </div>
             </div>
-            <div class="button text-right">
-                <a href="/apps/receiving-order/list-po"><button class="btn btn-success"></i>List Semua PO</button></a>
-            </div>
         </div>
     </div>
     @endsection

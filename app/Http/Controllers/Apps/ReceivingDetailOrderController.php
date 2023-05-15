@@ -127,7 +127,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
                 // 'fd_expired_date' => 'required',
-                'fc_catnumber' => 'required',
+                // 'fc_catnumber' => 'required',
                 'fc_batch' => 'required',
             ],
             [
@@ -135,7 +135,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_nameshort.required' => 'Nama Barang tidak boleh kosong',
                 'fn_qty_ro.required' => 'Qty tidak boleh kosong',
                 // 'fd_expired_date.required' => 'Expired Date tidak boleh kosong',
-                'fc_catnumber.required' => 'CAT number tidak boleh kosong',
+                // 'fc_catnumber.required' => 'CAT number tidak boleh kosong',
                 'fc_batch.required' => 'Batch tidak boleh kosong',
             ]
         );
@@ -159,7 +159,7 @@ class ReceivingDetailOrderController extends Controller
             'fn_qty_ro' => $request->fn_qty_ro,
             'fd_expired_date' => $request->fd_expired_date,
             'fc_batch' => $request->fc_batch,
-            'fc_catnumber' => $request->fc_catnumber,
+            // 'fc_catnumber' => $request->fc_catnumber,
             'fc_status' => 'Reguler'
         ], $request->all());
 

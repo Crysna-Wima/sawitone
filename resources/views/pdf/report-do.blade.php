@@ -271,32 +271,30 @@
         <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
-                <th>Barcode</th>
+                <th>Kode Barang</th>
                 <th>Nama Produk</th>
                 <th>Unity</th>
                 <th>Qty</th>
                 <th>Exp. Date</th>
                 <th>Batch</th>
-                <th>Harga (Rp)</th>
+                <!-- <th>Harga (Rp)</th>
                 <th>Diskon (Rp)</th>
-                <th>Total (Rp)</th>
-                <th>Status</th>
+                <th>Total (Rp)</th> -->
             </tr>
 
             @if(isset($do_dtl))
                 @foreach ($do_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->invstore->stock->fc_barcode }}</td>
+                        <td>{{ $item->invstore->stock->fc_stockcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->invstore->stock->fc_namepack }}</td>
                         <td>{{ $item->fn_qty_do }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fc_batch }}</td>
-                        <td>{{ number_format($item->fn_price,0,',','.') }}</td>
+                        <!-- <td>{{ number_format($item->fn_price,0,',','.') }}</td>
                         <td>{{ number_format($item->fn_disc,0,',','.') }}</td>
-                        <td>{{ number_format($item->fn_value,0,',','.') }}</td>
-                        <td>{{ $item->fc_status}}</td>
+                        <td>{{ number_format($item->fn_value,0,',','.') }}</td> -->
                     </tr>
                 @endforeach
 
@@ -328,7 +326,7 @@
             </tr>
         </table>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;">
+        <!-- <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;">
             <tr class="pt-1">
                 <td>Item</td>
                 <td style="width: 5px">:</td>
@@ -354,7 +352,7 @@
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. {{ number_format($do_mst->somst->fm_brutto,0,',','.')}}</td>
             </tr>
-        </table>
+        </table> -->
 
         <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15; page-break-before:always page-break-after:always ">
             <br><br/>

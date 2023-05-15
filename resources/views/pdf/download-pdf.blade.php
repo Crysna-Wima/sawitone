@@ -253,7 +253,7 @@
             <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
                 <tr>
                     <th>No</th>
-                    <th>Barcode</th>
+                    <th>Kode Barang</th>
                     <th>Nama Produk</th>
                     <th>Satuan</th>
                     <th>Qty</th>
@@ -267,7 +267,7 @@
                     @foreach ($so_detail as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->stock->fc_barcode}}</td>
+                            <td>{{ $item->stock->fc_stockcode}}</td>
                             <td>{{ $item->stock->fc_namelong}}</td>
                             <td>{{ $item->stock->fc_namepack}}</td>
                             <td>{{ $item->fn_so_qty}}</td>
@@ -289,8 +289,7 @@
             <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
                 <tr>
                     <th>No</th>
-                    <th>Katalog</th>
-                    <th>Barcode</th>
+                    <th>Kode Barang</th>
                     <th>Nama Produk</th>
                     <th>Satuan</th>
                     <th>Qty</th>
@@ -304,7 +303,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->invstore->fc_catnumber ?? '-' }}</td>
-                            <td>{{ $item->invstore->stock->fc_barcode}}</td>
+                            <td>{{ $item->invstore->stock->fc_stockcode}}</td>
                             <td>{{ $item->invstore->stock->fc_namelong}}</td>
                             <td>{{ $item->invstore->stock->fc_namepack}}</td>
                             <td>{{ $item->fn_qty_do}}</td>

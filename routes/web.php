@@ -190,6 +190,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('detail')->group(function () {
                 Route::get('/','Apps\SalesOrderDetailController@index')->name('so.detail');
                 Route::get('/datatables','Apps\SalesOrderDetailController@datatables');
+                Route::get('/datatables-inventory','Apps\SalesOrderDetailController@datatables_inventory');
                 Route::post('/store-update','Apps\SalesOrderDetailController@store_update');
                 Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
 
@@ -305,7 +306,6 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('receiving-order')->group(function(){
             Route::get('/','Apps\ReceivingOrderController@index');
             Route::get('/penerimaan-barang/{fc_grno}/{fc_suppliercode}','Apps\ReceivingOrderController@good_reception');
-            Route::get('/list-po','Apps\ReceivingOrderController@index_all_po');
             Route::get('/detail/{fc_pono}','Apps\ReceivingOrderController@detail');
             Route::post('/pdf', 'Apps\ReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\ReceivingOrderController@get_pdf');

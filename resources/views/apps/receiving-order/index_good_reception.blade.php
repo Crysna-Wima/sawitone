@@ -63,6 +63,9 @@
                     </div>
                 </div>
             </div>
+            <div class="button text-right mb-4">
+                <a href="/apps/receiving-order"><button type="button" class="btn btn-info">Back</button></a>
+            </div>
         </div>
     </div>
 </div>
@@ -86,7 +89,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 4, 5, 6, 7, 8]
+            targets: [0, 4, 5, 6, 7, 8, 9]
         }, {
             className: 'text-nowrap',
             targets: [2, 3, 5]

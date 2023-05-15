@@ -213,7 +213,8 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-success">Add Item</button>
+                                <button type="button" class="btn btn-warning" onclick="click_modal_inventory()"><i class="fa fa-eye"></i> Cek Stock</button>
+                                <button class="btn btn-success ml-1">Add Item</button>
                             </div>
                         </div>
                     </form>
@@ -402,6 +403,39 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Ketersediaan Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_inventory" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Nama Barang</th>
+                                    <th scope="col" class="text-center">Expired Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -424,6 +458,11 @@
     function click_modal_stock() {
         $('#modal_stock').modal('show');
         table_stock();
+    }
+
+    function click_modal_inventory() {
+        $('#modal_inventory').modal('show');
+        table_inventory();
     }
 
     function onchange_member_code(fc_membercode) {
@@ -611,6 +650,38 @@
             var url = $(this).val() === 'Semua' ? '/master/get-data-stock-so-datatables' :
                 '/master/get-data-stock_customer-so-datatables';
             tb_stock.ajax.url(url).load();
+        });
+    }
+
+    function table_inventory() {
+        var tb_inventory = $('#tb_inventory').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/sales-order/detail/datatables-inventory",
+                type: 'GET'
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 4]
+            }, ],
+            columns: [{
+                    data: 'fc_stockcode'
+                },
+                {
+                    data: 'fc_longname'
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+            ],
         });
     }
 

@@ -283,7 +283,7 @@
                                 <div class="form-group">
                                     <label>Stock Code</label>
                                     <div class="input-group">
-                                        <input type="text" id="fc_stockcode" class="form-control" name="fc_stockcode" required>
+                                        <input type="text" id="fc_stockcode" class="form-control" name="fc_stockcode" readonly>
                                         <input type="text" id="fc_pono" class="form-control" name="fc_pono" hidden>
                                         <input type="text" id="fc_namepack" class="form-control" name="fc_namepack" hidden>
                                     </div>
@@ -293,7 +293,7 @@
                                 <div class="form-group">
                                     <label>Nama Produk</label>
                                     <div class="input-group">
-                                        <input type="text" id="fc_nameshort" class="form-control" name="fc_nameshort" required>
+                                        <input type="text" id="fc_nameshort" class="form-control" name="fc_nameshort" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +310,7 @@
                                     <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6">
+                            <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Expired Date</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -321,12 +321,6 @@
                                         </div>
                                         <input type="text" id="fd_expired_date" class="form-control datepicker" name="fd_expired_date" required>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>CAT Number</label>
-                                    <input type="text" id="fc_catnumber" class="form-control" name="fc_catnumber">
                                 </div>
                             </div>
                         </div>
