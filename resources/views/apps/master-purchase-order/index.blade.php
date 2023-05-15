@@ -189,7 +189,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="/apps/master-purchase-order/pdf" method="POST" autocomplete="off">
+                <form id="form_submit_pdf" action="/apps/master-purchase-order/pdf" method="POST" autocomplete="off">
                     @csrf
                     <input type="text" name="fc_pono" id="fc_pono_input" hidden>
                     <div class="modal-body">

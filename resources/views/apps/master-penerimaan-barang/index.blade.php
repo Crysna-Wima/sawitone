@@ -75,7 +75,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="/apps/master-penerimaan-barang/pdf" method="POST" autocomplete="off">
+                <form id="form_submit_pdf" action="/apps/master-penerimaan-barang/pdf" method="POST" autocomplete="off">
                     @csrf
                     <input type="text" name="fc_grno" id="fc_grno_input_ttd" hidden>
                     <div class="modal-body">
