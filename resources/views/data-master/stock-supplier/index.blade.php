@@ -134,7 +134,8 @@
                           <th scope="col" class="text-center">No</th>
                           <th scope="col" class="text-center">Divisi</th>
                           <th scope="col" class="text-center">Branch</th>
-                          <th scope="col" class="text-center">Stock Code</th>
+                          <th scope="col" class="text-center">Kode Barang</th>
+                          <th scope="col" class="text-center">Nama Barang</th>
                           <th scope="col" class="text-center">Barcode</th>
                           <th scope="col" class="text-center">Supplier Code</th>
                           <th scope="col" class="text-center">Price Supplier</th>
@@ -388,13 +389,14 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0] },
-         { className: 'text-nowrap', targets: [12] },
+         { className: 'text-nowrap', targets: [13] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
          { data: 'branch.fv_description' },
-         { data: 'stock.fc_nameshort', defaultContent: '' },
+         { data: 'fc_stockcode' },
+         { data: 'stock.fc_namelong', defaultContent: '' },
          { data: 'fc_barcode' },
          { data: 'supplier.fc_suppliername1', defaultContent: '', },
          { data: 'fm_price_customer', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
@@ -409,7 +411,7 @@
          var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
          var url_delete = "/data-master/stock-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
 fc_barcode
-         $('td:eq(12)', row).html(`
+         $('td:eq(13)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
