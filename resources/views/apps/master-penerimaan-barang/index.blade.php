@@ -157,7 +157,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: "/apps/master-penerimaan-barang/datatables",
+                url: "/apps/master-penerimaan-barang/datatables/master-transit",
                 type: 'GET',
             },
             columnDefs: [{
@@ -205,9 +205,10 @@
                 $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
                     if (data['fc_status'] == 'R') {
                         $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
-                    } else {
+                    } else if (data['fc_status'] == 'C') {
                         $('td:eq(7)', row).html('<span class="badge badge-success">Tuntas</span>');
                     }
+
                 $('td:eq(8)', row).html(`
                 <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
                 <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')">Tuntaskan</button>

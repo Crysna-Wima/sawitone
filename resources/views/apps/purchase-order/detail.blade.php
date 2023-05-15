@@ -435,12 +435,12 @@
                                             </div>
                                             @if ($data->fm_servpay == 0)
                                                 <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                    id="fm_servpay" value="0" fdprocessedid="hgh1fp"
+                                                    id="fm_servpay_po" value="0" fdprocessedid="hgh1fp"
                                                     onkeyup="return onkeyupRupiah(this.id);" required>
                                             @else
                                                 <input type="text" class="form-control format-rp" name="fm_servpay"
-                                                    id="fm_servpay" onkeyup="return onkeyupRupiah(this.id);"
-                                                    value="{{ $data->fm_servpay }}">
+                                                    id="fm_servpay_po" onkeyup="return onkeyupRupiah(this.id);"
+                                                    value="{{ number_format($data->fm_servpay,0,',','.') }}">
                                             @endif
                                         </div>
                                     </div>
@@ -729,30 +729,6 @@
                 ajax: {
                     url: "/master/get-data-stock-po-datatables",
                     type: 'GET',
-                    dataSrc: function(data) {
-                        data.data.forEach(function(row) {
-                            switch (tipe_bisnis) {
-                                case 'PERSONAL':
-                                    row.fm_price_default = row.fm_price_enduser;
-                                    break;
-                                case 'DISTRIBUTOR':
-                                    row.fm_price_default = row.fm_price_distributor;
-                                    break;
-                                case 'RETAIL':
-                                    row.fm_price_default = row.fm_price_default;
-                                    break;
-                                case 'HOSPITAL':
-                                    row.fm_price_default = row.fm_price_project;
-                                    break;
-                                case 'ENDUSER':
-                                    row.fm_price_default = row.fm_price_enduser;
-                                    break;
-                                default:
-                                    row.fm_price_default = "";
-                            }
-                        });
-                        return data.data;
-                    }
                 },
                 columnDefs: [{
                     className: 'text-center',
@@ -773,7 +749,7 @@
                         data: 'namepack.fv_description'
                     },
                     {
-                        data: 'fm_price_default',
+                        data: 'fm_purchase',
                         render: $.fn.dataTable.render.number('.', ',', 0, 'Rp. ')
                     },
                     {
@@ -795,22 +771,7 @@
                 dataType: "JSON",
                 success: function(response) {
                     var data = response.data;
-                    // console.log(data.tempsodetail[0].fm_so_price);
-                    var tipe_bisnis = "{{ $data->supplier->supplier_type_business->fv_description }}";
-                    if (tipe_bisnis == 'DISTRIBUTOR') {
-                        $('#fm_po_price').val(fungsiRupiah(data.fm_price_distributor));
-                        // $('#fm_po_price').val(data.fm_price_distributor);
-                    } else if (tipe_bisnis == 'RETAIL') {
-                        $('#fm_po_price').val(fungsiRupiah(data.fm_price_default));
-                    } else if (tipe_bisnis == 'HOSPITAL') {
-                        $('#fm_po_price').val(fungsiRupiah(data.fm_price_project));
-                    } else if (tipe_bisnis == 'PERSONAL') {
-                        $('#fm_po_price').val(fungsiRupiah(data.fm_price_enduser));
-                    } else if (tipe_bisnis == 'ENDUSER') {
-                        $('#fm_po_price').val(fungsiRupiah(data.fm_price_enduser));
-                    } else {
-                        $('#fm_po_price').val(fungsiRupiah(""));
-                    }
+                    $('#fm_po_price').val(fungsiRupiah(data.fm_purchase))
                     $('#fc_barcode').val(data.fc_barcode);
                     $('#fc_stockcode').val(data.fc_stockcode);
 

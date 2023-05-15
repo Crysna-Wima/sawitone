@@ -162,100 +162,117 @@
     .content p {
         font-size: .8rem!important;
     }
+
+    #watermark {
+        position: fixed;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        opacity: .5;
+        transform-origin: 50% 50%;
+        z-index: -1000;
+    }
 </style>
 
 <body>
-<div class="container" id="po-pdf">
-    <div class="header" style="height: 100px">
-        <div style="position: absolute; left: 0; top: 0">
-            <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
-        </div>
-        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
-            <p><b>Kepada :</b></p>
-            <p>{{ $po_mst->supplier->fc_supplierlegalstatus }} {{ $po_mst->supplier-> fc_suppliername1 }}</p>
-            <p>{{ $po_mst->supplier->fc_supplier_npwpaddress1 }}</p>
-            <p>{{ $po_mst->supplier->fc_supplieremail1 }} / {{ $po_mst->supplier->fc_supplierphone1 }}
-        </div>
-        <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
-            <p><b>PT DEXA ARFINDO PRATAMA</b></p>
-            <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
-            <p>Surabaya, Jawa Timur (60297)</p>
-            <p><b>dexa-arfindopratama.com</b></p>
+    <?php if($po_mst->fc_postatus == 'CL'): ?>
+        <div id="watermark"><img src="{{ public_path('/assets/img/closed.png') }}" width="45%"></div>
+    <?php elseif($po_mst->fc_postatus == 'CC'): ?>
+        <div id="watermark"><img src="{{ public_path('/assets/img/cancelled.png') }}" width="45%"></div>
+    <?php endif; ?>
+    <main>
+    <div class="container" id="po-pdf">
+        <div class="header" style="height: 100px">
+            <div style="position: absolute; left: 0; top: 0">
+                <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
+            </div>
+            <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+                <p><b>Kepada :</b></p>
+                <p>{{ $po_mst->supplier->fc_supplierlegalstatus }} {{ $po_mst->supplier-> fc_suppliername1 }}</p>
+                <p>{{ $po_mst->supplier->fc_supplier_npwpaddress1 }}</p>
+                <p>{{ $po_mst->supplier->fc_supplieremail1 }} / {{ $po_mst->supplier->fc_supplierphone1 }}
+            </div>
+            <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
+                <p><b>PT DEXA ARFINDO PRATAMA</b></p>
+                <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
+                <p>Surabaya, Jawa Timur (60297)</p>
+                <p><b>dexa-arfindopratama.com</b></p>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="content">
-        <br><br><br><br>
-        <p style="text-align: center; font-weight:bold;">PURCHASE ORDER</p>
-        <br>
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
-            <tr>
-                <td>Nomor PO</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $po_mst->fc_pono }}</td>
-                <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 26%"></td>
-            </tr>
-            <tr class="pb-1">
-                <td>Tanggal PO</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ \Carbon\Carbon::parse( $po_mst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}</td>
-                <td>Tanggal Expired</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $po_mst->fd_poexpired )->isoFormat('D MMMM Y'); }}</td>
-            </tr>
-        </table>
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Item</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
-            <tr>
-                <th>No.</th>
-                <th>Nomor Katalog</th>
-                <th>Nama Produk</th>
-                <th>Qty</th>
-                <th>Unity</th>
-            </tr>
-
-            @if(isset($po_dtl))
-                @foreach ($po_dtl as $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->fc_stockcode }}</td>
-                        <td>{{ $item->stock->fc_nameshort }}</td>
-                        <td>{{ $item->fn_po_qty }}</td>
-                        <td>{{ $item->fc_namepack }}</td>
-                    </tr>
-                @endforeach
-
-            @else
-            <tr>
-                <td colspan="12" class="text-center">Data Not Found</td>
-            </tr>
-            @endif
-
-        </table>
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman</p>
-        <p style="font-size: .8rem; margin-left: 5%">{{  $po_mst->fc_address_loading1 }}</p>
-
-        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
-            <br><br/>
-            <tr>
-                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
-            </tr>
-            <tr >
-                <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
-            </tr>
-            <br><br/>
-            <br><br/>
-            <tr >
-                <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
-            </tr>
+    <div class="content">
+            <br><br><br><br>
+            <p style="text-align: center; font-weight:bold;">PURCHASE ORDER</p>
             <br>
-        </table>
-    <div>
+            <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+                <tr>
+                    <td>Nomor PO</td>
+                    <td style="width: 5px">:</td>
+                    <td style="width: 26%">{{ $po_mst->fc_pono }}</td>
+                    <td></td>
+                    <td style="width: 5px"></td>
+                    <td style="width: 26%"></td>
+                </tr>
+                <tr class="pb-1">
+                    <td>Tanggal PO</td>
+                    <td style="width: 5px">:</td>
+                    <td style="width: 30%">{{ \Carbon\Carbon::parse( $po_mst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}</td>
+                    <td>Tanggal Expired</td>
+                    <td style="width: 5px">:</td>
+                    <td style="width: 26%">{{ \Carbon\Carbon::parse( $po_mst->fd_poexpired )->isoFormat('D MMMM Y'); }}</td>
+                </tr>
+            </table>
+
+            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Item</p>
+            <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+                <tr>
+                    <th>No.</th>
+                    <th>Nomor Katalog</th>
+                    <th>Nama Produk</th>
+                    <th>Qty</th>
+                    <th>Unity</th>
+                </tr>
+
+                @if(isset($po_dtl))
+                    @foreach ($po_dtl as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->fc_stockcode }}</td>
+                            <td>{{ $item->stock->fc_nameshort }}</td>
+                            <td>{{ $item->fn_po_qty }}</td>
+                            <td>{{ $item->fc_namepack }}</td>
+                        </tr>
+                    @endforeach
+
+                @else
+                <tr>
+                    <td colspan="12" class="text-center">Data Not Found</td>
+                </tr>
+                @endif
+
+            </table>
+
+            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman</p>
+            <p style="font-size: .8rem; margin-left: 5%">{{  $po_mst->fc_address_loading1 }}</p>
+
+            <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
+                <br><br/>
+                <tr>
+                    <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
+                </tr>
+                <tr >
+                    <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
+                </tr>
+                <br><br/>
+                <br><br/>
+                <tr >
+                    <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
+                </tr>
+                <br>
+            </table>
+        <div>
+    </main>
 </body>
 
 </html>
