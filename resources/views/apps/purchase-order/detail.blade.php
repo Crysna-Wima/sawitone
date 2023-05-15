@@ -724,6 +724,8 @@
         }
 
         function table_stock() {
+            var fc_suppliercode = "{{ $data->fc_suppliercode }}";
+            var fc_suppliercode_encode = window.btoa(fc_suppliercode);
             var tipe_bisnis = "{{ $data->supplier->supplier_type_business->fv_description }}";
             var tb_stock = $('#tb_stock').DataTable({
                 processing: true,
@@ -778,7 +780,7 @@
 
             $('#category').on('change', function() {
                 var url = $(this).val() === 'Semua' ? '/master/get-data-stock-po-datatables' :
-                    '/master/get-data-stock_supplier-po-datatables';
+                    '/master/get-data-stock_supplier-po-datatables/' + fc_suppliercode_encode;
                 tb_stock.ajax.url(url).load();
         });
         }
