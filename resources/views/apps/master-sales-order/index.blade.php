@@ -176,7 +176,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="/apps/master-sales-order/pdf" method="POST" autocomplete="off">
+                <form id="form_submit_pdf" action="/apps/master-sales-order/pdf" method="POST" autocomplete="off">
                     @csrf
                     <input type="text" name="fc_dono" id="fc_dono_input" hidden>
                     <input type="text" name="fc_sono" id="fc_sono_input" hidden>

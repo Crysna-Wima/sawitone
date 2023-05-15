@@ -75,7 +75,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="/apps/master-penerimaan-barang/pdf" method="POST" autocomplete="off">
+                <form id="form_submit_pdf" action="/apps/master-penerimaan-barang/pdf" method="POST" autocomplete="off">
                     @csrf
                     <input type="text" name="fc_grno" id="fc_grno_input_ttd" hidden>
                     <div class="modal-body">
@@ -157,7 +157,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: "/apps/master-penerimaan-barang/datatables",
+                url: "/apps/master-penerimaan-barang/datatables/master-transit",
                 type: 'GET',
             },
             columnDefs: [{
@@ -205,9 +205,10 @@
                 $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
                     if (data['fc_status'] == 'R') {
                         $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
-                    } else {
+                    } else if (data['fc_status'] == 'C') {
                         $('td:eq(7)', row).html('<span class="badge badge-success">Tuntas</span>');
                     }
+
                 $('td:eq(8)', row).html(`
                 <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
                 <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')">Tuntaskan</button>

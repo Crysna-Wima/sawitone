@@ -337,7 +337,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="form_submit_edit" action="/apps/master-delivery-order/pdf" method="POST"
+                    <form id="form_submit_pdf" action="/apps/master-delivery-order/pdf" method="POST"
                         autocomplete="off">
                         @csrf
                         <input type="text" name="fc_dono" id="fc_dono_input_ttd" hidden>
