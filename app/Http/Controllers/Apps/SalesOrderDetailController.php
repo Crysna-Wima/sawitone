@@ -40,7 +40,7 @@ class SalesOrderDetailController extends Controller
 
     public function datatables_inventory()
     {
-        $data = Invstore::with('branch', 'stock')->where('fc_sono', auth()->user()->fc_userid)->get();
+        $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

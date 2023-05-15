@@ -654,6 +654,8 @@
     }
 
     function table_inventory() {
+        // var fc_sono = "{{ $data->fc_sono }}";
+        // var fc_sono_encode = window.btoa(fc_sono);
         var tb_inventory = $('#tb_inventory').DataTable({
             processing: true,
             serverSide: true,
@@ -670,7 +672,7 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'fc_longname'
+                    data: 'stock.fc_namelong'
                 },
                 {
                     data: 'fd_expired'

@@ -732,6 +732,9 @@
                 ajax: {
                     url: "/master/get-data-stock-po-datatables",
                     type: 'GET',
+                    data: function(d) {
+                    d.category = $('#category').val();
+                 },
                 },
                 columnDefs: [{
                     className: 'text-center',
@@ -746,10 +749,17 @@
                         data: 'fc_stockcode'
                     },
                     {
-                        data: 'fc_nameshort'
+                        data: 'fc_nameshort',
+                        render: function(data, type, row) {
+                            if (!data) {
+                                return row.stock.fc_nameshort;
+                            }
+                            return data;
+                        }
                     },
                     {
                         data: 'namepack.fv_description'
+                        
                     },
                     {
                         data: 'fm_purchase',
@@ -765,6 +775,12 @@
                 `);
                 }
             });
+
+            $('#category').on('change', function() {
+                var url = $(this).val() === 'Semua' ? '/master/get-data-stock-po-datatables' :
+                    '/master/get-data-stock_supplier-po-datatables';
+                tb_stock.ajax.url(url).load();
+        });
         }
 
         function detail_stock($id) {

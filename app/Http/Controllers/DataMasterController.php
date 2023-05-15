@@ -17,6 +17,7 @@ use App\Models\Brand;
 use App\Models\Stock;
 use App\Models\Customer;
 use App\Models\StockCustomer;
+use App\Models\StockSupplier;
 use App\Models\Supplier;
 use App\Models\TempSoMaster;
 use App\Models\TransaksiType;
@@ -160,6 +161,13 @@ class DataMasterCOntroller extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function get_data_stock_supplier_po_datatables(){
+        $data = StockSupplier::with('supplier', 'stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function data_supplier_first($fc_suppliercode){
