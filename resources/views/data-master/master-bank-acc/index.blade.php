@@ -178,7 +178,7 @@
                     $("#fv_bankname").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fv_bankname").append(
-                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                            `<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({

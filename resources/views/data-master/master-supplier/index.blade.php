@@ -768,9 +768,9 @@
                     $("#fc_supplierbank3").empty();
                     $("#fc_supplierbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_supplierbank1").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                        $("#fc_supplierbank2").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                        $("#fc_supplierbank3").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_supplierbank1").append(`<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
+                        $("#fc_supplierbank2").append(`<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
+                        $("#fc_supplierbank3").append(`<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({

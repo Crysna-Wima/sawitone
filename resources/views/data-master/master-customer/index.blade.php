@@ -780,11 +780,11 @@
                     $("#fc_memberbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_memberbank1").append(
-                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                            `<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
                         $("#fc_memberbank2").append(
-                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                            `<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
                         $("#fc_memberbank3").append(
-                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                            `<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
