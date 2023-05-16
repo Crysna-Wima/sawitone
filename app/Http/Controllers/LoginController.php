@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvMaster;
+use App\Models\PoMaster;
+use App\Models\SoMaster;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -17,7 +20,11 @@ class LoginController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard');
+            $userCount = User::all()->count();
+            $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
+            $poCount = PoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
+            $invCount = InvMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
+            return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount'));
         }
         return view('login.index');
     }
