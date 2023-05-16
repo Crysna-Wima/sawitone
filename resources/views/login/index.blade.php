@@ -60,7 +60,7 @@
                 </form>
 
                 <div class="text-center text-small" style="margin-top: 46%;">
-                   Copyright &copy; KHARISMA
+                   Copyright &copy; ITCorner
                 </div>
              </div>
           </div>
