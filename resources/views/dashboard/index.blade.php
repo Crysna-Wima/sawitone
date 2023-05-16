@@ -75,6 +75,54 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="card card-hero">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="far fa-bell"></i>
+          </div>
+          <h4>3</h4>
+          <div class="card-description">Notifications</div>
+        </div>
+        <div class="card-body p-0">
+          <div class="tickets-list">
+            <a href="#" class="ticket-item">
+              <div class="ticket-title">
+                <h4>Jangan lupa SO0001 Dikirim</h4>
+              </div>
+              <div class="ticket-info">
+                <div>Sales Order</div>
+                <div class="bullet"></div>
+                <div class="text-primary">1 min ago</div>
+              </div>
+            </a>
+            <a href="#" class="ticket-item">
+              <div class="ticket-title">
+                <h4>Cancel PO0002</h4>
+              </div>
+              <div class="ticket-info">
+                <div>Purchase Order</div>
+                <div class="bullet"></div>
+                <div>2 hours ago</div>
+              </div>
+            </a>
+            <a href="#" class="ticket-item">
+              <div class="ticket-title">
+                <h4>Stok sisa 5, jangan lupa belanja !</h4>
+              </div>
+              <div class="ticket-info">
+                <div>Master Stock</div>
+                <div class="bullet"></div>
+                <div>6 hours ago</div>
+              </div>
+            </a>
+            <a href="/dashboard" class="ticket-item ticket-more">
+              View All <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 @endsection

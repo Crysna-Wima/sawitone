@@ -189,7 +189,6 @@
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Status</th>
-                                        <th scope="col" class="text-center">Rack</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">CAT</th>
                                         <th scope="col" class="text-center">Exp.</th>
@@ -694,7 +693,8 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'stock.fc_nameshort'
+                data: 'stock.fc_nameshort',
+                defaultContent: '',
             },
             {
                 data: 'namepack.fv_description'
@@ -784,11 +784,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 10]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9]
             },
             {
                 className: 'text-nowrap',
-                targets: [9]
+                targets: [8]
             },
             {
                 targets: -1,
@@ -819,9 +819,6 @@
                 render: function(data, type, row) {
                     return data === 'T' ? 'Ya' : 'Tidak';
                 }
-            },
-            {
-                data: 'fc_rackcode'
             },
             {
                 data: 'fc_batch'
@@ -858,7 +855,7 @@
             const item_barcode = data.fc_barcode;
             const item_row = data.fn_rownum;
             // kirim 2 parameter di data-id di button hapus
-            $('td:eq(10)', row).html(`
+            $('td:eq(9)', row).html(`
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}">Hapus Item</button>
                 `);
 
