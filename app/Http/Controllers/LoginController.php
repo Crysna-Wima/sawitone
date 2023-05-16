@@ -17,8 +17,7 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         if (Auth::check()) {
             $userCount = User::all()->count();
             $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
