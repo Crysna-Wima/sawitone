@@ -752,7 +752,7 @@
     function get_data_supplier_bank() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url: "/master/get-data-all/BankAcc",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BANKNAME",
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -768,9 +768,9 @@
                     $("#fc_supplierbank3").empty();
                     $("#fc_supplierbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_supplierbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
-                        $("#fc_supplierbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
-                        $("#fc_supplierbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_supplierbank1").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_supplierbank2").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_supplierbank3").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
@@ -966,15 +966,15 @@
                 data: 'fd_supplierexpired'
             },
             {
-                data: 'supplier_bank1.fv_bankname',
+                data: 'fc_supplierbank1',
                 defaultContent: '',
             },
             {
-                data: 'supplier_bank2.fv_bankname',
+                data: 'fc_supplierbank2',
                 defaultContent: '',
             },
             {
-                data: 'supplier_bank3.fv_bankname',
+                data: 'fc_supplierbank3',
                 defaultContent: '',
             },
             {

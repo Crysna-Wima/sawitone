@@ -350,7 +350,7 @@
     function get_data_sales_bank() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url: "/master/get-data-all/BankAcc",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BANKNAME",
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -366,9 +366,9 @@
                     $("#fc_salesbank3").empty();
                     $("#fc_salesbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_salesbank1").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
-                        $("#fc_salesbank2").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
-                        $("#fc_salesbank3").append(`<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                        $("#fc_salesbank1").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_salesbank2").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_salesbank3").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
@@ -456,15 +456,15 @@
                 data: 'fc_salesemail2'
             },
             {
-                data: 'sales_bank1.fv_bankname',
+                data: 'fc_salesbank1',
                 defaultContent: ''
             },
             {
-                data: 'sales_bank2.fv_bankname',
+                data: 'fc_salesbank2',
                 defaultContent: ''
             },
             {
-                data: 'sales_bank3.fv_bankname',
+                data: 'fc_salesbank3',
                 defaultContent: ''
             },
             {

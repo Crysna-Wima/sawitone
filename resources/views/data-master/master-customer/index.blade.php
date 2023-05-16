@@ -62,21 +62,21 @@
                                     <th scope="col" class="text-center">Hutang Customer</th>
                                     <th scope="col" class="text-center">Masa Hutang Customer</th>
                                     <th scope="col" class="text-center">Kunci Transaksi Customer</th>
-                                    <th scope="col" class="text-center">Contact Person 1</th>
-                                    <th scope="col" class="text-center">Contact Person 2</th>
-                                    <th scope="col" class="text-center">Contact Person 3</th>
-                                    <th scope="col" class="text-center">Contact Person 4</th>
-                                    <th scope="col" class="text-center">Contact Person 5</th>
+                                    <th scope="col" class="text-center">Nama CP 1</th>
+                                    <th scope="col" class="text-center">Nama CP 2</th>
+                                    <th scope="col" class="text-center">Nama CP 3</th>
+                                    <th scope="col" class="text-center">Nama CP 4</th>
+                                    <th scope="col" class="text-center">Nama CP 5</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 1</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 2</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 3</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 4</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 5</th>
-                                    <th scope="col" class="text-center">Pos CP Customer 1</th>
-                                    <th scope="col" class="text-center">Pos CP Customer 2</th>
-                                    <th scope="col" class="text-center">Pos CP Customer 3</th>
-                                    <th scope="col" class="text-center">Pos CP Customer 4</th>
-                                    <th scope="col" class="text-center">Pos CP Customer 5</th>
+                                    <th scope="col" class="text-center">Kode Pos CP Customer 1</th>
+                                    <th scope="col" class="text-center">Kode Pos CP Customer 3</th>
+                                    <th scope="col" class="text-center">Kode Pos CP Customer 2</th>
+                                    <th scope="col" class="text-center">Kode Pos CP Customer 4</th>
+                                    <th scope="col" class="text-center">Kode Pos CP Customer 5</th>
                                     <th scope="col" class="text-center">Tanggal Join Customer</th>
                                     <th scope="col" class="text-center">Kontrak Customer</th>
                                     <th scope="col" class="text-center">Bank Customer 1</th>
@@ -186,7 +186,7 @@
                         <div class="row w-100 ml-2">
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label>Nama Contact Person 1</label>
+                                    <label>Nama CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label>Pos CP Customer 1</label>
+                                    <label>Kode Pos CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
                             </div>
@@ -438,14 +438,14 @@
                 <div class="row w-100 ml-2 row-input">
                 <div class="col-12 col-md-6 col-lg-4 input-contact-person">
                     <div class="form-group">
-                    <label>Contact Person Name ` + count + `</label>
+                    <label>Nama CP Customer ` + count + `</label>
                     <input type="text" class="form-control" name="fc_memberpicname` + count +
                     `" id="fc_memberpicname` + count + `">
                     </div>
                 </div>
                 <div class="col-12 col-md-3 col-lg-4 input-contact-person">
                     <div class="form-group">
-                    <label>Customer CP Phone ` + count + `</label>
+                    <label>No. HP CP Customer ` + count + `</label>
                     <input type="text" class="form-control" name="fc_memberpicphone` + count +
                     `" id="fc_memberpicphone` +
                     count + `">
@@ -453,7 +453,7 @@
                 </div>
                 <div class="col-12 col-md-3 col-lg-3 input-contact-person">
                     <div class="form-group">
-                    <label>Customer CP Pos ` + count + `</label>
+                    <label>Kode Pos CP Customer ` + count + `</label>
                     <input type="text" class="form-control" name="fc_memberpicpos` + count + `" id="fc_memberpicpos` +
                     count + `">
                     </div>
@@ -763,7 +763,7 @@
     function get_data_member_bank() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url: "/master/get-data-all/BankAcc",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BANKNAME",
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -780,11 +780,11 @@
                     $("#fc_memberbank3").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_memberbank1").append(
-                            `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_memberbank2").append(
-                            `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_memberbank3").append(
-                            `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                            `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
@@ -1064,15 +1064,15 @@
                 defaultContent: '',
             },
             {
-                data: 'member_bank1.fv_bankname',
+                data: 'fc_memberbank1',
                 defaultContent: '',
             },
             {
-                data: 'member_bank2.fv_bankname',
+                data: 'fc_memberbank2',
                 defaultContent: '',
             },
             {
-                data: 'member_bank3.fv_bankname',
+                data: 'fc_memberbank3',
                 defaultContent: '',
             },
             {
