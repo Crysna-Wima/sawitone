@@ -25,7 +25,7 @@ class DoDetail extends Model
 
     // relasi dengan tabel invstore
     public function invstore(){
-        return $this->belongsTo(Invstore::class, 'fc_barcode', 'fc_barcode');
+        return $this->hasOne(Invstore::class, 'fc_barcode', 'fc_barcode');
     }
 
     // relasi dengan tabel stock

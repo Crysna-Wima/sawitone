@@ -63,7 +63,7 @@ class MasterDeliveryOrderController extends Controller
             'message' => 'PDF Berhasil ditampilkan',
             'link' => '/apps/master-delivery-order/get_pdf/' . $encode_fc_dono . '/' . $data['nama_pj'],
         ];
-        // dd($request);
+        // dd($data['do_dtl']);
     }
 
     public function get_pdf($fc_dono,$nama_pj){
