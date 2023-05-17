@@ -310,7 +310,7 @@
                                     <thead style="white-space: nowrap">
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Stock Code</th>
+                                            <th scope="col" class="text-center">Kode Barang</th>
                                             <th scope="col" class="text-center">Nama Produk</th>
                                             <th scope="col" class="text-center">Unity</th>
                                             <th scope="col" class="text-center">Harga</th>
@@ -560,8 +560,10 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Kode Produk</th>
+                                        <th scope="col" class="text-center">Katalog Produk</th>
                                         <th scope="col" class="text-center">Nama Produk</th>
+                                        <th scope="col" class="text-center">Brand</th>
+                                        <th scope="col" class="text-center">Sub Group</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Harga</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
@@ -740,7 +742,7 @@
                 },
                 columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 5]
+                    targets: [0, 1, 2, 5]
                 }, ],
                 columns: [{
                         data: 'DT_RowIndex',
@@ -760,6 +762,12 @@
                         }
                     },
                     {
+                        data: 'fc_brand'
+                    },
+                    {
+                        data: 'fc_subgroup'
+                    },
+                    {
                         data: 'namepack.fv_description'
                         
                     },
@@ -772,7 +780,7 @@
                     },
                 ],
                 rowCallback: function(row, data) {
-                    $('td:eq(5)', row).html(`
+                    $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }

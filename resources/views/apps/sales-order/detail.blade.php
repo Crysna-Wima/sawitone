@@ -172,7 +172,7 @@
                                 <div class="form-group">
                                     <label>Kode Barang</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
+                                        <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
                                         </div>
@@ -287,8 +287,7 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Barcode</th>
-                                        <th scope="col" class="text-center">CAT Number</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Qty</th>
@@ -385,9 +384,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">CAT Number</th>
-                                    <th scope="col" class="text-center">Kode Produk</th>
+                                    <th scope="col" class="text-center">Katalog Produk</th>
                                     <th scope="col" class="text-center">Nama Produk</th>
+                                    <th scope="col" class="text-center">Brand</th>
+                                    <th scope="col" class="text-center">Sub Group</th>
                                     <th scope="col" class="text-center">Unity</th>
                                     <th scope="col" class="text-center">Harga</th>
                                     <th scope="col" class="text-center" style="width: 10%">Actions</th>
@@ -585,7 +585,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 5]
+                targets: [0, 1, 2, 5]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -593,11 +593,7 @@
                     orderable: false
                 },
                 {
-                    data: 'fc_catnumber',
-                    defaultContent: '-',
-                },
-                {
-                    data: 'fc_barcode'
+                    data: 'fc_stockcode'
                 },
                 {
                     data: 'fc_nameshort',
@@ -607,6 +603,12 @@
                         }
                         return data;
                     }
+                },
+                {
+                    data: 'fc_brand'
+                },
+                {
+                    data: 'fc_subgroup'
                 },
                 {
                     data: 'namepack.fv_description',
@@ -649,11 +651,11 @@
                 }
 
                 if ($('#category').val() == 'Khusus') {
-                        $('td:eq(6)', row).html(`
+                        $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }else{
-                    $('td:eq(6)', row).html(`
+                    $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
@@ -725,7 +727,7 @@
                 } else {
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
-                $('#fc_barcode').val(data.fc_barcode);
+                $('#fc_stockcode').val(data.fc_stockcode);
 
                 $("#modal_stock").modal('hide');
             },
@@ -763,7 +765,7 @@
                 } else {
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
-                $('#fc_barcode').val(data.fc_barcode);
+                $('#fc_stockcode').val(data.fc_stockcode);
 
                 $("#modal_stock").modal('hide');
             },
@@ -829,11 +831,7 @@
                 orderable: false
             },
             {
-                data: 'fc_barcode'
-            },
-            {
-                data: null,
-                defaultContent: '-',
+                data: 'stock.fc_stockcode'
             },
             {
                 data: 'stock.fc_nameshort'
@@ -870,7 +868,7 @@
         rowCallback: function(row, data) {
             var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-            $('td:eq(11)', row).html(`
+            $('td:eq(10)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
         },

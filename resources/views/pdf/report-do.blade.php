@@ -246,23 +246,17 @@
             <tr>
                 <td>Nama</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $do_mst->somst->customer->fc_membername1 }}</td>
-                <td>Masa Hutang</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $do_mst->somst->customer->fn_memberAgingAP ?? 0 }}</td>
+                <td style="width: 30%" colspan="2">{{ $do_mst->somst->customer->fc_membername1 }}</td>
             </tr>
             <tr>
                 <td>Legalitas</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $do_mst->somst->customer->fc_memberlegalstatus }}</td>
-                <td>Hutang</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $do_mst->somst->customer->fm_memberAP }}</td>
+                <td style="width: 30%" colspan="2">{{ $do_mst->somst->customer->fc_memberlegalstatus }}</td>
             </tr>
             <tr class="pb-1">
                 <td>Alamat</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $do_mst->somst->customer->fc_memberaddress1 }}</td>
+                <td style="width: 30%" colspan="2">{{ $do_mst->somst->customer->fc_memberaddress1 }}</td>
                 <td></td><td></td><td></td>
             </tr>
         </table>

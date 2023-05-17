@@ -253,7 +253,7 @@
 
             </table>
 
-            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman</p>
+            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Alamat Pengiriman</p>
             <p style="font-size: .8rem; margin-left: 5%">{{  $po_mst->fc_address_loading1 }}</p>
 
             <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">

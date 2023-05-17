@@ -188,13 +188,12 @@
 </div>
 
 <div class="content">
-    <br>
+    <br><br>
         <p style="font-weight: bold; font-size: .8rem;">Pengiriman Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
-                <th>CAT Number</th>
-                <th>Barcode</th>
+                <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Batch</th>
                 <th>Expired Date</th>
@@ -205,8 +204,7 @@
                 @foreach ($do_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->invstore->stock->fc_catnumber }}</td>
-                        <td>{{ $item->invstore->stock->fc_barcode }}</td>
+                        <td>{{ $item->invstore->stock->fc_stockcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>

@@ -228,23 +228,17 @@
                 <tr>
                     <td>Nama</td>
                     <td style="width: 5px">:</td>
-                    <td style="width: 28%">{{ $so_master->customer->fc_membername1 }}</td>
-                    <td>Masa Hutang</td>
-                    <td style="width: 5px">:</td>
-                    <td>{{ $so_master->customer->fn_memberAgingAP ?? 0 }}</td>
+                    <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_membername1 }}</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
                     <td style="width: 5px">:</td>
-                    <td style="width: 28%">{{ $so_master->customer->fc_memberaddress1 }}</td>
-                    <td>Hutang</td>
-                    <td style="width: 5px">:</td>
-                    <td>{{ $so_master->customer->fm_memberAP }}</td>
+                    <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress1 }}</td>
                 </tr>
                 <tr class="pb-1">
                     <td>Alamat Tujuan</td>
                     <td style="width: 5px">:</td>
-                    <td style="width: 28%">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
+                    <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
                     <td></td><td></td><td></td>
                 </tr>
             </table>
@@ -258,9 +252,9 @@
                     <th>Satuan</th>
                     <th>Qty</th>
                     <th>Bonus</th>
-                    <th>Harga (Rp)</th>
+                    <!-- <th>Harga (Rp)</th>
                     <th>Diskon (Rp)</th>
-                    <th>Total (Rp)</th>
+                    <th>Total (Rp)</th> -->
                 </tr>
 
                 @if(isset($so_detail))
@@ -272,9 +266,9 @@
                             <td>{{ $item->stock->fc_namepack}}</td>
                             <td>{{ $item->fn_so_qty}}</td>
                             <td>{{ $item->fn_so_bonusqty}}</td>
-                            <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
+                            <!-- <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
                             <td>{{ number_format($item->fm_so_disc,0,',','.')}}</td>
-                            <td>{{ number_format($item->fn_so_value,0,',','.')}}</td>
+                            <td>{{ number_format($item->fn_so_value,0,',','.')}}</td> -->
                         </tr>
                     @endforeach
                 @else
@@ -285,7 +279,7 @@
 
             </table>
 
-            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman Barang</p>
+            <!-- <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pengiriman Barang</p>
             <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
                 <tr>
                     <th>No</th>
@@ -319,9 +313,9 @@
                 </tr>
                 @endif
 
-            </table>
+            </table> -->
 
-            <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;"></table>
+            <!-- <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;"></table>
 
             <p style="font-weight: bold; font-size: .8rem; margin-left: 5%;">Kalkulasi</p>
             <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
@@ -349,7 +343,7 @@
                     <td style="width: 5px">:</td>
                     <td>{{ number_format($so_master->fm_brutto,0,',','.')}}</td>
                 </tr>
-            </table>
+            </table> -->
 
             <table style="width: 90%; border-collapse: collapse; margin: auto; dashed black; cellspacing=15 ">
                 <br><br/>

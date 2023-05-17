@@ -180,7 +180,7 @@
     </div>
 
     <div class="content">
-        <p style="text-align: center">{{ $so_master->fc_sotype }}</p>
+        <p style="text-align: center"><b>Sales Order</b></p>
 
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
             <tr class="tp-1">
@@ -228,17 +228,11 @@
                 <td>Nama</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%">{{ $so_master->customer->fc_membername1 }}</td>
-                <td>Masa Hutang</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->customer->fn_memberAgingAP ?? 0 }}</td>
             </tr>
             <tr>
                 <td>Legalitas</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%">{{ $so_master->customer->fc_memberlegalstatus }}</td>
-                <td>Hutang</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->customer->fm_memberAP }}</td>
             </tr>
              <tr>
                 <td>Alamat</td>
@@ -248,37 +242,31 @@
              <tr class="pb-1">
                 <td>Alamat Tujuan</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
+                <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
                 <td></td><td></td><td></td>
             </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Order</p>
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Pemesanan Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
-                <th>Barcode</th>
+                <th>Kode Barang</th>
                 <th>Nama Produk</th>
                 <th>Unity</th>
                 <th>Qty</th>
                 <th>Bonus</th>
-                <th>Harga (Rp)</th>
-                <th>Diskon (Rp)</th>
-                <th>Total (Rp)</th>
             </tr>
 
             @if(isset($so_detail))
                 @foreach ($so_detail as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->stock->fc_barcode}}</td>
+                        <td>{{ $item->stock->fc_stockcode}}</td>
                         <td>{{ $item->stock->fc_namelong}}</td>
                         <td>{{ $item->stock->fc_namepack}}</td>
                         <td>{{ $item->fn_so_qty}}</td>
                         <td>{{ $item->fn_so_bonusqty}}</td>
-                        <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
-                        <td>{{ number_format($item->fm_so_disc,0,',','.')}}</td>
-                        <td>{{ number_format($item->fn_so_value,0,',','.')}}</td>
                     </tr>
                 @endforeach
 
@@ -290,35 +278,7 @@
 
         </table>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-top: 1px dashed black;">
-            <tr class="pt-1">
-                <td>Item</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->fn_sodetail ?? '-' }}</td>
-                <td>Biaya Service</td>
-                <td style="width: 5px">:</td>
-                <td>{{ number_format($so_master->fm_servpay,0,',','.')}}</td>
-            </tr>
-
-            <tr>
-                <td>Diskon Total</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ number_format($so_master->fn_disctotal,0,',','.')}}</td>
-                <td>Pajak</td>
-                <td style="width: 5px">:</td>
-                <td>{{ number_format($so_master->fm_tax,0,',','.')}}</td>
-            </tr>
-            <tr>
-                <td>Total</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ number_format($so_master->fm_netto,0,',','.')}}</td>
-                <td>Grand</td>
-                <td style="width: 5px">:</td>
-                <td>{{ number_format($so_master->fm_brutto,0,',','.')}}</td>
-            </tr>
-        </table>
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Payment Method</p>
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Metode Pembayaran</p>
 
         <table style="width: 90%; border-collapse: collapse; margin: auto;" border="1">
             <tr>
