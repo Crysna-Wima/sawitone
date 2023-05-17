@@ -619,24 +619,25 @@
                 },
                 {
                     data: 'fm_price_default',
-                    render: function(data, type, row) {
-                        if (!data) {
-                            return row.fm_price_customer.toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            });
-                        }
-                        return data.toLocaleString('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                        });
-                    }
+                    // render: function(data, type, row) {
+                    //     if (!data) {
+                    //         return row.fm_price_customer.toLocaleString('id-ID', {
+                    //             style: 'currency',
+                    //             currency: 'IDR'
+                    //         });
+                    //     }
+                    //     return data.toLocaleString('id-ID', {
+                    //         style: 'currency',
+                    //         currency: 'IDR'
+                    //     });
+                    // }
                 },
                 {
                     data: null
                 },
             ],
             rowCallback: function(row, data) {
+                console.log(data)
                 if (!data.fc_nameshort) {
                     data.fc_nameshort = data.stock.fc_nameshort;
                 }
