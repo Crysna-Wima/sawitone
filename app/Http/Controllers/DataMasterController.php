@@ -49,6 +49,14 @@ class DataMasterCOntroller extends Controller
         // dd($data);
     }
 
+    public function get_data_where_field_id_first_customer($model, $where_field, $id)
+    {
+        $model = 'App\\Models\\' . $model;
+        $data = $model::with(['stock.namepack'])->where($where_field, $id)->first();
+        return ApiFormatter::getResponse($data);
+        // dd($data);
+    }
+
     public function get_data_where_field_id_get($model, $where_field, $id)
     {
         $model = 'App\\Models\\' . $model;

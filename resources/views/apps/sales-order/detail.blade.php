@@ -647,9 +647,17 @@
                 if (!data.fc_nameshort) {
                     data.fc_nameshort = data.stock.fc_nameshort;
                 }
-                $('td:eq(6)', row).html(`
-                <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
-            `);
+
+                if ($('#category').val() == 'Khusus') {
+                        $('td:eq(6)', row).html(`
+                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
+                }else{
+                    $('td:eq(6)', row).html(`
+                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
+                }
+                
             }
         });
         // Reload datatable when category is changed
@@ -695,6 +703,7 @@
     }
 
     function detail_stock($id) {
+        console.log($id)
         $.ajax({
             url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
             type: "GET",
@@ -713,6 +722,44 @@
                     $('#fm_so_price').val(fungsiRupiah(data.fm_price_enduser));
                 } else if (tipe_bisnis == 'ENDUSER') {
                     $('#fm_so_price').val(fungsiRupiah(data.fm_price_enduser));
+                } else {
+                    $('#fm_so_price').val(fungsiRupiah(""));
+                }
+                $('#fc_barcode').val(data.fc_barcode);
+
+                $("#modal_stock").modal('hide');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function detail_stock_customer($id) {
+        console.log($id)
+        $.ajax({
+            url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + $id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                var data = response.data;
+                // console.log(data.tempsodetail[0].fm_so_price);
+                var tipe_bisnis = "{{ $data->customer->member_type_business->fc_kode }}";
+                if (tipe_bisnis == 'DISTRIBUTOR') {
+                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
+                } else if (tipe_bisnis == 'RETAIL') {
+                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
+                } else if (tipe_bisnis == 'HOSPITAL') {
+                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
+                } else if (tipe_bisnis == 'PERSONAL') {
+                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
+                } else if (tipe_bisnis == 'ENDUSER') {
+                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
                 } else {
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
