@@ -75,13 +75,13 @@ class PurchaseOrderDetailController extends Controller
         }
 
         $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
-
+        $request->merge(['fm_po_price' => Convert::convert_to_double($request->fm_po_price)]);
         //total harga
         $total_harga = $request->fn_po_value * $request->fm_po_price;
 
         $request->merge(['fn_po_qty' => Convert::convert_to_double($request->fn_po_qty)]);
         $request->merge(['fn_po_value' => Convert::convert_to_double($total_harga)]);
-        $request->merge(['fm_po_price' => Convert::convert_to_double($request->fm_po_price)]);
+       
         // dd($request->fm_po_price);
         $insert_po_detail = TempPoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
