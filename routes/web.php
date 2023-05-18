@@ -354,8 +354,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\PersediaanBarangController@index');
             Route::get('/datatables-dexa','Apps\PersediaanBarangController@datatables_dexa');
             Route::get('/datatables-gudanglain','Apps\PersediaanBarangController@datatables_gudanglain');
-            Route::get('/datatables-inventory-dexa','Apps\PersediaanBarangController@datatables_inventory_dexa');
-            Route::get('/datatables-inventory-gudanglain','Apps\PersediaanBarangController@datatables_inventory_gudanglain');
+            Route::get('/datatables-inventory-dexa/{fc_stockde}','Apps\PersediaanBarangController@datatables_inventory_dexa');
+            Route::get('/datatables-inventory-gudanglain/{fc_stockcode}','Apps\PersediaanBarangController@datatables_inventory_gudanglain');
         });
 
         Route::prefix('mutasi-barang')->group(function(){

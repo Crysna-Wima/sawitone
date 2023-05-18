@@ -61,18 +61,18 @@ class PersediaanBarangController extends Controller
             ->make(true);
     }
 
-    public function datatables_inventory_dexa()
+    public function datatables_inventory_dexa($fc_stockcode)
     {
-        $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_inventory_gudanglain()
+    public function datatables_inventory_gudanglain($fc_stockcode)
     {
-        $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

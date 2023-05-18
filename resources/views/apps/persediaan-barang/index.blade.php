@@ -117,7 +117,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Nama Barang e</h5>
+                <h5 class="modal-title" id="product_name1"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -149,7 +149,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Nama Barang e</h5>
+                <h5 class="modal-title" id="product_name2"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -180,14 +180,14 @@
 
 @section('js')
 <script>
-    function click_modal_inventory_dexa() {
+    function click_modal_inventory_dexa(fc_stockcode, fc_namelong) {
         $('#modal_inventory_dexa').modal('show');
-        table_inventory_dexa();
+        table_inventory_dexa(fc_stockcode, fc_namelong);
     }
 
-    function click_modal_inventory_gudanglain() {
+    function click_modal_inventory_gudanglain(fc_stockcode, fc_namelong) {
         $('#modal_inventory_gudanglain').modal('show');
-        table_inventory_gudanglain();
+        table_inventory_gudanglain(fc_stockcode, fc_namelong);
     }
 
     var tb_dexa = $('#tb_dexa').DataTable({
@@ -235,7 +235,7 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa()"><i class="fa fa-eye"> </i> Detail</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
                 `);
         },
     });
@@ -285,18 +285,20 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_gudanglain()"><i class="fa fa-eye"> </i> Detail</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_gudanglain('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
                 `);
         },
+      
     });
 
-    function table_inventory_dexa() {
+    function table_inventory_dexa(fc_stockcode, fc_namelong) {
+
         var tb_inventory_dexa = $('#tb_inventory_dexa').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/persediaan-barang/datatables-inventory-dexa",
+                url: "/apps/persediaan-barang/datatables-inventory-dexa/" + fc_stockcode,
                 type: 'GET'
             },
             columnDefs: [{
@@ -316,16 +318,19 @@
                     data: 'fn_quantity'
                 },
             ],
+
         });
+
+        $('#product_name1').text(fc_namelong);
     }
 
-    function table_inventory_gudanglain() {
+    function table_inventory_gudanglain(fc_stockcode, fc_namelong) {
         var tb_inventory_gudanglain = $('#tb_inventory_gudanglain').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/persediaan-barang/datatables-inventory-gudanglain",
+                url: "/apps/persediaan-barang/datatables-inventory-gudanglain/" + + fc_stockcode,
                 type: 'GET' 
             },
             columnDefs: [{
@@ -346,6 +351,8 @@
                 },
             ],
         });
+
+        $('#product_name2').text(fc_namelong);
     }
 
     $('.modal').css('overflow-y', 'auto');
