@@ -341,6 +341,8 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
+                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
+                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
                     $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'P') {
                         $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
@@ -407,6 +409,8 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
+                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
+                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
                     $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'R') {
                         $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
