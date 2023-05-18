@@ -3,38 +3,38 @@
 @section('content')
 
 <div class="section-body">
-   <div class="row">
-      <div class="col-12 col-md-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                <h4>Data Gudang</h4>
-                <div class="card-header-action">
-                    <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Warehouse</button>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Data Gudang</h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Warehouse</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Division</th>
+                                    <th scope="col" class="text-center">Cabang</th>
+                                    <th scope="col" class="text-center">Kode Gudang</th>
+                                    <th scope="col" class="text-center">Posisi Gudang</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center">Rackname</th>
+                                    <th scope="col" class="text-center">Kapasitas</th>
+                                    <th scope="col" class="text-center">Deskripsi</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="card-body">
-               <div class="table-responsive">
-                  <table class="table table-striped" id="tb" width="100%">
-                     <thead>
-                        <tr>
-                           <th scope="col" class="text-center">No</th>
-                           <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Cabang</th>
-                           <th scope="col" class="text-center">Kode Gudang</th>
-                           <th scope="col" class="text-center">Kode Pos Gudang</th>
-                           <th scope="col" class="text-center">Status</th>
-                           <th scope="col" class="text-center">Rackname</th>
-                           <th scope="col" class="text-center">Kapasitas</th>
-                           <th scope="col" class="text-center">Deskripsi</th>
-                           <th scope="col" class="text-center" style="width: 20%">Actions</th>
-                        </tr>
-                     </thead>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -43,7 +43,7 @@
 <!-- Modal -->
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
-       <div class="modal-content">
+        <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -63,19 +63,19 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Branch</label>
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Warehouse Code</label>
+                                <label>Kode Gudang</label>
                                 <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Warehouse Pos</label>
+                                <label>Posisi Gudang</label>
                                 <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos" required>
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option value="INTERNAL">Internal</option>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group">
-                                <label>Capacity</label>
+                                <label>Kapasitas</label>
                                 <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
-       </div>
+        </div>
     </div>
 </div>
 
@@ -128,89 +128,128 @@
 
 @section('js')
 <script>
-
-    $(document).ready(function(){
+    $(document).ready(function() {
         get_data_branch();
     });
 
-    function get_data_branch(){
+    function get_data_branch() {
         $("#modal_loading").modal('show');
         $.ajax({
-            url : "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/BRANCH",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                if(response.status === 200){
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_branch").empty();
                     for (var i = 0; i < data.length; i++) {
-                        if(data[i].fc_kode == $('#fc_branch_view').val()){
+                        if (data[i].fc_kode == $('#fc_branch_view').val()) {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}" selected>${data[i].fv_description}</option>`);
                             $("#fc_branch").prop("disabled", true);
-                        }else{
+                        } else {
                             $("#fc_branch").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
 
-    function add(){
-      $("#modal").modal('show');
-      $(".modal-title").text('Tambah Daftar Gudang');
-      $("#form_submit")[0].reset();
+    function add() {
+        $("#modal").modal('show');
+        $(".modal-title").text('Tambah Daftar Gudang');
+        $("#form_submit")[0].reset();
     }
 
-   var tb = $('#tb').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: {
-         url: '/data-master/master-warehouse/datatables',
-         type: 'GET'
-      },
-      columnDefs: [
-         { className: 'text-center', targets: [0] },
-         { className: 'text-nowrap', targets: [9] },
-      ],
-      columns: [
-         { data: 'DT_RowIndex',searchable: false, orderable: false},
-         { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
-         { data: 'fc_warehousecode' },
-         { data: 'fc_warehousepos' },
-         { data: 'fl_status' },
-         { data: 'fc_rackname' },
-         { data: 'fn_capacity' },
-         { data: 'fv_description' },
-         { data: 'fv_description' },
-      ],
-      rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-warehouse/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
-         var url_delete = "/data-master/master-warehouse/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
+    var tb = $('#tb').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '/data-master/master-warehouse/datatables',
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0]
+            },
+            {
+                className: 'text-nowrap',
+                targets: [9]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_divisioncode'
+            },
+            {
+                data: 'branch.fv_description'
+            },
+            {
+                data: 'fc_warehousecode'
+            },
+            {
+                data: 'fc_warehousepos'
+            },
+            {
+                data: 'fl_status'
+            },
+            {
+                data: 'fc_rackname'
+            },
+            {
+                data: 'fn_capacity'
+            },
+            {
+                data: 'fv_description'
+            },
+            {
+                data: 'fv_description'
+            },
+        ],
+        rowCallback: function(row, data) {
+            var url_edit = "/data-master/master-warehouse/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
+            var url_delete = "/data-master/master-warehouse/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
 
-         $('td:eq(9)', row).html(`
+            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            if (data['fl_status'] == 'G') {
+                $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+            } else {
+                $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+            }
+
+            $('td:eq(9)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_warehousecode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
-      }
-   });
+        }
+    });
 
-   function edit(url){
-      edit_action(url, 'Edit Data Master Warehouse');
-      $("#type").val('update');
-      $("#fc_branch").prop("disabled", true);
-      document.getElementById("fc_warehousecode").readOnly = true;
-   }
+    function edit(url) {
+        edit_action(url, 'Edit Data Master Warehouse');
+        $("#type").val('update');
+        $("#fc_branch").prop("disabled", true);
+        document.getElementById("fc_warehousecode").readOnly = true;
+    }
 </script>
 @endsection

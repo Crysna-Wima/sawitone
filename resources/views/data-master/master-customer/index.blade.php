@@ -72,11 +72,11 @@
                                     <th scope="col" class="text-center">No. HP CP Customer 3</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 4</th>
                                     <th scope="col" class="text-center">No. HP CP Customer 5</th>
-                                    <th scope="col" class="text-center">Kode Pos CP Customer 1</th>
-                                    <th scope="col" class="text-center">Kode Pos CP Customer 3</th>
-                                    <th scope="col" class="text-center">Kode Pos CP Customer 2</th>
-                                    <th scope="col" class="text-center">Kode Pos CP Customer 4</th>
-                                    <th scope="col" class="text-center">Kode Pos CP Customer 5</th>
+                                    <th scope="col" class="text-center">Jabatan CP Customer 1</th>
+                                    <th scope="col" class="text-center">Jabatan CP Customer 3</th>
+                                    <th scope="col" class="text-center">Jabatan CP Customer 2</th>
+                                    <th scope="col" class="text-center">Jabatan CP Customer 4</th>
+                                    <th scope="col" class="text-center">Jabatan CP Customer 5</th>
                                     <th scope="col" class="text-center">Tanggal Join Customer</th>
                                     <th scope="col" class="text-center">Kontrak Customer</th>
                                     <th scope="col" class="text-center">Bank Customer 1</th>
@@ -198,7 +198,7 @@
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label>Kode Pos CP Customer 1</label>
+                                    <label>Jabatan CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
                             </div>
@@ -453,7 +453,7 @@
                 </div>
                 <div class="col-12 col-md-3 col-lg-3 input-contact-person">
                     <div class="form-group">
-                    <label>Kode Pos CP Customer ` + count + `</label>
+                    <label>Jabatan CP Customer ` + count + `</label>
                     <input type="text" class="form-control" name="fc_memberpicpos` + count + `" id="fc_memberpicpos` +
                     count + `">
                     </div>

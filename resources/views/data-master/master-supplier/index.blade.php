@@ -66,11 +66,11 @@
                                     <th scope="col" class="text-center">No. HP PIC Supplier 3</th>
                                     <th scope="col" class="text-center">No. HP PIC Supplier 4</th>
                                     <th scope="col" class="text-center">No. HP PIC Supplier 5</th>
-                                    <th scope="col" class="text-center">Pos PIC Supplier 1</th>
-                                    <th scope="col" class="text-center">Pos PIC Supplier 2</th>
-                                    <th scope="col" class="text-center">Pos PIC Supplier 3</th>
-                                    <th scope="col" class="text-center">Pos PIC Supplier 4</th>
-                                    <th scope="col" class="text-center">Pos PIC Supplier 5</th>
+                                    <th scope="col" class="text-center">Jabatan PIC Supplier 1</th>
+                                    <th scope="col" class="text-center">Jabatan PIC Supplier 2</th>
+                                    <th scope="col" class="text-center">Jabatan PIC Supplier 3</th>
+                                    <th scope="col" class="text-center">Jabatan PIC Supplier 4</th>
+                                    <th scope="col" class="text-center">Jabatan PIC Supplier 5</th>
                                     <th scope="col" class="text-center">Tanggal Join Supplier</th>
                                     <th scope="col" class="text-center">Supplier Expired</th>
                                     <th scope="col" class="text-center">Bank Supplier 1</th>
@@ -167,7 +167,7 @@
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
                                 <div class="form-group">
-                                    <label>Pos PIC Supplier</label>
+                                    <label>Jabatan PIC Supplier</label>
                                     <input type="text" class="form-control required-field" name="fc_supplierpicpos" id="fc_supplierpicpos">
                                 </div>
                             </div>
@@ -424,7 +424,7 @@
                 </div>
                 <div class="col-12 col-md-3 col-lg-3 input-contact-person">
                     <div class="form-group">
-                    <label>POS PIC Supplier ` + count + `</label>
+                    <label>Jabatan PIC Supplier ` + count + `</label>
                     <input type="text" class="form-control" name="fc_supplierpicpos` + count + `" id="fc_supplierpicpos` +
                     count + `">
                     </div>
