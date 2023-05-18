@@ -23,19 +23,41 @@ class PersediaanBarangController extends Controller
 
     public function datatables_dexa()
     {
-        $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('sum_quantity', function ($row) {
+                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+                    ->where('fc_warehousecode', $row->fc_warehousecode)
+                    ->sum('fn_quantity');
+
+                return $sumQuantity;
+            })
             ->make(true);
     }
 
+
     public function datatables_gudanglain()
     {
-        $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fl_status', 'EXTERNAL')
+        ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('sum_quantity', function ($row) {
+                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+                    ->where('fc_warehousecode', $row->fc_warehousecode)
+                    ->sum('fn_quantity');
+
+                return $sumQuantity;
+            })
             ->make(true);
     }
 

@@ -25,7 +25,8 @@ class MasterStockController extends Controller
         return Stock::where([
             'fc_stockcode' => $fc_stockcode,
             'fc_barcode' => $fc_barcode,
-        ])->first();
+        ])->where('fc_branch', auth()->user()->fc_branch)->first();
+        // dd($fc_barcode);
     }
 
     public function datatables(){

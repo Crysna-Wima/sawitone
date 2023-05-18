@@ -226,8 +226,8 @@
                 data: 'stock.fc_typestock2'
             },
             {
-                data: null,
-                defaultContent: '',
+                data: 'sum_quantity',
+                // defaultContent: '',
             },
             {
                 data: null
@@ -276,8 +276,8 @@
                 data: 'stock.fc_typestock2'
             },
             {
-                data: null,
-                defaultContent: '',
+                data: 'sum_quantity',
+                // defaultContent: '',
             },
             {
                 data: null
