@@ -358,8 +358,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-inventory-gudanglain','Apps\PersediaanBarangController@datatables_inventory_gudanglain');
         });
 
-        Route::prefix('mutasi-barang')->group(function(){
-            Route::get('/','Apps\MutasiBarangController@index');
+        Route::prefix('daftar-mutasi-barang')->group(function(){
+            Route::get('/','Apps\DaftarMutasiBarangController@index');
+            Route::get('/datatables-internal','Apps\DaftarMutasiBarangController@datatables_internal');
+            Route::get('/datatables-eksternal','Apps\DaftarMutasiBarangController@datatables_eksternal');
         });
     });
 });

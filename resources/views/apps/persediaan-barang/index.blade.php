@@ -62,7 +62,7 @@
                             <a class="nav-link active show" id="dexa-tab" data-toggle="tab" href="#dexa" role="tab" aria-controls="dexa" aria-selected="true">DEXA Utama</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="gudanglain-tab" data-toggle="tab" href="#gudanglain" role="tab" aria-controls="gudanglain" aria-selected="false">Gudang Lain</a>
+                            <a class="nav-link" id="gudanglain-tab" data-toggle="tab" href="#gudanglain" role="tab" aria-controls="gudanglain" aria-selected="false">Gudang Eksternal</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
