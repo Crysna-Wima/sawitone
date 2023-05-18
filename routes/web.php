@@ -349,6 +349,18 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/pdf', 'Apps\MasterPenerimaanBarangController@pdf');
             Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');    
         });
+
+        Route::prefix('persediaan-barang')->group(function(){
+            Route::get('/','Apps\PersediaanBarangController@index');
+            Route::get('/datatables-dexa','Apps\PersediaanBarangController@datatables_dexa');
+            Route::get('/datatables-gudanglain','Apps\PersediaanBarangController@datatables_gudanglain');
+            Route::get('/datatables-inventory-dexa','Apps\PersediaanBarangController@datatables_inventory_dexa');
+            Route::get('/datatables-inventory-gudanglain','Apps\PersediaanBarangController@datatables_inventory_gudanglain');
+        });
+
+        Route::prefix('mutasi-barang')->group(function(){
+            Route::get('/','Apps\MutasiBarangController@index');
+        });
     });
 });
 
