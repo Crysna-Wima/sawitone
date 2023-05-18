@@ -26,9 +26,14 @@
         color: #A5A5A5;
     }
 
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        background-color: #0A9447;
+        border-color: transparent;
+    }
+
     .nav-tabs .nav-item .nav-link.active {
         font-weight: bold;
-        color: #0A9447;
+        color: #FFFF;
     }
 
     @media (min-width: 992px) and (max-width: 1200px) {

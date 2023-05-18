@@ -14,13 +14,18 @@
             background-color: #A5A5A5 !important;
         }
 
-        .nav-tabs .nav-item .nav-link {
-            color: #A5A5A5;
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            background-color: #0A9447;
+            border-color: transparent;
         }
 
         .nav-tabs .nav-item .nav-link.active {
             font-weight: bold;
-            color: #0A9447;
+            color: #FFFF;
+        }
+
+        .nav-tabs .nav-item .nav-link {
+            color: #A5A5A5;
         }
     </style>
 @endsection
