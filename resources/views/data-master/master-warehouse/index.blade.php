@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title','Master Warehouse')
+@section('title','Daftar Gudang')
 @section('content')
 
 <div class="section-body">
@@ -7,7 +7,7 @@
       <div class="col-12 col-md-12 col-lg-12">
          <div class="card">
             <div class="card-header">
-                <h4>Data Master Warehouse</h4>
+                <h4>Data Gudang</h4>
                 <div class="card-header-action">
                     <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Warehouse</button>
                 </div>
@@ -19,13 +19,13 @@
                         <tr>
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
-                           <th scope="col" class="text-center">Warehouse Code</th>
-                           <th scope="col" class="text-center">Warehouse Pos</th>
+                           <th scope="col" class="text-center">Cabang</th>
+                           <th scope="col" class="text-center">Kode Gudang</th>
+                           <th scope="col" class="text-center">Kode Pos Gudang</th>
                            <th scope="col" class="text-center">Status</th>
                            <th scope="col" class="text-center">Rackname</th>
-                           <th scope="col" class="text-center">Capacity</th>
-                           <th scope="col" class="text-center">Description</th>
+                           <th scope="col" class="text-center">Kapasitas</th>
+                           <th scope="col" class="text-center">Deskripsi</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                         </tr>
                      </thead>
@@ -168,7 +168,7 @@
 
     function add(){
       $("#modal").modal('show');
-      $(".modal-title").text('Tambah Master Warehouse');
+      $(".modal-title").text('Tambah Daftar Gudang');
       $("#form_submit")[0].reset();
     }
 
