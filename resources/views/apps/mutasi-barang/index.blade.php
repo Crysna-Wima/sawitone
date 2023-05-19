@@ -256,6 +256,7 @@
         var tb = $('#tb_warehouse_awal').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         ajax: {
             url: '/apps/mutasi-barang/datatables-lokasi-awal',
             type: 'GET'
@@ -372,6 +373,7 @@
         var tb = $('#tb_warehouse_tujuan').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         ajax: {
             url: '/apps/mutasi-barang/datatables-lokasi-tujuan',
             type: 'GET'

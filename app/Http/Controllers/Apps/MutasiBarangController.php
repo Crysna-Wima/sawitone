@@ -47,6 +47,7 @@ class MutasiBarangController extends Controller
     }
 
     public function store_mutasi(Request $request){
+
         // validator
         $validator = Validator::make($request->all(), [
             'fd_date_byuser' => 'required',
@@ -86,5 +87,33 @@ class MutasiBarangController extends Controller
                  'message' => 'Data gagal disimpan'
                 ];
         }
+    }
+
+    public function delete(){
+        DB::beginTransaction();
+
+		try{
+            TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+            TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 200, // SUCCESS
+                'link' => '/apps/mutasi-barang',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }

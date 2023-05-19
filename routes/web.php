@@ -364,6 +364,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-lokasi-awal','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
+            Route::delete('/delete','Apps\MutasiBarangController@delete');
         });
 
         Route::prefix('daftar-mutasi-barang')->group(function(){
