@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button class="btn btn-danger" onclick="click_delete()">Delete PO</button>
+                                    <button class="btn btn-danger" onclick="click_delete()">Cancel PO</button>
                                 </div>
                             </div>
                         </div>

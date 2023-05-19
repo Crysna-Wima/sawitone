@@ -360,6 +360,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('mutasi-barang')->group(function(){
             Route::get('/','Apps\MutasiBarangController@index');
+            Route::get('/datatables-lokasi-awal','Apps\MutasiBarangController@datatables_lokasi_awal');
+            Route::get('/datatables-lokasi-tujuan','Apps\MutasiBarangController@datatables_lokasi_tujuan');
         });
 
         Route::prefix('daftar-mutasi-barang')->group(function(){
