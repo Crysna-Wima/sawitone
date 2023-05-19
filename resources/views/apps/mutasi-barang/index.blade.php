@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
-                <form id="form_submit" action="" method="POST" autocomplete="off">
+                <form id="form_submit" action="/apps/mutasi-barang/store-mutasi" method="POST" autocomplete="off">
                     <div class="collapse show" id="mycard-collapse">
                         <div class="card-body">
                             <div class="row">
@@ -130,26 +130,26 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Berangkat</label>
-                                    <input type="text" class="form-control" name="fc_rackname" id="fc_rackname" readonly>
+                                    <input type="text" class="form-control" name="fc_rackname_berangkat" id="fc_rackname_berangkat" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Tujuan</label>
-                                    <input type="text" class="form-control" name="fc_rackname" id="fc_rackname" readonly>
+                                    <input type="text" class="form-control" name="fc_rackname_tujuan" id="fc_rackname_tujuan" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Berangkat</label>
-                                    <textarea type="text" name="fc_warehouseaddress" class="form-control" id="fc_warehouseaddress"
+                                    <textarea type="text" name="fc_warehouseaddress_berangkat" class="form-control" id="fc_warehouseaddress_berangkat"
                                         data-height="76" readonly></textarea>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Tujuan</label>
-                                    <textarea type="text" name="fc_warehouseaddress" class="form-control" id="fc_warehouseaddress"
+                                    <textarea type="text" name="fc_warehouseaddress_tujuan" class="form-control" id="fc_warehouseaddress_tujuan"
                                         data-height="76" readonly></textarea>
                                 </div>
                             </div>
@@ -312,10 +312,60 @@
             }
 
             $('td:eq(9)', row).html(`
-            <button class="btn btn-warning btn-sm mr-1" onclick=""><i class="fa fa-check"></i> Pilih</button>
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_awal('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
         }
-    });
+     });
+    }
+
+    function detail_warehouse_awal($fc_warehousecode){
+        $.ajax({
+            url : "/master/data-warehouse-first/" + $fc_warehousecode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                var data = response.data;
+                $("#modal_lokasi_awal").modal('hide');
+                Object.keys(data).forEach(function (key) {
+                    var elem_name = $('[name=' + key + ']');
+                    elem_name.val(data[key]);
+                });
+                $('#fc_rackname_berangkat').val(data.fc_rackname);
+                $('#fc_startpoint').val(data.fc_rackname);
+                if(data.fc_warehouseaddress != null){
+                    $('#fc_warehouseaddress_berangkat').val(data.fc_warehouseaddress);
+                }else{
+                    $('#fc_warehouseaddress_berangkat').val('-');
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
+    }
+    
+    function detail_warehouse_tujuan($fc_warehousecode){
+        $.ajax({
+            url : "/master/data-warehouse-first/" + $fc_warehousecode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                var data = response.data;
+                $("#modal_lokasi_tujuan").modal('hide');
+                Object.keys(data).forEach(function (key) {
+                    var elem_name = $('[name=' + key + ']');
+                    elem_name.val(data[key]);
+                });
+                $('#fc_rackname_tujuan').val(data.fc_rackname);
+                $('#fc_destination').val(data.fc_rackname);
+                if(data.fc_warehouseaddress != null){
+                    $('#fc_warehouseaddress_tujuan').val(data.fc_warehouseaddress);
+                }else{
+                    $('#fc_warehouseaddress_tujuan').val('-');
+                }
+            },error: function (jqXHR, textStatus, errorThrown){
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
     }
 
     function table_warehouse_tujuan() {
@@ -378,7 +428,7 @@
             }
 
             $('td:eq(9)', row).html(`
-            <button class="btn btn-warning btn-sm mr-1" onclick=""><i class="fa fa-check"></i> Pilih</button>
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_tujuan('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
         }
     });
