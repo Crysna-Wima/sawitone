@@ -51,11 +51,11 @@ class SalesOrderDetailController extends Controller
         $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
         $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
-            'fc_barcode' => 'required',
+            'fc_stockcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
             'fn_so_bonusqty' => 'nullable|integer|min:0',
         ], [
-            'fc_barcode.required' => 'Barcode harus diisi',
+            'fc_stockcode.required' => 'Barcode harus diisi',
             'fn_so_qty.required' => 'Quantity harus diisi',
         ]);
 
@@ -68,12 +68,12 @@ class SalesOrderDetailController extends Controller
             ];
         }
 
-        $stock = Stock::where(['fc_barcode' => $request->fc_barcode])->first();
+        $stock = Stock::where(['fc_stockcode' => $request->fc_barcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
 
         // jika ada TempSoDetail yang fc_barcode == $request->fc_barcode
-        $count_barcode = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->where('fc_barcode', $request->fc_barcode)->get();
+        $count_barcode = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
         
 
          
@@ -96,7 +96,7 @@ class SalesOrderDetailController extends Controller
             $fn_sorownum = $temp_detail->fn_sorownum + 1;
         }
 
-        $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
+        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
 
         //total harga
         $total_harga = $request->fn_so_value * $request->fm_so_price;
@@ -112,7 +112,7 @@ class SalesOrderDetailController extends Controller
             'fc_branch' => auth()->user()->fc_branch,
             'fc_sono' => auth()->user()->fc_userid,
             'fn_sorownum' => $fn_sorownum,
-            'fc_barcode' => $stock->fc_barcode,
+            'fc_stockcode' => $stock->fc_stockcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
             'fn_so_bonusqty' => $request->fn_so_bonusqty,
