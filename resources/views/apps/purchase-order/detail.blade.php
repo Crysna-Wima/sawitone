@@ -31,6 +31,12 @@
                 font-size: .9rem;
             }
         }
+
+        .required label:after {
+            color: #e32;
+            content: ' *';
+            display:inline;
+        }
     </style>
 @endsection
 @section('content')
@@ -192,10 +198,10 @@
                             autocomplete="off">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Kode Barang</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_barcode" name="fc_barcode"
+                                            <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode"
                                                 readonly>
                                             <input type="text" class="form-control" id="fc_stockcode"
                                                 name="fc_stockcode" readonly hidden>
@@ -207,19 +213,21 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <label>Harga</label>
-                                    <div class="input-group format-rp">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                Rp.
+                                    <div class="form-group required">
+                                        <label>Harga</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
                                             </div>
+                                            <input type="text" class="form-control format-rp" name="fm_po_price" id="fm_po_price" 
+                                                onkeyup="return onkeyupRupiah(this.id);" required>
                                         </div>
-                                        <input type="text" id="fm_po_price" class="form-control" name="fm_po_price"
-                                            onkeyup="return onkeyupRupiah(this.id)" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-5">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Qty</label>
                                         <div class="form-group">
                                             <input type="number" min="0" class="form-control" name="fn_po_qty"
@@ -793,7 +801,7 @@
                 ],
                 rowCallback: function(row, data) {
                     $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
             });
@@ -813,7 +821,6 @@
                 success: function(response) {
                     var data = response.data;
                     $('#fm_po_price').val(fungsiRupiah(data.fm_purchase))
-                    $('#fc_barcode').val(data.fc_barcode);
                     $('#fc_stockcode').val(data.fc_stockcode);
 
                     $("#modal_stock").modal('hide');

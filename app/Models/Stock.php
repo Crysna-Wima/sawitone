@@ -48,7 +48,7 @@ class Stock extends Model
     }
 
     public function tempsodetail(){
-        return $this->hasMany(TempSoDetail::class, 'fc_barcode', 'fc_barcode');
+        return $this->hasMany(TempSoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
     public function invstore(){
@@ -57,7 +57,7 @@ class Stock extends Model
 
     // sodtl
     public function sodtl(){
-        return $this->hasMany(SoDetail::class, 'fc_barcode', 'fc_barcode');
+        return $this->hasMany(SoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
     // RoDetail

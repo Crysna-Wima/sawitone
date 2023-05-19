@@ -182,8 +182,8 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Barcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Bonus</th>
@@ -268,7 +268,7 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">{{'RP '.number_format($data->fm_servpay,0,',','.') }}</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">{{ number_format($data->fm_servpay,0,',','.') }}</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
@@ -335,9 +335,9 @@
                 </div>
             </div>
         </div>
-        <div class="button text-left ml-3 mb-4">
-            <a href="/apps/master-sales-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-        </div>
+    </div>
+    <div class="button text-right mb-4">
+        <a href="/apps/master-sales-order"><button type="button" class="btn btn-info">Back</button></a>
     </div>
 </div>
 @endsection
@@ -365,7 +365,7 @@
                 orderable: false
             },
             {
-                data: 'fc_barcode'
+                data: 'fc_stockcode'
             },
             {
                 data: 'stock.fc_nameshort'

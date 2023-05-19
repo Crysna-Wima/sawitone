@@ -26,7 +26,7 @@ class TempSoDetail extends Model
     }
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_barcode', 'fc_barcode')->withTrashed();
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
 
     public function warehouse(){

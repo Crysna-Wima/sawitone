@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -46,7 +52,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Tanggal</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
                                             <div class="input-group-prepend">
@@ -60,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Jenis Mutasi</label>
                                         @if (empty($data->fc_type_mutation))
                                             <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
@@ -80,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Lokasi Awal</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_startpoint" name="fc_startpoint" readonly>
@@ -91,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Lokasi Tujuan</label>
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_destination" name="fc_destination" readonly>

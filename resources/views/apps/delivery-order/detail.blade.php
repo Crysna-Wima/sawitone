@@ -288,7 +288,7 @@
                     orderable: false
                 },
                 {
-                    data: 'fc_barcode'
+                    data: 'fc_stockcode'
                 },
                 {
                     data: 'stock.fc_nameshort'

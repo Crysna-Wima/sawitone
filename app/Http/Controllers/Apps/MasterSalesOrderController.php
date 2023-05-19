@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\NoDocument;
 use App\Helpers\Convert;
 
-use DataTables;
+use Yajra\DataTables\DataTables as DataTables;
 use PDF;
 use Carbon\Carbon;
 use File;

@@ -31,6 +31,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -150,9 +156,9 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Barcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">DO</th>
@@ -185,8 +191,8 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Barcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Batch</th>
@@ -212,7 +218,7 @@
                         @method('PUT')
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Transport</label>
                                     <select class="form-control select2" name="fc_sotransport" id="fc_sotransport">
                                         <option value="">- Pilih Transport -</option>
@@ -223,11 +229,11 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Transporter</label>
                                     <div class="input-group">
                                         @if ($domst->fm_servpay == 0.0 && empty($domst->fc_sotransport))
-                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fc_transporter">
+                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fc_transporter" required>
                                         @else
                                         <input type="text" class="form-control" value="{{ $domst->fc_transporter }}" fdprocessedid="hgh1fp" name="fc_transporter">
                                         @endif
@@ -236,7 +242,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Biaya Penanganan</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -249,7 +255,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Tanggal DO</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <div class="input-group-prepend">
@@ -272,7 +278,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Alamat Tujuan</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $domst->fc_memberaddress_loading }}" required>
@@ -283,7 +289,7 @@
                                 @if (empty($domst->fd_dodate))
                                 <button type="submit" class="btn btn-success">Save</button>
                                 @else
-                                <button type="submit" class="btn btn-success">Edit</button>
+                                <button type="submit" class="btn btn-warning">Edit</button>
                                 @endif
                             </div>
                         </div>
@@ -389,7 +395,6 @@
                                     <th scope="col" class="text-center">Barcode</th>
                                     <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Qty</th>
-                                    <th scope="col" class="text-center">Rack</th>
                                     <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">CAT</th>
                                     <th scope="col" class="text-center">Exp.</th>
@@ -462,9 +467,6 @@
                 },
                 {
                     "data": "fn_quantity"
-                },
-                {
-                    "data": "fc_rackcode"
                 },
                 {
                     "data": "fc_batch"
@@ -573,7 +575,7 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5, 9]
+                    "targets": [0, 3, 4, 5, 8]
                 },
                 {
                     className: 'text-nowrap',
@@ -650,16 +652,6 @@
                         position: 'topRight'
                     });
                 }
-                // if (response.status == '200') {
-                //     $('.place_alert_cart_stock').append(
-                //         `<span class="alert alert-success alert-dismissible show fade">${response.message}</span>`
-                //     )
-                //     location.reload();
-                // } else {
-                //     $('.place_alert_cart_stock').append(
-                //         `<span class="alert alert-danger alert-dismissible show fade">${response.message}</span>`
-                //     )
-                // }
             },
             error: function(jqXhr, textStatus, errorThrown) {
                 $('#modal_loading').modal('hide');
@@ -690,7 +682,7 @@
                 orderable: false
             },
             {
-                data: 'fc_barcode'
+                data: 'fc_stockcode'
             },
             {
                 data: 'stock.fc_nameshort',
@@ -736,14 +728,14 @@
                 $('td:eq(9)', row).html(``);
             } else {
                 $('td:eq(9)', row).html(`
-                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>
+                    <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>
                 `);
             }
 
             if (data.fn_so_qty > data.fn_do_qty || data.fn_so_bonusqty > data.fn_do_bonusqty) {
                 $('td:eq(9)', row).html(
                     `
-                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')">Pilih Stock</button>`
+                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`
                 );
             } else {
                 $('td:eq(9)', row).html(`
