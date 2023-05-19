@@ -334,7 +334,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-12 col-md-12 col-lg-4">
+                                <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
                                         <label>Tanggal PO</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -355,7 +355,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-4">
+                                <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
                                         <label>Masa</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -378,7 +378,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-4">
+                                <div class="col-12 col-md-12 col-lg-3">
                                     <div class="form-group">
                                         <label>Estimasi Barang Datang</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -398,6 +398,18 @@
                                             @endif
 
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-3">
+                                    <label>Catatan</label>
+                                    <div class="form-group">
+                                        @if (empty($data->fv_description))
+                                            <input type="text" id="fv_description" class="form-control"
+                                                name="fv_description">
+                                        @else
+                                            <input type="text" id="fv_description" class="form-control"
+                                                name="fv_description" value="{{ $data->fv_description }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
