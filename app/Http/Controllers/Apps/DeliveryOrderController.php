@@ -185,17 +185,20 @@ class DeliveryOrderController extends Controller
             $validator = Validator::make($request->all(), [
                 'fc_barcode' => 'required',
                 'quantity' => 'required',
+                'fc_stockcode' => 'required'
             ]);
         } else if ($request->bonus_quantity) {
             $validator = Validator::make($request->all(), [
                 'fc_barcode' => 'required',
                 'bonus_quantity' => 'required',
+                'fc_stockcode' => 'required'
             ]);
         } else {
             $validator = Validator::make($request->all(), [
                 'fc_barcode' => 'required',
                 'quantity' => 'required',
                 'bonus_quantity' => 'required',
+                'fc_stockcode' => 'required'
             ]);
         }
 
@@ -210,7 +213,7 @@ class DeliveryOrderController extends Controller
         //CHECK DATA STOCK
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
         
-        $data_stock_sodtl = SoDetail::where('fc_barcode', $request->short_barcode)
+        $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
                                       ->where('fc_sono', $request->fc_sono)
                                       ->where('fc_branch', auth()->user()->fc_branch)
                                         ->first();
