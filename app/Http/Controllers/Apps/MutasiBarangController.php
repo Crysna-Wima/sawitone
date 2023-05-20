@@ -16,7 +16,7 @@ class MutasiBarangController extends Controller
 {
     public function index()
     {
-        $temp_mutasi_master = TempMutasiMaster::where('fc_mutationno',auth()->user()->fc_userid)->first();
+        $temp_mutasi_master = TempMutasiMaster::with('warehouse_start','warehouse_destination')->where('fc_mutationno',auth()->user()->fc_userid)->first();
         $temp_mutasi_detail = TempMutasiDetail::where('fc_mutationno',auth()->user()->fc_userid)->get();
         $total = count($temp_mutasi_detail);
         if(!empty($temp_mutasi_master)){
@@ -70,8 +70,8 @@ class MutasiBarangController extends Controller
             'fc_mutationno' => auth()->user()->fc_userid,
             'fd_date_byuser' => $request->fd_date_byuser,
             'fc_type_mutation' => $request->fc_type_mutation,
-            'fc_startpoint' => $request->fc_startpoint,
-            'fc_destination' => $request->fc_destination,
+            'fc_startpoint_code' => $request->fc_startpoint,
+            'fc_destination_code' => $request->fc_destination,
        ]);
 
          if($insert){

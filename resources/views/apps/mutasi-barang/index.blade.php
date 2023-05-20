@@ -331,7 +331,7 @@
                     elem_name.val(data[key]);
                 });
                 $('#fc_rackname_berangkat').val(data.fc_rackname);
-                $('#fc_startpoint').val(data.fc_rackname);
+                $('#fc_startpoint').val(data.fc_warehousecode);
                 if(data.fc_warehouseaddress != null){
                     $('#fc_warehouseaddress_berangkat').val(data.fc_warehouseaddress);
                 }else{
@@ -356,7 +356,7 @@
                     elem_name.val(data[key]);
                 });
                 $('#fc_rackname_tujuan').val(data.fc_rackname);
-                $('#fc_destination').val(data.fc_rackname);
+                $('#fc_destination').val(data.fc_warehousecode);
                 if(data.fc_warehouseaddress != null){
                     $('#fc_warehouseaddress_tujuan').val(data.fc_warehouseaddress);
                 }else{
