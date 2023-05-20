@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -170,9 +176,9 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Stockcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Qty RO</th>
                                         <th scope="col" class="text-center">Bonus</th>
@@ -201,7 +207,7 @@
                                         <th scope="col" class="text-center">No.</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Barang</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Expired Date</th>
@@ -222,9 +228,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Transport</label>
-                                    <select class="form-control select2" name="fc_potransport" id="fc_potransport">
+                                    <select class="form-control select2" name="fc_potransport" id="fc_potransport" required>
                                         <option value="" selected disabled>- Pilih Transport -</option>
                                         <option value="By Dexa">By Dexa</option>
                                         <option value="By Paket">By Paket</option>
@@ -233,7 +239,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Tanggal Surat Jalan</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <div class="input-group-prepend">
@@ -249,9 +255,9 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-5">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Alamat</label>
-                                    <input type="text" name="fc_address_loading" class="form-control" value="{{ $data->fc_address_loading1 }}">
+                                    <input type="text" name="fc_address_loading" class="form-control" value="{{ $data->fc_address_loading1 }}" required>
                                 </div>
                             </div>
                         </div>
@@ -298,20 +304,20 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Batch</label>
                                     <input type="text" id="fc_batch" class="form-control" name="fc_batch" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Qty</label>
-                                    <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro">
+                                    <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro" required>
                                     <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Expired Date</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <div class="input-group-prepend">
@@ -556,7 +562,7 @@
             rowCallback: function(row, data) {
                 if (data.fn_po_qty > data.fn_ro_qty || data.fn_po_bonusqty > data.fn_po_bonusqty) {
                     $('td:eq(7)', row).html(`
-                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)">Pilih Item</button>`);
+                        <button class="btn btn-warning btn-sm" data-pono="${data.fc_pono}" data-stockcode="${data.fc_stockcode}" onclick="click_modal_select(this)"><i class="fa fa-search"></i> Pilih Item</button>`);
                 } else {
                     $('td:eq(7)', row).html(`
                         <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
@@ -575,7 +581,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5, ]
+                targets: [0, 1, 2, 3, 4, 5, 6]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',

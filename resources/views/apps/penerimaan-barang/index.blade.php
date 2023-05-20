@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Penerimaan Barang')
+@section('title', 'Transit Barang')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -49,7 +55,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Tanggal Datang</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <input type="text" id="fd_arrivaldate" class="form-control datepicker" name="fd_arrivaldate" required>
@@ -63,13 +69,13 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Penerima</label>
                                     <input type="text" class="form-control" id="fc_recipient" name="fc_recipient">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Supplier</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="fc_suppliercode" name="fc_suppliercode" readonly>
@@ -80,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Jumlah</label>
                                     <div class="form-group">
                                         <input type="number" min="0" class="form-control" name="fn_qtyitem" id="fn_qtyitem">
@@ -88,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Unit</label>
                                     <select class="form-control select2" name="fc_unit" id="fc_unit">
                                         <option value="" selected disabled>- Pilih -</option>

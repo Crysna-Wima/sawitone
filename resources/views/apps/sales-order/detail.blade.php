@@ -295,7 +295,7 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Qty Bonus</th>
                                         <th scope="col" class="text-center">Harga</th>
@@ -394,7 +394,7 @@
                                     <th scope="col" class="text-center">Nama Produk</th>
                                     <th scope="col" class="text-center">Brand</th>
                                     <th scope="col" class="text-center">Sub Group</th>
-                                    <th scope="col" class="text-center">Unity</th>
+                                    <th scope="col" class="text-center">Satuan</th>
                                     <th scope="col" class="text-center">Harga</th>
                                     <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                 </tr>

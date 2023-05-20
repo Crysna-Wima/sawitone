@@ -34,7 +34,7 @@ class PurchaseOrderDetailController extends Controller
             'fm_po_price' => 'required',
         ], [
             // 'fc_stockcode.required' => 'Barcode harus diisi',
-            'fc_stockcode.required' => 'Stockcode harus diisi',
+            'fc_stockcode.required' => 'Kode Barang harus diisi',
             'fn_so_qty.required' => 'Quantity harus diisi',
             'fm_po_price' => 'Harga harus diisi'
         ]);

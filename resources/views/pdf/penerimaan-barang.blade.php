@@ -179,7 +179,7 @@
         </div>
     </div>
     <div class="content">
-        <p style="text-align: center; font-weight:bold; font-size:15px;">PENERIMAAN BARANG</p>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">TRANSIT BARANG</p>
         <br>
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>

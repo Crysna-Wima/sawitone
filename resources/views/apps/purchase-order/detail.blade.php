@@ -201,13 +201,9 @@
                                     <div class="form-group required">
                                         <label>Kode Barang</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode"
-                                                readonly>
-                                            <input type="text" class="form-control" id="fc_stockcode"
-                                                name="fc_stockcode" readonly hidden>
+                                            <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button"
-                                                    onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
+                                                <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +227,7 @@
                                         <label>Qty</label>
                                         <div class="form-group">
                                             <input type="number" min="0" class="form-control" name="fn_po_qty"
-                                                id="fn_po_qty">
+                                                id="fn_po_qty" required>
                                         </div>
                                     </div>
                                 </div>
@@ -320,7 +316,7 @@
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">Kode Barang</th>
                                             <th scope="col" class="text-center">Nama Produk</th>
-                                            <th scope="col" class="text-center">Unity</th>
+                                            <th scope="col" class="text-center">Satuan</th>
                                             <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc</th>
                                             <th scope="col" class="text-center">Qty</th>
@@ -343,7 +339,7 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-3">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Tanggal PO</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
                                             <div class="input-group-prepend">
@@ -364,7 +360,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Masa</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
                                             @if (empty($data->fd_poexpired) || empty($data->fd_podateinputuser))
@@ -421,11 +417,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Transport</label>
                                         @if (empty($data->fc_potransport))
                                             <select class="form-control select2" name="fc_potransport"
-                                                id="fc_potransport">
+                                                id="fc_potransport" required>
                                                 <option value="" selected disabled>- Pilih Transport -</option>
                                                 <option value="By Dexa">By Dexa</option>
                                                 <option value="By Paket">By Paket</option>
@@ -466,19 +462,20 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
+                                    <div class="form-group required">
                                     <label>Dikirim Ke</label>
-                                    
-                                    @if (empty($data->fc_membername1))
-                                        <select class="form-control select2" name="fc_membername1"
-                                        id="fc_membername1"></select>
-                                    @else
-                                        <select class="form-control select2" name="fc_membername1"
-                                            id="fc_membername1">
-                                            <option value="{{ $data->fc_membername1 }}" selected>
-                                                {{ $data->fc_membername1 }}
-                                            </option>
-                                        </select>
-                                    @endif
+                                        @if (empty($data->fc_membername1))
+                                            <select class="form-control select2" name="fc_membername1"
+                                            id="fc_membername1" required></select>
+                                        @else
+                                            <select class="form-control select2" name="fc_membername1"
+                                                id="fc_membername1">
+                                                <option value="{{ $data->fc_membername1 }}" selected>
+                                                    {{ $data->fc_membername1 }}
+                                                </option>
+                                            </select>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-3">
                                     <label>Alamat Tujuan</label>
@@ -584,7 +581,7 @@
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Brand</th>
                                         <th scope="col" class="text-center">Sub Group</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Harga</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
@@ -814,6 +811,7 @@
         }
 
         function detail_stock($id) {
+            console.log($id)
             $.ajax({
                 url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
                 type: "GET",
@@ -964,8 +962,7 @@
             }
 
         });
-
-
+        
         function click_delete() {
             swal({
                     title: 'Apakah anda yakin?',
