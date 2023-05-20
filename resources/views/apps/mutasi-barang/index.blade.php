@@ -242,6 +242,9 @@
 
 @section('js')
 <script>
+
+    // change value fc_type_mutation
+   
     function click_modal_lokasi_awal() {
         $('#modal_lokasi_awal').modal('show');
         table_warehouse_awal();
@@ -253,11 +256,15 @@
     }
 
     function table_warehouse_awal() {
+        // value fc_type_mutation
+        var fc_type_mutation = $('#fc_type_mutation').val();
+        // console.log(fc_type_mutation)
         var tb = $('#tb_warehouse_awal').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         ajax: {
-            url: '/apps/mutasi-barang/datatables-lokasi-awal',
+            url: '/apps/mutasi-barang/datatables-lokasi-awal/' + fc_type_mutation,
             type: 'GET'
         },
         columnDefs: [{
@@ -369,11 +376,13 @@
     }
 
     function table_warehouse_tujuan() {
+        var fc_type_mutation = $('#fc_type_mutation').val();
         var tb = $('#tb_warehouse_tujuan').DataTable({
         processing: true,
         serverSide: true,
+        destroy: true,
         ajax: {
-            url: '/apps/mutasi-barang/datatables-lokasi-tujuan',
+            url: '/apps/mutasi-barang/datatables-lokasi-tujuan/' + fc_type_mutation,
             type: 'GET'
         },
         columnDefs: [{

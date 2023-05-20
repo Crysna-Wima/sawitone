@@ -30,16 +30,23 @@ class MutasiBarangController extends Controller
         return view('apps.mutasi-barang.index');
     }
 
-    public function datatables_lokasi_awal(){
-        $data = Warehouse::with('branch')->orderBy('created_at', 'DESC')->get();
-
+    public function datatables_lokasi_awal($fc_type_mutation){
+        if($fc_type_mutation == 'INTERNAL'){
+            $data = Warehouse::with('branch')->where('fc_warehousepos', $fc_type_mutation)->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+        }else{
+            $data = Warehouse::with('branch')->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+        }
         return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
     }
 
-    public function datatables_lokasi_tujuan(){
-        $data = Warehouse::with('branch')->orderBy('created_at', 'DESC')->get();
+    public function datatables_lokasi_tujuan($fc_type_mutation){
+        if($fc_type_mutation == 'INTERNAL'){
+            $data = Warehouse::with('branch')->where('fc_warehousepos', $fc_type_mutation)->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+        }else{
+            $data = Warehouse::with('branch')->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+        }
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -47,6 +54,7 @@ class MutasiBarangController extends Controller
     }
 
     public function store_mutasi(Request $request){
+
         // validator
         $validator = Validator::make($request->all(), [
             'fd_date_byuser' => 'required',
@@ -86,5 +94,33 @@ class MutasiBarangController extends Controller
                  'message' => 'Data gagal disimpan'
                 ];
         }
+    }
+
+    public function delete(){
+        DB::beginTransaction();
+
+		try{
+            TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+            TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 200, // SUCCESS
+                'link' => '/apps/mutasi-barang',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }
