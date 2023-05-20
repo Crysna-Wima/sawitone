@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/data-subgroup-by-group','DataMasterController@data_subgroup_by_group');
         Route::get('/data-stock-by-primary/{stockcode}/{barcode}','DataMasterController@data_stock_by_primary');
         Route::get('/data-customer-first/{fc_membercode}','DataMasterController@data_customer_first');
+        Route::get('/data-warehouse-first/{fc_warehousecode}', 'DataMasterController@data_warehouse_first');
         Route::get('/data-supplier-first/{fc_suppliercode}','DataMasterController@data_supplier_first');
         Route::get('/generate-no-document','DataMasterController@generate_no_document');
 
@@ -362,6 +363,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\MutasiBarangController@index');
             Route::get('/datatables-lokasi-awal','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan','Apps\MutasiBarangController@datatables_lokasi_tujuan');
+            Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
         });
 
         Route::prefix('daftar-mutasi-barang')->group(function(){

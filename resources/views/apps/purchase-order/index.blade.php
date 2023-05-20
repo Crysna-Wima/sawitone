@@ -31,6 +31,12 @@
                 font-size: .9rem;
             }
         }
+
+        .required label:after {
+            color: #e32;
+            content: ' *';
+            display:inline;
+        }
     </style>
 @endsection
 @section('content')
@@ -70,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6">
-                                        <div class="form-group">
+                                        <div class="form-group required">
                                             <label>Supplier Code</label>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" id="fc_suppliercode"

@@ -182,35 +182,14 @@
     <div class="content">
         <p style="text-align: center"><b>Sales Order</b></p>
 
-        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
-            <tr class="tp-1">
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            <tr class="tp-1 tb-1">
                 <td>Tanggal SO</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%" colspan="3">{{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
-            </tr>
-            <tr>
-                <td>Cabang</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->branch->fv_description }}</td>
                 <td>Sales</td>
                 <td style="width: 5px">:</td>
                 <td>{{ $so_master->sales->fc_salesname1 }}</td>
-            </tr>
-            <tr>
-                <td>Divisi</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->fc_divisioncode }}</td>
-                <td>Customer Code</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->customer->fc_membername1 }}</td>
-            </tr>
-            <tr class="pb-1">
-                <td>Operator</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ auth()->user()->fc_username }}</td>
-                <td>PKP</td>
-                <td style="width: 5px">:</td>
-                <td>{{ $so_master->member_tax_code->fv_description }}</td>
             </tr>
         </table>
 
@@ -228,11 +207,6 @@
                 <td>Nama</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 28%">{{ $so_master->customer->fc_membername1 }}</td>
-            </tr>
-            <tr>
-                <td>Legalitas</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ $so_master->customer->fc_memberlegalstatus }}</td>
             </tr>
              <tr>
                 <td>Alamat</td>
@@ -253,7 +227,7 @@
                 <th>No</th>
                 <th>Kode Barang</th>
                 <th>Nama Produk</th>
-                <th>Unity</th>
+                <th>Satuan</th>
                 <th>Qty</th>
                 <th>Bonus</th>
             </tr>
@@ -279,8 +253,7 @@
         </table>
 
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Metode Pembayaran</p>
-
-        <table style="width: 90%; border-collapse: collapse; margin: auto;" border="1">
+        <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>Metode</th>
                 <th>Nominal (Rp)</th>

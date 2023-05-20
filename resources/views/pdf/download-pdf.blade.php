@@ -261,9 +261,9 @@
                     @foreach ($so_detail as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->stock->fc_stockcode}}</td>
+                            <td>{{ $item->fc_stockcode}}</td>
                             <td>{{ $item->stock->fc_namelong}}</td>
-                            <td>{{ $item->stock->fc_namepack}}</td>
+                            <td>{{ $item->fc_namepack}}</td>
                             <td>{{ $item->fn_so_qty}}</td>
                             <td>{{ $item->fn_so_bonusqty}}</td>
                             <!-- <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>

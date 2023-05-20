@@ -21,6 +21,7 @@ use App\Models\StockSupplier;
 use App\Models\Supplier;
 use App\Models\TempSoMaster;
 use App\Models\TransaksiType;
+use App\Models\Warehouse;
 use Yajra\DataTables\DataTables;
 
 class DataMasterCOntroller extends Controller
@@ -92,6 +93,12 @@ class DataMasterCOntroller extends Controller
     public function data_customer_first($fc_membercode)
     {
         $data = Customer::with('member_tax_code', 'member_typebranch', 'member_type_business', 'member_legal_status')->where('fc_membercode', $fc_membercode)->first();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function data_warehouse_first($fc_warehousecode)
+    {
+        $data = Warehouse::with('branch')->where('fc_warehousecode', $fc_warehousecode)->first();
         return ApiFormatter::getResponse($data);
     }
 

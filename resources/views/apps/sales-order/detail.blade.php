@@ -31,6 +31,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -169,7 +175,7 @@
                     <form id="form_submit_noconfirm" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Kode Barang</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
@@ -180,19 +186,19 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
+                                <div class="form-group required">
                                 <label>Qty</label>
-                                <div class="form-group">
-                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_qty" id="fn_so_qty">
+                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_qty" id="fn_so_qty" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
-                                <label>Bonus</label>
                                 <div class="form-group">
+                                <label>Bonus</label>
                                     <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-5">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Harga</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -652,11 +658,11 @@
 
                 if ($('#category').val() == 'Khusus') {
                         $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }else{
                     $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
                 
@@ -831,7 +837,7 @@
                 orderable: false
             },
             {
-                data: 'stock.fc_stockcode'
+                data: 'fc_stockcode'
             },
             {
                 data: 'stock.fc_nameshort'

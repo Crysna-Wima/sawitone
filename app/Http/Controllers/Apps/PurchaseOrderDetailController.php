@@ -28,12 +28,12 @@ class PurchaseOrderDetailController extends Controller
     {
         //  validasi request
         $validator = Validator::make($request->all(), [
-            // 'fc_barcode' => 'required',
+            // 'fc_stockcode' => 'required',
             'fc_stockcode' => 'required',
             'fn_po_qty' => 'required|integer|min:1',
             'fm_po_price' => 'required',
         ], [
-            // 'fc_barcode.required' => 'Barcode harus diisi',
+            // 'fc_stockcode.required' => 'Barcode harus diisi',
             'fc_stockcode.required' => 'Stockcode harus diisi',
             'fn_so_qty.required' => 'Quantity harus diisi',
             'fm_po_price' => 'Harga harus diisi'
@@ -49,17 +49,17 @@ class PurchaseOrderDetailController extends Controller
         $count_po_dtl = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->get();
         $total = count($count_po_dtl);
 
-        $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
+        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         $temp_detail = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->orderBy('fn_porownum', 'DESC')->first();
 
-        // jika ada TempSoDetail yang fc_barcode == $request->fc_barcode
-        $count_barcode = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
+        // jika ada TempSoDetail yang fc_stockcode == $request->fc_stockcode
+        $count_stockcode = TempPoDetail::where('fc_pono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
 
 
-        // jika ada fc_barcode yang sama di $temppodtl
+        // jika ada fc_stockcode yang sama di $temppodtl
         if (!empty($temp_detail)) {
             // jika ditemukan $count_barcode error produk yang sama telah diinputkan
-            if (count($count_barcode) > 0) {
+            if (count($count_stockcode) > 0) {
                 return [
                     'status' => 300,
                     'total' => $total,
@@ -74,7 +74,7 @@ class PurchaseOrderDetailController extends Controller
             $fn_porownum = $temp_detail->fn_porownum + 1;
         }
 
-        $stock = Stock::where('fc_barcode', $request->fc_barcode)->first();
+        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         $request->merge(['fm_po_price' => Convert::convert_to_double($request->fm_po_price)]);
         //total harga
         $total_harga = $request->fn_po_value * $request->fm_po_price;
@@ -88,7 +88,7 @@ class PurchaseOrderDetailController extends Controller
             'fc_branch' => auth()->user()->fc_branch,
             'fc_pono' => auth()->user()->fc_userid,
             'fn_porownum' => $fn_porownum,
-            // 'fc_barcode' => $stock->fc_barcode,
+            // 'fc_stockcode' => $stock->fc_stockcode,
             'fc_stockcode' => $request->fc_stockcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_po_qty' => $request->fn_po_qty,
