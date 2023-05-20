@@ -1,5 +1,15 @@
 @extends('partial.app')
 @section('title','Meta Data')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
+</style>
+@endsection
+
 @section('content')
 
 <div class="section-body">
@@ -50,19 +60,19 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>TRX</label>
                                 <input type="text" class="form-control required-field" name="fc_trx" id="fc_trx">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode</label>
                                 <input type="text" class="form-control required-field" name="fc_kode" id="fc_kode">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Deskipsi</label>
                                 <textarea class="form-control required-field" name="fv_description" id="fv_description" style="height: 100px"></textarea>
                             </div>

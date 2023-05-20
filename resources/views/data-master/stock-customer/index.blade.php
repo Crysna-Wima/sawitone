@@ -5,6 +5,12 @@
     #tb_wrapper .row:nth-child(2){
         overflow-x: auto;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -29,15 +35,15 @@
                                 </div>
                             </div>
                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Branch</label>
-                                    <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                <div class="form-group required">
+                                    <label>Cabang</label>
+                                    <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Member Code</label>
-                                    <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode"></select>
+                                    <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode" required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
@@ -371,6 +377,7 @@
    var tb = $('#tb').DataTable({
       processing: true,
       serverSide: true,
+      destroy: true,
       ajax: {
          url: '/data-master/stock-customer/datatables',
          type: 'GET'

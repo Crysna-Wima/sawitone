@@ -1,5 +1,14 @@
 @extends('partial.app')
 @section('title','Master Brand')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -19,7 +28,7 @@
                         <tr>
                            <th scope="col" class="text-center">No</th>
                            <th scope="col" class="text-center">Division</th>
-                           <th scope="col" class="text-center">Branch</th>
+                           <th scope="col" class="text-center">Cabang</th>
                            <th scope="col" class="text-center">Brand</th>
                            <th scope="col" class="text-center">Group</th>
                            <th scope="col" class="text-center">Sub Group</th>
@@ -59,25 +68,25 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Branch</label>
+                            <div class="form-group required">
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Brand</label>
                                 <input type="text" class="form-control required-field" name="fc_brand" id="fc_brand">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Group</label>
                                 <input type="text" class="form-control required-field" name="fc_group" id="fc_group">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Sub Group</label>
                                 <input type="text" class="form-control required-field" name="fc_subgroup" id="fc_subgroup">
                             </div>

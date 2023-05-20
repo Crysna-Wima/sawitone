@@ -1,5 +1,14 @@
 @extends('partial.app')
 @section('title', 'User')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
+</style>
+@endsection
 @section('content')
 
     <div class="section-body">
@@ -64,34 +73,34 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label>Branch</label>
+                                <div class="form-group required">
+                                    <label>Cabang</label>
                                     <select class="form-control select2 required-field" name="fc_branch"
                                         id="fc_branch" required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>User ID</label>
                                     <input type="text" class="form-control required-field" name="fc_userid"
-                                        id="fc_userid">
+                                        id="fc_userid" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Username</label>
                                     <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)">
+                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Password</label>
-                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password">
+                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Group User</label>
                                     <select class="form-control select2 required-field" name="fc_groupuser"
                                         id="fc_groupuser" required></select>

@@ -1,5 +1,14 @@
 @extends('partial.app')
 @section('title','Master Menu')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -51,7 +60,7 @@
             <div class="modal-body">
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Nama Menu</label>
                         <input type="text" hidden class="form-control" name="id" id="id">
                         <input type="text" hidden class="form-control" name="type" id="type">
@@ -59,13 +68,13 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-3">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Kategori</label>
                         <input type="text" class="form-control" name="kategori" id="kategori" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-3">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Icon</label>
                         <input type="text" class="form-control" name="icon" id="icon" required>
                     </div>
@@ -83,20 +92,20 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Menu</label>
                         <input type="text" class="form-control required-field" name="menu" id="menu" required>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Sub-Menu</label>
                         <input type="text" class="form-control" name="submenu" id="submenu" required>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label>Url</label>
                         <input type="text" class="form-control" name="link" id="link" required>
                     </div>
