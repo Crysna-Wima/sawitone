@@ -364,11 +364,12 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-lokasi-awal/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
-            Route::delete('/delete','Apps\MutasiBarangController@delete');
+            Route::delete('/cancel_mutasi','Apps\MutasiBarangController@cancel_mutasi');
 
             Route::prefix('detail')->group(function () {
-                Route::get('/datatables-inventory','Apps\MutasiBarangDetailController@datatables_inventory');
+                Route::get('/datatables-inventory/{fc_startpoint_code}','Apps\MutasiBarangDetailController@datatables_inventory');
                 Route::get('/datatables','Apps\MutasiBarangDetailController@datatables');
+                Route::post('/store_mutasi_detail','Apps\MutasiBarangDetailController@store_mutasi_detail');
             });
         });
 

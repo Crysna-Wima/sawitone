@@ -18,7 +18,7 @@ class TempMutasiDetail extends Model
     protected $table = 't_temp_mutasidtl';
     protected $primaryKey = 'fc_mutationno';
     public $incrementing = false;
-    // protected $guarded = ['type'];
+    protected $guarded = ['type'];
 
 
     public function warehouse(){
