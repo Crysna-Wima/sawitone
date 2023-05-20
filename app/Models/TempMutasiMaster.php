@@ -21,7 +21,11 @@ class TempMutasiMaster extends Model
     protected $guarded = ['type'];
 
 
-    public function warehouse(){
-        return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();
+    public function warehouse_start(){
+        return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_startpoint_code');
     } 
+
+    public function warehouse_destination(){
+        return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_destination_code');
+    }
 }

@@ -68,7 +68,11 @@
                                     <div class="form-group">
                                         <label>Lokasi Awal</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_startpoint" name="fc_startpoint" value="{{ $data->fc_startpoint }}" readonly>
+                                            @if (empty($data->fc_startpoint_code))
+                                            <input type="text" class="form-control" id="fc_startpoint" name="fc_startpoint" readonly>
+                                            @else
+                                            <input type="text" class="form-control" id="fc_startpoint" value="{{ $data->fc_startpoint_code }}" name="fc_startpoint" readonly>
+                                            @endif
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" disabled onclick="click_modal_lokasi_awal()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
@@ -79,7 +83,12 @@
                                     <div class="form-group">
                                         <label>Lokasi Tujuan</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_destination" name="fc_destination" value="{{ $data->fc_destination }}" readonly>
+                                            @if (empty($data->fc_destination_code))
+                                            <input type="text" class="form-control" id="fc_destination" name="fc_destination" readonly>
+                                            @else
+                                            <input type="text" class="form-control" id="fc_destination" value="{{ $data->fc_destination_code }}" name="fc_destination" readonly>
+                                            @endif
+
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" disabled onclick="click_modal_lokasi_tujuan()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
@@ -109,25 +118,26 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Berangkat</label>
-                                    <input type="text" class="form-control" value="{{ $data->fc_rackname_berangkat }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse_start->fc_rackname }}" readonly>
+
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Tujuan</label>
-                                    <input type="text" class="form-control" value="{{ $data->fc_rackname_tujuan }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse_start->fc_rackname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Berangkat</label>
-                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->fc_warehouseaddress_berangkat }}" readonly></textarea>
+                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_start->fc_warehouseaddress }}" readonly></textarea>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Tujuan</label>
-                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->fc_warehouseaddress_tujuan }}" readonly></textarea>
+                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_destination->fc_warehouseaddress }}" readonly></textarea>
                                 </div>
                             </div>
                         </div>
