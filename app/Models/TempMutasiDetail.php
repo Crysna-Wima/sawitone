@@ -23,5 +23,9 @@ class TempMutasiDetail extends Model
 
     public function warehouse(){
         return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();
-    } 
+    }
+
+    public function stock(){
+        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
+    }
 }

@@ -370,6 +370,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/datatables-inventory/{fc_startpoint_code}','Apps\MutasiBarangDetailController@datatables_inventory');
                 Route::get('/datatables','Apps\MutasiBarangDetailController@datatables');
                 Route::post('/store_mutasi_detail','Apps\MutasiBarangDetailController@store_mutasi_detail');
+                Route::delete('/delete/{fc_mutationno}/{fn_mutationrownum}','Apps\MutasiBarangDetailController@delete');
             });
         });
 

@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -146,7 +152,7 @@
             </div>
         </div>
         <div class="col-12 col-md-8 col-lg-12">
-            <form id="form_submit" method="POST" action="/apps/mutasi-barang/detail/store_mutasi_detail">
+            <form id="form_submit_noconfirm" method="POST" action="/apps/mutasi-barang/detail/store_mutasi_detail">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -159,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Barcode</label>
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
@@ -179,10 +185,10 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-2">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Jumlah</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control" id="fn_qty" name="fn_qty">
+                                        <input type="number" class="form-control" id="fn_qty" name="fn_qty" required>
                                     </div>
                                 </div>
                             </div>
@@ -330,12 +336,12 @@
                 $('td:eq(5)', row).html(`
                     <button type="button" class="btn btn-warning btn-sm" onclick="detail_inventory('${data.fn_quantity}','${data.fc_stockcode}','${data.fc_barcode}','${data.stock.fc_namelong}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
-                
+
             },
         });
     }
-    
-    function detail_inventory(fn_quantity,fc_stockcode,fc_barcode, fc_namelong){
+
+    function detail_inventory(fn_quantity, fc_stockcode, fc_barcode, fc_namelong) {
         $('#modal_inventory').modal('hide');
         $('#fc_barcode').val(fc_barcode);
         $('#fc_namelong').val(fc_namelong);
@@ -364,7 +370,7 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'fc_namelong'
+                data: 'stock.fc_namelong'
             },
             {
                 data: 'fc_batch'
@@ -373,15 +379,17 @@
                 data: 'fd_expired'
             },
             {
-                data: 'fn_quantity'
+                data: 'fn_qty'
             },
             {
                 data: null,
             },
         ],
         rowCallback: function(row, data) {
+            var url_delete = "/apps/mutasi-barang/detail/delete/" + data.fc_mutationno + '/' + data.fn_mutationrownum;
+
             $('td:eq(6)', row).html(`
-                    <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"></i> Hapus Item</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Mutasi Barang Detail')"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
     });
@@ -442,5 +450,65 @@
                 }
             });
     }
+
+    $('#form_submit_noconfirm').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_submit_noconfirm').attr('action'),
+            type: $('#form_submit_noconfirm').attr('method'),
+            data: $('#form_submit_noconfirm').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal").modal('hide');
+                    $("#form_submit_noconfirm")[0].reset();
+                    reset_all_select();
+                    tb.ajax.reload(null, false);
+                    if (response.total < 1) {
+                        window.location.href = response.link;
+                    }
+                } else if (response.status == 201) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal").modal('hide');
+                    tb.ajax.reload(null, false);
+                    location.href = location.href;
+                } else if (response.status == 203) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal").modal('hide');
+                    tb.ajax.reload(null, false);
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
 </script>
 @endsection
