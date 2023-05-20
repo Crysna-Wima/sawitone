@@ -365,6 +365,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
             Route::delete('/delete','Apps\MutasiBarangController@delete');
+
+            Route::prefix('detail')->group(function () {
+                Route::get('/datatables-inventory','Apps\MutasiBarangDetailController@datatables_inventory');
+                Route::get('/datatables','Apps\MutasiBarangDetailController@datatables');
+            });
         });
 
         Route::prefix('daftar-mutasi-barang')->group(function(){

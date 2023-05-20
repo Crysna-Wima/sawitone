@@ -42,65 +42,65 @@
                 </div>
                 <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                 {{-- <form id="form_submit" action="/apps/mutasi-barang/store-mutasi" method="POST" autocomplete="off"> --}}
-                    <div class="collapse" id="mycard-collapse">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Tanggal</label>
-                                        <div class="input-group" data-date-format="dd-mm-yyyy">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-calendar"></i>
-                                                </div>
+                <div class="collapse" id="mycard-collapse">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <div class="input-group" data-date-format="dd-mm-yyyy">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control datepicker" value="{{ \Carbon\Carbon::parse( $data->fd_date_byuser )->isoFormat('D MMMM Y'); }}" readonly>
+                                        </div>
+                                        <input type="text" class="form-control datepicker" value="{{ \Carbon\Carbon::parse( $data->fd_date_byuser )->isoFormat('D MMMM Y'); }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Jenis Mutasi</label>
+                                    <input type="text" class="form-control" value="{{ $data->fc_type_mutation }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Lokasi Awal</label>
+                                    <div class="input-group mb-3">
+                                        @if (empty($data->fc_startpoint_code))
+                                        <input type="text" class="form-control" id="fc_startpoint" name="fc_startpoint" readonly>
+                                        @else
+                                        <input type="text" class="form-control" id="fc_startpoint" value="{{ $data->fc_startpoint_code }}" name="fc_startpoint" readonly>
+                                        @endif
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" disabled onclick="click_modal_lokasi_awal()" type="button"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Jenis Mutasi</label>
-                                        <input type="text" class="form-control" value="{{ $data->fc_type_mutation }}" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Lokasi Awal</label>
-                                        <div class="input-group mb-3">
-                                            @if (empty($data->fc_startpoint_code))
-                                            <input type="text" class="form-control" id="fc_startpoint" name="fc_startpoint" readonly>
-                                            @else
-                                            <input type="text" class="form-control" id="fc_startpoint" value="{{ $data->fc_startpoint_code }}" name="fc_startpoint" readonly>
-                                            @endif
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" disabled onclick="click_modal_lokasi_awal()" type="button"><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Lokasi Tujuan</label>
-                                        <div class="input-group mb-3">
-                                            @if (empty($data->fc_destination_code))
-                                            <input type="text" class="form-control" id="fc_destination" name="fc_destination" readonly>
-                                            @else
-                                            <input type="text" class="form-control" id="fc_destination" value="{{ $data->fc_destination_code }}" name="fc_destination" readonly>
-                                            @endif
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Lokasi Tujuan</label>
+                                    <div class="input-group mb-3">
+                                        @if (empty($data->fc_destination_code))
+                                        <input type="text" class="form-control" id="fc_destination" name="fc_destination" readonly>
+                                        @else
+                                        <input type="text" class="form-control" id="fc_destination" value="{{ $data->fc_destination_code }}" name="fc_destination" readonly>
+                                        @endif
 
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" disabled onclick="click_modal_lokasi_tujuan()" type="button"><i class="fa fa-search"></i></button>
-                                            </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" disabled onclick="click_modal_lokasi_tujuan()" type="button"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button class="btn btn-danger" onclick="click_delete()">Cancel Mutasi</button>
-                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button class="btn btn-danger" onclick="click_delete()">Cancel Mutasi</button>
                             </div>
                         </div>
                     </div>
+                </div>
                 </form>
             </div>
         </div>
@@ -163,7 +163,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" onclick="" type="button"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-primary" onclick="click_modal_inventory()" type="button"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -246,11 +246,133 @@
 @endsection
 
 @section('modal')
-
+<div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_inventory" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Expired Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function click_modal_inventory() {
+        $('#modal_inventory').modal('show');
+        table_inventory();
+    }
+
+    function table_inventory() {
+        var tb_inventory = $('#tb_inventory').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/mutasi-barang/detail/datatables-inventory",
+                type: 'GET'
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_stockcode'
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+                {
+                    data: null,
+                },
+            ],
+            rowCallback: function(row, data) {
+                $('td:eq(5)', row).html(`
+                    <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"></i> Pilih</button>
+                `);
+            },
+        });
+    }
+
+    var tb = $('#tb').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/mutasi-barang/detail/datatables",
+            type: 'GET'
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'fc_namelong'
+            },
+            {
+                data: 'fc_batch'
+            },
+            {
+                data: 'fd_expired'
+            },
+            {
+                data: 'fn_quantity'
+            },
+            {
+                data: null,
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(6)', row).html(`
+                    <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"></i> Hapus Item</button>
+                `);
+        },
+    });
+
     function click_delete() {
         swal({
                 title: 'Apakah anda yakin?',
