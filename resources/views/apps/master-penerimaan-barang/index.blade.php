@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Daftar Penerimaan Barang')
+@section('title', 'Daftar Transit Barang')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -44,7 +44,7 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Penerimaan Barang</h4>
+                    <h4>Data Transit Barang</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -213,11 +213,17 @@
                     } else if (data['fc_status'] == 'C') {
                         $('td:eq(7)', row).html('<span class="badge badge-success">Tuntas</span>');
                     }
-
-                $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
-                <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')">Tuntaskan</button>
-                `);
+                
+                if (data['fc_status'] == 'C'){
+                    $('td:eq(8)', row).html(`
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
+                    `);
+                } else {
+                    $('td:eq(8)', row).html(`
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')"><i class="fa fa-check"></i> Tuntaskan</button>
+                    `);
+                }
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             },
         });
