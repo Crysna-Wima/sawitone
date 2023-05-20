@@ -27,6 +27,12 @@
                 font-size: .9rem;
             }
         }
+
+        .required label:after {
+            color: #e32;
+            content: ' *';
+            display:inline;
+        }
     </style>
 @endsection
 @section('content')
@@ -73,19 +79,19 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>No. Surat Jalan</label>
-                                        <input name="fc_sjno" type="text" id="fc_sjno" class="form-control">
+                                        <input name="fc_sjno" type="text" id="fc_sjno" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Penerima</label>
-                                        <input type="text" name="fc_receiver" id="fc_receiver" class="form-control">
+                                        <input type="text" name="fc_receiver" id="fc_receiver" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Tanggal Diterima</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
                                             <div class="input-group-prepend">

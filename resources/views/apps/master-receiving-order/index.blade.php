@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Receiving Order')
+@section('title', 'Daftar Receiving / SPB')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -44,7 +44,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Receiving Order</h4>
+                        <h4>Data Receiving / SPB</h4>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -222,6 +222,9 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
+                order: [
+                    [1, 'desc']
+                ],
                 ajax: {
                     url: "/apps/master-receiving-order/datatables",
                     type: 'GET',
@@ -282,8 +285,8 @@
                     //  console.log(data.rodtl[0].invstore.fc_barcode)
 
                     $('td:eq(9)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                     // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 },
@@ -293,6 +296,9 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
+                order: [
+                    [1, 'desc']
+                ],
                 ajax: {
                     url: "/apps/master-receiving-order/datatables",
                     type: 'GET',
@@ -351,7 +357,7 @@
                     }
 
                     $('td:eq(9)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                     <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}"  class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },
@@ -361,6 +367,9 @@
                 processing: true,
                 serverSide: true,
                 destroy: true,
+                order: [
+                    [1, 'desc']
+                ],
                 ajax: {
                     url: "/apps/master-receiving-order/datatables",
                     type: 'GET',
@@ -419,7 +428,7 @@
                     }
 
                     $('td:eq(9)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                     <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}" class="btn btn-primary btn-sm"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },

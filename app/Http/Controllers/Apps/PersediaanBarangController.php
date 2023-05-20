@@ -26,6 +26,7 @@ class PersediaanBarangController extends Controller
         $data = Invstore::with('stock')
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->groupBy('fc_stockcode')
             ->get();
 
         return DataTables::of($data)
@@ -47,6 +48,7 @@ class PersediaanBarangController extends Controller
         ->where('fc_branch', auth()->user()->fc_branch)
         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
         ->where('fl_status', 'EXTERNAL')
+        ->groupBy('fc_stockcode')
         ->get();
 
         return DataTables::of($data)

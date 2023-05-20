@@ -152,9 +152,9 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Stockcode</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">BPB</th>
                                         <th scope="col" class="text-center">Bonus</th>

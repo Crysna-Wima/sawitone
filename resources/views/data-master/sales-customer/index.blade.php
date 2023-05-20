@@ -5,6 +5,12 @@
     #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -68,19 +74,19 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Branch</label>
+                            <div class="form-group required">
+                                <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Sales Code</label>
                                 <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Member Code</label>
                                 <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode"></select>
                             </div>

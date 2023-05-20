@@ -549,7 +549,7 @@
                             if (qty == 0) {
                                 return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
                             } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
                             }
 
                         } else {
@@ -566,7 +566,7 @@
                             if (qty == 0) {
                                 return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
                             } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}')">Select</button>`;
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
                             }
                         }
 
@@ -609,7 +609,7 @@
 
     }
 
-    function select_stock(fc_barcode) {
+    function select_stock(fc_barcode, fc_stockcode) {
         let stock_name = 'input[name="pname[]'
         // ambil 8 string fc_barcode dari depan
         let fc_barcode_8 = fc_barcode.substring(0, 40);
@@ -622,6 +622,7 @@
             type: "POST",
             data: {
                 'fc_barcode': fc_barcode,
+                'fc_stockcode': fc_stockcode,
                 'short_barcode': fc_barcode_8,
                 'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
                 'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val(),

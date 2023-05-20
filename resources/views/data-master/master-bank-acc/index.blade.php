@@ -13,6 +13,12 @@
         top: 40px;
         left: 30px;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -79,20 +85,20 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama Bank</label>
                                 <select class="form-control select2 required-field" name="fv_bankname"
                                     id="fv_bankname" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-2 col-lg-2">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Tipe Bank</label>
                                 <select class="form-control select2" name="fc_banktype" id="fc_banktype" required>
                                     <option value="" selected disabled>- Pilih -</option>
@@ -102,14 +108,14 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>No. Rekening</label>
                                 <input type="number" class="form-control required-field" name="fc_bankcode" id="fc_bankcode">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama Pemilik Rekening</label>
                                 <input type="text" class="form-control required-field" name="fv_bankusername" id="fv_bankusername">
                             </div>
@@ -124,14 +130,14 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Cabang Bank</label>
                                 <input type="text" class="form-control required-field" name="fv_bankbranch" id="fv_bankbranch">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Alamat Bank 1</label>
                                 <textarea class="form-control required-field" name="fv_bankaddress1" id="fv_bankaddress1" style="height: 100px"></textarea>
                             </div>

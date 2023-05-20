@@ -5,6 +5,12 @@
     #tb_wrapper .row:nth-child(2){
         overflow-x: auto;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -30,15 +36,15 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Branch</label>
-                                        <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
+                                    <div class="form-group required">
+                                        <label>Cabang</label>
+                                        <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" required></select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Supplier Code</label>
-                                        <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode"></select>
+                                        <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode" required></select>
                                     </div>
                                 </div>
 
@@ -410,7 +416,7 @@
       rowCallback : function(row, data){
          var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
          var url_delete = "/data-master/stock-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
-fc_barcode
+
          $('td:eq(13)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>

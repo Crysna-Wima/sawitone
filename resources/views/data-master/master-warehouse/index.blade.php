@@ -1,5 +1,14 @@
 @extends('partial.app')
 @section('title','Daftar Gudang')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
+</style>
+@endsection
 @section('content')
 
 <div class="section-body">
@@ -62,19 +71,19 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode Gudang</label>
                                 <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Posisi Gudang</label>
                                 <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos" required>
                                     <option value="" selected disabled>- Pilih -</option>
@@ -84,7 +93,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Status</label>
                                 <select class="form-control select2" name="fl_status" id="fl_status" required>
                                     <option value="" selected disabled>- Pilih -</option>
@@ -95,15 +104,15 @@
                         </div>
 
                         <div class="col-12 col-md-9 col-lg-9">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Rackname</label>
-                                <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname">
+                                <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kapasitas</label>
-                                <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity">
+                                <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity" required>
                             </div>
                         </div>
 

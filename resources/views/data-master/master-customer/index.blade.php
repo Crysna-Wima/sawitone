@@ -12,6 +12,12 @@
         position: absolute;
         top: 40px;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -124,20 +130,20 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode Customer</label>
                                 <input type="text" class="form-control required-field" readonly name="fc_membercode" id="fc_membercode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama Customer 1</label>
                                 <input type="text" class="form-control required-field" name="fc_membername1" id="fc_membername1">
                             </div>
@@ -149,7 +155,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Alamat Customer 1</label>
                                 <textarea type="text" class="form-control required-field" name="fc_memberaddress1" id="fc_memberaddress1" style="height: 100px"></textarea>
                             </div>
@@ -161,7 +167,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Alamat Customer Loading 1</label>
                                 <textarea type="text" class="form-control required-field" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" style="height: 100px"></textarea>
                             </div>
@@ -185,19 +191,19 @@
                     <div class="row contact-person-row">
                         <div class="row w-100 ml-2">
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Nama CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicname" id="fc_memberpicname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>No. HP CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicphone" id="fc_memberpicphone">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Jabatan CP Customer 1</label>
                                     <input type="text" class="form-control required-field" name="fc_memberpicpos" id="fc_memberpicpos">
                                 </div>
@@ -215,13 +221,13 @@
 
                     <div class="row">
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Legal Status Customer</label>
                                 <select class="select2 required-field" name="fc_memberlegalstatus" id="fc_memberlegalstatus" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kebangsaan Customer</label>
                                 <select class="select2 required-field" name="fc_membernationality" id="fc_membernationality" onchange="change_nationality()" required></select>
                             </div>
@@ -233,7 +239,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Tipe Bisnis Customer</label>
                                 <select class="select2" name="fc_membertypebusiness" id="fc_membertypebusiness" required></select>
                             </div>
@@ -275,31 +281,31 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode Pajak Customer</label>
                                 <select class="select2 required-field" name="fc_membertaxcode" id="fc_membertaxcode" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Tipe Cabang</label>
                                 <select class="select2 required-field" class="form-control required-field" name="fc_member_branchtype" id="fc_member_branchtype" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>NPWP Customer</label>
                                 <input type="text" class="form-control required-field" name="fc_membernpwp_no" id="fc_membernpwp_no">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama NPWP Customer</label>
                                 <input type="text" class="form-control required-field" name="fc_membernpwp_name" id="fc_membernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Alamat NPWP Customer 1</label>
                                 <textarea type="text" class="form-control required-field" name="fc_member_npwpaddress1" id="fc_member_npwpaddress1" style="height: 100px"></textarea>
                             </div>
@@ -311,7 +317,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Email Customer 1</label>
                                 <input type="text" class="form-control required-field" name="fc_memberemail1" id="fc_memberemail1">
                             </div>
@@ -324,7 +330,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>No. HP Customer 1</label>
                                 <input type="text" class="form-control required-field" name="fc_memberphone1" id="fc_memberphone1">
                             </div>
@@ -343,7 +349,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Bank Customer 1</label>
                                 <select class="form-control select2 required-field" name="fc_memberbank1" id="fc_memberbank1" required></select>
                             </div>
@@ -362,7 +368,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>No Rekening Customer 1</label>
                                 <input type="text" class="form-control required-field" name="fc_membernorek1" id="fc_membernorek1">
                             </div>

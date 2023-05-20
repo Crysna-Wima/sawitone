@@ -12,6 +12,12 @@
         position: absolute;
         top: 40px;
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -117,20 +123,20 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2" name="fc_branch" id="fc_branch" required></select>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode Supplier</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliercode" id="fc_suppliercode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama Supplier 1</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliername1" id="fc_suppliername1">
                             </div>
@@ -154,19 +160,19 @@
                     <div class="row contact-person-row">
                         <div class="row w-100 ml-1">
                             <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Nama PIC Supplier</label>
                                     <input type="text" class="form-control required-field" name="fc_supplierpicname" id="fc_supplierpicname">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>No. HP PIC Supplier</label>
                                     <input type="text" class="form-control required-field" name="fc_supplierpicphone" id="fc_supplierpicphone">
                                 </div>
                             </div>
                             <div class="col-12 col-md-3 col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group required">
                                     <label>Jabatan PIC Supplier</label>
                                     <input type="text" class="form-control required-field" name="fc_supplierpicpos" id="fc_supplierpicpos">
                                 </div>
@@ -184,13 +190,13 @@
 
                     <div class="row">
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Legal Status Supplier</label>
                                 <select class="select2 required-field" name="fc_supplierlegalstatus" id="fc_supplierlegalstatus" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kebangsaaan Supplier</label>
                                 <select class="select2 required-field" name="fc_suppliernationality" id="fc_suppliernationality" onchange="change_nationality()" required></select>
                             </div>
@@ -202,13 +208,13 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Tipe Bisnis Supplier</label>
                                 <select class="select2 required-field" name="fc_suppliertypebusiness" id="fc_suppliertypebusiness" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Tipe Cabang Supplier</label>
                                 <select class="select2 required-field" name="fc_branchtype" id="fc_branchtype" required></select>
                             </div>
@@ -242,26 +248,26 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Kode Pajak Supplier</label>
 
                                 <select class="select2 required-field" name="fc_suppliertaxcode" id="fc_suppliertaxcode" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>NPWP Supplier</label>
                                 <input type="text" class="form-control required-field" name="fc_supplierNPWP" id="fc_supplierNPWP">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Nama NPWP Supplier</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliernpwp_name" id="fc_suppliernpwp_name">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Alamat NPWP Supplier 1</label>
                                 <textarea type="text" class="form-control required-field" name="fc_supplier_npwpaddress1" id="fc_supplier_npwpaddress1" style="height: 100px"></textarea>
                             </div>
@@ -273,7 +279,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Email Supplier 1</label>
                                 <input type="text" class="form-control required-field" name="fc_supplieremail1" id="fc_supplieremail1">
                             </div>
@@ -286,7 +292,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>No. HP Supplier 1</label>
                                 <input type="text" class="form-control required-field" name="fc_supplierphone1" id="fc_supplierphone1">
                             </div>
@@ -305,7 +311,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Bank Supplier 1</label>
                                 <select class="form-control select2 required-field" name="fc_supplierbank1" id="fc_supplierbank1" required></select>
                             </div>
@@ -324,7 +330,7 @@
                         </div>
 
                         <div class="col-12 col-md-4 col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>No Rekening Supplier 1</label>
                                 <input type="text" class="form-control required-field" name="fc_suppliernorek1" id="fc_suppliernorek1">
                             </div>
