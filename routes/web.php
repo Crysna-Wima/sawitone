@@ -367,6 +367,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/cancel_mutasi','Apps\MutasiBarangController@cancel_mutasi');
 
             Route::prefix('detail')->group(function () {
+                Route::put('/submit-mutasi-barang','Apps\MutasiBarangDetailController@submit');
                 Route::get('/datatables-inventory/{fc_startpoint_code}','Apps\MutasiBarangDetailController@datatables_inventory');
                 Route::get('/datatables','Apps\MutasiBarangDetailController@datatables');
                 Route::post('/store_mutasi_detail','Apps\MutasiBarangDetailController@store_mutasi_detail');

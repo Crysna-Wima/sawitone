@@ -236,21 +236,27 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Catatan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="fv_description" name="fv_description">
+            <form id="form_submit_edit" action="/apps/mutasi-barang/detail/submit-mutasi-barang" method="POST" autocomplete="off">
+                @csrf
+                @method('PUT')
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fc_description">Catatan</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fc_description" name="fc_description">
+                            </div>
+                        </div>
+                        <div class="button text-right mt-4">
+                            <button type="submit" class="btn btn-success">Submit Mutasi</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+            
         </div>
     </div>
-    <div class="button text-right mb-4">
-        <a href="#" class="btn btn-success">Submit Mutasi</a>
-    </div>
+  
 </div>
 @endsection
 

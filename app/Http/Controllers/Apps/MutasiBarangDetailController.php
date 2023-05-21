@@ -14,6 +14,8 @@ use Yajra\DataTables\DataTables as DataTables;
 use App\Models\TempMutasiDetail;
 use App\Models\Invstore;
 use App\Models\Stock;
+use App\Models\TempMutasiMaster;
+use Carbon\Carbon;
 
 class MutasiBarangDetailController extends Controller
 {
@@ -131,6 +133,54 @@ class MutasiBarangDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
+    }
+
+    public function submit(Request $request){
+        $count_mutasi_dtl = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->count();
+        if($count_mutasi_dtl < 1){
+            return response()->json([
+                'status' => 300,
+                'message' => 'Tambahkan item terlebih dahulu'
+            ]);
+        }
+
+        DB::beginTransaction();
+         
+            try {
+                $temp_mutasi_master = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->update([
+                    'fc_statusmutasi' => 'P',
+                    'fc_description' => $request->fc_description
+                ]);
+                // dd($request);
+                // tampilkan data yang di update dari $temp_so_master
+
+
+                TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+                TempMutasiMaster::where(['fc_mutationno' => auth()->user()->fc_userid])->delete();
+
+                DB::commit();
+                if ($temp_mutasi_master) {
+                    return [
+                        'status' => 201, // SUCCESS
+                        'link' => '/apps/mutasi-barang',
+                        'message' => 'Submit Mutasi Berhasil'
+                    ];
+                }
+            } catch (\Exception $e) {
+
+                DB::rollBack();
+
+                return [
+                    'status'     => 300, // GAGAL
+                    'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+                ];
+            }
+
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan',
+            ];
+
     }
 
 }
