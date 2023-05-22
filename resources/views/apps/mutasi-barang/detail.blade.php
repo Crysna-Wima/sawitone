@@ -131,7 +131,7 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Tujuan</label>
-                                    <input type="text" class="form-control" value="{{ $data->warehouse_start->fc_rackname }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse_tujuan->fc_rackname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
