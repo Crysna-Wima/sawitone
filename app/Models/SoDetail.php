@@ -28,7 +28,7 @@ class SoDetail extends Model
     public function stock(){
         return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
-
+ 
     public function warehouse(){
         return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();
     }
