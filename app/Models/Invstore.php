@@ -31,7 +31,7 @@ class Invstore extends Model
         return $this->hasMany(DoDetail::class, 'fc_barcode', 'fc_barcode');
     }
 
- 
-
-    
+    public function tempmutasidetail(){
+        return $this->hasMany(TempMutasiDetail::class, 'fc_barcode', 'fc_barcode');
+    }
 }

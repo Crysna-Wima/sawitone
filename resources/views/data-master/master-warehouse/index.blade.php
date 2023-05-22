@@ -30,9 +30,10 @@
                                     <th scope="col" class="text-center">Division</th>
                                     <th scope="col" class="text-center">Cabang</th>
                                     <th scope="col" class="text-center">Kode Gudang</th>
+                                    <th scope="col" class="text-center">Nama Gudang</th>
                                     <th scope="col" class="text-center">Posisi Gudang</th>
                                     <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Rackname</th>
+                                    <th scope="col" class="text-center">Alamat</th>
                                     <th scope="col" class="text-center">Kapasitas</th>
                                     <th scope="col" class="text-center">Deskripsi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -102,10 +103,9 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-12 col-md-9 col-lg-9">
                             <div class="form-group required">
-                                <label>Rackname</label>
+                                <label>Nama Gudang</label>
                                 <input type="text" class="form-control required-field" name="fc_rackname" id="fc_rackname" required>
                             </div>
                         </div>
@@ -115,7 +115,12 @@
                                 <input type="number" class="form-control required-field" name="fn_capacity" id="fn_capacity" required>
                             </div>
                         </div>
-
+                        <div class="col-12 col-md-9 col-lg-12">
+                            <div class="form-group required">
+                                <label>Alamat Gudang</label>
+                                <input type="text" class="form-control required-field" name="fc_warehouseaddress" id="fc_warehouseaddress" required>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Deskripsi</label>
@@ -218,13 +223,16 @@
                 data: 'fc_warehousecode'
             },
             {
+                data: 'fc_rackname'
+            },
+            {
                 data: 'fc_warehousepos'
             },
             {
                 data: 'fl_status'
             },
             {
-                data: 'fc_rackname'
+                data: 'fc_warehouseaddress'
             },
             {
                 data: 'fn_capacity'
@@ -240,14 +248,14 @@
             var url_edit = "/data-master/master-warehouse/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
             var url_delete = "/data-master/master-warehouse/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_warehousecode;
 
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
             if (data['fl_status'] == 'G') {
-                $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-success">Gudang</span>');
             } else {
-                $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-primary">Display</span>');
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_warehousecode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
@@ -260,5 +268,7 @@
         $("#fc_branch").prop("disabled", true);
         document.getElementById("fc_warehousecode").readOnly = true;
     }
+
+    $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

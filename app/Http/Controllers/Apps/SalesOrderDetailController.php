@@ -55,7 +55,11 @@ class SalesOrderDetailController extends Controller
             'fn_so_qty' => 'required|integer|min:1',
             'fn_so_bonusqty' => 'nullable|integer|min:0',
         ], [
+<<<<<<< HEAD
+            'fc_stockcode.required' => 'Barcode harus diisi',
+=======
             'fc_stockcode.required' => 'Kode Barang harus diisi',
+>>>>>>> 25e8b568a34cd58a5248a78ff2b22d015d11aebf
             'fn_so_qty.required' => 'Quantity harus diisi',
         ]);
 
@@ -68,12 +72,21 @@ class SalesOrderDetailController extends Controller
             ];
         }
 
+<<<<<<< HEAD
+        $stock = Stock::where(['fc_stockcode' => $request->fc_barcode])->first();
+
+        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
+
+        // jika ada TempSoDetail yang fc_barcode == $request->fc_barcode
+        $count_barcode = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
+=======
         $stock = Stock::where(['fc_stockcode' => $request->fc_stockcode])->first();
 
         $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->orderBy('fn_sorownum', 'DESC')->first();
 
         // jika ada TempSoDetail yang fc_stockcode == $request->fc_stockcode
         $count_stockcode = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
+>>>>>>> 25e8b568a34cd58a5248a78ff2b22d015d11aebf
         
 
          
