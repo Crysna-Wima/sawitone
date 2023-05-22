@@ -26,7 +26,8 @@
         color: #A5A5A5;
     }
 
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
         background-color: #0A9447;
         border-color: transparent;
     }
@@ -94,7 +95,8 @@
                                             <th scope="col" class="text-center">Nama Gudang</th>
                                             <th scope="col" class="text-center">Alamat</th>
                                             <th scope="col" class="text-center">Jenis Item</th>
-                                            <th scope="col" class="text-center" style="width: 15%">Actions</th>
+                                            <th scope="col" class="text-center">Deskripsi</th>
+                                            <th scope="col" class="text-center" style="width: 5%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -172,6 +174,41 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_mutasi" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title" id="nama_gudang"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_mutasi" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. Mutasi</th>
+                                    <th scope="col" class="text-center">Tanggal</th>
+                                    <th scope="col" class="text-center">Lokasi Awal</th>
+                                    <th scope="col" class="text-center">Lokasi Tujuan</th>
+                                    <th scope="col" class="text-center">Item</th>
+                                    <th scope="col" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -181,6 +218,10 @@
         table_inventory_dexa(fc_stockcode, fc_namelong);
     }
 
+    function click_modal_riwayat(fc_warehousecode, fc_rackname) {
+        $('#modal_mutasi').modal('show');
+        table_mutasi(fc_warehousecode, fc_rackname);
+    }
     // function click_modal_inventory_gudanglain(fc_stockcode, fc_namelong) {
     //     $('#modal_inventory_gudanglain').modal('show');
     //     table_inventory_gudanglain(fc_stockcode, fc_namelong);
@@ -247,6 +288,9 @@
         columnDefs: [{
             className: 'text-center',
             targets: [0, 1, 2, 3, 4]
+        }, {
+            className: 'text-nowrap',
+            targets: [5]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -261,20 +305,80 @@
                 // defaultContent: '',
             },
             {
-                data: 'sum_quantity'
+                data: 'sum_quantity',
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(4)', row).html(`
-                <button class="btn btn-warning btn-sm mr-1" onclick=""><i class="fa fa-eye"> </i> Detail</button>
-                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-history"> </i> Riwayat</button>
+            var fc_warehousecode = data.fc_warehousecode;
+            $('td:eq(5)', row).html(`
+                <a href="/apps/persediaan-barang/detail/${fc_warehousecode}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
                 `);
         },
-      
+
     });
+
+    function table_mutasi(fc_warehousecode, fc_rackname) {
+        var tb_mutasi = $('#tb_mutasi').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            order: [
+                [1, 'desc']
+            ],
+            ajax: {
+                url: "/apps/persediaan-barang/datatables-mutasi",
+                type: 'GET'
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 5, 6]
+            }, {
+                className: 'text-nowrap',
+                targets: [6]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_mutationno'
+                },
+                {
+                    data: 'fd_date_byuser',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fc_startpoint_code'
+                },
+                {
+                    data: 'fc_destination_code'
+                },
+                {
+                    data: 'fn_detailitem'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
+                var fc_mutationno = window.btoa(data.fc_mutationno);
+                $('td:eq(6)', row).html(`
+                <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_mutationno}')"><i class="fa fa-file"></i> PDF</button>
+                `);
+            },
+        });
+        $('#nama_gudang').text(fc_rackname);
+    }
 
     function table_inventory_dexa(fc_stockcode, fc_namelong) {
 
@@ -316,8 +420,8 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/persediaan-barang/datatables-inventory-gudanglain/" + + fc_stockcode,
-                type: 'GET' 
+                url: "/apps/persediaan-barang/datatables-inventory-gudanglain/" + +fc_stockcode,
+                type: 'GET'
             },
             columnDefs: [{
                 className: 'text-center',

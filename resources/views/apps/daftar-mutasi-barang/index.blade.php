@@ -190,20 +190,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group form_group_terlaksana">
-                                <label class="d-block">Nama</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="nama_user" id="nama_user" checked="">
-                                    <label class="form-check-label" for="nama_user">
-                                        {{ auth()->user()->fc_username }}
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="nama_user_lain" id="nama_user_lain">
-                                    <label class="form-check-label" for="nama_user_lain">
-                                        Lainnya
-                                    </label>
-                                </div>
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" class="form-control" name="fc_penerima" id="fc_penerima">
                             </div>
                         </div>
                     </div>
@@ -247,34 +236,6 @@
         });
 
         $('#name_pj').focus(function() {
-            $('.form-group:last').toggle();
-        });
-
-        $('#nama_user_lain').click(function() {
-            // Uncheck #nama_user
-            $('#nama_user').prop('checked', false);
-
-            // Show #form_terlaksana
-            if (!isNamePjShown) {
-                $('.form_group_terlaksana').append(
-                    '<div class="form-group" id="form_terlaksana"><label>Nama PJ</label><input type="text" class="form-control" name="nama_penerima" id="nama_penerima"></div>'
-                );
-                isNamePjShown = true;
-            }
-        });
-
-        $('#nama_user').click(function() {
-            // Uncheck #nama_user_lain
-            $('#nama_user_lain').prop('checked', false);
-
-            // Hide #form_pj
-            if (isNamePjShown) {
-                $('#form_terlaksana').remove();
-                isNamePjShown = false;
-            }
-        });
-
-        $('#nama_penerima').focus(function() {
             $('.form-group:last').toggle();
         });
     });
@@ -427,10 +388,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 5, 6]
-        }, {
-            className: 'text-nowrap',
-            targets: [7]
+            targets: [0, 5, 6, 7]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',

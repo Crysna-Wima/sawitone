@@ -14,12 +14,48 @@ use DB;
 use Yajra\DataTables\DataTables;
 use App\Models\Invstore;
 use App\Models\Warehouse;
+use App\Models\MutasiMaster;
 
 class PersediaanBarangController extends Controller
 {
     public function index()
     {
         return view('apps.persediaan-barang.index');
+    }
+
+    public function detail($fc_warehousecode){
+        
+        $data['gudang_mst'] = Warehouse::where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
+        return view('apps.persediaan-barang.detail', $data);
+        // dd($data);
+    }
+
+    public function datatables_detail($fc_warehousecode)
+    {
+        $data = Invstore::with('stock')->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_detail_inventory($fc_stockcode)
+    {
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_mutasi()
+    {
+        $data = MutasiMaster::with('warehouse')->where('fc_branch', auth()->user()->fc_branch)->get();
+        // $data = MutasiDetail::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function datatables_dexa()

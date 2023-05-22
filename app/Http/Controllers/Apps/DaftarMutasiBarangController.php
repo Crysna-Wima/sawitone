@@ -104,19 +104,14 @@ class DaftarMutasiBarangController extends Controller
 
     public function submit(Request $request){
         $fc_mutationno = $request->fc_mutationno;
+        $fc_penerima = $request->fc_penerima;
 
         DB::beginTransaction();
          
             try {
-                if($request->nama_penerima){
-                    $data['fc_penerima'] = $request->nama_penerima;
-                }else{
-                    $data['fc_penerima'] = auth()->user()->fc_username;
-                }
-
                 $data = MutasiMaster::where('fc_mutationno', $fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->update([
                     'fc_statusmutasi' => 'F',
-                    'fc_penerima' => $data['fc_penerima']
+                    'fc_penerima' => $request->fc_penerima
                 ]);
                 // dd($request);
                 
