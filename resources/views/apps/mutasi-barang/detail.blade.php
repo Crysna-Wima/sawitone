@@ -329,7 +329,8 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'fd_expired'
+                    data: 'fd_expired',
+                    render: formatTimestamp
                 },
                 {
                     data: 'fc_batch'
@@ -387,7 +388,8 @@
                 data: 'invstore.fc_batch'
             },
             {
-                data: 'invstore.fd_expired'
+                data: 'invstore.fd_expired',
+                render: formatTimestamp
             },
             {
                 data: 'fn_qty'

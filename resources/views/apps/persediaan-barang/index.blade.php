@@ -294,7 +294,8 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'fd_expired'
+                    data: 'fd_expired',
+                    render: formatTimestamp
                 },
                 {
                     data: 'fc_batch'
