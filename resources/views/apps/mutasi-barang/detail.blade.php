@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -146,58 +152,61 @@
             </div>
         </div>
         <div class="col-12 col-md-8 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-1">
-                            <div class="form-group">
-                                <label>Item</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="" name="" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-3">
-                            <div class="form-group">
-                                <label>Barcode</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" onclick="click_modal_inventory()" type="button"><i class="fa fa-search"></i></button>
+            <form id="form_submit_noconfirm" method="POST" action="/apps/mutasi-barang/detail/store_mutasi_detail">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-1">
+                                <div class="form-group">
+                                    <label>Item</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="fn_quantity" name="fn_quantity" readonly>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-3">
-                            <div class="form-group">
-                                <label>Nama Barang</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="fc_namelong" name="fc_namelong" readonly>
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <div class="form-group required">
+                                    <label>Barcode</label>
+                                    <div class="input-group">
+                                        <input type="hidden" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
+                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" onclick="click_modal_inventory()" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-2">
-                            <div class="form-group">
-                                <label>Jumlah</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="" name="">
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Nama Barang</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="fc_namelong" name="fc_namelong" readonly>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-3">
-                            <div class="form-group">
-                                <label>Catatan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="fv_description" name="fv_description">
+                            <div class="col-12 col-md-12 col-lg-2">
+                                <div class="form-group required">
+                                    <label>Jumlah</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="fn_qty" name="fn_qty" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12 text-right">
-                            <button type="submit" class="btn btn-success">Tambah Item</button>
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="fv_description" name="fv_description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button type="submit" class="btn btn-success">Tambah Item</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         {{-- TABLE --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
@@ -227,21 +236,27 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Catatan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="fv_description" name="fv_description">
+            <form id="form_submit_edit" action="/apps/mutasi-barang/detail/submit-mutasi-barang" method="POST" autocomplete="off">
+                @csrf
+                @method('PUT')
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fc_description">Catatan</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fc_description" name="fc_description">
+                            </div>
+                        </div>
+                        <div class="button text-right mt-4">
+                            <button type="submit" class="btn btn-success">Submit Mutasi</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+            
         </div>
     </div>
-    <div class="button text-right mb-4">
-        <a href="#" class="btn btn-success">Submit Mutasi</a>
-    </div>
+  
 </div>
 @endsection
 
@@ -289,12 +304,13 @@
     }
 
     function table_inventory() {
+        var fc_startpoint_code = "{{ $data->fc_startpoint_code }}";
         var tb_inventory = $('#tb_inventory').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/apps/mutasi-barang/detail/datatables-inventory",
+                url: "/apps/mutasi-barang/detail/datatables-inventory/" + fc_startpoint_code,
                 type: 'GET'
             },
             columnDefs: [{
@@ -324,10 +340,19 @@
             ],
             rowCallback: function(row, data) {
                 $('td:eq(5)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="detail_inventory('${data.fn_quantity}','${data.fc_stockcode}','${data.fc_barcode}','${data.stock.fc_namelong}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
+
             },
         });
+    }
+
+    function detail_inventory(fn_quantity, fc_stockcode, fc_barcode, fc_namelong) {
+        $('#modal_inventory').modal('hide');
+        $('#fc_barcode').val(fc_barcode);
+        $('#fc_namelong').val(fc_namelong);
+        $('#fn_quantity').val(fn_quantity);
+        $('#fc_stockcode').val(fc_stockcode);
     }
 
     var tb = $('#tb').DataTable({
@@ -351,7 +376,7 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'fc_namelong'
+                data: 'stock.fc_namelong'
             },
             {
                 data: 'fc_batch'
@@ -360,15 +385,17 @@
                 data: 'fd_expired'
             },
             {
-                data: 'fn_quantity'
+                data: 'fn_qty'
             },
             {
                 data: null,
             },
         ],
         rowCallback: function(row, data) {
+            var url_delete = "/apps/mutasi-barang/detail/delete/" + data.fc_mutationno + '/' + data.fn_mutationrownum;
+
             $('td:eq(6)', row).html(`
-                    <button class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"></i> Hapus Item</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Mutasi Barang Detail')"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
     });
@@ -385,14 +412,14 @@
                 if (willDelete) {
                     $("#modal_loading").modal('show');
                     $.ajax({
-                        url: '/apps/mutasi-barang/delete',
+                        url: '/apps/mutasi-barang/cancel_mutasi',
                         type: "DELETE",
                         dataType: "JSON",
                         success: function(response) {
                             setTimeout(function() {
                                 $('#modal_loading').modal('hide');
                             }, 500);
-                            if (response.status === 201) {
+                            if (response.status === 200) {
                                 $("#modal").modal('hide');
                                 iziToast.success({
                                     title: 'Success!',
@@ -400,7 +427,7 @@
                                     position: 'topRight'
                                 });
                                 tb.ajax.reload(null, false);
-                            } else if (response.status === 200) {
+                            } else if (response.status === 201) {
                                 $("#modal").modal('hide');
                                 iziToast.success({
                                     title: 'Success!',
@@ -429,5 +456,65 @@
                 }
             });
     }
+
+    $('#form_submit_noconfirm').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_submit_noconfirm').attr('action'),
+            type: $('#form_submit_noconfirm').attr('method'),
+            data: $('#form_submit_noconfirm').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal").modal('hide');
+                    $("#form_submit_noconfirm")[0].reset();
+                    reset_all_select();
+                    tb.ajax.reload(null, false);
+                    if (response.total < 1) {
+                        window.location.href = response.link;
+                    }
+                } else if (response.status == 201) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal").modal('hide');
+                    tb.ajax.reload(null, false);
+                    location.href = location.href;
+                } else if (response.status == 203) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal").modal('hide');
+                    tb.ajax.reload(null, false);
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
 </script>
 @endsection

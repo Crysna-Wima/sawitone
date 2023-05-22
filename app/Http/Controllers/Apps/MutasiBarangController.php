@@ -96,6 +96,34 @@ class MutasiBarangController extends Controller
         }
     }
 
+    public function cancel_mutasi(){
+        DB::beginTransaction();
+
+		try{
+            TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+            TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/mutasi-barang',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+    }
+
     public function delete(){
         DB::beginTransaction();
 
