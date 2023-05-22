@@ -27,6 +27,6 @@ class MutasiDetail extends Model
     }
 
     public function invstore(){
-        return $this->hasOne(Invstore::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->hasOne(Invstore::class, 'fc_barcode', 'fc_barcode');
     }
 }

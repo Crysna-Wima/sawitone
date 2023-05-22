@@ -129,7 +129,7 @@
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
-                                    <label>Lokasi Berangkat</label>
+                                    <label>Lokasi Awal</label>
                                     <input type="text" class="form-control" name="fc_rackname_berangkat" id="fc_rackname_berangkat" readonly>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
-                                    <label>Alamat Lokasi Berangkat</label>
+                                    <label>Alamat Lokasi Awal</label>
                                     <textarea type="text" name="fc_warehouseaddress_berangkat" class="form-control" id="fc_warehouseaddress_berangkat"
                                         data-height="76" readonly></textarea>
                                 </div>

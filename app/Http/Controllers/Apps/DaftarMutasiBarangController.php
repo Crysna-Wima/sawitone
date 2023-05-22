@@ -73,4 +73,74 @@ class DaftarMutasiBarangController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function pdf(Request $request){
+        // dd($request);
+        $encode_fc_mutationno = base64_encode($request->fc_mutationno);
+        $data['mutasi_mst']= MutasiMaster::where('fc_mutationno', $request->fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        if($request->name_pj){
+            $data['nama_pj'] = $request->name_pj;
+        }else{
+            $data['nama_pj'] = auth()->user()->fc_username;
+        }
+
+        //redirect ke /apps/daftar-mutasi-barang/pdf dengan mengirimkan $data
+        return [
+            'status' => 201,
+            'message' => 'PDF Berhasil ditampilkan',
+            'link' => '/apps/daftar-mutasi-barang/get_pdf/' . $encode_fc_mutationno . '/' . $data['nama_pj'],
+        ];
+        // dd($request);
+    }
+
+    public function get_pdf($fc_mutationno,$nama_pj){
+        $decode_fc_mutationno = base64_decode($fc_mutationno);
+        $data['mutasi_mst']= MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['mutasi_dtl']= MutasiDetail::with('invstore', 'stock')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['nama_pj'] = $nama_pj;
+        $pdf = PDF::loadView('pdf.mutasi-barang', $data)->setPaper('a4');
+        return $pdf->stream();
+    }
+
+    public function submit(Request $request){
+        $fc_mutationno = $request->fc_mutationno;
+
+        DB::beginTransaction();
+         
+            try {
+                if($request->nama_penerima){
+                    $data['fc_penerima'] = $request->nama_penerima;
+                }else{
+                    $data['fc_penerima'] = auth()->user()->fc_username;
+                }
+
+                $data = MutasiMaster::where('fc_mutationno', $fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->update([
+                    'fc_statusmutasi' => 'F',
+                    'fc_penerima' => $data['fc_penerima']
+                ]);
+                // dd($request);
+                
+                DB::commit();
+                if ($data) {
+                    return [
+                        'status' => 201, // SUCCESS
+                        'link' => '/apps/daftar-mutasi-barang',
+                        'message' => 'Mutasi Telah Terlaksana'
+                    ];
+                }
+            } catch (\Exception $e) {
+
+                DB::rollBack();
+
+                return [
+                    'status'     => 300, // GAGAL
+                    'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+                ];
+            }
+
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan',
+            ];
+    }
 }

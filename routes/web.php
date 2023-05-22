@@ -382,6 +382,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-belum-terlaksana','Apps\DaftarMutasiBarangController@datatables_belum_terlaksana');
             Route::get('/detail/{fc_mutationno}','Apps\DaftarMutasiBarangController@detail');
             Route::get('/datatables','Apps\DaftarMutasiBarangController@datatables');
+
+            Route::post('/pdf', 'Apps\DaftarMutasiBarangController@pdf');
+            Route::get('/get_pdf/{fc_mutationno}/{nama_pj}', 'Apps\DaftarMutasiBarangController@get_pdf');
+            Route::put('/submit','Apps\DaftarMutasiBarangController@submit');
         });
     });
 });

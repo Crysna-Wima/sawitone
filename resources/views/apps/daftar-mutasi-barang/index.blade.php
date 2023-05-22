@@ -133,11 +133,163 @@
 @endsection
 
 @section('modal')
+<div class="modal fade" role="dialog" id="modal_nama" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Penanda Tangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit_pdf" action="/apps/daftar-mutasi-barang/pdf" method="POST" autocomplete="off">
+                @csrf
+                <input type="text" name="fc_mutationno" id="fc_mutationno_input_ttd" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group form_group_ttd">
+                                <label class="d-block">Nama</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="name_user" id="name_user" checked="">
+                                    <label class="form-check-label" for="name_user">
+                                        {{ auth()->user()->fc_username }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="name_user_lainnya" id="name_user_lainnya">
+                                    <label class="form-check-label" for="name_user_lainnya">
+                                        Lainnya
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" role="dialog" id="modal_terlaksana" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Nama Penerima</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/apps/daftar-mutasi-barang/submit" method="POST" autocomplete="off">
+                @csrf
+                @method('PUT')
+                <input type="text" name="fc_mutationno" id="fc_mutationno_input_terlaksana" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group form_group_terlaksana">
+                                <label class="d-block">Nama</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="nama_user" id="nama_user" checked="">
+                                    <label class="form-check-label" for="nama_user">
+                                        {{ auth()->user()->fc_username }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="nama_user_lain" id="nama_user_lain">
+                                    <label class="form-check-label" for="nama_user_lain">
+                                        Lainnya
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    $(document).ready(function() {
+        var isNamePjShown = false;
+
+        $('#name_user_lainnya').click(function() {
+            // Uncheck #name_user
+            $('#name_user').prop('checked', false);
+
+            // Show #form_pj
+            if (!isNamePjShown) {
+                $('.form_group_ttd').append(
+                    '<div class="form-group" id="form_pj"><label>Nama PJ</label><input type="text" class="form-control" name="name_pj" id="name_pj"></div>'
+                );
+                isNamePjShown = true;
+            }
+        });
+
+        $('#name_user').click(function() {
+            // Uncheck #name_user_lainnya
+            $('#name_user_lainnya').prop('checked', false);
+
+            // Hide #form_pj
+            if (isNamePjShown) {
+                $('#form_pj').remove();
+                isNamePjShown = false;
+            }
+        });
+
+        $('#name_pj').focus(function() {
+            $('.form-group:last').toggle();
+        });
+
+        $('#nama_user_lain').click(function() {
+            // Uncheck #nama_user
+            $('#nama_user').prop('checked', false);
+
+            // Show #form_terlaksana
+            if (!isNamePjShown) {
+                $('.form_group_terlaksana').append(
+                    '<div class="form-group" id="form_terlaksana"><label>Nama PJ</label><input type="text" class="form-control" name="nama_penerima" id="nama_penerima"></div>'
+                );
+                isNamePjShown = true;
+            }
+        });
+
+        $('#nama_user').click(function() {
+            // Uncheck #nama_user_lain
+            $('#nama_user_lain').prop('checked', false);
+
+            // Hide #form_pj
+            if (isNamePjShown) {
+                $('#form_terlaksana').remove();
+                isNamePjShown = false;
+            }
+        });
+
+        $('#nama_penerima').focus(function() {
+            $('.form-group:last').toggle();
+        });
+    });
+
+    // untuk memunculkan nama penanggung jawab
+    function click_modal_nama(fc_mutationno) {
+        $('#fc_mutationno_input_ttd').val(fc_mutationno);
+        $('#modal_nama').modal('show');
+    };
+
+    function click_modal_terlaksana(fc_mutationno) {
+        $('#fc_mutationno_input_terlaksana').val(fc_mutationno);
+        $('#modal_terlaksana').modal('show');
+    };
+
     var tb_internal = $('#tb_internal').DataTable({
         processing: true,
         serverSide: true,
@@ -152,7 +304,7 @@
         columnDefs: [{
             className: 'text-center',
             targets: [0, 5, 6]
-        },{
+        }, {
             className: 'text-nowrap',
             targets: [7]
         }, ],
@@ -195,7 +347,7 @@
 
             $('td:eq(7)', row).html(`
                 <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_mutationno}')"><i class="fa fa-file"></i> PDF</button>
                 `);
         },
     });
@@ -214,7 +366,7 @@
         columnDefs: [{
             className: 'text-center',
             targets: [0, 5, 6]
-        },{
+        }, {
             className: 'text-nowrap',
             targets: [7]
         }, ],
@@ -257,7 +409,7 @@
 
             $('td:eq(7)', row).html(`
                 <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_mutationno}')"><i class="fa fa-file"></i> PDF</button>
                 `);
         },
     });
@@ -276,7 +428,7 @@
         columnDefs: [{
             className: 'text-center',
             targets: [0, 5, 6]
-        },{
+        }, {
             className: 'text-nowrap',
             targets: [7]
         }, ],
@@ -318,8 +470,7 @@
             }
 
             $('td:eq(7)', row).html(`
-                <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
+                <button class="btn btn-info btn-sm ml-1" onclick="click_modal_terlaksana('${data.fc_mutationno}')"><i class="fa fa-check"></i> Telah Terlaksana</button>
                 `);
         },
     });

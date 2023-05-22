@@ -103,7 +103,7 @@
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
-                                    <label>Lokasi Berangkat</label>
+                                    <label>Lokasi Awal</label>
                                     <input type="text" class="form-control" value="{{ $mutasi_mst->warehouse_start->fc_rackname }}" readonly>
 
                                 </div>
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
-                                    <label>Alamat Lokasi Berangkat</label>
+                                    <label>Alamat Lokasi Awal</label>
                                     <textarea type="text" class="form-control" data-height="76" readonly>{{ $mutasi_mst->warehouse_start->fc_warehouseaddress }}</textarea>
                                 </div>
                             </div>
