@@ -71,13 +71,13 @@
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group required">
                                 <label>Kode Gudang</label>
                                 <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">

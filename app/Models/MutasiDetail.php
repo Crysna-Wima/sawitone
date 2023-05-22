@@ -25,4 +25,8 @@ class MutasiDetail extends Model
     public function stock(){
         return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
+
+    public function invstore(){
+        return $this->hasOne(Invstore::class, 'fc_stockcode', 'fc_stockcode');
+    }
 }

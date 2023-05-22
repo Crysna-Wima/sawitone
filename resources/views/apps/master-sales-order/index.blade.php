@@ -401,7 +401,7 @@
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
                 }
 
-                if (data['fc_sostatus'] == 'CL') {
+                if (data['fc_sostatus'] == 'CC' || data['fc_sostatus'] == 'CL') {
                 $('td:eq(9)', row).html(`
                     <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>

@@ -401,7 +401,7 @@
                     $('td:eq(8)', row).html('<span class="badge badge-success">Selesai</span>');
                 }
 
-                if (data['fc_postatus'] == 'CL') {
+                if (data['fc_postatus'] == 'CC' || data['fc_postatus'] == 'CL') {
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
