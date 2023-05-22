@@ -65,6 +65,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="eksternal-tab" data-toggle="tab" href="#eksternal" role="tab" aria-controls="eksternal" aria-selected="false">Eksternal</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="belum-terlaksana-tab" data-toggle="tab" href="#belum-terlaksana" role="tab" aria-controls="belum-terlaksana" aria-selected="false">Belum Terlaksana</a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="internal" role="tabpanel" aria-labelledby="internal-tab">
@@ -77,6 +80,24 @@
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
                                             <th scope="col" class="text-center">Lokasi Tujuan</th>
+                                            <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center">Item</th>
+                                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="belum-terlaksana" role="tabpanel" aria-labelledby="belum-terlaksana-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tb_belum_terlaksana" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">No</th>
+                                            <th scope="col" class="text-center">No. Mutasi</th>
+                                            <th scope="col" class="text-center">Tanggal</th>
+                                            <th scope="col" class="text-center">Lokasi Awal</th>
+                                            <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -130,7 +151,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 5, 6, 7]
+            targets: [0, 5, 6]
+        },{
+            className: 'text-nowrap',
+            targets: [7]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -188,7 +212,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 5, 6, 7]
+            targets: [0, 5, 6]
         },{
             className: 'text-nowrap',
             targets: [7]
@@ -231,6 +255,67 @@
 
             $('td:eq(7)', row).html(`
                 <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"></i> Detail</button>
+                <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
+                `);
+        },
+    });
+
+    var tb_belum_terlaksana = $('#tb_belum_terlaksana').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        order: [
+            [1, 'desc']
+        ],
+        ajax: {
+            url: "/apps/daftar-mutasi-barang/datatables-belum-terlaksana",
+            type: 'GET'
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 5, 6]
+        },{
+            className: 'text-nowrap',
+            targets: [7]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_mutationno'
+            },
+            {
+                data: 'fd_date_byuser',
+                render: formatTimestamp
+            },
+            {
+                data: 'fc_startpoint_code'
+            },
+            {
+                data: 'fc_destination_code'
+            },
+            {
+                data: 'fc_statusmutasi'
+            },
+            {
+                data: 'fn_detailitem'
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            if (data['fc_statusmutasi'] == 'P') {
+                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
+            } else {
+                $(row).hide();
+            }
+
+            $('td:eq(7)', row).html(`
+                <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
                 `);
         },
