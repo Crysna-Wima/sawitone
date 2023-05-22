@@ -189,6 +189,7 @@
                                 <div class="form-group required">
                                     <label>Jumlah</label>
                                     <div class="input-group">
+                                        <input type="number" id="fn_quantity_stock" name="fn_quantity_stock" hidden>
                                         <input type="number" class="form-control" id="fn_qty" name="fn_qty" required>
                                     </div>
                                 </div>
@@ -299,6 +300,8 @@
 
 @section('js')
 <script>
+    var fn_detailitem = "{{ $data->fn_detailitem }}";
+     $('#fn_detailitem').val(fn_detailitem);
     function click_modal_inventory() {
         $('#modal_inventory').modal('show');
         table_inventory();
@@ -350,11 +353,13 @@
     }
 
     function detail_inventory(fn_quantity, fc_stockcode, fc_barcode, fc_namelong) {
+      
         $('#modal_inventory').modal('hide');
         $('#fc_barcode').val(fc_barcode);
         $('#fc_namelong').val(fc_namelong);
         $('#fc_stockcode').val(fc_stockcode);
         $('#fn_qty').val(fn_quantity);
+        $('#fn_quantity_stock').val(fn_quantity);
     }
 
     var tb = $('#tb').DataTable({

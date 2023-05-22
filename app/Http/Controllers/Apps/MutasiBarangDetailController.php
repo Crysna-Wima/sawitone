@@ -57,6 +57,13 @@ class MutasiBarangDetailController extends Controller
             ];
         }
 
+        if($request->fn_qty > $request->fn_quantity_stock){
+            return [
+                'status' => 300,
+                'message' => 'Jumlah barang yang dimasukkan melebihi stok yang tersedia'
+            ];
+        }
+
         $count_po_dtl = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->get();
         $total = count($count_po_dtl);
 
