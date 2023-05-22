@@ -307,8 +307,7 @@
 
 @section('js')
 <script>
-    var fn_detailitem = "{{ $data->fn_detailitem }}";
-    $('#fn_detailitem').val(fn_detailitem);
+   
 
     function click_modal_inventory() {
         $('#modal_inventory').modal('show');
@@ -414,6 +413,11 @@
                     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Mutasi Barang Detail')"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
+        // footer callback
+        footerCallback: function(row, data, start, end, display) {
+            $('#fn_detailitem').load(location.href + ' #fn_detailitem');
+        }
+
     });
 
     function click_delete() {
@@ -436,12 +440,14 @@
                                 $('#modal_loading').modal('hide');
                             }, 500);
                             if (response.status === 200) {
+                               
                                 $("#modal").modal('hide');
                                 iziToast.success({
                                     title: 'Success!',
                                     message: response.message,
                                     position: 'topRight'
                                 });
+                               
                                 tb.ajax.reload(null, false);
                             } else if (response.status === 201) {
                                 $("#modal").modal('hide');
@@ -497,6 +503,7 @@
                 if (response.status == 200) {
                     // swal(response.message, { icon: 'success', });
                     $("#modal").modal('hide');
+                    $('#fn_detailitem').load(location.href + ' #fn_detailitem');
                     $("#form_submit_noconfirm")[0].reset();
                     reset_all_select();
                     tb.ajax.reload(null, false);
