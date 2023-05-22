@@ -160,16 +160,16 @@
                                 <div class="form-group">
                                     <label>Item</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="fn_quantity" name="fn_quantity" readonly>
+                                        <input type="text" class="form-control" id="fn_detailitem" name="fn_detailitem" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
                                 <div class="form-group required">
-                                    <label>Barcode</label>
+                                    <label>Kode Barang</label>
                                     <div class="input-group">
-                                        <input type="hidden" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
-                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
+                                        <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
+                                        <input type="hidden" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" onclick="click_modal_inventory()" type="button"><i class="fa fa-search"></i></button>
                                         </div>
@@ -247,10 +247,10 @@
                                 <input type="text" class="form-control" id="fc_description" name="fc_description">
                             </div>
                         </div>
-                        <div class="button text-right mt-4">
-                            <button type="submit" class="btn btn-success">Submit Mutasi</button>
-                        </div>
                     </div>
+                </div>
+                <div class="button text-right mb-4">
+                    <button type="submit" class="btn btn-success">Submit Mutasi</button>
                 </div>
             </form>
             
@@ -351,8 +351,8 @@
         $('#modal_inventory').modal('hide');
         $('#fc_barcode').val(fc_barcode);
         $('#fc_namelong').val(fc_namelong);
-        $('#fn_quantity').val(fn_quantity);
         $('#fc_stockcode').val(fc_stockcode);
+        $('#fn_qty').val(fn_quantity);
     }
 
     var tb = $('#tb').DataTable({

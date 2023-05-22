@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use DB;
 use Yajra\DataTables\DataTables;
 use App\Models\Invstore;
+use App\Models\Warehouse;
 
 class PersediaanBarangController extends Controller
 {
@@ -44,11 +45,9 @@ class PersediaanBarangController extends Controller
 
     public function datatables_gudanglain()
     {
-        $data = Invstore::with('stock')
-        ->where('fc_branch', auth()->user()->fc_branch)
+        $data = Warehouse::where('fc_branch', auth()->user()->fc_branch)
         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-        ->where('fl_status', 'EXTERNAL')
-        ->groupBy('fc_stockcode')
+        ->where('fc_warehousepos', 'EXTERNAL')
         ->get();
 
         return DataTables::of($data)

@@ -91,14 +91,10 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Kode Barang</th>
-                                            <th scope="col" class="text-center">Nama Barang</th>
-                                            <th scope="col" class="text-center">Sebutan</th>
-                                            <th scope="col" class="text-center">Brand</th>
-                                            <th scope="col" class="text-center">Sub Group</th>
-                                            <th scope="col" class="text-center">Tipe Barang</th>
-                                            <th scope="col" class="text-center">Qty</th>
-                                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                            <th scope="col" class="text-center">Nama Gudang</th>
+                                            <th scope="col" class="text-center">Alamat</th>
+                                            <th scope="col" class="text-center">Jenis Item</th>
+                                            <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -185,10 +181,10 @@
         table_inventory_dexa(fc_stockcode, fc_namelong);
     }
 
-    function click_modal_inventory_gudanglain(fc_stockcode, fc_namelong) {
-        $('#modal_inventory_gudanglain').modal('show');
-        table_inventory_gudanglain(fc_stockcode, fc_namelong);
-    }
+    // function click_modal_inventory_gudanglain(fc_stockcode, fc_namelong) {
+    //     $('#modal_inventory_gudanglain').modal('show');
+    //     table_inventory_gudanglain(fc_stockcode, fc_namelong);
+    // }
 
     var tb_dexa = $('#tb_dexa').DataTable({
         processing: true,
@@ -250,7 +246,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 4]
+            targets: [0, 1, 2, 3, 4]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -258,34 +254,23 @@
                 orderable: false
             },
             {
-                data: 'fc_stockcode'
+                data: 'fc_rackname'
             },
             {
-                data: 'stock.fc_namelong'
-            },
-            {
-                data: 'stock.fc_nameshort'
-            },
-            {
-                data: 'stock.fc_brand'
-            },
-            {
-                data: 'stock.fc_subgroup'
-            },
-            {
-                data: 'stock.fc_typestock2'
-            },
-            {
-                data: 'sum_quantity',
+                data: 'fc_warehouseaddress',
                 // defaultContent: '',
+            },
+            {
+                data: 'sum_quantity'
             },
             {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_gudanglain('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
+            $('td:eq(4)', row).html(`
+                <button class="btn btn-warning btn-sm mr-1" onclick=""><i class="fa fa-eye"> </i> Detail</button>
+                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-history"> </i> Riwayat</button>
                 `);
         },
       
