@@ -64,7 +64,7 @@ class MutasiBarangDetailController extends Controller
         $temp_detail = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->orderBy('fn_mutationrownum', 'DESC')->first();
 
         // jika ada TempSoDetail yang fc_stockcode == $request->fc_stockcode
-        $count_stockcode = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->where('fc_stockcode', $request->fc_stockcode)->get();
+        $count_stockcode = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->where('fc_barcode', $request->fc_barcode)->get();
 
 
         // jika ada fc_stockcode yang sama di $temppodtl
