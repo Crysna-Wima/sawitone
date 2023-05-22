@@ -185,7 +185,8 @@
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            var fc_mutationno = window.btoa(data.fc_mutationno);
+            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
                 $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
@@ -193,7 +194,7 @@
             }
 
             $('td:eq(7)', row).html(`
-                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"></i> Detail</button>
+                <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
                 `);
         },
@@ -246,7 +247,8 @@
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            var fc_mutationno = window.btoa(data.fc_mutationno);
+            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
                 $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
@@ -254,7 +256,7 @@
             }
 
             $('td:eq(7)', row).html(`
-                <button class="btn btn-primary btn-sm" onclick=""><i class="fa fa-eye"></i> Detail</button>
+                <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick=""><i class="fa fa-file"></i> PDF</button>
                 `);
         },
@@ -307,7 +309,8 @@
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            var fc_mutationno = window.btoa(data.fc_mutationno);
+            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
                 $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {

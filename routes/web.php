@@ -381,6 +381,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-eksternal','Apps\DaftarMutasiBarangController@datatables_eksternal');
             Route::get('/datatables-belum-terlaksana','Apps\DaftarMutasiBarangController@datatables_belum_terlaksana');
             Route::get('/detail/{fc_mutationno}','Apps\DaftarMutasiBarangController@detail');
+            Route::get('/datatables','Apps\DaftarMutasiBarangController@datatables');
         });
     });
 });
