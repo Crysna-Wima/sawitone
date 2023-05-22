@@ -157,10 +157,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-1">
-                                <div class="form-group">
+                                <div class="form-group d-flex-row">
                                     <label>Item</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="fn_detailitem" name="fn_detailitem" readonly>
+                                    <div class="text mt-2">
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" "
+                                            id="fn_detailitem" name="fn_detailitem">0</h5>
                                     </div>
                                 </div>
                             </div>

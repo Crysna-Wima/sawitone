@@ -121,13 +121,16 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [
+            [1, 'desc']
+        ],
         ajax: {
             url: "/apps/daftar-mutasi-barang/datatables-internal",
             type: 'GET'
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 6]
+            targets: [0, 6, 7]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -138,13 +141,14 @@
                 data: 'fc_mutationno'
             },
             {
-                data: 'fd_date_byuse'
+                data: 'fd_date_byuser',
+                render: formatTimestamp
             },
             {
-                data: 'fc_startpoint'
+                data: 'fc_startpoint_code'
             },
             {
-                data: 'fc_destination'
+                data: 'fc_destination_code'
             },
             {
                 data: 'fn_detailitem'
@@ -175,6 +179,9 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        order: [
+            [1, 'desc']
+        ],
         ajax: {
             url: "/apps/daftar-mutasi-barang/datatables-eksternal",
             type: 'GET'
@@ -192,13 +199,14 @@
                 data: 'fc_mutationno'
             },
             {
-                data: 'fd_date_byuse'
+                data: 'fd_date_byuser',
+                render: formatTimestamp
             },
             {
-                data: 'fc_startpoint'
+                data: 'fc_startpoint_code'
             },
             {
-                data: 'fc_destination'
+                data: 'fc_destination_code'
             },
             {
                 data: 'fn_detailitem'
