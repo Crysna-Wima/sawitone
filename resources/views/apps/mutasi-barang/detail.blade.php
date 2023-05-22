@@ -151,21 +151,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-12">
+        <div class="col-12 col-md-8 col-lg-2">
+            <div class="card">
+                <div class="card-body" style="height: 160px;">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group d-flex-row text-center">
+                                <label>Jumlah Item</label>
+                                <div class="text-center mt-2">
+                                    <h5 class="text-success" style="font-weight: bold; font-size: 36px;" id="fn_detailitem" name="fn_detailitem">{{ $data->fn_detailitem }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-10">
             <form id="form_submit_noconfirm" method="POST" action="/apps/mutasi-barang/detail/store_mutasi_detail">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-1">
-                                <div class="form-group d-flex-row">
-                                    <label>Item</label>
-                                    <div class="text mt-2">
-                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" "
-                                            id="fn_detailitem" name="fn_detailitem">0</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-3">
+                            <div class="col-12 col-md-12 col-lg-4">
                                 <div class="form-group required">
                                     <label>Kode Barang</label>
                                     <div class="input-group">
@@ -255,10 +262,10 @@
                     <button type="submit" class="btn btn-success">Submit Mutasi</button>
                 </div>
             </form>
-            
+
         </div>
     </div>
-  
+
 </div>
 @endsection
 
@@ -301,7 +308,8 @@
 @section('js')
 <script>
     var fn_detailitem = "{{ $data->fn_detailitem }}";
-     $('#fn_detailitem').val(fn_detailitem);
+    $('#fn_detailitem').val(fn_detailitem);
+
     function click_modal_inventory() {
         $('#modal_inventory').modal('show');
         table_inventory();
@@ -353,7 +361,7 @@
     }
 
     function detail_inventory(fn_quantity, fc_stockcode, fc_barcode, fc_namelong) {
-      
+
         $('#modal_inventory').modal('hide');
         $('#fc_barcode').val(fc_barcode);
         $('#fc_namelong').val(fc_namelong);

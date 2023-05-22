@@ -77,9 +77,9 @@
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
                                             <th scope="col" class="text-center">Lokasi Tujuan</th>
-                                            <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center" style="width: 15%">Actions</th>
+                                            <th scope="col" class="text-center">Item</th>
+                                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -94,10 +94,10 @@
                                             <th scope="col" class="text-center">No. Mutasi</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
-                                            <th scope="col" class="text-center">Lokasi Tujuan</th>
-                                            <th scope="col" class="text-center">Item</th>
+                                            <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
                                             <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center" style="width: 15%">Actions</th>
+                                            <th scope="col" class="text-center">Item</th>
+                                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -130,7 +130,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 6, 7]
+            targets: [0, 5, 6, 7]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -151,21 +151,21 @@
                 data: 'fc_destination_code'
             },
             {
-                data: 'fn_detailitem'
+                data: 'fc_statusmutasi'
             },
             {
-                data: 'fc_statusmutasi'
+                data: 'fn_detailitem'
             },
             {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
-                $('td:eq(6)', row).html('<span class="badge badge-warning">Proses</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
-                $('td:eq(6)', row).html('<span class="badge badge-success">Terlaksana</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-success">Terlaksana</span>');
             }
 
             $('td:eq(7)', row).html(`
@@ -188,7 +188,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 6]
+            targets: [0, 5, 6, 7]
+        },{
+            className: 'text-nowrap',
+            targets: [7]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -209,21 +212,21 @@
                 data: 'fc_destination_code'
             },
             {
-                data: 'fn_detailitem'
+                data: 'fc_statusmutasi'
             },
             {
-                data: 'fc_statusmutasi'
+                data: 'fn_detailitem'
             },
             {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
-                $('td:eq(6)', row).html('<span class="badge badge-warning">Proses</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
-                $('td:eq(6)', row).html('<span class="badge badge-success">Terlaksana</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-success">Terlaksana</span>');
             }
 
             $('td:eq(7)', row).html(`
