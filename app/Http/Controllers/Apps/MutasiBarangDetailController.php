@@ -156,7 +156,8 @@ class MutasiBarangDetailController extends Controller
             try {
                 $temp_mutasi_master = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->update([
                     'fc_statusmutasi' => 'P',
-                    'fc_description' => $request->fc_description
+                    'fc_description' => $request->fc_description,
+                    'fd_date_bysystem' => Carbon::now()
                 ]);
                 // dd($request);
                 // tampilkan data yang di update dari $temp_so_master
