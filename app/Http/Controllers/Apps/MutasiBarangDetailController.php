@@ -33,7 +33,7 @@ class MutasiBarangDetailController extends Controller
 
     public function datatables()
     {
-        $data = TempMutasiDetail::with('warehouse', 'stock')->where('fc_mutationno', auth()->user()->fc_userid)->get();
+        $data = TempMutasiDetail::with('warehouse', 'stock','invstore')->where('fc_mutationno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

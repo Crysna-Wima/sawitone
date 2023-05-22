@@ -379,10 +379,10 @@
                 data: 'stock.fc_namelong'
             },
             {
-                data: 'fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'fd_expired'
+                data: 'invstore.fd_expired'
             },
             {
                 data: 'fn_qty'
