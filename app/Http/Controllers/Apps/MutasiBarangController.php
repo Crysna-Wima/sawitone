@@ -71,11 +71,19 @@ class MutasiBarangController extends Controller
             ];
         }
 
+        if($request->fc_startpoint_code == $request->fc_destination_code){
+            return [
+                'status' => 300,
+                'message' => "Lokasi awal dan lokasi tujuan tidak boleh sama"
+            ];
+        }
+
         // create ke TempMutasiMaster
        $insert =  TempMutasiMaster::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_mutationno' => auth()->user()->fc_userid,
+            'fc_operator' => auth()->user()->fc_userid,
             'fd_date_byuser' => $request->fd_date_byuser,
             'fc_type_mutation' => $request->fc_type_mutation,
             'fc_startpoint_code' => $request->fc_startpoint,

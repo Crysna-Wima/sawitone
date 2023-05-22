@@ -70,7 +70,7 @@
                                         <label>Jenis Mutasi</label>
                                         @if (empty($data->fc_type_mutation))
                                             <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
-                                                <option value="" selected disabled>- Pilih -</option>
+                                                <option value="" selected>- Pilih -</option>
                                                 <option value="INTERNAL">INTERNAL</option>
                                                 <option value="EKSTERNAL">EKSTERNAL</option>
                                             </select>
@@ -246,13 +246,32 @@
     // change value fc_type_mutation
    
     function click_modal_lokasi_awal() {
-        $('#modal_lokasi_awal').modal('show');
+        
+        if ($('#fc_type_mutation').val() === '') {
+            swal(
+                'Perhatian',
+                'Pilih Jenis Mutasi Terlebih Dahulu',
+                'warning'
+            )
+        }else{
+            $('#modal_lokasi_awal').modal('show');
         table_warehouse_awal();
+        }
+        
     }
 
     function click_modal_lokasi_tujuan() {
-        $('#modal_lokasi_tujuan').modal('show');
-        table_warehouse_tujuan();
+        if ($('#fc_type_mutation').val() === '') {
+            swal(
+                'Perhatian',
+                'Pilih Jenis Mutasi Terlebih Dahulu',
+                'warning'
+            )
+        }else{
+            $('#modal_lokasi_tujuan').modal('show');
+            table_warehouse_tujuan();
+        }
+      
     }
 
     function table_warehouse_awal() {

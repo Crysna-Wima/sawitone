@@ -22,7 +22,7 @@ class MutasiBarangDetailController extends Controller
     public function datatables_inventory($fc_startpoint_code)
     {
         $data = Invstore::with('stock')
-        // ->where('fc_warehousecode', $fc_startpoint_code)
+        ->where('fc_warehousecode', $fc_startpoint_code)
         ->where('fc_branch', auth()->user()->fc_branch)
         ->get();
 
