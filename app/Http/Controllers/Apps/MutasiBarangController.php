@@ -71,7 +71,7 @@ class MutasiBarangController extends Controller
             ];
         }
 
-        if($request->fc_startpoint_code == $request->fc_destination_code){
+        if($request->fc_startpoint == $request->fc_destination){
             return [
                 'status' => 300,
                 'message' => "Lokasi awal dan lokasi tujuan tidak boleh sama"
