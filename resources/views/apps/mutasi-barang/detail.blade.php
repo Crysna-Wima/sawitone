@@ -131,19 +131,19 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Lokasi Tujuan</label>
-                                    <input type="text" class="form-control" value="{{ $data->warehouse_tujuan->fc_rackname }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse_destination->fc_rackname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Berangkat</label>
-                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_start->fc_warehouseaddress }}" readonly></textarea>
+                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_start->fc_warehouseaddress }}" readonly>{{ $data->warehouse_start->fc_warehouseaddress }}</textarea> 
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Tujuan</label>
-                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_destination->fc_warehouseaddress }}" readonly></textarea>
+                                            <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_destination->fc_warehouseaddress }}" readonly>{{ $data->warehouse_destination->fc_warehouseaddress }}</textarea> 
                                 </div>
                             </div>
                         </div>
