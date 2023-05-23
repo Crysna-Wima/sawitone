@@ -316,7 +316,7 @@
             },
         ],
         rowCallback: function(row, data) {
-            var fc_warehousecode = data.fc_warehousecode;
+            var fc_warehousecode = window.btoa(data.fc_warehousecode);
             $('td:eq(5)', row).html(`
                 <a href="/apps/persediaan-barang/detail/${fc_warehousecode}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
