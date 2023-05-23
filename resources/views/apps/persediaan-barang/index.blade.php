@@ -334,7 +334,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: "/apps/persediaan-barang/datatables-mutasi",
+                url: "/apps/persediaan-barang/datatables-mutasi/" + fc_warehousecode,
                 type: 'GET'
             },
             columnDefs: [{

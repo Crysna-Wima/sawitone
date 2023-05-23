@@ -204,6 +204,7 @@
     });
 
     function table_detail_inventory(fc_stockcode, fc_namelong) {
+        var fc_warehousecode = "{{ $gudang_mst->fc_warehousecode }}";
         var tb_detail_inventory = $('#tb_detail_inventory').DataTable({
             processing: true,
             serverSide: true,
@@ -212,7 +213,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/persediaan-barang/datatables-detail-inventory/" + fc_stockcode,
+                url: "/apps/persediaan-barang/datatables-detail-inventory/" + fc_stockcode + '/' + fc_warehousecode,
                 type: 'GET'
             },
             columnDefs: [{

@@ -37,4 +37,9 @@ class Warehouse extends Model
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
+
+    // invstore
+    public function invstore(){
+        return $this->hasMany(Invstore::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
 }

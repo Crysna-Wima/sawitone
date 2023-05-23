@@ -38,4 +38,8 @@ class Invstore extends Model
     public function mutasidetail(){
         return $this->hasMany(MutasiDetail::class, 'fc_barcode', 'fc_barcode');
     }
+
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
 }

@@ -32,25 +32,36 @@ class PersediaanBarangController extends Controller
 
     public function datatables_detail($fc_warehousecode)
     {
-        $data = Invstore::with('stock')->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')
+        ->select('fc_stockcode', DB::raw('SUM(fn_quantity) as fn_quantity'))
+        ->where('fc_warehousecode', $fc_warehousecode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->groupBy('fc_stockcode')
+        ->get();
         
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_detail_inventory($fc_stockcode)
+    public function datatables_detail_inventory($fc_stockcode, $fc_warehousecode)
     {
-        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_mutasi()
+    public function datatables_mutasi($fc_warehousecode)
     {
-        $data = MutasiMaster::with('warehouse')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MutasiMaster::with('warehouse')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where(function ($query) use ($fc_warehousecode) {
+            $query->where('fc_startpoint_code', $fc_warehousecode)
+                ->orWhere('fc_destination_code', $fc_warehousecode);
+        })
+        ->get();
         // $data = MutasiDetail::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
@@ -60,9 +71,10 @@ class PersediaanBarangController extends Controller
 
     public function datatables_dexa()
     {
-        $data = Invstore::with('stock')
+        $data = Invstore::with('stock', 'warehouse')
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode) 
             ->groupBy('fc_stockcode')
             ->get();
 
