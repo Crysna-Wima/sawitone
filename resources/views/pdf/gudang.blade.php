@@ -179,51 +179,13 @@
         </div>
     </div>
     <div class="content">
-        <p style="text-align: center; font-weight:bold; font-size:15px;">TANDA TERIMA MUTASI</p>
-        <br>
-        <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-            <tr>
-                <td>Tanggal</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%">{{ \Carbon\Carbon::parse( $mutasi_mst->fd_date_byuser )->isoFormat('D MMMM Y'); }}</td>
-                <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 28%"></td>
-            </tr>
-            <tr>
-                <td>No. Mutasi</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_mutationno }}</td>
-                <td>Jenis Mutasi</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_type_mutation }}</td>
-            </tr>
-        </table>
-
-        <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">
-        <p style="font-size: .8rem; margin-left: 2%">Lokasi Awal :</p>
-            <tr>
-                <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
-                <td style="width: 5px"></td>
-                <td style="width: 16%"></td>
-                <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 16%"></td>
-            </tr>
-            <tr>
-                <td style="width: 50%">{{ $mutasi_mst->warehouse_start->fc_warehouseaddress }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="width: 5px"></td>
-                <td style="width: 16%"></td>
-            </tr>
-        </table>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">PERSEDIAAN GUDANG</p>
+        <p style="text-align: center; font-size:13px;">({{ $gudang_mst->fc_warehousecode }})</p>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-        <p style="font-size: .8rem; margin-left: 2%">Lokasi Tujuan :</p>
+        <p style="font-size: .8rem; margin-left: 2%">Nama Gudang :</p>
             <tr>
-                <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
+                <td style="font-weight: bold;">{{ $gudang_mst->fc_rackname }}</td>
                 <td style="width: 5px"></td>
                 <td style="width: 16%"></td>
                 <td></td>
@@ -231,7 +193,7 @@
                 <td style="width: 16%"></td>
             </tr>
             <tr>
-                <td style="width: 50%">{{ $mutasi_mst->warehouse_destination->fc_warehouseaddress }}</td>
+                <td style="width: 50%">{{ $gudang_mst->fc_warehouseaddress }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -239,27 +201,35 @@
                 <td style="width: 16%"></td>
             </tr>
         </table>
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Detail Barang</p>
+        
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Data Persediaan Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No.</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
+                <th>Sebutan</th>
+                <th>Brand</th>
+                <th>Sub Group</th>
+                <th>Tipe Stock</th>
                 <th>Batch</th>
                 <th>Expired Date</th>
                 <th>Qty</th>
             </tr>
 
-            @if(isset($mutasi_dtl))
-                @foreach ($mutasi_dtl as $item)
+            @if(isset($gudang_dtl))
+                @foreach ($gudang_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->fc_stockcode }}</td>
+                        <td>{{ $item->stock->fc_stockcode }}</td>
                         <td>{{ $item->stock->fc_namelong }}</td>
-                        <td>{{ $item->invstore->fc_batch }}</td>
-                        <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
-                        <td>{{ $item->fn_qty }}</td>
+                        <td>{{ $item->stock->fc_nameshort }}</td>
+                        <td>{{ $item->stock->fc_brand }}</td>
+                        <td>{{ $item->stock->fc_subgroup }}</td>
+                        <td>{{ $item->stock->fc_typestock2 }}</td>
+                        <td>{{ $item->fc_batch }}</td>
+                        <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ $item->fn_quantity }}</td>
                     </tr>
                 @endforeach
             @else
@@ -268,25 +238,6 @@
             </tr>
             @endif
 
-        </table>
-
-        <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
-            <br><br>
-            <br><br>
-            <tr >
-                <td style="width: 50% !important; text-align: left;">Telah diterima di,</td>
-                <td style="width: 50% !important; text-align: right;">Telah dikirim dari,</td>
-            </tr>
-            <tr>
-                <td style="width: 50% !important; text-align: left;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
-                <td style="width: 50% !important; text-align: right;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
-            </tr>
-            <br><br/>
-            <br><br/>
-            <tr >
-                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
-                <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
-            </tr>
         </table>
     <div>
 </body>

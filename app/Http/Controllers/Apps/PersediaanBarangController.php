@@ -98,7 +98,6 @@ class PersediaanBarangController extends Controller
             ->make(true);
     }
 
-
     public function datatables_gudanglain()
     {
         $data = Warehouse::where('fc_branch', auth()->user()->fc_branch)
@@ -113,6 +112,25 @@ class PersediaanBarangController extends Controller
                     ->where('fc_warehousecode', $row->fc_warehousecode)
                     ->sum('fn_quantity');
                 
+                return $sumQuantity;
+            })
+            ->make(true);
+    }
+
+    public function datatables_semua()
+    {
+        $data = Invstore::with('stock', 'warehouse')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->groupBy('fc_stockcode')
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('sum_quantity', function ($row) {
+                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+                    ->sum('fn_quantity');
+
                 return $sumQuantity;
             })
             ->make(true);
@@ -143,5 +161,16 @@ class PersediaanBarangController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function pdf($fc_warehousecode)
+    {
+        $decode_fc_warehousecode = base64_decode($fc_warehousecode);
+        session(['fc_warehousecode_global' => $decode_fc_warehousecode]);
+        $data['gudang_mst']= Warehouse::where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['gudang_dtl']= Invstore::with('stock')->where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
+        return $pdf->stream();
     }
 }

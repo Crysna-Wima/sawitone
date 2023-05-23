@@ -60,10 +60,13 @@
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="dexa-tab" data-toggle="tab" href="#dexa" role="tab" aria-controls="dexa" aria-selected="true">DEXA Utama</a>
+                            <a class="nav-link active show" id="dexa-tab" data-toggle="tab" href="#dexa" role="tab" aria-controls="dexa" aria-selected="true">Gudang Internal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="gudanglain-tab" data-toggle="tab" href="#gudanglain" role="tab" aria-controls="gudanglain" aria-selected="false">Gudang Eksternal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="semua-tab" data-toggle="tab" href="#semua" role="tab" aria-controls="semua" aria-selected="false">Seluruh Persediaan</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -94,9 +97,28 @@
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">Nama Gudang</th>
                                             <th scope="col" class="text-center">Alamat</th>
-                                            <th scope="col" class="text-center">Jenis Item</th>
+                                            <th scope="col" class="text-center">Jumlah Item</th>
                                             <th scope="col" class="text-center">Deskripsi</th>
-                                            <th scope="col" class="text-center" style="width: 5%">Actions</th>
+                                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="semua" role="tabpanel" aria-labelledby="semua-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tb_semua" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">No</th>
+                                            <th scope="col" class="text-center">Kode Barang</th>
+                                            <th scope="col" class="text-center">Nama Barang</th>
+                                            <th scope="col" class="text-center">Sebutan</th>
+                                            <th scope="col" class="text-center">Brand</th>
+                                            <th scope="col" class="text-center">Sub Group</th>
+                                            <th scope="col" class="text-center">Tipe Barang</th>
+                                            <th scope="col" class="text-center">Qty</th>
+                                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -126,7 +148,9 @@
                         <table class="table table-striped" id="tb_inventory_dexa" width="100%">
                             <thead>
                                 <tr>
+                                    <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Gudang</th>
                                     <th scope="col" class="text-center">Expired Date</th>
                                     <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">Qty</th>
@@ -319,10 +343,61 @@
             var fc_warehousecode = window.btoa(data.fc_warehousecode);
             $('td:eq(5)', row).html(`
                 <a href="/apps/persediaan-barang/detail/${fc_warehousecode}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <button class="btn btn-warning btn-sm" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
+                <a href="/apps/persediaan-barang/pdf/${fc_warehousecode}" target="_blank"><button class="btn btn-warning btn-sm"><i class="fa fa-file"></i> PDF</button></a>
+                <button class="btn btn-info btn-sm ml-1" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
                 `);
         },
 
+    });
+
+    var tb_semua = $('#tb_semua').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/persediaan-barang/datatables-semua",
+            type: 'GET'
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'stock.fc_namelong'
+            },
+            {
+                data: 'stock.fc_nameshort'
+            },
+            {
+                data: 'stock.fc_brand'
+            },
+            {
+                data: 'stock.fc_subgroup'
+            },
+            {
+                data: 'stock.fc_typestock2'
+            },
+            {
+                data: 'sum_quantity',
+                // defaultContent: '',
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(8)', row).html(`
+                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
+                `);
+        },
     });
 
     function table_mutasi(fc_warehousecode, fc_rackname) {
@@ -395,7 +470,15 @@
                 targets: [0, 1, 2, 3]
             }, ],
             columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
                     data: 'fc_stockcode'
+                },
+                {
+                    data: 'warehouse.fc_rackname'
                 },
                 {
                     data: 'fd_expired',

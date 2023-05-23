@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Delivery Order')
+@section('title', 'Daftar Surat Jalan')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -44,7 +44,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Master Delivery Order</h4>
+                        <h4>Data Surat Jalan</h4>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -69,9 +69,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
-                                                <th scope="col" class="text-center">Dono</th>
-                                                <th scope="col" class="text-center">Tgl DO</th>
+                                                <th scope="col" class="text-center">No. Surat Jalan</th>
+                                                <th scope="col" class="text-center">No. SO</th>
+                                                <th scope="col" class="text-center">Tgl SJ</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -87,9 +87,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
-                                                <th scope="col" class="text-center">Dono</th>
-                                                <th scope="col" class="text-center">Tgl DO</th>
+                                                <th scope="col" class="text-center">No. Surat Jalan</th>
+                                                <th scope="col" class="text-center">No. SO</th>
+                                                <th scope="col" class="text-center">Tgl SJ</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -105,9 +105,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
-                                                <th scope="col" class="text-center">Dono</th>
-                                                <th scope="col" class="text-center">Tgl DO</th>
+                                                <th scope="col" class="text-center">No. Surat Jalan</th>
+                                                <th scope="col" class="text-center">No. SO</th>
+                                                <th scope="col" class="text-center">Tgl SJ</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -563,10 +563,10 @@
                         orderable: false
                     },
                     {
-                        data: 'fc_sono'
+                        data: 'fc_dono'
                     },
                     {
-                        data: 'fc_dono'
+                        data: 'fc_sono'
                     },
                     {
                         data: 'fd_dodate',
@@ -637,11 +637,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 6, 7]
+                targets: [0, 6]
             },
             {
                 className: 'text-nowrap',
-                targets: [3]
+                targets: [3, 7]
             },
         ],
         columns: [{
@@ -650,10 +650,10 @@
                 orderable: false
             },
             {
-                data: 'fc_sono'
+                data: 'fc_dono'
             },
             {
-                data: 'fc_dono'
+                data: 'fc_sono'
             },
             {
                 data: 'fd_dodate',
@@ -686,18 +686,18 @@
             } else if (data['fc_dostatus'] == 'D') {
                 $('td:eq(7)', row).html(
                     `
-                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                 );
             } else {
                 if (data['fc_invstatus'] == 'N') {
                     $('td:eq(7)', row).html(
-                        `<button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                        `<button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                          <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                     );
                 } else {
                     $('td:eq(7)', row).html(
-                        `<button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                        `<button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                          <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                     );
                 }
@@ -718,11 +718,11 @@
                 },
                 columnDefs: [{
                         className: 'text-center',
-                        targets: [0, 6, 7]
+                        targets: [0, 6]
                     },
                     {
                         className: 'text-nowrap',
-                        targets: [3]
+                        targets: [3, 7]
                     },
                 ],
                 columns: [{
@@ -731,10 +731,10 @@
                         orderable: false
                     },
                     {
-                        data: 'fc_sono'
+                        data: 'fc_dono'
                     },
                     {
-                        data: 'fc_dono'
+                        data: 'fc_sono'
                     },
                     {
                         data: 'fd_dodate',
@@ -767,21 +767,21 @@
                     } else if (data['fc_dostatus'] == 'D') {
                         $('td:eq(7)', row).html(
                             `
-                            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                            <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                            <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
                         );
                     } else {
                         if (data['fc_invstatus'] == 'N') {
                             $('td:eq(7)', row).html(
                                 `
-                                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                                <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                                 <button class="btn btn-info btn-sm" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
                             );
                         } else {
                             $('td:eq(7)', row).html(
                                 `
-                                <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                                <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+                                <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                                <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                             );
                         }
                     }

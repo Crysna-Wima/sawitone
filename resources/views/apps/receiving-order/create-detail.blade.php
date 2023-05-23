@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'New Receiving / SPB')
+@section('title', 'BPB Baru')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {

@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Daftar Receiving / SPB')
+@section('title', 'Daftar BPB')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -44,7 +44,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Receiving / SPB</h4>
+                        <h4>Data BPB</h4>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
