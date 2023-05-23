@@ -71,20 +71,28 @@ class PersediaanBarangController extends Controller
 
     public function datatables_dexa()
     {
-        $data = Invstore::with('stock', 'warehouse')
+        $data = Invstore::with(['stock', 'warehouse' => function($query) {
+            $query->where('fc_warehousepos', 'INTERNAL');
+        }])
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-            ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode) 
+            // ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode) 
             ->groupBy('fc_stockcode')
             ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('sum_quantity', function ($row) {
+                if ($row->warehouse === null) {
+                    return null; // Jika warehouse null, kembalikan nilai null
+                }
+                
                 $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
-                    ->where('fc_warehousecode', $row->fc_warehousecode)
+                    ->whereHas('warehouse', function ($query) {
+                        $query->where('fc_warehousepos', 'INTERNAL');
+                    })
                     ->sum('fn_quantity');
-
+                
                 return $sumQuantity;
             })
             ->make(true);
@@ -103,7 +111,7 @@ class PersediaanBarangController extends Controller
                 $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
                     ->where('fc_warehousecode', $row->fc_warehousecode)
                     ->sum('fn_quantity');
-
+                
                 return $sumQuantity;
             })
             ->make(true);
