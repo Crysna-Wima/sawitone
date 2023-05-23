@@ -425,6 +425,7 @@
                         <table class="table table-striped" id="tb_inventory" width="100%">
                             <thead>
                                 <tr>
+                                    <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Barang</th>
                                     <th scope="col" class="text-center">Nama Barang</th>
                                     <th scope="col" class="text-center">Expired Date</th>
@@ -683,22 +684,31 @@
             processing: true,
             serverSide: true,
             destroy: true,
+            order: [
+                [3, 'asc']
+            ],
             ajax: {
                 url: "/apps/sales-order/detail/datatables-inventory",
                 type: 'GET'
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 4]
+                targets: [0, 1, 2, 3, 4, 5]
             }, ],
             columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
                     data: 'fc_stockcode'
                 },
                 {
                     data: 'stock.fc_namelong'
                 },
                 {
-                    data: 'fd_expired'
+                    data: 'fd_expired',
+                    render: formatTimestamp
                 },
                 {
                     data: 'fc_batch'

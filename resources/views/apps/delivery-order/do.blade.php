@@ -376,7 +376,7 @@
     <div class="modal-dialog modal-xl" style="width:90%" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Stock Inventory</h5>
+                <h5 class="modal-title">Ketersediaan Stock</h5>
                 <div class="card-header-action">
                     <select data-dismiss="modal" onchange="bonus_type()" class="form-control select2 required-field" name="#" id="category">
                         <option value="Regular">Regular&nbsp;&nbsp;</option>
@@ -447,6 +447,9 @@
         stock_inventory_table.DataTable({
             "processing": true,
             "serverSide": true,
+            order: [
+                [6, 'asc']
+            ],
             "ajax": {
                 "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
                 "type": "GET",
