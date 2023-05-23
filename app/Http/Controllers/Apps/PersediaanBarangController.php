@@ -24,7 +24,7 @@ class PersediaanBarangController extends Controller
     }
 
     public function detail($fc_warehousecode){
-        
+        $fc_warehousecode = base64_decode($fc_warehousecode);
         $data['gudang_mst'] = Warehouse::where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
         return view('apps.persediaan-barang.detail', $data);
         // dd($data);
@@ -130,9 +130,18 @@ class PersediaanBarangController extends Controller
 
     public function datatables_inventory_dexa($fc_stockcode)
     {
-        $data = Invstore::with('stock', 'warehouse')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
-
-        return DataTables::of($data)
+        $data = Invstore::with(['stock', 'warehouse' => function($query) {
+            $query->where('fc_warehousepos', 'INTERNAL');
+        }])
+        ->where('fc_stockcode', $fc_stockcode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+    
+        $filteredData = $data->filter(function ($item) {
+            return $item->warehouse !== null;
+        });
+    
+        return DataTables::of($filteredData)
             ->addIndexColumn()
             ->make(true);
     }
