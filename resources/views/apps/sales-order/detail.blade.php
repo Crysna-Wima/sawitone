@@ -141,7 +141,7 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Piutang</label>
+                                    <label>Masa Piutang</label>
                                     <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }}" readonly>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Hutang</label>
+                                    <label>Piutang</label>
                                     <input type="text" class="form-control" value="{{ $data->customer->fm_memberAP }}" readonly>
                                 </div>
                             </div>

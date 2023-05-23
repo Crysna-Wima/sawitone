@@ -153,8 +153,8 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Masa Hutang</label>
-                                    <input type="text" class="form-control" name="" id="" readonly>
+                                    <label>Masa Piutang</label>
+                                    <input type="text" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -172,8 +172,8 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Hutang</label>
-                                    <input type="text" class="form-control" name="" id="" readonly>
+                                    <label>Piutang</label>
+                                    <input type="text" class="form-control" name="fm_memberAP" id="fm_memberAP" readonly>
                                 </div>
                             </div>
                         </div>

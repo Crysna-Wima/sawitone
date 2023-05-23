@@ -162,15 +162,40 @@
     .content p {
         font-size: .8rem!important;
     }
+
+    #qrcode{
+        height: 0.7cm;
+        width: 0.7cm;
+    }
+
+    #logo{
+        width: 0.7cm;
+    }
+
+    .container-qr{
+        margin-top: -5px;
+    }
+
+    .template-qr{
+        align-content: center;
+        border: 0.5px solid #000;
+        height: 1.1cm;
+        width: 0.7cm;
+        padding: 5px;
+        margin: 15px;
+    }
 </style>
 
 <body>
     @for ($i = 0; $i < $count; $i++)
-    <div class="container" id="qr">
-            <img width="40" height="40" src="data:image/png;base64, {!! base64_encode($qrcode) !!} ">
+    <div class="template-qr">
+        <img id="logo" src="{{ public_path('/assets/img/logo-dexa.png') }}">
+        <div class="container-qr" id="qr">
+            <img id="qrcode" src="data:image/png;base64, {!! base64_encode($qrcode) !!}">
+        </div>
+        <br>
+        <br>
     </div>
-    <br>
-    <br>
     @endfor
 </body>
 

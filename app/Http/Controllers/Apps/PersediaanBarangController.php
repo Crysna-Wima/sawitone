@@ -154,4 +154,15 @@ class PersediaanBarangController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function pdf($fc_warehousecode)
+    {
+        $decode_fc_warehousecode = base64_decode($fc_warehousecode);
+        session(['fc_warehousecode_global' => $decode_fc_warehousecode]);
+        $data['gudang_mst']= Warehouse::where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['gudang_dtl']= Invstore::with('stock')->where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
+        return $pdf->stream();
+    }
 }
