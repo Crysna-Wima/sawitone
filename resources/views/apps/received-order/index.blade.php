@@ -1,12 +1,12 @@
 @extends('partial.app')
-@section('title', 'Received Order')
+@section('title', 'Konfirmasi Penerimaan')
 @section('content')
     <div class="section-body">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Pencarian Delivery Order</h4>
+                        <h4>Pencarian Surat Jalan</h4>
                     </div>
                     <div class="card-body">
                         <div class="form-group">

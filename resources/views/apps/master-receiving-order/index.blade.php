@@ -69,9 +69,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">RONO</th>
+                                                <th scope="col" class="text-center">No. BPB</th>
                                                 <th scope="col" class="text-center">Surat Jalan</th>
-                                                <th scope="col" class="text-center">PONO</th>
+                                                <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -89,9 +89,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">RONO</th>
+                                                <th scope="col" class="text-center">No. BPB</th>
                                                 <th scope="col" class="text-center">Surat Jalan</th>
-                                                <th scope="col" class="text-center">PONO</th>
+                                                <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -109,9 +109,9 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">RONO</th>
+                                                <th scope="col" class="text-center">No. BPB</th>
                                                 <th scope="col" class="text-center">Surat Jalan</th>
-                                                <th scope="col" class="text-center">PONO</th>
+                                                <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>

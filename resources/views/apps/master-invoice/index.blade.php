@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Invoice')
+@section('title', 'Daftar Invoice')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -54,15 +54,15 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Master Invoice</h4>
+                    <h4>Data Invoice</h4>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">Incoming</a>
+                            <a class="nav-link active show" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="true">Hutang</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="outgoing-tab" data-toggle="tab" href="#outgoing" role="tab" aria-controls="outgoing" aria-selected="false">Outgoing</a>
+                            <a class="nav-link" id="outgoing-tab" data-toggle="tab" href="#outgoing" role="tab" aria-controls="outgoing" aria-selected="false">Piutang</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -85,8 +85,8 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Inv No</th>
-                                            <th scope="col" class="text-center">Rono</th>
+                                            <th scope="col" class="text-center">No. Invoice</th>
+                                            <th scope="col" class="text-center">No. BPB</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tgl Terbit</th>
                                             <th scope="col" class="text-center">Tgl Berakhir</th>
@@ -104,8 +104,8 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
-                                            <th scope="col" class="text-center">Inv No</th>
-                                            <th scope="col" class="text-center">Dono</th>
+                                            <th scope="col" class="text-center">No. Invoice</th>
+                                            <th scope="col" class="text-center text-nowrap">No. Surat Jalan</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tgl Terbit</th>
                                             <th scope="col" class="text-center">Tgl Berakhir</th>
@@ -156,14 +156,14 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-6">
                                             <div class="form-group">
-                                                <label>INV NO :</label>
+                                                <label>No. Invoice :</label>
                                                 <span id="fc_invno_outgoing"></span>
                                                 <input type="text" name="fc_invno_outgoing" id="fc_invno_input_outgoing" hidden>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-6">
                                             <div class="form-group">
-                                                <label>DONO :</label>
+                                                <label>No. Surat Jalan :</label>
                                                 <span id="fc_dono_outgoing"></span>
                                             </div>
                                         </div>
@@ -345,14 +345,14 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-6">
                                             <div class="form-group">
-                                                <label>INV NO :</label>
+                                                <label>No. Invoice :</label>
                                                 <span id="fc_invno_incoming"></span>
                                                 <input type="text" name="fc_invno_incoming" id="fc_invno_input" hidden>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-6">
                                             <div class="form-group">
-                                                <label>RONO :</label>
+                                                <label>No. BPB :</label>
                                                 <span id="fc_rono_incoming"></span>
                                             </div>
                                         </div>
@@ -508,7 +508,7 @@
     <div class="modal-dialog modal-xl" style="width:90%" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Receiving Order</h5>
+                <h5 class="modal-title">Data BPB</h5>
             </div>
             <div class="place_alert_cart_stock text-center"></div>
             <form id="form_ttd" autocomplete="off">
@@ -518,10 +518,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">RONO</th>
+                                    <th scope="col" class="text-center">No. BPB</th>
                                     <th scope="col" class="text-center">Surat Jalan</th>
-                                    <th scope="col" class="text-center">PONO</th>
-                                    <th scope="col" class="text-center">Supplier</th>
+                                    <th scope="col" class="text-center">No. PO</th>
+                                    <th scope="col" class="text-center">Legal Status</th>
+                                    <th scope="col" class="text-center">Nama Supplier</th>
                                     <th scope="col" class="text-center">Item</th>
                                     <th scope="col" class="text-center">Tgl Diterima</th>
                                     <th scope="col" class="text-center" style="width: 10%">Action</th>
@@ -653,7 +654,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
             targets: [2, 6]
@@ -673,11 +674,10 @@
                 data: 'fc_pono'
             },
             {
-                data: null,
-                render: function(data, type, row) {
-                    return row.pomst.supplier.fc_supplierlegalstatus + ' ' + row.pomst.supplier
-                        .fc_suppliername1;
-                }
+                data: 'pomst.supplier.fc_supplierlegalstatus'
+            },
+            {
+                data: 'pomst.supplier.fc_suppliername1',
             },
             {
                 data: 'pomst.fn_podetail'
@@ -698,7 +698,7 @@
                 $(row).show();
             }
 
-            $('td:eq(7)', row).html(`
+            $('td:eq(8)', row).html(`
                     <a href="/apps/master-invoice/create/${fc_rono}" class="btn btn-warning">Pilih</a>
                 `);
         },
