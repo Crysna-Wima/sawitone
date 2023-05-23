@@ -90,7 +90,6 @@ class PersediaanBarangController extends Controller
             ->make(true);
     }
 
-
     public function datatables_gudanglain()
     {
         $data = Warehouse::where('fc_branch', auth()->user()->fc_branch)
@@ -110,9 +109,28 @@ class PersediaanBarangController extends Controller
             ->make(true);
     }
 
+    public function datatables_semua()
+    {
+        $data = Invstore::with('stock', 'warehouse')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->groupBy('fc_stockcode')
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('sum_quantity', function ($row) {
+                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+                    ->sum('fn_quantity');
+
+                return $sumQuantity;
+            })
+            ->make(true);
+    }
+
     public function datatables_inventory_dexa($fc_stockcode)
     {
-        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Invstore::with('stock', 'warehouse')->where('fc_stockcode', $fc_stockcode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

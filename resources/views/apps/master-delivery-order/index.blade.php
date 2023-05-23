@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Delivery Order')
+@section('title', 'Daftar Surat Jalan')
 @section('css')
     <style>
         #tb_wrapper .row:nth-child(2) {
@@ -44,7 +44,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Master Delivery Order</h4>
+                        <h4>Data Surat Jalan</h4>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -637,11 +637,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 6, 7]
+                targets: [0, 6]
             },
             {
                 className: 'text-nowrap',
-                targets: [3]
+                targets: [3, 7]
             },
         ],
         columns: [{
@@ -718,11 +718,11 @@
                 },
                 columnDefs: [{
                         className: 'text-center',
-                        targets: [0, 6, 7]
+                        targets: [0, 6]
                     },
                     {
                         className: 'text-nowrap',
-                        targets: [3]
+                        targets: [3, 7]
                     },
                 ],
                 columns: [{

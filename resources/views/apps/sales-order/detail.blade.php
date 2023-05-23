@@ -428,6 +428,10 @@
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Barang</th>
                                     <th scope="col" class="text-center">Nama Barang</th>
+                                    <th scope="col" class="text-center">Brand</th>
+                                    <th scope="col" class="text-center">Sub Group</th>
+                                    <th scope="col" class="text-center">Tipe Stock</th>
+                                    <th scope="col" class="text-center">Satuan</th>
                                     <th scope="col" class="text-center">Expired Date</th>
                                     <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">Qty</th>
@@ -705,6 +709,18 @@
                 },
                 {
                     data: 'stock.fc_namelong'
+                },
+                {
+                    data: 'stock.fc_brand'
+                },
+                {
+                    data: 'stock.fc_subgroup'
+                },
+                {
+                    data: 'stock.fc_typestock2'
+                },
+                {
+                    data: 'stock.fc_namepack'
                 },
                 {
                     data: 'fd_expired',
