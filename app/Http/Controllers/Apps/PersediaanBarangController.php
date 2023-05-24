@@ -131,16 +131,19 @@ class PersediaanBarangController extends Controller
         ->where('fc_warehousepos', 'EXTERNAL')
         ->get();
 
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->addColumn('sum_quantity', function ($row) {
-                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
-                    ->where('fc_warehousecode', $row->fc_warehousecode)
-                    ->sum('fn_quantity');
-                
-                return $sumQuantity;
-            })
-            ->make(true);
+    return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('sum_quantity', function ($row) {
+            $groupedInvstore = Invstore::where('fc_warehousecode', $row->fc_warehousecode)
+                ->selectRaw("SUBSTRING(fc_barcode, 1, 40) as grouped_barcode, COUNT(*) as count")
+                ->groupBy('grouped_barcode')
+                ->get();
+
+            $sumQuantity = $groupedInvstore->count();
+            
+            return $sumQuantity;
+        })
+        ->make(true);
     }
 
     public function datatables_semua()
