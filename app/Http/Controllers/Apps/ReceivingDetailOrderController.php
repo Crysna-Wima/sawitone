@@ -124,6 +124,7 @@ class ReceivingDetailOrderController extends Controller
             $request->all(),
             [
                 'fc_stockcode' => 'required',
+                'fc_barcode' => 'required',
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
                 // 'fd_expired_date' => 'required',
@@ -155,6 +156,7 @@ class ReceivingDetailOrderController extends Controller
             'fc_branch' => auth()->user()->fc_branch,
             'fc_rono' => auth()->user()->fc_userid,
             'fc_stockcode' => $request->fc_stockcode,
+            'fc_barcode' => $request->fc_barcode,
             'fc_namepack' => $request->fc_namepack,
             'fn_qty_ro' => $request->fn_qty_ro,
             'fd_expired_date' => $request->fd_expired_date,
