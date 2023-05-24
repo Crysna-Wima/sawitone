@@ -178,6 +178,7 @@
                                 <div class="form-group required">
                                     <label>Kode Barang</label>
                                     <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly hidden>
                                         <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
@@ -760,6 +761,7 @@
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
                 $('#fc_stockcode').val(data.fc_stockcode);
+                $('#fc_barcode'). val(data.fc_barcode);
 
                 $("#modal_stock").modal('hide');
             },

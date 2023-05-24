@@ -58,6 +58,7 @@ class SalesOrderDetailController extends Controller
         $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
             'fc_stockcode' => 'required',
+            'fc_barcode' => 'required',
             'fn_so_qty' => 'required|integer|min:1',
             'fn_so_bonusqty' => 'nullable|integer|min:0',
         ], [
@@ -119,6 +120,7 @@ class SalesOrderDetailController extends Controller
             'fc_sono' => auth()->user()->fc_userid,
             'fn_sorownum' => $fn_sorownum,
             'fc_stockcode' => $stock->fc_stockcode,
+            'fc_barcode' => $request->fc_barcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_so_qty' => $request->fn_so_qty,
             'fn_so_bonusqty' => $request->fn_so_bonusqty,

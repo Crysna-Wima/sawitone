@@ -30,6 +30,7 @@ class PurchaseOrderDetailController extends Controller
         $validator = Validator::make($request->all(), [
             // 'fc_stockcode' => 'required',
             'fc_stockcode' => 'required',
+            'fc_barcode' => 'required',
             'fn_po_qty' => 'required|integer|min:1',
             'fm_po_price' => 'required',
         ], [
@@ -89,6 +90,7 @@ class PurchaseOrderDetailController extends Controller
             'fc_pono' => auth()->user()->fc_userid,
             'fn_porownum' => $fn_porownum,
             // 'fc_stockcode' => $stock->fc_stockcode,
+            'fc_barcode' => $request->fc_barcode,
             'fc_stockcode' => $request->fc_stockcode,
             'fc_namepack' => $stock->fc_namepack,
             'fn_po_qty' => $request->fn_po_qty,
