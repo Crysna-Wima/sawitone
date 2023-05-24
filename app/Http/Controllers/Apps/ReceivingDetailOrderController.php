@@ -151,10 +151,17 @@ class ReceivingDetailOrderController extends Controller
 
         $request->request->add(['fc_rono' => auth()->user()->fc_userid]);
 
+        $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+        $fn_rownum = 1;
+        if (!empty($temp_ro_detail)) {
+            $fn_rownum = $temp_ro_detail->fn_rownum + 1;
+        }
+
         $insert_temprodtl = TempRoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_rono' => auth()->user()->fc_userid,
+            'fn_rownum' => $fn_rownum,
             'fc_stockcode' => $request->fc_stockcode,
             'fc_barcode' => $request->fc_barcode,
             'fc_namepack' => $request->fc_namepack,
