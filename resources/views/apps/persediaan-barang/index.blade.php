@@ -272,19 +272,19 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'fc_namelong'
             },
             {
-                data: 'stock.fc_nameshort'
+                data: 'fc_nameshort'
             },
             {
-                data: 'stock.fc_brand'
+                data: 'fc_brand'
             },
             {
-                data: 'stock.fc_subgroup'
+                data: 'fc_subgroup'
             },
             {
-                data: 'stock.fc_typestock2'
+                data: 'fc_typestock2'
             },
             {
                 data: 'sum_quantity',
@@ -296,7 +296,7 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa('${data.fc_stockcode}', '${data.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
                 `);
         },
     });
