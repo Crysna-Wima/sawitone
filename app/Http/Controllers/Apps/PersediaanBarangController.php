@@ -15,6 +15,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\Invstore;
 use App\Models\Warehouse;
 use App\Models\MutasiMaster;
+use App\Models\Stock;
 
 class PersediaanBarangController extends Controller
 {
@@ -71,19 +72,44 @@ class PersediaanBarangController extends Controller
 
     public function datatables_dexa()
     {
-        $data = Invstore::with(['stock', 'warehouse' => function($query) {
-            $query->where('fc_warehousepos', 'INTERNAL');
-        }])
-            ->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-            // ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode) 
-            ->groupBy('fc_stockcode')
-            ->get();
+        // $data = Invstore::with(['stock', 'warehouse' => function($query) {
+        //     $query->where('fc_warehousepos', 'INTERNAL');
+        // }])
+        //     ->where('fc_branch', auth()->user()->fc_branch)
+        //     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        //     // ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode) 
+        //     ->groupBy('fc_stockcode')
+        //     ->get();
+
+        // return DataTables::of($data)
+        //     ->addIndexColumn()
+        //     ->addColumn('sum_quantity', function ($row) {
+        //         if ($row->warehouse === null) {
+        //             return null; // Jika warehouse null, kembalikan nilai null
+        //         }
+                
+        //         $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+        //             ->whereHas('warehouse', function ($query) {
+        //                 $query->where('fc_warehousepos', 'INTERNAL');
+        //             })
+        //             ->sum('fn_quantity');
+                
+        //         return $sumQuantity;
+        //     })
+        //     ->make(true);
+
+        $data = Stock::with('invstore.warehouse')
+        // ->whereHas('invstore.warehouse', function ($query) {
+        //     $query->where('fc_warehousepos', 'INTERNAL');
+        // })
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('sum_quantity', function ($row) {
-                if ($row->warehouse === null) {
+                if ($row->invstore === null) {
                     return null; // Jika warehouse null, kembalikan nilai null
                 }
                 
