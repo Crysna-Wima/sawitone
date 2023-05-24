@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>PO No : {{ $data->fc_pono }}
+                                        <label>No. PO : {{ $data->fc_pono }}
                                         </label>
                                         <input type="text" name="fc_pono" value="{{ $data->fc_pono }}" hidden>
                                     </div>
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button type="submit" class="btn btn-success">Buat RO</button>
+                                    <button type="submit" class="btn btn-success">Buat BPB</button>
                                 </div>
                             </div>
                         </div>

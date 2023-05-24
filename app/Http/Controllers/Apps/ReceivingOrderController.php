@@ -153,7 +153,7 @@ class ReceivingOrderController extends Controller
             return [
                 'status' => 201, // SUCCESS
                 'link' => '/apps/receiving-order',
-                'message' => 'Receiving Order dibatalkan'
+                'message' => 'BPB dibatalkan'
             ];
         } catch (\Exception $e) {
 

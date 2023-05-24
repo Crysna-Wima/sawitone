@@ -252,6 +252,7 @@
                     <th>Satuan</th>
                     <th>Qty</th>
                     <th>Bonus</th>
+                    <th>Catatan</th>
                     <!-- <th>Harga (Rp)</th>
                     <th>Diskon (Rp)</th>
                     <th>Total (Rp)</th> -->
@@ -266,6 +267,7 @@
                             <td>{{ $item->fc_namepack}}</td>
                             <td>{{ $item->fn_so_qty}}</td>
                             <td>{{ $item->fn_so_bonusqty}}</td>
+                            <td>{{ $item->fv_description ?? '-' }}</td>
                             <!-- <td>{{ number_format($item->fm_so_price,0,',','.')}}</td>
                             <td>{{ number_format($item->fm_so_disc,0,',','.')}}</td>
                             <td>{{ number_format($item->fn_so_value,0,',','.')}}</td> -->

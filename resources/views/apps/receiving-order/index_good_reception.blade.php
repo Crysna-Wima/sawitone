@@ -48,7 +48,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">PONO</th>
+                                    <th scope="col" class="text-center">No. PO</th>
                                     <th scope="col" class="text-center">Order</th>
                                     <th scope="col" class="text-center">Expired</th>
                                     <th scope="col" class="text-center">Tipe</th>
@@ -82,7 +82,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        order: [[2, 'desc']],
+        order: [[1, 'desc']],
         ajax: {
             url: "/apps/master-purchase-order/datatables/good_reception/" + fc_suppliercode,
             type: 'GET',

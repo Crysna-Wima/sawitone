@@ -690,7 +690,7 @@
             serverSide: true,
             destroy: true,
             order: [
-                [3, 'asc']
+                [7, 'asc']
             ],
             ajax: {
                 url: "/apps/sales-order/detail/datatables-inventory",

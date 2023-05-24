@@ -146,7 +146,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <label>DONO :</label>
+                                                    <label>No. Surat Jalan :</label>
                                                     <span id="fc_dono"></span>
                                                     <input type="text" name="fc_dono" id="fc_dono_input" hidden>
                                                     <input type="text" name="fc_divisioncode" id="fc_divisioncode_input" hidden>
@@ -438,34 +438,32 @@
                     $('#fn_dodetail_input').val(data.fn_dodetail);
 
                     // set fm_disctotal
-                    $('#fm_disctotal').html(data.fm_disctotal);
+                    $('#fm_disctotal').html("Rp. " + fungsiRupiah(data.fm_disctotal));
                     $("#fm_disctotal").trigger("change");
                     // set fm_disctotal_input
                     $('#fm_disctotal_input').val(data.fm_disctotal);
 
                     // set fm_servpay
-                    $('#fm_servpay').html(data.fm_servpay);
+                    $('#fm_servpay').html("Rp. " + fungsiRupiah(data.fm_servpay));
                     $("#fm_servpay").trigger("change");
                     // set fm_servpay_input
                     $('#fm_servpay_input').val(data.fm_servpay);
 
                     // set fm_netto
-                    $('#fm_netto').html(data.fm_netto);
+                    $('#fm_netto').html("Rp. " + fungsiRupiah(data.fm_netto));
                     $("#fm_netto").trigger("change");
                     // set fm_netto_input
                     $('#fm_netto_input').val(data.fm_netto);
 
                     // set fm_tax
-                    $('#fm_tax').html(data.fm_tax)
+                    $('#fm_tax').html("Rp. " + fungsiRupiah(data.fm_tax));
                     $("#fm_tax").trigger("change");
                     // set fm_tax_input
                     $('#fm_tax_input').val(data.fm_tax);
 
                     // set fm_brutto
-                    $('#fm_brutto').html(
-                        // concat dengan RP
-                        $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data.fm_brutto)
-                    )
+                    $('#fm_brutto').html("Rp. " + fungsiRupiah(data.fm_brutto));
+                    
                     $("#fm_brutto").trigger("change");
                     // set fm_brutto_input
                     $('#fm_brutto_input').val(data.fm_brutto);

@@ -35,7 +35,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -57,7 +57,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>SONO : {{ $data->fc_sono }}
+                                    <label>No. SO : {{ $data->fc_sono }}
                                     </label>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
-                    <h4>Delivery Item</h4>
+                    <h4>Item yang Dikirim</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -354,7 +354,7 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel DO</button>
+        <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel Surat Jalan</button>
         <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
     </div>
 </div>
@@ -647,7 +647,7 @@
                     });
                     location.reload();
                 } else {
-                     setTimeout(function() {
+                    setTimeout(function() {
                         $('#modal_loading').modal('hide');
                     }, 500);
                     iziToast.error({
@@ -789,7 +789,7 @@
             {
                 targets: -1,
                 data: null,
-                defaultContent: '<button class="btn btn-danger btn-sm delete-btn">Hapus Item</button>'
+                defaultContent: '<button class="btn btn-danger btn-sm delete-btn"><i class="fa fa-trash"></i> Hapus Item</button>'
             }
         ],
         columns: [{
@@ -852,7 +852,7 @@
             const item_row = data.fn_rownum;
             // kirim 2 parameter di data-id di button hapus
             $('td:eq(9)', row).html(`
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}">Hapus Item</button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
 
             $('td:eq(5)', row).html(`<i class="${data.fc_status_bonus_do}"></i>`);
@@ -939,14 +939,13 @@
 
                 if (data[0].domst.fm_disctotal) {
                     // fm_disctotal
-                    $('#fm_disctotal').html(data[0].domst.fm_disctotal);
+                    $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].domst.fm_disctotal));
                     $("#fm_disctotal").trigger("change");
                 }
 
-
                 if (data[0].domst.fm_netto != null) {
                     // fm_netto
-                    $('#fm_netto').html(data[0].domst.fm_netto);
+                    $('#fm_netto').html("Rp. " + fungsiRupiah(data[0].domst.fm_netto));
                     $("#fm_netto").trigger("change");
                 }
 
@@ -959,7 +958,7 @@
 
                 // fm_tax
                 if (data[0].domst.fm_tax != null) {
-                    $('#fm_tax').html(data[0].domst.fm_tax)
+                    $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].domst.fm_tax));
                     $("#fm_tax").trigger("change");
                 }
 
@@ -981,7 +980,7 @@
     function click_delete() {
         swal({
                 title: 'Apakah anda yakin?',
-                text: 'Apakah anda yakin akan cancel data DO ini?',
+                text: 'Apakah anda yakin akan cancel data Surat Jalan ini?',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true,
@@ -1030,7 +1029,7 @@
 
         swal({
                 title: 'Apakah anda yakin?',
-                text: 'Apakah anda yakin akan submit data DO ini?',
+                text: 'Apakah anda yakin akan submit data Surat Jalan ini?',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true,

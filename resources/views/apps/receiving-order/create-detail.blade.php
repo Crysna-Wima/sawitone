@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>PO No : {{ $data->fc_pono }}
+                                        <label>No. PO : {{ $data->fc_pono }}
                                         </label>
                                     </div>
                                 </div>
@@ -92,12 +92,7 @@
                                     <div class="form-group">
                                         <label>Tanggal Diterima</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <i class="fas fa-calendar"></i>
-                                                </div>
-                                            </div>
-                                            <input type="text" id="" class="form-control datepicker" name="fd_roarivaldate" value="{{ $ro_master->fd_roarivaldate }}" required readonly>
+                                            <input type="text" id="" class="form-control datepicker" name="fd_roarivaldate" value="{{ date('d-m-Y', strtotime ($ro_master->fd_roarivaldate)) }}" required readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +175,7 @@
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Qty RO</th>
+                                        <th scope="col" class="text-center">Qty BPB</th>
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -192,11 +187,11 @@
             </div>
         </div>
 
-        {{-- TABLE SO PAY --}}
+        {{-- TABLE Item Receiving --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
-                    <h4>Item Receiving</h4>
+                    <h4>Item yang Diterima</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -264,7 +259,7 @@
                     </div>
                 </div>
                 <div class="text-right mb-4">
-                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ base64_encode($data->fc_pono) }}', 'Receiving Order')" class="btn btn-danger mr-2">Cancel RO</button>
+                    <button type="button" onclick="delete_action('/apps/receiving-order/cancel_ro/{{ base64_encode($data->fc_pono) }}', 'BPB')" class="btn btn-danger mr-2">Cancel BPB</button>
                     <button class="btn btn-success mr-2">Submit</button>
                 </div>
             </form>
@@ -605,6 +600,7 @@
                 },
                 {
                     data: 'fd_expired_date',
+                    render: formatTimestamp
                 },
                 {
                     data: null
@@ -615,7 +611,7 @@
                 var url_delete = '/apps/receiving-order/create/delete/temprodetail/' + data.fn_rownum;
                 $('td:eq(7)', row).html(`
                 <button class="btn btn-danger btn-sm"  onclick="delete_item(
-                    '${url_delete}','Item Receiving')"><i class="fa fa-trash"></i> Hapus Item</button>
+                    '${url_delete}','Item yang Diterima')"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
             },
         });

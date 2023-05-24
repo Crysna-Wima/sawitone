@@ -28,23 +28,23 @@ class ReceivedOrderController extends Controller
         return view('apps.received-order.index');
     }
 
-    public function cari_do($fc_dono){
-        $decode_fc_dono = base64_decode($fc_dono);
-        // dd($decode_fc_dono);
-        $do_master = DoMaster::where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        if(empty($do_master)){
-            return [
-                'status' => 300,
-                'message' => 'No Delivery Order Tidak ditemukan'
-            ];
-        }
+    // public function cari_do($fc_dono){
+    //     $decode_fc_dono = base64_decode($fc_dono);
+    //     // dd($decode_fc_dono);
+    //     $do_master = DoMaster::where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+    //     if(empty($do_master)){
+    //         return [
+    //             'status' => 300,
+    //             'message' => 'No Delivery Order Tidak ditemukan'
+    //         ];
+    //     }
 
-        return [
-            'status' => 201,
-            'link' => '/apps/received-order/detail/' . $fc_dono,
-            'message' => 'DO ditemukan, tunggu sebentar anda akan dialihkan ke halaman Detail',
-        ];
-    }
+    //     return [
+    //         'status' => 201,
+    //         'link' => '/apps/received-order/detail/' . $fc_dono,
+    //         'message' => 'DO ditemukan, tunggu sebentar anda akan dialihkan ke halaman Detail',
+    //     ];
+    // }
 
     public function detail($fc_dono){
         $decode_fc_dono = base64_decode($fc_dono);
@@ -71,7 +71,7 @@ class ReceivedOrderController extends Controller
         return [
             'status' => 201,
             'link' => '/apps/received-order',
-            'message' => 'Data DO berhasil diterima'
+            'message' => 'Surat Jalan berhasil diterima'
         ];
     }
 }

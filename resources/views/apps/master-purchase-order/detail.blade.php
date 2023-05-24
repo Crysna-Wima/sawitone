@@ -48,7 +48,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>PO No : {{ $po_master->fc_pono }}
+                                        <label>No. PO : {{ $po_master->fc_pono }}
                                         </label>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
             <div class="col-12 col-md-12 col-lg-12 place_detail">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Receiving Order</h4>
+                        <h4>BPB</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -200,8 +200,8 @@
                                     <thead style="white-space: nowrap">
                                         <tr>
                                             <th scope="col" class="text-center">No.</th>
-                                            <th scope="col" class="text-center">RONO</th>
-                                            <th scope="col" class="text-center">Tgl RO</th>
+                                            <th scope="col" class="text-center">No. BPB</th>
+                                            <th scope="col" class="text-center">Tgl BPB</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Action</th>

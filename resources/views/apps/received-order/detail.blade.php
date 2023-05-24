@@ -37,7 +37,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Umum</h4>
+                        <h4>Informasi Umum</h4>
                         <div class="card-header-action">
                             <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i
                                     class="fas fa-minus"></i></a>
@@ -49,8 +49,8 @@
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <label> <b>Order</b> : {{ \Carbon\Carbon::parse($data->fd_dodate)->format('d/m/Y') }}</label><br>
                                     <label> <b>Expired</b> : {{ \Carbon\Carbon::parse($data->somst->fd_soexpired)->format('d/m/Y') }}</label><br>
-                                    <label> <b>SO Number</b> : {{ $data->fc_sono }}</label><br>
-                                    <label> <b>DO Number</b> : {{ $data->fc_dono }}</label><br>
+                                    <label> <b>Nomor SO</b> : {{ $data->fc_sono }}</label><br>
+                                    <label> <b>Nomor Surat Jalan</b> : {{ $data->fc_dono }}</label><br>
                                     <hr>
                                     <div class="form-group">
                                         <label>Customer</label>
@@ -96,7 +96,6 @@
                                                 <th scope="col" class="text-center">Batch</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Jumlah</th>
-                                                <th scope="col" class="text-center">Status</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -121,7 +120,7 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                        <input type="text" class="form-control datepicker" name="fd_doarivaldate" id="fd_doarivaldate" value="{{ \Carbon\Carbon::parse( $data->fd_doarivaldate )->format('Y-m-d') }}" @if ($data->fc_dostatus == 'R') readonly @endif>
+                                        <input type="text" class="form-control datepicker" name="fd_doarivaldate" id="fd_doarivaldate" value="{{ \Carbon\Carbon::parse($data->fd_doarivaldate)->format('d-m-Y') }}"  @if ($data->fc_dostatus == 'R') readonly @endif>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
@@ -164,7 +163,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0,1,3,4,5,6]
+            targets: [0,1,3,4,5]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -181,13 +180,11 @@
                 data: 'fc_batch'
             },
             {
-                data: 'fd_expired'
+                data: 'fd_expired',
+                render: formatTimestamp
             },
             {
                 data: 'fn_qty_do'
-            },
-            {
-                data: 'fc_status'
             },
         ],
     });

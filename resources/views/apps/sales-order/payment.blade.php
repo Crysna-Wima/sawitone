@@ -171,7 +171,7 @@
                             @if ($data->fm_servpay == 0 && empty($data->fc_sotransport))
                                 <button type="submit" class="btn btn-success">Save</button>
                             @else
-                                <button type="submit" class="btn btn-success">Edit</button>
+                                <button type="submit" class="btn btn-warning">Edit</button>
                             @endif
                         </div>
                     </form>

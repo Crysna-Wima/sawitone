@@ -48,7 +48,7 @@
                             <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>SONO : {{ $data->fc_sono }}
+                                        <label>No. SO : {{ $data->fc_sono }}
                                         </label>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Masa Hutang</label>
+                                        <label>Masa Piutang</label>
                                         <input type="text" class="form-control"
                                             value="{{ $data->customer->fn_memberAgingAP }}" readonly>
                                     </div>
@@ -168,7 +168,7 @@
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
-                                        <label>Hutang</label>
+                                        <label>Piutang</label>
                                         <input type="text" class="form-control"
                                             value="{{ $data->customer->fm_memberAP }}" readonly>
                                     </div>
@@ -210,7 +210,7 @@
         </div>
         <div class="button text-right mb-4">
             <a href="/apps/delivery-order"><button type="button" class="btn btn-info mr-2">Back</button></a>
-            <button type="button" onclick="insert_do()" class="btn btn-primary mr-2">Buat DO</button>
+            <button type="button" onclick="insert_do()" class="btn btn-primary mr-2">Buat Surat Jalan</button>
         </div>
     </div>
 @endsection

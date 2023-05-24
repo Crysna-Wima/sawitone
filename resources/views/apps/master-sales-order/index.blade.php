@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Master Sales Order')
+@section('title', 'Daftar Sales Order')
 @section('css')
     <style>
         .text-secondary {
@@ -36,7 +36,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Data Master Sales Order</h4>
+                        <h4>Data Sales Order</h4>
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -69,7 +69,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
+                                                <th scope="col" class="text-center">No. SO</th>
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
@@ -89,7 +89,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
+                                                <th scope="col" class="text-center">No. SO</th>
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
@@ -109,7 +109,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
+                                                <th scope="col" class="text-center">No. SO</th>
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
@@ -129,7 +129,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
+                                                <th scope="col" class="text-center">No. SO</th>
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
@@ -149,7 +149,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Sono</th>
+                                                <th scope="col" class="text-center">No. SO</th>
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>

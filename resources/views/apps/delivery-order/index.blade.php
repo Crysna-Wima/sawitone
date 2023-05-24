@@ -22,7 +22,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Sono</th>
+                                    <th scope="col" class="text-center">No. SO</th>
                                     <th scope="col" class="text-center">Order</th>
                                     <th scope="col" class="text-center">Expired</th>
                                     <th scope="col" class="text-center">Tipe</th>

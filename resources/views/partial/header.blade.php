@@ -66,13 +66,10 @@ use App\Helpers\App;
 <div class="main-sidebar">
   <aside id="sidebar-wrapper">
     <div class="sidebar-brand mb-4">
-      {{-- <a href="index.html">DEXA</a> --}}
-      <a href="index.html">
+      {{-- <a href="/dashboard">DEXA</a> --}}
+      <a href="/dashboard">
         <img src="{{ asset('/assets/img/logo-dexa.png') }}" alt="logo" width="160" class="mb-4 mt-3">
       </a>
-    </div>
-    <div class="sidebar-brand sidebar-brand-sm">
-      <a href="index.html">DEXA</a>
     </div>
     <?php
     $url_menu = Request::segment(1);

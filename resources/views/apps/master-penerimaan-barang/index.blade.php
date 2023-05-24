@@ -159,7 +159,7 @@
             serverSide: true,
             destroy: true,
             order: [
-                [3, 'desc']
+                [1, 'desc']
             ],
             ajax: {
                 url: "/apps/master-penerimaan-barang/datatables/master-transit",

@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>PO No : {{ $data->fc_pono }}
+                                    <label>No. PO : {{ $data->fc_pono }}
                                     </label>
                                 </div>
                             </div>
@@ -172,9 +172,9 @@
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
-                    <h4>Receiving Order</h4>
+                    <h4>BPB</h4>
                     <div class="card-header-action">
-                        <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan RO</button></a>
+                        <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan BPB</button></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -184,8 +184,8 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No.</th>
-                                        <th scope="col" class="text-center">RONO</th>
-                                        <th scope="col" class="text-center">Tgl RO</th>
+                                        <th scope="col" class="text-center">No. BPB</th>
+                                        <th scope="col" class="text-center">Tgl BPB</th>
                                         <th scope="col" class="text-center">Item</th>
                                         <th scope="col" class="text-center">Status</th>
                                         <th scope="col" class="text-center">Action</th>

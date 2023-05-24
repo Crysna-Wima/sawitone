@@ -47,7 +47,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">GR NO</th>
+                                    <th scope="col" class="text-center">No. GR</th>
                                     <th scope="col" class="text-center">Supplier</th>
                                     <th scope="col" class="text-center">Tgl Penerimaan</th>
                                     <th scope="col" class="text-center">Jumlah</th>
@@ -71,7 +71,7 @@
             serverSide: true,
             destroy: true,
             order: [
-                [3, 'desc']
+                [1, 'desc']
             ],
             ajax: {
                 url: "/apps/master-penerimaan-barang/datatables",
