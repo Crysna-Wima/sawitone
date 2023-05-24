@@ -98,27 +98,19 @@ class PersediaanBarangController extends Controller
         //     })
         //     ->make(true);
 
-        $data = Stock::with('invstore.warehouse')
-        // ->whereHas('invstore.warehouse', function ($query) {
-        //     $query->where('fc_warehousepos', 'INTERNAL');
-        // })
-        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
-
+        $data = Stock::with(['invstore' => function ($query) {
+            $query->whereHas('warehouse', function ($query) {
+                $query->where('fc_warehousepos', 'INTERNAL');
+            });
+        }, 'invstore.warehouse'])
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+    
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('sum_quantity', function ($row) {
-                if ($row->invstore === null) {
-                    return null; // Jika warehouse null, kembalikan nilai null
-                }
-                
-                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
-                    ->whereHas('warehouse', function ($query) {
-                        $query->where('fc_warehousepos', 'INTERNAL');
-                    })
-                    ->sum('fn_quantity');
-                
+                $sumQuantity = $row->invstore->sum('fn_quantity');
                 return $sumQuantity;
             })
             ->make(true);
