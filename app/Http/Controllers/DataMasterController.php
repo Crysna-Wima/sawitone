@@ -24,7 +24,7 @@ use App\Models\TransaksiType;
 use App\Models\Warehouse;
 use Yajra\DataTables\DataTables;
 
-class DataMasterCOntroller extends Controller
+class DataMasterController extends Controller
 {
     public function get_data_all($model)
     {
