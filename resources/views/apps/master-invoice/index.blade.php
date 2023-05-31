@@ -490,7 +490,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="number" id="fm_valuepayment" class="form-control" name="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id)" required>
+                                    <input type="text" id="fm_valuepayment_incoming" class="form-control" name="fm_valuepayment" onkeyup="return onkeyupRupiah(this.id)" required>
                                 </div>
                             </div>
                         </div>
@@ -572,14 +572,14 @@
 
                     //calculation
                     $('#fn_invdetail_outgoing').html(data.fn_invdetail);
-                    $('#fm_disctotal_outgoing').html(data.fm_disctotal);
-                    $('#fm_netto_incoming').html(data.fm_netto);
-                    $('#fm_servpay_outgoing').html(data.fm_servpay);
-                    $('#fm_tax_outgoing').html(data.fm_tax);
-                    $('#fm_brutto_outgoing').html(data.fm_brutto);
-                    $('#fm_paidvalue_outgoing').html(data.fm_paidvalue);
-                    $('#sisa_outgoing').html(data.fm_brutto - data.fm_paidvalue);
-                    $('#fm_valuepayment_outgoing').val(data.fm_brutto - data.fm_paidvalue)
+                    $('#fm_disctotal_outgoing').html("Rp. " + fungsiRupiah(data.fm_disctotal));
+                    $('#fm_netto_incoming').html("Rp. " + fungsiRupiah(data.fm_netto));
+                    $('#fm_servpay_outgoing').html("Rp. " + fungsiRupiah(data.fm_servpay));
+                    $('#fm_tax_outgoing').html("Rp. " + fungsiRupiah(data.fm_tax));
+                    $('#fm_brutto_outgoing').html("Rp. " + fungsiRupiah(data.fm_brutto));
+                    $('#fm_paidvalue_outgoing').html("Rp. " + fungsiRupiah(data.fm_paidvalue));
+                    $('#sisa_outgoing').html("Rp. " + fungsiRupiah(data.fm_brutto - data.fm_paidvalue));
+                    $('#fm_valuepayment_outgoing').val(fungsiRupiah(data.fm_brutto - data.fm_paidvalue));
                 }
 
 
@@ -621,14 +621,14 @@
 
                     //calculation
                     $('#fn_invdetail_incoming').html(data.fn_invdetail);
-                    $('#fm_disctotal_incoming').html(data.fm_disctotal);
-                    $('#fm_netto_incoming').html(data.fm_netto);
-                    $('#fm_servpay_incoming').html(data.fm_servpay);
-                    $('#fm_tax_incoming').html(data.fm_tax);
-                    $('#fm_brutto_incoming').html(data.fm_brutto);
-                    $('#fm_paidvalue_incoming').html(data.fm_paidvalue);
-                    $('#sisa').html(data.fm_brutto - data.fm_paidvalue);
-                    $('#fm_valuepayment').val(data.fm_brutto - data.fm_paidvalue)
+                    $('#fm_disctotal_incoming').html("Rp. " + fungsiRupiah(data.fm_disctotal));
+                    $('#fm_netto_incoming').html("Rp. " + fungsiRupiah(data.fm_netto));
+                    $('#fm_servpay_incoming').html("Rp. " + fungsiRupiah(data.fm_servpay));
+                    $('#fm_tax_incoming').html("Rp. " + fungsiRupiah(data.fm_tax));
+                    $('#fm_brutto_incoming').html("Rp. " + fungsiRupiah(data.fm_brutto));
+                    $('#fm_paidvalue_incoming').html("Rp. " + fungsiRupiah(data.fm_paidvalue));
+                    $('#sisa').html("Rp. " + fungsiRupiah(data.fm_brutto - data.fm_paidvalue));
+                    $('#fm_valuepayment_incoming').val(fungsiRupiah(data.fm_brutto - data.fm_paidvalue));
                 }
             },
             error: function() {
