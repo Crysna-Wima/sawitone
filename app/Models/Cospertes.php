@@ -13,7 +13,7 @@ class Cospertes extends Model
 
     protected static $logAttributes = ["*"];
     protected $table = 't_cprr';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'fc_cprrcode';
     protected $guarded = ['type'];
 
     public function CprrCustomer(){
