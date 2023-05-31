@@ -166,15 +166,15 @@
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
          { data: 'fc_divisioncode' },
-         { data: 'branch.fv_description' },
+         { data: 'fc_branch' },
          { data: 'fc_cprrcode' },
          { data: 'fc_cprrname' },
          { data: 'fv_description' },
          { data: null },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-menu/detail/" + data.id;
-         var url_delete = "/data-master/master-menu/delete/" + data.id;
+         var url_edit   = "/data-master/master-cprr/detail/" + data.fc_cprrcode;
+         var url_delete = "/data-master/master-cprr/delete/" + data.fc_cprrcode;
 
          $('td:eq(6)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
@@ -184,7 +184,7 @@
    });
 
    function edit(url){
-      edit_action(url, 'Edit Menu');
+      edit_action(url, 'Edit Data Master CPRR');
       $("#type").val('update');
    }
 

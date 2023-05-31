@@ -21,8 +21,15 @@ class MasterCprrController extends Controller
         return view('data-master.master-cprr.index');
     }
 
+    public function detail($fc_cprrcode){
+        return Cospertes::where([
+            'fc_cprrcode' => $fc_cprrcode,
+        ])->where('fc_branch', auth()->user()->fc_branch)->first();
+        // dd($fc_cprrcode);
+    }
+
     public function datatables(){
-        $data = Cospertes::where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+        $data = Cospertes::where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
@@ -69,12 +76,20 @@ class MasterCprrController extends Controller
      }
 
      public function delete($fc_cprrcode){
-        Cospertes::where([
+        $delete = Cospertes::where([
             'fc_cprrcode' => $fc_cprrcode,
         ])->delete();
-        return response()->json([
-            'status' => 200,
-            'message' => "Data berhasil dihapus"
-        ]);
+
+        if($delete){
+            return response()->json([
+                'status' => 200,
+                'message' => "Data berhasil dihapus"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => "Data gagal dihapus"
+            ]);
+        }
     }
 }

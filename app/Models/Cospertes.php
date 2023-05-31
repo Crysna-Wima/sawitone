@@ -14,7 +14,9 @@ class Cospertes extends Model
     protected static $logAttributes = ["*"];
     protected $table = 't_cprr';
     protected $primaryKey = 'fc_cprrcode';
+    public $incrementing = false;
     protected $guarded = ['type'];
+    protected $appends = [];
 
     public function CprrCustomer(){
         return $this->hasMany(CprrCustomer::class,'fc_cprrcode','fc_cprrcode')->withTrashed();
