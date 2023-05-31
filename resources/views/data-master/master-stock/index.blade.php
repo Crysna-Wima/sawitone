@@ -271,9 +271,9 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required">
+                            <div class="form-groupd">
                                 <label>Detail CAT Number</label>
-                                <input type="text" class="form-control required-field" name="fc_catnumber" id="fc_catnumber">
+                                <input type="text" class="form-control" name="fc_catnumber" id="fc_catnumber">
                             </div>
                         </div>
                         <div class="col-12 col-md-3 col-lg-3">
