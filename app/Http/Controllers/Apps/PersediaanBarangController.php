@@ -140,18 +140,29 @@ class PersediaanBarangController extends Controller
 
     public function datatables_semua()
     {
-        $data = Invstore::with('stock', 'warehouse')
-            ->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-            ->groupBy('fc_stockcode')
-            ->get();
+        // $data = Invstore::with('stock', 'warehouse')
+        //     ->where('fc_branch', auth()->user()->fc_branch)
+        //     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        //     ->groupBy('fc_stockcode')
+        //     ->get();
 
+        // return DataTables::of($data)
+        //     ->addIndexColumn()
+        //     ->addColumn('sum_quantity', function ($row) {
+        //         $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
+        //             ->sum('fn_quantity');
+
+        //         return $sumQuantity;
+        //     })
+        //     ->make(true);
+        $data = Stock::where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+    
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('sum_quantity', function ($row) {
-                $sumQuantity = Invstore::where('fc_stockcode', $row->fc_stockcode)
-                    ->sum('fn_quantity');
-
+                $sumQuantity = $row->invstore->sum('fn_quantity');
                 return $sumQuantity;
             })
             ->make(true);
