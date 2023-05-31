@@ -134,6 +134,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/delete/{fc_stockcode}/{fc_barcode}','DataMaster\MasterStockController@delete');
         });
 
+        Route::prefix('master-cprr')->group(function () {
+            Route::get('/','DataMaster\MasterCprrController@index');
+            Route::get('/datatables','DataMaster\MasterCprrController@datatables');
+            Route::post('/store-update','DataMaster\MasterCprrController@store_update');
+            Route::delete('/delete/{fc_cprrcode}','DataMaster\MasterCprrController@delete');
+        });
+
         Route::prefix('master-warehouse')->group(function () {
             Route::get('/','DataMaster\MasterWarehouseController@index');
             Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}','DataMaster\MasterWarehouseController@detail');

@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\DataMaster;
+
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\Convert;
+use App\Helpers\NoDocument;
+
+use DataTables;
+use Carbon\Carbon;
+use File;
+
+use App\Models\Cospertes;
+
+class MasterCprrController extends Controller
+{
+    public function index(){
+        return view('data-master.master-cprr.index');
+    }
+
+    public function datatables(){
+        $data = Cospertes::where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
+
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function store_update(request $request){
+        $validator = Validator::make($request->all(), [
+             'fc_cprrcode' => 'required|unique:t_cprr',
+             'fc_cprrname' => 'required',
+         ]);
+ 
+         if($validator->fails()) {
+             return [
+                 'status' => 300,
+                 'message' => $validator->errors()->first()
+             ];
+         }
+ 
+         $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
+         if(empty($request->type)){
+             $cek_data = Cospertes::where([
+                 'fc_cprrcode' => $request->fc_cprrcode,
+                 'fc_cprrname' => $request->fc_cprrname,
+             ])->withTrashed()->count();
+ 
+             if($cek_data > 0){
+                 return [
+                     'status' => 300,
+                     'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
+                 ];
+             }
+         }
+
+         Cospertes::updateOrCreate([
+             'fc_cprrcode' => $request->fc_cprrcode,
+             'fc_cprrname' => $request->fc_cprrname,
+         ], $request->all());
+ 
+         return [
+             'status' => 200, // SUCCESS
+             'message' => 'Data berhasil disimpan'
+         ];
+     }
+
+     public function delete($fc_cprrcode){
+        Cospertes::where([
+            'fc_cprrcode' => $fc_cprrcode,
+        ])->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => "Data berhasil dihapus"
+        ]);
+    }
+}
