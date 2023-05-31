@@ -86,6 +86,7 @@ class MutasiBarangController extends Controller
             'fc_operator' => auth()->user()->fc_userid,
             'fd_date_byuser' => $request->fd_date_byuser,
             'fc_type_mutation' => $request->fc_type_mutation,
+            'fc_sono' => $request->fc_sono,
             'fc_startpoint_code' => $request->fc_startpoint,
             'fc_destination_code' => $request->fc_destination,
        ]);

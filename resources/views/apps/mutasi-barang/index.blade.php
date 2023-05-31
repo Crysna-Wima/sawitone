@@ -31,7 +31,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -60,8 +60,7 @@
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" id="fd_date_byuser" class="form-control datepicker"
-                                                name="fd_date_byuser" required>
+                                            <input type="text" id="fd_date_byuser" class="form-control datepicker" name="fd_date_byuser" required>
                                         </div>
                                     </div>
                                 </div>
@@ -69,23 +68,34 @@
                                     <div class="form-group required">
                                         <label>Jenis Mutasi</label>
                                         @if (empty($data->fc_type_mutation))
-                                            <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
-                                                <option value="" selected>- Pilih -</option>
-                                                <option value="INTERNAL">INTERNAL</option>
-                                                <option value="EKSTERNAL">EKSTERNAL</option>
-                                            </select>
+                                        <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
+                                            <option value="" selected>- Pilih -</option>
+                                            <option value="INTERNAL">INTERNAL</option>
+                                            <option value="EKSTERNAL">EKSTERNAL</option>
+                                        </select>
                                         @else
-                                            <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
-                                                <option value="{{ $data->fc_type_mutation }}" selected>
+                                        <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
+                                            <option value="{{ $data->fc_type_mutation }}" selected>
                                                 -- {{ $data->fc_type_mutation }} --
-                                                </option>
-                                                <option value="INTERNAL">INTERNAL</option>
-                                                <option value="EKSTERNAL">EKSTERNAL</option>
-                                            </select>
+                                            </option>
+                                            <option value="INTERNAL">INTERNAL</option>
+                                            <option value="EKSTERNAL">EKSTERNAL</option>
+                                        </select>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Cari SO CPRR</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
+                                            <div class="input-group-append">
+                                                <button id="unclick" class="btn btn-primary" onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group required">
                                         <label>Lokasi Awal</label>
                                         <div class="input-group mb-3">
@@ -96,7 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group required">
                                         <label>Lokasi Tujuan</label>
                                         <div class="input-group mb-3">
@@ -108,7 +118,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 text-right">
-                                    <button type="submit" class="btn btn-success">Buat Mutasi</button>
+                                    <button type="submit" id="buat" class="btn btn-success">Buat Mutasi</button>
                                 </div>
                             </div>
                         </div>
@@ -142,15 +152,13 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Awal</label>
-                                    <textarea type="text" name="fc_warehouseaddress_berangkat" class="form-control" id="fc_warehouseaddress_berangkat"
-                                        data-height="76" readonly></textarea>
+                                    <textarea type="text" name="fc_warehouseaddress_berangkat" class="form-control" id="fc_warehouseaddress_berangkat" data-height="76" readonly></textarea>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Tujuan</label>
-                                    <textarea type="text" name="fc_warehouseaddress_tujuan" class="form-control" id="fc_warehouseaddress_tujuan"
-                                        data-height="76" readonly></textarea>
+                                    <textarea type="text" name="fc_warehouseaddress_tujuan" class="form-control" id="fc_warehouseaddress_tujuan" data-height="76" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -238,26 +246,61 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_so" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Sales Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_so" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. SO</th>
+                                    <th scope="col" class="text-center">Tanggal</th>
+                                    <th scope="col" class="text-center">Expired</th>
+                                    <th scope="col" class="text-center">Tipe</th>
+                                    <th scope="col" class="text-center">Customer</th>
+                                    <th scope="col" class="text-center">Item</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
-
     // change value fc_type_mutation
-   
+
     function click_modal_lokasi_awal() {
-        
+
         if ($('#fc_type_mutation').val() === '') {
             swal(
                 'Perhatian',
                 'Pilih Jenis Mutasi Terlebih Dahulu',
                 'warning'
             )
-        }else{
+        } else {
             $('#modal_lokasi_awal').modal('show');
-        table_warehouse_awal();
+            table_warehouse_awal();
         }
-        
+
     }
 
     function click_modal_lokasi_tujuan() {
@@ -267,11 +310,88 @@
                 'Pilih Jenis Mutasi Terlebih Dahulu',
                 'warning'
             )
-        }else{
+        } else {
             $('#modal_lokasi_tujuan').modal('show');
             table_warehouse_tujuan();
         }
-      
+
+    }
+
+    function click_modal_so() {
+        $('#modal_so').modal('show');
+        table_so();
+    }
+
+    $("#fc_type_mutation").change(function(){
+        if ($('#fc_type_mutation').val() === 'INTERNAL') {
+            $('#unclick' ).attr( 'disabled', true );
+        } else {
+            $('#unclick' ).attr( 'disabled', false );
+        }
+    });
+
+    function get_sono($fc_sono) {
+        $('#fc_sono_input').val($fc_sono);
+        $('#modal_so').modal('hide');
+    }
+
+    function table_so() {
+        var tb = $('#tb_so').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            order: [
+                [1, 'desc']
+            ],
+            ajax: {
+                url: '/apps/master-sales-order/datatables',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 6, 7]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [3]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_sono'
+                },
+                {
+                    data: 'fd_sodatesysinput',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fd_soexpired',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fc_sotype'
+                },
+                {
+                    data: 'customer.fc_membername1'
+                },
+                {
+                    data: 'fn_sodetail'
+                },
+                {
+                    data: null
+                },
+            ],
+
+            rowCallback: function(row, data) {
+                var fc_sono = window.btoa(data.fc_sono);
+                $('td:eq(7)', row).html(`
+                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
+            }
+        });
     }
 
     function table_warehouse_awal() {
@@ -279,117 +399,123 @@
         var fc_type_mutation = $('#fc_type_mutation').val();
         // console.log(fc_type_mutation)
         var tb = $('#tb_warehouse_awal').DataTable({
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        ajax: {
-            url: '/apps/mutasi-barang/datatables-lokasi-awal/' + fc_type_mutation,
-            type: 'GET'
-        },
-        columnDefs: [{
-                className: 'text-center',
-                targets: [0]
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: '/apps/mutasi-barang/datatables-lokasi-awal/' + fc_type_mutation,
+                type: 'GET'
             },
-            {
-                className: 'text-nowrap',
-                targets: [9]
-            },
-        ],
-        columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                orderable: false
-            },
-            {
-                data: 'fc_divisioncode'
-            },
-            {
-                data: 'branch.fv_description'
-            },
-            {
-                data: 'fc_warehousecode'
-            },
-            {
-                data: 'fc_warehousepos'
-            },
-            {
-                data: 'fl_status'
-            },
-            {
-                data: 'fc_rackname'
-            },
-            {
-                data: 'fn_capacity'
-            },
-            {
-                data: 'fv_description'
-            },
-            {
-                data: null
-            },
-        ],
-        rowCallback: function(row, data) {
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [9]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_divisioncode'
+                },
+                {
+                    data: 'branch.fv_description'
+                },
+                {
+                    data: 'fc_warehousecode'
+                },
+                {
+                    data: 'fc_warehousepos'
+                },
+                {
+                    data: 'fl_status'
+                },
+                {
+                    data: 'fc_rackname'
+                },
+                {
+                    data: 'fn_capacity'
+                },
+                {
+                    data: 'fv_description'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
 
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
-            if (data['fl_status'] == 'G') {
-                $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
-            } else {
-                $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
-            }
+                $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+                if (data['fl_status'] == 'G') {
+                    $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+                } else {
+                    $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+                }
 
-            $('td:eq(9)', row).html(`
+                $('td:eq(9)', row).html(`
             <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_awal('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
-        }
-     });
+            }
+        });
     }
 
-    function detail_warehouse_awal($fc_warehousecode){
+    function detail_warehouse_awal($fc_warehousecode) {
         $.ajax({
-            url : "/master/data-warehouse-first/" + $fc_warehousecode,
+            url: "/master/data-warehouse-first/" + $fc_warehousecode,
             type: "GET",
             dataType: "JSON",
-            success: function(response){
+            success: function(response) {
                 var data = response.data;
                 $("#modal_lokasi_awal").modal('hide');
-                Object.keys(data).forEach(function (key) {
+                Object.keys(data).forEach(function(key) {
                     var elem_name = $('[name=' + key + ']');
                     elem_name.val(data[key]);
                 });
                 $('#fc_rackname_berangkat').val(data.fc_rackname);
                 $('#fc_startpoint').val(data.fc_warehousecode);
-                if(data.fc_warehouseaddress != null){
+                if (data.fc_warehouseaddress != null) {
                     $('#fc_warehouseaddress_berangkat').val(data.fc_warehouseaddress);
-                }else{
+                } else {
                     $('#fc_warehouseaddress_berangkat').val('-');
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
-    
-    function detail_warehouse_tujuan($fc_warehousecode){
+
+    function detail_warehouse_tujuan($fc_warehousecode) {
         $.ajax({
-            url : "/master/data-warehouse-first/" + $fc_warehousecode,
+            url: "/master/data-warehouse-first/" + $fc_warehousecode,
             type: "GET",
             dataType: "JSON",
-            success: function(response){
+            success: function(response) {
                 var data = response.data;
                 $("#modal_lokasi_tujuan").modal('hide');
-                Object.keys(data).forEach(function (key) {
+                Object.keys(data).forEach(function(key) {
                     var elem_name = $('[name=' + key + ']');
                     elem_name.val(data[key]);
                 });
                 $('#fc_rackname_tujuan').val(data.fc_rackname);
                 $('#fc_destination').val(data.fc_warehousecode);
-                if(data.fc_warehouseaddress != null){
+                if (data.fc_warehouseaddress != null) {
                     $('#fc_warehouseaddress_tujuan').val(data.fc_warehouseaddress);
-                }else{
+                } else {
                     $('#fc_warehouseaddress_tujuan').val('-');
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
@@ -397,70 +523,69 @@
     function table_warehouse_tujuan() {
         var fc_type_mutation = $('#fc_type_mutation').val();
         var tb = $('#tb_warehouse_tujuan').DataTable({
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        ajax: {
-            url: '/apps/mutasi-barang/datatables-lokasi-tujuan/' + fc_type_mutation,
-            type: 'GET'
-        },
-        columnDefs: [{
-                className: 'text-center',
-                targets: [0]
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: '/apps/mutasi-barang/datatables-lokasi-tujuan/' + fc_type_mutation,
+                type: 'GET'
             },
-            {
-                className: 'text-nowrap',
-                targets: [9]
-            },
-        ],
-        columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                orderable: false
-            },
-            {
-                data: 'fc_divisioncode'
-            },
-            {
-                data: 'branch.fv_description'
-            },
-            {
-                data: 'fc_warehousecode'
-            },
-            {
-                data: 'fc_warehousepos'
-            },
-            {
-                data: 'fl_status'
-            },
-            {
-                data: 'fc_rackname'
-            },
-            {
-                data: 'fn_capacity'
-            },
-            {
-                data: 'fv_description'
-            },
-            {
-                data: null
-            },
-        ],
-        rowCallback: function(row, data) {
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [9]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_divisioncode'
+                },
+                {
+                    data: 'branch.fv_description'
+                },
+                {
+                    data: 'fc_warehousecode'
+                },
+                {
+                    data: 'fc_warehousepos'
+                },
+                {
+                    data: 'fl_status'
+                },
+                {
+                    data: 'fc_rackname'
+                },
+                {
+                    data: 'fn_capacity'
+                },
+                {
+                    data: 'fv_description'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
 
-            $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
-            if (data['fl_status'] == 'G') {
-                $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
-            } else {
-                $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
-            }
+                $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+                if (data['fl_status'] == 'G') {
+                    $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+                } else {
+                    $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+                }
 
-            $('td:eq(9)', row).html(`
+                $('td:eq(9)', row).html(`
             <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_tujuan('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
-        }
-    });
+            }
+        });
     }
-
 </script>
 @endsection

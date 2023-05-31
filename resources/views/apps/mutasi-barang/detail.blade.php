@@ -70,7 +70,18 @@
                                     <input type="text" class="form-control" value="{{ $data->fc_type_mutation }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label>Cari SO CPRR</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" value="{{ $data->fc_sono ?? '-' }}" readonly>
+                                        <div class="input-group-append">
+                                            <button id="unclick" class="btn btn-primary" disabled onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>Lokasi Awal</label>
                                     <div class="input-group mb-3">
@@ -85,7 +96,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label>Lokasi Tujuan</label>
                                     <div class="input-group mb-3">
@@ -137,13 +148,13 @@
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Awal</label>
-                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_start->fc_warehouseaddress }}" readonly>{{ $data->warehouse_start->fc_warehouseaddress }}</textarea> 
+                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_start->fc_warehouseaddress }}" readonly>{{ $data->warehouse_start->fc_warehouseaddress }}</textarea>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Alamat Lokasi Tujuan</label>
-                                            <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_destination->fc_warehouseaddress }}" readonly>{{ $data->warehouse_destination->fc_warehouseaddress }}</textarea> 
+                                    <textarea type="text" class="form-control" data-height="76" value="{{ $data->warehouse_destination->fc_warehouseaddress }}" readonly>{{ $data->warehouse_destination->fc_warehouseaddress }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -307,8 +318,6 @@
 
 @section('js')
 <script>
-   
-
     function click_modal_inventory() {
         $('#modal_inventory').modal('show');
         table_inventory();
@@ -440,14 +449,14 @@
                                 $('#modal_loading').modal('hide');
                             }, 500);
                             if (response.status === 200) {
-                               
+
                                 $("#modal").modal('hide');
                                 iziToast.success({
                                     title: 'Success!',
                                     message: response.message,
                                     position: 'topRight'
                                 });
-                               
+
                                 tb.ajax.reload(null, false);
                             } else if (response.status === 201) {
                                 $("#modal").modal('hide');
