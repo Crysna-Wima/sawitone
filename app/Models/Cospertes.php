@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Cospertes extends Model
 {
@@ -11,7 +13,7 @@ class Cospertes extends Model
 
     protected static $logAttributes = ["*"];
     protected $table = 't_cprr';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'fc_cprrcode';
     protected $guarded = ['type'];
 
     public function CprrCustomer(){
