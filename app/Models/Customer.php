@@ -58,4 +58,8 @@ class Customer extends Model
     public function member_bank3(){
         return $this->belongsTo(BankAcc::class, 'fc_memberbank3', 'fc_bankcode')->withTrashed();
     }
+
+    public function CprrCustomer(){
+        return $this->hasMany(CprrCustomer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
 }
