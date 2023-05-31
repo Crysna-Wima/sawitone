@@ -44,7 +44,7 @@ class MasterStockController extends Controller
 
     public function store_update(request $request){
        $validator = Validator::make($request->all(), [
-            'fc_stockcode' => 'required',
+            'fc_stockcode' => 'required|unique:t_stock',
             'fc_barcode' => 'required',
         ]);
 
