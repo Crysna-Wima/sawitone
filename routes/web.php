@@ -137,8 +137,9 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-cprr')->group(function () {
             Route::get('/','DataMaster\MasterCprrController@index');
             Route::get('/datatables','DataMaster\MasterCprrController@datatables');
-            Route::get('/detail/{fc_cprrcode}','DataMaster\MasterCprrController@detail');
+            Route::get('/get-data/edit', 'DataMaster\MasterCprrController@edit');
             Route::post('/store-update','DataMaster\MasterCprrController@store_update');
+            Route::put('/update','DataMaster\MasterCprrController@update');
             Route::delete('/delete/{fc_cprrcode}','DataMaster\MasterCprrController@delete');
         });
 

@@ -18,6 +18,10 @@ class Cospertes extends Model
     protected $guarded = ['type'];
     protected $appends = [];
 
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
     public function CprrCustomer(){
         return $this->hasMany(CprrCustomer::class,'fc_cprrcode','fc_cprrcode')->withTrashed();
     }
