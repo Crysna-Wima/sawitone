@@ -90,7 +90,7 @@
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
                                             <div class="input-group-append">
-                                                <button id="unclick" class="btn btn-primary" onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
+                                                <button id="unclick" class="btn btn-primary" onclick="click_modal_so()" type="button" required><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -327,6 +327,7 @@
             $('#unclick' ).attr( 'disabled', true );
         } else {
             $('#unclick' ).attr( 'disabled', false );
+            $('#fc_sono_input').attr('required', true);
         }
     });
 
@@ -388,6 +389,12 @@
 
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
+                if (data['fc_sotype'] == 'Cost Per Test') {
+                    $(row).show();
+                } else {
+                    $(row).hide();
+                }
+
                 $('td:eq(7)', row).html(`
                 <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
             }

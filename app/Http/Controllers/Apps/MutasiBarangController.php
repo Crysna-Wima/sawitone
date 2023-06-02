@@ -61,8 +61,10 @@ class MutasiBarangController extends Controller
             'fc_type_mutation' => 'required',
             'fc_startpoint' => 'required',
             'fc_destination' => 'required',
-         ]
-        );
+            'fc_sono' => 'required_if:fc_type_mutation,EKSTERNAL',
+        ], [
+            'fc_sono.required_if' => 'SO CPRR wajib diisi',
+        ]);
         
         if($validator->fails()) {
             return [
