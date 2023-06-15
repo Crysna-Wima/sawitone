@@ -16,11 +16,15 @@ class CprrCustomer extends Model
     protected $primaryKey = 'id';
     protected $guarded = ['type'];
 
-    public function  Cospertes(){
-        return $this->belongsTo(Cospertes::class,'fc_cprrcode','fc_cprrcode')->withTrased();
+    public function Cospertes(){
+        return $this->belongsTo(Cospertes::class,'fc_cprrcode','fc_cprrcode');
     }
 
     public function Customer(){
         return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
+
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 }

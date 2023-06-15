@@ -75,6 +75,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/delete/{id}','Settings\SettingMenuController@delete');
         });
 
+        Route::prefix('master-role')->group(function () {
+            Route::get('/','DataMaster\MasterRoleController@index');
+        });
+
         Route::prefix('master-user')->group(function () {
             Route::get('/','DataMaster\MasterUserController@index');
             Route::get('/detail/{fc_username}','DataMaster\MasterUserController@detail');
@@ -165,6 +169,15 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','DataMaster\StockCustomerController@datatables');
             Route::post('/store-update','DataMaster\StockCustomerController@store_update');
             Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{stockcode}/{fc_barcode}/{membercode}','DataMaster\StockCustomerController@delete');
+        });
+
+        Route::prefix('cprr-customer')->group(function () {
+            Route::get('/','DataMaster\CprrCustomerController@index');
+            Route::get('/get/{fc_cprrcode}','DataMaster\CprrCustomerController@get');
+            Route::get('/detail/{id}','DataMaster\CprrCustomerController@detail');
+            Route::get('/datatables','DataMaster\CprrCustomerController@datatables');
+            Route::post('/store-update','DataMaster\CprrCustomerController@store_update');
+            Route::delete('/delete/{id}/{fc_cprrcode}','DataMaster\CprrCustomerController@delete');
         });
 
         Route::prefix('stock-supplier')->group(function () {
