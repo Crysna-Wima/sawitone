@@ -30,10 +30,13 @@ class CprrCustomerController extends Controller
         return response($data, 200);
     }
 
-    public function detail($fc_cprrcode)
+    public function detail($fc_divisioncode, $fc_branch, $fc_cprrcode, $fc_membercode)
     {
-        $data = CprrCustomer::where([
+        $data = CprrCustomer::with('cospertes')->where([
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
             'fc_cprrcode' => $fc_cprrcode,
+            'fc_membercode' => $fc_membercode,
         ])->first();
         return response($data, 200);
     }
@@ -83,7 +86,7 @@ class CprrCustomerController extends Controller
 
         $request->merge(['fm_price' => Convert::convert_to_double($request->fm_price)]);
 
-        if($request->has('fm_price')){
+        if ($request->has('fm_price')) {
             $request->request->add(['updated_at' => Carbon::now()]);
         }
 
@@ -101,11 +104,13 @@ class CprrCustomerController extends Controller
         ];
     }
 
-    public function delete($id, $fc_cprrcode)
+    public function delete($fc_divisioncode, $fc_branch, $fc_cprrcode, $fc_membercode)
     {
         CprrCustomer::where([
-            'id' => $id,
+            'fc_divisioncode' => $fc_divisioncode,
+            'fc_branch' => $fc_branch,
             'fc_cprrcode' => $fc_cprrcode,
+            'fc_membercode' => $fc_membercode,
         ])->delete();
         return response()->json([
             'status' => 200,

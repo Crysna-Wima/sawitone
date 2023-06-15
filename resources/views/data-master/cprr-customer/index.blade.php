@@ -149,6 +149,11 @@
         get_data_branch();
         get_data_customer_code();
     })
+    
+    function click_reset(){
+        $("#form_submit")[0].reset();
+        $('#button_reset').attr('hidden', true);
+    }
 
     function click_cprr() {
         $('#modal_cprr').modal('show');
@@ -201,7 +206,7 @@
     function pilih($fc_cprrcode) {
         // console.log($fc_cprrcode)
         $.ajax({
-            url: "/data-master/cprr-customer/detail/" + $fc_cprrcode,
+            url: "/data-master/cprr-customer/get/" + $fc_cprrcode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -341,8 +346,8 @@
             },
         ],
         rowCallback: function(row, data) {
-            var url_edit = "/data-master/cprr-customer/detail/" + data.fc_cprrcode;
-            var url_delete = "/data-master/cprr-customer/delete/" + data.id + '/' + data.fc_cprrcode;
+            var url_edit = "/data-master/cprr-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_cprrcode + '/' + data.fc_membercode;
+            var url_delete = "/data-master/cprr-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_cprrcode + '/' + data.fc_membercode;
 
             $('td:eq(7)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}','${data.fc_cprrcode}')"><i class="fa fa-edit"></i> Edit</button>
@@ -397,6 +402,7 @@
                 });
 
                 $('#fc_cprrcode').val(cprrcode);
+                $('#fc_cprrname').val(response.cospertes.fc_cprrname);
                 $('#fc_membercode').val(response.fc_membercode);
                 $('#fm_price').val(response.fm_price);
                 $('#button_reset').attr('hidden', false);
