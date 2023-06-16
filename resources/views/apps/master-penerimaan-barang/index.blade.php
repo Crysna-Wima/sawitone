@@ -167,10 +167,10 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 2, 3, 4, 5, 6, 7, 8]
+                targets: [0, 2, 3, 4, 5, 6, 7]
             }, {
                 className: 'text-nowrap',
-                targets: []
+                targets: [8]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -206,6 +206,7 @@
 
             rowCallback: function(row, data) {
                 var fc_grno = window.btoa(data.fc_grno);
+                var count = window.btoa(data.fn_qtyitem);
 
                 $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
                     if (data['fc_status'] == 'R') {
@@ -217,14 +218,18 @@
                 if (data['fc_status'] == 'C'){
                     $('td:eq(8)', row).html(`
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
+                    <a href="/apps/master-penerimaan-barang/doc/${fc_grno}/${count}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Plakat</a>
                     `);
                 } else {
                     $('td:eq(8)', row).html(`
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-info btn-sm" onclick="tuntaskan_gr('${data.fc_grno}')"><i class="fa fa-check"></i> Tuntaskan</button>
+                    <a href="/apps/master-penerimaan-barang/doc/${fc_grno}/${count}" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Plakat</a>
+                    <button class="btn btn-info btn-sm ml-1" onclick="tuntaskan_gr('${data.fc_grno}')"><i class="fa fa-check"></i> Tuntaskan</button>
                     `);
                 }
                 // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                // BUTTON PDF LAMA
+                // <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_grno}')"><i class="fa fa-file"></i> PDF</button>
             },
         });
         

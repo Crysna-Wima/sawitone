@@ -370,6 +370,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterPenerimaanBarangController@datatables');
             Route::get('/datatables/master-transit','Apps\MasterPenerimaanBarangController@datatables_master_transit');
             Route::post('/pdf', 'Apps\MasterPenerimaanBarangController@pdf');
+            Route::get('/doc/{fc_grno}/{count}', 'Apps\MasterPenerimaanBarangController@doc');
             Route::get('/get_pdf/{fc_grno}/{nama_pj}', 'Apps\MasterPenerimaanBarangController@get_pdf');    
         });
 
