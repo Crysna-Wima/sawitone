@@ -93,21 +93,20 @@ class CprrCustomerController extends Controller
                 'id' => $request->id_cprr,
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
-                'fc_cprrcode' => $request->fc_cprrcode,
-                'fc_membercode' => $request->fc_membercode,
+                'fc_cprrcode' => $request->fc_cprrcode
             ])->first();
+            // update
             $data->update($request->all());
 
-            // jika $data berhasil
-            if ($data) {
+            if($data){
                 return [
                     'status' => 200,
                     'message' => 'Data berhasil diupdate'
                 ];
-            } else {
+            }else{
                 return [
                     'status' => 300,
-                    'message' => 'Oops! Update gagal'
+                    'message' => 'Oops! Terjadi kesalahan saat update data'
                 ];
             }
         }else{
