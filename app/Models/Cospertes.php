@@ -22,7 +22,7 @@ class Cospertes extends Model
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
-    public function CprrCustomer(){
+    public function cprrCustomer(){
         return $this->hasMany(CprrCustomer::class,'fc_cprrcode','fc_cprrcode')->withTrashed();
     }
 }

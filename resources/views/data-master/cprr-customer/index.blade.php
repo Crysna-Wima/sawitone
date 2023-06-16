@@ -26,6 +26,7 @@
                     <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
                     <form id="form_submit" action="/data-master/cprr-customer/store-update" method="POST" autocomplete="off">
                         <input type="text" name="type" id="type" hidden>
+                        <input type="text" name="id_cprr" id="id_cprr" hidden>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6" hidden>
@@ -401,10 +402,12 @@
                     }
                 });
 
+              
                 $('#fc_cprrcode').val(cprrcode);
                 $('#fc_cprrname').val(response.cospertes.fc_cprrname);
                 $('#fc_membercode').val(response.fc_membercode);
                 $('#fm_price').val(response.fm_price);
+                $('#id_cprr').val(response.id);
                 $('#button_reset').attr('hidden', false);
             },
             error: function(jqXHR, textStatus, errorThrown) {

@@ -26,7 +26,7 @@ class CprrCustomerController extends Controller
     {
         $data = Cospertes::where([
             'fc_cprrcode' => $fc_cprrcode,
-        ])->first();
+        ])->where('fc_branch', auth()->user()->fc_branch)->first();
         return response($data, 200);
     }
 
@@ -50,10 +50,8 @@ class CprrCustomerController extends Controller
             ->make(true);
     }
 
-    public function store_update(request $request)
-    {
+    public function store_update(request $request){
         $validator = Validator::make($request->all(), [
-            'fc_divisioncode' => 'required',
             'fc_cprrcode' => 'required',
             'fc_membercode' => 'required',
             'fm_price' => 'required',
@@ -90,18 +88,51 @@ class CprrCustomerController extends Controller
             $request->request->add(['updated_at' => Carbon::now()]);
         }
 
-        CprrCustomer::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_cprrcode' => $request->fc_cprrcode,
-            'fc_membercode' => $request->fc_membercode,
-            'fm_price' => $request->fm_price,
-        ], $request->all());
+        if($request->type == 'update'){
+            $data = CprrCustomer::where([
+                'id' => $request->id_cprr,
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_cprrcode' => $request->fc_cprrcode,
+                'fc_membercode' => $request->fc_membercode,
+            ])->first();
+            $data->update($request->all());
 
-        return [
-            'status' => 200, // SUCCESS
-            'message' => 'Data berhasil disimpan'
-        ];
+            // jika $data berhasil
+            if ($data) {
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil diupdate'
+                ];
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Update gagal'
+                ];
+            }
+        }else{
+           $data = CprrCustomer::create([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_cprrcode' => $request->fc_cprrcode,
+                'fc_membercode' => $request->fc_membercode,
+                'fm_price' => $request->fm_price,
+            ], $request->all());
+    
+            if($data){
+                return [
+                    'status' => 200, // SUCCESS
+                    'message' => 'Data berhasil disimpan'
+                ];
+            }else{
+                return [
+                    'status' => 300, // FAILED
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+           
+        }
+       
     }
 
     public function delete($fc_divisioncode, $fc_branch, $fc_cprrcode, $fc_membercode)

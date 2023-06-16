@@ -37,7 +37,7 @@ class MasterCprrController extends Controller
 
     public function datatables()
     {
-        $data = Cospertes::with('branch')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Cospertes::with('branch','cprrCustomer')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
