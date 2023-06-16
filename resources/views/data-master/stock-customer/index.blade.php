@@ -6,6 +6,10 @@
         overflow-x: auto;
     }
 
+    .table.dataTable  {
+        font-size: 13px;
+    }
+
     .required label:after {
         color: #e32;
         content: ' *';
@@ -20,7 +24,7 @@
       <div class="col-12 col-md-12 col-lg-12">
          <div class="card">
             <div class="card-header">
-                <h4>Data Master Stock Customer</h4>
+                <h4>Tambah Stock Customer</h4>
             </div>
             <div class="card-body">
                 <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
@@ -154,49 +158,49 @@
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_stock" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
-       <div class="modal-content">
-          <div class="modal-header br">
-             <h5 class="modal-title">Pilih Stock</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-             </button>
-          </div>
-            <input type="text" id="counting" hidden>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-striped" id="tb_stock" width="100%">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">No</th>
-                                <th scope="col" class="text-center">Stock Code</th>
-                                <th scope="col" class="text-center">Barcode</th>
-                                <th scope="col" class="text-center">Name</th>
-                                <th scope="col" class="text-center">Price Default</th>
-                                <th scope="col" class="text-center">Price Distributor</th>
-                                <th scope="col" class="text-center">Price Project</th>
-                                <th scope="col" class="text-center">Price Dealer</th>
-                                <th scope="col" class="text-center">Price End User</th>
-                                <th scope="col" class="text-center" style="width: 25%">Actions</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-          <div class="modal-footer bg-whitesmoke br">
-             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-       </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_stock" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Stock Code</th>
+                                    <th scope="col" class="text-center">Barcode</th>
+                                    <th scope="col" class="text-center">Name</th>
+                                    <th scope="col" class="text-center">Price Default</th>
+                                    <th scope="col" class="text-center">Price Distributor</th>
+                                    <th scope="col" class="text-center">Price Project</th>
+                                    <th scope="col" class="text-center">Price Dealer</th>
+                                    <th scope="col" class="text-center">Price End User</th>
+                                    <th scope="col" class="text-center" style="width: 25%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
-
 @section('js')
+
 <script>
 
     $(document).ready(function(){
         get_data_branch();
         get_data_stock_code();
         get_data_customer_code();
-        table_stock();
     })
 
     function click_reset(){
@@ -206,6 +210,7 @@
 
     function click_choose_product(){
         $('#modal_stock').modal('show');
+        table_stock();
     }
 
     function table_stock(){

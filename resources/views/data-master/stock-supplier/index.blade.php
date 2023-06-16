@@ -6,6 +6,10 @@
         overflow-x: auto;
     }
 
+    .table.dataTable  {
+        font-size: 13px;
+    }
+
     .required label:after {
         color: #e32;
         content: ' *';
@@ -20,7 +24,7 @@
       <div class="col-12 col-md-12 col-lg-12">
          <div class="card">
             <div class="card-header">
-                <h4>Master Stock Supplier</h4>
+                <h4>Tambah Stock Supplier</h4>
             </div>
             <div class="card-body">
                <div class="row">

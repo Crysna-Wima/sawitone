@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\Convert;
 
-use DataTables;
+use Yajra\DataTables\DataTables as DataTables;
 use Carbon\Carbon;
 use File;
 
