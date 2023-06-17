@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group required">
-                                        <label>Tanggal Diterima</label>
+                                        <label>Tanggal BPB</label>
                                         <div class="input-group" data-date-format="dd-mm-yyyy">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text">

@@ -157,7 +157,9 @@
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">BPB</th>
+                                        <th scope="col" class="text-center">Sisa</th>
                                         <th scope="col" class="text-center">Bonus</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center">Status</th>
                                     </tr>
                                 </thead>
@@ -299,7 +301,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7]
+            targets: [0, 3, 4, 5, 6, 7, 8, 9]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -310,7 +312,7 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'stock.fc_nameshort'
+                data: 'stock.fc_namelong'
             },
             {
                 data: 'namepack.fv_description'
@@ -322,7 +324,17 @@
                 data: 'fn_ro_qty'
             },
             {
+                data: null,
+                render: function(data, type, row) {
+                    return row.fn_po_qty - row.fn_ro_qty;
+                }
+            },
+            {
                 data: 'fn_po_bonusqty'
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-',
             },
             {
                 data: 'fc_status'
@@ -330,13 +342,13 @@
         ],
         rowCallback: function(row, data) {
 
-            $('td:eq(7)', row).html(`<i class="${data.fc_status}"></i>`);
+            $('td:eq(9)', row).html(`<i class="${data.fc_status}"></i>`);
             if (data['fc_status'] == 'W') {
-                $('td:eq(7)', row).html('<span class="badge badge-primary"><i class="fa fa-hourglass"></i> Menunggu</span>');
+                $('td:eq(9)', row).html('<span class="badge badge-primary"><i class="fa fa-hourglass"></i> Menunggu</span>');
             } else if (data['fc_status'] == 'P') {
-                $('td:eq(7)', row).html('<span class="badge badge-warning"><i class="fa fa-spinner"></i> Pending</span>');
+                $('td:eq(9)', row).html('<span class="badge badge-warning"><i class="fa fa-spinner"></i> Pending</span>');
             } else {
-                $('td:eq(7)', row).html('<span class="badge badge-success"><i class="fa fa-check"></i> Selesai</span>');
+                $('td:eq(9)', row).html('<span class="badge badge-success"><i class="fa fa-check"></i> Selesai</span>');
             }
         }
     });
