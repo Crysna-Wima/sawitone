@@ -39,7 +39,6 @@ class MasterWarehouseController extends Controller
     public function store_update(request $request){
        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
-            'fc_warehousecode' => 'required',
         ]);
 
         if($validator->fails()) {

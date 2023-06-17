@@ -160,10 +160,22 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="fc_description">Catatan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="fc_description" name="fc_description" value="{{ $mutasi_mst->fc_description }}" readonly>
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="fc_penerima">Penerima</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fc_penerima" name="fc_penerima" value="{{ $mutasi_mst->fc_penerima }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="fc_description">Catatan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fc_description" name="fc_description" value="{{ $mutasi_mst->fc_description ?? '-' }}" readonly>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

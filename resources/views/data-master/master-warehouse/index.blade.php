@@ -78,9 +78,9 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6" hidden>
-                            <div class="form-group required">
+                            <div class="form-group">
                                 <label>Kode Gudang</label>
-                                <input type="text" class="form-control required-field" name="fc_warehousecode" id="fc_warehousecode">
+                                <input type="text" class="form-control" name="fc_warehousecode" id="fc_warehousecode">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -195,6 +195,7 @@
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
+        order: [[3, 'asc']],
         ajax: {
             url: '/data-master/master-warehouse/datatables',
             type: 'GET'
@@ -205,7 +206,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [9]
+                targets: [10]
             },
         ],
         columns: [{

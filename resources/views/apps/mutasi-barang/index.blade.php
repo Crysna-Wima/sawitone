@@ -69,13 +69,13 @@
                                         <label>Jenis Mutasi</label>
                                         @if (empty($data->fc_type_mutation))
                                         <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
-                                            <option value="" selected>- Pilih -</option>
+                                            <option value="" selected disabled>- Pilih -</option>
                                             <option value="INTERNAL">INTERNAL</option>
                                             <option value="EKSTERNAL">EKSTERNAL</option>
                                         </select>
                                         @else
                                         <select class="form-control select2" name="fc_type_mutation" id="fc_type_mutation" required>
-                                            <option value="{{ $data->fc_type_mutation }}" selected>
+                                            <option value="{{ $data->fc_type_mutation }}" selected disabled>
                                                 -- {{ $data->fc_type_mutation }} --
                                             </option>
                                             <option value="INTERNAL">INTERNAL</option>
@@ -325,6 +325,7 @@
     $("#fc_type_mutation").change(function(){
         if ($('#fc_type_mutation').val() === 'INTERNAL') {
             $('#unclick' ).attr( 'disabled', true );
+            $('input[id="fc_sono_input"]').val("");
         } else {
             $('#unclick' ).attr( 'disabled', false );
             $('#fc_sono_input').attr('required', true);
