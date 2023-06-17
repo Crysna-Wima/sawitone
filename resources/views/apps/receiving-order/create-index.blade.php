@@ -54,20 +54,20 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label>Order : {{ date('d-m-Y', strtotime ($data->fd_podateinputuser)) }}
+                                        <label>Order : {{ date('d-m-Y', strtotime ($po_master->fd_podateinputuser)) }}
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group">
-                                        <label>No. PO : {{ $data->fc_pono }}
+                                        <label>No. PO : {{ $po_master->fc_pono }}
                                         </label>
-                                        <input type="text" name="fc_pono" value="{{ $data->fc_pono }}" hidden>
+                                        <input type="text" name="fc_pono" value="{{ $po_master->fc_pono }}" hidden>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">
                                     <div class="form-group">
-                                        <label>Tipe : {{ $data->fc_potype }}
+                                        <label>Tipe : {{ $po_master->fc_potype }}
                                         </label>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                 <div class="col-12 col-md-12 col-lg-6">
                                     <div class="form-group required">
                                         <label>Penerima</label>
-                                        <input type="text" name="fc_receiver" id="fc_receiver" class="form-control" required>
+                                        <input type="text" name="fc_receiver" id="fc_receiver" class="form-control" value="{{ $goods_reception->fc_recipient }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
@@ -129,49 +129,49 @@
                                     <div class="form-group">
                                         <label>NPWP</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplierNPWP }}" readonly>
+                                            value="{{ $po_master->supplier->fc_supplierNPWP }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Cabang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_typebranch->fv_description }}" readonly>
+                                            value="{{ $po_master->supplier->supplier_typebranch->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Tipe Bisnis</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_type_business->fv_description }}" readonly>
+                                            value="{{ $po_master->supplier->supplier_type_business->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Nama</label>
                                         <input type="text" class="form-control"
-                                            value="{{  $data->supplier->fc_suppliername1 }}" readonly>
+                                            value="{{  $po_master->supplier->fc_suppliername1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Telepon</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplierphone1 }}" readonly>
+                                            value="{{ $po_master->supplier->fc_supplierphone1 }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Legal Status</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->supplier_legal_status->fv_description }}" readonly>
+                                            value="{{ $po_master->supplier->supplier_legal_status->fv_description }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-12">
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                            value="{{ $po_master->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                     </div>
                                 </div>
                             </div>

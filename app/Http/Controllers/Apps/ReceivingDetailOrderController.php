@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
+use App\Models\GoodReception;
 use App\Models\PoDetail;
 use App\Models\PoMaster;
 use App\Models\TempRoDetail;
@@ -24,10 +25,13 @@ class ReceivingDetailOrderController extends Controller
         // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();
         $temp_ro_master = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
-
+        
         $count = count($temp_ro_detail);
-        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        
+        $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_master'] = $temp_ro_master;
+        $data['goods_reception'] = GoodReception::where('fc_grno',session('fc_grno_global'))->where('fc_branch', auth()->user()->fc_branch)->first();
+
         if (!empty($temp_ro_master)) {
             return view('apps.receiving-order.create-detail', $data);
             // dd($data);
