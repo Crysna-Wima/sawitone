@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/','LandingPageController@index');
     Route::post('/login','LoginController@login');
     Route::get('/logout','LoginController@logout');
+
 
     Route::prefix('login')->group(function () {
         Route::get('/','LoginController@index')->name('login');

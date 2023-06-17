@@ -10,15 +10,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\CompositeKey;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, logsActivity, CompositeKey, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, logsActivity, CompositeKey, SoftDeletes, HasRoles;
 
     protected static $logAttributes = ["*"];
 
     protected $table = 't_user';
-    protected $primaryKey = 'fc_userid';
+    protected $primaryKey = 'id';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_userid'];
     public $incrementing = false;
     protected $guarded = ['type'];

@@ -74,6 +74,7 @@ use App\Helpers\App;
     <?php
     $url_menu = Request::segment(1);
     $url_submenu = Request::segment(2);
+    $usr = Auth::guard('web')->user();
     ?>
     <ul class="sidebar-menu">
       <li class="menu-header">Dashboard</li>
@@ -87,7 +88,10 @@ use App\Helpers\App;
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="{{ $item['icon'] }}"></i></i> <span>{{ $item['nama'] }}</span></a>
         <ul class="dropdown-menu">
           @foreach ($item['submenu'] as $submenu)
+          {{-- cek jika submenu['nama'] sama dengan nama permission maka jangan tampilkan --}}
+          @if (isset($submenu['nama']) && $usr->can($submenu['nama']))
           <li class="@if($url_menu == $submenu['menu'] && $url_submenu == $submenu['submenu']) active @endif"><a class="nav-link" href="{{ $submenu['link'] }}">{{ $submenu['nama'] }}</a></li>
+          @endif
           @endforeach
         </ul>
       </li>
