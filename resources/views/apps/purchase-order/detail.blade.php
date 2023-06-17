@@ -162,7 +162,7 @@
                                     <div class="form-group">
                                         <label>Masa Hutang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fn_supplierAgingAR }}" readonly>
+                                            value="{{ $data->supplier->fn_supplierAgingAR }} Hari" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
@@ -183,7 +183,7 @@
                                     <div class="form-group">
                                         <label>Hutang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->supplier->fm_supplierAR }}" readonly>
+                                            value="Rp. {{ number_format( $data->supplier->fm_supplierAR,0,',','.') }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-7">
                                     <div class="form-group">
-                                        <label>Deskripsi</label>
+                                        <label>Catatan</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" fdprocessedid="hgh1fp"
                                                 name="fv_description" id="fv_description">
@@ -322,6 +322,7 @@
                                             <th scope="col" class="text-center">Disc</th>
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center">Total</th>
+                                            <th scope="col" class="text-center">Catatan</th>
                                             <th scope="col" class="text-center justify-content-center">Action</th>
                                         </tr>
                                     </thead>
@@ -436,7 +437,7 @@
                                                 </option>
                                                 <option value="By Dexa">By Dexa</option>
                                                 <option value="By Paket">By Paket</option>
-                                                <option value="By Customer">By Customer</option>
+                                                <option value="By Supplier">By Supplier</option>
                                             </select>
                                         @endif
                                     </div>
@@ -910,6 +911,10 @@
                     render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
                 },
                 {
+                    data: 'fv_description',
+                    defaultContent: '-',
+                },
+                {
                     data: null,
                 },
             ],
@@ -919,7 +924,7 @@
                 // console.log(data.fn_porownum);
                 var url_delete = "/apps/purchase-order/detail/delete/" + data.fc_pono + '/' + data.fn_porownum;
 
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Purchase Order Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
             },

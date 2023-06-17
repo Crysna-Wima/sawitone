@@ -159,10 +159,6 @@
         padding-bottom: 15px;
     }
 
-    .content p {
-        font-size: .8rem!important;
-    }
-
     .page_break { page-break-before: always; }
 
     #watermark {
@@ -197,7 +193,7 @@
         </div>
 
         <div class="content">
-            <p style="text-align: center"><b>Sales Order</b></p>
+            <p style="text-align: center; font-weight:bold; font-size:15px;">SALES ORDER</p>
 
             <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
                 <tr>
@@ -221,9 +217,6 @@
                     <td>NPWP</td>
                     <td style="width: 5px">:</td>
                     <td style="width: 28%">{{ $so_master->customer->fc_membernpwp_no ?? '-' }}</td>
-                    <td>Tipe Bisnis</td>
-                    <td style="width: 5px">:</td>
-                    <td>{{ $so_master->customer->fc_membertypebusiness }}</td>
                 </tr>
                 <tr>
                     <td>Nama</td>
@@ -231,14 +224,19 @@
                     <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_membername1 }}</td>
                 </tr>
                 <tr>
+                    <td>Tipe Bisnis</td>
+                    <td style="width: 5px">:</td>
+                    <td>{{ $so_master->customer->fc_membertypebusiness }}</td>
+                </tr>
+                <tr>
                     <td>Alamat</td>
                     <td style="width: 5px">:</td>
-                    <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress1 }}</td>
+                    <td style="width: 48%">{{ $so_master->customer->fc_memberaddress1 }}</td>
                 </tr>
                 <tr class="pb-1">
                     <td>Alamat Tujuan</td>
                     <td style="width: 5px">:</td>
-                    <td style="width: 28%" colspan="2">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
+                    <td style="width: 48%">{{ $so_master->customer->fc_memberaddress_loading1 }}</td>
                     <td></td><td></td><td></td>
                 </tr>
             </table>

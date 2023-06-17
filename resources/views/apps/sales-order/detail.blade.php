@@ -87,7 +87,7 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }} ({{ $data->member_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
@@ -142,7 +142,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -160,7 +160,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fm_memberAP }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $data->customer->fm_memberAP,0,',','.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -303,6 +303,7 @@
                                         <th scope="col" class="text-center">Disc.(%)</th>
                                         <th scope="col" class="text-center">Disc.(Rp)</th>
                                         <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center justify-content-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -857,7 +858,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 2, 4, 5, 6, 7, 8, 9]
+            targets: [0, 2, 4, 5, 6, 7, 8, 9, 10]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -894,6 +895,10 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fv_description',
+                defaultContent: '-',
+            },
+            {
                 data: null,
             },
 
@@ -902,7 +907,7 @@
         rowCallback: function(row, data) {
             var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
-            $('td:eq(10)', row).html(`
+            $('td:eq(11)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
         },

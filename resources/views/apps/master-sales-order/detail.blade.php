@@ -45,9 +45,15 @@
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-12">
+                            <div class="col-12 col-md-12 col-lg-12" hidden>
                                 <div class="form-group">
                                     <label>Submit : {{ $data->fd_sodatesysinput }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>No. SO : {{ $data->fc_sono }}
                                     </label>
                                 </div>
                             </div>
@@ -86,14 +92,18 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->member_tax_code->fv_description }} ({{ $data->member_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
                                 <form id="form_cancel" action="/apps/master-sales-order/cancel_so" method="PUT">
                                     @csrf
                                     <input type="hidden" name="fc_sono" value="{{ $data->fc_sono }}">
+                                    @if (($data->fc_sostatus == 'CL') || ($data->fc_sostatus == 'C') || ($data->fc_sostatus == 'CC') || ($data->fc_sostatus == 'DD'))
+                                    <button type="submit" class="btn btn-danger" hidden>Cancel SO</button>
+                                    @else
                                     <button type="submit" class="btn btn-danger">Cancel SO</button>
+                                    @endif  
                                 </form>
                             </div>
                         </div>
@@ -145,7 +155,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -163,7 +173,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fm_memberAP }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $data->customer->fm_memberAP,0,',','.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -188,10 +198,11 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Bonus</th>
                                         <th scope="col" class="text-center">DO</th>
-                                        <th scope="col" class="text-center">Catatan</th>
+                                        <th scope="col" class="text-center">Sisa</th>
                                         <th scope="col" class="text-center">Harga</th>
                                         <th scope="col" class="text-center">Disc.(Rp)</th>
                                         <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -357,7 +368,7 @@
             targets: [7],
             defaultContent: "-",
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
+            targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -383,7 +394,10 @@
                 data: 'fn_do_qty'
             },
             {
-                data: 'fv_description'
+                data: null,
+                render: function ( data, type, row ) {
+                    return row.fn_so_qty - row.fn_do_qty;
+                }
             },
             {
                 data: 'fm_so_oriprice',
@@ -395,6 +409,10 @@
             {
                 data: 'total_harga',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            },
+            {
+                data: 'fv_description',
+                defaultContent: "-",
             },
         ],
         footerCallback: function(row, data, start, end, display) {
@@ -461,7 +479,8 @@
             },
             {
                 data: 'fv_keterangan',
-                name: 'Keterangan'
+                name: 'Keterangan',
+                defaultContent: "-",
             },
         ],
     });

@@ -576,8 +576,10 @@
                     $('#fc_branchtype_desc').val(data.supplier_typebranch.fv_description);
                     $('#fc_suppliertypebusiness_desc').val(data.supplier_type_business.fv_description);
                     $('#fc_supplierlegalstatus_desc').val(data.supplier_legal_status.fv_description);
-                    $('#status_pkp').val(data.supplier_tax_code.fv_description);
-
+                    $('#status_pkp').val(data.supplier_tax_code.fv_description + " (" + data.supplier_tax_code.fc_action + "%" + ")");
+                    $('#fm_supplierAR').val("Rp. " + fungsiRupiah(data.fm_supplierAR));
+                    $('#fn_supplierAgingAR').val(data.fn_supplierAgingAR + " Hari");
+                    
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {

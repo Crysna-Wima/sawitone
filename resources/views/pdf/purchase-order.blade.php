@@ -159,10 +159,6 @@
         padding-bottom: 15px;
     }
 
-    .content p {
-        font-size: .8rem!important;
-    }
-
     #watermark {
         position: fixed;
         top: 25%;
@@ -203,7 +199,7 @@
 
     <div class="content">
             <br><br><br><br>
-            <p style="text-align: center; font-weight:bold;">PURCHASE ORDER</p>
+            <p style="text-align: center; font-weight:bold; font-size:15px;">PURCHASE ORDER</p>
             <br>
             <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
                 <tr>
@@ -239,7 +235,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->fc_stockcode }}</td>
-                            <td>{{ $item->stock->fc_nameshort }}</td>
+                            <td>{{ $item->stock->fc_namelong }}</td>
                             <td>{{ $item->fn_po_qty }}</td>
                             <td>{{ $item->fc_namepack }}</td>
                         </tr>
@@ -254,7 +250,8 @@
             </table>
 
             <p style="font-size: .8rem; margin-left: 5%"><b>Catatan :</b> {{  $po_mst->fv_description ?? '-' }}</p>
-            <p style="font-size: .8rem; margin-left: 5%"><b>Alamat Pengiriman :</b> {{  $po_mst->fc_address_loading1 }}</p>
+            <p style="font-size: .8rem; margin-left: 5%"><b>Alamat Pengiriman :</b></p>
+            <p style="font-size: .8rem; margin-left: 5%">{{  $po_mst->fc_address_loading1 }}</p>
             <p style="font-size: .8rem; margin-left: 5%">{{  $po_mst->fc_destination }}</p>
 
             <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">

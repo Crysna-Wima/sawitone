@@ -257,7 +257,7 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'pomst.fn_podetail'
+                        data: 'fn_rodetail'
                     },
                     {
                         data: 'fd_roarivaldate',
@@ -332,7 +332,7 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'pomst.fn_podetail'
+                        data: 'fn_rodetail'
                     },
                     {
                         data: 'fd_roarivaldate',
@@ -403,7 +403,7 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'pomst.fn_podetail'
+                        data: 'fn_rodetail'
                     },
                     {
                         data: 'fd_roarivaldate',

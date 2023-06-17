@@ -403,12 +403,12 @@
 
                 if (data['fc_sostatus'] == 'CC' || data['fc_sostatus'] == 'CL') {
                 $('td:eq(9)', row).html(`
-                    <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
                 } else {
                 $('td:eq(9)', row).html(`
-                    <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm ml-1" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
                 `);
@@ -490,7 +490,7 @@
                 }
 
                 $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
@@ -570,7 +570,7 @@
                 }
 
                 $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
@@ -650,7 +650,7 @@
                 }
 
                 $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
@@ -730,7 +730,7 @@
                 }
 
                 $('td:eq(9)', row).html(`
-            <a href="/apps/master-sales-order/detail/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);

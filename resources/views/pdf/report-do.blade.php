@@ -158,10 +158,6 @@
     .pb-1 > *{
         padding-bottom: 15px;
     }
-
-    .content p {
-        font-size: .8rem!important;
-    }
 </style>
 
 <body>
@@ -180,7 +176,7 @@
 </div>
 
 <div class="content">
-        <p style="text-align: center; font-weight:bold">Delivery Order</p>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">DELIVERY ORDER</p>
         <p style="text-align: center">({{ $do_mst->fc_dono }})</p>
 
         <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
@@ -200,7 +196,7 @@
             <tr class="pt-1 pb-1">
                 <td>Tanggal Delivery</td>
                 <td style="width: 5px">:</td>
-                <td>{{ \Carbon\Carbon::parse( $do_mst->fd_dodateinputuser )->isoFormat('D MMMM Y'); }}</td>
+                <td>{{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</td>
                 <td></td><td></td><td></td>
             </tr>
         </table>

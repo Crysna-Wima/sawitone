@@ -69,10 +69,9 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group required">
-                                        <label>SO Type</label>
+                                        <label>Tipe SO</label>
                                         <select class="form-control select2 required-field" name="fc_sotype" id="fc_sotype">
                                             <option value="" selected disabled>- Pilih -</option>
-                                            <option value="Grosir">Grosir</option>
                                             <option value="Retail">Retail</option>
                                             <option value="Cost Per Test">Cost Per Test</option>
                                         </select>
@@ -181,103 +180,6 @@
                 </div>
             </div>
         </div>
-
-       <div class="col-12 col-md-12 col-lg-6 place_detail">
-            <div class="card">
-                <div class="card-body" style="padding-top: 30px!important;">
-                    <form id="form_submit" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
-                        <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label>Barcode</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
-                                        <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <label>Qty</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="fn_so_qty" id="fn_so_qty">
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-success">Add Item</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-12 col-lg-6 place_detail">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-row-item">
-                            <div class="d-flex">
-                                <p class="text-secondary flex-row-item">Item</p>
-                                <p class="text-success flex-row-item" id="count_item">0,00</p>
-                            </div>
-                            <div class="d-flex">
-                                <p class="text-secondary flex-row-item">Quantity</p>
-                                <p class="text-success flex-row-item" id="count_quantity">0,00</p>
-                            </div>
-                            <div class="d-flex">
-                                <p class="text-secondary flex-row-item">Disc. Total</p>
-                                <p class="text-success flex-row-item">0,00</p>
-                            </div>
-                        </div>
-                        <div class="flex-row-item" style="margin-left: -30px">
-                            <div class="d-flex" style="gap: 5px">
-                                <p class="text-secondary flex-row-item">Total</p>
-                                <p class="text-success flex-row-item" id="total_harga">0,00</p>
-                            </div>
-                            <div class="d-flex" style="gap: 5px">
-                                <p class="text-secondary flex-row-item">Pajak(+11%)</p>
-                                <p class="text-success flex-row-item">0,00</p>
-                            </div>
-                            <div class="d-flex" style="gap: 5px">
-                                <p class="text-secondary flex-row-item">Disc. Item</p>
-                                <p class="text-success flex-row-item">0,00</p>
-                            </div>
-                        </div>
-                        <div class="d-flex" style="flex-direction: column">
-                            <p class="text-secondary grand-text" style="font-weight: bold; font-size: 1.1rem">GRAND</p>
-                            <h5 class="text-success grand-text" id="grand_total">Rp. 0,00</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-             <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb" width="100%">
-                                <thead style="white-space: nowrap">
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Barcode</th>
-                                    <th scope="col" class="text-center">Namepack</th>
-                                    <th scope="col" class="text-center">Quantity</th>
-                                    <th scope="col" class="text-center">Bonus</th>
-                                    <th scope="col" class="text-center">Warehouse</th>
-                                    <th scope="col" class="text-center justify-content-center">Actions</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-             </div>
-        </div>
     </div>
 </div>
 @endsection
@@ -304,39 +206,6 @@
                             <th scope="col" class="text-center">Tipe Cabang</th>
                             <th scope="col" class="text-center">Status Legal</th>
                             <th scope="col" class="text-center">NPWP</th>
-                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                        </tr>
-                    </thead>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="modal fade" role="dialog" id="modal_stock" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Pilih Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-striped" id="tb_stock" width="100%">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-center">No</th>
-                            <th scope="col" class="text-center">Kode Produk</th>
-                            <th scope="col" class="text-center">Nama Produk</th>
-                            <th scope="col" class="text-center">Unity</th>
-                            <th scope="col" class="text-center">Harga</th>
-                            <th scope="col" class="text-center">Stock</th>
                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                         </tr>
                     </thead>
@@ -459,7 +328,7 @@
             dataType: "JSON",
             success: function(response){
                 var data = response.data;
-                // console.log(data);
+                console.log(data);
                 $("#modal_customer").modal('hide');
                 Object.keys(data).forEach(function (key) {
                     var elem_name = $('[name=' + key + ']');
@@ -469,7 +338,9 @@
                 $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
                 $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
                 $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-                $('#status_pkp').val(data.member_tax_code.fv_description);
+                $('#status_pkp').val(data.member_tax_code.fv_description + " (" + data.member_tax_code.fc_action + "%" + ")");
+                $('#fm_memberAP').val("Rp. " + fungsiRupiah(data.fm_memberAP));
+                $('#fn_memberAgingAP').val(data.fn_memberAgingAP + " Hari");
 
             },error: function (jqXHR, textStatus, errorThrown){
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
