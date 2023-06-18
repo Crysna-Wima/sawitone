@@ -247,7 +247,7 @@
         rowCallback: function(row, data) {
             var fc_rono = window.btoa(data.fc_rono);
             var count = window.btoa(data.fn_qty_ro);
-            var fc_barcode = window.btoa(data.invstore.fc_barcode);
+            var fc_barcode = window.btoa(data.fc_barcode);
             
             console.log(data.invstore);
             $('td:eq(7)', row).html(`
