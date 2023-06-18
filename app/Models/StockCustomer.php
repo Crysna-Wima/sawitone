@@ -29,7 +29,7 @@ class StockCustomer extends Model
     }
 
     protected $table = 't_stockcustomer';
-    protected $primaryKey = 'fc_membercode';
+    protected $primaryKey = 'id';
     // protected $primaryKey = ['fc_divisioncode', 'fc_branch', 'fc_stockcode', 'fc_barcode', 'fc_membercode'];
     public $incrementing = false;
     protected $guarded = ['type'];

@@ -61,6 +61,7 @@ class StockCustomerController extends Controller
                 'fc_stockcode' => $request->fc_stockcode,
                 'fc_barcode' => $request->fc_barcode,
                 'fc_membercode' => $request->fc_membercode,
+                'deleted_at' => null
             ])->withTrashed()->count();
 
             if($cek_data > 0){
@@ -70,6 +71,7 @@ class StockCustomerController extends Controller
                 ];
             }
         }
+
 
         $request->merge(['fm_price_customer' => Convert::convert_to_double($request->fm_price_customer) ]);
         $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);
@@ -83,13 +85,19 @@ class StockCustomerController extends Controller
             $request->request->add(['fd_update' => Carbon::now()]);
         }
 
-        StockCustomer::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_stockcode' => $request->fc_stockcode,
-            'fc_barcode' => $request->fc_barcode,
-            'fc_membercode' => $request->fc_membercode,
-        ], $request->all());
+        if($request->type = "update"){
+            StockCustomer::updateOrCreate([
+                'id' => $request->id
+            ], $request->all());
+        } else {
+            StockCustomer::updateOrCreate([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_stockcode' => $request->fc_stockcode,
+                'fc_barcode' => $request->fc_barcode,
+                'fc_membercode' => $request->fc_membercode,
+            ], $request->all());
+        }
 
 		return [
 			'status' => 200, // SUCCESS
@@ -97,11 +105,12 @@ class StockCustomerController extends Controller
 		];
     }
 
-    public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_membercode){
+    public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_barcode, $fc_membercode){
         StockCustomer::where([
             'fc_divisioncode' => $fc_divisioncode,
             'fc_branch' => $fc_branch,
             'fc_stockcode' => $fc_stockcode,
+            'fc_barcode' => $fc_barcode,
             'fc_membercode' => $fc_membercode,
         ])->delete();
         return response()->json([
