@@ -68,6 +68,7 @@ class MasterWarehouseController extends Controller
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_warehousecode' => $request->fc_warehousecode,
+            'fc_membercode' => $request->fc_membercode,
         ], $request->except(['type']));
 
 		return [

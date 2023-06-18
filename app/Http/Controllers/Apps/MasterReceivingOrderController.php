@@ -37,32 +37,53 @@ class MasterReceivingOrderController extends Controller
             ->make(true);
     }
 
-    public function generateQRCodePDF($fc_barcode, $count){
+    public function detail($fc_rono)
+    {
+        $decode_fc_rono = base64_decode($fc_rono);
+        session(['fc_rono_global' => $decode_fc_rono]);
+        $data['ro_mst'] = RoMaster::with('pomst.supplier')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        return view('apps.master-receiving-order.detail', $data);
+        // dd($data);
+    }
+
+    public function datatables_ro_detail()
+    {
+        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', session('fc_rono_global'))->where('fc_branch', auth()->user()->fc_branch)->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function generateQRCodePDF($fc_barcode, $count)
+    {
         $fc_barcode_decode = base64_decode($fc_barcode);
         $count_decode = base64_decode($count);
         $qrcode = QrCode::size(250)->generate($fc_barcode_decode);
-    
+
         // generate qrcode ke pdf
-        $pdf = PDF::loadView('pdf.qr-code', 
+        $pdf = PDF::loadView(
+            'pdf.qr-code',
             [
                 'qrcode' => $qrcode,
                 'count' => $count_decode
             ]
         )->setPaper('a4', 'portrait');
-        
-    
+
+
         return $pdf->stream();
     }
-    
 
-    public function pdf(Request $request){
+
+    public function pdf(Request $request)
+    {
         // dd($request);
         $decode_fc_rono = base64_encode($request->fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        if($request->name_pj){
+        if ($request->name_pj) {
             $data['nama_pj'] = $request->name_pj;
-        }else{
+        } else {
             $data['nama_pj'] = auth()->user()->fc_username;
         }
         // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
@@ -77,7 +98,8 @@ class MasterReceivingOrderController extends Controller
         ];
     }
 
-    public function get_pdf($fc_rono,$nama_pj){
+    public function get_pdf($fc_rono, $nama_pj)
+    {
         $decode_fc_rono = base64_decode($fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();

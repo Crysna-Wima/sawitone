@@ -5,7 +5,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -61,7 +61,7 @@
                 </button>
             </div>
             <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" onsubmit="setTimeout(function(){window.location.reload();},10);" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -83,7 +83,7 @@
                                 <input type="text" class="form-control" name="fc_warehousecode" id="fc_warehousecode">
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Posisi Gudang</label>
                                 <select class="form-control select2" name="fc_warehousepos" id="fc_warehousepos" required>
@@ -93,13 +93,20 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Status</label>
                                 <select class="form-control select2" name="fl_status" id="fl_status" required>
                                     <option value="" selected disabled>- Pilih -</option>
                                     <option value="G">Gudang</option>
                                     <option value="D">Display</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group" id="customer" hidden>
+                                <label>Customer</label>
+                                <select class="form-control select2" name="fc_membercode" id="fc_membercode">
                                 </select>
                             </div>
                         </div>
@@ -144,7 +151,46 @@
 <script>
     $(document).ready(function() {
         get_data_branch();
+        get_data_customer();
     });
+
+    $("#fc_warehousepos").change(function() {
+        if ($('#fc_warehousepos').val() === 'INTERNAL') {
+            $('#customer').attr('hidden', true);
+        } else {
+            $('#customer').attr('hidden', false);
+            $('#fc_membercode').attr('required', true);
+        }
+    });
+
+    function get_data_customer() {
+        $.ajax({
+            url: "/master/get-data-all/Customer",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_membercode").empty();
+                    $("#fc_membercode").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function get_data_branch() {
         $("#modal_loading").modal('show');
@@ -195,7 +241,9 @@
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
-        order: [[3, 'asc']],
+        order: [
+            [3, 'asc']
+        ],
         ajax: {
             url: '/data-master/master-warehouse/datatables',
             type: 'GET'
@@ -206,7 +254,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [10]
+                targets: [7, 10]
             },
         ],
         columns: [{
