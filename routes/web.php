@@ -357,7 +357,9 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-receiving-order')->group(function(){
             Route::get('/','Apps\MasterReceivingOrderController@index');
             Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
-            Route::get('/generate-qr/{fc_barcode}/{count}','Apps\MasterReceivingOrderController@generateQRCodePDF');
+            Route::get('/detail/{fc_rono}','Apps\MasterReceivingOrderController@detail');
+            Route::get('/datatables/ro_detail','Apps\MasterReceivingOrderController@datatables_ro_detail');
+            Route::get('/detail/generate-qr/{fc_barcode}/{count}/{fd_expired_date}/{fc_batch}','Apps\MasterReceivingOrderController@generateQRCodePDF');
             Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
         });
@@ -395,6 +397,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('mutasi-barang')->group(function(){
             Route::get('/','Apps\MutasiBarangController@index');
+            Route::get('/datatables/so_cprr/{fc_membercode}','Apps\MutasiBarangController@datatables_so_cprr');
             Route::get('/datatables-lokasi-awal/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');

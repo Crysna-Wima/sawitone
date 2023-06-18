@@ -74,9 +74,9 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
-                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                                 <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                             </tr>
                                         </thead>
@@ -94,9 +94,9 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
-                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                                 <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                             </tr>
                                         </thead>
@@ -114,9 +114,9 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center text-nowrap">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
-                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center text-nowrap">Tgl Diterima</th>
                                                 <th scope="col" class="text-center">Status</th>
+                                                <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center" style="width: 15%">Actions</th>
                                             </tr>
                                         </thead>
@@ -257,9 +257,6 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'fn_rodetail'
-                    },
-                    {
                         data: 'fd_roarivaldate',
                         render: formatTimestamp
                     },
@@ -267,27 +264,27 @@
                         data: 'fc_rostatus'
                     },
                     {
+                        data: 'fn_rodetail'
+                    },
+                    {
                         data: null,
                     },
                 ],
 
                 rowCallback: function(row, data) {
-                    console.log(data.rodtl)
                     var fc_rono = window.btoa(data.fc_rono);
-                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
-                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
-                    $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                    $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'P') {
-                        $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                        $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
                     } else {
-                        $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
+                        $('td:eq(7)', row).html('<span class="badge badge-success">Diterima</span>');
                     }
 
                     //  console.log(data.rodtl[0].invstore.fc_barcode)
 
                     $('td:eq(9)', row).html(`
-                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" target="_blank" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
+                    <a href="/apps/master-receiving-order/detail/${fc_rono}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
+                    <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
                     // <a href="/apps/master-receiving-order/pdf/${fc_rono}" target="_blank"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 },
@@ -332,14 +329,14 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'fn_rodetail'
-                    },
-                    {
                         data: 'fd_roarivaldate',
                         render: formatTimestamp
                     },
                     {
                         data: 'fc_rostatus'
+                    },
+                    {
+                        data: 'fn_rodetail'
                     },
                     {
                         data: null,
@@ -348,18 +345,16 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
-                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
-                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
-                    $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                    $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'P') {
-                        $('td:eq(8)', row).html('<span class="badge badge-primary">Terbayar</span>');
+                        $('td:eq(7)', row).html('<span class="badge badge-primary">Terbayar</span>');
                     } else {
                         $(row).hide();
                     }
 
                     $('td:eq(9)', row).html(`
+                    <a href="/apps/master-receiving-order/detail/${fc_rono}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" target="_blank" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },
             });
@@ -403,14 +398,14 @@
                         data: 'pomst.supplier.fc_suppliername1',
                     },
                     {
-                        data: 'fn_rodetail'
-                    },
-                    {
                         data: 'fd_roarivaldate',
                         render: formatTimestamp
                     },
                     {
                         data: 'fc_rostatus'
+                    },
+                    {
+                        data: 'fn_rodetail'
                     },
                     {
                         data: null,
@@ -419,21 +414,18 @@
 
                 rowCallback: function(row, data) {
                     var fc_rono = window.btoa(data.fc_rono);
-                    var count = window.btoa(data.rodtl[0].fn_qty_ro);
-                    var fc_barcode = window.btoa(data.rodtl[0].invstore.fc_barcode);
-                    $('td:eq(8)', row).html(`<i class="${data.fc_rostatus}"></i>`);
+                    $('td:eq(7)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                     if (data['fc_rostatus'] == 'R') {
-                        $('td:eq(8)', row).html('<span class="badge badge-success">Diterima</span>');
+                        $('td:eq(7)', row).html('<span class="badge badge-success">Diterima</span>');
                     } else {
                         $(row).hide();
                     }
 
                     $('td:eq(9)', row).html(`
+                    <a href="/apps/master-receiving-order/detail/${fc_rono}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-receiving-order/generate-qr/${fc_barcode}/${count}" target="_blank" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
                 },
             });
-
         </script>
     @endsection

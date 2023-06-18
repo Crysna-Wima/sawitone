@@ -165,7 +165,11 @@
                             <div class="form-group">
                                 <label for="fc_penerima">Penerima</label>
                                 <div class="input-group">
+                                    @if ($mutasi_mst->fc_penerima != null)
                                     <input type="text" class="form-control" id="fc_penerima" name="fc_penerima" value="{{ $mutasi_mst->fc_penerima }}" readonly>
+                                    @else
+                                    <input type="text" class="form-control" id="fc_penerima" name="fc_penerima" value="Masih Proses" readonly>
+                                    @endif
                                 </div>
                             </div>
                         </div>

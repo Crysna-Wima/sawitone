@@ -76,6 +76,14 @@
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
+                                            <th scope="col" class="text-center">Nama Gudang</th>
+                                            <th scope="col" class="text-center">Alamat</th>
+                                            <th scope="col" class="text-center">Jumlah Item</th>
+                                            <th scope="col" class="text-center">Deskripsi</th>
+                                            <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                        </tr>
+                                        <!-- <tr>
+                                            <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">Kode Barang</th>
                                             <th scope="col" class="text-center">Nama Barang</th>
                                             <th scope="col" class="text-center">Sebutan</th>
@@ -84,7 +92,7 @@
                                             <th scope="col" class="text-center">Tipe Barang</th>
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                                        </tr>
+                                        </tr> -->
                                     </thead>
                                 </table>
                             </div>
@@ -261,7 +269,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 4]
+            targets: [0, 2, 3, 4]
+        }, {
+            className: 'text-nowrap',
+            targets: [1, 5]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -269,34 +280,29 @@
                 orderable: false
             },
             {
-                data: 'fc_stockcode'
+                data: 'fc_rackname'
             },
             {
-                data: 'fc_namelong'
-            },
-            {
-                data: 'fc_nameshort'
-            },
-            {
-                data: 'fc_brand'
-            },
-            {
-                data: 'fc_subgroup'
-            },
-            {
-                data: 'fc_typestock2'
+                data: 'fc_warehouseaddress',
+                // defaultContent: '',
             },
             {
                 data: 'sum_quantity',
-                // defaultContent: '',
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_inventory_dexa('${data.fc_stockcode}', '${data.fc_namelong}')"><i class="fa fa-eye"> </i> Detail</button>
+            var fc_warehousecode = window.btoa(data.fc_warehousecode);
+            $('td:eq(5)', row).html(`
+                <a href="/apps/persediaan-barang/detail/${fc_warehousecode}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                <a href="/apps/persediaan-barang/pdf/${fc_warehousecode}" target="_blank"><button class="btn btn-warning btn-sm"><i class="fa fa-file"></i> PDF</button></a>
+                <button class="btn btn-info btn-sm ml-1" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
                 `);
         },
     });
@@ -311,10 +317,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4]
+            targets: [0, 2, 3, 4]
         }, {
             className: 'text-nowrap',
-            targets: [5]
+            targets: [1, 5]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',

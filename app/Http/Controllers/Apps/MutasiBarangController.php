@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\TempMutasiDetail;
 use App\Models\TempMutasiMaster;
+use App\Models\SoMaster;
 use Illuminate\Http\Request;
 use App\Models\Warehouse;
 use Yajra\DataTables\DataTables as DataTables;
@@ -28,6 +29,18 @@ class MutasiBarangController extends Controller
         }
         // dd($temp_po_detail);
         return view('apps.mutasi-barang.index');
+    }
+    
+    public function datatables_so_cprr($fc_membercode){
+        $data = SoMaster::with('customer')
+        ->where('fc_sotype', 'Cost Per Test')
+        ->where('fc_membercode', $fc_membercode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function datatables_lokasi_awal($fc_type_mutation){

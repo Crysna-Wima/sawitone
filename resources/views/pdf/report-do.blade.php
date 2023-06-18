@@ -235,6 +235,8 @@
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 30%">{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+            </tr>
+            <tr>
                 <td>Tipe Bisnis</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ $do_mst->somst->customer->fc_membertypebusiness }}</td>
