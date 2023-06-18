@@ -55,11 +55,22 @@ class MasterReceivingOrderController extends Controller
             ->make(true);
     }
 
-    public function generateQRCodePDF($fc_barcode, $count)
+    public function generateQRCodePDF($fc_barcode, $count, $fd_expired_date, $fc_batch)
     {
         $fc_barcode_decode = base64_decode($fc_barcode);
+        $fc_batch_decode = base64_decode($fc_batch);
+        $fd_expired_date_decode = base64_decode($fd_expired_date);
         $count_decode = base64_decode($count);
-        $qrcode = QrCode::size(250)->generate($fc_barcode_decode);
+        $t_nomor = DB::table('t_nomor')
+        ->where('fv_document', 'BATCH')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->first();
+
+        $vBatch = $fc_batch_decode  . str_repeat('0', $t_nomor->fn_count3 - strlen($fc_batch));
+    
+        $kode_qr = $fc_barcode_decode . $vBatch . date("dmY", strtotime($fd_expired_date_decode));
+        
+        $qrcode = QrCode::size(250)->generate($kode_qr);
 
         // generate qrcode ke pdf
         $pdf = PDF::loadView(
@@ -72,6 +83,7 @@ class MasterReceivingOrderController extends Controller
 
 
         return $pdf->stream();
+        // dd($kode_qr);
     }
 
 

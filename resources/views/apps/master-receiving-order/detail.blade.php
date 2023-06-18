@@ -247,11 +247,13 @@
         rowCallback: function(row, data) {
             var fc_rono = window.btoa(data.fc_rono);
             var count = window.btoa(data.fn_qty_ro);
+            var expired_date = window.btoa(data.fd_expired_date);
+            var fc_batch = window.btoa(data.fc_batch);
             var fc_barcode = window.btoa(data.fc_barcode);
             
             console.log(data.invstore);
             $('td:eq(7)', row).html(`
-                <a href="/apps/master-receiving-order/detail/generate-qr/${fc_barcode}/${count}" target="_blank" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
+                <a href="/apps/master-receiving-order/detail/generate-qr/${fc_barcode}/${count}/${expired_date}/${fc_batch}" target="_blank" class="btn btn-primary btn-sm" ml-1><i class="fa fa-qrcode"></i> Generate QR</a>
             `)
         }
     });
