@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------
@@ -242,5 +242,4 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
-
 ];
