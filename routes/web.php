@@ -395,7 +395,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('mutasi-barang')->group(function(){
             Route::get('/','Apps\MutasiBarangController@index');
-            Route::get('/datatables/so_cprr','Apps\MutasiBarangController@datatables_so_cprr');
+            Route::get('/datatables/so_cprr/{fc_membercode}','Apps\MutasiBarangController@datatables_so_cprr');
             Route::get('/datatables-lokasi-awal/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
