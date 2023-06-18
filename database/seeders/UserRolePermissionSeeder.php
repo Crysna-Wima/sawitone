@@ -64,8 +64,8 @@ class UserRolePermissionSeeder extends Seeder
             // $role->givePermissionTo('CPRR Customer');
 
             // user dengan id 3 assignrole ke SUPERADMIN
-            $user = User::find(11);
-            $user->assignRole('BASIC');
+            $user = User::find(3);
+            $user->assignRole('SUPERADMIN');
             
 
             

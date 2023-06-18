@@ -79,6 +79,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-role')->group(function () {
             Route::get('/','DataMaster\MasterRoleController@index');
+            Route::get('/datatable','DataMaster\MasterRoleController@datatable');
+            Route::post('/create','DataMaster\MasterRoleController@create');
         });
 
         Route::prefix('master-user')->group(function () {
