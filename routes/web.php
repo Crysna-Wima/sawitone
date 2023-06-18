@@ -357,7 +357,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterReceivingOrderController@datatables');
             Route::get('/detail/{fc_rono}','Apps\MasterReceivingOrderController@detail');
             Route::get('/datatables/ro_detail','Apps\MasterReceivingOrderController@datatables_ro_detail');
-            Route::get('/detail/generate-qr/{fc_barcode}/{count}','Apps\MasterReceivingOrderController@generateQRCodePDF');
+            Route::get('/detail/generate-qr/{fc_barcode}/{count}/{fd_expired_date}/{fc_batch}','Apps\MasterReceivingOrderController@generateQRCodePDF');
             Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
         });
