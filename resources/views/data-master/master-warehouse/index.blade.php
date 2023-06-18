@@ -61,7 +61,7 @@
                 </button>
             </div>
             <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" onsubmit="setTimeout(function(){window.location.reload();},10);" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/master-warehouse/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -157,6 +157,8 @@
     $("#fc_warehousepos").change(function() {
         if ($('#fc_warehousepos').val() === 'INTERNAL') {
             $('#customer').attr('hidden', true);
+            $('#fc_membercode').attr('required', false);
+            $('#fc_membercode').val(null).trigger('change');
         } else {
             $('#customer').attr('hidden', false);
             $('#fc_membercode').attr('required', true);

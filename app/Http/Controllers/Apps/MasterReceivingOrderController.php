@@ -57,6 +57,7 @@ class MasterReceivingOrderController extends Controller
 
     public function generateQRCodePDF($fc_barcode, $count, $fd_expired_date, $fc_batch)
     {
+
         $fc_barcode_decode = base64_decode($fc_barcode);
         $fc_batch_decode = base64_decode($fc_batch);
         $fd_expired_date_decode = base64_decode($fd_expired_date);
@@ -72,30 +73,29 @@ class MasterReceivingOrderController extends Controller
         
         $qrcode = QrCode::size(250)->generate($kode_qr);
 
+
         // generate qrcode ke pdf
-        $pdf = PDF::loadView(
-            'pdf.qr-code',
+        $pdf = PDF::loadView('pdf.qr-code', 
             [
                 'qrcode' => $qrcode,
                 'count' => $count_decode
             ]
         )->setPaper('a4', 'portrait');
-
-
+        
+    
         return $pdf->stream();
         // dd($kode_qr);
     }
+    
 
-
-    public function pdf(Request $request)
-    {
+    public function pdf(Request $request){
         // dd($request);
         $decode_fc_rono = base64_encode($request->fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        if ($request->name_pj) {
+        if($request->name_pj){
             $data['nama_pj'] = $request->name_pj;
-        } else {
+        }else{
             $data['nama_pj'] = auth()->user()->fc_username;
         }
         // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
@@ -110,8 +110,7 @@ class MasterReceivingOrderController extends Controller
         ];
     }
 
-    public function get_pdf($fc_rono, $nama_pj)
-    {
+    public function get_pdf($fc_rono,$nama_pj){
         $decode_fc_rono = base64_decode($fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
