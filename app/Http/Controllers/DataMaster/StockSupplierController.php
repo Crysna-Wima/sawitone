@@ -61,6 +61,7 @@ class StockSupplierController extends Controller
                 'fc_stockcode' => $request->fc_stockcode,
                 'fc_barcode' => $request->fc_barcode,
                 'fc_suppliercode' => $request->fc_suppliercode,
+                'deleted_at' => null
             ])->withTrashed()->count();
 
             if($cek_data > 0){
@@ -72,7 +73,7 @@ class StockSupplierController extends Controller
         }
 
         $request->merge(['fm_purchase' => Convert::convert_to_double($request->fm_purchase) ]);
-        $request->merge(['fm_price_customer' => Convert::convert_to_double($request->fm_price_customer) ]);
+        // $request->merge(['fm_price_customer' => Convert::convert_to_double($request->fm_price_customer) ]);
         $request->merge(['fm_price_default' => Convert::convert_to_double($request->fm_price_default) ]);
         $request->merge(['fm_price_distributor' => Convert::convert_to_double($request->fm_price_distributor) ]);
         $request->merge(['fm_price_project' => Convert::convert_to_double($request->fm_price_project) ]);
@@ -83,24 +84,31 @@ class StockSupplierController extends Controller
         if($request->has('fm_price_customer') || $request->has('fm_price_default') || $request->has('fm_price_distributor') || $request->has('fm_price_project') || $request->has('fm_price_dealer') || $request->has('fm_price_enduser')){
             $request->request->add(['fd_update' => Carbon::now()]);
         }
-
-        StockSupplier::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_stockcode' => $request->fc_stockcode,
-            'fc_barcode' => $request->fc_barcode,
-            'fc_suppliercode' => $request->fc_suppliercode,
-        ], $request->all());
+        
+        if($request->type = "update"){
+            StockSupplier::updateOrCreate([
+                'id' => $request->id
+            ], $request->all());
+        } else {
+            StockSupplier::updateOrCreate([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_stockcode' => $request->fc_stockcode,
+                'fc_barcode' => $request->fc_barcode,
+                'fc_suppliercode' => $request->fc_suppliercode,
+            ], $request->all());   
+        }
 
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'
 		];
+        // dd($request);
     }
 
     public function delete($fc_divisioncode, $fc_branch, $fc_stockcode, $fc_barcode, $fc_suppliercode){
         StockSupplier::where([
-            'fc_divisoncode' => $fc_divisioncode,
+            'fc_divisioncode' => $fc_divisioncode,
             'fc_barcode' => $fc_barcode,
             'fc_branch' => $fc_branch,
             'fc_stockcode' => $fc_stockcode,

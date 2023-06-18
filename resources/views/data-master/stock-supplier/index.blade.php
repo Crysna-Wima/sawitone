@@ -31,6 +31,7 @@
                     <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
                     <form id="form_submit" action="/data-master/stock-supplier/store-update" method="POST" autocomplete="off">
                         <input type="text" name="type" id="type" hidden>
+                        <input type="number" name="id" id="id" hidden>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-12 col-md-6 col-lg-6" hidden>
@@ -61,9 +62,9 @@
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
                                     <div class="form-group">
-                                        <label>Barcode</label>
-                                        <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" readonly>
-                                        <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" hidden readonly>
+                                        <label>Katalog Product</label>
+                                        <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" hidden readonly>
+                                        <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
@@ -78,16 +79,16 @@
                                         <input type="text" class="form-control" name="fc_namelong" id="fc_namelong" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-12">
+                                {{-- <div class="col-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label>Harga Pembelian dari Supplier</label>
                                         <input type="text" class="form-control format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <div class="form-group">
                                         <label>Price Supplier</label>
-                                        <input type="text" class="form-control format-rp" name="fm_price_customer" id="fm_price_customer" onkeyup="return onkeyupRupiah(this.id);">
+                                        <input type="text" class="form-control format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4">
@@ -144,9 +145,9 @@
                           <th scope="col" class="text-center">No</th>
                           <th scope="col" class="text-center">Divisi</th>
                           <th scope="col" class="text-center">Branch</th>
-                          <th scope="col" class="text-center">Kode Barang</th>
+                          <th scope="col" class="text-center">Katalog Barang</th>
                           <th scope="col" class="text-center">Nama Barang</th>
-                          <th scope="col" class="text-center">Barcode</th>
+                          {{-- <th scope="col" class="text-center">Barcode</th> --}}
                           <th scope="col" class="text-center">Supplier Code</th>
                           <th scope="col" class="text-center">Price Supplier</th>
                           <th scope="col" class="text-center">Price Default</th>
@@ -185,7 +186,7 @@
                             <tr>
                                 <th scope="col" class="text-center">No</th>
                                 <th scope="col" class="text-center">Stock Code</th>
-                                <th scope="col" class="text-center">Barcode</th>
+                                {{-- <th scope="col" class="text-center">Barcode</th> --}}
                                 <th scope="col" class="text-center">Name</th>
                                 <th scope="col" class="text-center">Price Default</th>
                                 <th scope="col" class="text-center">Price Distributor</th>
@@ -235,12 +236,12 @@
                 type: 'GET'
             },
             columnDefs: [
-                { className: 'text-center', targets: [0,9] },
+                { className: 'text-center', targets: [0,8] },
             ],
             columns: [
                 { data: 'DT_RowIndex',searchable: false, orderable: false},
                 { data: 'fc_stockcode'},
-                { data: 'fc_barcode'},
+                // { data: 'fc_barcode'},
                 { data: 'fc_nameshort'},
                 { data: 'fm_price_default',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
                 { data: 'fm_price_distributor',render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
@@ -251,7 +252,7 @@
             ],
             rowCallback : function(row, data){
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(8)', row).html(`
                     <button type="button" class="btn btn-success btn-sm mr-1" onclick="terpilih_stock('${data.fc_stockcode}', '${data.fc_barcode}')"><i class="fa fa-check"></i> Choose</button>
                 `);
             }
@@ -399,7 +400,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0] },
-         { className: 'text-nowrap', targets: [13] },
+         { className: 'text-nowrap', targets: [12] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -407,9 +408,9 @@
          { data: 'branch.fv_description' },
          { data: 'fc_stockcode' },
          { data: 'stock.fc_namelong', defaultContent: '' },
-         { data: 'fc_barcode' },
+        //  { data: 'fc_barcode' },
          { data: 'supplier.fc_suppliername1', defaultContent: '', },
-         { data: 'fm_price_customer', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
+         { data: 'fm_purchase', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fm_price_default', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fm_price_distributor', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
          { data: 'fm_price_project', render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' ) },
@@ -421,16 +422,17 @@
          var url_edit   = "/data-master/stock-supplier/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
          var url_delete = "/data-master/stock-supplier/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_stockcode + '/' + data.fc_barcode + '/' + data.fc_suppliercode;
 
-         $('td:eq(13)', row).html(`
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+         $('td:eq(12)', row).html(`
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}','${data.stock.fc_nameshort}','${data.stock.fc_namelong}', '${data.id}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_description}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
-   function edit(url){
-      edit_action_custom(url, 'Edit Data Stock Supplier');
+   function edit(url, nameshort, namelong, id){
+      edit_action_custom(url,nameshort,namelong);
       $("#type").val('update');
+      $("#id").val(id);
    }
 
    function edit_action_custom(url, nameshort, namelong){
