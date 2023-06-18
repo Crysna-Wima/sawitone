@@ -286,6 +286,7 @@
 
 @section('js')
 <script>
+    var fc_membercode_tujuan = "";
     // change value fc_type_mutation
 
     function click_modal_lokasi_awal() {
@@ -318,11 +319,24 @@
     }
 
     function click_modal_so() {
-        $('#modal_so').modal('show');
-        table_so();
+        var fc_destination = $('#fc_destination').val();
+        if(fc_destination === ''){
+            swal(
+                'Perhatian',
+                'Pilih Lokasi Tujuan Terlebih Dahulu',
+                'warning'
+            )
+        }else{
+            $('#modal_so').modal('show');
+            table_so(fc_membercode_tujuan);
+        }
+       
     }
 
     $("#fc_type_mutation").change(function(){
+        // #fc_destination clear value
+        $('#fc_destination').val('');
+        $('#fc_startpoint').val('');
         if ($('#fc_type_mutation').val() === 'INTERNAL') {
             $('#unclick' ).attr( 'disabled', true );
             $('input[id="fc_sono_input"]').val("");
@@ -337,7 +351,7 @@
         $('#modal_so').modal('hide');
     }
 
-    function table_so() {
+    function table_so(fc_membercode_tujuan) {
         var tb = $('#tb_so').DataTable({
             processing: true,
             serverSide: true,
@@ -346,7 +360,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: '/apps/mutasi-barang/datatables/so_cprr',
+                url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_membercode_tujuan,
                 type: 'GET'
             },
             columnDefs: [{
@@ -495,9 +509,9 @@
         });
     }
 
-    function detail_warehouse_tujuan($fc_warehousecode) {
+    function detail_warehouse_tujuan(fc_warehousecode, fc_membercode) {
         $.ajax({
-            url: "/master/data-warehouse-first/" + $fc_warehousecode,
+            url: "/master/data-warehouse-first/" + fc_warehousecode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -509,6 +523,7 @@
                 });
                 $('#fc_rackname_tujuan').val(data.fc_rackname);
                 $('#fc_destination').val(data.fc_warehousecode);
+                fc_membercode_tujuan = fc_membercode;
                 if (data.fc_warehouseaddress != null) {
                     $('#fc_warehouseaddress_tujuan').val(data.fc_warehouseaddress);
                 } else {
@@ -585,7 +600,7 @@
                 }
 
                 $('td:eq(9)', row).html(`
-            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_tujuan('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_tujuan('${data.fc_warehousecode}','${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
             }
         });
