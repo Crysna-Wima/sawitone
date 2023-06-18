@@ -30,9 +30,11 @@ class MutasiBarangController extends Controller
         // dd($temp_po_detail);
         return view('apps.mutasi-barang.index');
     }
-
+    
     public function datatables_so_cprr(){
-        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = SoMaster::with('customer')->where('fc_sotype', 'Cost Per Test')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
