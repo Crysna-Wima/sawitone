@@ -149,7 +149,7 @@
                                     <div class="form-group">
                                         <label>Masa Piutang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->customer->fn_memberAgingAP }}" readonly>
+                                            value="{{ $data->customer->fn_memberAgingAP }} Hari" readonly>
                                     </div>
                                 </div>
                                 <div class="col-4 col-md-4 col-lg-4">
@@ -170,7 +170,7 @@
                                     <div class="form-group">
                                         <label>Piutang</label>
                                         <input type="text" class="form-control"
-                                            value="{{ $data->customer->fm_memberAP }}" readonly>
+                                            value="Rp. {{ number_format( $data->customer->fm_memberAP,0,',','.') }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -195,6 +195,7 @@
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center">Bonus</th>
                                             <th scope="col" class="text-center">DO</th>
+                                            <th scope="col" class="text-center">Sisa</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
                                             <th scope="col" class="text-center">Disc.(Rp)</th>
@@ -280,7 +281,7 @@
                 targets: [7],
                 defaultContent: "-",
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7]
+                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -306,7 +307,14 @@
                     data: 'fn_do_qty'
                 },
                 {
-                    data: 'fv_description'
+                    data: null,
+                    render: function ( data, type, row ) {
+                        return row.fn_so_qty - row.fn_do_qty;
+                    }
+                },
+                {
+                    data: 'fv_description',
+                    defaultContent: '-'
                 },
                 // {
                 //     data: 'fm_so_oriprice',

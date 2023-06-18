@@ -639,7 +639,7 @@
                         var data = response.data;
                         // console.log(data);
                         $("#fc_membername1").empty();
-                        $("#fc_membername1").append(`<option value="" selected readonly>-- Select --</option>`);
+                        $("#fc_membername1").append(`<option value="" selected readonly>-- Pilih --</option>`);
                         for (var i = 0; i < staticAddress.length; i++) {
                             $("#fc_membername1").append(
                                 `<option value="${staticAddress[i].text}">${staticAddress[i].text}</option>`

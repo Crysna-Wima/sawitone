@@ -157,7 +157,7 @@
                                             <div class="col-12 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <label>Tanggal :</label>
-                                                    <span id="fd_dodateinputuser"></span>
+                                                    <span id="fd_dodate"></span>
                                                 </div>
                                                 {{-- input --}}
                                                 <input type="text" id="fd_dodateinputuser_input" name="fd_dodateinputuser" hidden>
@@ -183,13 +183,14 @@
                                     <div class="card-header">
                                         <h4>Calculation</h4>
                                     </div>
-                                    <div class="card-body" style="height: 180px">
+                                    <div class="card-body" style="height: 185px">
                                         <div class="d-flex">
                                             <div class="flex-row-item" style="margin-right: 30px">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
                                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
                                                 </div>
+                                                <input type="text" name="fn_dodetail" id="fn_dodetail_input" hidden>
                                                 <div class="d-flex">
                                                     <p class="flex-row-item"></p>
                                                     <p class="flex-row-item text-right"></p>
@@ -198,6 +199,7 @@
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
                                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_disctotal">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_disctotal" id="fm_disctotal_input" hidden>
                                                 <div class="d-flex">
                                                     <p class="flex-row-item"></p>
                                                     <p class="flex-row-item text-right"></p>
@@ -207,11 +209,13 @@
                                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
                                                 </div>
                                             </div>
+                                            <input type="text" name="fm_netto" id="fm_netto_input" hidden>
                                             <div class="flex-row-item">
                                                 <div class="d-flex" style="gap: 5px; white-space: pre">
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
                                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_servpay" id="fm_servpay_input" hidden>
                                                 <div class="d-flex">
                                                     <p class="flex-row-item"></p>
                                                     <p class="flex-row-item text-right"></p>
@@ -220,6 +224,7 @@
                                                     <p class="text-secondary flex-row-item" style="font-size: medium">Pajak</p>
                                                     <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_tax">0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_tax" id="fm_tax_input" hidden>
                                                 <div class="d-flex">
                                                     <p class="flex-row-item"></p>
                                                     <p class="flex-row-item text-right"></p>
@@ -228,6 +233,7 @@
                                                     <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
                                                     <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
                                                 </div>
+                                                <input type="text" name="fm_brutto" id="fm_brutto_input" hidden>
                                             </div>
                                         </div>
                                     </div>
@@ -331,9 +337,12 @@
         $('#modal_invoice').css('overflow-y', 'auto');
 
         $(document).ready(function() {
-            $('.btn-submit').click(function() {
+            $('#form_submit').submit(function() {
                 $('#modal_invoice').modal('hide');
             });
+            // $('.btn-submit').click(function() {
+            //     $('#modal_invoice').modal('hide');
+            // });
 
             var isNamePjShown = false;
 
@@ -394,6 +403,10 @@
                         $('#modal_loading').modal('hide');
                     }, 500);
 
+                    console.log(data);
+                    // tampilkan modal_invoice
+                    $('#modal_invoice').modal('show');
+
                     // set fc_dono
                     $('#fc_dono').text(data.fc_dono);
                     // set fc_dono input
@@ -409,12 +422,12 @@
                     $('#fc_branch_input').val(data.fc_branch);
 
                     // set fd_dodateinputuser
-                    $('#fd_dodateinputuser').text(
-                        moment(data.fd_dodateinputuser).format('D MMMM Y')
+                    $('#fd_dodate').text(
+                        moment(data.fd_dodate).format('D MMMM Y')
                     );
                     // set fd_dodateinputuser input
-                    $('#fd_dodateinputuser_input').val(
-                        moment(data.fd_dodateinputuser).format('D MMMM Y')
+                    $('#fd_dodate_input').val(
+                        moment(data.fd_dodate).format('D MMMM Y')
                     );
                     //set fc_membernpwp_no input value
                     $('#fc_membernpwp_no').val(data.somst.customer.fc_membernpwp_no);
@@ -463,22 +476,16 @@
 
                     // set fm_brutto
                     $('#fm_brutto').html("Rp. " + fungsiRupiah(data.fm_brutto));
-                    
+
                     $("#fm_brutto").trigger("change");
                     // set fm_brutto_input
                     $('#fm_brutto_input').val(data.fm_brutto);
-
-
-                    // tampilkan modal_invoice
-                    $('#modal_invoice').modal('show');
-
-
                 },
                 error: function() {
                     // // hilangkan modal loading
                     // $('#modal_loading').modal('hide');
 
-                    console.log('Error retrieving fd_dodateinputuser');
+                    console.log('Error retrieving fd_dodate');
                 }
             });
         }

@@ -28,7 +28,7 @@ class ReceivingDetailOrderController extends Controller
         
         $count = count($temp_ro_detail);
         
-        $data['po_master'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_master'] = $temp_ro_master;
         $data['goods_reception'] = GoodReception::where('fc_grno',session('fc_grno_global'))->where('fc_branch', auth()->user()->fc_branch)->first();
 

@@ -392,11 +392,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Barcode</th>
+                                    <th scope="col" class="text-center">Katalog</th>
                                     <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Qty</th>
                                     <th scope="col" class="text-center">Batch</th>
-                                    <th scope="col" class="text-center">CAT</th>
                                     <th scope="col" class="text-center">Exp.</th>
                                     <th scope="col" class="text-center">Quantity</th>
                                     <th scope="col" class="text-center" style="width: 10%">Actions</th>
@@ -463,7 +462,7 @@
                     "searchable": false
                 },
                 {
-                    "data": "fc_barcode"
+                    "data": "fc_stockcode"
                 },
                 {
                     "data": "stock.fc_namelong"
@@ -473,9 +472,6 @@
                 },
                 {
                     "data": "fc_batch"
-                },
-                {
-                    "data": "fc_catnumber"
                 },
                 {
                     "data": "fd_expired",
@@ -578,7 +574,7 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5, 8]
+                    "targets": [0, 3, 4, 5, 7]
                 },
                 {
                     className: 'text-nowrap',
@@ -678,7 +674,7 @@
             targets: [8],
             defaultContent: "-",
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7, 8, 9]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
