@@ -346,7 +346,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/mutasi-barang/datatables/so_cprr',
                 type: 'GET'
             },
             columnDefs: [{
@@ -390,11 +390,6 @@
 
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
-                if (data['fc_sotype'] == 'Cost Per Test') {
-                    $(row).show();
-                } else {
-                    $(row).hide();
-                }
 
                 $('td:eq(7)', row).html(`
                 <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
