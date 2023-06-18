@@ -280,9 +280,10 @@
                 },
             ],
             rowCallback: function(row, data) {
+                var url_delete = "/data-master/master-role/destroy/" + data.id
                 $('td:eq(4)', row).html(`
                     <button class="btn btn-info btn-sm mr-1" ><i class="fa fa-edit"></i> Edit</button>
-                    <button class="btn btn-danger btn-sm" ><i class="fa fa-trash"> </i> Hapus</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')" ><i class="fa fa-trash"> </i> Hapus</button>
                 `);
             }
         });

@@ -19,12 +19,12 @@ use Spatie\Permission\Models\Role;
 class MasterRoleController extends Controller
 {
     public $user;
-    // public function __construct(){
-    //     $this->middleware(function ($request, $next) {
-    //         $this->user = Auth::guard('web')->user();
-    //         return $next($request);
-    //     });
-    // }
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::guard('web')->user();
+            return $next($request);
+        });
+    }
 
     public function datatable(){
         // role has permission
@@ -37,9 +37,9 @@ class MasterRoleController extends Controller
     }
 
     public function index(){
-        // if (is_null($this->user) || !$this->user->can('Master Role')) {
-        //     abort(403, 'Sorry !! You are Unauthorized to create any role !');
-        // }
+        if (is_null($this->user) || !$this->user->can('Master Role')) {
+            abort(403, 'Sorry !! You are Unauthorized to create any role !');
+        }
 
         $all_permissions  = Permission::all();
         $permission_groups = User::getpermissionGroups();
@@ -48,9 +48,9 @@ class MasterRoleController extends Controller
     }
 
     public function create(Request $request){
-        // if (is_null($this->user) || !$this->user->can('Master Role')) {
-        //     abort(403, 'Sorry !! You are Unauthorized to create any role !');
-        // }
+        if (is_null($this->user) || !$this->user->can('Master Role')) {
+            abort(403, 'Sorry !! You are Unauthorized to create any role !');
+        }
 
         // Validation Data
         $request->validate([
@@ -72,6 +72,30 @@ class MasterRoleController extends Controller
         return response()->json([
             'status' => 200,
             'message' => "Role User Berhasil dibuat"
+        ]);
+    }
+
+    public function destroy(int $id){
+        if (is_null($this->user) || !$this->user->can('Master Role')) {
+            abort(403, 'Sorry !! You are Unauthorized to delete any role !');
+        }
+
+        // TODO: You can delete this in your local. This is for heroku publish.
+        // This is only for Super Admin role,
+        // so that no-one could delete or disable it by somehow.
+        if ($id === 7) {
+            session()->flash('error', 'Sorry !! You are not authorized to delete this role !');
+            return back();
+        }
+
+        $role = Role::findById($id, 'web');
+        if (!is_null($role)) {
+            $role->delete();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Role User Berhasil dihapus"
         ]);
     }
 }

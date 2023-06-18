@@ -81,6 +81,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','DataMaster\MasterRoleController@index');
             Route::get('/datatable','DataMaster\MasterRoleController@datatable');
             Route::post('/create','DataMaster\MasterRoleController@create');
+            Route::delete('/destroy/{id}','DataMaster\MasterRoleController@destroy');
         });
 
         Route::prefix('master-user')->group(function () {
