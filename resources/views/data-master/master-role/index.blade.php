@@ -15,6 +15,98 @@
     .form-check-label {
         text-transform: capitalize;
     }
+
+    .cbox{
+        margin-top: 20px;
+    }
+
+    .ks-cboxtags {        
+        list-style: none;
+    }
+
+    .ks-cboxtags {
+        display: inline;
+    }
+
+    .ks-cboxtags label {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, .9);
+        border: 2px solid rgba(139, 139, 139, .3);
+        color: #adadad;
+        border-radius: 25px;
+        white-space: nowrap;
+        margin: 3px 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags label {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    .ks-cboxtags label::before {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 12px;
+        padding: 2px 6px 2px 2px;
+        content: "\f067";
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label::before {
+        content: "\f00c";
+        transform: rotate(-360deg);
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label {
+        border: 2px solid #0d6efd;
+        background-color: #0464d4;
+        color: #fff;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        display: absolute;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:focus+label {
+        border: 2px solid #e9a1ff;
+    }
+
+    #role{
+        margin-top: 10px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.4em;
+        font-size: 75%;
+        font-weight: 600;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        background-color: #0464d4;
+        color: #fff;
+    }
 </style>
 @endsection
 @section('content')
@@ -35,8 +127,8 @@
                             <thead style="white-space: nowrap">
                                 <tr>
                                     <th class="text-center" width="5%">No</th>
-                                    <th class="text-center" width="10%">Role ID</th>
                                     <th class="text-center" width="10%">Nama Role</th>
+                                    <th class="text-center" width="10%">Role ID</th>
                                     <th class="text-center" width="50%">Hak Akses</th>
                                     <th class="text-center" width="15%">Actions</th>
                                 </tr>
@@ -75,26 +167,26 @@
 
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="checkPermissionAll" value="1">
-                            <label class="form-check-label" for="checkPermissionAll">All</label>
+                            <label class="form-check-label" for="checkPermissionAll">Semua</label>
                         </div>
                         <hr>
                         @php $i = 1; @endphp
                         @foreach ($permission_groups as $group)
                         <div class="row">
-                            <div class="col-3">
-                                <div class="form-check">
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <div class="form-check cbox">
                                     <input type="checkbox" class="form-check-input" id="{{ $i }}Management" value="{{ $group->name }}" onclick="checkPermissionByGroup('role-{{ $i }}-management-checkbox', this)">
                                     <label class="form-check-label" for="checkPermission">{{ $group->name }}</label>
                                 </div>
                             </div>
 
-                            <div class="col-9 role-{{ $i }}-management-checkbox">
+                            <div class="col-12 col-md-12 col-lg-9 role-{{ $i }}-management-checkbox" id="role">
                                 @php
                                     $permissions = App\Models\User::getpermissionsByGroupName($group->name);
                                     $j = 1;
                                 @endphp
                                 @foreach ($permissions as $permission)
-                                    <div class="form-check">
+                                    <div class="ks-cboxtags">
                                         <input type="checkbox" class="form-check-input" name="permissions[]" id="checkPermission{{ $permission->id }}" value="{{ $permission->name }}">
                                         <label class="form-check-label" for="checkPermission{{ $permission->id }}">{{ $permission->name }}</label>
                                     </div>
@@ -191,7 +283,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 1]
+                    targets: [0, 1, 2, 3]
                 },
                 {
                     className: 'text-nowrap',
@@ -204,19 +296,19 @@
                     orderable: false
                 },
                 {
-                    data: 'id'
+                    data: 'name'
                 },
                 {
-                    data: 'name'
+                    data: 'id'
                 },
                 {
                     data: 'permissions',
                     render: function(data) {
                         var permissions = data.map(function(permission) {
-                            return permission.name;
+                            return `<span class="badge mr-1">${permission.name}</span>`;
                         });
-                        return permissions.join(', ');
-                    }
+                        return permissions.join('');
+                    },
                 },
                 {
                     data: null
