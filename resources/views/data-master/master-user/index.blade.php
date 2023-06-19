@@ -68,6 +68,7 @@
                             <div class="col-12 col-md-12 col-lg-12" hidden>
                                 <div class="form-group">
                                     <label>Division Code</label>
+                                    <input type="number" id="id_user" name="id" hidden>
                                     <input type="text" class="form-control required-field" name="fc_divisioncode"
                                         id="fc_divisioncode" value="SBY001" readonly>
                                 </div>
@@ -126,14 +127,24 @@
                                                 class="selectgroup-input" checked="">
                                             <span class="selectgroup-button">Non Active</span>
                                         </label>
+                                       
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Expired Date</label>
                                     <input type="text" class="form-control datepicker" name="fd_expired"
                                         id="fd_expired">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Assign Roles</label>
+                                    <select name="roles[]" id="roles" class="form-control select2" multiple>
+                                     
+                                            <option value="" ></option>
+                                     
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -303,7 +314,7 @@
                 }
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
-                var url_edit = "/data-master/master-user/detail/" + data.fc_username;
+                var url_edit = "/data-master/master-user/detail/" + data.fc_username + "/" + data.id;
                 var url_delete = "/data-master/master-user/delete/" + data.fc_username;
 
                 $('td:eq(10)', row).html(`
@@ -363,7 +374,7 @@
         }
 
         function edit(url) {
-            edit_action(url, 'Edit Data User');
+            edit_action_custom(url, 'Edit Data User');
             $("#type").val('update');
             $('#fc_branch').attr('disabled', true);
         }
@@ -373,5 +384,72 @@
         });
 
         $('.modal').css('overflow-y', 'auto');
+
+        function edit_action_custom(url, modal_text) {
+            save_method = 'edit';
+            $("#modal").modal('show');
+            $(".modal-title").text(modal_text);
+            $("#modal_loading").modal('show');
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "JSON",
+                success: function(response) {
+                    var user = response.user; // Ambil data user dari response
+                    var roles = response.roles;
+
+                    // Populate roles select options
+                    var rolesSelect = $('#roles');
+                    rolesSelect.empty(); // Clear existing options
+                    $.each(roles, function(index, role) {
+                        var selected = response.selected.hasOwnProperty(role.name) ? 'selected' : '';
+                        rolesSelect.append('<option value="' + role.id + '" ' + selected + '>' + role.name + '</option>');
+                    });
+
+                    Object.keys(user).forEach(function(key) {
+                        var elem_name = $('[name=' + key + ']');
+                        if (elem_name.hasClass('selectric')) {
+                            elem_name.val(user[key]).change().selectric('refresh');
+                        } else if (elem_name.hasClass('select2')) {
+                            elem_name.select2("trigger", "select", {
+                                data: {
+                                    id: user[key]
+                                }
+                            });
+                        } else if (elem_name.hasClass('selectgroup-input')) {
+                            $("input[name=" + key + "][value=" + user[key] + "]").prop('checked', true);
+                        } else if (elem_name.hasClass('my-ckeditor')) {
+                            CKEDITOR.instances[key].setData(user[key]);
+                        } else if (elem_name.hasClass('summernote')) {
+                            elem_name.summernote('code', user[key]);
+                        } else if (elem_name.hasClass('custom-control-input')) {
+                            $("input[name=" + key + "][value=" + user[key] + "]").prop('checked', true);
+                        } else if (elem_name.hasClass('time-format')) {
+                            elem_name.val(user[key].substr(0, 5));
+                        } else if (elem_name.hasClass('format-rp')) {
+                            var nominal = user[key].toString();
+                            elem_name.val(nominal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                        } else {
+                            elem_name.val(user[key]);
+                        }
+                    });
+
+                    // menambahkan input hidden id user
+                    $('#id_user').val(user.id);
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 600);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                        icon: 'error'
+                    });
+                }
+            });
+        }
+
     </script>
 @endsection

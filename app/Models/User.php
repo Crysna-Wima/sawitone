@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\CompositeKey;
+use DB;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -42,5 +43,34 @@ class User extends Authenticatable
 
     public function group_user(){
         return $this->belongsTo(TransaksiType::class, 'fc_groupuser', 'fc_kode')->withTrashed();
+    }
+
+    public static function getpermissionGroups()
+    {
+        $permission_groups = DB::table('permissions')
+            ->select('group_name as name')
+            ->groupBy('group_name')
+            ->get();
+        return $permission_groups;
+    }
+
+    public static function getpermissionsByGroupName($group_name)
+    {
+        $permissions = DB::table('permissions')
+            ->select('name', 'id')
+            ->where('group_name', $group_name)
+            ->get();
+        return $permissions;
+    }
+
+    public static function roleHasPermissions($role, $permissions){
+        $hasPermission = true;
+        foreach ($permissions as $permission) {
+            if (!$role->hasPermissionTo($permission->name)) {
+                $hasPermission = false;
+                return $hasPermission;
+            }
+        }
+        return $hasPermission;
     }
 }
