@@ -44,22 +44,22 @@ class MasterStockController extends Controller
 
     public function store_update(request $request){
        $validator = Validator::make($request->all(), [
-            'fc_stockcode' => 'required|unique:t_stock',
+            'fc_stockcode' => 'required',
             'fc_barcode' => 'required',
         ]);
 
-        if($validator->fails()) {
-            return [
-                'status' => 300,
-                'message' => $validator->errors()->first()
-            ];
-        }
+    //     if($validator->fails()) {
+    //         return [
+    //             'status' => 300,
+    //             'message' => $validator->errors()->first()
+    //         ];
+    //     }
 
         $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
         if(empty($request->type)){
             $cek_data = Stock::where([
                 'fc_stockcode' => $request->fc_stockcode,
-                'fc_barcode' => $request->fc_barcode,
+                'deleted_at' => null,
             ])->withTrashed()->count();
 
             if($cek_data > 0){
