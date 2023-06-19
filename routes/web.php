@@ -81,12 +81,14 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','DataMaster\MasterRoleController@index');
             Route::get('/datatable','DataMaster\MasterRoleController@datatable');
             Route::post('/create','DataMaster\MasterRoleController@create');
+            Route::get('/edit/{id}','DataMaster\MasterRoleController@edit');
+            Route::put('/update/{id}','DataMaster\MasterRoleController@update');
             Route::delete('/destroy/{id}','DataMaster\MasterRoleController@destroy');
         });
 
         Route::prefix('master-user')->group(function () {
             Route::get('/','DataMaster\MasterUserController@index');
-            Route::get('/detail/{fc_username}','DataMaster\MasterUserController@detail');
+            Route::get('/detail/{fc_username}/{id}','DataMaster\MasterUserController@detail');
             Route::get('/datatables','DataMaster\MasterUserController@datatables');
             Route::post('/store-update','DataMaster\MasterUserController@store_update');
             Route::delete('/delete/{fc_username}','DataMaster\MasterUserController@delete');

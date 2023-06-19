@@ -13,15 +13,44 @@ use Carbon\Carbon;
 use File;
 
 use App\Models\User;
+use Auth;
+use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Role as ModelsRole;
 
 class MasterUserController extends Controller
 {
+    public $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::guard('web')->user();
+            return $next($request);
+        });
+    }
     public function index(){
         return view('data-master.master-user.index');
     }
 
-    public function detail($fc_username){
-        return User::where('fc_username', $fc_username)->first();
+    public function detail($fc_username, $id){
+        if (is_null($this->user) || !$this->user->can('Master User')) {
+            abort(403, 'Sorry !! You are Unauthorized to edit any admin !');
+        }
+       
+        $user = User::find($id)->where('fc_username', $fc_username)->first();
+        $roles = ModelsRole::all();
+
+        // user punya role apa sajakah?
+        $selected = $user->roles->pluck('name', 'name')->all();
+
+        $response = [
+            'user' => $user,
+            'roles' => $roles,
+            'selected' => $selected
+        ];
+
+        return $response;
+        // dd($selected);
     }
 
     public function datatables(){
@@ -33,7 +62,19 @@ class MasterUserController extends Controller
     }
 
     public function store_update(request $request){
+        if (is_null($this->user) || !$this->user->can('Master User')) {
+            abort(403, 'Sorry !! You are Unauthorized to edit any admin !');
+        }
 
+        $id = $request->id;
+
+        // TODO: You can delete this in your local. This is for heroku publish.
+        // This is only for Super Admin role,
+        // so that no-one could delete or disable it by somehow.
+        if ($id === 7) {
+            session()->flash('error', 'Sorry !! You are not authorized to update this Admin as this is the Super Admin. Please create new one if you need to test !');
+            return back();
+        }
         $validation_array = [
             'fc_divisioncode' => 'required',
             'fc_branch' => 'required',
@@ -71,8 +112,15 @@ class MasterUserController extends Controller
             }
         }
 
+        $userAdmin = User::find($id);
+        $userAdmin->roles()->detach();
+        if ($request->roles) {
+            $userAdmin->assignRole($request->roles);
+        }
+
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
         User::updateOrCreate([
+            'id' => $request->id,
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_userid' => $request->fc_userid,

@@ -115,63 +115,6 @@
     </div>
 </div>
 
-<!-- Modal Update -->
-<!-- <div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Edit Data Master CPRR</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <input type="text" class="form-control" name="fc_branch_view_edit" id="fc_branch_view_edit" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit_cprr" action="/data-master/master-cprr/update" method="POST" autocomplete="off">
-                @csrf
-                @method('PUT')
-                <input type="text" name="type" id="type" hidden>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 col-md-3 col-lg-3" hidden>
-                            <div class="form-group">
-                                <label>Division Code</label>
-                                <input type="text" class="form-control" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required">
-                                <label>Cabang</label>
-                                <select class="form-control select2" name="fc_branch_edit" id="fc_branch_edit"></select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-9">
-                            <div class="form-group required">
-                                <label>Kode CPRR</label>
-                                <input type="text" class="form-control required-field" name="fc_cprrcode" id="fc_cprrcode_edit" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-12">
-                            <div class="form-group required">
-                                <label>Nama Pemeriksaan</label>
-                                <input type="text" class="form-control required-field" name="fc_cprrname" id="fc_cprrname_edit">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Deskripsi</label>
-                                <textarea name="fv_description" id="fv_description_edit" style="height: 50px" class="form-control"></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 
 @endsection
 
@@ -280,9 +223,10 @@
                 },
             ],
             rowCallback: function(row, data) {
-                var url_delete = "/data-master/master-role/destroy/" + data.id
+                var url_delete = "/data-master/master-role/destroy/" + data.id;
+                var url_edit = "/data-master/master-role/edit/" + data.id;
                 $('td:eq(4)', row).html(`
-                    <button class="btn btn-info btn-sm mr-1" ><i class="fa fa-edit"></i> Edit</button>
+                <a href="${url_edit}" class="btn btn-info btn-sm mr-1"><i class="fa fa-edit"></i> Edit</a>
                     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')" ><i class="fa fa-trash"> </i> Hapus</button>
                 `);
             }
