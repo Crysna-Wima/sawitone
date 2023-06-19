@@ -56,7 +56,7 @@ class MasterRoleController extends Controller
         $request->validate([
             'name' => 'required|max:100|unique:roles'
         ], [
-            'name.requried' => 'Please give a role name'
+            'name.requried' => 'Tolong isi nama role'
         ]);
 
         // Process Data
