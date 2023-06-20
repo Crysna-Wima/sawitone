@@ -52,7 +52,7 @@ class MetaDataController extends Controller
             $cek_data = TransaksiType::where([
                 'fc_trx' => $request->fc_trx,
                 'fc_kode' => $request->fc_kode,
-            ])->withTrashed()->count();
+            ])->whereNull('deleted_at')->withTrashed()->count();
 
             if ($cek_data > 0) {
                 return [
@@ -66,7 +66,7 @@ class MetaDataController extends Controller
         $exist_data = TransaksiType::where([
             'fc_trx' => $request->fc_trx,
             'fc_kode' => $request->fc_kode,
-        ])->withTrashed()->count();
+        ])->whereNull('deleted_at')->withTrashed()->count();
 
         // munculkan pesan 300
         if ($exist_data > 0) {

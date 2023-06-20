@@ -80,6 +80,7 @@
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6" hidden>
                             <div class="form-group">
+                                <input type="text" name="id" id="id_bank" hidden>
                                 <label>Kode Divisi</label>
                                 <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}">
                             </div>
@@ -249,6 +250,7 @@
         $("#modal").modal('show');
         $(".modal-title").text('Tambah Master Bank Acc');
         $("#form_submit")[0].reset();
+        $("#fc_bankcode").prop("readonly", false);
     }
 
     var tb = $('#tb').DataTable({
@@ -307,7 +309,7 @@
             },
         ],
         rowCallback: function(row, data) {
-            var url_edit = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
+            var url_edit = "/data-master/master-bank-acc/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode + '/' + data.id;
             var url_delete = "/data-master/master-bank-acc/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_bankcode;
 
             if (data.fl_bankhold == 'T') {
@@ -317,15 +319,19 @@
             }
 
             $('td:eq(11)', row).html(`
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}','${data.id}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fv_bankname}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
         }
     });
 
-    function edit(url) {
+    function edit(url, id) {
         edit_action(url, 'Edit Data Master Bank Acc');
         $("#type").val('update');
+        // input no rekening menjadi readonly
+        $("#fc_bankcode").prop("readonly", true);
+        $("#id_bank").val(id);
+
     }
 
     $('.modal').css('overflow-y', 'auto');
