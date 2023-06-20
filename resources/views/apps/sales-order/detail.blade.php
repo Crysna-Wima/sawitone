@@ -738,10 +738,11 @@
         });
     }
 
-    function detail_stock($id) {
-        console.log($id)
+    function detail_stock(id) {
+        // console.log($id)
+        var fc_stockcode = window.btoa(id)
         $.ajax({
-            url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
+            url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + fc_stockcode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -779,8 +780,9 @@
 
     function detail_stock_customer($id) {
         console.log($id)
+        var fc_stockcode = window.btoa(id);
         $.ajax({
-            url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + $id,
+            url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + fc_stockcode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {

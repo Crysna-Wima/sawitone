@@ -60,28 +60,63 @@ class MasterBrandController extends Controller
                 'fc_brand' => $request->fc_brand,
                 'fc_group' => $request->fc_group,
                 'fc_subgroup' => $request->fc_subgroup,
-            ])->withTrashed()->count();
+            ])->whereNull('deleted_at')->withTrashed()->count();
 
             if($cek_data > 0){
                 return [
                     'status' => 300,
                     'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
                 ];
+            }else{
+                $insert = Brand::create([
+                    'fc_divisioncode' => $request->fc_divisioncode,
+                    'fc_branch' => $request->fc_branch,
+                    'fc_brand' => $request->fc_brand,
+                    'fc_group' => $request->fc_group,
+                    'fc_subgroup' => $request->fc_subgroup,
+                ], $request->all());
+
+                if($insert){
+                    return [
+                        'status' => 200,
+                        'message' => 'Success! Data berhasil disimpan'
+                    ];
+                }else{
+                    return [
+                        'status' => 300,
+                        'message' => 'Oops! Terjadi kesalahan saat menyimpan data'
+                    ];
+                }
             }
         }
 
-        Brand::updateOrCreate([
+        // cek apakah request value sama dengan nilai yang ada di db
+        $cek_data = Brand::where([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_brand' => $request->fc_brand,
             'fc_group' => $request->fc_group,
             'fc_subgroup' => $request->fc_subgroup,
-        ], $request->all());
+        ])->whereNull('deleted_at')->withTrashed()->count();
 
-		return [
-			'status' => 200, // SUCCESS
-			'message' => 'Data berhasil disimpan'
-		];
+        if($cek_data > 0){
+            return [
+                'status' => 300,
+                'message' => 'Oops! Terjadi kesalahan saat mengupdate data'
+            ];
+        }else{
+            Brand::updateOrCreate([
+                'id' => $request->id,
+            ], $request->all());
+    
+            return [
+                'status' => 200, // SUCCESS
+                'message' => 'Data berhasil disimpan'
+            ];
+        }
+
+
+        
     }
 
     public function delete($fc_divisioncode,$fc_branch,$fc_brand,$fc_group,$fc_subgroup){
