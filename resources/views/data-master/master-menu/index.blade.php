@@ -92,22 +92,22 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group required">
+                    <div class="form-group">
                         <label>Menu</label>
-                        <input type="text" class="form-control required-field" name="menu" id="menu" required>
+                        <input type="text" class="form-control required-field" name="menu" id="menu">
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group required">
+                    <div class="form-group">
                         <label>Sub-Menu</label>
-                        <input type="text" class="form-control" name="submenu" id="submenu" required>
+                        <input type="text" class="form-control" name="submenu" id="submenu">
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class="form-group required">
+                    <div class="form-group">
                         <label>Url</label>
-                        <input type="text" class="form-control" name="link" id="link" required>
+                        <input type="text" class="form-control" name="link" id="link">
                     </div>
                 </div>
             </div>

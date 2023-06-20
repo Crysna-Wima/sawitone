@@ -513,6 +513,9 @@
         edit_action(url, 'Edit Data Master Sales');
         $("#type").val('update');
         $("#fc_branch").prop("disabled", true);
+        $("#fc_salesnorek1").prop("readonly", true);
+        $("#fc_salesnorek2").prop("readonly", true);
+        $("#fc_salesnorek3").prop("readonly", true);
     }
 </script>
 @endsection

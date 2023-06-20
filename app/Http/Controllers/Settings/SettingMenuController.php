@@ -63,7 +63,6 @@ class SettingMenuController extends Controller
             'nama_menu' => 'required',
             'index' => 'required',
             'parent_id' => 'required',
-            'menu' => 'required',
         ]);
 
         if($validator->fails()) {

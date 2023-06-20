@@ -312,7 +312,7 @@
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>>Alamat NPWP Customer 2</label>
+                                <label>Alamat NPWP Customer 2</label>
                                 <textarea type="text" class="form-control" name="fc_member_npwpaddress2" id="fc_member_npwpaddress2" style="height: 100px"></textarea>
                             </div>
                         </div>

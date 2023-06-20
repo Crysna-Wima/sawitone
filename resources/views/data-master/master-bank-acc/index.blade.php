@@ -182,7 +182,7 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fv_bankname").empty();
-                    $("#fv_bankname").append(`<option value="" selected readonly> - Pilih - </option>`);
+                    $("#fv_bankname").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fv_bankname").append(
                             `<option value="${data[i].fv_description}">${data[i].fv_description}</option>`);
@@ -331,6 +331,7 @@
         // input no rekening menjadi readonly
         $("#fc_bankcode").prop("readonly", true);
         $("#id_bank").val(id);
+
 
     }
 
