@@ -59,6 +59,7 @@
             <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
             <form id="form_submit" action="/data-master/master-brand/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
+                <input type="number" name="id" id="id_brand" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12" hidden>
@@ -173,15 +174,16 @@
          var url_delete = "/data-master/master-brand/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_brand + '/' + data.fc_group + '/' + data.fc_subgroup;
 
          $('td:eq(6)', row).html(`
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}','${data.id}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_subgroup}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
       }
    });
 
-   function edit(url){
+   function edit(url,id){
       edit_action(url, 'Edit Data Master Brand');
       $("#type").val('update');
+      $("#id_brand").val(id);
    }
 </script>
 @endsection

@@ -44,8 +44,10 @@ class DataMasterController extends Controller
 
     public function get_data_where_field_id_first($model, $where_field, $id)
     {
+        // decode id
+        $fc_stockcode = base64_decode($id);
         $model = 'App\\Models\\' . $model;
-        $data = $model::where($where_field, $id)->first();
+        $data = $model::where($where_field, $fc_stockcode)->first();
         return ApiFormatter::getResponse($data);
         // dd($data);
     }

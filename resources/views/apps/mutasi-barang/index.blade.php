@@ -352,6 +352,7 @@
     }
 
     function table_so(fc_membercode_tujuan) {
+        console.log(fc_membercode_tujuan)
         var tb = $('#tb_so').DataTable({
             processing: true,
             serverSide: true,
@@ -510,6 +511,7 @@
     }
 
     function detail_warehouse_tujuan(fc_warehousecode, fc_membercode) {
+        console.log(fc_membercode)
         $.ajax({
             url: "/master/data-warehouse-first/" + fc_warehousecode,
             type: "GET",
