@@ -379,7 +379,7 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'stock.fc_nameshort'
+                data: 'stock.fc_namelong'
             },
             {
                 data: 'namepack.fv_description'

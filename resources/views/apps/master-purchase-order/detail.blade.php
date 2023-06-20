@@ -162,7 +162,7 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Stockcode</th>
+                                        <th scope="col" class="text-center">Kode Stock</th>
                                         <th scope="col" class="text-center">Nama Produk</th>
                                         <th scope="col" class="text-center">Unity</th>
                                         <th scope="col" class="text-center">Qty</th>
