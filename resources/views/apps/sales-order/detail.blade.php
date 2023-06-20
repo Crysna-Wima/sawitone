@@ -598,7 +598,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 2, 5]
+                targets: [0, 1, 2, 5, 7]
             }],
             columns: [{
                     data: 'DT_RowIndex',
@@ -609,10 +609,10 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'fc_nameshort',
+                    data: 'fc_namelong',
                     render: function(data, type, row) {
                         if (!data) {
-                            return row.stock.fc_nameshort;
+                            return row.stock.fc_namelong;
                         }
                         return data;
                     }
@@ -871,7 +871,7 @@
                 data: 'fc_stockcode'
             },
             {
-                data: 'stock.fc_nameshort'
+                data: 'stock.fc_namelong'
             },
             {
                 data: 'namepack.fv_description'

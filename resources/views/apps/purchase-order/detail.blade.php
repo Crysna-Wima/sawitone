@@ -772,10 +772,10 @@
                         data: 'fc_stockcode'
                     },
                     {
-                        data: 'fc_nameshort',
+                        data: 'fc_namelong',
                         render: function(data, type, row) {
                             if (!data) {
-                                return row.stock.fc_nameshort;
+                                return row.stock.fc_namelong;
                             }
                             return data;
                         }
@@ -890,7 +890,7 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'stock.fc_nameshort'
+                    data: 'stock.fc_namelong'
                 },
                 {
                     data: 'fc_namepack'
