@@ -55,7 +55,7 @@ class MasterBankAccController extends Controller
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_bankcode' => $request->fc_bankcode,
-            ])->withTrashed()->count();
+            ])->whereNull('deleted_at')->count();
 
             if($cek_data > 0){
                 return [
@@ -66,6 +66,7 @@ class MasterBankAccController extends Controller
         }
 
         BankAcc::updateOrCreate([
+            'id' => $request->id,
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_bankcode' => $request->fc_bankcode,

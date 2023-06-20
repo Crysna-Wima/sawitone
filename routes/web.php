@@ -123,7 +123,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-bank-acc')->group(function () {
             Route::get('/','DataMaster\MasterBankAccController@index');
-            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_bankcode}','DataMaster\MasterBankAccController@detail');
+            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_bankcode}/{id}','DataMaster\MasterBankAccController@detail');
             Route::get('/datatables','DataMaster\MasterBankAccController@datatables');
             Route::post('/store-update','DataMaster\MasterBankAccController@store_update');
             Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_bankcode}','DataMaster\MasterBankAccController@delete');
