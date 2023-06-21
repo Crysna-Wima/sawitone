@@ -446,6 +446,7 @@
         stock_inventory_table.DataTable({
             "processing": true,
             "serverSide": true,
+            "ordering": false,
             "ajax": {
                 "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
                 "type": "GET",
