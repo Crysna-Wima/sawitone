@@ -447,7 +447,7 @@
             "processing": true,
             "serverSide": true,
             order: [
-                [6, 'asc']
+                [5, 'asc']
             ],
             "ajax": {
                 "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
@@ -574,7 +574,7 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5, 7]
+                    "targets": [0, 3, 4, 5, ,7]
                 },
                 {
                     className: 'text-nowrap',
