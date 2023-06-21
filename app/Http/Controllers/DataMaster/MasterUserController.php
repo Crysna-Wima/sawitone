@@ -29,7 +29,8 @@ class MasterUserController extends Controller
         });
     }
     public function index(){
-        return view('data-master.master-user.index');
+        $roles = ModelsRole::all();
+        return view('data-master.master-user.index', compact('roles'));
     }
 
     public function detail($fc_username, $id){
@@ -112,10 +113,12 @@ class MasterUserController extends Controller
             }
         }
 
-        $userAdmin = User::find($id);
-        $userAdmin->roles()->detach();
-        if ($request->roles) {
-            $userAdmin->assignRole($request->roles);
+        if($request->type === 'update'){
+            $userAdmin = User::find($id);
+            $userAdmin->roles()->detach();
+            if ($request->roles) {
+                $userAdmin->assignRole($request->roles);
+            }
         }
 
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
