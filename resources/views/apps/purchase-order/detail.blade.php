@@ -813,9 +813,10 @@
         }
 
         function detail_stock($id) {
+            var fc_stockcode = window.btoa($id)
             console.log($id)
             $.ajax({
-                url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + $id,
+                url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + fc_stockcode,
                 type: "GET",
                 dataType: "JSON",
                 success: function(response) {

@@ -163,6 +163,109 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" id="modal_add" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xs" role="document">
+            <div class="modal-content">
+                <div class="modal-header br">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form_submit_edit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
+                    <input type="text" name="type" id="type" hidden>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12" hidden>
+                                <div class="form-group">
+                                    <label>Division Code</label>
+                                    <input type="number" id="id_user" name="id" hidden>
+                                    <input type="text" class="form-control required-field" name="fc_divisioncode"
+                                        id="fc_divisioncode" value="SBY001" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group required">
+                                    <label>Cabang</label>
+                                    <select class="form-control select2 required-field" name="fc_branch"
+                                        id="fc_branch_add" required></select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>User ID</label>
+                                    <input type="text" class="form-control required-field" name="fc_userid"
+                                        id="fc_userid" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control required-field" name="fc_username"
+                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Password</label>
+                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password" required>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Group User</label>
+                                    <select class="form-control select2 required-field" name="fc_groupuser"
+                                        id="fc_groupuser_add" required></select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Level</label>
+                                    <input type="text" class="form-control" name="fl_level" id="fl_level">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label>Hold</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item" style="margin: 0!important">
+                                            <input type="radio" name="fl_hold" value="T"
+                                                class="selectgroup-input">
+                                            <span class="selectgroup-button">Active</span>
+                                        </label>
+                                        <label class="selectgroup-item" style="margin: 0!important">
+                                            <input type="radio" name="fl_hold" value="F"
+                                                class="selectgroup-input" checked="">
+                                            <span class="selectgroup-button">Non Active</span>
+                                        </label>
+                                       
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Expired Date</label>
+                                    <input type="text" class="form-control datepicker" name="fd_expired"
+                                        id="fd_expired">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea name="fv_description" id="fv_description" style="height: 90px" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -174,7 +277,7 @@
         })
 
         function add() {
-            $("#modal").modal('show');
+            $("#modal_add").modal('show');
             $(".modal-title").text('Tambah User');
             $("#form_submit")[0].reset();
         }
@@ -191,6 +294,12 @@
                     }, 500);
                     if (response.status === 200) {
                         var data = response.data;
+                        $("#fc_branch_add").empty();
+                        $("#fc_branch_add").append(`<option value="" selected readonly> - Pilih - </option>`);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#fc_branch_add").append(
+                                `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        }
                         $("#fc_branch").empty();
                         $("#fc_branch").append(`<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
@@ -232,6 +341,12 @@
                         $("#fc_groupuser").append(`<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_groupuser").append(
+                                `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        }
+                        $("#fc_groupuser_add").empty();
+                        $("#fc_groupuser_add").append(`<option value="" selected readonly> - Pilih - </option>`);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#fc_groupuser_add").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
                     } else {
