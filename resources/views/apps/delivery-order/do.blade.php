@@ -190,7 +190,7 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Barcode</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
@@ -446,9 +446,6 @@
         stock_inventory_table.DataTable({
             "processing": true,
             "serverSide": true,
-            order: [
-                [5, 'asc']
-            ],
             "ajax": {
                 "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
                 "type": "GET",
@@ -545,10 +542,14 @@
                                 }
                             }
 
-                            if (qty == 0) {
-                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (qty == 0) {
+                                    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                                } else if (data.DT_RowIndex == 1) {
+                                    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-danger"><i class="fa fa-lock"></i></button>`;
+                                }
                             }
 
                         } else {
@@ -562,10 +563,14 @@
                             }
 
                             // console.log("qty"+qty);
-                            if (qty == 0) {
-                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (qty == 0) {
+                                    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                                } else if (data.DT_RowIndex == 1) {
+                                    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                                } else {
+                                    return `<button type="button" class="btn btn-danger"><i class="fa fa-lock"></i></button>`;
+                                }
                             }
                         }
 
@@ -574,7 +579,7 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5, ,7]
+                    "targets": [0, 3, 4, 5, , 7]
                 },
                 {
                     className: 'text-nowrap',
