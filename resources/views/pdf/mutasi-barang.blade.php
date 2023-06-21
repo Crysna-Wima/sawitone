@@ -198,6 +198,14 @@
                 <td style="width: 5px">:</td>
                 <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_type_mutation }}</td>
             </tr>
+            <tr>
+                <td>No. SO</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_sono }}</td>
+                <td>Jenis SO</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_sotype }}</td>
+            </tr>
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">

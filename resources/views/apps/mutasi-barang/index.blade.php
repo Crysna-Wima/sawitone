@@ -85,17 +85,6 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <label>Cari SO CPRR</label>
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
-                                            <div class="input-group-append">
-                                                <button id="unclick" class="btn btn-primary" onclick="click_modal_so()" type="button" required><i class="fa fa-search"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group required">
                                         <label>Lokasi Awal</label>
                                         <div class="input-group mb-3">
@@ -113,6 +102,28 @@
                                             <input type="text" class="form-control" id="fc_destination" name="fc_destination" readonly>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" onclick="click_modal_lokasi_tujuan()" type="button"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4" id="internal">
+                                    <div class="form-group required">
+                                        <label>SO Memo Internal</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" onclick="click_modal_so_internal()" type="button" required><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4" id="cprr" hidden>
+                                    <div class="form-group required">
+                                        <label>SO CPRR</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" onclick="click_modal_so()" type="button" required><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -320,29 +331,45 @@
 
     function click_modal_so() {
         var fc_destination = $('#fc_destination').val();
-        if(fc_destination === ''){
+        if (fc_destination === '') {
             swal(
                 'Perhatian',
                 'Pilih Lokasi Tujuan Terlebih Dahulu',
                 'warning'
             )
-        }else{
+        } else {
             $('#modal_so').modal('show');
             table_so(fc_membercode_tujuan);
         }
-       
+
     }
 
-    $("#fc_type_mutation").change(function(){
+    function click_modal_so_internal() {
+        var fc_destination = $('#fc_destination').val();
+        if (fc_destination === '') {
+            swal(
+                'Perhatian',
+                'Pilih Lokasi Tujuan Terlebih Dahulu',
+                'warning'
+            )
+        } else {
+            $('#modal_so').modal('show');
+            table_so(fc_membercode_tujuan);
+        }
+
+    }
+
+    $("#fc_type_mutation").change(function() {
         // #fc_destination clear value
         $('#fc_destination').val('');
         $('#fc_startpoint').val('');
         if ($('#fc_type_mutation').val() === 'INTERNAL') {
-            $('#unclick' ).attr( 'disabled', true );
             $('input[id="fc_sono_input"]').val("");
+            $('#internal').attr('hidden', false);
+            $('#cprr').attr('hidden', true);
         } else {
-            $('#unclick' ).attr( 'disabled', false );
-            $('#fc_sono_input').attr('required', true);
+            $('#cprr').attr('hidden', false);
+            $('#internal').attr('hidden', true);
         }
     });
 
@@ -362,6 +389,67 @@
             ],
             ajax: {
                 url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_membercode_tujuan,
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 6, 7]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [3]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_sono'
+                },
+                {
+                    data: 'fd_sodatesysinput',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fd_soexpired',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fc_sotype'
+                },
+                {
+                    data: 'customer.fc_membername1'
+                },
+                {
+                    data: 'fn_sodetail'
+                },
+                {
+                    data: null
+                },
+            ],
+
+            rowCallback: function(row, data) {
+                var fc_sono = window.btoa(data.fc_sono);
+
+                $('td:eq(7)', row).html(`
+                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
+            }
+        });
+    }
+
+    function table_so_internal(fc_membercode_tujuan) {
+        console.log(fc_membercode_tujuan)
+        var tb = $('#tb_so').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            order: [
+                [1, 'desc']
+            ],
+            ajax: {
+                url: '/apps/mutasi-barang/datatables/so_internal/' + fc_membercode_tujuan,
                 type: 'GET'
             },
             columnDefs: [{

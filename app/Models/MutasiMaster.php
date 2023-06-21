@@ -21,6 +21,9 @@ class MutasiMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
+    public function somst(){
+        return $this->hasMany(SoMaster::class, 'fc_sono', 'fc_sono');
+    } 
 
     public function warehouse(){
         return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode')->withTrashed();

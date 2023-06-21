@@ -53,12 +53,12 @@
                                     aria-controls="pending" aria-selected="false">Pending</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="selesai-tab" data-toggle="tab" href="#selesai" role="tab"
-                                    aria-controls="selesai" aria-selected="false">Selesai</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" id="do-tuntas-tab" data-toggle="tab" href="#do-tuntas" role="tab"
                                     aria-controls="do-tuntas" aria-selected="false">DO Tuntas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="selesai-tab" data-toggle="tab" href="#selesai" role="tab"
+                                    aria-controls="selesai" aria-selected="false">Selesai</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">

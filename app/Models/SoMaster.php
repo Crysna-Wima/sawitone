@@ -50,4 +50,7 @@ class SoMaster extends Model
         return $this->hasOne(DoMaster::class, 'fc_sono', 'fc_sono');
     }
 
+    public function mutasimst(){
+        return $this->belongsTo(MutasiMaster::class, 'fc_sono', 'fc_sono');
+    }
 }

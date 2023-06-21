@@ -74,6 +74,7 @@
                                             <option value="" selected disabled>- Pilih -</option>
                                             <option value="Retail">Retail</option>
                                             <option value="Cost Per Test">Cost Per Test</option>
+                                            <option value="Memo Internal">Memo Internal</option>
                                         </select>
                                     </div>
                                 </div>

@@ -43,6 +43,18 @@ class MutasiBarangController extends Controller
         ->make(true);
     }
 
+    public function datatables_so_internal($fc_membercode){
+        $data = SoMaster::with('customer')
+        ->where('fc_sotype', 'Memo Internal')
+        ->where('fc_membercode', $fc_membercode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+    }
+
     public function datatables_lokasi_awal($fc_type_mutation){
         if($fc_type_mutation == 'INTERNAL'){
             $data = Warehouse::with('branch')->where('fc_warehousepos', $fc_type_mutation)->where('fc_branch', auth()->user()->fc_branch)->orderBy('created_at', 'DESC')->get();
@@ -74,9 +86,9 @@ class MutasiBarangController extends Controller
             'fc_type_mutation' => 'required',
             'fc_startpoint' => 'required',
             'fc_destination' => 'required',
-            'fc_sono' => 'required_if:fc_type_mutation,EKSTERNAL',
+            'fc_sono' => 'required',
         ], [
-            'fc_sono.required_if' => 'SO CPRR wajib diisi',
+            'fc_sono.required' => 'SO wajib diisi',
         ]);
         
         if($validator->fails()) {

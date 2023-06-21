@@ -22,8 +22,6 @@ class DaftarMutasiBarangController extends Controller
     }
 
     public function detail($fc_mutationno){
-        // kalau encode pakai base64_encode
-        // kalau decode pakai base64_decode
         $encoded_fc_mutationno = base64_decode($fc_mutationno);
         session(['fc_mutationno_global' => $encoded_fc_mutationno]);
         $data['mutasi_mst'] = MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_mutationno', $encoded_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -95,11 +93,12 @@ class DaftarMutasiBarangController extends Controller
 
     public function get_pdf($fc_mutationno,$nama_pj){
         $decode_fc_mutationno = base64_decode($fc_mutationno);
-        $data['mutasi_mst']= MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['mutasi_mst']= MutasiMaster::with('warehouse_start', 'warehouse_destination', 'somst')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['mutasi_dtl']= MutasiDetail::with('invstore', 'stock')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.mutasi-barang', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($data);
     }
 
     public function submit(Request $request){
