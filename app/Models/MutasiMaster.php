@@ -22,7 +22,7 @@ class MutasiMaster extends Model
     protected $guarded = ['type'];
 
     public function somst(){
-        return $this->hasMany(SoMaster::class, 'fc_sono', 'fc_sono');
+        return $this->hasOne(SoMaster::class, 'fc_sono', 'fc_sono');
     } 
 
     public function warehouse(){

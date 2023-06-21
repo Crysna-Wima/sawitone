@@ -204,7 +204,7 @@
                 <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_sono }}</td>
                 <td>Jenis SO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%" colspan="1">{{ $mutasi_mst->fc_sotype }}</td>
+                <td style="width: 28%" colspan="1">{{ $mutasi_mst->somst->fc_sotype }}</td>
             </tr>
         </table>
 

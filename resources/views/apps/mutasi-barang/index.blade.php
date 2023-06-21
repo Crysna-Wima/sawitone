@@ -110,7 +110,7 @@
                                     <div class="form-group required">
                                         <label>SO Memo Internal</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
+                                            <input type="text" class="form-control" id="fc_sono_internal" name="fc_sono" readonly>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" onclick="click_modal_so_internal()" type="button" required><i class="fa fa-search"></i></button>
                                             </div>
@@ -121,9 +121,9 @@
                                     <div class="form-group required">
                                         <label>SO CPRR</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" readonly>
+                                            <input type="text" class="form-control" id="fc_sono_cprr" name="fc_sono_cprr" readonly>
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" onclick="click_modal_so()" type="button" required><i class="fa fa-search"></i></button>
+                                                <button class="btn btn-primary" onclick="click_modal_so_cprr()" type="button" required><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -258,11 +258,11 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" id="modal_so" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal_so_internal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Pilih Sales Order</h5>
+                <h5 class="modal-title">Pilih Sales Order Internal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -270,7 +270,43 @@
             <form id="form_ttd" autocomplete="off">
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb_so" width="100%">
+                        <table class="table table-striped" id="tb_so_internal" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. SO</th>
+                                    <th scope="col" class="text-center">Tanggal</th>
+                                    <th scope="col" class="text-center">Expired</th>
+                                    <th scope="col" class="text-center">Tipe</th>
+                                    <th scope="col" class="text-center">Customer</th>
+                                    <th scope="col" class="text-center">Item</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_so_cprr" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Sales Order CPRR</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_so_cprr" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
@@ -329,7 +365,7 @@
 
     }
 
-    function click_modal_so() {
+    function click_modal_so_cprr() {
         var fc_destination = $('#fc_destination').val();
         if (fc_destination === '') {
             swal(
@@ -338,8 +374,8 @@
                 'warning'
             )
         } else {
-            $('#modal_so').modal('show');
-            table_so(fc_membercode_tujuan);
+            $('#modal_so_cprr').modal('show');
+            table_so_cprr(fc_membercode_tujuan);
         }
 
     }
@@ -353,8 +389,8 @@
                 'warning'
             )
         } else {
-            $('#modal_so').modal('show');
-            table_so(fc_membercode_tujuan);
+            $('#modal_so_internal').modal('show');
+            table_so_internal(fc_membercode_tujuan);
         }
 
     }
@@ -364,23 +400,33 @@
         $('#fc_destination').val('');
         $('#fc_startpoint').val('');
         if ($('#fc_type_mutation').val() === 'INTERNAL') {
-            $('input[id="fc_sono_input"]').val("");
+            $('input[id="fc_sono_internal"]').val("");
             $('#internal').attr('hidden', false);
             $('#cprr').attr('hidden', true);
+            $('#fc_sono_internal').attr('name', 'fc_sono');
+            $('#fc_sono_cprr').attr('name', 'fc_sono_cprr');
         } else {
+            $('input[id="fc_sono_cprr"]').val("");
             $('#cprr').attr('hidden', false);
             $('#internal').attr('hidden', true);
+            $('#fc_sono_cprr').attr('name', 'fc_sono');
+            $('#fc_sono_internal').attr('name', 'fc_sono_internal');
         }
     });
 
-    function get_sono($fc_sono) {
-        $('#fc_sono_input').val($fc_sono);
-        $('#modal_so').modal('hide');
+    function get_sono_internal($fc_sono) {
+        $('#fc_sono_internal').val($fc_sono);
+        $('#modal_so_internal').modal('hide');
     }
 
-    function table_so(fc_membercode_tujuan) {
+    function get_sono_cprr($fc_sono) {
+        $('#fc_sono_cprr').val($fc_sono);
+        $('#modal_so_cprr').modal('hide');
+    }
+
+    function table_so_cprr(fc_membercode_tujuan) {
         console.log(fc_membercode_tujuan)
-        var tb = $('#tb_so').DataTable({
+        var tb = $('#tb_so_cprr').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -434,14 +480,14 @@
                 var fc_sono = window.btoa(data.fc_sono);
 
                 $('td:eq(7)', row).html(`
-                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
+                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono_cprr('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
             }
         });
     }
 
     function table_so_internal(fc_membercode_tujuan) {
         console.log(fc_membercode_tujuan)
-        var tb = $('#tb_so').DataTable({
+        var tb = $('#tb_so_internal').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -495,7 +541,7 @@
                 var fc_sono = window.btoa(data.fc_sono);
 
                 $('td:eq(7)', row).html(`
-                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
+                <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono_internal('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
             }
         });
     }

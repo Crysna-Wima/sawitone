@@ -72,17 +72,6 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label>Cari SO CPRR</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" value="{{ $data->fc_sono ?? '-' }}" readonly>
-                                        <div class="input-group-append">
-                                            <button id="unclick" class="btn btn-primary" disabled onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="form-group">
                                     <label>Lokasi Awal</label>
                                     <div class="input-group mb-3">
                                         @if (empty($data->fc_startpoint_code))
@@ -108,6 +97,17 @@
 
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" disabled onclick="click_modal_lokasi_tujuan()" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label>No. SO</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_sono_input" name="fc_sono" value="{{ $data->fc_sono ?? '-' }}" readonly>
+                                        <div class="input-group-append">
+                                            <button id="unclick" class="btn btn-primary" disabled onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>

@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group" id="customer" hidden>
+                            <div class="form-group required" id="customer">
                                 <label>Customer</label>
-                                <select class="form-control select2" name="fc_membercode" id="fc_membercode">
+                                <select class="form-control select2" name="fc_membercode" id="fc_membercode" required>
                                 </select>
                             </div>
                         </div>
@@ -154,16 +154,16 @@
         get_data_customer();
     });
 
-    $("#fc_warehousepos").change(function() {
-        if ($('#fc_warehousepos').val() === 'INTERNAL') {
-            $('#customer').attr('hidden', true);
-            $('#fc_membercode').attr('required', false);
-            $('#fc_membercode').val(null).trigger('change');
-        } else {
-            $('#customer').attr('hidden', false);
-            $('#fc_membercode').attr('required', true);
-        }
-    });
+    // $("#fc_warehousepos").change(function() {
+    //     if ($('#fc_warehousepos').val() === 'INTERNAL') {
+    //         $('#customer').attr('hidden', true);
+    //         $('#fc_membercode').attr('required', false);
+    //         $('#fc_membercode').val(null).trigger('change');
+    //     } else {
+    //         $('#customer').attr('hidden', false);
+    //         $('#fc_membercode').attr('required', true);
+    //     }
+    // });
 
     function get_data_customer() {
         $.ajax({
