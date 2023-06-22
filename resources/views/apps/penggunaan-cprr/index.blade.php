@@ -105,7 +105,7 @@
                             <div class="form-group required">
                                 <label>Hasil Scan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="result" name="result" readonly>
+                                    <input type="text" class="form-control" id="result" name="fc_barcode" readonly>
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" onclick="click_modal_barcode()" type="button" id="detail"><i class="fa fa-eye"></i> Detail</button>
                                     </div>
@@ -130,14 +130,25 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_ttd" autocomplete="off">
+            <form id="form_scan" action="/apps/penggunaan-cprr/scan-barang" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Katalog</label>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
+                                    <input type="text" class="form-control" id="fc_barcode_scan" name="fc_barcode_scan" hidden>
+                                    <input type="text" class="form-control" id="fc_warehousecode" name="fc_warehousecode" hidden>
+                                    <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" hidden>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Nama Barang</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fc_namelong" name="fc_namelong" readonly>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +171,7 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </div>
             </form>
         </div>
@@ -172,19 +183,20 @@
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
 <script>
-    var audio = new Audio('assets/audio/scan.mp3');
+    var audio = new Audio('/assets/audio/scan.mp3');
 
     function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         // console.log(`Code matched = ${decodedText}`, decodedResult);
         $('#result').val(decodedText);
+        table_detail_barang();
         audio.play();
     }
 
     function onScanFailure(error) {
         // handle scan failure, usually better to ignore and keep scanning.
         // for example:
-        // console.warn(`Code scan error = ${error}`);
+        console.warn(`Code scan error = ${error}`);
     }
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
@@ -200,7 +212,102 @@
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
     function click_modal_barcode() {
-        $('#modal_barcode').modal('show');
+         table_detail_barang();
     }
+
+    function table_detail_barang() {
+        var fc_barcode = $('#result').val();
+        var url = "/apps/penggunaan-cprr/detail-barang/" + fc_barcode;
+        
+        $.ajax({
+            url: url,
+            type: "GET",
+            beforeSend: function() {
+                // Show the loading modal
+                $('#modal_loading').modal('show');
+            },
+            success: function(response) {
+                // Close the loading modal
+                if(response.status === 200){
+                    $('#modal_loading').modal('hide');
+
+                    $('#fc_barcode_scan').val(response.data.fc_barcode);
+                    // Populate the input fields with the received data
+                    $('#fc_namelong').val(response.data.stock.fc_namelong);
+                    $('#fc_warehousecode').val(response.data.warehouse.fc_warehousecode);
+                    $('#fc_membercode').val(response.data.warehouse.fc_membercode);
+                    $('#fc_stockcode').val(response.data.fc_stockcode);
+                    $('#fc_batch').val(response.data.fc_batch);
+                    $('#fd_expired').val(response.data.fd_expired);
+
+                    // Show the modal_barcode modal
+                    $('#modal_barcode').modal('show');
+                }else{
+                    $('#modal_loading').modal('hide');
+                    swal(response.message, { icon: 'error', });
+                }
+                
+            },
+            error: function(xhr, status, error) {
+                // Close the loading modal
+                $('#modal_loading').modal('hide');
+                console.log(xhr.responseText);
+            }
+    });
+}
+
+$('#form_scan').on('submit', function(e){
+       e.preventDefault();
+
+       var form_id = $(this).attr("id");
+       if(check_required(form_id) === false){
+          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
+          return;
+       }
+
+       swal({
+             title: 'Yakin?',
+             text: 'Apakah anda yakin akan menyimpan data ini?',
+             icon: 'warning',
+             buttons: true,
+             dangerMode: true,
+       })
+       .then((save) => {
+             if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                   url:  $('#form_scan').attr('action'),
+                   type: $('#form_scan').attr('method'),
+                   data: $('#form_scan').serialize(),
+                   success: function(response){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      if(response.status == 200){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         $("#form_scan")[0].reset();
+                         reset_all_select();
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 201){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         location.href = response.link;
+                      }
+                      else if(response.status == 203){
+                         swal(response.message, { icon: 'success', });
+                         $("#modal").modal('hide');
+                         tb.ajax.reload(null, false);
+                      }
+                      else if(response.status == 300){
+                         swal(response.message, { icon: 'error', });
+                      }
+                   },error: function (jqXHR, textStatus, errorThrown){
+                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                   }
+                });
+             }
+       });
+    });
 </script>
 @endsection
