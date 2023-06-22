@@ -429,7 +429,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/submit','Apps\DaftarMutasiBarangController@submit');
         });
 
-        Route::prefix('pengggunaan-cprr')->group(function(){
+        Route::prefix('penggunaan-cprr')->group(function(){
             Route::get('/','Apps\PenggunaanCprrController@index');
         });
     });
