@@ -428,6 +428,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get_pdf/{fc_mutationno}/{nama_pj}', 'Apps\DaftarMutasiBarangController@get_pdf');
             Route::put('/submit','Apps\DaftarMutasiBarangController@submit');
         });
+
+        Route::prefix('pengggunaan-cprr')->group(function(){
+            Route::get('/','Apps\PenggunaanCprrController@index');
+        });
     });
 });
 

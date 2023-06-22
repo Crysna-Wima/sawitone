@@ -164,25 +164,28 @@
     }
 
     #qrcode{
-        height: 0.7cm;
-        width: 0.7cm;
+        height: 10mm;
+        width: 10mm;
     }
 
     #logo{
-        width: 0.7cm;
+        width: 12mm;
+        margin-left: 7px;
     }
 
     .container-qr{
-        margin-top: -5px;
+        margin-left: 9px;
     }
 
     .template-qr{
         align-content: center;
         border: 0.5px solid #000;
-        height: 1.1cm;
-        width: 0.7cm;
+        height: 15mm;
+        width: 15mm;
         padding: 5px;
-        margin: 15px;
+        margin-left: -5px;
+        margin-top: 3mm;
+        display: inline-block;
     }
 </style>
 

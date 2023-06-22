@@ -63,39 +63,42 @@ class MasterReceivingOrderController extends Controller
         $fd_expired_date_decode = base64_decode($fd_expired_date);
         $count_decode = base64_decode($count);
         $t_nomor = DB::table('t_nomor')
-        ->where('fv_document', 'BATCH')
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->first();
+            ->where('fv_document', 'BATCH')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first();
 
         $vBatch = $fc_batch_decode  . str_repeat('0', $t_nomor->fn_count3 - strlen($fc_batch));
-    
+
         $kode_qr = $fc_barcode_decode . $vBatch . date("dmY", strtotime($fd_expired_date_decode));
-        
+
         $qrcode = QrCode::size(250)->generate($kode_qr);
 
 
         // generate qrcode ke pdf
-        $pdf = PDF::loadView('pdf.qr-code', 
+        $customPaper = array(0, 0, 400, 595);        
+        $pdf = PDF::loadView(
+            'pdf.qr-code',
             [
                 'qrcode' => $qrcode,
                 'count' => $count_decode
             ]
-        )->setPaper('a4', 'portrait');
-        
-    
+        )->setPaper($customPaper);
+
+
         return $pdf->stream();
         // dd($kode_qr);
     }
-    
 
-    public function pdf(Request $request){
+
+    public function pdf(Request $request)
+    {
         // dd($request);
         $decode_fc_rono = base64_encode($request->fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        if($request->name_pj){
+        if ($request->name_pj) {
             $data['nama_pj'] = $request->name_pj;
-        }else{
+        } else {
             $data['nama_pj'] = auth()->user()->fc_username;
         }
         // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
@@ -110,7 +113,8 @@ class MasterReceivingOrderController extends Controller
         ];
     }
 
-    public function get_pdf($fc_rono,$nama_pj){
+    public function get_pdf($fc_rono, $nama_pj)
+    {
         $decode_fc_rono = base64_decode($fc_rono);
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
