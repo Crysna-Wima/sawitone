@@ -431,6 +431,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('penggunaan-cprr')->group(function(){
             Route::get('/','Apps\PenggunaanCprrController@index');
+            Route::get('/detail-barang/{fc_barcode}','Apps\PenggunaanCprrController@detail_barang');
+            Route::post('/scan-barang','Apps\PenggunaanCprrController@scan_barang');
         });
     });
 });

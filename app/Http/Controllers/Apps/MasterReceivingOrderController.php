@@ -67,7 +67,9 @@ class MasterReceivingOrderController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)
             ->first();
 
-        $vBatch = $fc_batch_decode  . str_repeat('0', $t_nomor->fn_count3 - strlen($fc_batch));
+            // dd($fc_batch);
+
+        $vBatch = $fc_batch_decode  . str_repeat('0', $t_nomor->fn_count3 - strlen($fc_batch_decode));
 
         $kode_qr = $fc_barcode_decode . $vBatch . date("dmY", strtotime($fd_expired_date_decode));
 
