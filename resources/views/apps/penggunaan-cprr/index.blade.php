@@ -172,13 +172,14 @@
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
 <script>
-    var audio = new Audio('assets/audio/scan.mp3');
+    var audio = new Audio('/assets/audio/scan.mp3');
 
     function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         // console.log(`Code matched = ${decodedText}`, decodedResult);
-        $('#result').val(decodedText);
         audio.play();
+        $('#result').val(decodedText);
+        html5QrcodeScanner.clear();
     }
 
     function onScanFailure(error) {
@@ -188,10 +189,10 @@
     }
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
-            fps: 20,
+            fps: 10,
             qrbox: {
-                width: 350,
-                height: 350
+                width: 250,
+                height: 250
             },
             supportedScanTypes: [
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA
