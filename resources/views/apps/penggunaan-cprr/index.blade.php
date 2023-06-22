@@ -88,10 +88,6 @@
         font-size: 12px;
         border-radius: 4px;
     }
-
-    #search-button{
-        margin-top: 35px;
-    }
 </style>
 @endsection
 
@@ -105,17 +101,15 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div id="reader" width="600px"></div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-10 mt-2">
+                        <div class="col-12 col-md-12 col-lg-12 mt-2">
                             <div class="form-group required">
                                 <label>Hasil Scan</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="result" name="result" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" onclick="click_modal_barcode()" type="button" id="detail"><i class="fa fa-eye"></i> Detail</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-2">
-                            <div class="button" id="search-button">
-                                <button id="search" class="btn btn-primary">Search Barcode</button>
                             </div>
                         </div>
                     </div>
@@ -127,11 +121,11 @@
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_scan" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade" role="dialog" id="modal_barcode" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Scan Barcode</h5>
+                <h5 class="modal-title">Detail Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -140,22 +134,35 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
-                            <div id="reader" width="600px"></div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-8">
                             <div class="form-group required">
-                                <label>Hasil Scan</label>
+                                <label>Katalog</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="result" name="result" readonly>
+                                    <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Batch</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fc_batch" name="fc_batch" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Expired Date</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fd_expired" name="fd_expired" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-success">Submit</button>
+                </div>
             </form>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
         </div>
     </div>
 </div>
@@ -170,8 +177,8 @@
     function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         // console.log(`Code matched = ${decodedText}`, decodedResult);
-        audio.play();
         $('#result').val(decodedText);
+        audio.play();
     }
 
     function onScanFailure(error) {
@@ -179,20 +186,21 @@
         // for example:
         // console.warn(`Code scan error = ${error}`);
     }
-
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
             fps: 20,
             qrbox: {
                 width: 350,
                 height: 350
-            }
-        },
-        /* verbose= */
-        false);
+            },
+            supportedScanTypes: [
+                Html5QrcodeScanType.SCAN_TYPE_CAMERA
+            ],
+        }, false);
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-    // function click_modal_scan() {
-    //     $('#modal_scan').modal('show');
-    // }
+
+    function click_modal_barcode() {
+        $('#modal_barcode').modal('show');
+    }
 </script>
 @endsection

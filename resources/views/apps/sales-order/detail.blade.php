@@ -35,7 +35,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -188,13 +188,13 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group required">
-                                <label>Qty</label>
+                                    <label>Qty</label>
                                     <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_qty" id="fn_so_qty" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">
-                                <label>Bonus</label>
+                                    <label>Bonus</label>
                                     <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
                                 </div>
                             </div>
@@ -312,6 +312,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-body" style="padding-top: 30px!important;">
+                    <div class="col-12 col-md-6 col-lg-12">
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @if ($data->fc_sostatus === 'F')
             <div class="button text-right mb-4">
                 <a href="#" class="btn btn-success">Save SO</a>
@@ -330,7 +344,6 @@
                            
                    </div> --}}
             @endif
-
         </div>
     </div>
 </div>
@@ -636,20 +649,20 @@
                     data: 'fm_price_default',
                     render: function(data, type, row) {
                         if ($('#category').val() == 'Khusus') {
-                                if (row.fm_price_customer == undefined) {
-                                    return data
-                                }else{
-                                    return row.fm_price_customer.toLocaleString('id-ID', {
-                                        style: 'currency',
-                                        currency: 'IDR'
-                                    });
-                                }
-                          
-                        }else{
+                            if (row.fm_price_customer == undefined) {
+                                return data
+                            } else {
+                                return row.fm_price_customer.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+                            }
+
+                        } else {
                             return data.toLocaleString('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR'
-                         });
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
                         }
                     }
                 },
@@ -664,15 +677,15 @@
                 }
 
                 if ($('#category').val() == 'Khusus') {
-                        $('td:eq(7)', row).html(`
+                    $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
-                }else{
+                } else {
                     $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
                 `);
                 }
-                
+
             }
         });
         // Reload datatable when category is changed
@@ -763,7 +776,7 @@
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
                 $('#fc_stockcode').val(data.fc_stockcode);
-                $('#fc_barcode'). val(data.fc_barcode);
+                $('#fc_barcode').val(data.fc_barcode);
 
                 $("#modal_stock").modal('hide');
             },
