@@ -38,55 +38,62 @@
     }
 
     #html5-qrcode-button-camera-start {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
+        background-color: #FAFBFC;
+        border: 1px solid #0A9447;
+        color: #0A9447;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        appearance: none;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
     #html5-qrcode-button-camera-stop {
-        background-color: #FF0000;
-        /* Green */
-        border: none;
-        color: white;
+        background-color: #FAFBFC;
+        border: 1px solid #FF0000;
+        color: #FF0000;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        appearance: none;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
-    #html5-qrcode-button-file-selection {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
+    #html5-qrcode-select-camera {
+        background-color: #FAFBFC;
+        border: 1px solid rgba(27, 31, 35, 0.15);
+        color: #24292E;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
-    }
-
-    #html5-qrcode-button-camera-permission {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 </style>
 @endsection
@@ -216,6 +223,8 @@
             supportedScanTypes: [
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA
             ],
+            showTorchButtonIfSupported: true,
+            showZoomSliderIfSupported: true,
         }, false);
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
