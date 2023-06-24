@@ -198,13 +198,21 @@
         // for example:
         console.warn(`Code scan error = ${error}`);
     }
+
+    let qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
+        let minEdgePercentage = 0.7; // 70%
+        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+        let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+        return {
+            width: qrboxSize,
+            height: qrboxSize
+        };
+    }
+
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
             fps: 10,
-            qrbox: {
-                width: 250,
-                height: 250
-            },
+            qrbox: qrboxFunction,
             supportedScanTypes: [
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA
             ],
@@ -212,13 +220,13 @@
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
     function click_modal_barcode() {
-         table_detail_barang();
+        table_detail_barang();
     }
 
     function table_detail_barang() {
         var fc_barcode = $('#result').val();
         var url = "/apps/penggunaan-cprr/detail-barang/" + fc_barcode;
-        
+
         $.ajax({
             url: url,
             type: "GET",
@@ -228,7 +236,7 @@
             },
             success: function(response) {
                 // Close the loading modal
-                if(response.status === 200){
+                if (response.status === 200) {
                     $('#modal_loading').modal('hide');
 
                     $('#fc_barcode_scan').val(response.data.fc_barcode);
@@ -242,72 +250,88 @@
 
                     // Show the modal_barcode modal
                     $('#modal_barcode').modal('show');
-                }else{
+                } else {
                     $('#modal_loading').modal('hide');
-                    swal(response.message, { icon: 'error', });
+                    swal(response.message, {
+                        icon: 'error',
+                    });
                 }
-                
+
             },
             error: function(xhr, status, error) {
                 // Close the loading modal
                 $('#modal_loading').modal('hide');
                 console.log(xhr.responseText);
             }
-    });
-}
+        });
+    }
 
-$('#form_scan').on('submit', function(e){
-       e.preventDefault();
+    $('#form_scan').on('submit', function(e) {
+        e.preventDefault();
 
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
 
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((save) => {
-             if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_scan').attr('action'),
-                   type: $('#form_scan').attr('method'),
-                   data: $('#form_scan').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         $("#form_scan")[0].reset();
-                         reset_all_select();
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
-                });
-             }
-       });
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_scan').attr('action'),
+                        type: $('#form_scan').attr('method'),
+                        data: $('#form_scan').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                $("#form_scan")[0].reset();
+                                reset_all_select();
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
 </script>
 @endsection
