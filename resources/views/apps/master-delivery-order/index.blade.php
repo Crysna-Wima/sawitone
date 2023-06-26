@@ -874,11 +874,11 @@
                 var fc_dono = window.btoa(data.fc_dono);
                 $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
                 if (data['fc_dostatus'] == 'N') {
-                    $('td:eq(6)', row).html('<span class="badge badge-info">Butuh Approval</span>');
+                    $('td:eq(6)', row).html('<span class="badge badge-info">Butuh Perizinan</span>');
                 } else if (data['fc_dostatus'] == 'AP') {
-                    $('td:eq(6)', row).html('<span class="badge badge-success">Accept</span>');
+                    $('td:eq(6)', row).html('<span class="badge badge-success">Perizinan Diterima</span>');
                 } else {
-                    $('td:eq(6)', row).html('<span class="badge badge-danger">Reject</span>');
+                    $('td:eq(6)', row).html('<span class="badge badge-danger">Perizinan Ditolak</span>');
                 }
 
                 if ((data['fc_dostatus'] == 'N' || data['fc_dostatus'] == 'AP' || data['fc_dostatus'] == 'RJ')) {
