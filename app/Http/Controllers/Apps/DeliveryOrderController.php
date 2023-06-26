@@ -51,6 +51,7 @@ class DeliveryOrderController extends Controller
         if ($cek_status->fc_sostatus == "L" || $cek_status->fc_sostatus == "C") {
             return redirect()->route('do_index')->with('warning', 'SO sudah di proses');
         }
+        $data['data'] = Warehouse::where('fc_branch', auth()->user()->fc_branch)->first();
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
             ->where('fc_sono', $encode_fc_sono)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
@@ -65,12 +66,14 @@ class DeliveryOrderController extends Controller
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_sono' => 'required',
+            'fc_warehousecode' => 'fc_warehousecode',
             'fc_sostatus' => 'required',
             // 'fc_userid' => 'required',
             'fc_dono' => 'required',
         ], [
             'fc_divisioncode.required' => 'Division Code tidak boleh kosong',
             'fc_sono.required' => 'SO Number tidak boleh kosong',
+            'fc_warehousecode.required' => 'Gudang tidak boleh kosong',
             'fc_sostatus.required' => 'SO Status tidak boleh kosong',
             // 'fc_userid.required' => 'User ID tidak boleh kosong',
             'fc_dono.required' => 'DO Number tidak boleh kosong',
@@ -176,12 +179,23 @@ class DeliveryOrderController extends Controller
     }
 
     public function datatables(){
-        $data = SoMaster::with('customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = SoMaster::with('customer')
+        ->where('fc_sotype', 'Retail')
+        ->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function datatables_warehouse(){
+        $data = Warehouse::where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
 
 
     public function cart_stock(request $request){

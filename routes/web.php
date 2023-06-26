@@ -248,6 +248,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/insert_do', 'Apps\DeliveryOrderController@insert_do');
             Route::get('/create_do','Apps\DeliveryOrderController@create')->name('create_do');
             Route::get('/datatables','Apps\DeliveryOrderController@datatables');
+            Route::get('/datatables-warehouse','Apps\DeliveryOrderController@datatables_warehouse');
             Route::get('/datatables-so-detail/{fc_sono}','Apps\DeliveryOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\DeliveryOrderController@datatables_so_payment');
             Route::get('/datatables-do-detail','Apps\DeliveryOrderController@datatables_do_detail');
