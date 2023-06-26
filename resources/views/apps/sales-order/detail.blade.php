@@ -640,10 +640,36 @@
                     }
                 },
                 {
-                    data: 'fc_brand'
+                    data: 'fc_brand',
+                    render: function(data, type, row) {
+                        if ($('#category').val() == 'Khusus') {
+                            if (row.fc_brand == undefined) {
+                                return row.stock.fc_brand
+                            } else {
+                                
+                                return data
+                            }
+
+                        } else {
+                            return data;
+                        }
+                    }
                 },
                 {
-                    data: 'fc_subgroup'
+                    data: 'fc_subgroup',
+                     render: function(data, type, row) {
+                        if ($('#category').val() == 'Khusus') {
+                            if (row.fc_subgroup == undefined) {
+                                return row.stock.fc_subgroup
+                            } else {
+                                
+                                return data
+                            }
+
+                        } else {
+                            return data;
+                        }
+                    }
                 },
                 {
                     data: 'namepack.fv_description',
@@ -803,6 +829,7 @@
     function detail_stock_customer(id) {
         // console.log($id)
         var fc_stockcode = window.btoa(id);
+        console.log(fc_stockcode)
         $.ajax({
             url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + fc_stockcode,
             type: "GET",
