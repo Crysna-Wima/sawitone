@@ -393,7 +393,7 @@
                 <h5 class="modal-title">Pilih Item</h5>
                 <div class="card-header-action">
                     <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" name="Category" id="category">
-                        <option value="Semua">Semua&nbsp;&nbsp;</option>
+                        <option value="Semua" selected>Semua&nbsp;&nbsp;</option>
                         <option value="Khusus">Khusus&nbsp;&nbsp;</option>
                     </select>
                 </div>
@@ -419,7 +419,7 @@
                 </div>
             </form>
             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="click_category" class="btn btn-secondary" onclick="clear_category()" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -479,6 +479,15 @@
     function click_modal_customer() {
         $('#modal_customer').modal('show');
         table_customer();
+    }
+
+    function clear_category(){
+        var select = document.getElementById('category')
+        // ketika click_category di klik maka reset semua value select option category ubah menjadi "Semua"
+        select.value = "Semua"
+        $("#category").trigger("change");
+
+        return;
     }
 
     function click_modal_stock() {
@@ -791,8 +800,8 @@
         });
     }
 
-    function detail_stock_customer($id) {
-        console.log($id)
+    function detail_stock_customer(id) {
+        // console.log($id)
         var fc_stockcode = window.btoa(id);
         $.ajax({
             url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + fc_stockcode,
