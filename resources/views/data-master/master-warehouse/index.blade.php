@@ -18,7 +18,7 @@
                 <div class="card-header">
                     <h4>Data Gudang</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Warehouse</button>
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Daftar Gudang</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group required" id="customer">
+                            <div class="form-group" id="customer" hidden>
                                 <label>Customer</label>
                                 <select class="form-control select2" name="fc_membercode" id="fc_membercode" required>
                                 </select>
@@ -154,16 +154,16 @@
         get_data_customer();
     });
 
-    // $("#fc_warehousepos").change(function() {
-    //     if ($('#fc_warehousepos').val() === 'INTERNAL') {
-    //         $('#customer').attr('hidden', true);
-    //         $('#fc_membercode').attr('required', false);
-    //         $('#fc_membercode').val(null).trigger('change');
-    //     } else {
-    //         $('#customer').attr('hidden', false);
-    //         $('#fc_membercode').attr('required', true);
-    //     }
-    // });
+    $("#fc_warehousepos").change(function() {
+        if ($('#fc_warehousepos').val() === 'INTERNAL') {
+            $('#customer').attr('hidden', true);
+            $('#fc_membercode').attr('required', false);
+            $('#fc_membercode').val(null).trigger('change');
+        } else {
+            $('#customer').attr('hidden', false);
+            $('#fc_membercode').attr('required', true);
+        }
+    });
 
     function get_data_customer() {
         $.ajax({

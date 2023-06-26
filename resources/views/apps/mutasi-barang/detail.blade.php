@@ -162,71 +162,31 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-2">
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
-                <div class="card-body" style="height: 160px;">
+                <div class="card-header">
+                    <h4>Order Item</h4>
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group d-flex-row text-center">
-                                <label>Jumlah Item</label>
-                                <div class="text-center mt-2">
-                                    <h5 class="text-success" style="font-weight: bold; font-size: 36px;" id="fn_detailitem" name="fn_detailitem">{{ $data->fn_detailitem }}</h5>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_so" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12 col-md-8 col-lg-10">
-            <form id="form_submit_noconfirm" method="POST" action="/apps/mutasi-barang/detail/store_mutasi_detail">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-4">
-                                <div class="form-group required">
-                                    <label>Kode Barang</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
-                                        <input type="hidden" class="form-control" id="fc_barcode" name="fc_barcode" readonly>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" onclick="click_modal_inventory()" type="button"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group">
-                                    <label>Nama Barang</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="fc_namelong" name="fc_namelong" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-2">
-                                <div class="form-group required">
-                                    <label>Jumlah</label>
-                                    <div class="input-group">
-                                        <input type="number" id="fn_quantity_stock" name="fn_quantity_stock" hidden>
-                                        <input type="number" class="form-control" id="fn_qty" name="fn_qty" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group">
-                                    <label>Catatan</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="fv_description" name="fv_description">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button type="submit" class="btn btn-success">Tambah Item</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
         {{-- TABLE --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
@@ -282,26 +242,26 @@
 
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-xl" style="width:90%" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Pilih Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Ketersediaan Stock</h5>
             </div>
+            <div class="place_alert_cart_stock text-center"></div>
             <form id="form_ttd" autocomplete="off">
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb_inventory" width="100%">
+                        <table class="table table-striped" width="100%" id="stock_inventory">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Kode Barang</th>
-                                    <th scope="col" class="text-center">Expired Date</th>
-                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Katalog</th>
+                                    <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Qty</th>
-                                    <th scope="col" class="text-center">Actions</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Exp.</th>
+                                    <th scope="col" class="text-center">Quantity</th>
+                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                 </tr>
                             </thead>
                         </table>
@@ -322,6 +282,59 @@
         $('#modal_inventory').modal('show');
         table_inventory();
     }
+
+    let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
+
+    var tb = $('#tb_so').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/delivery-order/datatables-so-detail/" + encode_fc_sono,
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'stock.fc_nameshort',
+                defaultContent: '',
+            },
+            {
+                data: 'namepack.fv_description'
+            },
+            {
+                data: 'fn_so_qty'
+            },
+            {
+                data: null
+            },
+
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(5)', row).html(`
+            <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`);
+            // if (data.fn_so_qty > data.fn_qty) {
+            //     $('td:eq(6)', row).html(
+            //         `
+            //             <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`
+            //     );
+            // } else {
+            //     $('td:eq(6)', row).html(`
+            //             <button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
+            // }
+        },
+    });
 
     function table_inventory() {
         var fc_startpoint_code = "{{ $data->fc_startpoint_code }}";
@@ -353,9 +366,6 @@
                     data: 'fc_batch'
                 },
                 {
-                    data: 'fn_quantity'
-                },
-                {
                     data: null,
                 },
             ],
@@ -371,14 +381,230 @@
         });
     }
 
-    function detail_inventory(fn_quantity, fc_stockcode, fc_barcode, fc_namelong) {
+    function pilih_inventory(fc_stockcode) {
+        // console.log(fc_stockcode);
+        $("#modal_loading").modal('show');
 
-        $('#modal_inventory').modal('hide');
-        $('#fc_barcode').val(fc_barcode);
-        $('#fc_namelong').val(fc_namelong);
-        $('#fc_stockcode').val(fc_stockcode);
-        $('#fn_qty').val(fn_quantity);
-        $('#fn_quantity_stock').val(fn_quantity);
+        // tampilkan loading_data
+        var stock_inventory_table = $('#stock_inventory');
+        if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
+            stock_inventory_table.DataTable().destroy();
+        }
+        stock_inventory_table.DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ordering": false,
+            "ajax": {
+                "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
+                "type": "GET",
+                "data": {
+                    "fc_stockcode": fc_stockcode
+                }
+            },
+            "columns": [{
+                    "data": 'DT_RowIndex',
+                    "sortable": false,
+                    "searchable": false
+                },
+                {
+                    "data": "fc_stockcode"
+                },
+                {
+                    "data": "stock.fc_namelong"
+                },
+                {
+                    "data": "fn_quantity"
+                },
+                {
+                    "data": "fc_batch"
+                },
+                {
+                    "data": "fd_expired",
+                    "render": function(data, type, row) {
+                        return moment(data).format(
+                            // format tanggal
+                            'DD MMMM YYYY'
+                        );
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function(data, type, full, meta) {
+                        // console.log('data'+data.fn_sorrownum);
+                        var selectedOption = $('#category').val();
+                        // looping data data.stock.sodtl[index].fn_so_qty
+                        if (selectedOption == "Bonus") {
+                            let qty = 0;
+                            // looping data stock.sodtl[index].fn_so_qty
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                        index].fn_do_bonusqty;
+                                    break;
+                                }
+                            }
+
+                            if (qty >= data.fn_quantity) {
+                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            } else {
+                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                            }
+                            // reload datatable
+
+                        } else {
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                            index]
+                                        .fn_do_qty;
+                                    break;
+                                }
+
+                            }
+
+                            // console.log("qty"+qty);
+                            if (qty >= data.fn_quantity) {
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                            } else {
+                                if (qty < 0) {
+                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                                }
+                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                            }
+                        }
+
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function(data, type, full, meta) {
+                        var selectedOption = $('#category').val();
+                        if (selectedOption == "Bonus") {
+                            let qty = 0;
+                            // looping data stock.sodtl[index].fn_so_qty
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                        index].fn_do_bonusqty;
+                                    break;
+                                }
+                            }
+
+                            // if (qty == 0) {
+                            //     return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            // } else {
+                            //     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            // }
+                            if (qty == 0) {
+                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            } else {
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            }
+
+                        } else {
+                            for (let index = 0; index < data.stock.sodtl.length; index++) {
+                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                            index]
+                                        .fn_do_qty;
+                                    break;
+                                }
+                            }
+
+                            // console.log("qty"+qty);
+
+                            if (qty == 0) {
+                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            } else {
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            }
+                            // if (qty == 0) {
+                            //     return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            // } else {
+                            //     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            // }
+                            // else {
+                            //     return `<button type="button" class="btn btn-danger"><i class="fa fa-lock"></i></button>`;
+                            // }
+                        }
+
+                    }
+                }
+            ],
+            "columnDefs": [{
+                    "className": "text-center",
+                    "targets": [0, 3, 4, 5, , 7]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [7]
+                },
+            ],
+            "initComplete": function() {
+                // hidden modal loading
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                $('#modal_inventory').modal('show');
+
+                stock_inventory_table.DataTable().ajax.reload();
+                var table = stock_inventory_table.DataTable();
+                var rows = table.rows().nodes();
+                for (var i = 0; i < rows.length; i++) {
+                    var row = $(rows[i]);
+                    var fn_quantity = row.find('td:nth-child(4)').text();
+                    if (fn_quantity == 0) {
+                        table.row(row).remove().draw(false);
+                    }
+                }
+            }
+        });
+    }
+
+    function select_stock(fc_barcode, fc_stockcode) {
+        // modal loading
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: '/apps/mutasi-barang/store_mutasi_detail',
+            type: "POST",
+            data: {
+                'fc_barcode': fc_barcode,
+                'fc_stockcode': fc_stockcode,
+                'fn_qty': $(`#quantity_cart_stock_${fc_barcode}`).val(),
+                'fc_sono': '{{ $data->fc_sono }}',
+            },
+            dataType: 'JSON',
+            success: function(response, textStatus, jQxhr) {
+                // modal loading hide
+                $('#modal_loading').modal('hide');
+                $('.place_alert_cart_stock').empty();
+                if (response.status === 200) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    location.reload();
+                } else {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXhr, textStatus, errorThrown) {
+                $('#modal_loading').modal('hide');
+                console.log(errorThrown);
+                console.warn(jqXhr.responseText);
+            },
+        });
     }
 
     var tb = $('#tb').DataTable({

@@ -162,10 +162,24 @@
     .content p {
         font-size: .8rem!important;
     }
+
+    #watermark {
+        position: fixed;
+        top: 25%;
+        width: 100%;
+        text-align: center;
+        opacity: .5;
+        transform-origin: 50% 50%;
+        z-index: -1000;
+    }
 </style>
 
 <body>
-<div class="container" id="sj-pdf">
+    <?php if($do_mst->fc_dostatus == 'CC'): ?>
+        <div id="watermark"><img src="{{ public_path('/assets/img/cancelled.png') }}" width="45%"></div>
+    <?php endif; ?>
+    <main>
+    <div class="container" id="sj-pdf">
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
@@ -237,6 +251,7 @@
             </tr>
         </table>
     <div>
+    </main>
 </body>
 
 </html>
