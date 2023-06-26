@@ -28,8 +28,28 @@ class MasterDeliveryOrderController extends Controller
         return view('apps.master-delivery-order.index', $data);
     }
 
+    public function detail($fc_dono){
+        // kalau encode pakai base64_encode
+        // kalau decode pakai base64_decode
+        $encoded_fc_dono = base64_decode($fc_dono);
+        session(['fc_dono_global' => $encoded_fc_dono]);
+        $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        return view('apps.master-delivery-order.detail', $data);
+        // dd($data);
+    }
+
+
     public function datatables(){
         $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+    }
+
+    public function datatables_do_detail(){
+        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -41,6 +61,32 @@ class MasterDeliveryOrderController extends Controller
 
         // return response json
         return response()->json($data);
+    }
+
+    public function cancel(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_dono = $request->fc_dono;
+
+        // update
+        $do_master = DoMaster::where('fc_dono', $fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $do_master->update([
+            'fc_dostatus' => 'CC',
+        ]);
+
+        if ($update_status) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil dicancel',
+                'link' => '/apps/master-delivery-order'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dicancel'
+        ];
     }
 
     public function pdf(Request $request){

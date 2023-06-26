@@ -259,13 +259,13 @@
             </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Delivery Item</p>
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Dikirim</p>
         <table class="table-lg table-center" style="margin-bottom: 35px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Kode Barang</th>
-                <th>Nama Produk</th>
-                <th>Unity</th>
+                <th>Nama Barang</th>
+                <th>Satuan</th>
                 <th>Qty</th>
                 <th>Exp. Date</th>
                 <th>Batch</th>
