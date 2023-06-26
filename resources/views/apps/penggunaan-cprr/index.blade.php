@@ -38,55 +38,62 @@
     }
 
     #html5-qrcode-button-camera-start {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
+        background-color: #FAFBFC;
+        border: 1px solid #0A9447;
+        color: #0A9447;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        appearance: none;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
     #html5-qrcode-button-camera-stop {
-        background-color: #FF0000;
-        /* Green */
-        border: none;
-        color: white;
+        background-color: #FAFBFC;
+        border: 1px solid #FF0000;
+        color: #FF0000;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        appearance: none;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
-    #html5-qrcode-button-file-selection {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
+    #html5-qrcode-select-camera {
+        background-color: #FAFBFC;
+        border: 1px solid rgba(27, 31, 35, 0.15);
+        color: #24292E;
+        cursor: pointer;
         text-align: center;
         text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
-    }
-
-    #html5-qrcode-button-camera-permission {
-        background-color: #0A9447;
-        /* Green */
-        border: none;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        font-size: 12px;
-        border-radius: 4px;
+        padding: 6px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        box-sizing: border-box;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 20px;
+        margin-bottom: 5px;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 </style>
 @endsection
@@ -188,9 +195,9 @@
     function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
         // console.log(`Code matched = ${decodedText}`, decodedResult);
+        audio.play();
         $('#result').val(decodedText);
         table_detail_barang();
-        audio.play();
     }
 
     function onScanFailure(error) {
@@ -198,27 +205,37 @@
         // for example:
         console.warn(`Code scan error = ${error}`);
     }
+
+    let qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
+        let minEdgePercentage = 0.7; // 70%
+        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+        let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+        return {
+            width: qrboxSize,
+            height: qrboxSize
+        };
+    }
+
     let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader", {
-            fps: 20,
-            qrbox: {
-                width: 350,
-                height: 350
-            },
+            fps: 10,
+            qrbox: qrboxFunction,
             supportedScanTypes: [
                 Html5QrcodeScanType.SCAN_TYPE_CAMERA
             ],
+            showTorchButtonIfSupported: true,
+            showZoomSliderIfSupported: true,
         }, false);
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
     function click_modal_barcode() {
-         table_detail_barang();
+        table_detail_barang();
     }
 
     function table_detail_barang() {
         var fc_barcode = $('#result').val();
         var url = "/apps/penggunaan-cprr/detail-barang/" + fc_barcode;
-        
+
         $.ajax({
             url: url,
             type: "GET",
@@ -228,7 +245,7 @@
             },
             success: function(response) {
                 // Close the loading modal
-                if(response.status === 200){
+                if (response.status === 200) {
                     $('#modal_loading').modal('hide');
 
                     $('#fc_barcode_scan').val(response.data.fc_barcode);
@@ -242,72 +259,88 @@
 
                     // Show the modal_barcode modal
                     $('#modal_barcode').modal('show');
-                }else{
+                } else {
                     $('#modal_loading').modal('hide');
-                    swal(response.message, { icon: 'error', });
+                    swal(response.message, {
+                        icon: 'error',
+                    });
                 }
-                
+
             },
             error: function(xhr, status, error) {
                 // Close the loading modal
                 $('#modal_loading').modal('hide');
                 console.log(xhr.responseText);
             }
-    });
-}
+        });
+    }
 
-$('#form_scan').on('submit', function(e){
-       e.preventDefault();
+    $('#form_scan').on('submit', function(e) {
+        e.preventDefault();
 
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
 
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((save) => {
-             if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_scan').attr('action'),
-                   type: $('#form_scan').attr('method'),
-                   data: $('#form_scan').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         $("#form_scan")[0].reset();
-                         reset_all_select();
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
-                });
-             }
-       });
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_scan').attr('action'),
+                        type: $('#form_scan').attr('method'),
+                        data: $('#form_scan').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                $("#form_scan")[0].reset();
+                                reset_all_select();
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
 </script>
 @endsection
