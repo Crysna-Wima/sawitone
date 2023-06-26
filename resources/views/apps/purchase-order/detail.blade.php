@@ -593,7 +593,7 @@
                     </div>
                 </form>
                 <div class="modal-footer bg-whitesmoke br">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" onclick="clear_category()" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -747,6 +747,7 @@
         function table_stock() {
             var fc_suppliercode = "{{ $data->fc_suppliercode }}";
             var fc_suppliercode_encode = window.btoa(fc_suppliercode);
+            console.log(fc_suppliercode_encode);
             var tipe_bisnis = "{{ $data->supplier->supplier_type_business->fv_description }}";
             var tb_stock = $('#tb_stock').DataTable({
                 processing: true,
@@ -781,14 +782,66 @@
                         }
                     },
                     {
-                        data: 'fc_brand'
+                        data: 'fc_brand',
+                        render: function(data, type, row) {
+                          if ($('#category').val() === 'Semua') {
+                                if (row.stock && row.stock.fc_brand) {
+                                    return row.stock.fc_brand;
+                                } else {
+                                    return data;
+                                }
+                            } else if ($('#category').val() === 'Khusus') {
+                                if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
+                                    return row.stock.fc_brand;
+                                } else {
+                                    return data;
+                                }
+                            } else {
+                                return data;
+                            }
+                            }
                     },
                     {
-                        data: 'fc_subgroup'
+                        data: 'fc_subgroup',
+                        render: function(data, type, row) {
+                          if ($('#category').val() === 'Semua') {
+                            if (row.stock && row.stock.fc_subgroup) {
+                                return row.stock.fc_subgroup;
+                            } else {
+                                return data;
+                            }
+                        } else if ($('#category').val() === 'Khusus') {
+                            if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
+                                return row.stock.fc_subgroup;
+                            } else {
+                                return data;
+                            }
+                        } else {
+                            return data;
+                        }
+                        }
                     },
                     {
-                        data: 'namepack.fv_description'
-                        
+                        data: 'namepack.fv_description',
+                        render: function(data, type, row) {
+                            if ($('#category').val() === 'Semua') {
+                                if (row.stock && row.stock.namepack && row.stock.namepack.fv_description) {
+                                    return row.stock.namepack.fv_description;
+                                } else {
+                                    return data;
+                                }
+                            } else if ($('#category').val() === 'Khusus') {
+                                if (row.namepack && row.namepack.fv_description) {
+                                    return row.namepack.fv_description;
+                                } else if (row.stock && row.stock.namepack && row.stock.namepack.fv_description) {
+                                    return row.stock.namepack.fv_description;
+                                } else {
+                                    return data;
+                                }
+                            } else {
+                                return data;
+                            }
+                        }
                     },
                     {
                         data: 'fm_purchase',
@@ -810,6 +863,10 @@
                     '/master/get-data-stock_supplier-po-datatables/' + fc_suppliercode_encode;
                 tb_stock.ajax.url(url).load();
         });
+        }
+
+        function clear_category(){
+            $('#category').val('Semua').trigger('change');
         }
 
         function detail_stock($id) {

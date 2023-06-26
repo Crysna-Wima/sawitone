@@ -482,10 +482,7 @@
     }
 
     function clear_category(){
-        var select = document.getElementById('category')
-        // ketika click_category di klik maka reset semua value select option category ubah menjadi "Semua"
-        select.value = "Semua"
-        $("#category").trigger("change");
+        $('#category').val('Semua').trigger('change');
     }
 
     function click_modal_stock() {
@@ -640,33 +637,41 @@
                 {
                     data: 'fc_brand',
                     render: function(data, type, row) {
-                        if ($('#category').val() == 'Khusus') {
-                            if (row.fc_brand == undefined) {
-                                return row.stock.fc_brand
-                            } else {
-                                
-                                return data
-                            }
-
+                          if ($('#category').val() === 'Semua') {
+                        if (row.stock && row.stock.fc_brand) {
+                            return row.stock.fc_brand;
+                        } else {
+                            return '';
+                        }
+                    } else if ($('#category').val() === 'Khusus') {
+                        if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
+                            return row.stock.fc_brand;
                         } else {
                             return data;
                         }
+                    } else {
+                        return data;
+                    }
                     }
                 },
                 {
                     data: 'fc_subgroup',
-                     render: function(data, type, row) {
-                        if ($('#category').val() == 'Khusus') {
-                            if (row.fc_subgroup == undefined) {
-                                return row.stock.fc_subgroup
-                            } else {
-                                
-                                return data
-                            }
-
+                    render: function(data, type, row) {
+                          if ($('#category').val() === 'Semua') {
+                        if (row.stock && row.stock.fc_subgroup) {
+                            return row.stock.fc_subgroup;
+                        } else {
+                            return '';
+                        }
+                    } else if ($('#category').val() === 'Khusus') {
+                        if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
+                            return row.stock.fc_subgroup;
                         } else {
                             return data;
                         }
+                    } else {
+                        return data;
+                    }
                     }
                 },
                 {

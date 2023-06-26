@@ -186,7 +186,7 @@ class DataMasterController extends Controller
     public function get_data_stock_supplier_po_datatables($fc_suppliercode){
         // decode
         $fc_suppliercode_decode = base64_decode($fc_suppliercode);
-        $data = StockSupplier::with('supplier', 'stock')->where('fc_suppliercode', $fc_suppliercode_decode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = StockSupplier::with('supplier', 'stock.namepack')->where('fc_suppliercode', $fc_suppliercode_decode)->where('fc_branch', auth()->user()->fc_branch)->get();
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
