@@ -486,8 +486,6 @@
         // ketika click_category di klik maka reset semua value select option category ubah menjadi "Semua"
         select.value = "Semua"
         $("#category").trigger("change");
-
-        return;
     }
 
     function click_modal_stock() {

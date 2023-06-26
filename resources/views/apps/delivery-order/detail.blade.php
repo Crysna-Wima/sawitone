@@ -246,11 +246,12 @@
 
     let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
 
-    function insert_do() {
+    function insert_do(fc_warehousecode) {
+        // console.log(fc_warehousecode);
         // show modal loading
         $('#modal_loading').modal('show');
         // Dapatkan data input dari elemen form
-        var fc_warehousecode = "{{ $data->fc_warehousecode }}";
+        // var fc_warehousecode = "{{ $data->fc_warehousecode }}";
         var fc_sono = "{{ $data->fc_sono }}";
         var fc_divisioncode = "{{ $data->fc_divisioncode }}";
         var fc_branch = "{{ $data->fc_branch }}";
@@ -262,7 +263,7 @@
             'fc_divisioncode': fc_divisioncode,
             'fc_branch': fc_branch,
             'fc_sono': fc_sono,
-            'fc_sono': fc_sono,
+            'fc_sostatus' : fc_sostatus,
             'fc_warehousecode': fc_warehousecode,
             // 'fc_userid': fc_userid,
             'fc_dono': fc_dono
@@ -389,7 +390,7 @@
             ],
             rowCallback: function(row, data) {
                 $('td:eq(5)', row).html(`
-                <button class="btn btn-warning btn-sm mr-1" onclick="insert_do()"><i class="fa fa-check"></i> Pilih</button>
+                <button class="btn btn-warning btn-sm mr-1" onclick="insert_do('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
             `);
             }
         });

@@ -66,7 +66,7 @@ class DeliveryOrderController extends Controller
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
             'fc_sono' => 'required',
-            'fc_warehousecode' => 'fc_warehousecode',
+            'fc_warehousecode' => 'required',
             'fc_sostatus' => 'required',
             // 'fc_userid' => 'required',
             'fc_dono' => 'required',
@@ -105,6 +105,7 @@ class DeliveryOrderController extends Controller
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_sono' => $request->fc_sono,
+            'fc_warehousecode' => $request->fc_warehousecode,
             'fc_sostatus' => $request->fc_sostatus,
             'fc_userid' => auth()->user()->fc_userid,
             'fc_dono' => $request->fc_dono,
@@ -134,7 +135,7 @@ class DeliveryOrderController extends Controller
     }
 
     public function create(){
-        $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
         $fc_sono_domst = $domst->fc_sono;
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')
             ->where('fc_sono', $fc_sono_domst)
