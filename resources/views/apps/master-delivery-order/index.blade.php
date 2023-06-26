@@ -58,6 +58,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="diterima-tab" data-toggle="tab" href="#diterima" role="tab" aria-controls="diterima" aria-selected="false">Diterima</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="approval-tab" data-toggle="tab" href="#approval" role="tab" aria-controls="approval" aria-selected="false">Approval</a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="semua" role="tabpanel" aria-labelledby="semua-tab">
@@ -99,6 +102,24 @@
                         <div class="tab-pane fade" id="diterima" role="tabpanel" aria-labelledby="diterima-tab">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="tb_diterima" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">No</th>
+                                            <th scope="col" class="text-center">No. Surat Jalan</th>
+                                            <th scope="col" class="text-center">No. SO</th>
+                                            <th scope="col" class="text-center">Tgl SJ</th>
+                                            <th scope="col" class="text-center">Customer</th>
+                                            <th scope="col" class="text-center">Item</th>
+                                            <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center" style="width: 22%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="approval" role="tabpanel" aria-labelledby="approval-tab">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tb_approval" width="100%">
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
@@ -490,6 +511,56 @@
             });
         }
 
+        function closeDO(fc_dono) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin cancel surat jalan ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/master-delivery-order/cancel',
+                        type: 'PUT',
+                        data: {
+                            fc_dostatus: 'CC',
+                            fc_dono: fc_dono
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                                tb_pengiriman.ajax.reload();
+                                tb_diterima.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
 
         var tb = $('#tb_semua').DataTable({
             processing: true,
@@ -547,6 +618,8 @@
                     $('td:eq(6)', row).html('<span class="badge badge-primary">Pengiriman</span>');
                 } else if (data['fc_dostatus'] == 'P') {
                     $('td:eq(6)', row).html('<span class="badge badge-info">Terbayar</span>');
+                } else if (data['fc_dostatus'] == 'CC') {
+                    $('td:eq(6)', row).html('<span class="badge badge-danger">Cancel</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
@@ -554,6 +627,13 @@
                 if (data['fc_dostatus'] == 'I') {
                     $(row).hide();
                 } else if (data['fc_dostatus'] == 'D') {
+                    $('td:eq(7)', row).html(
+                        `
+                        <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
+                        <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
+                        <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
+                    );
+                } else if (data['fc_dostatus'] == 'CC') {
                     $('td:eq(7)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
@@ -640,7 +720,8 @@
                     $('td:eq(7)', row).html(
                         `
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>
+                    <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
                     );
                 } else {
                     if (data['fc_invstatus'] == 'N') {
@@ -737,6 +818,76 @@
                                 <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm"><i class="fa fa-credit-card"></i> Invoice</button></a>`
                         );
                     }
+                }
+                //<a href="/apps/master-delivery-order/inv/${data.fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
+            }
+        });
+
+        var tb_approval = $('#tb_approval').DataTable({
+            processing: true,
+            serverSide: true,
+            order: [
+                [3, 'desc']
+            ],
+            ajax: {
+                url: '/apps/master-delivery-order/datatables',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 6, 7]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [3]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_dono'
+                },
+                {
+                    data: 'fc_sono'
+                },
+                {
+                    data: 'fd_dodate',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'somst.customer.fc_membername1'
+                },
+                {
+                    data: 'fn_dodetail'
+                },
+                {
+                    data: 'fc_dostatus'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
+                var fc_dono = window.btoa(data.fc_dono);
+                $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+                if (data['fc_dostatus'] == 'N') {
+                    $('td:eq(6)', row).html('<span class="badge badge-info">Butuh Approval</span>');
+                } else if (data['fc_dostatus'] == 'AP') {
+                    $('td:eq(6)', row).html('<span class="badge badge-success">Accept</span>');
+                } else {
+                    $('td:eq(6)', row).html('<span class="badge badge-danger">Reject</span>');
+                }
+
+                if ((data['fc_dostatus'] == 'N' || data['fc_dostatus'] == 'AP' || data['fc_dostatus'] == 'RJ')) {
+                    $('td:eq(7)', row).html(
+                        `
+                        <a href="/apps/master-delivery-order/detail/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>`
+                    );
+                } else {
+                    $(row).hide();
                 }
                 //<a href="/apps/master-delivery-order/inv/${data.fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
             }

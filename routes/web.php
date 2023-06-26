@@ -262,14 +262,17 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-delivery-order')->group(function () {
             Route::get('/','Apps\MasterDeliveryOrderController@index');
+            Route::get('/detail/{fc_dono}','Apps\MasterDeliveryOrderController@detail');
             Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
             Route::get('/datatables/detail','Apps\MasterDeliveryOrderController@datatables_detail');
+            Route::get('/datatables-do-detail','Apps\MasterDeliveryOrderController@datatables_do_detail');
 
             Route::post('/pdf', 'Apps\MasterDeliveryOrderController@pdf');
             Route::get('/get_pdf/{fc_dono}/{nama_pj}', 'Apps\MasterDeliveryOrderController@get_pdf');
             Route::get('/pdf_sj/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf_sj');
             Route::get('/inv/{fc_dono}', 'Apps\MasterDeliveryOrderController@inv');
             Route::post('/inv/publish', 'Apps\MasterDeliveryOrderController@publish');
+            Route::put('/cancel','Apps\MasterDeliveryOrderController@cancel');
         });
 
         Route::prefix('received-order')->group(function () {
