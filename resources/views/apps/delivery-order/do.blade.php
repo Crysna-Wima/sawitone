@@ -355,7 +355,7 @@
     </div>
     <div class="button text-right mb-4">
         <button type="button" onclick="click_delete()" class="btn btn-danger mr-2">Cancel Surat Jalan</button>
-        <button onclick="submit_do()" type="button" class="btn btn-success mr-2">Submit</button>
+        <button onclick="cek_submit()" type="button" class="btn btn-success mr-2">Submit</button>
     </div>
 </div>
 </div>
@@ -1033,8 +1033,43 @@
             });
     }
 
-    function submit_do() {
+    function cek_submit(){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/delivery-order/need-approve',
+            type: 'GET',
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.approval) {
+                    swal({
+                        title: 'Konfirmasi',
+                        html: '<strong>Surat Jalan memerlukan approval.</strong> Apakah anda ingin melanjutkan?',
+                        icon: 'warning',
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willContinue) => {
+                        if (willContinue) {
+                            submit_do_noconfirm();
+                        }
+                    });
+                } else {
+                    submit_do();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
+    function submit_do() {
         swal({
                 title: 'Apakah anda yakin?',
                 text: 'Apakah anda yakin akan submit data Surat Jalan ini?',
@@ -1042,8 +1077,8 @@
                 buttons: true,
                 dangerMode: true,
             })
-            .then((willDelete) => {
-                if (willDelete) {
+            .then((willSave) => {
+                if (willSave) {
                     $("#modal_loading").modal('show');
                     $.ajax({
                         url: '/apps/delivery-order/submit_do',
@@ -1066,7 +1101,7 @@
                                     position: 'topRight'
                                 });
                                 window.location.href = response.link;
-                            } else {
+                            }else {
                                 swal(response.message, {
                                     icon: 'error',
                                 });
@@ -1086,5 +1121,46 @@
                 }
             });
     }
+
+
+    function submit_do_noconfirm() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/delivery-order/submit_do',
+            type: "POST",
+            data: {
+                'fc_sostatus': 'P',
+                'fc_dostatus': 'NA',
+                'fd_dodatesysinput': moment().format('YYYY-MM-DD HH:mm:ss'),
+            },
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 201) {
+                    $("#modal").modal('hide');
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    window.location.href = response.link;
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
 </script>
 @endsection
