@@ -215,7 +215,7 @@
                                 <div class="form-group">
                                     <label>Catatan</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description">
+                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description" id="fv_description">
                                     </div>
                                 </div>
                             </div>
@@ -314,18 +314,33 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-body" style="padding-top: 30px!important;">
-                    <div class="col-12 col-md-6 col-lg-12">
-                        <div class="form-group">
-                            <label>Catatan</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description">
+            <form id="form_submit" action="/apps/sales-order/detail/catatan-save" method="POST">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body" style="padding-top: 30px!important;">
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group">
+                                <label for="fv_description_mst">Catatan</label>
+                                <div class="input-group">
+                                    @if (empty($data->fv_description))
+                                    <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description_mst" id="fv_description_mst">
+                                    @endif
+                                    <input type="text" class="form-control" fdprocessedid="hgh1fp" value="{{ $data->fv_description }}" name="fv_description_mst" id="fv_description_mst">
+                                    <input type="text" class="form-control" name="fc_sono" id="fc_sono" hidden>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-warning" id="btn_save">
+                            <i class="fas fa-edit"></i> Simpan
+                        </button>
+                    </div>
                 </div>
-            </div>
+         
+            </form>
+            
             @if ($data->fc_sostatus === 'F')
             <div class="button text-right mb-4">
                 <a href="#" class="btn btn-success">Save SO</a>

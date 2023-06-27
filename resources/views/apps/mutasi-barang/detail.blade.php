@@ -179,6 +179,7 @@
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Mutasi Qty</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
@@ -284,6 +285,7 @@
     }
 
     let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
+    console.log(encode_fc_sono)
 
     var tb = $('#tb_so').DataTable({
         // apabila data kosong
@@ -291,7 +293,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/delivery-order/datatables-so-detail/" + encode_fc_sono,
+            url: "/apps/mutasi-barang/datatables-so-detail/" + encode_fc_sono,
             type: 'GET',
         },
         columnDefs: [{
@@ -317,12 +319,15 @@
                 data: 'fn_so_qty'
             },
             {
+                data: 'fn_do_qty'
+            },
+            {
                 data: null
             },
 
         ],
         rowCallback: function(row, data) {
-            $('td:eq(5)', row).html(`
+            $('td:eq(6)', row).html(`
             <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`);
             // if (data.fn_so_qty > data.fn_qty) {
             //     $('td:eq(6)', row).html(
@@ -395,7 +400,7 @@
             "serverSide": true,
             "ordering": false,
             "ajax": {
-                "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
+                "url": '/apps/mutasi-barang/datatables-stock-inventory/' + fc_stockcode,
                 "type": "GET",
                 "data": {
                     "fc_stockcode": fc_stockcode

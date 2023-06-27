@@ -224,6 +224,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/datatables','Apps\SalesOrderDetailController@datatables');
                 Route::get('/datatables-inventory','Apps\SalesOrderDetailController@datatables_inventory');
                 Route::post('/store-update','Apps\SalesOrderDetailController@store_update');
+                Route::put('/catatan-save', 'Apps\SalesOrderDetailController@save_catatan');
                 Route::delete('/delete/{fc_sono}/{fn_sorownum}','Apps\SalesOrderDetailController@delete');
 
                 Route::prefix('payment')->group(function () {
@@ -404,10 +405,12 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('mutasi-barang')->group(function(){
             Route::get('/','Apps\MutasiBarangController@index');
+            Route::get('/datatables-stock-inventory/{fc_stockcode}','Apps\MutasiBarangController@datatables_stock_inventory');
             Route::get('/datatables/so_cprr/{fc_membercode}','Apps\MutasiBarangController@datatables_so_cprr');
             Route::get('/datatables/so_internal/{fc_membercode}','Apps\MutasiBarangController@datatables_so_internal');
             Route::get('/datatables-lokasi-awal/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
+            Route::get('/datatables-so-detail/{fc_sono}','Apps\MutasiBarangController@datatables_so_detail');
             Route::post('/store-mutasi','Apps\MutasiBarangController@store_mutasi');
             Route::delete('/cancel_mutasi','Apps\MutasiBarangController@cancel_mutasi');
 

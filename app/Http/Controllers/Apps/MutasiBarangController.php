@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Apps;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\Invstore;
+use App\Models\SoDetail;
 use App\Models\TempMutasiDetail;
 use App\Models\TempMutasiMaster;
 use App\Models\SoMaster;
@@ -29,6 +31,32 @@ class MutasiBarangController extends Controller
         }
         // dd($temp_po_detail);
         return view('apps.mutasi-barang.index');
+    }
+
+    public function datatables_so_detail($fc_sono){
+        $decode_fc_sono = base64_decode($fc_sono);
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.domst')->where('fc_sono', $decode_fc_sono)->get();
+
+        return DataTables::of($data)
+            ->addColumn('total_harga', function ($item) {
+                return $item->fn_so_qty * $item->fm_so_oriprice;
+            })
+            ->addIndexColumn()
+            ->make(true);
+        // dd($domst);
+    }
+
+    public function datatables_stock_inventory($fc_stockcode){
+        // get data from Invstore
+
+        $data = Invstore::with('stock.sodtl.somst', 'warehouse')->where('fc_stockcode', $fc_stockcode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode)
+        ->orderBy('fd_expired', 'ASC')
+        ->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
     
     public function datatables_so_cprr($fc_membercode){

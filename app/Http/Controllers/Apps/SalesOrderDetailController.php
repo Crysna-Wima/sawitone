@@ -53,6 +53,26 @@ class SalesOrderDetailController extends Controller
             ->make(true);
     }
 
+    public function save_catatan(Request $request){
+        $data = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data->fv_description = $request->fv_description_mst;
+        $data->save();
+
+        // jika data berhasil di save
+        if($data){
+            return response()->json([
+                'status' => 201,
+                'message' => 'Data berhasil di simpan',
+                'link' => '/apps/sales-order'
+            ]);
+        }else{
+            return response()->json([
+                'status' => 300,
+                'message' => 'Data gagal di simpan'
+            ]);
+        }
+    }
+
     public function store_update(request $request){
         $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
         $total = count($count_sodtl);
