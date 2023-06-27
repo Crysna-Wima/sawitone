@@ -397,7 +397,10 @@
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Cancel</span>');
                 } else if (data['fc_sostatus'] == 'CL') {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Close</span>');
-                } else {
+                } else if (data['fc_sostatus'] == 'WA') {
+                    $('td:eq(7)', row).html('<span class="badge badge-dark">Waiting Approval</span>');
+                }  
+                else {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
                 }
 
