@@ -55,7 +55,7 @@ class MasterDeliveryOrderController extends Controller
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
-        // dd($request);
+        // dd($fc_dono);
     }
 
     public function datatables_detail(Request $request){
