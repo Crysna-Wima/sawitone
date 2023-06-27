@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO : {{ $do_mst->fc_dono }}
+                                    <label>Approv : {{ $do_mst->fc_dono }}
                                     </label>
                                 </div>
                             </div>
@@ -226,13 +226,15 @@
 
 @section('js')
 <script>
+    var dono = "{{ $do_mst->fc_dono }}";
+    var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
         serverSide: true,
-        destroy: true,
+        destroy: true, 
         ajax: {
-            url: "/apps/master-delivery-order/datatables-do-detail",
+            url: "/apps/master-delivery-order/datatables-do-detail/" + encode_dono,
             type: 'GET',
         },
         columnDefs: [{
