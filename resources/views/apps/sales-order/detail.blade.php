@@ -325,22 +325,23 @@
                                 <div class="input-group">
                                     @if (empty($data->fv_description))
                                     <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description_mst" id="fv_description_mst">
-                                    @endif
+                                    @else
                                     <input type="text" class="form-control" fdprocessedid="hgh1fp" value="{{ $data->fv_description }}" name="fv_description_mst" id="fv_description_mst">
                                     <input type="text" class="form-control" name="fc_sono" id="fc_sono" hidden>
-                                </div>
+                                    @endif
+                                </div>  
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="button text-right">
+                                <button type="submit" class="btn btn-warning" id="btn_save">
+                                    <i class="fas fa-edit"></i> Simpan
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-warning" id="btn_save">
-                            <i class="fas fa-edit"></i> Simpan
-                        </button>
-                    </div>
                 </div>
-         
             </form>
-            
+
             @if ($data->fc_sostatus === 'F')
             <div class="button text-right mb-4">
                 <a href="#" class="btn btn-success">Save SO</a>
@@ -496,7 +497,7 @@
         table_customer();
     }
 
-    function clear_category(){
+    function clear_category() {
         $('#category').val('Semua').trigger('change');
     }
 
@@ -652,41 +653,41 @@
                 {
                     data: 'fc_brand',
                     render: function(data, type, row) {
-                          if ($('#category').val() === 'Semua') {
-                        if (row.stock && row.stock.fc_brand) {
-                            return row.stock.fc_brand;
-                        } else {
-                            return '';
-                        }
-                    } else if ($('#category').val() === 'Khusus') {
-                        if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
-                            return row.stock.fc_brand;
+                        if ($('#category').val() === 'Semua') {
+                            if (row.stock && row.stock.fc_brand) {
+                                return row.stock.fc_brand;
+                            } else {
+                                return '';
+                            }
+                        } else if ($('#category').val() === 'Khusus') {
+                            if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
+                                return row.stock.fc_brand;
+                            } else {
+                                return data;
+                            }
                         } else {
                             return data;
                         }
-                    } else {
-                        return data;
-                    }
                     }
                 },
                 {
                     data: 'fc_subgroup',
                     render: function(data, type, row) {
-                          if ($('#category').val() === 'Semua') {
-                        if (row.stock && row.stock.fc_subgroup) {
-                            return row.stock.fc_subgroup;
-                        } else {
-                            return '';
-                        }
-                    } else if ($('#category').val() === 'Khusus') {
-                        if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
-                            return row.stock.fc_subgroup;
+                        if ($('#category').val() === 'Semua') {
+                            if (row.stock && row.stock.fc_subgroup) {
+                                return row.stock.fc_subgroup;
+                            } else {
+                                return '';
+                            }
+                        } else if ($('#category').val() === 'Khusus') {
+                            if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
+                                return row.stock.fc_subgroup;
+                            } else {
+                                return data;
+                            }
                         } else {
                             return data;
                         }
-                    } else {
-                        return data;
-                    }
                     }
                 },
                 {

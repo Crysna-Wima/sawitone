@@ -511,7 +511,7 @@
             });
         }
 
-        function closeDO(fc_dono) {
+        function cancelDO(fc_dono) {
             swal({
                 title: "Konfirmasi",
                 text: "Anda yakin ingin cancel surat jalan ini?",
@@ -533,7 +533,7 @@
                             setTimeout(function() {
                                 $('#modal_loading').modal('hide');
                             }, 500);
-                            if (response.status == 200) {
+                            if (response.status == 201) {
                                 swal(response.message, {
                                     icon: 'success',
                                 });
@@ -574,11 +574,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 6]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3]
+                    targets: [3, 7]
                 },
             ],
             columns: [{
@@ -835,11 +835,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 6]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3]
+                    targets: [3, 7]
                 },
             ],
             columns: [{
