@@ -208,13 +208,15 @@
 
 @section('js')
 <script>
+    var dono = "{{ $do_mst->fc_dono }}";
+    var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
         serverSide: true,
-        destroy: true,
+        destroy: true, 
         ajax: {
-            url: "/apps/master-delivery-order/datatables-do-detail",
+            url: "/apps/master-delivery-order/datatables-do-detail/" + encode_dono,
             type: 'GET',
         },
         columnDefs: [{

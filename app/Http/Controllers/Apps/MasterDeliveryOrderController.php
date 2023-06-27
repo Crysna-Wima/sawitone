@@ -48,12 +48,14 @@ class MasterDeliveryOrderController extends Controller
         ->make(true);
     }
 
-    public function datatables_do_detail(){
-        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function datatables_do_detail($fc_dono){
+        $decode_dono = base64_decode($fc_dono);
+        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
+        // dd($request);
     }
 
     public function datatables_detail(Request $request){
