@@ -199,10 +199,17 @@
             </div>
         </div>
     </div>
-    <div class="button text-right mb-4">
-        <button class="btn btn-danger mr-1" onclick="">Reject</button>
-        <button class="btn btn-success" onclick="">Accept</button>
+    @if (auth()->user()->fc_groupuser == 'IN_MNGWRH' && auth()->user()->fl_level == 3)
+        <div class="button text-right mb-4">
+            <button class="btn btn-danger mr-1" onclick="">Reject</button>
+            <button class="btn btn-success" onclick="">Accept</button>
+        </div>
+     @else
+     <div class="button text-right mb-4">
+        <button class="btn btn-warning" onclick="">Edit</button>
     </div>
+    @endif
+    
 </div>
 @endsection
 
