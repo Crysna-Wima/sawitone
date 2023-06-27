@@ -221,4 +221,71 @@ class MasterDeliveryOrderController extends Controller
         }
 
     }
+
+
+    public function reject_approval(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_dostatus' => 'required',
+        ], [
+            'fc_dostatus.required' => 'Pilih Reject Terlebih Dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        // update data fc_dostatus in DoMaster
+        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->update(['fc_dostatus' => $request->fc_dostatus]);
+        
+        // jika validasi sukses dan $do_master berhasil response 200
+        if ($do_mst) {
+            return response()->json(
+                [
+                    'status' => 201,
+                    'message' => 'Reject berhasil',
+                    'link' => '/apps/master-delivery-order'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 300,
+                    'message' => 'Reject gagal'
+                ]
+            );
+        }
+    }
+
+    public function accept_approval(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_dostatus' => 'required',
+        ], [
+            'fc_dostatus.required' => 'Pilih Accept Terlebih Dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+
+        // update data fc_dostatus in DoMaster
+        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->update(['fc_dostatus' => $request->fc_dostatus]);
+        
+        // jika validasi sukses dan $do_master berhasil response 200
+        if ($do_mst) {
+            return response()->json(
+                [
+                    'status' => 201,
+                    'message' => 'Accept berhasil',
+                    'link' => '/apps/master-delivery-order'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 300,
+                    'message' => 'Accept gagal'
+                ]
+            );
+        }
+    }
 }

@@ -200,9 +200,20 @@
         </div>
     </div>
     @if (auth()->user()->fc_groupuser == 'IN_MNGWRH' && auth()->user()->fl_level == 3)
-        <div class="button text-right mb-4">
-            <button class="btn btn-danger mr-1" onclick="">Reject</button>
-            <button class="btn btn-success" onclick="">Accept</button>
+        <div class="button text-right mb-4 d-flex justify-content-end">
+            <form id="form_submit" action="/apps/master-delivery-order/reject_approval" method="POST">
+                @csrf
+                @method('put')
+                <input type="text" name="fc_dostatus" value="RJ" hidden>
+                <button type="submit" class="btn btn-danger mr-1" onclick="">Reject</button>
+            </form>
+            <form id="form_submit_edit" action="/apps/master-delivery-order/accept_approval" method="POST">
+                @csrf
+                @method('put')
+                <input type="text" name="fc_dostatus" value="AC" hidden>
+                <button type="submit" class="btn btn-success">Accept</button>
+            </form>
+            
         </div>
      @else
      <div class="button text-right mb-4">
