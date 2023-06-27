@@ -13,6 +13,7 @@ use DB;
 use Yajra\DataTables\DataTables as DataTables;
 use App\Models\TempMutasiDetail;
 use App\Models\Invstore;
+use App\Models\SoDetail;
 use App\Models\Stock;
 use App\Models\TempMutasiMaster;
 use Carbon\Carbon;
@@ -45,7 +46,7 @@ class MutasiBarangDetailController extends Controller
          $validator = Validator::make($request->all(), [
             'fc_stockcode' => 'required',
             'fc_barcode' => 'required',
-            'fc_namelong' => 'required',
+            // 'fc_namelong' => 'required',
             'fn_qty' => 'required',
          ]
         );
@@ -57,17 +58,36 @@ class MutasiBarangDetailController extends Controller
             ];
         }
 
-        if($request->fn_qty > $request->fn_quantity_stock){
+        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
+        $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
+                                      ->where('fc_sono', $request->fc_sono)
+                                      ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->first();
+        $sodtlLength = count($data_stock_sodtl->stock->sodtl);
+        $qty = 0;
+        for ($i = 0; $i < $sodtlLength; $i++) {
+            $qty += $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty;
+        }
+        if ($qty >= $data_stock->fn_quantity) {
+            if ($request->fn_qty > $data_stock->fn_quantity) {
+                return [
+                    'status' => 300,
+                    'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
+                ];
+            }
+        }
+
+        if ($request->fn_qty > $qty) {
             return [
                 'status' => 300,
-                'message' => 'Jumlah barang yang dimasukkan melebihi stok yang tersedia'
+                'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
             ];
         }
 
         $count_po_dtl = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->get();
         $total = count($count_po_dtl);
 
-        $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
+        // $stock = Stock::where('fc_stockcode', $request->fc_stockcode)->first();
         $temp_detail = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->orderBy('fn_mutationrownum', 'DESC')->first();
 
         // jika ada TempSoDetail yang fc_stockcode == $request->fc_stockcode

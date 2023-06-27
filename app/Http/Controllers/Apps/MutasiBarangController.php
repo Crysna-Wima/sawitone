@@ -46,12 +46,13 @@ class MutasiBarangController extends Controller
         // dd($domst);
     }
 
-    public function datatables_stock_inventory($fc_stockcode){
+    public function datatables_stock_inventory($fc_stockcode,$fc_warehousecode){
         // get data from Invstore
 
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')->where('fc_stockcode', $fc_stockcode)
         ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode)
+        ->where('fc_warehousecode', $fc_warehousecode)
+        // ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode)
         ->orderBy('fd_expired', 'ASC')
         ->get();
         return DataTables::of($data)

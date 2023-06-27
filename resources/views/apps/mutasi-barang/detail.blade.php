@@ -392,6 +392,7 @@
 
         // tampilkan loading_data
         var stock_inventory_table = $('#stock_inventory');
+        var fc_warehousecode = "{{ $data->fc_startpoint_code }}";
         if ($.fn.DataTable.isDataTable(stock_inventory_table)) {
             stock_inventory_table.DataTable().destroy();
         }
@@ -400,10 +401,10 @@
             "serverSide": true,
             "ordering": false,
             "ajax": {
-                "url": '/apps/mutasi-barang/datatables-stock-inventory/' + fc_stockcode,
+                "url": '/apps/mutasi-barang/datatables-stock-inventory/' + fc_stockcode + '/' + fc_warehousecode,
                 "type": "GET",
                 "data": {
-                    "fc_stockcode": fc_stockcode
+                    "fc_stockcode": fc_stockcode,
                 }
             },
             "columns": [{
@@ -494,24 +495,16 @@
                                     break;
                                 }
                             }
-
-                            // if (qty == 0) {
-                            //     return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            // } else {
-                            //     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
-                            // }
                             if (qty == 0) {
                                 return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
                             } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}','${data.stock.fc_namelong}')">Select</button>`;
                             }
 
                         } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                            index]
-                                        .fn_do_qty;
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
                                     break;
                                 }
                             }
@@ -521,16 +514,8 @@
                             if (qty == 0) {
                                 return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
                             } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}','${data.stock.fc_namelong}')">Select</button>`;
                             }
-                            // if (qty == 0) {
-                            //     return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            // } else {
-                            //     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
-                            // }
-                            // else {
-                            //     return `<button type="button" class="btn btn-danger"><i class="fa fa-lock"></i></button>`;
-                            // }
                         }
 
                     }
@@ -566,17 +551,18 @@
         });
     }
 
-    function select_stock(fc_barcode, fc_stockcode) {
+    function select_stock(fc_barcode, fc_stockcode, fc_namelong) {
         // modal loading
         $('#modal_loading').modal('show');
         $.ajax({
-            url: '/apps/mutasi-barang/store_mutasi_detail',
+            url: '/apps/mutasi-barang/detail/store_mutasi_detail',
             type: "POST",
             data: {
                 'fc_barcode': fc_barcode,
                 'fc_stockcode': fc_stockcode,
                 'fn_qty': $(`#quantity_cart_stock_${fc_barcode}`).val(),
                 'fc_sono': '{{ $data->fc_sono }}',
+                'fc_namelong': fc_namelong,
             },
             dataType: 'JSON',
             success: function(response, textStatus, jQxhr) {
