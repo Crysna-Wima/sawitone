@@ -620,6 +620,8 @@
                     $('td:eq(6)', row).html('<span class="badge badge-info">Terbayar</span>');
                 } else if (data['fc_dostatus'] == 'CC') {
                     $('td:eq(6)', row).html('<span class="badge badge-danger">Cancel</span>');
+                } else if (data['fc_dostatus'] == 'NA') {
+                    $('td:eq(6)', row).html('<span class="badge badge-dark">Menunggu Approval</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
@@ -835,7 +837,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6]
+                    targets: [0, 3, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
@@ -873,15 +875,15 @@
             rowCallback: function(row, data) {
                 var fc_dono = window.btoa(data.fc_dono);
                 $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
-                if (data['fc_dostatus'] == 'N') {
-                    $('td:eq(6)', row).html('<span class="badge badge-info">Butuh Perizinan</span>');
+                if (data['fc_dostatus'] == 'NA') {
+                    $('td:eq(6)', row).html('<span class="badge badge-dark">Menunggu Perizinan</span>');
                 } else if (data['fc_dostatus'] == 'AP') {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Perizinan Diterima</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-danger">Perizinan Ditolak</span>');
                 }
 
-                if ((data['fc_dostatus'] == 'N' || data['fc_dostatus'] == 'AP' || data['fc_dostatus'] == 'RJ')) {
+                if ((data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AP' || data['fc_dostatus'] == 'RJ')) {
                     $('td:eq(7)', row).html(
                         `
                         <a href="/apps/master-delivery-order/detail/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>`

@@ -398,7 +398,7 @@
                 } else if (data['fc_sostatus'] == 'CL') {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Close</span>');
                 } else if (data['fc_sostatus'] == 'WA') {
-                    $('td:eq(7)', row).html('<span class="badge badge-dark">Waiting Approval</span>');
+                    $('td:eq(7)', row).html('<span class="badge badge-dark">Menunggu Approval</span>');
                 }  
                 else {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
