@@ -1056,9 +1056,10 @@
                     $('#modal_loading').modal('hide');
                 }, 500);
                 if (response.approval) {
+                    var boldConfirm = "<b>Surat Jalan memerlukan approval.</b>";
                     swal({
-                        title: 'Konfirmasi',
-                        html: '<strong>Surat Jalan memerlukan approval.</strong> Apakah anda ingin melanjutkan?',
+                        title: 'Membutuhkan Approval',
+                        text: 'Surat Jalan Ini Membutuhkan Approval, Apakah anda ingin melanjutkan?',
                         icon: 'warning',
                         buttons: true,
                         dangerMode: true,
