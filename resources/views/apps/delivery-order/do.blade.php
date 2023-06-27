@@ -201,6 +201,7 @@
                                         <!-- <th scope="col" class="text-center">Harga</th>
                                                                 <th scope="col" class="text-center">Disc.</th>
                                                                 <th scope="col" class="text-center">Total</th> -->
+                                        <th scope="col" class="text-center">Approval</th>
                                         <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
@@ -788,11 +789,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9,10]
             },
             {
                 className: 'text-nowrap',
-                targets: [8]
+                targets: [10]
             },
             {
                 targets: -1,
@@ -851,6 +852,12 @@
             //     render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             // },
             {
+                data: 'fc_approval',
+                render: function(data, type, row) {
+                    return data === 'T' ? 'Ya' : 'Tidak';
+                }
+            },
+            {
                 data: null
             }
 
@@ -859,9 +866,15 @@
             const item_barcode = data.fc_barcode;
             const item_row = data.fn_rownum;
             // kirim 2 parameter di data-id di button hapus
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
+            $('td:eq(9)', row).html(`<i class="${data.fc_approval}"></i>`);
+            if (data['fc_approval'] == 'F') {
+                $('td:eq(9)', row).html('<span class="badge badge-success">NO</span>');
+            } else {
+                $('td:eq(9)', row).html('<span class="badge badge-warning">YES</span>');
+            }
 
             $('td:eq(5)', row).html(`<i class="${data.fc_status_bonus_do}"></i>`);
             if (data['fc_status_bonus_do'] == 'T') {
