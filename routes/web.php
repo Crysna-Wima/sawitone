@@ -259,6 +259,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/update_transport/{fc_sono}', 'Apps\DeliveryOrderController@update_transport');
             Route::delete('/cancel_do', 'Apps\DeliveryOrderController@cancel_do');
             Route::post('/submit_do', 'Apps\DeliveryOrderController@submit_do');
+            Route::get('/need-approve', 'Apps\DeliveryOrderController@approve');
         });
 
         Route::prefix('master-delivery-order')->group(function () {

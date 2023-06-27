@@ -507,7 +507,8 @@ class DeliveryOrderController extends Controller
                 'fc_dostatus' => $request->fc_dostatus,
                 'fd_dodatesysinput' => $request->fd_dodatesysinput,
             ]);
-
+        
+        
         // jika $update_do bisa
         if ($update_do_mst) {
             return [
@@ -521,5 +522,13 @@ class DeliveryOrderController extends Controller
                 'message' => 'Data gagal disubmit'
             ];
         }
+    }
+
+    public function approve(){
+        $isApproved = DoDetail::where('fc_dono', auth()->user()->fc_userid)
+            ->where('fc_approval', 'T')
+            ->exists();
+
+        return response()->json(['approval' => $isApproved]);
     }
 }
