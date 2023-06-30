@@ -29,8 +29,72 @@
     }
 </style>
 @endsection
-@section('content')
 
+@section('modal')
+
+<div class="modal fade" role="dialog" id="modal_catatan" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Catatan Tidak Menyetujui</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_submit" action="/apps/master-delivery-order/reject_approval" method="POST">
+                    @csrf
+                    @method('put')
+                    <input type="text" name="fc_dostatus" value="RJ" hidden>
+                    <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fv_description" name="fv_description">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-1" onclick="">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_invstore" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Ketersediaan Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_invstore" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Nama Barang</th>
+                                    <th scope="col" class="text-center">Brand</th>
+                                    <th scope="col" class="text-center">Sub Group</th>
+                                    <th scope="col" class="text-center">Tipe Stock</th>
+                                    <th scope="col" class="text-center">Satuan</th>
+                                    <th scope="col" class="text-center">Expired Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('content')
 <div class="section-body">
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4">
@@ -190,6 +254,8 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
                                         <th scope="col" class="text-center">Batch</th>
+                                        <th scope="col" class="text-center">Approval</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -198,25 +264,40 @@
                 </div>
             </div>
         </div>
+
+        @if ($do_mst->fc_dostatus == 'RJ' )
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Catatan Tidak Disetujui</h4>
+                </div>
+                <div class="card-body">
+                    <textarea class="form-control" rows="3" readonly>{{$do_mst->fv_description}}</textarea>
+                </div>
+            </div>
+        </div>
+        @endif;
     </div>
+    
     @if (auth()->user()->fc_groupuser == 'IN_MNGWRH' && auth()->user()->fl_level == 3)
+        @if ($do_mst->fc_dostatus == 'NA')
         <div class="button text-right mb-4 d-flex justify-content-end">
-            <form id="form_submit" action="/apps/master-delivery-order/reject_approval" method="POST">
-                @csrf
-                @method('put')
-                <input type="text" name="fc_dostatus" value="RJ" hidden>
-                <button type="submit" class="btn btn-danger mr-1" onclick="">Reject</button>
-            </form>
+            <button type="submit" class="btn btn-danger mr-1" onclick="click_modal_catatan()">Reject</button>
             <form id="form_submit_edit" action="/apps/master-delivery-order/accept_approval" method="POST">
                 @csrf
                 @method('put')
                 <input type="text" name="fc_dostatus" value="AC" hidden>
+                <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
                 <button type="submit" class="btn btn-success">Accept</button>
             </form>
-            
         </div>
-     @else
-     <div class="button text-right mb-4">
+        @else
+        <div class="button text-right mb-4">
+            <a href="/apps/master-delivery-order"><button type="button" class="btn btn-info">Back</button></a>
+        </div>
+        @endif
+    @else
+    <div class="button text-right mb-4">
         <button class="btn btn-warning" onclick="">Edit</button>
     </div>
     @endif
@@ -228,6 +309,88 @@
 <script>
     var dono = "{{ $do_mst->fc_dono }}";
     var encode_dono = window.btoa(dono);
+
+    // Untuk menampilkan invstore yang perlu approval
+    function click_modal_invstore(fc_stockcode, fc_warehousecode, fc_barcode) {
+        $('#modal_invstore').modal('show');
+        table_invstore(fc_stockcode, fc_warehousecode, fc_barcode);
+    }
+    
+    function click_modal_catatan(){
+        $('#modal_catatan').modal('show');
+    }
+
+    function table_invstore(fc_stockcode, fc_warehousecode, fc_barcode) {
+        var tb_invstore = $('#tb_invstore').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            orderable: false,
+            order: [
+                [7,'asc']
+            ],
+            ajax: {
+                url: "/apps/master-delivery-order/datatables-do-invstore/" + fc_stockcode + "/" + fc_warehousecode,
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 2, 4, 5, 6, 7, 8, 9, 10]
+            }, ],
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_namelong'
+                },
+                {
+                    data: 'stock.fc_brand'
+                },
+                {
+                    data: 'stock.fc_subgroup'
+                },
+                {
+                    data: 'stock.fc_typestock2'
+                },
+                {
+                    data: 'stock.fc_namepack'
+                },
+                {
+                    data: 'fd_expired',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+                {
+                    data: null
+                }
+            ],
+            rowCallback: function(row, data){
+                if(data.DT_RowIndex == 1) {
+                    $('td:eq(10)', row).html(`
+                        <span class="badge badge-success">FEFO</span>
+                    `);
+                } else if(data.fc_barcode === fc_barcode){
+                    $('td:eq(10)', row).html(`
+                    <span class="badge badge-warning">Dipilih</span>
+                    `); 
+                } else {
+                    $('td:eq(10)', row).html(`-`);
+                }
+            }
+        })
+    }
+
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
@@ -239,7 +402,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6]
+            targets: [0, 3, 4, 5, 6, 7, 8]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -264,8 +427,30 @@
             },
             {
                 data: 'fc_batch'
-            }
+            },
+            {
+                data: 'fc_approval',
+                render: function(data, type, row) {
+                    return data === 'T' ? 'Ya' : 'Tidak';
+                }
+            },
+            {
+                data: null
+            },
         ],
+
+        rowCallback: function(row, data){
+            $('td:eq(8)', row).html(`
+                <button class="btn btn-primary btn-sm" onclick="click_modal_invstore('${data.invstore.fc_stockcode}','${data.invstore.fc_warehousecode}','${data.fc_barcode}')">Detail Approval</button>
+            `);
+
+            $('td:eq(7)', row).html(`<i class="${data.fc_approval}"></i>`);
+            if (data['fc_approval'] == 'F') {
+                $('td:eq(7)', row).html('<span class="badge badge-success">NO</span>');
+            } else {
+                $('td:eq(7)', row).html('<span class="badge badge-warning">YES</span>');
+            }
+        }
     });
 </script>
 @endsection
