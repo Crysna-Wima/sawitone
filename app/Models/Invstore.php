@@ -42,4 +42,8 @@ class Invstore extends Model
     public function warehouse(){
         return $this->belongsTo(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode');
     }
+
+    public function scanqr(){
+        return $this->hasMany(ScanQr::class, 'fc_barcode', 'fc_barcode');
+    }
 }

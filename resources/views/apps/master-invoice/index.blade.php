@@ -731,6 +731,7 @@
     var tb = $('#tb_incoming_invoice').DataTable({
         processing: true,
         serverSide: true,
+        pageLength : 5,
         ajax: {
             url: '/apps/master-invoice/datatables/incoming',
             type: 'GET'
@@ -811,6 +812,7 @@
     var tb = $('#tb_outgoing_invoice').DataTable({
         processing: true,
         serverSide: true,
+        pageLength : 5,
         ajax: {
             url: '/apps/master-invoice/datatables/outgoing',
             type: 'GET'

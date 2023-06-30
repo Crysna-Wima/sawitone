@@ -565,6 +565,7 @@
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -663,6 +664,7 @@
         var tb_pengiriman = $('#tb_pengiriman').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -745,6 +747,7 @@
         var tb_diterima = $('#tb_diterima').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -828,6 +831,7 @@
         var tb_approval = $('#tb_approval').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],

@@ -304,6 +304,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        pageLength : 5,
         ajax: {
             url: '/data-master/cprr-customer/datatables',
             type: 'GET'

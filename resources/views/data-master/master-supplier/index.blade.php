@@ -808,6 +808,7 @@
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
+        pageLength : 5,
         ajax: {
             url: '/data-master/master-supplier/datatables',
             type: 'GET'
