@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: .8rem!important;
+        font-size: 12px;
     }
 </style>
 
@@ -186,8 +186,7 @@
 
 <div class="content">
         <br><br><br>
-        <p style="text-align: center; font-weight:bold">INVOICE</p>
-        <br>
+        <p style="text-align: center; font-weight:bold; font-size: 15px;">INVOICE</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
                 <td>Sales</td>
@@ -205,7 +204,7 @@
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</td>
             </tr>
-            <tr class="pb-1">
+            <tr class="">
                 <td>Nomor</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 30%">{{ $inv_mst->fc_invno }}</td>
@@ -215,7 +214,7 @@
             </tr>
         </table>
 
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+        <table class="table-lg table-center" style="margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Nama Produk</th>
@@ -286,7 +285,7 @@
             </tr>
 
             <tr>
-                <td style="width: 50%;"><i>"{{ terbilang($inv_mst->fm_brutto) }} Rupiah"</i></td>
+                <td style="width: 50%;">"{{ terbilang($inv_mst->fm_brutto) }} Rupiah"</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -296,7 +295,6 @@
         </table>
 
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
-            <br><br>
             <br><br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
