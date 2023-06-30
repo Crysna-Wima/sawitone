@@ -291,6 +291,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/reject_approval','Apps\MasterDeliveryOrderController@reject_approval');
             Route::put('/accept_approval','Apps\MasterDeliveryOrderController@accept_approval');
             Route::put('/submit','Apps\MasterDeliveryOrderController@submit');
+            Route::put('/edit','Apps\MasterDeliveryOrderController@editDO');
         });
 
         Route::prefix('received-order')->group(function () {

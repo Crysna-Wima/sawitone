@@ -298,7 +298,13 @@
         @endif
     @else
     <div class="button text-right mb-4">
-        <button class="btn btn-warning" onclick="">Edit</button>
+        <form id="form_submit_edit" action="/apps/master-delivery-order/edit" method="POST">
+            @csrf
+            @method('put')
+            <input type="text" name="fc_dostatus" value="I" hidden>
+            <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
+            <button type="submit" class="btn btn-success">Edit DO</button>
+        </form>
     </div>
     @endif
     

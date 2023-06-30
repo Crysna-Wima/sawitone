@@ -79,6 +79,43 @@ class MasterDeliveryOrderController extends Controller
         // dd($request);
     }
 
+    public function editDo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_dostatus' => 'required',
+            'fc_dono' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        
+        // Transaction update data fc_dostatus in DoMaster dan DODTL
+        DB::beginTransaction();
+        try{
+            DoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
+            DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/delivery-order',
+				'message' => 'DO Berhasil di Edit'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+        // dd($request);
+    }
+
     public function datatables(){
         $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
 
