@@ -1,5 +1,20 @@
 @php
 use App\Helpers\App;
+use Carbon\Carbon;
+
+$notifList = \App\Models\NotificationMaster::with('notifdtl')
+    ->whereHas('notifdtl', function ($query) {
+        $query->where('fc_userid', auth()->user()->fc_userid)
+            ->whereNull('fd_watchingdate');
+    })
+    ->orderBy('fd_notifdate', 'DESC')
+    ->limit(3)
+    ->get();
+
+    $notifCount = \App\Models\NotificationMaster::with(['notifdtl' => function ($query) {
+            $query->where('fc_userid', auth()->user()->fc_userid)
+                ->whereNull('fd_watchingdate');
+        }])->count();
 @endphp
 
 <nav class="navbar navbar-expand-lg main-navbar">
@@ -17,24 +32,17 @@ use App\Helpers\App;
           </div>
         </div>
         <div class="dropdown-list-content dropdown-list-icons" style="overflow: hidden; outline: none;" tabindex="3">
-          <a href="#" class="dropdown-item">
-            <div class="dropdown-item-icon bg-success text-white">
-              <i class="fas fa-check"></i>
-            </div>
-            <div class="dropdown-item-desc">
-              <b>SO Telah dibuat</b>
-              <div class="time">12 Hours Ago</div>
-            </div>
-          </a>
-          <a href="#" class="dropdown-item dropdown-item-unread">
-            <div class="dropdown-item-icon bg-danger text-white">
-              <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <div class="dropdown-item-desc">
-              <b>Stok menipis.</b> Segera belanja lagi!
-              <div class="time">17 Hours Ago</div>
-            </div>
-          </a>
+         @foreach ($notifList as $notif)
+         <a href="{{ $notif->fv_link }}" class="dropdown-item read-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
+          <div class="dropdown-item-icon bg-success text-white">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="dropdown-item-desc">
+            <b>{{ $notif->fc_tittle }}</b>
+            <div class="time">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}</div>
+          </div>
+        </a>
+         @endforeach
         </div>
         <div class="dropdown-footer text-center">
           <a href="#">View All <i class="fas fa-chevron-right"></i></a>
@@ -104,3 +112,39 @@ use App\Helpers\App;
 
   </aside>
 </div>
+
+@section('js')
+<script>
+  $(document).ready(function() {
+  $('.read-notification').click(function(event) {
+    event.preventDefault(); 
+    
+    var notificationCode = $(this).data('notificationcode');
+    var url = $(this).attr('href');
+   
+    $.ajax({
+      url: '/reading-notification-click',
+      type: 'POST',
+      data: { 
+        fc_notificationcode: notificationCode,
+        fv_url : url
+      },
+      success: function(response) {
+        if(response.status == 200){
+          // arahkan ke response.link
+          window.location= response.link;
+        }else{
+          swal(response.message, { icon: 'error', });
+        }
+      },
+      error: function(xhr) {
+        swal(response.message, { icon: 'error', });
+        console.log('Terjadi kesalahan saat mengirim data');
+      }
+    });
+  });
+});
+
+  
+</script>
+@endsection

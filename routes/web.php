@@ -53,6 +53,9 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::view('/dashboard','dashboard.index')->name('dashboard');
     Route::get('/dashboard', 'DashboardController@index');
 
+    Route::post('/reading-notification-click', 'Apps\NotifikasiController@handleNotificationClick');
+
+
     //CHANGE PASSWORD
     Route::prefix('change-password')->group(function () {
         Route::get('/', 'LoginController@change_password');
