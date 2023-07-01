@@ -243,6 +243,7 @@
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
+        pageLength : 5,
         order: [
             [3, 'asc']
         ],

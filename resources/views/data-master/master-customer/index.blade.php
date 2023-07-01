@@ -866,8 +866,8 @@
             datatype: 'json',
             lengthMenu: [10],
             paging: true,
-            pageLength: 10,
         },
+        pageLength : 5,
         columnDefs: [{
                 className: 'text-center',
                 targets: [0, 18, 46]

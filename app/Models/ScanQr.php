@@ -21,7 +21,7 @@ class ScanQr extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
-
-
-
+    public function invstore(){
+        return $this->belongsTo(Invstore::class, 'fc_barcode', 'fc_barcode');
+    }
 }

@@ -82,19 +82,19 @@
                 <div class="col-12 col-md-3 col-lg-3">
                     <div class="form-group">
                         <label>Index</label>
-                        <input type="text" class="form-control required-field" name="index" id="index">
+                        <input type="text" class="form-control" name="index" id="index">
                     </div>
                 </div>
                 <div class="col-12 col-md-3 col-lg-3">
                     <div class="form-group">
                         <label>Parent</label>
-                        <input type="text" class="form-control required-field" name="parent_id" id="parent_id">
+                        <input type="text" class="form-control" name="parent_id" id="parent_id">
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="form-group">
                         <label>Menu</label>
-                        <input type="text" class="form-control required-field" name="menu" id="menu">
+                        <input type="text" class="form-control" name="menu" id="menu">
                     </div>
                 </div>
 
@@ -138,6 +138,7 @@
    var tb = $('#tb').DataTable({
       processing: true,
       serverSide: true,
+      pageLength : 5,
       ajax: {
          url: '/data-master/master-menu/datatables',
          type: 'GET'

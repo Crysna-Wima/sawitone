@@ -511,6 +511,57 @@
             });
         }
 
+        function submitDO(fc_dono) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin submit surat jalan ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/master-delivery-order/submit',
+                        type: 'PUT',
+                        data: {
+                            fc_dostatus: 'D',
+                            fc_dono: fc_dono
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                                tb_pengiriman.ajax.reload();
+                                tb_diterima.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
         function cancelDO(fc_dono) {
             swal({
                 title: "Konfirmasi",
@@ -565,6 +616,7 @@
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -620,13 +672,11 @@
                     $('td:eq(6)', row).html('<span class="badge badge-info">Terbayar</span>');
                 } else if (data['fc_dostatus'] == 'CC') {
                     $('td:eq(6)', row).html('<span class="badge badge-danger">Cancel</span>');
-                } else if (data['fc_dostatus'] == 'NA') {
-                    $('td:eq(6)', row).html('<span class="badge badge-warning">Menunggu Perizinan</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
-                if (data['fc_dostatus'] == 'I') {
+                if (data['fc_dostatus'] == 'I' || data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ' ) {
                     $(row).hide();
                 } else if (data['fc_dostatus'] == 'D') {
                     $('td:eq(7)', row).html(
@@ -663,6 +713,7 @@
         var tb_pengiriman = $('#tb_pengiriman').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -745,6 +796,7 @@
         var tb_diterima = $('#tb_diterima').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -828,6 +880,7 @@
         var tb_approval = $('#tb_approval').DataTable({
             processing: true,
             serverSide: true,
+            pageLength : 5,
             order: [
                 [3, 'desc']
             ],
@@ -877,17 +930,24 @@
                 $('td:eq(6)', row).html(`<i class="${data.fc_dostatus}"></i>`);
                 if (data['fc_dostatus'] == 'NA') {
                     $('td:eq(6)', row).html('<span class="badge badge-warning">Menunggu Perizinan</span>');
-                } else if (data['fc_dostatus'] == 'AP') {
+                } else if (data['fc_dostatus'] == 'AC') {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Perizinan Diterima</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-danger">Perizinan Ditolak</span>');
                 }
 
-                if ((data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AP' || data['fc_dostatus'] == 'RJ')) {
-                    $('td:eq(7)', row).html(
-                        `
-                        <a href="/apps/master-delivery-order/detail/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>`
-                    );
+                
+                
+                if ((data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ')) {
+                    $('td:eq(7)', row).html(`
+                        <a href="/apps/master-delivery-order/detail/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+                    `);
+
+                    if(data['fc_dostatus'] == 'AC'){
+                        $('td:eq(7)', row).append(`
+                            <button class="btn btn-success btn-sm mr-1" onClick="submitDO('${fc_dono}')">Submit</button>
+                        `);
+                    }
                 } else {
                     $(row).hide();
                 }

@@ -17,6 +17,7 @@ use DB;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
 use App\Models\InvMaster;
+use App\Models\Invstore;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterDeliveryOrderController extends Controller
@@ -39,6 +40,81 @@ class MasterDeliveryOrderController extends Controller
         // dd($data);
     }
 
+    public function submit(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_dostatus' => 'required',
+            'fc_dono' => 'required'
+        ], [
+            'fc_dostatus.required' => 'Pilih Reject Terlebih Dahulu',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        
+        $decoded_dono = base64_decode($request->fc_dono);
+        // update data fc_dostatus in DoMaster
+        $do_mst = DoMaster::where('fc_dono', $decoded_dono)
+                  ->update([
+                    'fc_dostatus' => $request->fc_dostatus,
+                ]);
+        
+        // jika validasi sukses dan $do_master berhasil response 200
+        if ($do_mst) {
+            return response()->json(
+                [
+                    'status' => 201,
+                    'message' => 'Submit berhasil',
+                    'link' => '/apps/master-delivery-order'
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 300,
+                    'message' => 'Submit gagal'
+                ]
+            );
+        }
+        // dd($request);
+    }
+
+    public function editDo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_dostatus' => 'required',
+            'fc_dono' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
+        
+        // Transaction update data fc_dostatus in DoMaster dan DODTL
+        DB::beginTransaction();
+        try{
+            DoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
+            DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/delivery-order',
+				'message' => 'DO Berhasil di Edit'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+        // dd($request);
+    }
 
     public function datatables(){
         $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -63,6 +139,18 @@ class MasterDeliveryOrderController extends Controller
 
         // return response json
         return response()->json($data);
+    }
+
+    public function datatables_invstore($fc_stockcode, $fc_warehousecode){
+        $data = Invstore::with('stock')
+                ->where('fc_stockcode', $fc_stockcode)
+                ->where('fc_warehousecode', $fc_warehousecode)
+                ->where('fc_branch',auth()->user()->fc_branch)
+                ->get();
+        
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function cancel(Request $request){
@@ -228,6 +316,8 @@ class MasterDeliveryOrderController extends Controller
     public function reject_approval(Request $request){
         $validator = Validator::make($request->all(), [
             'fc_dostatus' => 'required',
+            'fv_description' => 'required',
+            'fc_dono' => 'required'
         ], [
             'fc_dostatus.required' => 'Pilih Reject Terlebih Dahulu',
         ]);
@@ -237,7 +327,11 @@ class MasterDeliveryOrderController extends Controller
         }
 
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->update(['fc_dostatus' => $request->fc_dostatus]);
+        $do_mst = DoMaster::where('fc_dono',$request->fc_dono)
+                  ->update([
+                    'fc_dostatus' => $request->fc_dostatus,
+                    'fv_description' => $request->fv_description,
+                ]);
         
         // jika validasi sukses dan $do_master berhasil response 200
         if ($do_mst) {
@@ -260,7 +354,8 @@ class MasterDeliveryOrderController extends Controller
 
     public function accept_approval(Request $request){
         $validator = Validator::make($request->all(), [
-            'fc_dostatus' => 'required',
+            'fc_dostatus' => 'required', 
+            'fc_dono' => 'required'
         ], [
             'fc_dostatus.required' => 'Pilih Accept Terlebih Dahulu',
         ]);
@@ -270,7 +365,10 @@ class MasterDeliveryOrderController extends Controller
         }
 
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->update(['fc_dostatus' => $request->fc_dostatus]);
+        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)
+                  ->update([
+                    'fc_dostatus' => $request->fc_dostatus,
+                  ]);
         
         // jika validasi sukses dan $do_master berhasil response 200
         if ($do_mst) {

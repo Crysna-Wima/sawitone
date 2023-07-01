@@ -216,6 +216,18 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get_pdf/{fc_dono}/{fc_sono}/{nama_pj}', 'Apps\MasterSalesOrderController@get_pdf');
         });
 
+        Route::prefix('daftar-cprr')->group(function () {
+            Route::get('/','Apps\DaftarCprrController@index');
+            Route::get('/datatables','Apps\DaftarCprrController@datatables');
+            Route::get('/detail/{fc_sono}','Apps\DaftarCprrController@detail');
+        });
+
+        Route::prefix('daftar-memo-internal')->group(function () {
+            Route::get('/','Apps\DaftarMemoInternalController@index');
+            Route::get('/datatables','Apps\DaftarMemoInternalController@datatables');
+            Route::get('/detail/{fc_sono}','Apps\DaftarMemoInternalController@detail');
+        });
+
         Route::prefix('sales-order')->group(function () {
             Route::get('/','Apps\SalesOrderController@index');
             Route::get('/datatables','Apps\SalesOrderController@datatables');
@@ -271,6 +283,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
             Route::get('/datatables/detail','Apps\MasterDeliveryOrderController@datatables_detail');
             Route::get('/datatables-do-detail/{fc_dono}','Apps\MasterDeliveryOrderController@datatables_do_detail');
+            Route::get('/datatables-do-invstore/{fc_stockcode}/{fc_warehousecode}','Apps\MasterDeliveryOrderController@datatables_invstore');
 
             Route::post('/pdf', 'Apps\MasterDeliveryOrderController@pdf');
             Route::get('/get_pdf/{fc_dono}/{nama_pj}', 'Apps\MasterDeliveryOrderController@get_pdf');
@@ -280,6 +293,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/cancel','Apps\MasterDeliveryOrderController@cancel');
             Route::put('/reject_approval','Apps\MasterDeliveryOrderController@reject_approval');
             Route::put('/accept_approval','Apps\MasterDeliveryOrderController@accept_approval');
+            Route::put('/submit','Apps\MasterDeliveryOrderController@submit');
+            Route::put('/edit','Apps\MasterDeliveryOrderController@editDO');
         });
 
         Route::prefix('received-order')->group(function () {
@@ -444,8 +459,15 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('penggunaan-cprr')->group(function(){
             Route::get('/','Apps\PenggunaanCprrController@index');
-            Route::get('/detail-barang/{fc_barcode}','Apps\PenggunaanCprrController@detail_barang');
-            Route::post('/scan-barang','Apps\PenggunaanCprrController@scan_barang');
+            Route::get('/datatables','Apps\PenggunaanCprrController@datatables');
+            Route::get('/detail/{fc_warehousecode}','Apps\PenggunaanCprrController@detail');
+            Route::get('/datatables-detail/{fc_warehousecode}','Apps\PenggunaanCprrController@datatables_detail');
+        });
+
+        Route::prefix('scan-qr')->group(function(){
+            Route::get('/','Apps\ScanQrController@index');
+            Route::get('/detail-barang/{fc_barcode}','Apps\ScanQrController@detail_barang');
+            Route::post('/scan-barang','Apps\ScanQrController@scan_barang');
         });
     });
 });

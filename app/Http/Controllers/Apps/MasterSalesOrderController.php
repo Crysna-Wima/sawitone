@@ -58,7 +58,9 @@ class MasterSalesOrderController extends Controller
     }
 
     public function datatables(){
-        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = SoMaster::with('domst','customer')
+        ->where('fc_sotype', 'Retail')
+        ->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()

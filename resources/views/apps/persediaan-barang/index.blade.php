@@ -263,6 +263,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        pageLength : 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-dexa",
             type: 'GET'
@@ -311,6 +312,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        pageLength : 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-gudanglain",
             type: 'GET'
@@ -360,6 +362,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
+        pageLength : 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-semua",
             type: 'GET'

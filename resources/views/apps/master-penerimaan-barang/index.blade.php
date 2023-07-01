@@ -158,6 +158,7 @@
             processing: true,
             serverSide: true,
             destroy: true,
+            pageLength : 5,
             order: [
                 [1, 'desc']
             ],
