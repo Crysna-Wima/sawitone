@@ -12,9 +12,14 @@
     ->limit(3)
     ->get();
 
-    $notifCount = \App\Models\NotificationMaster::where('fc_status', 'R')->count();
-
-        // @dd($notifList)
+    // $notifCount = \App\Models\NotificationMaster::where('fc_status', 'R')->count();
+    $notifCount = \App\Models\NotificationDetail::whereHas('notifmst', function($query){ 
+                    $query->where('fc_status','=','R');
+                  })
+                  ->where('fc_userid', auth()->user()->fc_userid)
+                  ->whereNull('fd_watchingdate')
+                  ->count();
+    // @dd($notifCount)
 @endphp
 
 <div class="section-body">
