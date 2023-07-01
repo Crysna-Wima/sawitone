@@ -297,15 +297,21 @@
         </div>
         @endif
     @else
-    <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="/apps/master-delivery-order/edit" method="POST">
-            @csrf
-            @method('put')
-            <input type="text" name="fc_dostatus" value="I" hidden>
-            <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
-            <button type="submit" class="btn btn-success">Edit DO</button>
-        </form>
-    </div>
+        @if ($do_mst->fc_dostatus == 'RJ')
+        <div class="button text-right mb-4">
+            <form id="form_submit_edit" action="/apps/master-delivery-order/edit" method="POST">
+                @csrf
+                @method('put')
+                <input type="text" name="fc_dostatus" value="I" hidden>
+                <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
+                <button type="submit" class="btn btn-success">Edit DO</button>
+            </form>
+        </div>
+        @else
+        <div class="button text-right mb-4">
+            <a href="/apps/master-delivery-order"><button type="button" class="btn btn-info">Back</button></a>
+        </div>
+        @endif
     @endif
     
 </div>
@@ -446,16 +452,17 @@
         ],
 
         rowCallback: function(row, data){
-            $('td:eq(8)', row).html(`
-                <button class="btn btn-primary btn-sm" onclick="click_modal_invstore('${data.invstore.fc_stockcode}','${data.invstore.fc_warehousecode}','${data.fc_barcode}')">Detail Approval</button>
-            `);
-
             $('td:eq(7)', row).html(`<i class="${data.fc_approval}"></i>`);
             if (data['fc_approval'] == 'F') {
                 $('td:eq(7)', row).html('<span class="badge badge-success">NO</span>');
+                $('td:eq(8)', row).html(`<button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`);
             } else {
                 $('td:eq(7)', row).html('<span class="badge badge-warning">YES</span>');
+                $('td:eq(8)', row).html(`
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_invstore('${data.invstore.fc_stockcode}','${data.invstore.fc_warehousecode}','${data.fc_barcode}')">Detail Approval</button>
+                `);
             }
+            
         }
     });
 </script>
