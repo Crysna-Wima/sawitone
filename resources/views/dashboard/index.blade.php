@@ -95,6 +95,7 @@
         </div>
       </div>
     </div>
+    @if($notifCount != 0)
     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
       <div class="card card-hero">
         <div class="card-header">
@@ -128,6 +129,19 @@
         </div>
       </div>
     </div>
+    @else
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="card card-hero">
+        <div class="card-header">
+          <div class="card-icon">
+            <i class="far fa-bell"></i>
+          </div>
+          <h4>{{ $notifCount }}</h4>
+          <div class="card-description">Notifications</div>
+        </div>
+      </div>
+    </div>
+    @endif
   </div>
 </div>
 @endsection

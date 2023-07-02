@@ -86,7 +86,7 @@ class LoginController extends Controller
     }
 
     public function change_password(){
-        return view('change-password.index');
+        return view('login.change-password');
     }
 
     public function action_change_password(request $request){
