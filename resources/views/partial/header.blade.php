@@ -29,12 +29,12 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
         <div class="dropdown-header">Notifications
           <!-- <div class="float-right">
             <a href="#">Mark All As Read</a>
-          </div>
-        </div> -->
+          </div> -->
+        </div>
         <div class="dropdown-list-content dropdown-list-icons" style="overflow: hidden; outline: none;" tabindex="3">
          @foreach ($notifList as $notif)
          <a href="{{ $notif->fv_link }}" class="dropdown-item read-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
-          <div class="dropdown-item-icon bg-success text-white">
+          <div class="dropdown-item-icon bg-warning text-white">
             <i class="fas fa-check"></i>
           </div>
           <div class="dropdown-item-desc">
