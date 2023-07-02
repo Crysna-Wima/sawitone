@@ -278,7 +278,7 @@
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Expired</th>
                                     <th scope="col" class="text-center">Tipe</th>
-                                    <th scope="col" class="text-center">Customer</th>
+                                    <th scope="col" class="text-center">Peruntukan</th>
                                     <th scope="col" class="text-center">Item</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                 </tr>
@@ -338,7 +338,7 @@
 
     function click_modal_lokasi_awal() {
 
-        if ($('#fc_type_mutation').val() === '') {
+        if ($('#fc_type_mutation').val() === '' || $('#fc_type_mutation').val() === null) {
             swal(
                 'Perhatian',
                 'Pilih Jenis Mutasi Terlebih Dahulu',
@@ -352,7 +352,7 @@
     }
 
     function click_modal_lokasi_tujuan() {
-        if ($('#fc_type_mutation').val() === '') {
+        if ($('#fc_type_mutation').val() === '' || $('#fc_type_mutation').val() === null) {
             swal(
                 'Perhatian',
                 'Pilih Jenis Mutasi Terlebih Dahulu',
@@ -381,18 +381,16 @@
     }
 
     function click_modal_so_internal() {
-        var fc_destination = $('#fc_destination').val();
-        if (fc_destination === '') {
+        if ($('#fc_type_mutation').val() === '' || $('#fc_type_mutation').val() === null) {
             swal(
                 'Perhatian',
-                'Pilih Lokasi Tujuan Terlebih Dahulu',
+                'Pilih Jenis Mutasi Terlebih Dahulu',
                 'warning'
             )
         } else {
             $('#modal_so_internal').modal('show');
-            table_so_internal(fc_membercode_tujuan);
+            table_so_internal();
         }
-
     }
 
     $("#fc_type_mutation").change(function() {
@@ -485,8 +483,8 @@
         });
     }
 
-    function table_so_internal(fc_membercode_tujuan) {
-        console.log(fc_membercode_tujuan)
+    function table_so_internal() {
+        // console.log(fc_membercode_tujuan)
         var tb = $('#tb_so_internal').DataTable({
             processing: true,
             serverSide: true,
@@ -495,7 +493,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: '/apps/mutasi-barang/datatables/so_internal/' + fc_membercode_tujuan,
+                url: '/apps/mutasi-barang/datatables/so_internal',
                 type: 'GET'
             },
             columnDefs: [{
@@ -527,7 +525,7 @@
                     data: 'fc_sotype'
                 },
                 {
-                    data: 'customer.fc_membername1'
+                    data: 'fv_description'
                 },
                 {
                     data: 'fn_sodetail'

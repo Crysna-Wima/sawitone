@@ -17,7 +17,7 @@ use DB;
 
 class MutasiBarangController extends Controller
 {
-    public function index()
+    public function index() 
     {
         $temp_mutasi_master = TempMutasiMaster::with('warehouse_start','warehouse_destination')->where('fc_mutationno',auth()->user()->fc_userid)->first();
         $temp_mutasi_detail = TempMutasiDetail::where('fc_mutationno',auth()->user()->fc_userid)->get();
@@ -72,10 +72,10 @@ class MutasiBarangController extends Controller
         ->make(true);
     }
 
-    public function datatables_so_internal($fc_membercode){
+    public function datatables_so_internal(){
         $data = SoMaster::with('customer')
         ->where('fc_sotype', 'Memo Internal')
-        ->where('fc_membercode', $fc_membercode)
+        ->where('fc_sostatus','F')->orWhere('fc_sostatus', 'P')
         ->where('fc_branch', auth()->user()->fc_branch)
         ->get();
 

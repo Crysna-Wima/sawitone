@@ -428,7 +428,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\MutasiBarangController@index');
             Route::get('/datatables-stock-inventory/{fc_stockcode}/{fc_warehousecode}','Apps\MutasiBarangController@datatables_stock_inventory');
             Route::get('/datatables/so_cprr/{fc_membercode}','Apps\MutasiBarangController@datatables_so_cprr');
-            Route::get('/datatables/so_internal/{fc_membercode}','Apps\MutasiBarangController@datatables_so_internal');
+            Route::get('/datatables/so_internal','Apps\MutasiBarangController@datatables_so_internal');
             Route::get('/datatables-lokasi-awal/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_awal');
             Route::get('/datatables-lokasi-tujuan/{fc_type_mutation}','Apps\MutasiBarangController@datatables_lokasi_tujuan');
             Route::get('/datatables-so-detail/{fc_sono}','Apps\MutasiBarangController@datatables_so_detail');
