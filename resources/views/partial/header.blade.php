@@ -10,11 +10,13 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
     ->orderBy('fd_notifdate', 'DESC')
     ->limit(3)
     ->get();
-
-    $notifCount = \App\Models\NotificationMaster::with(['notifdtl' => function ($query) {
-            $query->where('fc_userid', auth()->user()->fc_userid)
-                ->whereNull('fd_watchingdate');
-        }])->count();
+  
+    $notifCount = \App\Models\NotificationDetail::whereHas('notifmst', function($query){ 
+                    $query->where('fc_status','=','R');
+                  })
+                  ->where('fc_userid', auth()->user()->fc_userid)
+                  ->whereNull('fd_watchingdate')
+                  ->count();
 @endphp
 
 <nav class="navbar navbar-expand-lg main-navbar">
@@ -24,7 +26,9 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
     </ul>
   </form>
   <ul class="navbar-nav navbar-right">
-    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep" aria-expanded="false"><i class="far fa-bell"></i></a>
+    @if($notifCount != 0)
+    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="notif nav-link notification-toggle nav-link-lg" aria-expanded="false">
+      <i class="far fa-bell" style="font-size: 20px;"></i><span class="icon-badge">{{ $notifCount }}</span></a>
       <div class="dropdown-menu dropdown-list dropdown-menu-right">
         <div class="dropdown-header">Notifications
           <!-- <div class="float-right">
@@ -33,7 +37,7 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
         </div>
         <div class="dropdown-list-content dropdown-list-icons" style="overflow: hidden; outline: none;" tabindex="3">
          @foreach ($notifList as $notif)
-         <a href="{{ $notif->fv_link }}" class="dropdown-item read-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
+         <a href="{{ $notif->fv_link }}" class="dropdown-item dropdown-item-unread" data-notificationCode="{{ $notif->fc_notificationcode }}">
           <div class="dropdown-item-icon bg-warning text-white">
             <i class="fas fa-check"></i>
           </div>
@@ -55,6 +59,21 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
         </div>
       </div>
     </li>
+    @else
+    <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="notif nav-link notification-toggle nav-link-lg" aria-expanded="false">
+      <i class="far fa-bell" style="font-size: 20px;"></i></a>
+      <div class="dropdown-menu dropdown-list dropdown-menu-right">
+        <div class="dropdown-header">Notifications
+          <!-- <div class="float-right">
+            <a href="#">Mark All As Read</a>
+          </div> -->
+        </div>
+        <div class="container" style="overflow: hidden; outline: none; height: 100px">
+          <p class="text-center" style="padding: 30px 0; font-size:14px; color: #6c757d">Tidak ada notifikasi.</p>
+        </div>
+      </div>
+    </li>
+    @endif
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <img alt="image" src="{{asset('assets/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
         <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->fc_userid }}</div>
