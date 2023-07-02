@@ -23,7 +23,7 @@
 @endphp
 
 <div class="section-body">
- <div class="row">
+ <!-- <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
       <div class="card">
         <div class="card-body ">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>  -->
   <div class="row">
     <div class="col-lg-3 col-md-6 col-sm-6 col-12">
       <div class="card card-statistic-1">
@@ -108,13 +108,13 @@
           <div class="tickets-list">
             @foreach ($notifList as $notif)
             <a href="{{ $notif->fv_link }}"  class="ticket-item handle-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
-              <div class="ticket-title">
+              <div class="ticket-title col-lg-12 col-md-12 col-sm-12 col-12">
                 <h4>{{ $notif->fc_tittle }}</h4>
-                <div class="col-lg-8 col-md-12 col-sm-12 col-12 text-dark">
+                <div class="text-dark">
                 <p>{{ $notif->fc_message }}</p>
                 </div>
               </div>
-              <div class="ticket-info">
+              <div class="ticket-info col-lg-12 col-md-12 col-sm-12 col-12">
                 <div>{{ $notif->fc_notiftype }}</div>
                 <div class="bullet"></div>
                 <div class="text-primary">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}</div>

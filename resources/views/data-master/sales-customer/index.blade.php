@@ -365,6 +365,8 @@
         edit_action_sales_customer(url, 'Edit Data Sales Customer');
         $("#type").val('update');
         $("#fc_branch").prop("disabled", true);
+        $("#fc_salescode").prop("disabled", true);
+        $("#fc_membercode").prop("disabled", true);
     }
 
     $('#form_submit_edit_sales_custom').on('submit', function(e){
