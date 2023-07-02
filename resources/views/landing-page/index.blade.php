@@ -49,13 +49,13 @@
           <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             <div class="content text-center">
               <h1>DISTRIBUTOR DEXA</h1>
-              <p>Manage your company in one webiste application, faster!</p>
+              <p>Manage your company in one website application, faster!</p>
               <div class="btn-success"><a href="/login"><i class="fas fa-sign-in-alt"></i>&nbsp; Login</a></div>
             </div>  
           </div>
           <div class="col-xl-8 col-lg-9 order-lg-1 order-0">
             <div class="hero-area-image">
-              <img src="{{ asset('assets/img/bg-dexa.jpg') }}" alt="" class="w-100">
+              <img src="{{ asset('assets/img/bg-dexa-2.jpg') }}" alt="" class="w-100">
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@
           <div class="row align-items-center">
             <div class="col-lg-4 col-md-4">
               <div class="copyright">
-                <p> &copy; PT. DEXA ARFINDO PRATAMA 2023 All right reserved. </p>
+                <p> Copyright © ITCorner </p>
               </div>
             </div>
             <div class="col-lg-5 col-md-6">
