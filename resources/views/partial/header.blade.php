@@ -4,8 +4,8 @@ use Carbon\Carbon;
 
 $notifList = \App\Models\NotificationMaster::with('notifdtl')
     ->whereHas('notifdtl', function ($query) {
-        $query->where('fc_userid', auth()->user()->fc_userid)
-            ->whereNull('fd_watchingdate');
+        $query->where('fc_userid', auth()->user()->fc_userid);
+            // ->whereNull('fd_watchingdate');
     })
     ->orderBy('fd_notifdate', 'DESC')
     ->limit(3)
@@ -17,9 +17,12 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
                   ->where('fc_userid', auth()->user()->fc_userid)
                   ->whereNull('fd_watchingdate')
                   ->count();
+
+                  
 @endphp
 
 <nav class="navbar navbar-expand-lg main-navbar">
+ 
   <form class="form-inline mr-auto">
     <ul class="navbar-nav mr-3">
       <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
@@ -36,17 +39,23 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
           </div> -->
         </div>
         <div class="dropdown-list-content dropdown-list-icons" style="overflow: hidden; outline: none;" tabindex="3">
-         @foreach ($notifList as $notif)
-         <a href="{{ $notif->fv_link }}" class="dropdown-item dropdown-item-unread" data-notificationCode="{{ $notif->fc_notificationcode }}">
-          <div class="dropdown-item-icon bg-warning text-white">
-            <i class="fas fa-check"></i>
-          </div>
-          <div class="dropdown-item-desc">
-            <b>{{ $notif->fc_tittle }}</b>
-            <div class="time">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}</div>
-          </div>
-        </a>
-         @endforeach
+          @foreach ($notifList as $notif)
+            @php
+                $status = $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'Belum dibaca' : 'Telah dibaca';
+                $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'fa-book-open' : 'fa-check';
+                $bgColorClass = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'bg-success text-white' : 'bg-warning text-white';
+            @endphp
+            <a href="{{ $notif->fv_link }}" class="dropdown-item item-read-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
+                <div class="dropdown-item-icon {{ $bgColorClass }}">
+                    <i class="fas {{ $icon }}"></i>
+                </div>
+                <div class="dropdown-item-desc">
+                    <b>{{ $notif->fc_tittle }}</b>
+                    <div class="time">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}</div>
+                </div>
+                <p><i>{{ $status }}</i></p>
+            </a>
+        @endforeach
         </div>
         <div class="dropdown-footer text-center">
           <a href="#">View All <i class="fas fa-chevron-right"></i></a>
@@ -89,6 +98,40 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
       </div>
     </li>
   </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var itemReadNotifications = document.querySelectorAll('.item-read-notification');
+      itemReadNotifications.forEach(function(item) {
+        item.addEventListener('click', function(event) {
+          event.preventDefault();
+          
+          var notificationCode = this.getAttribute('data-notificationcode');
+          var url = this.getAttribute('href');
+          
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/reading-notification-click', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+              if (response.status === 200) {
+                window.location.href = response.link;
+              } else {
+                swal(response.message, { icon: 'error' });
+              }
+            } else {
+              swal('Terjadi kesalahan saat mengirim data', { icon: 'error' });
+            }
+          };
+          xhr.onerror = function() {
+            swal('Terjadi kesalahan saat mengirim data', { icon: 'error' });
+          };
+          xhr.send('fc_notificationcode=' + encodeURIComponent(notificationCode) + '&fv_url=' + encodeURIComponent(url));
+        });
+      });
+    });
+  </script>
 </nav>
 <div class="main-sidebar">
   <aside id="sidebar-wrapper">
@@ -132,38 +175,4 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
   </aside>
 </div>
 
-@section('js')
-<script>
-  $(document).ready(function() {
-  $('.read-notification').click(function(event) {
-    event.preventDefault(); 
-    
-    var notificationCode = $(this).data('notificationcode');
-    var url = $(this).attr('href');
-   
-    $.ajax({
-      url: '/reading-notification-click',
-      type: 'POST',
-      data: { 
-        fc_notificationcode: notificationCode,
-        fv_url : url
-      },
-      success: function(response) {
-        if(response.status == 200){
-          // arahkan ke response.link
-          window.location= response.link;
-        }else{
-          swal(response.message, { icon: 'error', });
-        }
-      },
-      error: function(xhr) {
-        swal(response.message, { icon: 'error', });
-        console.log('Terjadi kesalahan saat mengirim data');
-      }
-    });
-  });
-});
 
-  
-</script>
-@endsection
