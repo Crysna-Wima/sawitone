@@ -165,8 +165,8 @@ class MutasiBarangController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->delete();
             TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+            TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->delete();
 
 			DB::commit();
 
