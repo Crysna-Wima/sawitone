@@ -654,8 +654,8 @@
                     data: 'fc_brand',
                     render: function(data, type, row) {
                         if ($('#category').val() === 'Semua') {
-                            if (row.stock && row.stock.fc_brand) {
-                                return row.stock.fc_brand;
+                            if (row && row.fc_brand) {
+                                return row.fc_brand;
                             } else {
                                 return '';
                             }
@@ -674,8 +674,8 @@
                     data: 'fc_subgroup',
                     render: function(data, type, row) {
                         if ($('#category').val() === 'Semua') {
-                            if (row.stock && row.stock.fc_subgroup) {
-                                return row.stock.fc_subgroup;
+                            if (row && row.fc_subgroup) {
+                                return row.fc_subgroup;
                             } else {
                                 return '';
                             }

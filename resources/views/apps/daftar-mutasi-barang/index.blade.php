@@ -77,6 +77,7 @@
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Mutasi</th>
+                                            <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
                                             <th scope="col" class="text-center">Lokasi Tujuan</th>
@@ -95,6 +96,7 @@
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Mutasi</th>
+                                            <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
                                             <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
@@ -113,6 +115,7 @@
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Mutasi</th>
+                                            <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Lokasi Awal</th>
                                             <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
@@ -268,7 +271,7 @@
             targets: [0, 5, 6]
         }, {
             className: 'text-nowrap',
-            targets: [7]
+            targets: [8]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -277,6 +280,9 @@
             },
             {
                 data: 'fc_mutationno'
+            },
+            {
+                data: 'fc_sono'
             },
             {
                 data: 'fd_date_byuser',
@@ -300,14 +306,14 @@
         ],
         rowCallback: function(row, data) {
             var fc_mutationno = window.btoa(data.fc_mutationno);
-            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
-                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
-                $('td:eq(5)', row).html('<span class="badge badge-success">Terlaksana</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-success">Terlaksana</span>');
             }
 
-            $('td:eq(7)', row).html(`
+            $('td:eq(8)', row).html(`
                 <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_mutationno}')"><i class="fa fa-file"></i> PDF</button>
                 `);
@@ -331,7 +337,7 @@
             targets: [0, 5, 6]
         }, {
             className: 'text-nowrap',
-            targets: [7]
+            targets: [8]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -340,6 +346,9 @@
             },
             {
                 data: 'fc_mutationno'
+            },
+            {
+                data: 'fc_sono'
             },
             {
                 data: 'fd_date_byuser',
@@ -363,14 +372,14 @@
         ],
         rowCallback: function(row, data) {
             var fc_mutationno = window.btoa(data.fc_mutationno);
-            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
-                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
-                $('td:eq(5)', row).html('<span class="badge badge-success">Terlaksana</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-success">Terlaksana</span>');
             }
 
-            $('td:eq(7)', row).html(`
+            $('td:eq(8)', row).html(`
                 <a href="/apps/daftar-mutasi-barang/detail/${fc_mutationno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                 <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_mutationno}')"><i class="fa fa-file"></i> PDF</button>
                 `);
@@ -391,7 +400,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 5, 6, 7]
+            targets: [0, 5, 6, 7, 8]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -400,6 +409,9 @@
             },
             {
                 data: 'fc_mutationno'
+            },
+            {
+                data: 'fc_sono'
             },
             {
                 data: 'fd_date_byuser',
@@ -423,14 +435,14 @@
         ],
         rowCallback: function(row, data) {
             var fc_mutationno = window.btoa(data.fc_mutationno);
-            $('td:eq(5)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
+            $('td:eq(6)', row).html(`<i class="${data.fc_statusmutasi}"></i>`);
             if (data['fc_statusmutasi'] == 'P') {
-                $('td:eq(5)', row).html('<span class="badge badge-warning">Proses</span>');
+                $('td:eq(6)', row).html('<span class="badge badge-warning">Proses</span>');
             } else {
                 $(row).hide();
             }
 
-            $('td:eq(7)', row).html(`
+            $('td:eq(8)', row).html(`
                 <button class="btn btn-info btn-sm ml-1" onclick="click_modal_terlaksana('${data.fc_mutationno}')"><i class="fa fa-check"></i> Telah Terlaksana</button>
                 `);
         },

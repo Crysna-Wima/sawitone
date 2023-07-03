@@ -198,12 +198,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Division</th>
-                                    <th scope="col" class="text-center">Cabang</th>
                                     <th scope="col" class="text-center">Kode Gudang</th>
                                     <th scope="col" class="text-center">Posisi Gudang</th>
                                     <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Rackname</th>
+                                    <th scope="col" class="text-center">Nama Gudang</th>
+                                    <th scope="col" class="text-center">Alamat</th>
                                     <th scope="col" class="text-center">Kapasitas</th>
                                     <th scope="col" class="text-center">Deskripsi</th>
                                     <th scope="col" class="text-center" style="width: 10%">Actions</th>
@@ -236,12 +235,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Division</th>
-                                    <th scope="col" class="text-center">Cabang</th>
                                     <th scope="col" class="text-center">Kode Gudang</th>
                                     <th scope="col" class="text-center">Posisi Gudang</th>
                                     <th scope="col" class="text-center">Status</th>
-                                    <th scope="col" class="text-center">Rackname</th>
+                                    <th scope="col" class="text-center">Nama Gudang</th>
+                                    <th scope="col" class="text-center">Alamat</th>
                                     <th scope="col" class="text-center">Kapasitas</th>
                                     <th scope="col" class="text-center">Deskripsi</th>
                                     <th scope="col" class="text-center" style="width: 10%">Actions</th>
@@ -477,6 +475,12 @@
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
 
+                if ((data['fc_sostatus'] == 'CL' ) || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')){
+                    $(row).hide();
+                } else {
+                    $(row).show();
+                }
+
                 $('td:eq(7)', row).html(`
                 <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono_cprr('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
             }
@@ -538,6 +542,12 @@
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
 
+                if ((data['fc_sostatus'] == 'CL' ) || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')){
+                    $(row).hide();
+                } else {
+                    $(row).show();
+                }
+
                 $('td:eq(7)', row).html(`
                 <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_sono_internal('${data.fc_sono}')"><i class="fa fa-check"></i> Pilih</button>`);
             }
@@ -562,19 +572,13 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [9]
+                    targets: [8]
                 },
             ],
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
-                },
-                {
-                    data: 'fc_divisioncode'
-                },
-                {
-                    data: 'branch.fv_description'
                 },
                 {
                     data: 'fc_warehousecode'
@@ -589,6 +593,9 @@
                     data: 'fc_rackname'
                 },
                 {
+                    data: 'fc_warehouseaddress'
+                },
+                {
                     data: 'fn_capacity'
                 },
                 {
@@ -600,14 +607,14 @@
             ],
             rowCallback: function(row, data) {
 
-                $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+                $('td:eq(3)', row).html(`<i class="${data.fc_dostatus}"></i>`);
                 if (data['fl_status'] == 'G') {
-                    $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Gudang</span>');
                 } else {
-                    $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Display</span>');
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(8)', row).html(`
             <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_awal('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
             }
@@ -688,19 +695,13 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [9]
+                    targets: [8]
                 },
             ],
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
-                },
-                {
-                    data: 'fc_divisioncode'
-                },
-                {
-                    data: 'branch.fv_description'
                 },
                 {
                     data: 'fc_warehousecode'
@@ -715,6 +716,9 @@
                     data: 'fc_rackname'
                 },
                 {
+                    data: 'fc_warehouseaddress'
+                },
+                {
                     data: 'fn_capacity'
                 },
                 {
@@ -726,14 +730,14 @@
             ],
             rowCallback: function(row, data) {
 
-                $('td:eq(5)', row).html(`<i class="${data.fc_dostatus}"></i>`);
+                $('td:eq(3)', row).html(`<i class="${data.fc_dostatus}"></i>`);
                 if (data['fl_status'] == 'G') {
-                    $('td:eq(5)', row).html('<span class="badge badge-success">Gudang</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-success">Gudang</span>');
                 } else {
-                    $('td:eq(5)', row).html('<span class="badge badge-primary">Display</span>');
+                    $('td:eq(3)', row).html('<span class="badge badge-primary">Display</span>');
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(8)', row).html(`
             <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_warehouse_tujuan('${data.fc_warehousecode}','${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
          `);
             }

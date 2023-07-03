@@ -52,6 +52,18 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
+                                    <label>No. Mutasi : {{ $mutasi_mst->fc_mutationno }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>No. SO : {{ $mutasi_mst->fc_sono }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
                                     <label>Tanggal</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
                                         <div class="input-group-prepend">

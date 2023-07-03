@@ -220,12 +220,14 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\DaftarCprrController@index');
             Route::get('/datatables','Apps\DaftarCprrController@datatables');
             Route::get('/detail/{fc_sono}','Apps\DaftarCprrController@detail');
+            Route::put('/cancel_so','Apps\DaftarCprrController@cancel_so');
         });
 
         Route::prefix('daftar-memo-internal')->group(function () {
             Route::get('/','Apps\DaftarMemoInternalController@index');
             Route::get('/datatables','Apps\DaftarMemoInternalController@datatables');
             Route::get('/detail/{fc_sono}','Apps\DaftarMemoInternalController@detail');
+            Route::put('/cancel_so','Apps\DaftarMemoInternalController@cancel_so');
         });
 
         Route::prefix('sales-order')->group(function () {

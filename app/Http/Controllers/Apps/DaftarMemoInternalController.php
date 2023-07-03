@@ -64,4 +64,30 @@ class DaftarMemoInternalController extends Controller
         ->addIndexColumn()
         ->make(true);
     }
+
+    public function cancel_so(Request $request){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $fc_sono = $request->fc_sono;
+
+        // update
+        $so_master = SoMaster::where('fc_sono', $fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $so_master->update([
+            'fc_sostatus' => 'CC',
+        ]);
+
+        if ($update_status) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil dicancel',
+                'link' => '/apps/daftar-memo-internal'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dicancel'
+        ];
+    }
 }
