@@ -657,7 +657,7 @@
                             if (row.stock && row.stock.fc_brand) {
                                 return row.stock.fc_brand;
                             } else {
-                                return '';
+                                return data;
                             }
                         } else if ($('#category').val() === 'Khusus') {
                             if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
@@ -677,7 +677,7 @@
                             if (row.stock && row.stock.fc_subgroup) {
                                 return row.stock.fc_subgroup;
                             } else {
-                                return '';
+                                return data;
                             }
                         } else if ($('#category').val() === 'Khusus') {
                             if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
@@ -871,6 +871,7 @@
                     $('#fm_so_price').val(fungsiRupiah(""));
                 }
                 $('#fc_stockcode').val(data.fc_stockcode);
+                $('#fc_barcode').val(data.fc_barcode);
 
                 $("#modal_stock").modal('hide');
             },
