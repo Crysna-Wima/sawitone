@@ -37,8 +37,9 @@ class MasterWarehouseController extends Controller
     }
 
     public function store_update(request $request){
-       $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
+            'fc_membercode' => 'required_if:fc_warehousepos,EXTERNAL|unique:t_warehouse,fc_membercode,NULL,fc_membercode,deleted_at,NULL',
         ]);
 
         if($validator->fails()) {
@@ -54,6 +55,7 @@ class MasterWarehouseController extends Controller
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_warehousecode' => $request->fc_warehousecode,
+                'fc_membercode' => $request->fc_membercode,
             ])->withTrashed()->count();
 
             if($cek_data > 0){
