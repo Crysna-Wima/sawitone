@@ -30,70 +30,6 @@
 </style>
 @endsection
 
-@section('modal')
-
-<div class="modal fade" role="dialog" id="modal_catatan" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Catatan Tidak Menyetujui</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="form_submit" action="/apps/master-delivery-order/reject_approval" method="POST">
-                    @csrf
-                    @method('put')
-                    <input type="text" name="fc_dostatus" value="RJ" hidden>
-                    <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="fv_description" name="fv_description">
-                    </div>
-                    <button type="submit" class="btn btn-primary mr-1" onclick="">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" role="dialog" id="modal_invstore" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Ketersediaan Stock</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_invstore" width="100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Kode Barang</th>
-                                    <th scope="col" class="text-center">Nama Barang</th>
-                                    <th scope="col" class="text-center">Brand</th>
-                                    <th scope="col" class="text-center">Sub Group</th>
-                                    <th scope="col" class="text-center">Tipe Stock</th>
-                                    <th scope="col" class="text-center">Satuan</th>
-                                    <th scope="col" class="text-center">Expired Date</th>
-                                    <th scope="col" class="text-center">Batch</th>
-                                    <th scope="col" class="text-center">Qty</th>
-                                    <th scope="col" class="text-center">Status</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endsection
-
 @section('content')
 <div class="section-body">
     <div class="row">
@@ -276,7 +212,7 @@
                 </div>
             </div>
         </div>
-        @endif;
+        @endif
     </div>
     
     @if (auth()->user()->fc_groupuser == 'IN_MNGWRH' && auth()->user()->fl_level == 3)
@@ -288,7 +224,7 @@
                 @method('put')
                 <input type="text" name="fc_dostatus" value="AC" hidden>
                 <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
-                <button type="submit" class="btn btn-success">Accept</button>
+                <button type="submit" class="btn btn-success ml-1">Accept</button>
             </form>
         </div>
         @else
@@ -313,7 +249,71 @@
         </div>
         @endif
     @endif
-    
+</div>
+@endsection
+
+@section('modal')
+<div class="modal fade" role="dialog" id="modal_catatan" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Catatan Tidak Menyetujui</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form_submit" action="/apps/master-delivery-order/reject_approval" method="POST">
+                    @csrf
+                    @method('put')
+                    <input type="text" name="fc_dostatus" value="RJ" hidden>
+                    <input type="text" name="fc_dono" value="{{$do_mst->fc_dono}}" hidden>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fv_description" name="fv_description">
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success" onclick="">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_invstore" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Ketersediaan Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_invstore" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Nama Barang</th>
+                                    <th scope="col" class="text-center">Brand</th>
+                                    <th scope="col" class="text-center">Sub Group</th>
+                                    <th scope="col" class="text-center">Tipe Stock</th>
+                                    <th scope="col" class="text-center">Satuan</th>
+                                    <th scope="col" class="text-center">Expired Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -459,7 +459,7 @@
             } else {
                 $('td:eq(7)', row).html('<span class="badge badge-warning">YES</span>');
                 $('td:eq(8)', row).html(`
-                    <button class="btn btn-primary btn-sm" onclick="click_modal_invstore('${data.invstore.fc_stockcode}','${data.invstore.fc_warehousecode}','${data.fc_barcode}')">Detail Approval</button>
+                    <button class="btn btn-primary btn-sm" onclick="click_modal_invstore('${data.invstore.fc_stockcode}','${data.invstore.fc_warehousecode}','${data.fc_barcode}')"><i class="fa fa-eye"></i> Detail Approval</button>
                 `);
             }
             

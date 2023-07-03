@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <form id="form_cancel" action="/apps/master-sales-order/cancel_so" method="PUT">
+                                <form id="form_cancel" action="/apps/daftar-cprr/cancel_so" method="PUT">
                                     @csrf
                                     <input type="hidden" name="fc_sono" value="{{ $data->fc_sono }}">
                                     @if (($data->fc_sostatus == 'CL') || ($data->fc_sostatus == 'C') || ($data->fc_sostatus == 'CC') || ($data->fc_sostatus == 'DD'))

@@ -808,7 +808,7 @@
 
             },
             {
-                data: 'fc_barcode'
+                data: 'invstore.fc_stockcode'
             },
             {
                 data: 'invstore.stock.fc_namelong'

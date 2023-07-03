@@ -208,6 +208,11 @@
 
 @section('js')
 <script>
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+    });
+    
     $(document).ready(function() {
         get_data_supplier();
         $('.place_detail').attr('hidden', true);
