@@ -16,9 +16,7 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
                   })
                   ->where('fc_userid', auth()->user()->fc_userid)
                   ->whereNull('fd_watchingdate')
-                  ->count();
-
-                  
+                  ->count();     
 @endphp
 
 <nav class="navbar navbar-expand-lg main-navbar">
@@ -43,8 +41,20 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
             @php
                 $status = $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'Belum dibaca' : 'Telah dibaca';
                 $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'fa-book-open' : 'fa-check';
-                $bgColorClass = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'bg-success text-white' : 'bg-warning text-white';
+                $bgColorClass = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'bg-warning text-white' : 'bg-success text-white';
             @endphp
+            @if ($status == 'Belum dibaca')
+            <a href="{{ $notif->fv_link }}" class="dropdown-item dropdown-item-unread" data-notificationCode="{{ $notif->fc_notificationcode }}">
+                <div class="dropdown-item-icon {{ $bgColorClass }}">
+                    <i class="fas {{ $icon }}"></i>
+                </div>
+                <div class="dropdown-item-desc">
+                    <b>{{ $notif->fc_tittle }}</b>
+                    <div class="time">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}</div>
+                </div>
+                <p><i>{{ $status }}</i></p>
+            </a>
+            @else
             <a href="{{ $notif->fv_link }}" class="dropdown-item item-read-notification" data-notificationCode="{{ $notif->fc_notificationcode }}">
                 <div class="dropdown-item-icon {{ $bgColorClass }}">
                     <i class="fas {{ $icon }}"></i>
@@ -55,6 +65,7 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
                 </div>
                 <p><i>{{ $status }}</i></p>
             </a>
+            @endif
         @endforeach
         </div>
         <div class="dropdown-footer text-center">
