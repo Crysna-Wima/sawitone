@@ -331,6 +331,11 @@
 
 @section('js')
 <script>
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+    });
+
     var fc_membercode_tujuan = "";
     // change value fc_type_mutation
 
@@ -475,7 +480,7 @@
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
 
-                if ((data['fc_sostatus'] == 'CL' ) || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')){
+                if ((data['fc_sostatus'] == 'CL') || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')) {
                     $(row).hide();
                 } else {
                     $(row).show();
@@ -542,7 +547,7 @@
             rowCallback: function(row, data) {
                 var fc_sono = window.btoa(data.fc_sono);
 
-                if ((data['fc_sostatus'] == 'CL' ) || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')){
+                if ((data['fc_sostatus'] == 'CL') || (data['fc_sostatus'] == 'C') || (data['fc_sostatus'] == 'CC') || (data['fc_sostatus'] == 'L')) {
                     $(row).hide();
                 } else {
                     $(row).show();
