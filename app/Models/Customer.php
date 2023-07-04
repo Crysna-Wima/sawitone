@@ -62,4 +62,10 @@ class Customer extends Model
     public function CprrCustomer(){
         return $this->hasMany(CprrCustomer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
+
+    // relasi dengan t_user
+    public function user(){
+        return $this->hasMany(User::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
+
 }

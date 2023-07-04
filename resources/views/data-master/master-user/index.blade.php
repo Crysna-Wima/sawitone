@@ -7,6 +7,7 @@
         content: ' *';
         display:inline;
     }
+
 </style>
 @endsection
 @section('content')
@@ -33,6 +34,7 @@
                                         <th scope="col" class="text-center text-nowrap">User Id</th>
                                         <th scope="col" class="text-center">Username</th>
                                         <th scope="col" class="text-center text-nowrap">Group User</th>
+                                        <th scope="col" class="text-center text-nowrap">Customer</th>
                                         <th scope="col" class="text-center">Level</th>
                                         <th scope="col" class="text-center">Hold</th>
                                         <th scope="col" class="text-center">Expired</th>
@@ -131,6 +133,13 @@
                                     </div>
                                 </div>
                                 
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Customer Code</label>
+                                    <select class="form-control select2 required-field" name="fc_membercode"
+                                        id="fc_membercode" required></select>
+                                </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
@@ -243,6 +252,13 @@
                                 </div>
                                 
                             </div>
+                            <div id="fc_membercode_add-container" class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required" >
+                                    <label>Customer Code</label>
+                                    <select class="form-control select2 required-field" name="fc_membercode"
+                                        id="fc_membercode_add" required></select>
+                                </div>
+                            </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Expired Date</label>
@@ -274,6 +290,30 @@
         $(document).ready(function() {
             get_data_branch();
             get_data_group_user();
+            $("#fc_membercode_add").parent().hide();
+            $("#fc_membercode").parent().hide();
+            $("#fc_groupuser_add").on("change", function() {
+                var fc_kode = $(this).val();
+                console.log(fc_kode)
+                if (fc_kode === "CUSTOMER") {
+                    get_data_membercode();
+                } else {
+                    $("#fc_membercode_add").empty();
+                    $("#fc_membercode_add").parent().hide();
+                }
+            });
+            $("#fc_groupuser").on("change", function() {
+                var fc_kode = $(this).val();
+                console.log(fc_kode)
+                if (fc_kode === "CUSTOMER") {
+                    // Memanggil fungsi get_data_membercode() saat fc_groupuser dipilih CUSTOMER
+                    get_data_membercode();
+                } else {
+                    // Menyembunyikan atau menonaktifkan fc_membercode jika fc_groupuser bukan CUSTOMER
+                    $("#fc_membercode").empty();
+                    $("#fc_membercode").parent().hide();
+                }
+            });
         })
 
         function add() {
@@ -368,6 +408,54 @@
             });
         }
 
+        function get_data_membercode() {
+            $("#modal_loading").modal('show');
+            $.ajax({
+                url: "/master/get-data/user-from-customer",
+                type: "GET",
+                dataType: "JSON",
+                success: function(response) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    if (response.status === 200) {
+                        var data = response.data;
+                        
+                        $("#fc_membercode").empty();
+                        $("#fc_membercode").append(`<option value="" readonly> - Pilih - </option>`);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#fc_membercode").append(
+                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                        }
+                        $("#fc_membercode_add").empty();
+                        $("#fc_membercode_add").append(`<option value="" selected readonly> - Pilih - </option>`);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#fc_membercode_add").append(
+                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                        }
+                        $("#fc_membercode_add").parent().show();
+                        $("#fc_membercode").parent().show();
+                    } else {
+                        iziToast.error({
+                            title: 'Error!',
+                            message: response.message,
+                            position: 'topRight'
+                        });
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                        icon: 'error',
+                    });
+                }
+            });
+        }
+
+
+
         var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
@@ -382,7 +470,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [10]
+                    targets: [11]
                 },
             ],
             columns: [{
@@ -406,6 +494,12 @@
                     data: 'group_user.fv_description'
                 },
                 {
+                    data: 'customer.fc_membername1',
+                    render: function (data, type, row) {
+                        return data ? data : '';
+                    }
+                },
+                {
                     data: 'fl_level'
                 },
                 {
@@ -418,22 +512,22 @@
                     data: 'fv_description'
                 },
                 {
-                    data: 'fv_description'
+                    data: null
                 },
             ],
             rowCallback: function(row, data) {
 
                 if (data.fl_hold == 'T') {
-                    $('td:eq(7)', row).html(`<span class="badge badge-success">Hold</span>`);
+                    $('td:eq(8)', row).html(`<span class="badge badge-success">Hold</span>`);
                 } else {
-                    $('td:eq(7)', row).html(`<span class="badge badge-danger">Not Hold</span>`);
+                    $('td:eq(8)', row).html(`<span class="badge badge-danger">Not Hold</span>`);
                 }
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
                 var url_edit = "/data-master/master-user/detail/" + data.fc_username + "/" + data.id;
                 var url_delete = "/data-master/master-user/delete/" + data.fc_username;
 
-                $('td:eq(10)', row).html(`
+                $('td:eq(11)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')"><i class="fa fa-trash"> </i> Hapus</button>
@@ -514,13 +608,14 @@
                     var user = response.user; // Ambil data user dari response
                     var roles = response.roles;
 
-                    // Populate roles select options
+                  
                     var rolesSelect = $('#roles');
                     rolesSelect.empty(); // Clear existing options
                     $.each(roles, function(index, role) {
                         var selected = response.selected.hasOwnProperty(role.name) ? 'selected' : '';
                         rolesSelect.append('<option value="' + role.id + '" ' + selected + '>' + role.name + '</option>');
                     });
+
 
                     Object.keys(user).forEach(function(key) {
                         var elem_name = $('[name=' + key + ']');
