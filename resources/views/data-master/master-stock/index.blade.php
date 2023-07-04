@@ -773,10 +773,12 @@
          { data: 'fc_divisioncode' },
       ],
       rowCallback : function(row, data){
-         var url_edit   = "/data-master/master-stock/detail/" + data.fc_stockcode + '/' + data.fc_barcode;
-         var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode + '/' + data.fc_barcode;
+        var stockcodeEncode = window.btoa(data.fc_stockcode);
+        var barcodeEncode = window.btoa(data.fc_barcode);
+        var url_edit   = "/data-master/master-stock/detail/" + stockcodeEncode + '/' + barcodeEncode;
+        var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode + '/' + data.fc_barcode;
 
-         if(data.fl_batch == 'T'){
+        if(data.fl_batch == 'T'){
             $('td:eq(7)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(7)', row).html(`<span class="badge badge-danger">NO</span>`);

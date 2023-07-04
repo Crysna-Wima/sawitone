@@ -22,9 +22,11 @@ class MasterStockController extends Controller
     }
 
     public function detail($fc_stockcode, $fc_barcode){
+        $stockcodeDecode = base64_decode($fc_stockcode);
+        $barcodeDecode = base64_decode($fc_barcode);
         return Stock::where([
-            'fc_stockcode' => $fc_stockcode,
-            'fc_barcode' => $fc_barcode,
+            'fc_stockcode' => $stockcodeDecode,
+            'fc_barcode' => $barcodeDecode,
         ])->where('fc_branch', auth()->user()->fc_branch)->first();
         // dd($fc_barcode);
     }
