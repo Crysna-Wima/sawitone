@@ -285,7 +285,7 @@
     }
 
     let encode_fc_sono = "{{ base64_encode($data->fc_sono) }}";
-    console.log(encode_fc_sono)
+    // console.log(encode_fc_sono)
 
     var tb_so = $('#tb_so').DataTable({
         // apabila data kosong

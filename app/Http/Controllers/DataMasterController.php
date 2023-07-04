@@ -196,4 +196,9 @@ class DataMasterController extends Controller
         $data = Supplier::with('supplier_tax_code', 'supplier_typebranch', 'supplier_type_business', 'supplier_legal_status')->where('fc_suppliercode', $fc_suppliercode)->first();
         return ApiFormatter::getResponse($data);
     }
+
+    public function getCustomer(){
+        $data = Customer::with('user')->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+        return ApiFormatter::getResponse($data);
+    }
 }

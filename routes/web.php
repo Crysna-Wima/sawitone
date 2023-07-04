@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/get-data-all-table/{model}','DataMasterController@get_data_all_table');
         Route::get('/get-data-by-id-table/{model}/{id}','DataMasterController@get_data_by_id_table');
         Route::get('/get-data-where-field-id-get-table/{model}/{where_field}/{id}','DataMasterController@get_data_where_field_id_get_table');
+        Route::get('/get-data/user-from-customer', 'DataMasterController@getCustomer');
 
         Route::get('/data-brand','DataMasterController@data_brand');
         Route::get('/data-group-by-brand','DataMasterController@data_group_by_brand');

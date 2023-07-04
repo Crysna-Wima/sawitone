@@ -38,7 +38,7 @@ class MasterUserController extends Controller
             abort(403, 'Sorry !! You are Unauthorized to edit any admin !');
         }
        
-        $user = User::find($id)->where('fc_username', $fc_username)->first();
+        $user = User::find($id)->with('customer')->where('fc_username', $fc_username)->first();
         $roles = ModelsRole::all();
 
         // user punya role apa sajakah?
@@ -55,7 +55,7 @@ class MasterUserController extends Controller
     }
 
     public function datatables(){
-        $data = User::with('branch', 'group_user')->orderBy('created_at', 'DESC')->get();
+        $data = User::with('branch', 'group_user','customer')->orderBy('created_at', 'DESC')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()

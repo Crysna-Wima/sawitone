@@ -73,4 +73,8 @@ class User extends Authenticatable
         }
         return $hasPermission;
     }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
+    }
 }
