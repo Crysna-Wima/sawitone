@@ -39,6 +39,10 @@ $query->where('fc_userid', auth()->user()->fc_userid);
     .d-flex {
         gap: 20px;
     }
+
+    .notif-content:hover {
+        text-decoration: none;
+    }
 </style>
 @endsection
 
@@ -61,7 +65,9 @@ $query->where('fc_userid', auth()->user()->fc_userid);
                         <div class="right-info">
                             <b style="font-size: 16px; color:black;">{{ $notif->fc_tittle }}</b>
                             <div class="notification" style="font-size: 14px; font-weight:500; color:black">{{ $notif->fc_message }}</div>
-                            <div class="text-muted" style="font-size: 12px; margin-top: 5px; font-weight:500">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }} <div class="bullet"></div> <i>{{ $status }}</i></div>
+                            <div class="text-muted" style="font-size: 12px; margin-top: 5px; font-weight:500">{{ Carbon::parse($notif->fd_notifdate)->diffForHumans() }}
+                                <div class="bullet"></div> <i>{{ $status }}</i>
+                            </div>
                         </div>
                     </div>
                 </div>
