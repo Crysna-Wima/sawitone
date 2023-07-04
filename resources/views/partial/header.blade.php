@@ -69,7 +69,7 @@ $notifList = \App\Models\NotificationMaster::with('notifdtl')
         @endforeach
         </div>
         <div class="dropdown-footer text-center">
-          <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+          <a href="/view-all-notif">View All <i class="fas fa-chevron-right"></i></a>
         </div>
         <div id="ascrail2002" class="nicescroll-rails nicescroll-rails-vr" style="width: 9px; z-index: 1000; cursor: default; position: absolute; top: 57.9861px; left: 341px; height: 350px; opacity: 0.3; display: none;">
           <div class="nicescroll-cursors" style="position: relative; top: 44px; float: right; width: 7px; height: 305px; background-color: rgb(66, 66, 66); border: 1px solid rgb(255, 255, 255); background-clip: padding-box; border-radius: 5px;"></div>
