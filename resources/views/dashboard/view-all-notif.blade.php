@@ -117,7 +117,7 @@ $query->where('fc_userid', auth()->user()->fc_userid)->whereNull('fd_watchingdat
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Terdahulu</h4> <span class="badge rounded-pill badge-notification bg-danger text-white">{{ $notifEarlierCount }}</span>
+                    <h4>Terdahulu</h4> <span class="badge rounded-pill bg-danger text-white">{{ $notifEarlierCount }}</span>
                 </div>
                 @foreach ($notifListEarlier as $notif)
                 @php

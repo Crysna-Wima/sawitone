@@ -42,9 +42,9 @@ $query->where('fc_status','=','R');
       @if($notifCount != 0)
       <i class="far fa-bell" style="font-size: 20px;"></i>
         @if($notifCount >= 99)
-        <span class="icon-badge">99+</span></a>
+        <span class="badge-notification bg-danger">99+</span></a>
         @else
-        <span class="icon-badge">{{ $notifCount }}</span></a>
+        <span class="icon-badge bg-danger">{{ $notifCount }}</span></a>
         @endif
       @else
       <i class="far fa-bell" style="font-size: 20px;"></i></a>
@@ -129,7 +129,7 @@ $query->where('fc_status','=','R');
       height: 100px;
     }
 
-    .dropdown-list .dropdown-header{
+    .dropdown-list .dropdown-header {
       font-weight: bold;
     }
   </style>

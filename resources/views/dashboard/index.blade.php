@@ -104,9 +104,9 @@ $query->where('fc_status','=','R');
             <i class="far fa-bell"></i>
           </div>
           @if($notifCount >= 99)
-          <h4>99+ <span class="badge rounded-pill badge-notification bg-danger">Unread</span></h4>
+          <h4>99+ <span class="badge rounded-pill bg-danger">Unread</span></h4>
           @else
-          <h4>{{ $notifCount }} <span class="badge rounded-pill badge-notification bg-danger">Unread</span></h4>
+          <h4>{{ $notifCount }} <span class="badge rounded-pill bg-danger">Unread</span></h4>
           @endif
           <div class="card-description">Notifications</div>
         </div>

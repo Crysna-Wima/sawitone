@@ -1639,6 +1639,20 @@ table tr:hover .table-links {
   border-radius: 50%;
 }
 
+.badge-notification {
+  position: absolute;
+  top: -5px;
+  right: 0px;
+  width: 28px;
+  height: 20px;
+  font-size: 12px;
+  background: #fc544b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+
 .notif {
   position: relative;
   display: flex;
