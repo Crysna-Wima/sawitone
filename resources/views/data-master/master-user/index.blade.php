@@ -137,8 +137,8 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Customer Code</label>
-                                    <select class="form-control select2 required-field" name="fc_membercode"
-                                        id="fc_membercode" required></select>
+                                    <select class="form-control select2" name="fc_membercode"
+                                        id="fc_membercode"></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -255,8 +255,8 @@
                             <div id="fc_membercode_add-container" class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required" >
                                     <label>Customer Code</label>
-                                    <select class="form-control select2 required-field" name="fc_membercode"
-                                        id="fc_membercode_add" required></select>
+                                    <select class="form-control select2" name="fc_membercode"
+                                        id="fc_membercode_add"></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">

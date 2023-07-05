@@ -53,6 +53,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['cek_login']], function () {
     Route::view('/dashboard','dashboard.index')->name('dashboard');
     Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard/datatable/{fitur}','DashboardController@datatable');
 
     Route::post('/reading-notification-click', 'Apps\NotifikasiController@handleNotificationClick');
 

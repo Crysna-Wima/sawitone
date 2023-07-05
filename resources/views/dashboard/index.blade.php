@@ -45,7 +45,7 @@ $query->where('fc_status','=','R');
             <h4>Minimum Available Quantity</h4>
           </div>
           <div class="card-body">
-            100
+            {{ $moqCount }}
           </div>
           <span class="fas fa-arrow-right"></span>
         </div>
@@ -61,7 +61,7 @@ $query->where('fc_status','=','R');
             <h4>Maximum Available Quantity</h4>
           </div>
           <div class="card-body">
-            1000
+            {{ $maqCount }}
           </div>
           <span class="fas fa-arrow-right"></span>
         </div>
@@ -77,7 +77,7 @@ $query->where('fc_status','=','R');
             <h4>Expired Stock</h4>
           </div>
           <div class="card-body">
-            0
+            {{ $expiredDateCount }}
           </div>
           <span class="fas fa-arrow-right"></span>
         </div>
@@ -160,7 +160,7 @@ $query->where('fc_status','=','R');
       <form id="" autocomplete="off">
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-striped" id="" width="100%">
+            <table class="table table-striped" id="tb_moq" width="100%">
               <thead>
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -198,7 +198,7 @@ $query->where('fc_status','=','R');
       <form id="" autocomplete="off">
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-striped" id="" width="100%">
+            <table class="table table-striped" id="tb_maq" width="100%">
               <thead>
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -236,7 +236,7 @@ $query->where('fc_status','=','R');
       <form id="" autocomplete="off">
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-striped" id="" width="100%">
+            <table class="table table-striped" id="tb_expired" width="100%">
               <thead>
                 <tr>
                   <th scope="col" class="text-center">No</th>
@@ -375,5 +375,162 @@ $query->where('fc_status','=','R');
       });
     });
   });
+
+  var tb_expired = $('#tb_expired').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength : 5,
+            ajax: {
+                url: '/dashboard/datatable/expired',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 7]
+                },
+                // {
+                //     className: 'text-nowrap',
+                //     targets: [11]
+                // },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'stock.fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_namelong'
+                },
+                {
+                    data: 'stock.fc_brand'
+                },
+                {
+                    data: 'stock.fc_subgroup'
+                },
+                {
+                    data: 'stock.fc_typestock1'
+                },
+                {
+                    data: 'stock.fc_namepack',
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+            ],
+        });
+
+  var tb_moq = $('#tb_moq').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength : 5,
+            ajax: {
+                url: '/dashboard/datatable/moq',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 7]
+                },
+                // {
+                //     className: 'text-nowrap',
+                //     targets: [11]
+                // },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'stock.fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_namelong'
+                },
+                {
+                    data: 'stock.fc_brand'
+                },
+                {
+                    data: 'stock.fc_subgroup'
+                },
+                {
+                    data: 'stock.fc_typestock1'
+                },
+                {
+                    data: 'stock.fc_namepack',
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+            ],
+        });
+
+  var tb_maq = $('#tb_maq').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength : 5,
+            ajax: {
+                url: '/dashboard/datatable/maq',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 7]
+                },
+                // {
+                //     className: 'text-nowrap',
+                //     targets: [11]
+                // },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'stock.fc_stockcode'
+                },
+                {
+                    data: 'stock.fc_namelong'
+                },
+                {
+                    data: 'stock.fc_brand'
+                },
+                {
+                    data: 'stock.fc_subgroup'
+                },
+                {
+                    data: 'stock.fc_typestock1'
+                },
+                {
+                    data: 'stock.fc_namepack',
+                },
+                {
+                    data: 'fd_expired'
+                },
+                {
+                    data: 'fc_batch'
+                },
+                {
+                    data: 'fn_quantity'
+                },
+            ],
+        });
+
 </script>
 @endsection
