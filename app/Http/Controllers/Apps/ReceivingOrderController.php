@@ -19,6 +19,7 @@ use App\Models\RoMaster;
 use App\Models\RoDetail;
 use App\Models\TempRoDetail;
 use App\Models\TempRoMaster;
+use App\Models\Warehouse;
 use Yajra\DataTables\DataTables;
 
 class ReceivingOrderController extends Controller
@@ -75,6 +76,14 @@ class ReceivingOrderController extends Controller
         }
 
         $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_warehouse(){
+        $data = Warehouse::where('fc_branch', auth()->user()->fc_branch)->where('fc_warehousepos', 'INTERNAL')->get();
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);

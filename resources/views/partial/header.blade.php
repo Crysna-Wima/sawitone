@@ -40,9 +40,12 @@ $query->where('fc_status','=','R');
 
     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="notif nav-link notification-toggle nav-link-lg" aria-expanded="false">
       @if($notifCount != 0)
-      <i class="far fa-bell" style="font-size: 20px;"></i><span class="icon-badge">{{ $notifCount }}</span></a>
-      @elseif($notifCount >= 99)
-      <i class="far fa-bell" style="font-size: 20px;"></i><span class="icon-badge">99+</span></a>
+      <i class="far fa-bell" style="font-size: 20px;"></i>
+        @if($notifCount >= 99)
+        <span class="icon-badge">99+</span></a>
+        @else
+        <span class="icon-badge">{{ $notifCount }}</span></a>
+        @endif
       @else
       <i class="far fa-bell" style="font-size: 20px;"></i></a>
       @endif

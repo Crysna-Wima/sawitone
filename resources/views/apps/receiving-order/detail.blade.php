@@ -176,7 +176,8 @@
                 <div class="card-header">
                     <h4>BPB</h4>
                     <div class="card-header-action">
-                        <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"><button type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan BPB</button></a>
+                        <!-- <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"></a> -->
+                        <button type="button" onclick="pilih_gudang()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan BPB</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -247,10 +248,89 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_gudang" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Daftar Gudang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" width="100%" id="table_gudang">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">Kode Gudang</th>
+                                <th scope="col" class="text-center">Nama Gudang</th>
+                                <th scope="col" class="text-center">Posisi Gudang</th>
+                                <th scope="col" class="text-center">Alamat</th>
+                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function pilih_gudang() {
+        $('#modal_gudang').modal('show');
+        table_gudang();
+    }
+    
+    function table_gudang() {
+        var tb = $('#table_gudang').DataTable({
+            // apabila data kosong
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: "/apps/receiving-order/datatables-warehouse",
+                type: 'GET',
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5]
+            }, ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_warehousecode'
+                },
+                {
+                    data: 'fc_rackname'
+                },
+                {
+                    data: 'fc_warehousepos'
+                },
+                {
+                    data: 'fc_warehouseaddress'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
+                $('td:eq(5)', row).html(`
+                <button class="btn btn-warning btn-sm mr-1" onclick="insert_ro('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
+            `);
+            }
+        });
+    }
     // untuk form input nama penanggung jawab
     $(document).ready(function() {
         var isNamePjShown = false;

@@ -83,7 +83,7 @@
                                     <button type="submit" class="btn btn-danger" hidden>Cancel PO</button>
                                     @else
                                     <button type="submit" class="btn btn-danger">Cancel PO</button>
-                                    @endif  
+                                    @endif
                                 </form>
                             </div>
                         </div>
@@ -144,6 +144,20 @@
                                     <input type="text" class="form-control" value="{{ $po_master->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Catatan</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <textarea class="form-control" style="height: 70px;" readonly>{{ $po_master->fv_description ?? '-' }}</textarea>
                         </div>
                     </div>
                 </div>
