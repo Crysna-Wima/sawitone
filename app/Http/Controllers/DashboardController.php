@@ -89,14 +89,6 @@ class DashboardController extends Controller
 
     public function view_all_notif()
     {
-        $data = NotificationMaster::with('notifdtl')
-            ->whereHas('notifdtl', function ($query) {
-                $query->where('fc_userid', auth()->user()->fc_userid);
-                // ->whereNull('fd_watchingdate');
-            })
-            ->orderBy('fd_notifdate', 'DESC')
-            ->get();
-
-        return view('dashboard.view-all-notif', $data);
+        return view('dashboard.view-all-notif');
     }
 }

@@ -8,7 +8,7 @@ $query->where('fc_userid', auth()->user()->fc_userid);
 //->whereNull('fd_watchingdate');
 })
 ->orderBy('fd_notifdate', 'DESC')
-->limit(3)
+->limit(5)
 ->get();
 
 $notifHeader = \App\Models\NotificationMaster::with('notifdtl')
@@ -17,7 +17,7 @@ $query->where('fc_userid', auth()->user()->fc_userid);
 //->whereNull('fd_watchingdate');
 })
 ->orderBy('fd_notifdate', 'DESC')
-->limit(3)
+->limit(5)
 ->count();
 
 $notifCount = \App\Models\NotificationDetail::whereHas('notifmst', function($query){
@@ -39,8 +39,13 @@ $query->where('fc_status','=','R');
   <ul class="navbar-nav navbar-right">
 
     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="notif nav-link notification-toggle nav-link-lg" aria-expanded="false">
-        @if($notifCount != 0)
-        <i class="far fa-bell" style="font-size: 20px;"></i><span class="icon-badge">{{ $notifCount }}</span></a>
+      @if($notifCount != 0)
+      <i class="far fa-bell" style="font-size: 20px;"></i>
+        @if($notifCount >= 99)
+        <span class="icon-badge">99+</span></a>
+        @else
+        <span class="icon-badge">{{ $notifCount }}</span></a>
+        @endif
       @else
       <i class="far fa-bell" style="font-size: 20px;"></i></a>
       @endif
