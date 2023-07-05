@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title','Notification')
+@section('title','Notifications')
 @php
 use App\Helpers\App;
 use Carbon\Carbon;

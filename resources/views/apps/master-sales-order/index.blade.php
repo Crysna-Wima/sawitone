@@ -320,7 +320,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/master-sales-order/datatables/ALL',
                 type: 'GET'
             },
             columnDefs: [{
@@ -429,7 +429,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/master-sales-order/datatables/F',
                 type: 'GET'
             },
             columnDefs: [{
@@ -510,7 +510,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/master-sales-order/datatables/P',
                 type: 'GET'
             },
             columnDefs: [{
@@ -591,7 +591,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/master-sales-order/datatables/C',
                 type: 'GET'
             },
             columnDefs: [{
@@ -672,7 +672,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/master-sales-order/datatables',
+                url: '/apps/master-sales-order/datatables/DD',
                 type: 'GET'
             },
             columnDefs: [{

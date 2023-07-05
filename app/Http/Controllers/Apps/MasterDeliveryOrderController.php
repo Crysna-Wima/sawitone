@@ -116,12 +116,22 @@ class MasterDeliveryOrderController extends Controller
         // dd($request);
     }
 
-    public function datatables(){
-        $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function datatables($fc_dostatus){
+        if($fc_dostatus == "ALL") {
+            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+        } elseif($fc_dostatus == "APR") {
+            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_dostatus','NA')
+            ->orWhere('fc_dostatus','AC')
+            ->orWhere('fc_dostatus','RJ')->get();
+        } else {
+            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dostatus', $fc_dostatus)->get();
+        }
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
     }
 
     public function datatables_do_detail($fc_dono){

@@ -296,7 +296,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/daftar-cprr/datatables',
+                url: '/apps/daftar-cprr/datatables/ALL',
                 type: 'GET'
             },
             columnDefs: [{
@@ -405,7 +405,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/daftar-cprr/datatables',
+                url: '/apps/daftar-cprr/datatables/F',
                 type: 'GET'
             },
             columnDefs: [{
@@ -473,7 +473,7 @@
                 $('td:eq(9)', row).html(`
             <a href="/apps/daftar-cprr/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
-            <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
+            <button class="btn btn-danger btn-sm ml-1" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
             }
         });
@@ -486,7 +486,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/daftar-cprr/datatables',
+                url: '/apps/daftar-cprr/datatables/P',
                 type: 'GET'
             },
             columnDefs: [{
@@ -554,7 +554,7 @@
                 $('td:eq(9)', row).html(`
             <a href="/apps/daftar-cprr/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
-            <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
+            <button class="btn btn-danger btn-sm ml-1" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
             }
         });
@@ -567,7 +567,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/daftar-cprr/datatables',
+                url: '/apps/daftar-cprr/datatables/C',
                 type: 'GET'
             },
             columnDefs: [{
@@ -635,7 +635,7 @@
                 $('td:eq(9)', row).html(`
             <a href="/apps/daftar-cprr/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
-            <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
+            <button class="btn btn-danger btn-sm ml-1" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
          `);
             }
         });

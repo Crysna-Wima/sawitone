@@ -621,7 +621,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: '/apps/master-delivery-order/datatables',
+                url: '/apps/master-delivery-order/datatables/ALL',
                 type: 'GET'
             },
             columnDefs: [{
@@ -718,7 +718,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: '/apps/master-delivery-order/datatables',
+                url: '/apps/master-delivery-order/datatables/D',
                 type: 'GET'
             },
             columnDefs: [{
@@ -801,7 +801,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: '/apps/master-delivery-order/datatables',
+                url: '/apps/master-delivery-order/datatables/R',
                 type: 'GET'
             },
             columnDefs: [{
@@ -885,7 +885,7 @@
                 [3, 'desc']
             ],
             ajax: {
-                url: '/apps/master-delivery-order/datatables',
+                url: '/apps/master-delivery-order/datatables/APR',
                 type: 'GET'
             },
             columnDefs: [{

@@ -333,7 +333,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/master-purchase-order/datatables",
+                url: "/apps/master-purchase-order/datatables/ALL",
                 type: 'GET',
             },
             columnDefs: [{
@@ -426,7 +426,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/master-purchase-order/datatables",
+                url: "/apps/master-purchase-order/datatables/F",
                 type: 'GET',
             },
             columnDefs: [{
@@ -488,7 +488,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm ml-1" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
         });
@@ -502,7 +502,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/master-purchase-order/datatables",
+                url: "/apps/master-purchase-order/datatables/P",
                 type: 'GET',
             },
             columnDefs: [{
@@ -564,7 +564,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm ml-1" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
         });
@@ -578,7 +578,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/master-purchase-order/datatables",
+                url: "/apps/master-purchase-order/datatables/S",
                 type: 'GET',
             },
             columnDefs: [{
@@ -640,7 +640,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm ml-1" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
         });
@@ -654,7 +654,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: "/apps/master-purchase-order/datatables",
+                url: "/apps/master-purchase-order/datatables/C",
                 type: 'GET',
             },
             columnDefs: [{
@@ -716,7 +716,7 @@
                 $('td:eq(10)', row).html(`
                     <a href="/apps/master-purchase-order/detail/${fc_pono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_pono}')"><i class="fa fa-file"></i> PDF</button>
-                    <button class="btn btn-danger btn-sm" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
+                    <button class="btn btn-danger btn-sm ml-1" onclick="closePO('${data.fc_pono}')"><i class="fa fa-times"></i> Close PO</button>
                 `);
             },
         });

@@ -57,14 +57,17 @@ class MasterSalesOrderController extends Controller
             ->make(true);
     }
 
-    public function datatables(){
-        $data = SoMaster::with('domst','customer')
-        ->where('fc_sotype', 'Retail')
-        ->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function datatables($fc_sostatus){
+        if($fc_sostatus == "ALL") {
+            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Retail')->where('fc_branch', auth()->user()->fc_branch)->get();
+        } else {
+            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Retail')->where('fc_branch', auth()->user()->fc_branch)->where('fc_sostatus', $fc_sostatus)->get();
+        }
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
     }
     
     public function pdf(Request $request){
