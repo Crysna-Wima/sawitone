@@ -9,7 +9,11 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
+    }
+
+    .modal {
+        overflow-y: auto;
     }
 </style>
 @endsection
@@ -81,13 +85,13 @@
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group required">
-                                <label>Sales Code</label>
+                                <label>Nama Sales</label>
                                 <select class="form-control select2 required-field" name="fc_salescode" id="fc_salescode"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group required">
-                                <label>Member Code</label>
+                                <label>Nama Customer</label>
                                 <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode"></select>
                             </div>
                         </div>
@@ -298,7 +302,7 @@
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
-        pageLength : 5,
+        pageLength: 5,
         ajax: {
             url: '/data-master/sales-customer/datatables',
             type: 'GET'
@@ -364,64 +368,74 @@
     function edit(url) {
         edit_action_sales_customer(url, 'Edit Data Sales Customer');
         $("#type").val('update');
-        $("#fc_branch").prop("disabled", true);
-        $("#fc_salescode").prop("disabled", true);
-        $("#fc_membercode").prop("disabled", true);
     }
 
-    $('#form_submit_edit_sales_custom').on('submit', function(e){
-       e.preventDefault();
+    $('#form_submit_edit_sales_custom').on('submit', function(e) {
+        e.preventDefault();
 
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
 
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((save) => {
-             if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_submit_edit_sales_custom').attr('action'),
-                   type: $('#form_submit_edit_sales_custom').attr('method'),
-                   data: $('#form_submit_edit_sales_custom').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal_edit").modal('hide');
-                         $("#form_submit_edit_sales_custom")[0].reset();
-                         reset_all_select();
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal_edit").modal('hide');
-                         location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal_edit").modal('hide');
-                         tb.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
-                });
-             }
-       });
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_submit_edit_sales_custom').attr('action'),
+                        type: $('#form_submit_edit_sales_custom').attr('method'),
+                        data: $('#form_submit_edit_sales_custom').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal_edit").modal('hide');
+                                $("#form_submit_edit_sales_custom")[0].reset();
+                                reset_all_select();
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal_edit").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal_edit").modal('hide');
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
-
 </script>
 @endsection

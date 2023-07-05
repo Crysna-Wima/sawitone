@@ -10,14 +10,17 @@ use App\Models\Invstore;
 use App\Models\NotificationMaster;
 use Carbon\Carbon;
 use DB;
+use App\Models\NotificationDetail;
 use Illuminate\Database\Eloquent\Builder;
 use Yajra\DataTables\DataTables;
 
-class DashboardController extends Controller{
-    
-    public function index() {
+class DashboardController extends Controller
+{
+
+    public function index()
+    {
         $userCount = User::all()->count();
-        $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
+        $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
         $poCount = PoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
         $invCount = InvMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
 
@@ -82,4 +85,18 @@ class DashboardController extends Controller{
             ->make();
     }
 
+
+
+    public function view_all_notif()
+    {
+        $data = NotificationMaster::with('notifdtl')
+            ->whereHas('notifdtl', function ($query) {
+                $query->where('fc_userid', auth()->user()->fc_userid);
+                // ->whereNull('fd_watchingdate');
+            })
+            ->orderBy('fd_notifdate', 'DESC')
+            ->get();
+
+        return view('dashboard.view-all-notif', $data);
+    }
 }

@@ -103,7 +103,7 @@ $query->where('fc_status','=','R');
           <div class="card-icon">
             <i class="far fa-bell"></i>
           </div>
-          <h4>{{ $notifCount }}</h4>
+          <h4>{{ $notifCount }} <span class="badge rounded-pill badge-notification bg-danger">Unread</span></h4>
           <div class="card-description">Notifications</div>
         </div>
         <div class="card-body p-0">
@@ -123,7 +123,7 @@ $query->where('fc_status','=','R');
               </div>
             </a>
             @endforeach
-            <a href="/dashboard" class="ticket-item ticket-more">
+            <a href="/view-all-notif" class="ticket-item ticket-more">
               View All <i class="fas fa-chevron-right"></i>
             </a>
           </div>

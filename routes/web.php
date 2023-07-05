@@ -54,7 +54,7 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::view('/dashboard','dashboard.index')->name('dashboard');
     Route::get('/dashboard', 'DashboardController@index');
     Route::get('/dashboard/datatable/{fitur}','DashboardController@datatable');
-
+    Route::get('/view-all-notif','DashboardController@view_all_notif');
     Route::post('/reading-notification-click', 'Apps\NotifikasiController@handleNotificationClick');
 
 
@@ -208,7 +208,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-sales-order')->group(function () {
             Route::get('/','Apps\MasterSalesOrderController@index');
             Route::get('/detail/{fc_sono}','Apps\MasterSalesOrderController@detail');
-            Route::get('/datatables','Apps\MasterSalesOrderController@datatables');
+            Route::get('/datatables/{fc_sostatus}','Apps\MasterSalesOrderController@datatables');
             Route::get('/datatables-so-detail','Apps\MasterSalesOrderController@datatables_so_detail');
             Route::get('/datatables-so-payment','Apps\MasterSalesOrderController@datatables_so_payment');
             Route::put('/close','Apps\MasterSalesOrderController@close_so');
@@ -220,14 +220,14 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('daftar-cprr')->group(function () {
             Route::get('/','Apps\DaftarCprrController@index');
-            Route::get('/datatables','Apps\DaftarCprrController@datatables');
+            Route::get('/datatables/{fc_sostatus}','Apps\DaftarCprrController@datatables');
             Route::get('/detail/{fc_sono}','Apps\DaftarCprrController@detail');
             Route::put('/cancel_so','Apps\DaftarCprrController@cancel_so');
         });
 
         Route::prefix('daftar-memo-internal')->group(function () {
             Route::get('/','Apps\DaftarMemoInternalController@index');
-            Route::get('/datatables','Apps\DaftarMemoInternalController@datatables');
+            Route::get('/datatables/{fc_sostatus}','Apps\DaftarMemoInternalController@datatables');
             Route::get('/detail/{fc_sono}','Apps\DaftarMemoInternalController@detail');
             Route::put('/cancel_so','Apps\DaftarMemoInternalController@cancel_so');
         });
@@ -284,7 +284,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('master-delivery-order')->group(function () {
             Route::get('/','Apps\MasterDeliveryOrderController@index');
             Route::get('/detail/{fc_dono}','Apps\MasterDeliveryOrderController@detail');
-            Route::get('/datatables','Apps\MasterDeliveryOrderController@datatables');
+            Route::get('/datatables/{fc_dostatus}','Apps\MasterDeliveryOrderController@datatables');
             Route::get('/datatables/detail','Apps\MasterDeliveryOrderController@datatables_detail');
             Route::get('/datatables-do-detail/{fc_dono}','Apps\MasterDeliveryOrderController@datatables_do_detail');
             Route::get('/datatables-do-invstore/{fc_stockcode}/{fc_warehousecode}','Apps\MasterDeliveryOrderController@datatables_invstore');
@@ -352,7 +352,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-purchase-order')->group(function(){
             Route::get('/','Apps\MasterPurchaseOrderController@index');
-            Route::get('/datatables','Apps\MasterPurchaseOrderController@datatables');
+            Route::get('/datatables/{fc_postatus}','Apps\MasterPurchaseOrderController@datatables');
             Route::get('/datatables/good_reception/{fc_suppliercode}','Apps\MasterPurchaseOrderController@datatables_good_reception');
             Route::get('/datatables/po_detail','Apps\MasterPurchaseOrderController@datatables_po_detail');
             Route::get('/datatables/ro','Apps\MasterPurchaseOrderController@datatables_receiving_order');
