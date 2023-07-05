@@ -172,6 +172,7 @@ $query->where('fc_status','=','R');
                   <th scope="col" class="text-center">Satuan</th>
                   <th scope="col" class="text-center">Expired Date</th>
                   <th scope="col" class="text-center">Batch</th>
+                  <th scope="col" class="text-center">Qty Reorder</th>
                   <th scope="col" class="text-center">Qty</th>
                 </tr>
               </thead>
@@ -210,6 +211,7 @@ $query->where('fc_status','=','R');
                   <th scope="col" class="text-center">Satuan</th>
                   <th scope="col" class="text-center">Expired Date</th>
                   <th scope="col" class="text-center">Batch</th>
+                  <th scope="col" class="text-center">Qty Max On Hand</th>
                   <th scope="col" class="text-center">Qty</th>
                 </tr>
               </thead>
@@ -475,6 +477,9 @@ $query->where('fc_status','=','R');
                     data: 'fc_batch'
                 },
                 {
+                    data: 'fn_reorderlevel'
+                },
+                {
                     data: 'fn_quantity'
                 },
             ],
@@ -525,6 +530,9 @@ $query->where('fc_status','=','R');
                 },
                 {
                     data: 'fc_batch'
+                },
+                {
+                    data: 'fn_maxonhand'
                 },
                 {
                     data: 'fn_quantity'
