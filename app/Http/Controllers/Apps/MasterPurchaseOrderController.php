@@ -61,18 +61,20 @@ class MasterPurchaseOrderController extends Controller
     }
 
 
-    public function datatables_po_detail(){
-
+    public function datatables_po_detail($fc_pono)
+    {
+        $decode_fc_pono = base64_decode($fc_pono);
+        // dd($decode_fc_pono);
         //  jika session fc_sono_global tidak sama dengan null
         if (session('fc_pono_global') != null) {
             $fc_pono = session('fc_pono_global');
-        } else {
-            $pomst = PoMaster::where('fc_userid', auth()->user()->fc_userid)->first();
-            $fc_pono_pomst = $pomst->fc_pono;
-            $fc_pono = $fc_pono_pomst;
+            $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
         }
 
-        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
