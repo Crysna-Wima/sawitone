@@ -89,31 +89,22 @@ class MasterBrandController extends Controller
                     ];
                 }
             }
-        }
-
-        // cek apakah request value sama dengan nilai yang ada di db
-        $cek_data = Brand::where([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_brand' => $request->fc_brand,
-            'fc_group' => $request->fc_group,
-            'fc_subgroup' => $request->fc_subgroup,
-        ])->whereNull('deleted_at')->withTrashed()->count();
-
-        if($cek_data > 0){
-            return [
-                'status' => 300,
-                'message' => 'Oops! Terjadi kesalahan saat mengupdate data'
-            ];
-        }else{
-            Brand::updateOrCreate([
+        } else{
+            $updateBrand = Brand::updateOrCreate([
                 'id' => $request->id,
             ], $request->all());
-    
-            return [
-                'status' => 200, // SUCCESS
-                'message' => 'Data berhasil disimpan'
-            ];
+            
+            if($updateBrand){
+                return [
+                    'status' => 200, // SUCCESS
+                    'message' => 'Data berhasil diupdate'
+                ];
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Terjadi kesalahan saat mengupdate data'
+                ];
+            }
         }
 
 
