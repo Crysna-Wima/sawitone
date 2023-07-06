@@ -316,7 +316,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/master-purchase-order/datatables/po_detail",
+            url: "/apps/master-purchase-order/datatables/po_detail/" + encode_fc_pono,
             type: 'GET',
         },
         columnDefs: [{
