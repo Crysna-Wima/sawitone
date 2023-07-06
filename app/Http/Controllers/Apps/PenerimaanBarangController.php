@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use App\Models\GoodReception;
 use App\Models\Supplier;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -38,12 +39,14 @@ class PenerimaanBarangController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // formatting tanggal untuk store DB
+        $arrivalDate = Carbon::createFromFormat('m/d/Y', $request->fd_arrivaldate)->format('Y-m-d H:i:s');
 
         $insert_good_reception = GoodReception::create([
             'fc_branch' => auth()->user()->fc_branch,
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_grno' => auth()->user()->fc_userid,
-            'fd_arrivaldate' => $request->fd_arrivaldate,
+            'fd_arrivaldate' => $arrivalDate,
             'fc_recipient' => $request->fc_recipient,
             'fc_suppliercode' => $request->fc_suppliercode,
             'fn_qtyitem' => $request->fn_qtyitem,
@@ -62,6 +65,6 @@ class PenerimaanBarangController extends Controller
                 'message' => 'Data gagal disimpan',
             ];
         }
-        // dd($request);
+        // dd($arrivalDate);
     }
 }
