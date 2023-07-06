@@ -80,7 +80,7 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center">Tgl</th>
                                                 <th scope="col" class="text-center">Expired</th>
-                                                <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -101,7 +101,7 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center">Tgl</th>
                                                 <th scope="col" class="text-center">Expired</th>
-                                                <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -122,7 +122,7 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center">Tgl</th>
                                                 <th scope="col" class="text-center">Expired</th>
-                                                <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -143,7 +143,7 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center">Tgl</th>
                                                 <th scope="col" class="text-center">Expired</th>
-                                                <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -164,7 +164,7 @@
                                                 <th scope="col" class="text-center">No. PO</th>
                                                 <th scope="col" class="text-center">Tgl</th>
                                                 <th scope="col" class="text-center">Expired</th>
-                                                <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Legal Status</th>
                                                 <th scope="col" class="text-center text-nowrap">Nama Supplier</th>
                                                 <th scope="col" class="text-center">Item</th>
@@ -360,7 +360,7 @@
                     render: formatTimestamp
                 },
                 {
-                    data: 'fc_potype'
+                    data: 'fc_userid'
                 },
                 {
                     data: 'supplier.fc_supplierlegalstatus'
@@ -453,7 +453,7 @@
                     render: formatTimestamp
                 },
                 {
-                    data: 'fc_potype'
+                    data: 'fc_userid'
                 },
                 {
                     data: 'supplier.fc_supplierlegalstatus'
@@ -529,7 +529,7 @@
                     render: formatTimestamp
                 },
                 {
-                    data: 'fc_potype'
+                    data: 'fc_userid'
                 },
                 {
                     data: 'supplier.fc_supplierlegalstatus'
@@ -605,7 +605,7 @@
                     render: formatTimestamp
                 },
                 {
-                    data: 'fc_potype'
+                    data: 'fc_userid'
                 },
                 {
                     data: 'supplier.fc_supplierlegalstatus'
@@ -681,7 +681,7 @@
                     render: formatTimestamp
                 },
                 {
-                    data: 'fc_potype'
+                    data: 'fc_userid'
                 },
                 {
                     data: 'supplier.fc_supplierlegalstatus'
