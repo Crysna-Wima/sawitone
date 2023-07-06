@@ -35,17 +35,22 @@ $query->where('fc_status','=','R');
     <ul class="navbar-nav mr-3">
       <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
     </ul>
+    <!-- <div class="search-element">
+      <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;">
+      <button class="btn" type="submit" fdprocessedid="61zokb"><i class="fas fa-search"></i></button>
+      <div class="search-backdrop"></div>
+    </div> -->
   </form>
   <ul class="navbar-nav navbar-right">
 
     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="notif nav-link notification-toggle nav-link-lg" aria-expanded="false">
-      @if($notifCount != 0)
-      <i class="far fa-bell" style="font-size: 20px;"></i>
+        @if($notifCount != 0)
+        <i class="far fa-bell" style="font-size: 20px;"></i>
         @if($notifCount >= 99)
         <span class="badge-notification bg-danger">99+</span></a>
-        @else
-        <span class="icon-badge bg-danger">{{ $notifCount }}</span></a>
-        @endif
+      @else
+      <span class="icon-badge bg-danger">{{ $notifCount }}</span></a>
+      @endif
       @else
       <i class="far fa-bell" style="font-size: 20px;"></i></a>
       @endif
@@ -132,6 +137,17 @@ $query->where('fc_status','=','R');
     .dropdown-list .dropdown-header {
       font-weight: bold;
     }
+
+    /* .navbar .form-inline .form-control {
+      border-radius: 30px 0 0 30px;
+    }
+
+    .navbar .form-inline .btn {
+      border-radius: 0 30px 30px 0;
+      background-color: #fff;
+      padding: 9px 15px 9px 15px;
+      border-color: transparent;
+    } */
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -60,7 +60,8 @@ class MasterBrandController extends Controller
                 'fc_brand' => $request->fc_brand,
                 'fc_group' => $request->fc_group,
                 'fc_subgroup' => $request->fc_subgroup,
-            ])->whereNull('deleted_at')->withTrashed()->count();
+                'deleted_at' => null,
+            ])->withTrashed()->count();
 
             if($cek_data > 0){
                 return [

@@ -47,7 +47,7 @@ class MasterCprrController extends Controller
     public function store_update(request $request)
     {
         $validator = Validator::make($request->all(), [
-            'fc_cprrcode' => 'required|unique:t_cprr',
+            'fc_cprrcode' => 'required',
             'fc_cprrname' => 'required',
         ]);
 
@@ -63,6 +63,7 @@ class MasterCprrController extends Controller
             $cek_data = Cospertes::where([
                 'fc_cprrcode' => $request->fc_cprrcode,
                 'fc_cprrname' => $request->fc_cprrname,
+                'deleted_at' => null,
             ])->withTrashed()->count();
 
             if ($cek_data > 0) {
