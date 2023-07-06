@@ -177,7 +177,7 @@
                     <h4>BPB</h4>
                     <div class="card-header-action">
                         <!-- <a href="/apps/receiving-order/create/{{ base64_encode($data->fc_pono) }}"></a> -->
-                        <button type="button" onclick="pilih_gudang()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan BPB</button>
+                        <button type="button" onclick="pilih_gudang('{{ base64_encode($data->fc_pono) }}')" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan BPB</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -284,12 +284,12 @@
 
 @section('js')
 <script>
-    function pilih_gudang() {
+    function pilih_gudang(fc_pono) {
         $('#modal_gudang').modal('show');
-        table_gudang();
+        table_gudang(fc_pono);
     }
     
-    function table_gudang() {
+    function table_gudang(fc_pono) {
         var tb = $('#table_gudang').DataTable({
             // apabila data kosong
             processing: true,
@@ -325,8 +325,9 @@
                 },
             ],
             rowCallback: function(row, data) {
+                let encode_fc_warehousecode = window.btoa(data.fc_warehousecode)
                 $('td:eq(5)', row).html(`
-                <button class="btn btn-warning btn-sm mr-1" onclick="insert_ro('${data.fc_warehousecode}')"><i class="fa fa-check"></i> Pilih</button>
+                <a class="btn btn-warning btn-sm mr-1" href="/apps/receiving-order/create/${fc_pono}/${encode_fc_warehousecode}"><i class="fa fa-check"></i> Pilih</button>
             `);
             }
         });

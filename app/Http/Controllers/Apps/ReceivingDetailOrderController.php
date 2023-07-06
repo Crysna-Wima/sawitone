@@ -19,9 +19,10 @@ class ReceivingDetailOrderController extends Controller
     //     return view('apps.receiving-order.create-index');
     // }
 
-    public function create($fc_pono)
+    public function create($fc_pono, $fc_warehousecode)
     {
         $decode_fc_pono = base64_decode($fc_pono);
+        $decode_fc_warehousecode = base64_decode($fc_warehousecode);
         // $data = PoMaster::with('supplier')->where('fc_pono', auth()->user()->fc_userid)->first();
         $temp_ro_master = TempRoMaster::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_ro_detail = TempRoDetail::where('fc_rono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -31,6 +32,7 @@ class ReceivingDetailOrderController extends Controller
         $data['data'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_master'] = $temp_ro_master;
         $data['goods_reception'] = GoodReception::where('fc_grno',session('fc_grno_global'))->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['fc_warehousecode'] = $decode_fc_warehousecode;
 
         if (!empty($temp_ro_master)) {
             return view('apps.receiving-order.create-detail', $data);
@@ -49,7 +51,8 @@ class ReceivingDetailOrderController extends Controller
                 'fc_userid' => 'required',
                 'fc_sjno' => 'required',
                 'fc_receiver' => 'required',
-                'fd_roarivaldate' => 'required'
+                'fd_roarivaldate' => 'required',
+                'fc_warehousecode' => 'required',
             ],
             [
                 'fc_userid.required' => 'User ID tidak boleh kosong',
@@ -77,6 +80,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_rono' => auth()->user()->fc_userid,
                 'fc_pono' => $request->fc_pono,
                 'fc_sjno' => $request->fc_sjno,
+                'fc_warehousecode' => $request->fc_warehousecode,
                 'fc_receiver' => $request->fc_receiver,
                 'fd_roarivaldate' => $request->fd_roarivaldate,
                 'fc_userid' => $request->fc_userid,
@@ -89,6 +93,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_rono' => auth()->user()->fc_userid,
                 'fc_pono' => $request->fc_pono,
                 'fc_sjno' => $request->fc_sjno,
+                'fc_warehousecode' => $request->fc_warehousecode,
                 'fc_grno' => session('fc_grno_global'),
                 'fc_receiver' => $request->fc_receiver,
                 'fd_roarivaldate' => $request->fd_roarivaldate,
@@ -100,7 +105,7 @@ class ReceivingDetailOrderController extends Controller
         if ($insert_tempromst) {
             return [
                 'status' => 201,
-                'link' => '/apps/receiving-order/create/' . base64_encode($request->fc_pono),
+                'link' => '/apps/receiving-order/create/' . base64_encode($request->fc_pono) . '/' . base64_encode($request->fc_warehousecode),
                 'message' => 'Data berhasil disimpan'
             ];
         } else {
@@ -109,6 +114,7 @@ class ReceivingDetailOrderController extends Controller
                 'message' => 'Data gagal disimpan'
             ];
         }
+        // dd($request);
     }
 
     public function detail_item($fc_stockcode, $fc_pono)

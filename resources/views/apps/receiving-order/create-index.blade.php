@@ -63,6 +63,7 @@
                                         <label>No. PO : {{ $data->fc_pono }}
                                         </label>
                                         <input type="text" name="fc_pono" value="{{ $data->fc_pono }}" hidden>
+                                        <input type="text" name="fc_warehousecode" value="{{ $fc_warehousecode }}" hidden>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6" style="white-space: nowrap;">

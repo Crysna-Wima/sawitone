@@ -378,7 +378,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::prefix('create')->group(function () {
                 // Route::get('/','Apps\ReceivingDetailOrderController@index');
-                Route::get('/{fc_pono}','Apps\ReceivingDetailOrderController@create');
+                Route::get('/{fc_pono}/{fc_warehousecode}','Apps\ReceivingDetailOrderController@create');
                 Route::post('/store-update','Apps\ReceivingDetailOrderController@store');
                 Route::get('/detail-item/{fc_stockcode}/{fc_pono}','Apps\ReceivingDetailOrderController@detail_item');
                 Route::get('/datatables/temprodetail/{fc_pono}','Apps\ReceivingDetailOrderController@datatables_temp_ro_detail');
