@@ -35,11 +35,35 @@ $query->where('fc_status','=','R');
     <ul class="navbar-nav mr-3">
       <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
     </ul>
-    <!-- <div class="search-element">
-      <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;">
-      <button class="btn" type="submit" fdprocessedid="61zokb"><i class="fas fa-search"></i></button>
-      <div class="search-backdrop"></div>
+    <!-- <div class="searchBox">
+      <input class="searchInput" type="text" placeholder="Search">
+      <a href="#">
+        <button class="searchButton" type="submit" fdprocessedid="61zokb"><i class="fas fa-search" style="font-size: 16px;"></i></button>
+      </a>
     </div> -->
+  </form>
+  <form class="form-inline ml-auto">
+    <ul class="navbar-nav">
+      <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
+    </ul>
+    <div class="search-element">
+      <input class="form-control" type="search" placeholder="Cari" aria-label="Cari" data-width="250" style="width: 250px;">
+      <button class="btn" type="submit"><i class="fas fa-search" style="color: #0A9447"></i></button>
+      <div class="search-backdrop"></div>
+      <div class="search-result">
+        <div class="search-header">
+          Riwayat Pencarian
+        </div>
+        <div class="search-item">
+          <a href="#">Persediaan Barang</a>
+          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+        </div>
+        <div class="search-item">
+          <a href="#">Purchase Order</a>
+          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
+    </div>
   </form>
   <ul class="navbar-nav navbar-right">
 
@@ -138,7 +162,7 @@ $query->where('fc_status','=','R');
       font-weight: bold;
     }
 
-    /* .navbar .form-inline .form-control {
+    .navbar .form-inline .form-control {
       border-radius: 30px 0 0 30px;
     }
 
@@ -147,6 +171,64 @@ $query->where('fc_status','=','R');
       background-color: #fff;
       padding: 9px 15px 9px 15px;
       border-color: transparent;
+    }
+
+    /* .searchBox {
+      background: white;
+      height: 40px;
+      border-radius: 40px;
+      padding: 10px;
+    }
+
+    .searchBox:hover>.searchInput {
+      width: 240px;
+      padding: 0 6px;
+    }
+
+    .searchBox:hover>.searchButton {
+      background: white;
+      color: #0A9447;
+    }
+
+    .searchButton {
+      color: #0A9447;
+      float: right;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.4s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .searchInput {
+      border: none;
+      background: none;
+      outline: none;
+      float: left;
+      padding: 0;
+      color: black;
+      font-size: 16px;
+      transition: 0.4s;
+      width: 0px;
+    }
+
+    @media screen and (max-width: 620px) {
+      .searchBox:hover>.searchInput {
+        width: 150px;
+        padding: 0 6px;
+      }
+    }
+
+    @media screen and (max-width: 396px) {
+      .searchBox:hover>.searchInput {
+        width: 100px;
+        padding: 0 10px;
+      }
     } */
   </style>
   <script>
