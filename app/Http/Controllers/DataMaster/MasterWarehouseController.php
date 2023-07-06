@@ -51,7 +51,7 @@ class MasterWarehouseController extends Controller
         }
 
         $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
-        if(empty($request->type)){
+        if(empty($request->type) && $request->fc_warehousepos == "EXTERNAL"){
             $cek_data = Warehouse::where([
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
