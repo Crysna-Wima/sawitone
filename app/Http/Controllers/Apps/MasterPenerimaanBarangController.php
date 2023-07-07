@@ -67,7 +67,7 @@ class MasterPenerimaanBarangController extends Controller
                 'fc_grno' => $decode_fc_grno,
                 'count' => $count_decode
             ]
-            , $data)->setPaper('a4', 'portrait');
+            , $data)->setPaper(array(0,0,302.3622047244094, 1000),'portrait');
         
     
         return $pdf->stream();
