@@ -1,31 +1,31 @@
 @php
-use App\Helpers\App;
-use Carbon\Carbon;
+    use App\Helpers\App;
+    use Carbon\Carbon;
 
-$notifList = \App\Models\NotificationMaster::with('notifdtl')
-->whereHas('notifdtl', function ($query) {
-$query->where('fc_userid', auth()->user()->fc_userid);
-//->whereNull('fd_watchingdate');
-})
-->orderBy('fd_notifdate', 'DESC')
-->limit(5)
-->get();
+    $notifList = \App\Models\NotificationMaster::with('notifdtl')
+    ->whereHas('notifdtl', function ($query) {
+    $query->where('fc_userid', auth()->user()->fc_userid);
+    //->whereNull('fd_watchingdate');
+    })
+    ->orderBy('fd_notifdate', 'DESC')
+    ->limit(5)
+    ->get();
 
-$notifHeader = \App\Models\NotificationMaster::with('notifdtl')
-->whereHas('notifdtl', function ($query) {
-$query->where('fc_userid', auth()->user()->fc_userid);
-//->whereNull('fd_watchingdate');
-})
-->orderBy('fd_notifdate', 'DESC')
-->limit(5)
-->count();
+    $notifHeader = \App\Models\NotificationMaster::with('notifdtl')
+    ->whereHas('notifdtl', function ($query) {
+    $query->where('fc_userid', auth()->user()->fc_userid);
+    //->whereNull('fd_watchingdate');
+    })
+    ->orderBy('fd_notifdate', 'DESC')
+    ->limit(5)
+    ->count();
 
-$notifCount = \App\Models\NotificationDetail::whereHas('notifmst', function($query){
-$query->where('fc_status','=','R');
-})
-->where('fc_userid', auth()->user()->fc_userid)
-->whereNull('fd_watchingdate')
-->count();
+    $notifCount = \App\Models\NotificationDetail::whereHas('notifmst', function($query){
+    $query->where('fc_status','=','R');
+    })
+    ->where('fc_userid', auth()->user()->fc_userid)
+    ->whereNull('fd_watchingdate')
+    ->count();
 
 @endphp
 
@@ -55,12 +55,7 @@ $query->where('fc_status','=','R');
           Riwayat Pencarian
         </div>
         <div class="search-item">
-          <a href="#">Persediaan Barang</a>
-          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
-        </div>
-        <div class="search-item">
-          <a href="#">Purchase Order</a>
-          <a href="#" class="search-close"><i class="fas fa-times"></i></a>
+          
         </div>
       </div>
     </div>
@@ -231,44 +226,81 @@ $query->where('fc_status','=','R');
       }
     } */
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var itemReadNotifications = document.querySelectorAll('.item-read-notification');
-      itemReadNotifications.forEach(function(item) {
-        item.addEventListener('click', function(event) {
-          event.preventDefault();
 
-          var notificationCode = this.getAttribute('data-notificationcode');
-          var url = this.getAttribute('href');
+    $(document).ready(function() {
+      $('.item-read-notification').on('click', function(event) {
+        event.preventDefault();
 
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/reading-notification-click', true);
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              var response = JSON.parse(xhr.responseText);
-              if (response.status === 200) {
-                window.location.href = response.link;
-              } else {
-                swal(response.message, {
-                  icon: 'error'
-                });
-              }
+        var notificationCode = $(this).data('notificationcode');
+        var url = $(this).attr('href');
+
+        $.ajax({
+          url: '/reading-notification-click',
+          method: 'POST',
+          data: {
+            fc_notificationcode: notificationCode,
+            fv_url: url
+          },
+          dataType: 'json',
+          success: function(response) {
+            if (response.status === 200) {
+              window.location.href = response.link;
             } else {
-              swal('Terjadi kesalahan saat mengirim data', {
+              swal(response.message, {
                 icon: 'error'
               });
             }
-          };
-          xhr.onerror = function() {
+          },
+          error: function() {
             swal('Terjadi kesalahan saat mengirim data', {
               icon: 'error'
             });
-          };
-          xhr.send('fc_notificationcode=' + encodeURIComponent(notificationCode) + '&fv_url=' + encodeURIComponent(url));
+          }
         });
       });
+});
+
+  $(document).ready(function() {
+    $('.search-element input').on('input', function() {
+      var query = $(this).val();
+
+      $.ajax({
+        url: "{{ route('search-menu') }}",
+        method: 'GET',
+        data: { query: query },
+        success: function(response) {
+          var results = response.data; // response berupa array untuk key data
+
+          var searchResults = $('.search-result');
+          searchResults.empty();
+          console.log(results.length);
+          if (results.length > 0) {
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i];
+              var searchItem = $('<div class="search-item"></div>');
+              var link = $('<a href="' + result.url + '">' + result.name + '</a>');
+              var closeButton = $('<a href="#" class="search-close"><i class="fas fa-times"></i></a>');
+
+              searchItem.append(link, closeButton);
+              searchResults.append(searchItem);
+            }
+          } else {
+            var noResultsItem = $('<div class="search-item">Tidak ada hasil pencarian.</div>');
+           searchResults.append(noResultsItem);
+          }
+        },
+        error: function() {
+          console.log('Terjadi Kesalahan.');
+        }
+      });
     });
+  });
+
+
+
+
   </script>
 </nav>
 <div class="main-sidebar">

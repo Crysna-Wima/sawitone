@@ -11,7 +11,9 @@ use App\Models\NotificationMaster;
 use Carbon\Carbon;
 use DB;
 use App\Models\NotificationDetail;
+use Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class DashboardController extends Controller
@@ -87,8 +89,24 @@ class DashboardController extends Controller
 
 
 
-    public function view_all_notif()
-    {
+    public function view_all_notif(){
         return view('dashboard.view-all-notif');
+    }
+
+    public function search_menu(Request $request){
+        // ambil user dan permissionnya dengan spatie
+        $user = Auth::user();
+        $permissions = $user->getAllPermissionsField();
+        
+        $filteredPermissions = $permissions->filter(function ($permission) use ($request) {
+            return strpos($permission->name, $request->query('query')) !== false;
+        });
+        
+        $filteredPermissions = $filteredPermissions->toArray();
+    
+        return [
+            'status' => 200,
+            'data' => array_values($filteredPermissions)
+        ];
     }
 }

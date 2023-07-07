@@ -56,9 +56,9 @@ Route::group(['middleware' => ['cek_login']], function () {
     Route::get('/dashboard/datatable/{fitur}','DashboardController@datatable');
     Route::get('/view-all-notif','DashboardController@view_all_notif');
     Route::post('/reading-notification-click', 'Apps\NotifikasiController@handleNotificationClick');
+    Route::get('/fitur/search-menu', 'DashboardController@search_menu')->name('search-menu');
 
-
-    //CHANGE PASSWORD
+    //CHANGE PASSWORDs
     Route::prefix('change-password')->group(function () {
         Route::get('/', 'LoginController@change_password');
         Route::post('/action-change-password','LoginController@action_change_password');

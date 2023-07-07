@@ -69,7 +69,6 @@ class MasterUserController extends Controller
 
         $id = $request->id;
 
-        // TODO: You can delete this in your local. This is for heroku publish.
         // This is only for Super Admin role,
         // so that no-one could delete or disable it by somehow.
         if ($id === 7) {
