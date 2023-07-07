@@ -54,7 +54,7 @@ class DashboardController extends Controller
        
         return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount', 'expiredDateCount','moqCount','maqCount'));
         // dd($expiredDateCount);
-        // dd($notifList);
+        // dd($moqCount);
     }
 
     public function datatable($tipe){
