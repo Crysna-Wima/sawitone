@@ -309,30 +309,30 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/action', 'Apps\ReceivedOrderController@action_confirm');
         });
 
-        Route::prefix('master-invoice')->group(function(){
-            Route::get('/','Apps\MasterInvoiceController@index');
-            Route::get('/datatables/incoming','Apps\MasterInvoiceController@datatables_incoming');
-            Route::get('/datatables/outgoing','Apps\MasterInvoiceController@datatables_outgoing');
-            Route::get('/datatables/add-invoice','Apps\MasterInvoiceController@add_invoice');
-            Route::delete('/delete/{fc_invno}', 'Apps\MasterInvoiceDetailController@delete_inv');
-            Route::get('/inv_do/{fc_dono}', 'Apps\MasterInvoiceController@inv_do');
-            Route::get('/inv_ro/{fc_rono}', 'Apps\MasterInvoiceController@inv_ro');
-            Route::get('/get-update/incoming', 'Apps\MasterInvoiceController@get_update_incoming');
-            Route::get('/get-update/outgoing', 'Apps\MasterInvoiceController@get_update_outgoing');
-            Route::post('/update-invoice-incoming', 'Apps\MasterInvoiceController@update_invoice_incoming');
-            Route::post('/update-invoice-outgoing', 'Apps\MasterInvoiceController@update_invoice_outgoing');
-            Route::get('/detail_ro/{fc_rono}','Apps\MasterInvoiceController@detail_ro');
-            Route::get('/detail_do/{fc_dono}','Apps\MasterInvoiceController@detail_do');
+        // Route::prefix('master-invoice')->group(function(){
+        //     Route::get('/','Apps\MasterInvoiceController@index');
+        //     Route::get('/datatables/incoming','Apps\MasterInvoiceController@datatables_incoming');
+        //     Route::get('/datatables/outgoing','Apps\MasterInvoiceController@datatables_outgoing');
+        //     Route::get('/datatables/add-invoice','Apps\MasterInvoiceController@add_invoice');
+        //     Route::delete('/delete/{fc_invno}', 'Apps\MasterInvoiceDetailController@delete_inv');
+        //     Route::get('/inv_do/{fc_dono}', 'Apps\MasterInvoiceController@inv_do');
+        //     Route::get('/inv_ro/{fc_rono}', 'Apps\MasterInvoiceController@inv_ro');
+        //     Route::get('/get-update/incoming', 'Apps\MasterInvoiceController@get_update_incoming');
+        //     Route::get('/get-update/outgoing', 'Apps\MasterInvoiceController@get_update_outgoing');
+        //     Route::post('/update-invoice-incoming', 'Apps\MasterInvoiceController@update_invoice_incoming');
+        //     Route::post('/update-invoice-outgoing', 'Apps\MasterInvoiceController@update_invoice_outgoing');
+        //     Route::get('/detail_ro/{fc_rono}','Apps\MasterInvoiceController@detail_ro');
+        //     Route::get('/detail_do/{fc_dono}','Apps\MasterInvoiceController@detail_do');
 
-            Route::prefix('create')->group(function () {
-                Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');
-                Route::get('/datatables/ro-detail/{fc_rono}','Apps\MasterInvoiceDetailController@datatables_ro');
-                Route::post('/incoming-insert','Apps\MasterInvoiceDetailController@incoming_insert');
-                Route::put('/edit/incoming-edit-ro-detail','Apps\MasterInvoiceDetailController@incoming_edit_ro');
-                Route::put('/deliver-update', 'Apps\MasterInvoiceDetailController@delivery_update');
-                Route::put('/submit-invoice','Apps\MasterInvoiceDetailController@submit_invoice');
-            });
-        });
+        //     Route::prefix('create')->group(function () {
+        //         Route::get('/{fc_rono}','Apps\MasterInvoiceDetailController@create');
+        //         Route::get('/datatables/ro-detail/{fc_rono}','Apps\MasterInvoiceDetailController@datatables_ro');
+        //         Route::post('/incoming-insert','Apps\MasterInvoiceDetailController@incoming_insert');
+        //         Route::put('/edit/incoming-edit-ro-detail','Apps\MasterInvoiceDetailController@incoming_edit_ro');
+        //         Route::put('/deliver-update', 'Apps\MasterInvoiceDetailController@delivery_update');
+        //         Route::put('/submit-invoice','Apps\MasterInvoiceDetailController@submit_invoice');
+        //     });
+        // });
 
         Route::prefix('purchase-order')->group(function () {
             Route::get('/','Apps\PurchaseOrderController@index')->name('po_index');
@@ -473,6 +473,22 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/','Apps\ScanQrController@index');
             Route::get('/detail-barang/{fc_barcode}','Apps\ScanQrController@detail_barang');
             Route::post('/scan-barang','Apps\ScanQrController@scan_barang');
+        });
+
+        Route::prefix('invoice-penjualan')->group(function(){
+            Route::get('/','Apps\InvoicePenjualanController@index');
+        });
+
+        Route::prefix('invoice-pembelian')->group(function(){
+            Route::get('/','Apps\InvoicePembelianController@index');
+        });
+
+        Route::prefix('invoice-cprr')->group(function(){
+            Route::get('/','Apps\InvoiceCprrController@index');
+        });
+
+        Route::prefix('daftar-invoice')->group(function(){
+            Route::get('/','Apps\DaftarInvoiceController@index');
         });
     });
 });
