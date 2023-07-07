@@ -44,7 +44,7 @@
                             <h4>Minimum Available Quantity</h4>
                         </div>
                         <div class="card-body">
-                            {{-- {{ $moqCount }} --}}
+                            {{ $moqCount}}
                         </div>
                         <span class="fas fa-arrow-right"></span>
                     </div>
@@ -60,7 +60,7 @@
                             <h4>Maximum Available Quantity</h4>
                         </div>
                         <div class="card-body">
-                            {{-- {{ $maqCount }} --}}
+                            {{ $maqCount }}
                         </div>
                         <span class="fas fa-arrow-right"></span>
                     </div>
@@ -76,7 +76,7 @@
                             <h4>Expired Stock</h4>
                         </div>
                         <div class="card-body">
-                            {{-- {{ $expiredDateCount }} --}}
+                            {{ $expiredDateCount }}
                         </div>
                         <span class="fas fa-arrow-right"></span>
                     </div>
