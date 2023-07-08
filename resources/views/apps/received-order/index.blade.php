@@ -58,7 +58,7 @@
             [3, 'desc']
         ],
         ajax: {
-            url: '/apps/master-delivery-order/datatables',
+            url: '/apps/master-delivery-order/datatables/ALL',
             type: 'GET'
         },
         columnDefs: [{

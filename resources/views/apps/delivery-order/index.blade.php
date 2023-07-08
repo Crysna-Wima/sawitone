@@ -49,7 +49,7 @@
         serverSide: true,
         order: [[2, 'desc']],
         ajax: {
-            url: '/apps/delivery-order/datatables',
+            url: '/apps/delivery-order/datatables/',
             type: 'GET'
         },
         columnDefs: [{
