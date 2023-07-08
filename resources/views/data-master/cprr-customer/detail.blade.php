@@ -24,7 +24,7 @@
                 <div class="card-header">
                     <h4>Detail Pemeriksaan CPRR</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Stock</button>
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Data CPRR</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -224,7 +224,7 @@
                 defaultContent: '-',
             },
             {
-                data: 'cospertes.fc_cprrname'
+                data: 'cospertes.fc_cprrname',
             },
             {
                 data: 'fm_price',

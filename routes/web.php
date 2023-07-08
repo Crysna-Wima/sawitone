@@ -136,10 +136,10 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-brand')->group(function () {
             Route::get('/','DataMaster\MasterBrandController@index');
-            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_brand}/{fc_group}/{fc_subgroup}','DataMaster\MasterBrandController@detail');
+            Route::get('/detail/{id}','DataMaster\MasterBrandController@detail');
             Route::get('/datatables','DataMaster\MasterBrandController@datatables');
             Route::post('/store-update','DataMaster\MasterBrandController@store_update');
-            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_brand}/{fc_group}/{fc_subgroup}','DataMaster\MasterBrandController@delete');
+            Route::delete('/delete/{id}','DataMaster\MasterBrandController@delete');
         });
 
         Route::prefix('master-stock')->group(function () {
