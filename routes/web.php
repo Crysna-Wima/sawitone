@@ -185,12 +185,15 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('cprr-customer')->group(function () {
             Route::get('/','DataMaster\CprrCustomerController@index');
-            Route::get('/get/{fc_cprrcode}','DataMaster\CprrCustomerController@get');
-            Route::get('/detail/{fc_divisioncode}/{fc_branch}/{cprrcode}/{membercode}','DataMaster\CprrCustomerController@detail');
+            Route::get('/getall','DataMaster\CprrCustomerController@getAll');
             Route::get('/datatables','DataMaster\CprrCustomerController@datatables');
+            Route::get('/get/{fc_cprrcode}','DataMaster\CprrCustomerController@get');
+            Route::get('/detail/{fc_membercode}','DataMaster\CprrCustomerController@detailView');
+            Route::get('/{id}','DataMaster\CprrCustomerController@detail');
+            Route::get('/datatables/{fc_membercode}','DataMaster\CprrCustomerController@datatables_detail');
             Route::post('/store-update','DataMaster\CprrCustomerController@store_update');
-            Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{cprrcode}/{membercode}','DataMaster\CprrCustomerController@delete');
-        });
+            Route::delete('/delete/{id}','DataMaster\CprrCustomerController@delete');
+        }); 
 
         Route::prefix('stock-supplier')->group(function () {
             Route::get('/','DataMaster\StockSupplierController@index');

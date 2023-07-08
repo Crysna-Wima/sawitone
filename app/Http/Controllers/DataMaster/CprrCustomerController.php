@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DataMaster;
 
+use App\Helpers\ApiFormatter;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,6 +15,9 @@ use Carbon\Carbon;
 use File;
 
 use App\Models\CprrCustomer;
+use App\Models\Customer;
+use DB;
+use PHPUnit\Framework\Constraint\Count;
 
 class CprrCustomerController extends Controller
 {
@@ -30,20 +34,58 @@ class CprrCustomerController extends Controller
         return response($data, 200);
     }
 
-    public function detail($fc_divisioncode, $fc_branch, $fc_cprrcode, $fc_membercode)
+    public function getAll()
+    {
+        $data = Cospertes::get();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function detail($id)
     {
         $data = CprrCustomer::with('cospertes')->where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_cprrcode' => $fc_cprrcode,
-            'fc_membercode' => $fc_membercode,
+            'id' => $id
         ])->first();
-        return response($data, 200);
+        
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function detailView($fc_membercode)
+    {
+        $membercode = base64_decode($fc_membercode);
+        
+        $data['data'] = Customer::with(
+            'branch', 'member_type_business', 'member_typebranch',
+            'member_legal_status', 'member_tax_code'
+        )
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_membercode', $membercode)
+        ->first();
+
+        // dd($data);
+        return view('data-master.cprr-customer.detail',$data);
+    }
+
+    public function datatables_detail($fc_membercode)
+    {
+        $membercode = base64_decode($fc_membercode);
+        
+        $data = CprrCustomer::with('Cospertes')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_membercode',$membercode)
+        ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function datatables()
     {
-        $data = CprrCustomer::with('cospertes', 'customer', 'branch')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Customer::with('CprrCustomer.Cospertes','branch')
+            ->withCount('CprrCustomer')
+            ->has('CprrCustomer','>',0)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -52,8 +94,8 @@ class CprrCustomerController extends Controller
 
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
-            'fc_cprrcode' => 'required',
             'fc_membercode' => 'required',
+            'fc_cprrcode' => 'required',
             'fm_price' => 'required',
         ]);
 
@@ -64,14 +106,18 @@ class CprrCustomerController extends Controller
             ];
         }
 
-        $request->request->add(['fc_branch' => auth()->user()->fc_branch]);
+        $request->request->add([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode
+        ]);
+
         if (empty($request->type)) {
             $cek_data = CprrCustomer::where([
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_cprrcode' => $request->fc_cprrcode,
                 'fc_membercode' => $request->fc_membercode,
-                'fm_price' => $request->fm_price,
+                'deleted_at' => null,
             ])->withTrashed()->count();
 
             if ($cek_data > 0) {
@@ -84,13 +130,13 @@ class CprrCustomerController extends Controller
 
         $request->merge(['fm_price' => Convert::convert_to_double($request->fm_price)]);
 
-        if ($request->has('fm_price')) {
+        if ($request->has('fm_price') || $request->has('fv_description')) {
             $request->request->add(['updated_at' => Carbon::now()]);
         }
 
         if($request->type == 'update'){
             $data = CprrCustomer::where([
-                'id' => $request->id_cprr,
+                'id' => $request->id,
                 'fc_divisioncode' => $request->fc_divisioncode,
                 'fc_branch' => $request->fc_branch,
                 'fc_cprrcode' => $request->fc_cprrcode
@@ -116,6 +162,7 @@ class CprrCustomerController extends Controller
                 'fc_cprrcode' => $request->fc_cprrcode,
                 'fc_membercode' => $request->fc_membercode,
                 'fm_price' => $request->fm_price,
+                'fv_description' => $request->fv_description,
             ], $request->all());
     
             if($data){
@@ -131,20 +178,28 @@ class CprrCustomerController extends Controller
             }
            
         }
+        // dd($request);
        
     }
 
-    public function delete($fc_divisioncode, $fc_branch, $fc_cprrcode, $fc_membercode)
+    public function delete($id)
     {
-        CprrCustomer::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_cprrcode' => $fc_cprrcode,
-            'fc_membercode' => $fc_membercode,
+        $idCprr = base64_decode($id);
+        
+        $delete = CprrCustomer::where([
+            'id' => $idCprr
         ])->delete();
-        return response()->json([
-            'status' => 200,
-            'message' => "Data berhasil dihapus"
-        ]);
+
+        if ($delete) {
+            return response()->json([
+                'status' => 200,
+                'message' => "Data berhasil dihapus"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 300,
+                'message' => "Data gagal dihapus"
+            ]);
+        }
     }
 }
