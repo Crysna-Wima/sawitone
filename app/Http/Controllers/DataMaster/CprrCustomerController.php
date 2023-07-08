@@ -42,8 +42,10 @@ class CprrCustomerController extends Controller
 
     public function detail($id)
     {
+        $idCprrCustomer = base64_decode($id);
+        
         $data = CprrCustomer::with('cospertes')->where([
-            'id' => $id
+            'id' => $idCprrCustomer,
         ])->first();
         
         return ApiFormatter::getResponse($data);
@@ -74,7 +76,7 @@ class CprrCustomerController extends Controller
         ->where('fc_membercode',$membercode)
         ->get();
 
-        return DataTables::of($data)
+        return DataTables::of($data) 
             ->addIndexColumn()
             ->make(true);
     }
