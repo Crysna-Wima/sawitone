@@ -19,13 +19,9 @@ class MasterBrandController extends Controller
         return view('data-master.master-brand.index');
     }
 
-    public function detail($fc_divisioncode,$fc_branch,$fc_brand,$fc_group,$fc_subgroup){
+    public function detail($id){
         return Brand::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_brand' => $fc_brand,
-            'fc_group' => $fc_group,
-            'fc_subgroup' => $fc_subgroup,
+            'id' => $id,
         ])->first();
     }
 
@@ -111,13 +107,9 @@ class MasterBrandController extends Controller
         
     }
 
-    public function delete($fc_divisioncode,$fc_branch,$fc_brand,$fc_group,$fc_subgroup){
+    public function delete($id){
         Brand::where([
-            'fc_divisioncode' => $fc_divisioncode,
-            'fc_branch' => $fc_branch,
-            'fc_brand' => $fc_brand,
-            'fc_group' => $fc_group,
-            'fc_subgroup' => $fc_subgroup,
+            'id' => $id,
         ])->delete();
         return response()->json([
             'status' => 200,

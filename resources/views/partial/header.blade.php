@@ -50,14 +50,7 @@
       <input class="form-control" type="search" placeholder="Cari" aria-label="Cari" data-width="250" style="width: 250px;">
       <button class="btn" type="submit"><i class="fas fa-search" style="color: #0A9447"></i></button>
       <div class="search-backdrop"></div>
-      <div class="search-result">
-        <div class="search-header">
-          Riwayat Pencarian
-        </div>
-        <div class="search-item">
-          
-        </div>
-      </div>
+      <div class="search-result"></div>
     </div>
   </form>
   <ul class="navbar-nav navbar-right">
@@ -155,17 +148,6 @@
 
     .dropdown-list .dropdown-header {
       font-weight: bold;
-    }
-
-    .navbar .form-inline .form-control {
-      border-radius: 30px 0 0 30px;
-    }
-
-    .navbar .form-inline .btn {
-      border-radius: 0 30px 30px 0;
-      background-color: #fff;
-      padding: 9px 15px 9px 15px;
-      border-color: transparent;
     }
 
     /* .searchBox {
