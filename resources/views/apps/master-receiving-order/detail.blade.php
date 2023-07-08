@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
-                                    <label>No. RO : {{ $ro_mst->fc_rono }}
+                                    <label>No. BPB : {{ $ro_mst->fc_rono }}
                                     </label>
                                 </div>
                             </div>
@@ -181,11 +181,11 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Nomor Katalog</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
                                         <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Unity</th>
+                                        <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Actions</th>
                                     </tr>
                                 </thead>

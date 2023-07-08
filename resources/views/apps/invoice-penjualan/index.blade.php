@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Daftar Surat Jalan')
+@section('title', 'Daftar Pengiriman')
 @section('content')
 <div class="section-body">
     <div class="row">

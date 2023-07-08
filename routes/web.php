@@ -489,6 +489,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('invoice-pembelian')->group(function () {
             Route::get('/', 'Apps\InvoicePembelianController@index');
+            Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
+            Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
         });
 
         Route::prefix('invoice-cprr')->group(function () {
