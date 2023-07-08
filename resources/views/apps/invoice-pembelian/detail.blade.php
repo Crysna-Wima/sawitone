@@ -196,7 +196,7 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $ro_mst->fc_potransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->fc_potransport }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $ro_mst->fc_receiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $ro_mst->fc_receiver }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                             <div class="form-group">
                                 <label>Catatan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
                                 </div>
                             </div>
                         </div>

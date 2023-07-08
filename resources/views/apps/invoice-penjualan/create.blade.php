@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Invoice Penjualan')
+@section('title', 'Invoice Pembelian')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -29,11 +29,11 @@
     }
 </style>
 @endsection
-
 @section('content')
+
 <div class="section-body">
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-5">
+        <div class="col-12 col-md-4 col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <h4>Informasi Umum</h4>
@@ -41,58 +41,56 @@
                         <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-                <div class="collapse" id="mycard-collapse">
+                <div class="collapse show" id="mycard-collapse">
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO : {{ $do_mst->fc_dono }}
+                                    <label>No. BPB : {{ $ro_mst->fc_rono }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SO : {{ $do_mst->somst->fc_sono }}
+                                    <label>No. PO : {{ $ro_mst->fc_pono }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}
+                                    <label>No. SJ : {{ $ro_mst->fc_sjno }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $do_mst->fd_arrivaldate )->isoFormat('D MMMM Y'); }}
+                                    <label>No. GR : {{ $ro_mst->fc_grno }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Tgl PO : {{ \Carbon\Carbon::parse( $ro_mst->pomst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $ro_mst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tipe SO</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->fc_sotype }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>Sales</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->sales->fc_salesname1 }}" readonly>
+                                    <label>Operator</label>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Customer Code</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $do_mst->somst->customer->fc_membercode }}" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group">
-                                    <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->member_tax_code->fv_description }} ({{ $do_mst->somst->member_tax_code->fc_action }}%)" readonly>
+                                    <label>Tgl Diterima</label>
+                                    <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($ro_mst->fd_roarivaldate)) }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -100,69 +98,57 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-7">
+        <div class="col-12 col-md-8 col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <h4>Detail Customer</h4>
+                    <h4>Detail Supplier</h4>
                     <div class="card-header-action">
                         <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-                <div class="collapse" id="mycard-collapse2">
+                <div class="collapse show" id="mycard-collapse2">
                     <div class="card-body" style="height: 303px">
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membertypebusiness }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_type_business->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress1 }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <label>Telepon</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4">
+                            <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
-                                    <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $do_mst->somst->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -170,12 +156,11 @@
                 </div>
             </div>
         </div>
-
         {{-- TABLE --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
-                    <h4>Barang Terkirim</h4>
+                    <h4>Barang Diterima</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -192,35 +177,6 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
                                         <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Biaya Lain-lain</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb_lain" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Harga Satuan</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Catatan</th>
-                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -240,7 +196,7 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $do_mst->fc_sotransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->fc_potransport }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +204,7 @@
                             <div class="form-group">
                                 <label>Transporter</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $do_mst->fc_transporter }}" readonly>
+                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $ro_mst->fc_transporter ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -261,7 +217,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
+                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -269,7 +225,7 @@
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $do_mst->fc_custreceiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $ro_mst->fc_receiver }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +233,7 @@
                             <div class="form-group">
                                 <label>Catatan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $do_mst->fv_description ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +241,7 @@
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $do_mst->fc_memberaddress_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -351,25 +307,20 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <a href=""><button type="button" class="btn btn-primary">Terbitkan Invoice</button></a>
+        <button type="button" onclick="insert_inv()" class="btn btn-primary">Buat Invoice</button>
     </div>
 </div>
 @endsection
 
-@section('modal')
-@endsection
-
 @section('js')
 <script>
-    var dono = "{{ $do_mst->fc_dono }}";
-    var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/invoice-penjualan/datatables-do-detail/" + encode_dono,
+            url: "/apps/master-receiving-order/datatables/ro_detail",
             type: 'GET',
         },
         columnDefs: [{
@@ -382,37 +333,70 @@
                 orderable: false
             },
             {
-                data: 'invstore.stock.fc_stockcode'
+                data: 'fc_stockcode'
             },
             {
                 data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'invstore.stock.fc_namepack'
+                data: 'fc_namepack'
             },
             {
                 data: 'fc_batch'
             },
             {
-                data: 'fd_expired',
-                render: formatTimestamp
+                data: 'fd_expired_date'
             },
             {
-                data: 'fn_qty_do'
+                data: 'fn_qty_ro'
             },
             {
-                data: 'fn_price'
+                data: 'fn_price',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
-                data: 'fn_value'
+                data: 'fn_value',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
         ],
         rowCallback: function(row, data) {
-            
-        },
-        footerCallback: function(row, data, start, end, display) {
-
         }
     });
+
+    function insert_inv() {
+        // show modal loading
+        $('#modal_loading').modal('show');
+        // Dapatkan data input dari elemen form
+        var fc_rono = "{{ $ro_mst->fc_rono }}";
+        var fc_divisioncode = "{{ $ro_mst->fc_divisioncode }}";
+        var fc_branch = "{{ $ro_mst->fc_branch }}";
+
+        var dataToSend = {
+            'fc_divisioncode': fc_divisioncode,
+            'fc_branch': fc_branch,
+            'fc_rono': fc_rono
+        }
+
+        // Kirim data menggunakan Ajax
+        $.ajax({
+            url: "/apps/invoice-pembelian/insert-inv",
+            type: 'POST',
+            data: dataToSend,
+            success: function(response) {
+                // hide modal loading
+                $('#modal_loading').modal('hide');
+                // Alihkan halaman hanya jika data berhasil disimpan
+                window.location.href = "{{ route('create_inv') }}";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // hide modal loading
+                $('#modal_loading').modal('hide');
+                swal("Gagal Buat DO (" + jqXHR
+                    .responseText + ")", {
+                        icon: 'error',
+                    });
+            }
+        });
+    }
 </script>
 @endsection
