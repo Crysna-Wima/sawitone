@@ -11,8 +11,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class InvoiceCprrDetailController extends Controller
 {
-    public function index(){
-        $invoiceCprrDtl = TempInvoiceDtl::with('cospertes','nameunity')->where('fc_invno', auth()->user()->fc_userid)->get();
+    public function index($fc_status){
+        $typeInvDtl = base64_decode($fc_status);
+        $invoiceCprrDtl = TempInvoiceDtl::with('tempinvmst','cospertes','nameunity')->where('fc_invno', auth()->user()->fc_userid)->where('fc_status',$typeInvDtl)->get();
         
         return DataTables::of($invoiceCprrDtl)->addIndexColumn()->make(true);
     }
@@ -27,11 +28,21 @@ class InvoiceCprrDetailController extends Controller
                 ->count();
 
         // validator data yang dibutuhkan (mandatory) 
-        $validator = Validator::make($request->all(), [
-            'fc_detailitem' => 'required',
-            'fn_itemqty' => 'required',
-            'fm_unityprice' => 'required',
-        ]);
+        if(!empty($request->fc_status)){
+            $validator = Validator::make($request->all(), [
+                'fc_detailitem2' => 'required',
+                'fc_unityname2' => 'required',
+                'fn_itemqty2' => 'required',
+                'fm_unityprice2' => 'required',
+                'fc_status' => 'required'
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'fc_detailitem' => 'required',
+                'fn_itemqty' => 'required',
+                'fm_unityprice' => 'required',
+            ]);
+        }  
 
         if($validator->fails()){
             return [
@@ -42,10 +53,17 @@ class InvoiceCprrDetailController extends Controller
         }
 
         // Mencari apakah sudah pernah memasukkan CPRR yang sama 
-        $item = TempInvoiceDtl::where([
-            'fc_invno' => auth()->user()->fc_userid,
-            'fc_detailitem' => $request->fc_detailitem
-        ])->first();
+        if(!empty($request->fc_status)){
+            $item = TempInvoiceDtl::where([
+                'fc_invno' => auth()->user()->fc_userid,
+                'fc_detailitem' => $request->fc_detailitem2
+            ])->first();
+        } else {
+            $item = TempInvoiceDtl::where([
+                'fc_invno' => auth()->user()->fc_userid,
+                'fc_detailitem' => $request->fc_detailitem2
+            ])->first();
+        }
         
         // Kondisi ketika ada CPRR yang sama 
         if(!empty($item)){
@@ -60,19 +78,36 @@ class InvoiceCprrDetailController extends Controller
             $fn_invrownum = $tempInvDtl->fn_invrownum + 1;
         }
 
-        $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
+        if(!empty($request->fc_status)){
+            $request->merge(['fm_unityprice2' => Convert::convert_to_double($request->fm_unityprice2)]);
+            
+            $insert_invdtl = TempInvoiceDtl::create([
+                'fn_invrownum' => $fn_invrownum, 
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_invno' => auth()->user()->fc_userid,
+                'fc_status' => $request->fc_status,
+                'fc_detailitem' => $request->fc_detailitem2,
+                'fc_unityname' => $request->fc_unityname2,
+                'fm_unityprice' => $request->fm_unityprice2,
+                'fn_itemqty' =>  $request->fn_itemqty2,
+                'fv_description' => $request->fv_description2,
+            ]);
+        } else {
+            $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
 
-        $insert_invdtl = TempInvoiceDtl::create([
-            'fn_invrownum' => $fn_invrownum, 
-            'fc_divisioncode' => auth()->user()->fc_divisioncode,
-            'fc_branch' => auth()->user()->fc_branch,
-            'fc_invno' => auth()->user()->fc_userid,
-            'fc_detailitem' => $request->fc_detailitem,
-            'fc_unityname' => "CPRR",
-            'fm_unityprice' => $request->fm_unityprice,
-            'fn_itemqty' =>  $request->fn_itemqty,
-            'fv_description' => $request->fv_description
-        ]);
+            $insert_invdtl = TempInvoiceDtl::create([
+                'fn_invrownum' => $fn_invrownum, 
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_invno' => auth()->user()->fc_userid,
+                'fc_detailitem' => $request->fc_detailitem,
+                'fc_unityname' => "CPRR",
+                'fm_unityprice' => $request->fm_unityprice,
+                'fn_itemqty' =>  $request->fn_itemqty,
+                'fv_description' => $request->fv_description
+            ]);
+        }
 
         if($insert_invdtl){
             return response()->json([
@@ -91,10 +126,7 @@ class InvoiceCprrDetailController extends Controller
     }
 
     public function delete($fc_invno, $fn_invrownum){
-        $count_invdtl = TempInvoiceDtl::where([
-            'fc_invno' => $fc_invno,
-            'fn_invrownum' => $fn_invrownum,
-        ])->count();
+        $count_invdtl = TempInvoiceDtl::where('fc_invno', $fc_invno)->count();
 
         $deleteInvDtl = TempInvoiceDtl::where([
             'fc_invno' => $fc_invno,

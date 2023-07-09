@@ -109,4 +109,33 @@ class InvoiceCprrController extends Controller
 
 		}
     }
+
+    public function submit(request $request){
+        DB::beginTransaction();
+
+		try{
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->update(['fc_status' => $request->fc_status]);
+
+            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
+            
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/invoice-cprr',
+				'message' => 'Data berhasil Disimpan'
+			];
+		}
+
+		catch(\Exception $e){
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+    }
 }
