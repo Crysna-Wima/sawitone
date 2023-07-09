@@ -322,7 +322,7 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <a href="/apps/invoice-penjualan/create"><button type="button" class="btn btn-primary">Buat Invoice</button></a>
+        <a href="/apps/invoice-penjualan/create/{{ base64_encode($fc_dono) }}"><button type="button" class="btn btn-primary">Buat Invoice</button></a>
     </div>
 </div>
 @endsection

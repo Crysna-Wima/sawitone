@@ -47,37 +47,37 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. BPB : {{ $ro_mst->fc_rono }}
+                                    <label>No. BPB : 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. PO : {{ $ro_mst->fc_pono }}
+                                    <label>No. PO : 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SJ : {{ $ro_mst->fc_sjno }}
+                                    <label>No. SJ : 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. GR : {{ $ro_mst->fc_grno }}
+                                    <label>No. GR : 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl PO : {{ \Carbon\Carbon::parse( $ro_mst->pomst->fd_podateinputuser )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl PO : 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $ro_mst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Diterima : 
                                     </label>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Tgl Diterima</label>
-                                    <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($ro_mst->fd_roarivaldate)) }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -112,43 +112,43 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_type_business->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Telepon</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierphone1 }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->fc_potransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +204,7 @@
                             <div class="form-group">
                                 <label>Transporter</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $ro_mst->fc_transporter ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
+                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $ro_mst->fc_receiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -233,7 +233,7 @@
                             <div class="form-group">
                                 <label>Catatan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="" readonly>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +307,7 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <a href="/apps/invoice-pembelian/create"><button type="button" class="btn btn-primary">Buat Invoice</button></a>
+        <a href="/apps/invoice-pembelian/create/{{ base64_encode($fc_rono) }}"><button type="button" class="btn btn-primary">Buat Invoice</button></a>
     </div>
 </div>
 @endsection

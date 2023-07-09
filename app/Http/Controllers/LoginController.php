@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvMaster;
+use App\Models\Invstore;
 use App\Models\PoMaster;
 use App\Models\SoMaster;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
 use App\Models\User;
+use DB;
 
 class LoginController extends Controller
 {
@@ -22,9 +24,34 @@ class LoginController extends Controller
             $userCount = User::all()->count();
             $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
             $poCount = PoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
-            $invCount = InvMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
-            return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount'));
+            $invCount = InvMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
+
+            $expiredDateCount = Invstore::with('stock')
+            ->where('t_invstore.fc_branch', auth()->user()->fc_branch)
+            ->whereDate('t_invstore.fd_expired', '<=', now())
+            ->count();
+
+            $subquery = DB::table('t_invstore')
+                ->select(DB::raw('SUM(fn_quantity)'))
+                ->where('fc_branch', auth()->user()->fc_branch);
+
+            $maqCount = DB::table('t_invstore as a')
+            ->select('a.fc_stockcode', DB::raw('SUM(a.fn_quantity) as total_quantity'), 'b.fn_maxonhand')
+            ->leftJoin('t_stock as b', 'a.fc_stockcode', '=', 'b.fc_stockcode')
+            ->groupBy('a.fc_stockcode')
+            ->havingRaw('SUM(a.fn_quantity) > b.fn_maxonhand')
+            ->count();
+
+
+            $moqCount = DB::table('t_invstore as a')
+                ->select('a.fc_stockcode', DB::raw('SUM(a.fn_quantity) as total_quantity'), 'b.fn_reorderlevel')
+                ->leftJoin('t_stock as b', 'a.fc_stockcode', '=', 'b.fc_stockcode')
+                ->groupBy('a.fc_stockcode')
+                ->havingRaw('SUM(a.fn_quantity) < b.fn_reorderlevel')
+                ->count();
+            return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount','maqCount','moqCount','expiredDateCount'));
         }
+        
         return view('login.index');
     }
 
