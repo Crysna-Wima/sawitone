@@ -500,11 +500,13 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('invoice-cprr')->group(function () {
             Route::get('/', 'Apps\InvoiceCprrController@index');
-            Route::get('/detail', 'Apps\InvoiceCprrController@create');
+            // Route::get('/detail', 'Apps\InvoiceCprrController@create');
             Route::post('/create', 'Apps\InvoiceCprrController@create');
+            Route::post('/submit', 'Apps\InvoiceCprrController@submit');
             Route::delete('/cancel', 'Apps\InvoiceCprrController@delete');
 
-            Route::get('/datatables', 'Apps\InvoiceCprrDetailController@index');
+
+            Route::get('/datatables/{fc_status}', 'Apps\InvoiceCprrDetailController@index');
             Route::post('/detail/store-update', 'Apps\InvoiceCprrDetailController@create');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoiceCprrDetailController@delete');
         });

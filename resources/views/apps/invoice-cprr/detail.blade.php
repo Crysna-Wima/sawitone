@@ -41,6 +41,8 @@
 @endsection
 @section('content')
 
+<div id="alert-success"></div>
+
 <div class="section-body">
     <div class="row">
         {{-- Informasi Umum  --}}
@@ -248,7 +250,7 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Disc. Total</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_so_disc">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_inv_disc">0,00</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
@@ -261,7 +263,7 @@
                         </div>
                         <div class="flex-row-item">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Lain-lain</p>
                                 <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay">0,00</p>
                             </div>
                             <div class="d-flex">
@@ -311,6 +313,47 @@
                 </div>
             </div>
         </div>
+        {{-- Tabel Biaya Lain-lain  --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biaya Lain-lain</h4>
+                    <div class="card-header-action">
+                        <button type="button" onclick="click_addon_invdtl()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan Biaya Lain</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_addon" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Jumlah</th>
+                                        <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Catatan</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center justify-content-center">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- submit   --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="button text-right mb-4">
+                <input type="text" value="F" name="fc_status" id="fc_status" hidden>
+
+                @if($data->fn_invdetail >= 1 && $data->fc_status == "I")
+                    <button id="submit_button" class="btn btn-primary">Submit</button>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -352,24 +395,221 @@
         </div>
     </div>
 </div>
+<div class="modal fade" role="dialog" id="modal_addon" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Rincian Biaya Lainnya</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <form id="form_submit_noconfirm2" action="/apps/invoice-cprr/detail/store-update" method="POST" autocomplete="off">
+                        <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group required">
+                                    <label>Keterangan Biaya</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_detailitem2" name="fc_detailitem2" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Satuan</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" id="fc_unityname2" name="fc_unityname2" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Qty</label>
+                                    <div class="input-group">
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null" name="fn_itemqty2" id="fn_itemqty2" class="form-control" required>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group required">
+                                    <label>Harga</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control format-rp" name="fm_unityprice2" id="fm_unityprice2" onkeyup="return onkeyupRupiah(this.id);" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description2" id="fv_description2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 text-right">
+                                <button class="btn btn-success ml-1">Add Item</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
 
 @section('js')
 <script>    
+    var invdtl = window.btoa('DEFAULT');
+    var addon = window.btoa('ADDON');
+
     function click_modal_cprr(){
         $('#modal_cprr').modal('show');
         table_cprr();
     }
+
+    function click_addon_invdtl(){
+        $('#modal_addon').modal('show');
+    }
     
+    $("#submit_button").click(function() {
+        swal({
+                title: 'Apakah anda yakin?',
+                text: 'Apakah anda yakin akan menyimpan data Invoice CPRR ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    var data = {
+                        'fc_status': $('#fc_status').val(),
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/apps/invoice-cprr/submit',
+                        data: data,
+                        success: function(response) {
+                            // tampilkan modal section alert
+                            if (response.status == 300 || response.status == 301) {
+                                // hide loading
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                $('#alert-message').html(response.message);
+                                $('#alertModal').modal('show');
+                            } else {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                // tampilkan flas message bootstrap id alert-success
+                                
+                                swal(response.message, {  icon: 'success', });
+                                // redirect ke halaman sales order
+                                // hapus local storage
+        
+                                window.location.href = "/apps/invoice-cprr";
+                            }
+                        }
+                    });
+                }
+            });
+    });
+    
+    var tbAddOn = $("#tb_addon").DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax:{
+            url: '/apps/invoice-cprr/datatables/'+addon,
+            type: 'GET'
+        },
+        columnDefs: [
+            {
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            },
+        ],
+        columns: [
+            {
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false,
+            },
+            {
+                data: 'fc_detailitem',
+            },
+            {
+                data: 'fc_unityname',
+            },
+            {
+                data: 'fn_itemqty',
+            },
+            {
+                data: 'fm_unityprice',
+                render: function(data, type, row){
+                    return row.fm_unityprice.toLocaleString('id-ID',{
+                        style:  'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'fv_description',
+            },
+            {
+                data: 'fm_value',
+                render: function(data, type, row){
+                    return row.fm_value.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: null
+            }
+        ],
+        rowCallback: function(row, data){
+            var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
+
+            $('td:eq(7)', row).html(`
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+            `);
+        },
+        footerCallback: function(row, data, start, end, display){
+            if(data.length != 0){
+                $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $("#fm_servpay").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_inv_disc').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $("#fm_inv_disc").trigger("change");
+                $('#count_item').html(data[0].tempinvmst.fn_invdetail);
+                $("#count_item").trigger("change");
+            }
+        }
+    });
 
     var tb = $("#tb").DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
         ajax:{
-            url: '/apps/invoice-cprr/datatables',
+            url: '/apps/invoice-cprr/datatables/'+invdtl,
             type: 'GET'
         },
         columnDefs: [
@@ -428,8 +668,24 @@
             $('td:eq(8)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
             `);
+        },
+        footerCallback: function(row, data, start, end, display){
+            if(data.length != 0){
+                $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $("#fm_servpay").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_inv_disc').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $("#fm_inv_disc").trigger("change");
+                $('#count_item').html(data[0].tempinvmst.fn_invdetail);
+                $("#count_item").trigger("change");
+            }
         }
-    })
+    });
 
 
     function table_cprr(){
@@ -556,6 +812,52 @@
                     $("#modal").modal('hide');
                     tb.ajax.reload(null, false);
                 } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
+    $('#form_submit_noconfirm2').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_submit_noconfirm2').attr('action'),
+            type: $('#form_submit_noconfirm2').attr('method'),
+            data: $('#form_submit_noconfirm2').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal_addon").modal('hide');
+                    $("#form_submit_noconfirm2")[0].reset();
+                    reset_all_select();
+                    tbAddOn.ajax.reload(null, false);
+                    if (response.total < 1) {
+                        window.location.href = response.link;
+                    }
+                }  else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',
                     });
