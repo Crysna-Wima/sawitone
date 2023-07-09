@@ -338,7 +338,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_item" action="" method="post" autocomplete="off">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/store-invoice" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-4">
@@ -350,7 +350,12 @@
                                             <i class="fas fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="" data-provide="datepicker" class="form-control" name="" required>
+                                    <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
+                                    <input type="hidden" id="fc_suppdocno"  class="form-control" value="{{ $do_mst->somst->fc_sono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_child_suppdocno" required>
+                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $do_mst->somst->customer->fc_membercode }}" name="fc_entitycode" required>
+                                    <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $do_mst->fn_dodetail }}" name="fn_dodetail" required>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -376,7 +381,7 @@
                                             <i class="fas fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="" class="form-control datepicker" name="" readonly>
+                                    <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" readonly>
                                 </div>
                             </div>
                         </div>
@@ -396,6 +401,17 @@
     function click_modal_inv() {
         $("#modal_inv").modal('show');
     }
+
+    $('#fn_inv_agingday').on('input', function() {
+    var fd_inv_releasedate = $('#fd_inv_releasedate').val();
+    var fn_inv_agingday = parseInt($('#fn_inv_agingday').val());
+
+        if (moment(fd_inv_releasedate, 'DD/MM/YYYY').isValid()) {
+            var fd_inv_agingdate = moment(fd_inv_releasedate, 'DD/MM/YYYY').add(fn_inv_agingday, 'days').format('DD/MM/YYYY');
+            $('#fd_inv_agingdate').val(fd_inv_agingdate);
+        }
+    });
+
 
     var dono = "{{ $do_mst->fc_dono }}";
     var encode_dono = window.btoa(dono);
@@ -452,5 +468,7 @@
 
         }
     });
+
+
 </script>
 @endsection

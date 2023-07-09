@@ -482,6 +482,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_dono}', 'Apps\InvoicePenjualanController@detail');
 
             Route::prefix('create')->group(function () {
+                Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
                 Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
                 Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');

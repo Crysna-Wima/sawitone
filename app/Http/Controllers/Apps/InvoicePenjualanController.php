@@ -15,6 +15,7 @@ use App\Models\DoMaster;
 use App\Models\DoDetail;
 use App\Models\InvDetail;
 use App\Models\InvMaster;
+use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
 use Validator;
 
@@ -31,5 +32,50 @@ class InvoicePenjualanController extends Controller
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decoded_fc_dono )->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['fc_dono'] = $decoded_fc_dono;
         return view('apps.invoice-penjualan.detail', $data);
+    }
+
+    public function create_invoice(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_suppdocno' => 'required',
+            'fc_entitycode' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // create TempInvoiceMst
+         $create = TempInvoiceMst::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_suppdocno' => $request->fc_suppdocno,
+            'fc_child_suppdocno' => $request->fc_child_suppdocno,
+            'fc_entitycode' => $request->fc_entitycode,
+            'fc_status' => 'I',
+            'fc_invtype' => 'SALES',
+            'fd_inv_releasedate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_releasedate)),
+            'fn_inv_agingday' => $request->fn_inv_agingday,
+            'fd_inv_agingdate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_agingdate)),
+            'fc_userid' => auth()->user()->fc_userid,
+            'fn_invdetail' => $request->fn_dodetail
+         ]);
+
+            if($create){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil disimpan',
+                    'link' => '/apps/invoice-penjualan/create/' . base64_encode( $request->fc_child_suppdocno)
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
     }
 }
