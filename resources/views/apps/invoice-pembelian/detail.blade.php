@@ -228,7 +228,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            Rp.
+                                            Rp. 
                                         </div>
                                     </div>
                                     <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
