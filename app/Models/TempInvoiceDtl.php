@@ -21,4 +21,12 @@ class TempInvoiceDtl extends Model
     public function tempinvmst(){
         return $this->hasOne(TempInvoiceMst::class, 'fc_invno', 'fc_invno');
     }
+
+    public function cospertes(){
+        return $this->hasOne(Cospertes::class, 'fc_cprrcode', 'fc_detailitem');
+    }
+
+    public function nameunity(){
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_unityname')->where('fc_trx', 'LIKE', '%UNITY%')->withTrashed();
+    }
 }

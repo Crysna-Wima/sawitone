@@ -23,18 +23,26 @@ class InvoiceMst extends Model
     }
 
     public function somst(){
-        return $this->hasone(SoMaster::class, 'fc_sono', 'fc_sono');
+        return $this->hasone(SoMaster::class, 'fc_suppdocno', 'fc_sono');
     }
     
     public function domst(){
-        return $this->hasone(DoMaster::class, 'fc_dono', 'fc_dono');
+        return $this->hasone(DoMaster::class, 'fc_child_suppdocno', 'fc_dono');
     }
 
     public function pomst(){
-        return $this->hasone(PoMaster::class, 'fc_pono', 'fc_pono');
+        return $this->hasone(PoMaster::class, 'fc_suppdocno', 'fc_pono');
     }
 
     public function romst(){
-        return $this->hasone(RoMaster::class, 'fc_rono', 'fc_rono');
+        return $this->hasone(RoMaster::class, 'fc_child_suppdocno', 'fc_rono');
+    }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_entitycode');
+    }
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_entitycode');
     }
 }

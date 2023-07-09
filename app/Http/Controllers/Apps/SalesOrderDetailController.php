@@ -187,12 +187,13 @@ class SalesOrderDetailController extends Controller
                'link' => '/apps/sales-order',
                'message' => 'Data berhasil disimpan'
            ]);
-           }
+        } else{
             return [
-               'status' => 300,
-               'link' => '/apps/sales-order',
-               'message' => 'Error'
-               ];
+                'status' => 300,
+                'link' => '/apps/sales-order',
+                'message' => 'Error'
+            ];
+        }
     }
 
     public function delete($fc_sono, $fn_sorownum)
