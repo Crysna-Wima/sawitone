@@ -32,14 +32,4 @@ class InvoicePenjualanController extends Controller
         $data['fc_dono'] = $decoded_fc_dono;
         return view('apps.invoice-penjualan.detail', $data);
     }
-
-    public function datatables_do_detail($fc_dono){
-        $decode_dono = base64_decode($fc_dono);
-        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
-
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
-        // dd($fc_dono);
-    }
 }

@@ -322,16 +322,81 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <a href="/apps/invoice-penjualan/create/{{ base64_encode($fc_dono) }}"><button type="button" class="btn btn-primary">Buat Invoice</button></a>
+        <button type="button" class="btn btn-primary" onclick="click_modal_inv();">Buat Invoice</button>
+        <!-- <a href="/apps/invoice-penjualan/create/{{ base64_encode($fc_dono) }}"><button type="button" class="btn btn-primary">Buat Invoice</button></a> -->
     </div>
 </div>
 @endsection
 
 @section('modal')
+<div class="modal fade" role="dialog" id="modal_inv" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Masa Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit_item" action="" method="post" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group required">
+                                <label>Tanggal Terbit</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="" data-provide="datepicker" class="form-control" name="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group required">
+                                <label>Masa Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Hari
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label>Estimasi Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="" class="form-control datepicker" name="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function click_modal_inv() {
+        $("#modal_inv").modal('show');
+    }
+
     var dono = "{{ $do_mst->fc_dono }}";
     var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({

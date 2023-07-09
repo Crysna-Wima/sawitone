@@ -484,6 +484,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('create')->group(function () {
                 Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
+                Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
             });
         });
 
@@ -493,7 +494,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
 
             Route::prefix('create')->group(function () {
-                Route::get('/{fc_rono}', 'Apps\InvoicePenjualanDetailController@create');
+                Route::get('/{fc_rono}', 'Apps\InvoicePembelianController@create');
             });
         });
 
