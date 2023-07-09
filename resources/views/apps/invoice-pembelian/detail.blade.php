@@ -47,50 +47,50 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. BPB : 
+                                    <label>No. BPB : {{ $ro_mst->fc_rono }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. PO : 
+                                    <label>No. PO : {{ $ro_mst->fc_pono }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SJ : 
+                                    <label>No. SJ : {{ $ro_mst->fc_sjno }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. GR : 
+                                    <label>No. GR : {{ $ro_mst->fc_grno }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl PO : 
+                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($ro_mst->pomst->fd_podateinputuser)) }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : 
+                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($ro_mst->fd_roarivaldate)) }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Operator</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
+                                    <label>Basis Gudang</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->warehouse->fc_rackname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <label>Status PKP</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }} ({{ $ro_mst->pomst->supplier->supplier_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -107,48 +107,54 @@
                     </div>
                 </div>
                 <div class="collapse show" id="mycard-collapse2">
-                    <div class="card-body" style="height: 303px">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_type_business->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Telepon</label>
-                                    <input type="text" class="form-control" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-4">
+                                <div class="form-group">
+                                    <label>Masa Hutang</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fn_supplierAgingAR }} Hari" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-6">
+                                <div class="form-group">
+                                    <label>Legal Status</label>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4 col-md-4 col-lg-6">
+                                <div class="form-group">
+                                    <label>Hutang</label>
+                                    <input type="text" class="form-control" value="Rp. {{ $ro_mst->pomst->supplier->fm_supplierAR }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -196,15 +202,23 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->pomst->fc_potransport }}" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <!-- <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transporter</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="" readonly>
+                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $ro_mst->fc_transporter }}" readonly>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Penerima</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $ro_mst->fc_receiver }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -214,34 +228,26 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            Rp.
+                                            Rp. 
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="" readonly>
+                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Penerima</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group">
                                 <label>Catatan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
-                                <label>Alamat Pengiriman</label>
+                                <label>Alamat Penerimaan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -359,8 +365,7 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
         ],
-        rowCallback: function(row, data) {
-        }
+        rowCallback: function(row, data) {}
     });
 </script>
 @endsection
