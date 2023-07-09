@@ -28,13 +28,14 @@ class InvoicePembelianController extends Controller
         session(['fc_rono_global' => $decode_fc_rono]);
         $data['ro_mst'] = RoMaster::with('pomst.supplier')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['fc_rono'] = $decode_fc_rono;
         return view('apps.invoice-pembelian.detail', $data);
         // dd($data);
     }
 
     public function datatables()
     {
-        $data = RoMaster::with('pomst.supplier', 'invmst')->where('fc_rostatus', 'R')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = RoMaster::with('pomst.supplier')->where('fc_rostatus', 'R')->where('fc_branch', auth()->user()->fc_branch)->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
