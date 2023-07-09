@@ -26,7 +26,7 @@ class InvoicePembelianController extends Controller
     {
         $decode_fc_rono = base64_decode($fc_rono);
         session(['fc_rono_global' => $decode_fc_rono]);
-        $data['ro_mst'] = RoMaster::with('pomst.supplier')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_mst'] = RoMaster::with('pomst.supplier', 'warehouse')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['fc_rono'] = $decode_fc_rono;
         return view('apps.invoice-pembelian.detail', $data);

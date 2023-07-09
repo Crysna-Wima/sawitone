@@ -33,6 +33,10 @@ class RoMaster extends Model
     public function invmst(){
         return $this->hasOne(InvoiceMst::class, 'fc_rono', 'fc_rono');
     }
+
+    public function warehouse(){
+        return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
     
 
 }

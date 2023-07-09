@@ -42,4 +42,8 @@ class Warehouse extends Model
     public function invstore(){
         return $this->hasMany(Invstore::class, 'fc_warehousecode', 'fc_warehousecode');
     }
+
+    public function romst(){
+        return $this->belongsTo(RoMaster::class, 'fc_warehousecode', 'fc_warehousecode');
+    }
 }
