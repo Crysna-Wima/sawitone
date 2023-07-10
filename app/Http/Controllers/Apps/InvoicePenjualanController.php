@@ -15,19 +15,37 @@ use App\Models\DoMaster;
 use App\Models\DoDetail;
 use App\Models\InvDetail;
 use App\Models\InvMaster;
+use App\Models\TempInvoiceDtl;
 use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
+use Carbon\Carbon;
 use Validator;
 
 class InvoicePenjualanController extends Controller
 {
     public function index(){
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
+        $total = count($temp_detail);
+        if(!empty($temp_inv_master)){
+            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
+            return view('apps.invoice-penjualan.create',$data);
+            // dd($temp_inv_master->fc_child_suppdocno);
+        }
         return view('apps.invoice-penjualan.index');     
     }
 
     public function detail($fc_dono){
         $decoded_fc_dono = base64_decode($fc_dono);
         session(['fc_dono_global' => $decoded_fc_dono ]);
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        if(!empty($temp_inv_master)){
+            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
+            return view('apps.invoice-penjualan.create',$data);
+            // dd($temp_inv_master->fc_child_suppdocno);
+        }
         $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $decoded_fc_dono )->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decoded_fc_dono )->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['fc_dono'] = $decoded_fc_dono;

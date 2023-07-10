@@ -623,6 +623,9 @@
                          if(typeof tbAddOn !== 'undefined'){
                            tbAddOn.ajax.reload(null,false);
                          }
+                         if(typeof tb_lain !== 'undefined'){
+                           tb_lain.ajax.reload(null,false);
+                         }
                         //  location.href = location.href;
                       }else if(response.status == 201){
                         swal(response.message, {  icon: 'success', });

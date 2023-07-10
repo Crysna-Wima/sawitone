@@ -477,27 +477,30 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/scan-barang', 'Apps\ScanQrController@scan_barang');
         });
 
-        Route::prefix('invoice-penjualan')->group(function () {
-            Route::get('/', 'Apps\InvoicePenjualanController@index');
-            Route::get('/detail/{fc_dono}', 'Apps\InvoicePenjualanController@detail');
+        // Route::prefix('invoice-penjualan')->group(function () {
+        //     Route::get('/', 'Apps\InvoicePenjualanController@index');
+        //     Route::get('/detail/{fc_dono}', 'Apps\InvoicePenjualanController@detail');
+        //     Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
+        //     Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@delete');
 
-            Route::prefix('create')->group(function () {
-                Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
-                Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
-                Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
-                Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
-            });
-        });
+        //     Route::prefix('create')->group(function () {
+        //         Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
+        //         Route::post('/store-detail','Apps\InvoicePenjualanDetailController@insert_item');
+        //         Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
+        //         Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
+                
+        //     });
+        // });
 
-        Route::prefix('invoice-pembelian')->group(function () {
-            Route::get('/', 'Apps\InvoicePembelianController@index');
-            Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
-            Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
+        // Route::prefix('invoice-pembelian')->group(function () {
+        //     Route::get('/', 'Apps\InvoicePembelianController@index');
+        //     Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
+        //     Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
 
-            Route::prefix('create')->group(function () {
-                Route::get('/{fc_rono}', 'Apps\InvoicePembelianController@create');
-            });
-        });
+        //     Route::prefix('create')->group(function () {
+        //         Route::get('/{fc_rono}', 'Apps\InvoicePembelianController@create');
+        //     });
+        // });
 
         Route::prefix('invoice-cprr')->group(function () {
             Route::get('/', 'Apps\InvoiceCprrController@index');

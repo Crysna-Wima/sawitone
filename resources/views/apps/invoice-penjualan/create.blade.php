@@ -369,11 +369,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_item" action="" method="post" autocomplete="off">
+            <form id="form_submit_item2" action="/apps/invoice-penjualan/create/store-detail" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group">
+                                <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
                                 <label>Keterangan</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="fc_detailitem" name="fc_detailitem">
@@ -397,7 +398,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" id="fc_unityprice" name="fc_unityprice" onkeyup="return onkeyupRupiah(this.id);">
+                                    <input type="text" class="form-control" id="fm_unityprice" name="fm_unityprice" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                         </div>
@@ -418,7 +419,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="number" class="form-control" id="fn_value" name="fn_value" onkeyup="return onkeyupRupiah(this.id);">
+                                    <input type="text" class="form-control" id="fn_value" name="fn_value" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                         </div>
@@ -523,7 +524,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/invoice-penjualan/create/datatables-biaya-lain/",
+            url: "/apps/invoice-penjualan/datatables-biaya-lain",
             type: 'GET',
         },
         columnDefs: [{
@@ -560,9 +561,58 @@
             },
         ],
         rowCallback: function(row, data) {
+            var url_delete = "/apps/invoice-penjualan/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
+
             $('td:eq(7)', row).html(`
-                <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</button>`);
+                <button class="btn btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i> Hapus</button>`);
         },
+    });
+
+    $('#form_submit_item2').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_submit_item2').attr('action'),
+            type: $('#form_submit_item2').attr('method'),
+            data: $('#form_submit_item2').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal_biaya").modal('hide');
+                    $("#form_submit_item2")[0].reset();
+                    reset_all_select();
+                    tb_lain.ajax.reload(null, false);
+                    if (response.total < 1) {
+                        window.location.href = response.link;
+                    }
+                }  else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     });
 </script>
 @endsection

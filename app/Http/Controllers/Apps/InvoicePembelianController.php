@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Apps;
 
 use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
+use App\Models\DoDetail;
+use App\Models\DoMaster;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,12 +15,28 @@ use App\Models\RoDetail;
 use App\Models\InvDetail;
 use App\Models\InvMaster;
 use App\Models\InvoiceMst;
+use App\Models\TempInvoiceDtl;
+use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
+use Carbon\Carbon;
 use Validator;
 
 class InvoicePembelianController extends Controller
 {
     public function index(){
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
+        $total = count($temp_detail);
+        if(!empty($temp_inv_master)){
+            // $data['data'] = $temp_inv_master;
+            // $data['data']->fd_inv_releasedate = Carbon::createFromFormat('Y-m-d H:i:s',$temp_inv_master->fd_inv_releasedate,)->format('d-m-Y');
+            // $data['data']->fd_inv_agingdate = Carbon::createFromFormat('Y-m-d H:i:s',$temp_inv_master->fd_inv_agingdate,)->format('d-m-Y');
+            // $data['total'] = $total;
+            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
+            return view('apps.invoice-pembelian.create',$data);
+            // dd($data);
+        }
         return view('apps.invoice-pembelian.index');     
     }
 
