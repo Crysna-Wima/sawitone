@@ -193,13 +193,22 @@
         </div>
 
         <div class="content">
+            @if($so_master->fc_sotype == 'Retail')
             <p style="text-align: center; font-weight:bold; font-size:15px;">SALES ORDER</p>
+            @elseif($so_master->fc_sotype == 'Memo Internal')
+            <p style="text-align: center; font-weight:bold; font-size:15px;">MEMO INTERNAL</p>
+            @else
+            <p style="text-align: center; font-weight:bold; font-size:15px;">COST PER TEST</p>
+            @endif
 
             <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
                 <tr>
-                    <td> Tanggal SO</td>
+                    <td>Tanggal SO</td>
                     <td style="width: 5px"> :</td>
-                    <td style="width: 28%" colspan="3">{{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
+                    <td style="width: 28%">{{ \Carbon\Carbon::parse( $so_master->created_at )->isoFormat('D MMMM Y'); }}</td>
+                    <td>Operator</td>
+                    <td style="width: 5px">:</td>
+                    <td style="width: 28%">{{ $so_master->fc_userid }}</td>
                 </tr>
                 <tr>
                     <td>No. SO</td>
@@ -207,7 +216,7 @@
                     <td style="width: 28%">{{ $so_master->fc_sono }}</td>
                     <td>Sales</td>
                     <td style="width: 5px">:</td>
-                    <td>{{ $so_master->sales->fc_salesname1 }}</td>
+                    <td style="width: 28%">{{ $so_master->sales->fc_salesname1 }}</td>
                 </tr>
             </table>
 

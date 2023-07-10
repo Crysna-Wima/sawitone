@@ -517,6 +517,10 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('daftar-invoice')->group(function () {
             Route::get('/', 'Apps\DaftarInvoiceController@index');
+            Route::get('/datatables/{fc_invtype}', 'Apps\DaftarInvoiceController@datatables');
+            Route::get('/detail/{fc_invno}', 'Apps\DaftarInvoiceController@detail');
+            Route::post('/pdf', 'Apps\DaftarInvoiceController@pdf');
+            Route::get('/get_pdf/{fc_invno}/{nama_pj}', 'Apps\DaftarInvoiceController@get_pdf');
         });
     });
 });
