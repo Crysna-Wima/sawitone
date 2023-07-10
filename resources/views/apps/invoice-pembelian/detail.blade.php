@@ -228,7 +228,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            Rp. 
+                                            Rp.
                                         </div>
                                     </div>
                                     <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
@@ -318,8 +318,90 @@
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade" role="dialog" id="modal_inv" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Masa Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/apps/invoice-penjualan/create/store-invoice" method="post" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group required">
+                                <label>Tanggal Terbit</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
+                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $do_mst->somst->fc_sono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_child_suppdocno" required>
+                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $do_mst->somst->customer->fc_membercode }}" name="fc_entitycode" required>
+                                    <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $do_mst->fn_dodetail }}" name="fn_dodetail" required>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group required">
+                                <label>Masa Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Hari
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label>Estimasi Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
 @section('js')
 <script>
+    function click_modal_inv() {
+        $("#modal_inv").modal('show');
+    }
+
+    $('#fn_inv_agingday').on('input', function() {
+        var fd_inv_releasedate = $('#fd_inv_releasedate').val();
+        var fn_inv_agingday = parseInt($('#fn_inv_agingday').val());
+
+        if (moment(fd_inv_releasedate, 'DD/MM/YYYY').isValid()) {
+            var fd_inv_agingdate = moment(fd_inv_releasedate, 'DD/MM/YYYY').add(fn_inv_agingday, 'days').format('DD/MM/YYYY');
+            $('#fd_inv_agingdate').val(fd_inv_agingdate);
+        }
+    });
+
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
