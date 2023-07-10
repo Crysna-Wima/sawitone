@@ -28,12 +28,8 @@ class InvoicePembelianController extends Controller
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
         $total = count($temp_detail);
         if(!empty($temp_inv_master)){
-            // $data['data'] = $temp_inv_master;
-            // $data['data']->fd_inv_releasedate = Carbon::createFromFormat('Y-m-d H:i:s',$temp_inv_master->fd_inv_releasedate,)->format('d-m-Y');
-            // $data['data']->fd_inv_agingdate = Carbon::createFromFormat('Y-m-d H:i:s',$temp_inv_master->fd_inv_agingdate,)->format('d-m-Y');
-            // $data['total'] = $total;
-            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
-            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
+            $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
             return view('apps.invoice-pembelian.create',$data);
             // dd($data);
         }

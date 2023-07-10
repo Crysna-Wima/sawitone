@@ -185,7 +185,7 @@
                       if(response.status == 200){
                          swal(response.message, { icon: 'success', });
                          $("#modal_edit").modal('hide');
-                         $("#form_submit")[0].reset();
+                         $("#form_submit_edit")[0].reset();
                          reset_all_select();
                          tb.ajax.reload(null, false);
                       }

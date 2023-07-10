@@ -27,11 +27,11 @@ class TempInvoiceMst extends Model
     }
     
     public function domst(){
-        return $this->hasOne(DoMaster::class, 'fc_child_suppdocno', 'fc_dono');
+        return $this->hasOne(DoMaster::class, 'fc_dono','fc_child_suppdocno');
     }
 
     public function pomst(){
-        return $this->hasOne(PoMaster::class, 'fc_suppdocno', 'fc_pono');
+        return $this->hasOne(PoMaster::class,'fc_pono', 'fc_suppdocno');
     }
 
     public function romst(){

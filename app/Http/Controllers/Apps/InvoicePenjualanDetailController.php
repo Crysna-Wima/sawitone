@@ -16,7 +16,9 @@ use App\Models\DoDetail;
 use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
 use App\Models\TempInvoiceDtl;
+use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
+use DB;
 use Validator;
 
 class InvoicePenjualanDetailController extends Controller
@@ -27,7 +29,7 @@ class InvoicePenjualanDetailController extends Controller
         $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-
+        
         return view('apps.invoice-penjualan.create', $data);       
         // dd($data);
     }
@@ -140,17 +142,25 @@ class InvoicePenjualanDetailController extends Controller
     }
 
     public function datatables_do_detail($fc_dono){
-        $decode_dono = base64_decode($fc_dono);
-        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
+        // $decode_dono = base64_decode($fc_dono);
+        $data = TempInvoiceDtl::with('invstore.stock','tempinvmst.domst')
+        ->where('fc_invno',auth()->user()->fc_userid)
+        ->where('fc_status','DEFAULT')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
-        // dd($fc_dono);
+        // dd($data);
     }
 
     public function datatables_biaya_lain(){
-        $data = TempInvoiceDtl::with('tempinvmst', 'nameunity')->where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = TempInvoiceDtl::with('tempinvmst', 'nameunity')
+        ->where('fc_invno', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_status', 'ADDON')
+        ->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -183,5 +193,108 @@ class InvoicePenjualanDetailController extends Controller
             'status' => 300,
             'message' => 'Error',
         ];
+    }
+
+    public function update_unityprice(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fm_unityprice' => 'required',
+            'fn_invrownum' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $update_unityprice = TempInvoiceDtl::where([
+            'fn_invrownum' => $request->fn_invrownum,
+        ])->update([
+            'fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)
+        ]);
+
+        if($update_unityprice){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diupdate'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+    }
+
+    public function cancel_invoice(){
+        DB::beginTransaction();
+
+		try{
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/invoice-penjualan',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+    }
+
+    public function submit_invoice(Request $request){
+        $validator = Validator::make($request->all(), [
+            'fc_invtype' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        $check_invdtl = TempInvoiceDtl::where('fc_status', 'DEFAULT')->where('fc_branch',auth()->user()->fc_branch)->count();
+        if($check_invdtl < 1){
+            return [
+                'status' => 300,
+                'message' => 'Barang terkirim kosong'
+            ];
+        }
+        try {
+            DB::beginTransaction();
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_invtype', $request->fc_invtype)
+            ->where('fc_branch', auth()->user()->fc_branch)
+                ->update([
+                    'fc_status' => 'R'
+                    ]);
+            DB::commit();
+
+            return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/invoice-penjualan',
+				'message' => 'Data berhasil dihapus'
+			];
+        }catch(\Exception $e){
+            return [
+                'status' => 300,
+                'message' => $e->getMessage()
+            ];
+        }
+        // dd($request);
+
     }
 }

@@ -13,7 +13,7 @@ use Validator;
 class InvoiceCprrController extends Controller
 {
     public function index(){
-        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->first();
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'CPRR')->first();
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
         $total = count($temp_detail);
         if(!empty($temp_inv_master)){
