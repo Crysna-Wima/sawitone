@@ -347,7 +347,7 @@
         {{-- submit   --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="button text-right mb-4">
-                <input type="text" value="F" name="fc_status" id="fc_status" hidden>
+                <input type="text" value="R" name="fc_status" id="fc_status" hidden>
 
                 @if($data->fn_invdetail >= 1 && $data->fc_status == "I")
                     <button id="submit_button" class="btn btn-primary">Submit</button>

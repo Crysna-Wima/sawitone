@@ -87,8 +87,8 @@ class InvoiceCprrController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
-            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceDtl::where(['fc_invno' => auth()->user()->fc_userid, 'fc_invtype' => 'CPRR'])->delete();
+            TempInvoiceMst::where(['fc_invno' => auth()->user()->fc_userid, 'fc_invtype' => 'CPRR'])->delete();
             
 			DB::commit();
 
@@ -114,10 +114,10 @@ class InvoiceCprrController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->update(['fc_status' => $request->fc_status]);
+            TempInvoiceMst::where(['fc_invno' => auth()->user()->fc_userid, 'fc_invtype' => 'CPRR'])->update(['fc_status' => $request->fc_status]);
 
-            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
-            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceDtl::where(['fc_invno' => auth()->user()->fc_userid, 'fc_invtype' => 'CPRR'])->delete();
+            TempInvoiceMst::where(['fc_invno' => auth()->user()->fc_userid, 'fc_invtype' => 'CPRR'])->delete();
             
 			DB::commit();
 
