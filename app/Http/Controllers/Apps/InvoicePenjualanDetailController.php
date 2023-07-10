@@ -106,6 +106,7 @@ class InvoicePenjualanDetailController extends Controller
                 'fc_detailitem' => $request->fc_detailitem,
                 'fc_unityname' => $request->fc_unityname,
                 'fm_unityprice' => $request->fm_unityprice,
+                'fc_invtype' => 'SALES',
                 'fn_itemqty' =>  $request->fn_itemqty,
                 'fv_description' => $request->fv_description,
             ]);
