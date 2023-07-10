@@ -500,11 +500,12 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
 
             Route::prefix('create')->group(function () {
-                Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
-                Route::post('/store-detail','Apps\InvoicePenjualanDetailController@insert_item');
+                Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
+                Route::post('/store-detail','Apps\InvoicePembelianControllerDetailController@insert_item');
                 Route::get('/{fc_rono}', 'Apps\InvoicePembelianController@create');
-                Route::get('/datatables-do-detail/{fc_rono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
-                Route::put('/submit-invoice','Apps\InvoicePenjualanDetailController@submit_invoice');
+                Route::get('/datatables-ro-detail/{fc_rono}', 'Apps\InvoicePembelianControllerDetailController@datatables_ro_detail');
+                Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
+                Route::put('/submit-invoice','Apps\InvoicePembelianControllerDetailController@submit_invoice');
             });
         });
 
