@@ -29,4 +29,8 @@ class TempInvoiceDtl extends Model
     public function nameunity(){
         return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_unityname')->where('fc_trx', 'LIKE', '%UNITY%')->withTrashed();
     }
+
+    public function invstore(){
+        return $this->hasOne(Invstore::class, 'fc_barcode','fc_detailitem');
+    }
 }

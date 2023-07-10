@@ -306,7 +306,7 @@
                         <div class="flex-row-item" style="margin-right: 30px">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
@@ -322,12 +322,12 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                             </div>
                         </div>
                         <div class="flex-row-item">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Lain-lain</p>
                                 <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
                             </div>
                             <div class="d-flex">
@@ -344,7 +344,7 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                             </div>
                         </div>
                     </div>
@@ -353,8 +353,16 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <button type="button" onclick="" class="btn btn-danger mr-1">Cancel</button>
-        <button type="button" onclick="" class="btn btn-success">Terbitkan Invoice</button>
+        <button type="button" onclick="click_delete()" class="btn btn-danger mr-1">Cancel</button>
+        <form id="form_submit_edit" action="/apps/invoice-penjualan/create/submit-invoice" method="post">
+            @csrf
+            @method('put')
+            <input type="hidden" name="fc_invtype" value="{{ utf8_encode('SALES') }}">
+            <input type="hidden" name="fc_status" value="{{ utf8_encode('R') }}">
+            <button type="submit" class="btn btn-success">Terbitkan Invoice</button>
+        </form>
+        
+       
     </div>
 </div>
 @endsection
@@ -407,19 +415,6 @@
                                 <label>Qty</label>
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="fn_itemqty" name="fn_itemqty">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group">
-                                <label>Total</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            Rp.
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" id="fn_value" name="fn_value" onkeyup="return onkeyupRupiah(this.id);">
                                 </div>
                             </div>
                         </div>
@@ -478,23 +473,23 @@
                 data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
-                data: 'fn_qty_do'
+                data: 'fn_itemqty'
             },
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="" min="0" class="form-control" value="${data.fn_price}">`;
+                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
                 }
             },
             {
-                data: 'fn_value',
+                data: 'fm_value',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
             },
             {
@@ -510,13 +505,111 @@
                     <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
             } else {
                 $('td:eq(9)', row).html(`
-                    <button type="submit" class="btn btn-warning">Edit</button>`);
+                <button type="submit" class="btn btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)">Edit</button>`);
             }
         },
         footerCallback: function(row, data, start, end, display) {
-
+           
         }
     });
+
+    function editUnityPrice(button) {
+        var id = $(button).data('id');
+        var currentPrice = $(button).data('price');
+        var newPrice = parseFloat($(`#fm_unityprice_${id}`).val());
+
+        if (newPrice === currentPrice) {
+            swal("No changes made.", { icon: 'info' });
+            return;
+        }
+
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah kamu yakin ingin update harga tersebut?",
+            icon: "warning",
+            buttons: ["Cancel", "Update"],
+            dangerMode: true,
+        }).then(function(confirm) {
+            if (confirm) {
+                updateFmUnityPrice(id, newPrice);
+            }
+        });
+    }
+
+    function updateFmUnityPrice(id, fmUnityPrice) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/invoice-penjualan/update-fm-unityprice', 
+            type: 'PUT',
+            data: {
+                fn_invrownum: id,
+                fm_unityprice: fmUnityPrice
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {  icon: 'success', });
+                    $("#modal_loading").modal('hide');
+                    tb.ajax.reload();
+                } else {
+                    swal(response.message, {  icon: 'error', });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
+                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+            }
+        });
+    }
+
+    function click_delete() {
+        swal({
+                title: 'Apakah anda yakin?',
+                text: 'Apakah anda yakin akan membatalkan invoice ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/invoice-penjualan/cancel-invoice',
+                        type: "DELETE",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status === 201) {
+                                $("#modal").modal('hide');
+                                iziToast.success({
+                                    title: 'Success!',
+                                    message: response.message,
+                                    position: 'topRight'
+                                });
+                                window.location.href = response.link;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+    }
 
     var tb_lain = $('#tb_lain').DataTable({
         // apabila data kosong
@@ -566,6 +659,22 @@
             $('td:eq(7)', row).html(`
                 <button class="btn btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i> Hapus</button>`);
         },
+        footerCallback: function(row, data, start, end, display) {
+            if(data.length != 0){
+                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $("#fm_servpay_calculate").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $("#fm_disctotal").trigger("change");
+                $('#count_item').html(data[0].tempinvmst.fn_invdetail);
+                $("#count_item").trigger("change");
+            }
+        }
     });
 
     $('#form_submit_item2').on('submit', function(e) {

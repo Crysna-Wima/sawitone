@@ -46,4 +46,8 @@ class Invstore extends Model
     public function scanqr(){
         return $this->hasMany(ScanQr::class, 'fc_barcode', 'fc_barcode');
     }
+
+    public function tempinvoicedetail(){
+        return $this->belongsToMany(TempInvoiceDtl::class, 'fc_detailitem','fc_barcode');
+    }
 }
