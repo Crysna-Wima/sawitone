@@ -30,8 +30,8 @@ class InvoicePembelianController extends Controller
         if(!empty($temp_inv_master)){
             $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
-            return view('apps.invoice-pembelian.create',$data);
-            // dd($data);
+            // return view('apps.invoice-pembelian.create',$data);
+            dd($data);
         }
         return view('apps.invoice-pembelian.index');     
     }
