@@ -381,7 +381,7 @@
                                             <i class="fas fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" readonly>
+                                    <input type="text" id="fd_inv_agingdate" class="form-control" name="fd_inv_agingdate" readonly>
                                 </div>
                             </div>
                         </div>
