@@ -50,4 +50,8 @@ class Invstore extends Model
     public function tempinvoicedetail(){
         return $this->belongsToMany(TempInvoiceDtl::class, 'fc_detailitem','fc_barcode');
     }
+
+    public function invoicedetail(){
+        return $this->belongsToMany(InvoiceDtl::class, 'fc_detailitem','fc_barcode');
+    }
 }

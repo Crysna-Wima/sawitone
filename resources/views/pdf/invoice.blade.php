@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: .8rem!important;
+        font-size: .8rem;
     }
 </style>
 
@@ -172,8 +172,16 @@
         </div>
         <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
             <p><b>Kepada Yth</b></p>
-            <p>{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</p>
-            <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+            @if($inv_mst->fc_invtype == 'SALES')
+            <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
+            <p>{{ $inv_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+            @elseif($inv_mst->fc_invtype == 'PURCHASE')
+            <p>{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
+            <p>{{ $inv_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</p>
+            @else
+            <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
+            <p>{{ $inv_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+            @endif
         </div>
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
@@ -186,21 +194,44 @@
 
 <div class="content">
         <br><br><br>
-        <p style="text-align: center; font-weight:bold">INVOICE</p>
-        <br>
+        <p style="text-align: center; font-weight:bold; font-size: 15px">INVOICE</p>
+        <p style="text-align: center; font-weight:bold;">({{ $inv_mst->fc_invno }})</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            @if($inv_mst->fc_invtype == 'SALES')
             <tr>
                 <td>Sales</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $do_mst->somst->sales->fc_salesname1 ?? '-' }}</td>
+                <td style="width: 30%">{{ $inv_mst->somst->sales->fc_salesname1 ?? '-' }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
-            <tr>    
+            @elseif($inv_mst->fc_invtype == 'PURCHASE')
+
+            @else
+            <tr>
+                <td>Sales</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->somst->sales->fc_salesname1 ?? '-' }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            @endif
+            <tr>
+                @if($inv_mst->fc_invtype == 'SALES')
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                <td style="width: 30%">{{ $inv_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                @elseif($inv_mst->fc_invtype == 'PURCHASE')
+                <td>NPWP</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->pomst->supplier->fc_supplierNPWP ?? '-' }}</td>
+                @else
+                <td>NPWP</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                @endif
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</td>
@@ -215,27 +246,33 @@
             </tr>
         </table>
 
+        @if($inv_mst->fc_invtype == 'SALES')
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Dikirim</p>
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
-                <th>Nama Produk</th>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
                 <th>Satuan</th>
+                <th>Batch</th>
+                <th>Exp. Date</th>
                 <th>Qty</th>
-                <th>Harga (Rp)</th>
-                <th>Diskon (Rp)</th>
-                <th>Total (Rp)</th>
+                <th>Harga Satuan</th>
+                <th>Total</th>
             </tr>
 
-            @if(isset($do_dtl))
-                @foreach ($do_dtl as $item)
+            @if(isset($inv_dtl))
+                @foreach ($inv_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->invstore->stock->fc_stockcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->invstore->stock->fc_namepack }}</td>
-                        <td>{{ $item->fn_qty_do }}</td>
-                        <td>{{ $item->fn_price }}</td>
-                        <td>{{ $item->fn_disc }}</td>
-                        <td>{{ $item->fn_value }}</td>
+                        <td>{{ $item->invstore->fc_batch }}</td>
+                        <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ $item->fn_itemqty }}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
                     </tr>
                 @endforeach
 
@@ -246,21 +283,123 @@
             @endif
 
         </table>
+        @elseif($inv_mst->fc_invtype == 'PURCHASE')
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Diterima</p>
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+            <tr>
+                <th>No</th>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
+                <th>Satuan</th>
+                <th>Batch</th>
+                <th>Exp. Date</th>
+                <th>Qty</th>
+                <th>Harga Satuan</th>
+                <th>Total</th>
+            </tr>
+
+            @if(isset($inv_dtl))
+                @foreach ($inv_dtl as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->invstore->stock->fc_stockcode }}</td>
+                        <td>{{ $item->invstore->stock->fc_namelong }}</td>
+                        <td>{{ $item->invstore->stock->fc_namepack }}</td>
+                        <td>{{ $item->invstore->fc_batch }}</td>
+                        <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ $item->fn_itemqty }}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                    </tr>
+                @endforeach
+
+            @else
+            <tr>
+                <td colspan="12" class="text-center">Data Not Found</td>
+            </tr>
+            @endif
+        </table>
+        @else
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Data CPRR</p>
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+            <tr>
+                <th>No</th>
+                <th>Kode CPRR</th>
+                <th>Nama CPRR</th>
+                <th>Jumlah</th>
+                <th>Harga Satuan</th>
+                <th>Catatan</th>
+                <th>Total</th>
+            </tr>
+
+            @if(isset($inv_dtl))
+                @foreach ($inv_dtl as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->fc_detailitem }}</td>
+                        <td>{{ $item->cospertes->fc_cprrname }}</td>
+                        <td>{{ $item->nameunity->fv_description }}</td>
+                        <td>{{ $item->fn_itemqty }}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
+                        <td>{{ $item->fv_description ?? '-'}}</td>
+                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                    </tr>
+                @endforeach
+
+            @else
+            <tr>
+                <td colspan="12" class="text-center">Data Not Found</td>
+            </tr>
+            @endif
+        </table>
+        @endif
+
+        <!-- <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Biaya Lainnya</p>
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+            <tr>
+                <th>No</th>
+                <th>Keterangan</th>
+                <th>Satuan</th>
+                <th>Harga Satuan</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Catatan</th>
+            </tr>
+
+            @if(isset($inv_dtl))
+                @foreach ($inv_dtl as $item)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->fc_detailitem }}</td>
+                        <td>{{ $item->fc_unityname }}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
+                        <td>{{ $item->fn_itemqty }}</td>
+                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                        <td>{{ $item->fv_description ?? '-'}}</td>
+                    </tr>
+                @endforeach
+
+            @else
+            <tr>
+                <td colspan="12" class="text-center">Data Not Found</td>
+            </tr>
+            @endif
+        </table> -->
 
         <table style="width: 90%; border-collapse: collapse; margin: auto;">
-            <tr class="pt-1">
+            <tr>
                 <td>Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">Rp. {{ number_format($do_mst->fm_netto,0,',','.')}}</td>
+                <td style="width: 28%">Rp. {{ number_format($inv_mst->fm_netto,0,',','.')}}</td>
                 <td>Biaya Kirim</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format( $do_mst->somst->fm_servpay,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format( $inv_mst->fm_servpay,0,',','.')}}</td>
             </tr>
 
             <tr>
                 <td>Pajak</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($do_mst->somst->fm_tax,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_tax,0,',','.')}}</td>
                 <td>Biaya Materai</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. 0</td>
@@ -271,7 +410,7 @@
                 <td style="width: 28%"></td>
                 <td><b>Tagihan</b></td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($do_mst->somst->fm_brutto,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_brutto,0,',','.')}}</td>
             </tr>
         </table>
 
@@ -286,7 +425,7 @@
             </tr>
 
             <tr>
-                <td style="width: 50%;"><i>"{{ terbilang($do_mst->somst->fm_brutto) }} Rupiah"</i></td>
+                <td style="width: 50%;">"{{ terbilang($inv_mst->fm_brutto) }} Rupiah"</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -304,15 +443,35 @@
             </tr>
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
-                <td style="width: 50% !important; text-align: right;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
+                @if($inv_mst->fc_invtype == 'SALES')
+                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</td>
+                @elseif($inv_mst->fc_invtype == 'PURCHASE')
+                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</td>
+                @else
+                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</td>
+                @endif
             </tr>
             <br><br/>
             <br><br/>
             <tr >
-                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: left;">( {{ $nama_pj }} )</td>
                 <td style="width: 50% !important; text-align: right;">(..................................................)</td>
             </tr>
         </table>
+
+        <div class="container" id="so-pdf">
+            <div class="footer" style="height: 100px">
+                <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
+                    <p><b>Syarat Pembayaran :</b></p>
+                    <p>- Pembayaran harap di selesaikan dalam waktu 30 hari dari tanggal Faktur</p>
+                    <p>- Pembayaran harap dilakukan dengan Giro Bilyet / Cross Cheque atau transfer ke bank kami.</p>
+                    <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
+                    <p>&nbsp;&nbsp;Bank BCA kcp Rungkut Mapan</p>
+                    <p>&nbsp;&nbsp;A/C 6750320030</p>
+                    <p>- Pembayaran di anggap lunas apabila sudah CAIR</p>
+                </div>
+            </div>
+        </div>
     <div>
 </body>
 

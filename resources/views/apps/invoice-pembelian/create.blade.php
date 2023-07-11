@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -345,8 +351,8 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <button type="button" onclick="click_delete()" class="btn btn-danger mr-1">Cancel</button>
         <form id="form_submit_edit" action="/apps/invoice-pembelian/create/submit-invoice" method="post">
+            <button type="button" onclick="click_delete()" class="btn btn-danger mr-1">Cancel</button>
             @csrf
             @method('put')
             <input type="hidden" name="fc_invtype" value="{{ utf8_encode('PURCHASE') }}">
@@ -361,7 +367,7 @@
 
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_biaya" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title">Biaya Lainnya</h5>
@@ -372,8 +378,8 @@
             <form id="form_submit_item2" action="/apps/invoice-pembelian/create/store-detail" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group required">
                                 <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
                                 <label>Keterangan</label>
                                 <div class="input-group">
@@ -382,15 +388,23 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Satuan</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="fc_unityname" name="fc_unityname">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Qty</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="fn_itemqty" name="fn_itemqty">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group required">
                                 <label>Harga Satuan</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -399,14 +413,6 @@
                                         </div>
                                     </div>
                                     <input type="text" class="form-control" id="fm_unityprice" name="fm_unityprice" onkeyup="return onkeyupRupiah(this.id);">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group">
-                                <label>Qty</label>
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="fn_itemqty" name="fn_itemqty">
                                 </div>
                             </div>
                         </div>
@@ -479,7 +485,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
+                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
                 }
             },
             {

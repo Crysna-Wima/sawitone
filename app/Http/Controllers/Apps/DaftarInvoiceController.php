@@ -51,16 +51,25 @@ class DaftarInvoiceController extends Controller
 
     public function datatables_inv_detail($fc_invno){
         $decode_fc_invno = base64_decode($fc_invno);
-        $data = InvoiceDtl::with('invmst', 'cospertes', 'nameunity')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invno', $decode_fc_invno)->get();
+        $data = InvoiceDtl::with('invmst', 'cospertes', 'nameunity')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_invno', $decode_fc_invno)
+        ->where('fc_status', 'ADDON')
+        ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_do_detail($fc_dono){
-        $decode_dono = base64_decode($fc_dono);
-        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
+    public function datatables_do_detail($fc_invno){
+        $decode_fc_invno = base64_decode($fc_invno);
+        $data = InvoiceDtl::with('invstore.stock', 'invmst')
+        ->where('fc_invno', $decode_fc_invno)
+        ->where('fc_status','DEFAULT')
+        ->where('fc_invtype' , "SALES")
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -68,14 +77,32 @@ class DaftarInvoiceController extends Controller
         // dd($fc_dono);
     }
 
-    public function datatables_ro_detail($fc_rono){
-        $decode_rono = base64_decode($fc_rono);
-        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
-
+    public function datatables_ro_detail($fc_invno){
+        $decode_fc_invno = base64_decode($fc_invno);
+        $data = InvoiceDtl::with('invstore.stock', 'invmst')
+        ->where('fc_invno', $decode_fc_invno)
+        ->where('fc_status','DEFAULT')
+        ->where('fc_invtype' , "PURCHASE")
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+        
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
-        // dd($fc_dono);
+    }
+
+    public function datatables_cprr($fc_invno){
+        $decode_fc_invno = base64_decode($fc_invno);
+        $data = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')
+        ->where('fc_invno', $decode_fc_invno)
+        ->where('fc_status','DEFAULT')
+        ->where('fc_invtype' , "CPRR")
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+        
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function pdf(Request $request){
@@ -99,7 +126,7 @@ class DaftarInvoiceController extends Controller
     public function get_pdf($fc_invno, $nama_pj){
         $decode_fc_invno = base64_decode($fc_invno);
         $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
