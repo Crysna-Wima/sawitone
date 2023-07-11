@@ -144,12 +144,16 @@ class InvoicePenjualanDetailController extends Controller
 
     public function datatables_do_detail($fc_dono){
         // $decode_dono = base64_decode($fc_dono);
-        $data = TempInvoiceDtl::with('invstore.stock','tempinvmst.domst')
-        ->where('fc_invno',auth()->user()->fc_userid)
-        ->where('fc_status','DEFAULT')
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
-
+        $data = TempInvoiceDtl::with('invstore.stock', 'tempinvmst')
+                ->where([
+                    'fc_invno' =>  auth()->user()->fc_userid,
+                    'fc_invtype' => "SALES",
+                    'fc_status' => "DEFAULT",
+                    'fc_branch' =>  auth()->user()->fc_branch,
+                ])
+                ->get();
+        
+        
         return DataTables::of($data)
         ->addIndexColumn()
         ->make(true);
@@ -158,9 +162,12 @@ class InvoicePenjualanDetailController extends Controller
 
     public function datatables_biaya_lain(){
         $data = TempInvoiceDtl::with('tempinvmst', 'nameunity')
-        ->where('fc_invno', auth()->user()->fc_userid)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_status', 'ADDON')
+        ->where([
+            'fc_invno' =>  auth()->user()->fc_userid,
+            'fc_invtype' => "SALES",
+            'fc_status' => "ADDON",
+            'fc_branch' =>  auth()->user()->fc_branch,
+        ])
         ->get();
 
         return DataTables::of($data)

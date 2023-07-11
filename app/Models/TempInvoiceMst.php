@@ -10,7 +10,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class TempInvoiceMst extends Model
 {
-    use HasFactory, Blameable, LogsActivity, CompositeKey;
+    use \Awobaz\Compoships\Compoships, HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttribute = ["*"];
     protected $table = 't_tempinvmst';
@@ -19,7 +19,9 @@ class TempInvoiceMst extends Model
     protected $guarded = ['type'];
 
     public function tempinvdtl(){
-        return $this->hasMany(TempInvoiceDtl::class, 'fc_invno','fc_invno');
+        return $this->hasMany(TempInvoiceDtl::class, ['fc_invno', 'fc_invtype'], ['fc_invno', 'fc_invtype'])->where([
+            'fc_branch' => auth()->user()->fc_branch
+        ]);
     }
 
     public function somst(){
