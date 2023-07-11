@@ -12,7 +12,7 @@ use App\Traits\CompositeKey;
 
 class RoDetail extends Model
 {
-    use HasFactory, Blameable, LogsActivity, CompositeKey;
+    use \Awobaz\Compoships\Compoships, HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 

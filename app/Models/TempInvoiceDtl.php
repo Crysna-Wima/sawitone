@@ -35,4 +35,5 @@ class TempInvoiceDtl extends Model
     public function invstore(){
         return $this->hasOne(Invstore::class, 'fc_barcode','fc_detailitem');
     }
+
 }

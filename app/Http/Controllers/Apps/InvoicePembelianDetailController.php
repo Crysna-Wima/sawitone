@@ -146,6 +146,7 @@ class InvoicePembelianDetailController extends Controller
         $data = TempInvoiceDtl::with('invstore.stock')
         ->where('fc_invno',auth()->user()->fc_userid)
         ->where('fc_status','DEFAULT')
+        ->where('fc_invtype' , "PURCHASE")
         ->where('fc_branch', auth()->user()->fc_branch)
         ->get();
 

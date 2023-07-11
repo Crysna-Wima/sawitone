@@ -77,8 +77,10 @@ class InvoicePembelianController extends Controller
             ];
         }
         
-        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
-        // create TempInvoiceMst
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        if(empty($temp_inv_master)){
+             // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
@@ -107,5 +109,12 @@ class InvoicePembelianController extends Controller
                     'message' => 'Data gagal disimpan'
                 ];
             }
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data sudah ada'
+            ];
+        }
+       
     }
 }
