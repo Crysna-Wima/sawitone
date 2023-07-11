@@ -407,13 +407,13 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-calendar"></i>
-                                        </div>
+                                        </div>zz
                                     </div>
                                     <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
-                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $do_mst->somst->fc_sono }}" name="fc_suppdocno" required>
-                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_child_suppdocno" required>
-                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $do_mst->somst->customer->fc_membercode }}" name="fc_entitycode" required>
-                                    <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $do_mst->fn_dodetail }}" name="fn_dodetail" required>
+                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $ro_mst->pomst->fc_pono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $ro_mst->fc_rono }}" name="fc_child_suppdocno" required>
+                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliercode }}" name="fc_entitycode" required>
+                                    <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $ro_mst->fn_rodetail }}" name="fn_dodetail" required>
 
                                 </div>
                             </div>
