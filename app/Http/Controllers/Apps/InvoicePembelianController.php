@@ -76,7 +76,8 @@ class InvoicePembelianController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-
+        
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
         // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
