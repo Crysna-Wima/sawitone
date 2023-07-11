@@ -43,8 +43,23 @@ class InvoicePembelianController extends Controller
         $data['ro_mst'] = RoMaster::with('pomst.supplier', 'warehouse')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['fc_rono'] = $decode_fc_rono;
+
+        $temp_inv_master = TempInvoiceMst::with('supplier')->where([
+            'fc_invno' =>  auth()->user()->fc_userid,
+            'fc_branch' =>  auth()->user()->fc_branch,
+            'fc_invtype' => "PURCHASE"
+        ])->first();
+        if(!empty($temp_inv_master)){
+            $data['ro_mst'] = RoMaster::with('pomst.supplier')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
+            return view('apps.invoice-pembelian.create',$data);
+            // dd($temp_inv_master->fc_child_suppdocno);
+        }
+        $data['ro_mst'] = DoMaster::with('pomst.supplier')->where('fc_rono', $decode_fc_rono )->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['ro_dtl'] = DoDetail::with('invstore.stock')->where('fc_rono', $decode_fc_rono )->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['fc_rono'] = $decode_fc_rono;
+        
         return view('apps.invoice-pembelian.detail', $data);
-        // dd($data);
     }
 
     public function datatables()

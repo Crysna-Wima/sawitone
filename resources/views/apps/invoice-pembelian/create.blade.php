@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Invoice Penjualan')
+@section('title', 'Invoice Pembelian')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -183,6 +183,7 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
                                         <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -345,7 +346,7 @@
     </div>
     <div class="button text-right mb-4">
         <button type="button" onclick="click_delete()" class="btn btn-danger mr-1">Cancel</button>
-        <form id="form_submit_edit" action="/apps/invoice-penjualan/create/submit-invoice" method="post">
+        <form id="form_submit_edit" action="/apps/invoice-pembelian/create/submit-invoice" method="post">
             @csrf
             @method('put')
             <input type="hidden" name="fc_invtype" value="{{ utf8_encode('PURCHASE') }}">
@@ -502,7 +503,20 @@
             }
         },
         footerCallback: function(row, data, start, end, display) {
-
+            if (data.length != 0) {
+                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $("#fm_servpay_calculate").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $("#fm_disctotal").trigger("change");
+                $('#count_item').html(data[0].tempinvmst.fn_invdetail);
+                $("#count_item").trigger("change");
+            }
         }
     });
 
@@ -657,7 +671,7 @@
             },
         ],
         rowCallback: function(row, data) {
-            var url_delete = "/apps/invoice-penjualan/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
+            var url_delete = "/apps/invoice-pembelian/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
             $('td:eq(7)', row).html(`
                 <button class="btn btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i> Hapus</button>`);

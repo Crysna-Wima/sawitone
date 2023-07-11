@@ -294,6 +294,16 @@ class InvoicePenjualanDetailController extends Controller
                 ->update([
                     'fc_status' => 'R'
                     ]);
+            
+                TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_invtype', 'SALES')
+                    ->delete();
+                TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_invtype', 'SALES')
+                    ->delete();
+                    
             DB::commit();
 
             return [
