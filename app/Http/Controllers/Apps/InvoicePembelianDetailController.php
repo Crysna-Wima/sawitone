@@ -141,9 +141,10 @@ class InvoicePembelianDetailController extends Controller
         }
     }
 
+
     public function datatables_ro_detail($fc_rono){
         // $decode_dono = base64_decode($fc_dono);
-        $data = TempInvoiceDtl::with('invstore.stock')
+        $data = TempInvoiceDtl::with('invstore.stock', 'tempinvmst')
         ->where('fc_invno',auth()->user()->fc_userid)
         ->where('fc_status','DEFAULT')
         ->where('fc_invtype' , "PURCHASE")
@@ -262,6 +263,7 @@ class InvoicePembelianDetailController extends Controller
 		}
     }
 
+
     public function submit_invoice(Request $request){
         $validator = Validator::make($request->all(), [
             'fc_invtype' => 'required',
@@ -288,7 +290,19 @@ class InvoicePembelianDetailController extends Controller
                 ->update([
                     'fc_status' => 'R'
                     ]);
+
+            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_invtype', 'PURCHASE')
+                        ->delete();
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_invtype', 'PURCHASE')
+                        ->delete();
+            
             DB::commit();
+
+            
 
             return [
 				'status' => 201, // SUCCESS

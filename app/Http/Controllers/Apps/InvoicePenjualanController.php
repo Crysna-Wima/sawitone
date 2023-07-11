@@ -45,7 +45,7 @@ class InvoicePenjualanController extends Controller
         $temp_inv_master = TempInvoiceMst::with('customer')->where([
             'fc_invno' =>  auth()->user()->fc_userid,
             'fc_branch' =>  auth()->user()->fc_branch,
-            'fc_invtype' => "PURCHASE"
+            'fc_invtype' => "SALES"
         ])->first();
         if(!empty($temp_inv_master)){
             $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -74,7 +74,10 @@ class InvoicePenjualanController extends Controller
             ];
         }
 
-        // create TempInvoiceMst
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        if(empty($temp_inv_master)){
+            // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
@@ -103,5 +106,13 @@ class InvoicePenjualanController extends Controller
                     'message' => 'Data gagal disimpan'
                 ];
             }
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data sudah ada'
+            ];
+        }
+
+        
     }
 }
