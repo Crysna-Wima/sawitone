@@ -270,7 +270,7 @@
             }
 
             $('td:eq(8)', row).html(`
-            <a href="/apps/daftar-invoice/detail/${fc_invno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/daftar-invoice/detail/${fc_invno}/SALES"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
          `);
         }
@@ -316,7 +316,7 @@
                 render: formatTimestamp
             },
             {
-                data: 'supplier.fc_suppliername'
+                data: 'supplier.fc_suppliername1'
             },
             {
                 data: 'fc_status'
@@ -344,7 +344,7 @@
             }
 
             $('td:eq(8)', row).html(`
-            <a href="/apps/daftar-invoice/detail/${fc_invno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/daftar-invoice/detail/${fc_invno}/PURCHASE"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
          `);
         }
@@ -387,7 +387,7 @@
                 render: formatTimestamp
             },
             {
-                data: 'fc_entitycode'
+                data: 'customer.fc_membername1'
             },
             {
                 data: 'fc_status'
@@ -419,7 +419,7 @@
             }
 
             $('td:eq(8)', row).html(`
-            <a href="/apps/daftar-invoice/detail/${fc_invno}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
+            <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
          `);
         }

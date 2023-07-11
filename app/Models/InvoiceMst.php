@@ -39,10 +39,10 @@ class InvoiceMst extends Model
     }
 
     public function customer(){
-        return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_entitycode');
+        return $this->hasOne(Customer::class, 'fc_membercode', 'fc_entitycode');
     }
 
     public function supplier(){
-        return $this->belongsTo(Supplier::class, 'fc_suppliercode', 'fc_entitycode');
+        return $this->hasOne(Supplier::class, 'fc_suppliercode', 'fc_entitycode');
     }
 }

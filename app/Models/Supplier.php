@@ -75,6 +75,10 @@ class Supplier extends Model
     public function pomst(){
         return $this->hasMany(PoMaster::class, 'fc_suppliercode', 'fc_suppliercode')->withTrashed();
     }
+
+    public function invmst(){
+        return $this->hasMany(InvoiceMst::class, 'fc_membercode', 'fc_entitycode');
+    }
     
 
 }

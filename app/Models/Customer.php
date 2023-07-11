@@ -68,4 +68,8 @@ class Customer extends Model
         return $this->hasMany(User::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
 
+    public function invmst(){
+        return $this->hasMany(InvoiceMst::class, 'fc_membercode', 'fc_entitycode');
+    }
+
 }

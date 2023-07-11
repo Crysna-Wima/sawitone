@@ -8,12 +8,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 use PDF;
-use App\Models\RoMaster;
 use App\Models\RoDetail;
-use App\Models\DoMaster;
 use App\Models\DoDetail;
-use App\Models\InvDetail;
-use App\Models\InvMaster;
 use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
 use App\Models\TransaksiType;
@@ -25,12 +21,20 @@ class DaftarInvoiceController extends Controller
         return view('apps.daftar-invoice.index');     
     }
 
-    public function detail($fc_invno)
+    public function detail($fc_invno, $fc_invtype)
     {
         $decode_fc_invno = base64_decode($fc_invno);
         session(['fc_invno_global' => $decode_fc_invno]);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
+        if($fc_invtype == "SALES") {
+            $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->get();
+        } else if ($fc_invtype == "PURCHASE"){
+            $data['inv_mst'] = InvoiceMst::with('pomst', 'romst', 'supplier')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->get();
+        } else {
+            $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->first();
+            $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->get();
+        }
         $data['fc_invno'] = $decode_fc_invno;
         return view('apps.daftar-invoice.detail', $data);
         // dd($data);
@@ -43,6 +47,35 @@ class DaftarInvoiceController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function datatables_inv_detail($fc_invno){
+        $decode_fc_invno = base64_decode($fc_invno);
+        $data = InvoiceDtl::with('invmst', 'cospertes', 'nameunity')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invno', $decode_fc_invno)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_do_detail($fc_dono){
+        $decode_dono = base64_decode($fc_dono);
+        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+        // dd($fc_dono);
+    }
+
+    public function datatables_ro_detail($fc_rono){
+        $decode_rono = base64_decode($fc_rono);
+        $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', $decode_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->make(true);
+        // dd($fc_dono);
     }
 
     public function pdf(Request $request){
