@@ -397,7 +397,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="/apps/invoice-penjualan/create/store-invoice" method="post" autocomplete="off">
+            <form id="form_submit" action="/apps/invoice-pembelian/create/store-invoice" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-4">
@@ -410,10 +410,10 @@
                                         </div>zz
                                     </div>
                                     <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
-                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $do_mst->somst->fc_sono }}" name="fc_suppdocno" required>
-                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_child_suppdocno" required>
-                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $do_mst->somst->customer->fc_membercode }}" name="fc_entitycode" required>
-                                    <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $do_mst->fn_dodetail }}" name="fn_dodetail" required>
+                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $ro_mst->pomst->fc_pono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $ro_mst->fc_rono }}" name="fc_child_suppdocno" required>
+                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliercode }}" name="fc_entitycode" required>
+                                    <input type="hidden" id="fn_rodetail" class="form-control" value="{{ $ro_mst->fn_rodetail }}" name="fn_rodetail" required>
 
                                 </div>
                             </div>
