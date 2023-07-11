@@ -130,13 +130,12 @@ class InvoicePenjualanDetailController extends Controller
             return response()->json([
                 'status' => 200,
                 'total' => $total,
-                'link' => '/apps/invoice-cprr',
+                'link' => '/apps/invoice-penjualan',
                 'message' => 'Data berhasil disimpan'
             ]);
         } else{
              return [
                  'status' => 300,
-                 'link' => '/apps/invoice-cprr',
                  'message' => 'Error'
              ];
         }
