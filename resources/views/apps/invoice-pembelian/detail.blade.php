@@ -465,8 +465,8 @@
     $('#fn_inv_agingday').on('input', function() {
         var fd_inv_releasedate = $('#fd_inv_releasedate').val();
         var fn_inv_agingday = parseInt($('#fn_inv_agingday').val());
-        if (moment(fd_inv_releasedate, 'DD/MM/YYYY').isValid()) {
-            var fd_inv_agingdate = moment(fd_inv_releasedate, 'DD/MM/YYYY').add(fn_inv_agingday, 'days').format('DD/MM/YYYY');
+        if (moment(fd_inv_releasedate, 'MM/DD/YYYY').isValid()) {
+            var fd_inv_agingdate = moment(fd_inv_releasedate, 'MM/DD/YYYY').add(fn_inv_agingday, 'days').format('MM/DD/YYYY');
             $('#fd_inv_agingdate').val(fd_inv_agingdate);
         }
     });
