@@ -232,8 +232,14 @@ class InvoicePenjualanDetailController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
-            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invtype', 'SALES')
+            ->delete();
+            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invtype', 'SALES')
+            ->delete();
 
 			DB::commit();
 

@@ -21,7 +21,7 @@ use App\Models\TransaksiType;
 use DB;
 use Validator;
 
-class InvoicePenjualanDetailController extends Controller
+class InvoicePembelianDetailController extends Controller
 {
     public function create($fc_rono)
     {
@@ -144,7 +144,7 @@ class InvoicePenjualanDetailController extends Controller
 
     public function datatables_ro_detail($fc_rono){
         // $decode_dono = base64_decode($fc_dono);
-        $data = TempInvoiceDtl::with('invstore.stock','tempinvmst.domst')
+        $data = TempInvoiceDtl::with('invstore.stock')
         ->where('fc_invno',auth()->user()->fc_userid)
         ->where('fc_status','DEFAULT')
         ->where('fc_branch', auth()->user()->fc_branch)
@@ -232,8 +232,14 @@ class InvoicePenjualanDetailController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->delete();
-            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->delete();
+            TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invtype', 'PURCHASE')
+            ->delete();
+            TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invtype', 'PURCHASE')
+            ->delete();
 
 			DB::commit();
 

@@ -495,16 +495,19 @@ Route::group(['middleware' => ['cek_login']], function () {
         });
 
         Route::prefix('invoice-pembelian')->group(function () {
+            Route::get('/datatables-biaya-lain', 'Apps\InvoicePembelianDetailController@datatables_biaya_lain');
+            Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
             Route::get('/', 'Apps\InvoicePembelianController@index');
             Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
+            Route::delete('/cancel-invoice','Apps\InvoicePembelianDetailController@cancel_invoice');
+            
 
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
                 Route::post('/store-detail','Apps\InvoicePembelianControllerDetailController@insert_item');
-                Route::get('/{fc_rono}', 'Apps\InvoicePembelianController@create');
-                Route::get('/datatables-ro-detail/{fc_rono}', 'Apps\InvoicePembelianControllerDetailController@datatables_ro_detail');
-                Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
+                Route::get('/{fc_rono}', 'Apps\InvoicePembelianDetailController@create');
+                Route::get('/datatables-ro-detail/{fc_rono}', 'Apps\InvoicePembelianDetailController@datatables_ro_detail');
                 Route::put('/submit-invoice','Apps\InvoicePembelianControllerDetailController@submit_invoice');
             });
         });

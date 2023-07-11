@@ -24,14 +24,14 @@ use Validator;
 class InvoicePembelianController extends Controller
 {
     public function index(){
-        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
         $total = count($temp_detail);
         if(!empty($temp_inv_master)){
             $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
-            // return view('apps.invoice-pembelian.create',$data);
-            dd($data);
+            return view('apps.invoice-pembelian.create',$data);
+            // dd($data);
         }
         return view('apps.invoice-pembelian.index');     
     }
@@ -61,5 +61,50 @@ class InvoicePembelianController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function create_invoice(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_suppdocno' => 'required',
+            'fc_entitycode' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // create TempInvoiceMst
+         $create = TempInvoiceMst::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_suppdocno' => $request->fc_suppdocno,
+            'fc_child_suppdocno' => $request->fc_child_suppdocno,
+            'fc_entitycode' => $request->fc_entitycode,
+            'fc_status' => 'I',
+            'fc_invtype' => 'PURCHASE',
+            'fd_inv_releasedate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_releasedate)),
+            'fn_inv_agingday' => $request->fn_inv_agingday,
+            'fd_inv_agingdate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_agingdate)),
+            'fc_userid' => auth()->user()->fc_userid,
+            'fn_invdetail' => $request->fn_dodetail
+         ]);
+
+            if($create){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil disimpan',
+                    'link' => '/apps/invoice-pembelian/create/' . base64_encode( $request->fc_child_suppdocno)
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
     }
 }

@@ -436,6 +436,7 @@
 
     var rono = "{{ $ro_mst->fc_rono }}";
     var encode_rono = window.btoa(rono);
+    // console.log(encode_rono)
     var tb = $('#tb').DataTable({
         // apabila data kosong
         processing: true,
@@ -447,9 +448,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7, 8, 9]
+            targets: [0, 3]
         }, ],
-        columns: [{
+        columns: [
+            {
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false
