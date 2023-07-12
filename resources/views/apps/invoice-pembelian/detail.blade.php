@@ -388,71 +388,7 @@
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_inv" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Masa Invoice</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="form_submit" action="/apps/invoice-pembelian/create/store-invoice" method="post" autocomplete="off">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group required">
-                                <label>Tanggal Terbit</label>
-                                <div class="input-group" data-date-format="dd-mm-yyyy">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-calendar"></i>
-                                        </div>zz
-                                    </div>
-                                    <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
-                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $ro_mst->pomst->fc_pono }}" name="fc_suppdocno" required>
-                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $ro_mst->fc_rono }}" name="fc_child_suppdocno" required>
-                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliercode }}" name="fc_entitycode" required>
-                                    <input type="hidden" id="fn_rodetail" class="form-control" value="{{ $ro_mst->fn_rodetail }}" name="fn_rodetail" required>
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group required">
-                                <label>Masa Jatuh Tempo</label>
-                                <div class="input-group" data-date-format="dd-mm-yyyy">
-                                    <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" required>
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            Hari
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-4">
-                            <div class="form-group">
-                                <label>Estimasi Jatuh Tempo</label>
-                                <div class="input-group" data-date-format="dd-mm-yyyy">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-calendar"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" id="fd_inv_agingdate" class="form-control" name="fd_inv_agingdate" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('js')

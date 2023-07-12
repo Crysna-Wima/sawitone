@@ -27,108 +27,99 @@
                     <h4>Tambah Stock Customer</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-                        <form id="form_submit" action="/data-master/stock-customer/store-update" method="POST" autocomplete="off">
-                            <input type="text" name="type" id="type" hidden>
-                            <input type="number" name="id" id="id" hidden>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-12 col-md-6 col-lg-6" hidden>
-                                        <div class="form-group">
-                                            <label>Division Code</label>
-                                            <input type="text" class="form-control" name="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" id="fc_divisioncode" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group required">
-                                            <label>Cabang</label>
-                                            <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" required></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group required">
-                                            <label>Supplier Code</label>
-                                            <select class="form-control select2 required-field" name="fc_suppliercode" id="fc_suppliercode" required></select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>-</label>
-                                            <button type="button" class="btn btn-info btn-block" onclick="click_choose_product()">Choose Product</button>
-                                            {{-- <select class="form-control select2 required-field" name="fc_stockcode" id="fc_stockcode"></select> --}}
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
-                                        <div class="form-group">
-                                            <label>Katalog Product</label>
-                                            <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" hidden readonly>
-                                            <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
-                                        <div class="form-group">
-                                            <label>Name Short</label>
-                                            <input type="text" class="form-control" name="fc_nameshort" id="fc_nameshort" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
-                                        <div class="form-group">
-                                            <label>Name Long</label>
-                                            <input type="text" class="form-control" name="fc_namelong" id="fc_namelong" readonly>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-12 col-md-12 col-lg-12">
+                    <input type="text" class="form-control required-field" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+                    <form id="form_submit" action="/data-master/stock-customer/store-update" method="POST" autocomplete="off">
+                        <input type="text" name="type" id="type" hidden>
+                        <input type="number" name="id" id="id" hidden>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-6" hidden>
                                     <div class="form-group">
-                                        <label>Harga Pembelian dari Supplier</label>
-                                        <input type="text" class="form-control format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);">
+                                        <label>Division Code</label>
+                                        <input type="text" class="form-control required-field" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                                     </div>
-                                </div> --}}
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price Supplier</label>
-                                            <input type="text" class="form-control format-rp" name="fm_purchase" id="fm_purchase" onkeyup="return onkeyupRupiah(this.id);" required>
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group required">
+                                        <label>Cabang</label>
+                                        <select class="form-control select2 required-field" name="fc_branch" id="fc_branch" required></select>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price</label>
-                                            <input type="text" class="form-control format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group required">
+                                        <label>Member Code</label>
+                                        <select class="form-control select2 required-field" name="fc_membercode" id="fc_membercode" required></select>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price Distributor</label>
-                                            <input type="text" class="form-control format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>-</label>
+                                        <button type="button" class="btn btn-info btn-block" onclick="click_choose_product()">Choose Product</button>
+                                        {{-- <select class="form-control select2 required-field" name="fc_stockcode" id="fc_stockcode"></select> --}}
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price Project</label>
-                                            <input type="text" class="form-control format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
+                                    <div class="form-group">
+                                        <label>Katalog Product</label>
+                                        <input type="text" class="form-control" name="fc_barcode" id="fc_barcode" hidden readonly>
+                                        <input type="text" class="form-control" name="fc_stockcode" id="fc_stockcode" readonly>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price Dealer</label>
-                                            <input type="text" class="form-control format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
+                                    <div class="form-group">
+                                        <label>Name Short</label>
+                                        <input type="text" class="form-control" name="fc_nameshort" id="fc_nameshort" readonly>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4">
-                                        <div class="form-group">
-                                            <label>Price End User</label>
-                                            <input type="text" class="form-control format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
-                                        </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4 place_hidden" hidden>
+                                    <div class="form-group">
+                                        <label>Name Long</label>
+                                        <input type="text" class="form-control" name="fc_namelong" id="fc_namelong" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price Customer</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_customer" id="fm_price_customer" onkeyup="return onkeyupRupiah(this.id);" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_default" id="fm_price_default" onkeyup="return onkeyupRupiah(this.id);">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price Distributor</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_distributor" id="fm_price_distributor" onkeyup="return onkeyupRupiah(this.id);">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price Project</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_project" id="fm_price_project" onkeyup="return onkeyupRupiah(this.id);">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price Dealer</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_dealer" id="fm_price_dealer" onkeyup="return onkeyupRupiah(this.id);">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Price End User</label>
+                                        <input type="text" class="form-control format-rp" name="fm_price_enduser" id="fm_price_enduser" onkeyup="return onkeyupRupiah(this.id);">
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer bg-whitesmoke br">
-                                <button type="button" onclick="click_reset()" hidden id="button_reset" class="btn btn-danger">Reset Data</button>
-                                <button type="submit" class="btn btn-success">Simpan Data Stock Supplier</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="modal-footer bg-whitesmoke br">
+                            <button type="button" onclick="click_reset()" hidden id="button_reset" class="btn btn-danger">Reset Data</button>
+                            <button type="submit" class="btn btn-success">Simpan Data Stock Customer</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
