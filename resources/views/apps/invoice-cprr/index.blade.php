@@ -62,7 +62,7 @@
                                         <input type="text" class="form-control" id="fc_userid" name="fc_userid" value="{{ auth()->user()->fc_userid }}" required readonly>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-6 col-lg-6">
+                                <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group">
                                         <label>Tanggal Terbit</label>
                                         <div class="input-group date">
