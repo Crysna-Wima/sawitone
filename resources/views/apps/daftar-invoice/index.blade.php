@@ -207,7 +207,7 @@
         serverSide: true,
         pageLength: 5,
         order: [
-            [2, 'desc']
+            [3, 'desc']
         ],
         ajax: {
             url: '/apps/daftar-invoice/datatables/SALES',
@@ -281,7 +281,7 @@
         serverSide: true,
         pageLength: 5,
         order: [
-            [2, 'desc']
+            [3, 'desc']
         ],
         ajax: {
             url: '/apps/daftar-invoice/datatables/PURCHASE',
