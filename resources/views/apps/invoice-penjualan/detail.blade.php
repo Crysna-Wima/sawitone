@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
 </style>
 @endsection
 
@@ -330,7 +336,7 @@
 
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_inv" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title">Masa Invoice</h5>
@@ -341,7 +347,7 @@
             <form id="form_submit" action="/apps/invoice-penjualan/create/store-invoice" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Tanggal Terbit</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -359,7 +365,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Masa Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -372,7 +378,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Estimasi Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">

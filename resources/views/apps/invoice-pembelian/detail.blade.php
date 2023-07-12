@@ -27,6 +27,12 @@
             font-size: .9rem;
         }
     }
+
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -314,14 +320,14 @@
     </div>
     <div class="button text-right mb-4">
         {{-- <a href="/apps/invoice-pembelian/create/{{ base64_encode($fc_rono) }}"><button type="button" class="btn btn-primary">Buat Invoice</button></a> --}}
-        <button type="button" class="btn btn-primary" onclick="click_modal_inv();">Buat Invoice</button>
+        <button type="button" class="btn btn-primary" onclick="click_modal_inv_pembelian();">Buat Invoice</button>
     </div>
 </div>
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_inv" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" role="dialog" id="modal_inv_pembelian" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header br">
                 <h5 class="modal-title">Masa Invoice</h5>
@@ -332,7 +338,7 @@
             <form id="form_submit" action="/apps/invoice-pembelian/create/store-invoice" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Tanggal Terbit</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -350,7 +356,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Masa Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -363,7 +369,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Estimasi Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -372,7 +378,7 @@
                                             <i class="fas fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <input type="text" id="fd_inv_agingdate" class="form-control datepicker" name="fd_inv_agingdate" readonly>
+                                    <input type="text" id="fd_inv_agingdate" class="form-control" name="fd_inv_agingdate" readonly>
                                 </div>
                             </div>
                         </div>
@@ -393,8 +399,8 @@
 
 @section('js')
 <script>
-    function click_modal_inv() {
-        $("#modal_inv").modal('show');
+    function click_modal_inv_pembelian() {
+        $("#modal_inv_pembelian").modal('show');
     }
 
 
