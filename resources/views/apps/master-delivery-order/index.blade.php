@@ -75,6 +75,7 @@
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center">Invoice</th>
                                             <th scope="col" class="text-center" style="width: 22%">Actions</th>
                                         </tr>
                                     </thead>
@@ -93,6 +94,7 @@
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center">Invoice</th>
                                             <th scope="col" class="text-center" style="width: 22%">Actions</th>
                                         </tr>
                                     </thead>
@@ -111,6 +113,7 @@
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center">Status</th>
+                                            <th scope="col" class="text-center">Invoice</th>
                                             <th scope="col" class="text-center" style="width: 22%">Actions</th>
                                         </tr>
                                     </thead>
@@ -630,7 +633,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 7]
+                    targets: [3, 8]
                 },
             ],
             columns: [{
@@ -658,6 +661,9 @@
                     data: 'fc_dostatus'
                 },
                 {
+                    data: 'fc_invstatus'
+                },
+                {
                     data: null
                 },
             ],
@@ -676,17 +682,25 @@
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
+                if (data['fc_invstatus'] == 'R') {
+                    $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
+                } else if (data['fc_invstatus'] == 'N') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Belum Terbit</span>');
+                } else {
+                    $('td:eq(7)', row).html('<span class="badge badge-success">Lunas</span>');
+                }
+
                 if (data['fc_dostatus'] == 'I' || data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ' ) {
                     $(row).hide();
                 } else if (data['fc_dostatus'] == 'D') {
-                    $('td:eq(7)', row).html(
+                    $('td:eq(8)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                         <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
                         <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
                     );
                 } else {
-                    $('td:eq(7)', row).html(
+                    $('td:eq(8)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                         <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
@@ -743,7 +757,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 7]
+                    targets: [3, 8]
                 },
             ],
             columns: [{
@@ -771,6 +785,9 @@
                     data: 'fc_dostatus'
                 },
                 {
+                    data: 'fc_invstatus'
+                },
+                {
                     data: null
                 },
             ],
@@ -783,10 +800,18 @@
                     $(row).hide();
                 }
 
+                if (data['fc_invstatus'] == 'R') {
+                    $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
+                } else if (data['fc_invstatus'] == 'N') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Belum Terbit</span>');
+                } else {
+                    $('td:eq(7)', row).html('<span class="badge badge-success">Lunas</span>');
+                }
+
                 if (data['fc_dostatus'] == 'I') {
                     $(row).hide();
                 } else {
-                    $('td:eq(7)', row).html(
+                    $('td:eq(8)', row).html(
                         `
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                     <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>
@@ -813,7 +838,7 @@
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 7]
+                    targets: [3, 8]
                 },
             ],
             columns: [{
@@ -841,6 +866,9 @@
                     data: 'fc_dostatus'
                 },
                 {
+                    data: 'fc_invstatus'
+                },
+                {
                     data: null
                 },
             ],
@@ -853,10 +881,18 @@
                     $(row).hide();
                 }
 
+                if (data['fc_invstatus'] == 'R') {
+                    $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
+                } else if (data['fc_invstatus'] == 'N') {
+                    $('td:eq(7)', row).html('<span class="badge badge-danger">Belum Terbit</span>');
+                } else {
+                    $('td:eq(7)', row).html('<span class="badge badge-success">Lunas</span>');
+                }
+
                 if (data['fc_dostatus'] == 'I') {
                     $(row).hide();
                 } else {
-                    $('td:eq(7)', row).html(
+                    $('td:eq(8)', row).html(
                         `
                             <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
                             <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>`

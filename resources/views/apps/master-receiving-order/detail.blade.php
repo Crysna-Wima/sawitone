@@ -66,7 +66,7 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Operator</label>
-                                    <input type="text" class="form-control" value="{{ auth()->user()->fc_username }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->fc_userid }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
