@@ -96,7 +96,7 @@ class DashboardController extends Controller
     public function search_menu(Request $request){
         // ambil user dan permissionnya dengan spatie
         $user = Auth::user();
-        $permissions = $user->getAllPermissionsField();
+        $permissions = $user->getAllPermissionsField($request);
         
         $filteredPermissions = $permissions->filter(function ($permission) use ($request) {
             return strpos($permission->name, $request->query('query')) !== false;
