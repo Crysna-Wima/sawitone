@@ -257,6 +257,7 @@
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Katalog</th>
+                                    <th scope="col" class="text-center">Barcode</th>
                                     <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Qty</th>
                                     <th scope="col" class="text-center">Batch</th>
@@ -417,6 +418,9 @@
                     "data": "fc_stockcode"
                 },
                 {
+                    "data": "fc_barcode"
+                },
+                {
                     "data": "stock.fc_namelong"
                 },
                 {
@@ -524,11 +528,16 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5, , 7]
+                    "targets": [0, 3, 4, 5, 7, 8]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [7]
+                    targets: [8]
+                },
+                {
+                    visible: false,
+                    searchable: true,
+                    targets: [2]
                 },
             ],
             "initComplete": function() {
