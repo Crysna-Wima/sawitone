@@ -441,28 +441,6 @@
                 {
                     "data": null,
                     "render": function(data, type, full, meta) {
-                        // console.log('data'+data.fn_sorrownum);
-                        var selectedOption = $('#category').val();
-                        // looping data data.stock.sodtl[index].fn_so_qty
-                        if (selectedOption == "Bonus") {
-                            let qty = 0;
-                            // looping data stock.sodtl[index].fn_so_qty
-                            for (let index = 0; index < data.stock.sodtl.length; index++) {
-                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
-                                        index].fn_do_bonusqty;
-                                    break;
-                                }
-                            }
-
-                            if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
-                            } else {
-                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
-                            }
-                            // reload datatable
-
-                        } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
                                     var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
@@ -475,14 +453,14 @@
 
                             // console.log("qty"+qty);
                             if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                                return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="${data.fn_quantity}">`;
                             } else {
                                 if (qty < 0) {
-                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                                    return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="0">`;
                                 }
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="${qty}">`;
                             }
-                        }
+                        // }
 
                     }
                 },
@@ -570,7 +548,7 @@
             data: {
                 'fc_barcode': fc_barcode,
                 'fc_stockcode': fc_stockcode,
-                'fn_qty': $(`#quantity_cart_stock_${fc_barcode}`).val(),
+                'fn_qty': $(`#quantity_cart_stock`).val(),
                 'fc_sono': '{{ $data->fc_sono }}',
                 'fc_namelong': fc_namelong,
             },

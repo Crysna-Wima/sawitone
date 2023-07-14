@@ -136,6 +136,7 @@ class MutasiBarangDetailController extends Controller
                  'message' => 'Data gagal disimpan'
                 ];
         }
+    // dd($request);
     }
 
     public function delete($fc_mutationno, $fn_mutationrownum)
