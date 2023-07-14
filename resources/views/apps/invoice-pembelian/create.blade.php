@@ -485,7 +485,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
+                    return `<input id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
                 }
             },
             {
