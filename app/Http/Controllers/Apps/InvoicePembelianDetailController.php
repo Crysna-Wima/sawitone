@@ -142,6 +142,36 @@ class InvoicePembelianDetailController extends Controller
         }
     }
 
+    public function update_inform($fc_invno, Request $request){
+    
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'PURCHASE')->first();
+        $update_tempinvmst = $temp_inv_master->update([
+            'fv_description' => $request->fv_description_mst,
+        ]);
+
+        $temp_inv_master = TempInvoiceMst::with('pomst', 'romst')->where('fc_invno', auth()->user()->fc_userid)->first();
+        // $data = [];
+        // if (!empty($temp_inv_master)) {
+        //     $data['data'] = $temp_inv_master;
+        // }
+
+        if ($update_tempinvmst) {
+            return [
+                'status' => 201,
+                // 'data' => $data,
+                'message' => 'Data berhasil disimpan',
+                // link
+                'link' => '/apps/invoice-pembelian'
+            ];
+            // dd($request);
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+    }
+
 
     public function datatables_ro_detail($fc_rono){
         // $decode_dono = base64_decode($fc_dono);

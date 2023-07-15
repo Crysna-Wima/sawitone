@@ -35,7 +35,7 @@ class InvoicePenjualanDetailController extends Controller
         // dd($data);
     }
 
-    public function insert($fc_invno, Request $request)
+    public function update_inform($fc_invno, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'fc_bankcode' => 'required',
@@ -51,7 +51,7 @@ class InvoicePenjualanDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype','SALES')->first();
         $update_tempinvmst = $temp_inv_master->update([
             'fc_bankcode' => $request->fc_bankcode,
             'fc_address' => $request->fc_address,
@@ -70,7 +70,7 @@ class InvoicePenjualanDetailController extends Controller
                 // 'data' => $data,
                 'message' => 'Data berhasil disimpan',
                 // link
-                'link' => '/invoice-penjualan/create'
+                'link' => '/apps/invoice-penjualan'
             ];
             // dd($request);
         }
