@@ -5,11 +5,11 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
     * {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
 
