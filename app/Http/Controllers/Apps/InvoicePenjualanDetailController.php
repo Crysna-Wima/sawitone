@@ -51,7 +51,7 @@ class InvoicePenjualanDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype','SALES')->first();
         $update_tempinvmst = $temp_inv_master->update([
             'fc_bankcode' => $request->fc_bankcode,
             'fc_address' => $request->fc_address,

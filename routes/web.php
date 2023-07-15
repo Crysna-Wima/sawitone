@@ -521,6 +521,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             // Route::get('/detail', 'Apps\InvoiceCprrController@create');
             Route::post('/create', 'Apps\InvoiceCprrController@create');
             Route::post('/submit', 'Apps\InvoiceCprrController@submit');
+            Route::put('/update-inform/{fc_invno}', 'Apps\InvoiceCprrController@update_inform');
             Route::delete('/cancel', 'Apps\InvoiceCprrController@delete');
 
 

@@ -144,7 +144,7 @@ class InvoicePembelianDetailController extends Controller
 
     public function update_inform($fc_invno, Request $request){
     
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'PURCHASE')->first();
         $update_tempinvmst = $temp_inv_master->update([
             'fv_description' => $request->fv_description_mst,
         ]);
