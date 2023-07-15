@@ -784,6 +784,8 @@
         return rupiah;
     }
 
+
+
     function convertToAngka(rupiah){
         return parseInt(rupiah.replace(/,.*|[^0-9]/g, ''), 10).toString();
     }

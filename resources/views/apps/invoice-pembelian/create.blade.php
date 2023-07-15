@@ -522,7 +522,11 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
+<<<<<<< HEAD
                     return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
+=======
+                    return `<input id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
+>>>>>>> 6367e2d5e04db9307c2f45c215c86aef2710e27e
                 }
             },
             {
