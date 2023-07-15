@@ -230,7 +230,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit" action="/apps/invoice-penjualan/create/insert/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
+            <form id="form_submit" action="/apps/invoice-pembelian/create/update-info/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -252,7 +252,11 @@
                                 <div class="form-group">
                                     <label>Catatan</label>
                                     <div class="input-group">
+                                        @if (empty($temp->fv_description))
                                         <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                        @else
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@ class InvoicePenjualanDetailController extends Controller
         // dd($data);
     }
 
-    public function insert($fc_invno, Request $request)
+    public function update_inform($fc_invno, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'fc_bankcode' => 'required',
@@ -70,7 +70,7 @@ class InvoicePenjualanDetailController extends Controller
                 // 'data' => $data,
                 'message' => 'Data berhasil disimpan',
                 // link
-                'link' => '/invoice-penjualan/create'
+                'link' => '/apps/invoice-penjualan'
             ];
             // dd($request);
         }

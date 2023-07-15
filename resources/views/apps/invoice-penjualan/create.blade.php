@@ -238,7 +238,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit" action="/apps/invoice-penjualan/create/insert/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/update-inform/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -284,7 +284,12 @@
                                 <div class="form-group">
                                     <label>Catatan</label>
                                     <div class="input-group">
+                                        @if (empty($temp->fv_description))
                                         <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                        @else
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
+                                        @endif
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -515,6 +520,10 @@
     }
 
     function get_data_bank() {
+        var valueBank = "{{ $temp->fc_bankcode }}";
+        var nameBank = "{{ $temp->bank ? $temp->bank->fv_bankname : '' }}";
+
+        // console.log(valueBank)
         $("#modal_loading").modal('show');
         $.ajax({
             url: "/master/get-data-all/BankAcc",
@@ -527,7 +536,12 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fc_bankcode").empty();
-                    $("#fc_bankcode").append(`<option value="" selected disabled> - Pilih Bank - </option>`);
+                    if(nameBank == ""){
+                        $("#fc_bankcode").append(`<option value="" selected disabled> -- Pilih Bank -- </option>`);
+                    }else{
+                        $("#fc_bankcode").append(`<option value="${valueBank}" selected disabled> ${nameBank} </option>`);
+                    }
+                   
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_bankcode").append(
                             `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
