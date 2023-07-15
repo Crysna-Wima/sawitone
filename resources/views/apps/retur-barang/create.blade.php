@@ -195,6 +195,7 @@
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
                                         <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Qty Retur</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -265,15 +266,21 @@
                 // }
             },
             {
+                data: 'fn_itemqty',
+                // render: function(data, type, full, meta) {
+                //     return `<input type="number" id="fn_itemqty_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_itemqty}">`;
+                // }
+            },
+            {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
             if (data.fn_itemqty == 0) {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                     <button type="submit" class="btn btn-primary">Save</button>`);
             }  else {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning" data-id="${data.fn_rownum}" data-qty="${data.fn_itemqty}" onclick="editQty(this)">Edit</button>`);
             }
         },

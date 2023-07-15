@@ -208,16 +208,55 @@
     <div class="button text-right mb-4">
         <a href="/apps/retur-barang"><button type="button" class="btn btn-info mr-2">Back</button></a>
         <!-- <a href="/apps/retur-barang/retur/{{ base64_encode($fc_dono) }}"><button type="button" class="btn btn-primary">Retur Barang</button></a> -->
-        <a href="#"><button type="button" class="btn btn-primary">Retur Barang</button></a>
+        <button type="button" class="btn btn-primary" onclick="click_modal_retur();">Retur Barang</button>
     </div>
 </div>
 @endsection
 
 @section('modal')
+<div class="modal fade" role="dialog" id="modal_retur" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Retur Barang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/apps/retur-barang/store-retur" method="post" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group required">
+                                <label>Tanggal Retur</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="fd_returdate" data-provide="datepicker" class="form-control" name="fd_returdate" required>
+                                    <input type="hidden" id="fc_dono" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_dono" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function click_modal_retur() {
+        $("#modal_retur").modal('show');
+    }
+
     var dono = "{{ $do_mst->fc_dono }}";
     var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
