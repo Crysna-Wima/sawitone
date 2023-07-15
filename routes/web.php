@@ -539,5 +539,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-ro-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_ro_detail');
             Route::get('/datatables-cprr/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_cprr');
         });
+
+        Route::prefix('retur-barang')->group(function () {
+            Route::get('/', 'Apps\ReturBarangController@index');
+            Route::get('/detail/{fc_dono}', 'Apps\ReturBarangController@detail');
+            Route::get('/retur/{fc_dono}', 'Apps\ReturBarangController@retur');
+        });
     });
 });

@@ -134,13 +134,14 @@ class MutasiBarangController extends Controller
             ];
         }
 
+        $dateByuser = Carbon::createFromFormat('m/d/Y', $request->fd_date_byuser,)->format('Y-m-d H:i:s');
         // create ke TempMutasiMaster
-       $insert =  TempMutasiMaster::create([
+        $insert =  TempMutasiMaster::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_mutationno' => auth()->user()->fc_userid,
             'fc_operator' => auth()->user()->fc_userid,
-            'fd_date_byuser' => $request->fd_date_byuser,
+            'fd_date_byuser' => $dateByuser,
             'fc_type_mutation' => $request->fc_type_mutation,
             'fc_sono' => $request->fc_sono,
             'fc_startpoint_code' => $request->fc_startpoint,
