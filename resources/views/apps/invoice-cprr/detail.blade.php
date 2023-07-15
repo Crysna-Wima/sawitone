@@ -344,6 +344,67 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <form id="form_submit" action="/apps/invoice-cprr/insert/{{ $data->fc_invno }}" method="POST" autocomplete="off">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body" style="padding-top: 30px!important;">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Bank</label>
+                                    @if (empty($data->fc_bankcode))
+                                    <select class="form-control select2 required-field" name="fc_bankcode" id="fc_bankcode" required></select>
+                                    @else
+                                    <select class="form-control select2" name="fc_bankcode" id="fc_bankcode">
+                                        <option value="{{ $data->fc_bankcode }}" selected>
+                                            {{ $data->bank->fv_bankname }}
+                                        </option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Alamat Customer</label>
+                                    @if (empty($data->fc_address))
+                                    <select class="form-control select2" name="fc_address" id="fc_address" required>
+                                        <option value="" selected disabled>- Pilih Alamat -</option>
+                                        <option value="{{ $data->customer->fc_memberaddress1 }}">{{ $data->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $data->customer->fc_memberaddress_loading1 }}">{{ $data->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $data->customer->fc_member_npwpaddress1 }}">{{ $data->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @else
+                                    <select class="form-control select2" name="fc_address" id="fc_address">
+                                        <option value="{{ $data->fc_address }}" selected disabled>
+                                            {{ $data->fc_address }}
+                                        </option>
+                                        <option value="{{ $data->customer->fc_memberaddress1 }}">{{ $data->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $data->customer->fc_memberaddress_loading1 }}">{{ $data->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $data->customer->fc_member_npwpaddress1 }}">{{ $data->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="button text-right">
+                                    <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         {{-- submit   --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="button text-right mb-4">
@@ -470,6 +531,10 @@
 <script>    
     var invdtl = window.btoa('DEFAULT');
     var addon = window.btoa('ADDON');
+
+    $(document).ready(function() {
+        get_data_bank();
+    })
 
     function click_modal_cprr(){
         $('#modal_cprr').modal('show');
@@ -687,6 +752,42 @@
         }
     });
 
+    function get_data_bank() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/master/get-data-all/BankAcc",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_bankcode").empty();
+                    $("#fc_bankcode").append(`<option value="" selected disabled> - Pilih Bank - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_bankcode").append(
+                            `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function table_cprr(){
         var fc_membercode = window.btoa($('#fc_membercode').val());

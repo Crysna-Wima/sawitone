@@ -229,6 +229,43 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/insert/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body" style="padding-top: 30px!important;">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Bank</label>
+                                    <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $ro_mst->pomst->supplier->fc_supplierbank1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Alamat Supplier</label>
+                                    <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="button text-right">
+                                    <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
@@ -485,7 +522,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
+                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
                 }
             },
             {

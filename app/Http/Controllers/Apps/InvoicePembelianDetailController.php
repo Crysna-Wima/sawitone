@@ -26,6 +26,7 @@ class InvoicePembelianDetailController extends Controller
     public function create($fc_rono)
     {
         $encoded_fc_rono = base64_decode($fc_rono);
+        $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();

@@ -5,11 +5,11 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
     * {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
 
@@ -97,7 +97,7 @@
     }
 
     .div-lg p{
-        font-size: .9rem!important;
+        font-size: .6rem;
     }
 
     .fw-bold{
@@ -159,10 +159,6 @@
         padding-bottom: 15px;
     }
 
-    .content p {
-        font-size: .8rem!important;
-    }
-
     #watermark {
         position: fixed;
         top: 25%;
@@ -172,6 +168,10 @@
         transform-origin: 50% 50%;
         z-index: -1000;
     }
+
+    /* .header p {
+        font-size: 12px;
+    } */
 </style>
 
 <body>
@@ -194,7 +194,7 @@
         </div>
         <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
             <p><b>SURAT JALAN</b></p>
-            <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
+            <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
             <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
             <p>No. SO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_sono }}</p>
         </div>
@@ -203,7 +203,7 @@
 
 <div class="content">
     <br><br>
-        <p style="font-weight: bold; font-size: .8rem;">Pengiriman Barang</p>
+        <p style="font-weight: bold; font-size: 14px;">Pengiriman Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
@@ -246,8 +246,8 @@
             <br><br/>
             <br><br/>
             <tr >
-                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
-                <td style="width: 50% !important; text-align: right;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: left;">(......................)</td>
+                <td style="width: 50% !important; text-align: right;">(......................)</td>
             </tr>
         </table>
     <div>
