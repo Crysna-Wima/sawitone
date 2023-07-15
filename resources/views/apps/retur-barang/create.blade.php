@@ -180,7 +180,7 @@
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
-                    <h4>Barang Terkirim</h4>
+                    <h4>Barang Retur</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -194,7 +194,7 @@
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
-                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Qty SJ</th>
                                         <th scope="col" class="text-center">Qty Retur</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
