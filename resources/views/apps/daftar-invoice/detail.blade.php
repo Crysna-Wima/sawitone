@@ -517,6 +517,34 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body" style="padding-top: 30px!important;">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="form-group required">
+                            <label>Bank</label>
+                            <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->fc_bankcode }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="form-group required">
+                            <label>Alamat Supplier</label>
+                            <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Catatan</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @if($inv_mst->fc_invtype == 'SALES')
     <div class="col-12 col-md-12 col-lg-6">

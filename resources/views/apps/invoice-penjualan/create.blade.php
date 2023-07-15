@@ -289,13 +289,16 @@
                                         @else
                                         <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
                                         @endif
-                                       
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="button text-right">
+                                    @if (empty($temp->fc_address) && empty($temp->fc_bankcode) && empty($temp->fv_description))
                                     <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                    @else
+                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -536,12 +539,12 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fc_bankcode").empty();
-                    if(nameBank == ""){
+                    if (nameBank == "") {
                         $("#fc_bankcode").append(`<option value="" selected disabled> -- Pilih Bank -- </option>`);
-                    }else{
+                    } else {
                         $("#fc_bankcode").append(`<option value="${valueBank}" selected disabled> ${nameBank} </option>`);
                     }
-                   
+
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_bankcode").append(
                             `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);

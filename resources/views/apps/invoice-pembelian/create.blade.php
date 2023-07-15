@@ -31,7 +31,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -47,7 +47,7 @@
                         <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-                <div class="collapse show" id="mycard-collapse">
+                <div class="collapse" id="mycard-collapse">
                     <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
                     <div class="card-body">
                         <div class="row">
@@ -112,7 +112,7 @@
                         <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
                 </div>
-                <div class="collapse show" id="mycard-collapse2">
+                <div class="collapse" id="mycard-collapse2">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-4 col-md-4 col-lg-4">
@@ -239,13 +239,15 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group required">
                                     <label>Bank</label>
-                                    <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $ro_mst->pomst->supplier->fc_supplierbank1 }}" readonly>
+                                    <input type="text" class="form-control" name="fc_supplierbank1" id="fc_supplierbank1" value="{{ $ro_mst->pomst->supplier->fc_supplierbank1 }}" readonly>
+                                    <input type="hidden" id="fc_bankcode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliernorek1 }}" name="fc_bankcode" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group required">
                                     <label>Alamat Supplier</label>
                                     <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                    <input type="hidden" id="fc_address" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" name="fc_address" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -262,7 +264,11 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="button text-right">
+                                    @if (empty($temp->fc_address) && empty($temp->fc_bankcode) && empty($temp->fv_description))
                                     <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                    @else
+                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -498,8 +504,7 @@
             className: 'text-center',
             targets: [0, 3]
         }, ],
-        columns: [
-            {
+        columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false

@@ -108,7 +108,7 @@ class DaftarInvoiceController extends Controller
     public function pdf(Request $request){
         // dd($request);
         $encode_fc_invno = base64_encode($request->fc_invno);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         if($request->name_pj){
             $data['nama_pj'] = $request->name_pj;

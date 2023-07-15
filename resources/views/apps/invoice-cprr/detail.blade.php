@@ -2,7 +2,7 @@
 @section('title','Invoice CPRR')
 @section('css')
 <style>
-    #tb_wrapper .row:nth-child(2){
+    #tb_wrapper .row:nth-child(2) {
         overflow-x: auto;
     }
 
@@ -10,24 +10,24 @@
         flex: 1 1 30%;
     }
 
-    .text-secondary{
-        color: #969DA4!important;
+    .text-secondary {
+        color: #969DA4 !important;
     }
 
-    .text-success{
-        color: #28a745!important;
+    .text-success {
+        color: #28a745 !important;
     }
 
     .btn-secondary {
-            background-color: #A5A5A5 !important;
-        }
+        background-color: #A5A5A5 !important;
+    }
 
-    @media (min-width: 992px) and (max-width: 1200px){
-        .flex-row-item{
+    @media (min-width: 992px) and (max-width: 1200px) {
+        .flex-row-item {
             font-size: 12px;
         }
 
-        .grand-text{
+        .grand-text {
             font-size: .9rem;
         }
     }
@@ -35,7 +35,7 @@
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -69,8 +69,7 @@
                                     <div class="form-group">
                                         <label>Tanggal Terbit</label>
                                         <div class="input-group date">
-                                            <input type="text" id="fd_inv_releasedate" name="fd_inv_releasedate" class="form-control"
-                                                fdprocessedid="8ovz8a" value="{{ $data->fd_inv_releasedate }}" readonly>
+                                            <input type="text" id="fd_inv_releasedate" name="fd_inv_releasedate" class="form-control" fdprocessedid="8ovz8a" value="{{ $data->fd_inv_releasedate }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -84,8 +83,7 @@
                                     <div class="form-group">
                                         <label>Jatuh Tempo</label>
                                         <div class="input-group date">
-                                            <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control"
-                                                fdprocessedid="8ovz8a" value="{{ $data->fd_inv_agingdate }}" readonly>
+                                            <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control" fdprocessedid="8ovz8a" value="{{ $data->fd_inv_agingdate }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +196,7 @@
                                 <div class="form-group required">
                                     <label>Qty</label>
                                     <div class="input-group">
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null" name="fn_itemqty" id="fn_itemqty" class="form-control" required>    
+                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null" name="fn_itemqty" id="fn_itemqty" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -377,7 +375,7 @@
                                     </select>
                                     @else
                                     <select class="form-control select2" name="fc_address" id="fc_address">
-                                        <option value="{{ $data->fc_address }}" selected disabled>
+                                        <option value="{{ $data->fc_address }}" selected>
                                             {{ $data->fc_address }}
                                         </option>
                                         <option value="{{ $data->customer->fc_memberaddress1 }}">{{ $data->customer->fc_memberaddress1 }}</option>
@@ -401,7 +399,11 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="button text-right">
+                                    @if (empty($data->fc_address) && empty($data->fc_bankcode) && empty($data->fv_description))
                                     <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                    @else
+                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -415,7 +417,7 @@
                 <input type="text" value="R" name="fc_status" id="fc_status" hidden>
 
                 @if($data->fn_invdetail >= 1 && $data->fc_status == "I")
-                    <button id="submit_button" class="btn btn-primary">Submit</button>
+                <button id="submit_button" class="btn btn-primary">Submit</button>
                 @endif
             </div>
         </div>
@@ -469,61 +471,61 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <form id="form_submit_noconfirm2" action="/apps/invoice-cprr/detail/store-update" method="POST" autocomplete="off">
-                        <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group required">
-                                    <label>Keterangan Biaya</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_detailitem2" name="fc_detailitem2" required>
-                                    </div>
+            <div class="modal-body">
+                <form id="form_submit_noconfirm2" action="/apps/invoice-cprr/detail/store-update" method="POST" autocomplete="off">
+                    <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group required">
+                                <label>Keterangan Biaya</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fc_detailitem2" name="fc_detailitem2" required>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group required">
-                                    <label>Satuan</label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_unityname2" name="fc_unityname2" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group required">
-                                    <label>Qty</label>
-                                    <div class="input-group">
-                                        <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null" name="fn_itemqty2" id="fn_itemqty2" class="form-control" required>    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group required">
-                                    <label>Harga</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                Rp.
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control format-rp" name="fm_unityprice2" id="fm_unityprice2" onkeyup="return onkeyupRupiah(this.id);" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label>Catatan</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description2" id="fv_description2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-success ml-1">Add Item</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group required">
+                                <label>Satuan</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fc_unityname2" name="fc_unityname2" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group required">
+                                <label>Qty</label>
+                                <div class="input-group">
+                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) > 0 ? Math.abs(this.value) : null" name="fn_itemqty2" id="fn_itemqty2" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group required">
+                                <label>Harga</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Rp.
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control format-rp" name="fm_unityprice2" id="fm_unityprice2" onkeyup="return onkeyupRupiah(this.id);" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Catatan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description2" id="fv_description2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12 text-right">
+                            <button class="btn btn-success ml-1">Add Item</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -532,7 +534,7 @@
 
 
 @section('js')
-<script>    
+<script>
     var invdtl = window.btoa('DEFAULT');
     var addon = window.btoa('ADDON');
 
@@ -540,15 +542,15 @@
         get_data_bank();
     })
 
-    function click_modal_cprr(){
+    function click_modal_cprr() {
         $('#modal_cprr').modal('show');
         table_cprr();
     }
 
-    function click_addon_invdtl(){
+    function click_addon_invdtl() {
         $('#modal_addon').modal('show');
     }
-    
+
     $("#submit_button").click(function() {
         swal({
                 title: 'Apakah anda yakin?',
@@ -581,11 +583,13 @@
                                     $('#modal_loading').modal('hide');
                                 }, 500);
                                 // tampilkan flas message bootstrap id alert-success
-                                
-                                swal(response.message, {  icon: 'success', });
+
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
                                 // redirect ke halaman sales order
                                 // hapus local storage
-        
+
                                 window.location.href = "/apps/invoice-cprr";
                             }
                         }
@@ -593,23 +597,20 @@
                 }
             });
     });
-    
+
     var tbAddOn = $("#tb_addon").DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
-        ajax:{
-            url: '/apps/invoice-cprr/datatables/'+addon,
+        ajax: {
+            url: '/apps/invoice-cprr/datatables/' + addon,
             type: 'GET'
         },
-        columnDefs: [
-            {
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5, 6, 7]
-            },
-        ],
-        columns: [
-            {
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+        }, ],
+        columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false,
@@ -625,9 +626,9 @@
             },
             {
                 data: 'fm_unityprice',
-                render: function(data, type, row){
-                    return row.fm_unityprice.toLocaleString('id-ID',{
-                        style:  'currency',
+                render: function(data, type, row) {
+                    return row.fm_unityprice.toLocaleString('id-ID', {
+                        style: 'currency',
                         currency: 'IDR'
                     })
                 }
@@ -637,7 +638,7 @@
             },
             {
                 data: 'fm_value',
-                render: function(data, type, row){
+                render: function(data, type, row) {
                     return row.fm_value.toLocaleString('id-ID', {
                         style: 'currency',
                         currency: 'IDR'
@@ -648,15 +649,15 @@
                 data: null
             }
         ],
-        rowCallback: function(row, data){
+        rowCallback: function(row, data) {
             var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
             $('td:eq(7)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
             `);
         },
-        footerCallback: function(row, data, start, end, display){
-            if(data.length != 0){
+        footerCallback: function(row, data, start, end, display) {
+            if (data.length != 0) {
                 $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay").trigger("change");
                 $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
@@ -677,18 +678,15 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        ajax:{
-            url: '/apps/invoice-cprr/datatables/'+invdtl,
+        ajax: {
+            url: '/apps/invoice-cprr/datatables/' + invdtl,
             type: 'GET'
         },
-        columnDefs: [
-            {
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-            },
-        ],
-        columns: [
-            {
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        }, ],
+        columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false,
@@ -699,7 +697,7 @@
             {
                 data: 'cospertes.fc_cprrname',
             },
-            
+
             {
                 data: 'nameunity.fv_description',
             },
@@ -708,9 +706,9 @@
             },
             {
                 data: 'fm_unityprice',
-                render: function(data, type, row){
-                    return row.fm_unityprice.toLocaleString('id-ID',{
-                        style:  'currency',
+                render: function(data, type, row) {
+                    return row.fm_unityprice.toLocaleString('id-ID', {
+                        style: 'currency',
                         currency: 'IDR'
                     })
                 }
@@ -720,7 +718,7 @@
             },
             {
                 data: 'fm_value',
-                render: function(data, type, row){
+                render: function(data, type, row) {
                     return row.fm_value.toLocaleString('id-ID', {
                         style: 'currency',
                         currency: 'IDR'
@@ -731,15 +729,15 @@
                 data: null
             }
         ],
-        rowCallback: function(row, data){
+        rowCallback: function(row, data) {
             var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
             $('td:eq(8)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
             `);
         },
-        footerCallback: function(row, data, start, end, display){
-            if(data.length != 0){
+        footerCallback: function(row, data, start, end, display) {
+            if (data.length != 0) {
                 $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay").trigger("change");
                 $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
@@ -771,12 +769,12 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fc_bankcode").empty();
-                    if(nameBank == ""){
+                    if (nameBank == "") {
                         $("#fc_bankcode").append(`<option value="" selected disabled> -- Pilih Bank -- </option>`);
-                    }else{
+                    } else {
                         $("#fc_bankcode").append(`<option value="${valueBank}" selected disabled> ${nameBank} </option>`);
                     }
-                   
+
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_bankcode").append(
                             `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
@@ -800,7 +798,7 @@
         });
     }
 
-    function table_cprr(){
+    function table_cprr() {
         var fc_membercode = window.btoa($('#fc_membercode').val());
 
         var tb_cptt = $('#tb_cprr').DataTable({
@@ -808,9 +806,9 @@
             serverSide: true,
             destroy: true,
             ajax: {
-                url: '/data-master/cprr-customer/datatables/'+fc_membercode,
+                url: '/data-master/cprr-customer/datatables/' + fc_membercode,
                 type: 'GET',
-                data: function(dData){
+                data: function(dData) {
                     dData.category = $("#categori").val();
                 },
             },
@@ -818,8 +816,7 @@
                 className: 'text-center',
                 targets: []
             }],
-            columns: [
-                {
+            columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false,
@@ -832,13 +829,13 @@
                 },
                 {
                     data: 'fm_price',
-                    render: function(data, type, row){
-                        return row.fm_price.toLocaleString('id-ID',{
-                            style:  'currency',
+                    render: function(data, type, row) {
+                        return row.fm_price.toLocaleString('id-ID', {
+                            style: 'currency',
                             currency: 'IDR'
                         })
                     }
-                }, 
+                },
                 {
                     data: 'fv_description'
                 },
@@ -846,29 +843,29 @@
                     data: null,
                 }
             ],
-            rowCallback: function(row, data){
+            rowCallback: function(row, data) {
                 $("td:eq(5)", row).html(`
                     <button type="button" onclick="choosen('${data.id}')" class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</butoon>
                 `);
             }
         })
     }
-    
-    function choosen(id) { 
+
+    function choosen(id) {
         $("modal_loading").modal('show');
         var fc_id = window.btoa(id);
         $.ajax({
             url: "/data-master/cprr-customer/" + fc_id,
             type: "GET",
             dataType: "JSON",
-            success: function(response){
+            success: function(response) {
                 var data = response.data;
 
                 $("#modal_cprr").modal('hide');
                 $("#fc_detailitem").val(data.fc_cprrcode);
                 $("#fm_unityprice").val(data.fm_price);
                 $("#fv_description").val(data.fv_description);
-                
+
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 setTimeout(function() {
@@ -969,7 +966,7 @@
                     if (response.total < 1) {
                         window.location.href = response.link;
                     }
-                }  else if (response.status == 300) {
+                } else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',
                     });
