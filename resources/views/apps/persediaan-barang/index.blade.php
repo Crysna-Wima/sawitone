@@ -54,8 +54,9 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>Data Persediaan Barang</h4>
+                    <a href="/apps/konversi-stock" class="btn btn-success">Konversi Stock</a>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
