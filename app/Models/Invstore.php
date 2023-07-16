@@ -12,7 +12,7 @@ use App\Traits\CompositeKey;
 
 class Invstore extends Model
 {
-    use HasFactory, Blameable, LogsActivity, CompositeKey;
+    use \Awobaz\Compoships\Compoships, HasFactory, Blameable, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 
@@ -53,5 +53,9 @@ class Invstore extends Model
 
     public function invoicedetail(){
         return $this->belongsToMany(InvoiceDtl::class, 'fc_detailitem','fc_barcode');
+    }
+
+    public function stockinquiri(){
+        return $this->hasMany(StockInquiri::class, ['fc_barcode','fc_warehousecode'], ['fc_barcode','fc_warehousecode']);
     }
 }

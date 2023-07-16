@@ -527,6 +527,16 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoiceCprrDetailController@delete');
         });
 
+        Route::prefix('konversi-stock')->group(function(){
+            Route::get('/', 'Apps\StockKonversiController@index');
+            Route::get('/stock-stockcode/{fc_stockcode}', 'Apps\StockKonversiController@stock_stockcode');
+            Route::get('/invstore-stockcode/{fc_stockcode}/{fc_warehousecode}/{fd_expired}/{fc_batch}', 'Apps\StockKonversiController@invstore_stockcode');
+            Route::get('/invstore-warehouse/{fc_warehousecode}', 'Apps\StockKonversiController@invstore_warehouse');
+            Route::get('/history-konversi', 'Apps\StockKonversiController@datatable_inquiry');
+            
+            Route::POST('/', 'Apps\StockKonversiController@konversi');
+        });
+
         Route::prefix('daftar-invoice')->group(function () {
             Route::get('/', 'Apps\DaftarInvoiceController@index');
             Route::get('/datatables/{fc_invtype}', 'Apps\DaftarInvoiceController@datatables');
