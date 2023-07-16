@@ -138,4 +138,31 @@ class InvoiceCprrController extends Controller
 
 		}
     }
+
+    public function update_inform($fc_invno, Request $request){
+    
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'CPRR')->first();
+        $update_tempinvmst = $temp_inv_master->update([
+            'fc_bankcode' => $request->fc_bankcode,
+            'fc_address' => $request->fc_address,
+            'fv_description' => $request->fv_description_mst,
+        ]);
+
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->first();
+        // $data = [];
+        // if (!empty($temp_inv_master)) {
+        //     $data['data'] = $temp_inv_master;
+        // }
+
+        if ($update_tempinvmst) {
+            return [
+                'status' => 201,
+                // 'data' => $data,
+                'message' => 'Data berhasil disimpan',
+                // link
+                'link' => '/apps/invoice-cprr'
+            ];
+            // dd($request);
+        }
+    }
 }

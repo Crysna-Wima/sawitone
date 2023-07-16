@@ -488,6 +488,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
                 Route::post('/store-detail','Apps\InvoicePenjualanDetailController@insert_item');
+                Route::put('/update-inform/{fc_invno}', 'Apps\InvoicePenjualanDetailController@update_inform');
                 Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
                 Route::put('/submit-invoice','Apps\InvoicePenjualanDetailController@submit_invoice');
@@ -508,6 +509,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
                 Route::post('/store-detail','Apps\InvoicePembelianDetailController@insert_item');
+                Route::put('/update-info/{fc_invno}','Apps\InvoicePembelianDetailController@update_inform');
                 Route::get('/{fc_rono}', 'Apps\InvoicePembelianDetailController@create');
                 Route::get('/datatables-ro-detail/{fc_rono}', 'Apps\InvoicePembelianDetailController@datatables_ro_detail');
                 Route::put('/submit-invoice','Apps\InvoicePembelianDetailController@submit_invoice');
@@ -519,6 +521,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             // Route::get('/detail', 'Apps\InvoiceCprrController@create');
             Route::post('/create', 'Apps\InvoiceCprrController@create');
             Route::post('/submit', 'Apps\InvoiceCprrController@submit');
+            Route::put('/update-inform/{fc_invno}', 'Apps\InvoiceCprrController@update_inform');
             Route::delete('/cancel', 'Apps\InvoiceCprrController@delete');
 
 
@@ -547,6 +550,17 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-do-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_do_detail');
             Route::get('/datatables-ro-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_ro_detail');
             Route::get('/datatables-cprr/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_cprr');
+        });
+
+        Route::prefix('retur-barang')->group(function () {
+            Route::get('/', 'Apps\ReturBarangController@index');
+            Route::get('/detail/{fc_dono}', 'Apps\ReturBarangController@detail');
+            Route::post('/store-retur','Apps\ReturBarangController@store_retur');
+
+            Route::prefix('create')->group(function () {
+                Route::get('/{fc_dono}', 'Apps\ReturBarangDetailController@create');
+                Route::get('/datatables-do-detail/{fc_dono}', 'Apps\ReturBarangDetailController@datatables_do_detail');
+            });
         });
     });
 });

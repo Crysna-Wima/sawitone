@@ -27,11 +27,11 @@
             font-size: .9rem;
         }
     }
-    
+
     .required label:after {
         color: #e32;
         content: ' *';
-        display:inline;
+        display: inline;
     }
 </style>
 @endsection
@@ -237,6 +237,75 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/update-inform/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body" style="padding-top: 30px!important;">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Bank</label>
+                                    @if (empty($temp->fc_bankcode))
+                                    <select class="form-control select2 required-field" name="fc_bankcode" id="fc_bankcode" required></select>
+                                    @else
+                                    <select class="form-control select2" name="fc_bankcode" id="fc_bankcode">
+                                        <option value="{{ $temp->fc_bankcode }}" selected>
+                                            {{ $temp->bank->fv_bankname }}
+                                        </option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Alamat Customer</label>
+                                    @if (empty($temp->fc_address))
+                                    <select class="form-control select2" name="fc_address" id="fc_address" required>
+                                        <option value="" selected disabled>- Pilih Alamat -</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @else
+                                    <select class="form-control select2" name="fc_address" id="fc_address">
+                                        <option value="{{ $temp->fc_address }}" selected disabled>
+                                            {{ $temp->fc_address }}
+                                        </option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        @if (empty($temp->fv_description))
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                        @else
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="button text-right">
+                                    @if (empty($temp->fc_address) && empty($temp->fc_bankcode) && empty($temp->fv_description))
+                                    <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                    @else
+                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
@@ -367,8 +436,8 @@
             <input type="hidden" name="fc_status" value="{{ utf8_encode('R') }}">
             <button type="submit" class="btn btn-success">Terbitkan Invoice</button>
         </form>
-        
-       
+
+
     </div>
 </div>
 @endsection
@@ -445,8 +514,58 @@
 
 @section('js')
 <script>
+    $(document).ready(function() {
+        get_data_bank();
+    })
+
     function click_modal_biaya() {
         $("#modal_biaya").modal('show');
+    }
+
+    function get_data_bank() {
+        var valueBank = "{{ $temp->fc_bankcode }}";
+        var nameBank = "{{ $temp->bank ? $temp->bank->fv_bankname : '' }}";
+
+        // console.log(valueBank)
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/master/get-data-all/BankAcc",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_bankcode").empty();
+                    if (nameBank == "") {
+                        $("#fc_bankcode").append(`<option value="" selected disabled> -- Pilih Bank -- </option>`);
+                    } else {
+                        $("#fc_bankcode").append(`<option value="${valueBank}" selected disabled> ${nameBank} </option>`);
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_bankcode").append(
+                            `<option value="${data[i].fc_bankcode}">${data[i].fv_bankname}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     }
 
     var dono = "{{ $do_mst->fc_dono }}";
@@ -491,7 +610,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input id="fm_unityprice_${data.fn_invrownum}" min="0" max="100" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}">`;
+                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
                 }
             },
             {
@@ -515,7 +634,7 @@
             }
         },
         footerCallback: function(row, data, start, end, display) {
-            if(data.length != 0){
+            if (data.length != 0) {
                 $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
                 $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
@@ -538,7 +657,9 @@
         var newPrice = parseFloat($(`#fm_unityprice_${id}`).val());
 
         if (newPrice === currentPrice) {
-            swal("No changes made.", { icon: 'info' });
+            swal("No changes made.", {
+                icon: 'info'
+            });
             return;
         }
 
@@ -558,7 +679,7 @@
     function updateFmUnityPrice(id, fmUnityPrice) {
         $("#modal_loading").modal('show');
         $.ajax({
-            url: '/apps/invoice-penjualan/update-fm-unityprice', 
+            url: '/apps/invoice-penjualan/update-fm-unityprice',
             type: 'PUT',
             data: {
                 fn_invrownum: id,
@@ -566,18 +687,26 @@
             },
             success: function(response) {
                 if (response.status == 200) {
-                    swal(response.message, {  icon: 'success', });
+                    swal(response.message, {
+                        icon: 'success',
+                    });
                     $("#modal_loading").modal('hide');
                     tb.ajax.reload();
                 } else {
-                    swal(response.message, {  icon: 'error', });
+                    swal(response.message, {
+                        icon: 'error',
+                    });
                     $("#modal_loading").modal('hide');
                 }
             },
             error: function(xhr, status, error) {
                 $("#modal_loading").modal('hide');
-                setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
@@ -679,7 +808,7 @@
                 <button class="btn btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i> Hapus</button>`);
         },
         footerCallback: function(row, data, start, end, display) {
-            if(data.length != 0){
+            if (data.length != 0) {
                 $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
                 $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
@@ -726,7 +855,7 @@
                     if (response.total < 1) {
                         window.location.href = response.link;
                     }
-                }  else if (response.status == 300) {
+                } else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',
                     });

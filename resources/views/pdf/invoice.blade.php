@@ -5,11 +5,11 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
     * {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Roboto Mono', monospace;
     }
 
 
@@ -174,13 +174,13 @@
             <p><b>Kepada Yth</b></p>
             @if($inv_mst->fc_invtype == 'SALES')
             <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
-            <p>{{ $inv_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+            <p>{{ $inv_mst->fc_address }}</p>
             @elseif($inv_mst->fc_invtype == 'PURCHASE')
             <p>{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
-            <p>{{ $inv_mst->pomst->supplier->fc_supplier_npwpaddress1 }}</p>
+            <p>{{ $inv_mst->fc_address }}</p>
             @else
             <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
-            <p>{{ $inv_mst->somst->customer->fc_memberaddress_loading1 }}</p>
+            <p>{{ $inv_mst->fc_address }}</p>
             @endif
         </div>
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
@@ -386,6 +386,8 @@
             @endif
         </table> -->
 
+        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Catatan</p>
+        <p style="font-size: .8rem; margin-left: 5%">{{ $inv_mst->fv_description ?? '-' }}</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;">
             <tr>
                 <td>Total</td>
@@ -465,9 +467,19 @@
                     <p><b>Syarat Pembayaran :</b></p>
                     <p>- Pembayaran harap di selesaikan dalam waktu 30 hari dari tanggal Faktur</p>
                     <p>- Pembayaran harap dilakukan dengan Giro Bilyet / Cross Cheque atau transfer ke bank kami.</p>
+                    @if($inv_mst->fc_invtype == 'SALES')
                     <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
-                    <p>&nbsp;&nbsp;Bank BCA kcp Rungkut Mapan</p>
-                    <p>&nbsp;&nbsp;A/C 6750320030</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname1 }}</p>
+                    <p>&nbsp;&nbsp;A/C {{ $inv_mst->bank->fc_bankcode }}</p>
+                    @elseif($inv_mst->fc_invtype == 'PURCHASE')
+                    <p>&nbsp;&nbsp;Atas Nama : {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->pomst->supplier->fc_supplierbank1 }}</p>
+                    <p>&nbsp;&nbsp;A/C {{ $inv_mst->fc_bankcode }}</p>
+                    @else
+                    <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname1 }}</p>
+                    <p>&nbsp;&nbsp;A/C {{ $inv_mst->bank->fc_bankcode }}</p>
+                    @endif
                     <p>- Pembayaran di anggap lunas apabila sudah CAIR</p>
                 </div>
             </div>

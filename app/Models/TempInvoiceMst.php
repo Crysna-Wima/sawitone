@@ -25,7 +25,7 @@ class TempInvoiceMst extends Model
     }
 
     public function somst(){
-        return $this->hasOne(SoMaster::class, 'fc_suppdocno', 'fc_sono');
+        return $this->hasOne(SoMaster::class, 'fc_sono', 'fc_suppdocno');
     }
     
     public function domst(){
@@ -37,7 +37,7 @@ class TempInvoiceMst extends Model
     }
 
     public function romst(){
-        return $this->hasOne(RoMaster::class, 'fc_child_suppdocno', 'fc_rono');
+        return $this->hasOne(RoMaster::class, 'fc_rono', 'fc_child_suppdocno');
     }
 
     public function customer(){
@@ -46,5 +46,9 @@ class TempInvoiceMst extends Model
 
     public function supplier(){
         return $this->hasOne(Supplier::class, 'fc_suppliercode', 'fc_entitycode');
+    }
+
+    public function bank(){
+        return $this->hasOne(BankAcc::class, 'fc_bankcode', 'fc_bankcode');
     }
 }

@@ -26,6 +26,7 @@ class InvoicePembelianDetailController extends Controller
     public function create($fc_rono)
     {
         $encoded_fc_rono = base64_decode($fc_rono);
+        $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -139,6 +140,38 @@ class InvoicePembelianDetailController extends Controller
                  'message' => 'Error'
              ];
         }
+    }
+
+    public function update_inform($fc_invno, Request $request){
+    
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'PURCHASE')->first();
+        $update_tempinvmst = $temp_inv_master->update([
+            'fv_description' => $request->fv_description_mst,
+            'fc_address' => $request->fc_address,
+            'fc_bankcode' => $request->fc_bankcode,
+        ]);
+
+        $temp_inv_master = TempInvoiceMst::with('pomst', 'romst')->where('fc_invno', auth()->user()->fc_userid)->first();
+        // $data = [];
+        // if (!empty($temp_inv_master)) {
+        //     $data['data'] = $temp_inv_master;
+        // }
+
+        if ($update_tempinvmst) {
+            return [
+                'status' => 201,
+                // 'data' => $data,
+                'message' => 'Data berhasil disimpan',
+                // link
+                'link' => '/apps/invoice-pembelian'
+            ];
+            // dd($request);
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
     }
 
 

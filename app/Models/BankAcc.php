@@ -37,4 +37,8 @@ class BankAcc extends Model
     public function branch(){
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
+
+    public function invmst(){
+        return $this->belongsTo(InvoiceMst::class, 'fc_bankcode', 'fc_bankcode')->withTrashed();
+    }
 }
