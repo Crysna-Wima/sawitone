@@ -103,7 +103,7 @@
         <div class="col-12 col-md-8 col-lg-7">
             <div class="card">
                 <div class="card-header">
-                    <h4>Detail Customer</h4>
+                    <h4>Detail Surat Jalan</h4>
                     <div class="card-header-action">
                         <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
