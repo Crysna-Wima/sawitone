@@ -114,58 +114,43 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" name="fc_membernpwp_no" id="fc_membernpwp_no" readonly>
+                                    <input type="text" class="form-control" id="fc_membernpwp_no" name="fc_membernpwp_no" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" name="fc_member_branchtype" id="fc_member_branchtype" readonly hidden>
-                                    <input type="text" class="form-control" name="fc_member_branchtype_desc" id="fc_member_branchtype_desc" readonly>
+                                    <label>Nama Customer</label>
+                                    <input type="text" class="form-control" id="fc_membername1" name="fc_membername1" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" name="fc_membertypebusiness" id="fc_membertypebusiness" readonly hidden>
-                                    <input type="text" class="form-control" name="fc_membertypebusiness_desc" id="fc_membertypebusiness_desc" readonly>
+                                    <label>Pajak</label>
+                                    <input type="text" class="form-control" id="status_pkp" name="status_pkp" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" class="form-control" name="fc_membername1" id="fc_membername1" readonly>
+                                    <label>Penerima</label>
+                                    <input type="text" class="form-control" id="fc_custreceiver" name="fc_custreceiver" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Alamat</label>
-                                    <input type="text" class="form-control" name="fc_memberaddress1" id="fc_memberaddress1" readonly>
+                                    <label>Tanggal Kirim</label>
+                                    <input type="text" class="form-control" id="fd_doarivaldate" name="fd_doarivaldate" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" name="fn_memberAgingAP" id="fn_memberAgingAP" readonly>
+                                    <label>Tanggal Diterima</label>
+                                    <input type="text" class="form-control" id="fd_doarivaldate" name="fd_doarivaldate" readonly>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4">
+                            <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
-                                    <label>Legal Status</label>
-                                    <input type="text" class="form-control" name="fc_memberlegalstatus" id="fc_memberlegalstatus" readonly hidden>
-                                    <input type="text" class="form-control" name="fc_memberlegalstatus_desc" id="fc_memberlegalstatus_desc" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading1" id="fc_memberaddress_loading1" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Piutang</label>
-                                    <input type="text" class="form-control" name="fm_memberAP" id="fm_memberAP" readonly>
+                                    <label>Alamat Pengiriman</label>
+                                    <input type="text" class="form-control" id="fc_memberaddress_loading" name="fc_memberaddress_loading" readonly>
                                 </div>
                             </div>
                         </div>

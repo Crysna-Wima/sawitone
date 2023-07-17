@@ -18,7 +18,7 @@ class ReturBarangController extends Controller
 {
     public function index()
     {
-        $temp_retur_master = TempReturMaster::with('domst')->where('fc_returno', auth()->user()->fc_userid)->first();
+        $temp_retur_master = TempReturMaster::with('domst.somst.customer')->where('fc_returno', auth()->user()->fc_userid)->first();
         $temp_retur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->get();
         $total = count($temp_retur_detail);
         if(!empty($temp_retur_master)){
@@ -78,5 +78,33 @@ class ReturBarangController extends Controller
                 'message' => 'Data sudah ada'
             ];
         }
+    }
+    
+    public function cancel(){
+        DB::beginTransaction();
+
+		try{
+            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->delete();
+            TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->delete();
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/retur-barang',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }

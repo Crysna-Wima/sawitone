@@ -55,7 +55,7 @@
                 <div class="collapse" id="mycard-collapse">
                     <div class="card-body">
                         <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal :
                                         {{ \Carbon\Carbon::parse($data->created_at)->format('d/m/Y') }}</label>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-8 col-lg-8">
+        <div class="col-12 col-md-8 col-lg-7">
             <div class="card">
                 <div class="card-header">
                     <h4>Detail Surat Jalan</h4>
@@ -107,55 +107,43 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fc_membernpwp_no }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->domst->somst->customer->fc_membernpwp_no }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->member_typebranch->fv_description }}" readonly>
+                                    <label>Nama Customer</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->somst->customer->fc_membername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->member_type_business->fv_description }}" readonly>
+                                    <label>Pajak</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->somst->customer->member_tax_code->fv_description }} ({{ $data->domst->somst->customer->member_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fc_membername1 }}" readonly>
+                                    <label>Penerima</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->fc_custreceiver }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fc_memberaddress1 }}" readonly>
+                                    <label>Tanggal Kirim</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->fd_dodate }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
-                                    <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <label>Tanggal Diterima</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->fd_doarivaldate }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-4 col-md-4 col-lg-4">
+                            <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
-                                    <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $data->customer->member_legal_status->fv_description }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $data->fc_memberaddress_loading1 }}" readonly>
-                                </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4">
-                                <div class="form-group">
-                                    <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $data->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <label>Alamat Pengiriman</label>
+                                    <input type="text" class="form-control" value="{{ $data->domst->fc_memberaddress_loading }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +155,7 @@
         <div class="col-12 col-md-12 col-lg-6 place_detail">
             <div class="card">
                 <div class="card-body" style="padding-top: 30px!important;">
-                    <form id="form_submit_noconfirm" action="/apps/sales-order/detail/store-update" method="POST" autocomplete="off">
+                    <form id="form_submit_noconfirm" action="/apps/retur-barang/detail/store-update" method="POST" autocomplete="off">
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
@@ -176,21 +164,15 @@
                                         <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly hidden>
                                         <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button" onclick="click_modal_stock()"><i class="fa fa-search"></i></button>
+                                            <button class="btn btn-primary" type="button" onclick="click_modal_do_dtl()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-3">
+                            <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Qty</label>
-                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_qty" id="fn_so_qty" required>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group">
-                                    <label>Bonus</label>
-                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_so_bonusqty" id="fn_so_bonusqty">
+                                    <input type="number" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" name="fn_returqty" id="fn_returqty" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-5">
@@ -202,7 +184,7 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control format-rp" name="fm_so_price_edit" id="fm_so_price" onkeyup="return onkeyupRupiah(this.id);" required>
+                                        <input type="text" class="form-control format-rp" name="fn_price_edit" id="fn_price" onkeyup="return onkeyupRupiah(this.id);" required>
                                     </div>
                                 </div>
                             </div>
@@ -215,8 +197,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button type="button" class="btn btn-warning" onclick="click_modal_inventory()"><i class="fa fa-eye"></i> Cek Stock</button>
-                                <button class="btn btn-success ml-1">Add Item</button>
+                                <button class="btn btn-success ml-1">Tambahkan</button>
                             </div>
                         </div>
                     </form>
@@ -279,9 +260,12 @@
             </div>
         </div>
 
-        {{-- TABLE --}}
+        {{-- RETUR ITEM --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
+                <div class="card-header">
+                    <h4>Item yang Diretur</h4>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="table-responsive">
@@ -290,16 +274,14 @@
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
-                                        <th scope="col" class="text-center">Nama Produk</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Qty Bonus</th>
+                                        <th scope="col" class="text-center">Batch</th>
+                                        <th scope="col" class="text-center">Exp.</th>
+                                        <th scope="col" class="text-center">CAT.</th>
+                                        <th scope="col" class="text-center">Qty Retur</th>
                                         <th scope="col" class="text-center">Harga</th>
-                                        <th scope="col" class="text-center">Disc.(%)</th>
-                                        <th scope="col" class="text-center">Disc.(Rp)</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Catatan</th>
-                                        <th scope="col" class="text-center justify-content-center">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -308,64 +290,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <form id="form_submit" action="/apps/sales-order/detail/catatan-save" method="POST">
-                @csrf
-                @method('put')
-                <div class="card">
-                    <div class="card-body" style="padding-top: 30px!important;">
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group">
-                                <label for="fv_description_mst">Catatan</label>
-                                <div class="input-group">
-                                    @if (empty($data->fv_description))
-                                    <input type="text" class="form-control" fdprocessedid="hgh1fp" name="fv_description_mst" id="fv_description_mst">
-                                    @else
-                                    <input type="text" class="form-control" fdprocessedid="hgh1fp" value="{{ $data->fv_description }}" name="fv_description_mst" id="fv_description_mst">
-                                    <input type="text" class="form-control" name="fc_sono" id="fc_sono" hidden>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="button text-right">
-                                <button type="submit" class="btn btn-warning" id="btn_save">
-                                    <i class="fas fa-edit"></i> Simpan
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            @if ($data->fc_sostatus === 'F')
-            <div class="button text-right mb-4">
-                <a href="#" class="btn btn-success">Save SO</a>
-            </div>
-            @else
-            @if ($total == 0)
-            <div class="button text-right mb-4">
-
-            </div>
-            @else
-            <div class="button text-right mb-4">
-                <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
-            </div>
-            @endif
-            {{-- <div id="btn-payment" class="button text-right mb-4">
-                           
-                   </div> --}}
-            @endif
-        </div>
+    </div>
+    <div class="button text-right mb-4">
+        <form id="form_submit_edit" action="/apps/retur-barang/submit" method="post">
+            <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+            @csrf
+            @method('put')
+            <button type="submit" class="btn btn-success">Submit Retur</button>
+        </form>
     </div>
 </div>
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_customer" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal_do_dtl" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Pilih Customer</h5>
+                <h5 class="modal-title">Pilih Stock</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -373,94 +315,17 @@
             <form id="form_ttd" autocomplete="off">
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb_customer" width="100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">Kode</th>
-                                    <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Alamat</th>
-                                    <th scope="col" class="text-center">Tipe Bisnis</th>
-                                    <th scope="col" class="text-center">Tipe Cabang</th>
-                                    <th scope="col" class="text-center">Status Legal</th>
-                                    <th scope="col" class="text-center">NPWP</th>
-                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" role="dialog" id="modal_stock" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Pilih Item</h5>
-                <div class="card-header-action">
-                    <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" name="Category" id="category">
-                        <option value="Semua" selected>Semua&nbsp;&nbsp;</option>
-                        <option value="Khusus">Khusus&nbsp;&nbsp;</option>
-                    </select>
-                </div>
-            </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_stock" width="100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Katalog Produk</th>
-                                    <th scope="col" class="text-center">Nama Produk</th>
-                                    <th scope="col" class="text-center">Brand</th>
-                                    <th scope="col" class="text-center">Sub Group</th>
-                                    <th scope="col" class="text-center">Satuan</th>
-                                    <th scope="col" class="text-center">Harga</th>
-                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" id="click_category" class="btn btn-secondary" onclick="clear_category()" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Ketersediaan Stock</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_inventory" width="100%">
+                        <table class="table table-striped" id="tb_do_dtl" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Barang</th>
                                     <th scope="col" class="text-center">Nama Barang</th>
-                                    <th scope="col" class="text-center">Brand</th>
-                                    <th scope="col" class="text-center">Sub Group</th>
-                                    <th scope="col" class="text-center">Tipe Stock</th>
                                     <th scope="col" class="text-center">Satuan</th>
-                                    <th scope="col" class="text-center">Expired Date</th>
-                                    <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Exp. Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -477,291 +342,27 @@
 
 @section('js')
 <script>
-    $(document).ready(function() {
-        // Format mata uang.
-        $('.rupiah').mask('000.000.000', {
-            reverse: true
-        });
-    })
-    $(document).ready(function() {
-        $('.place_detail').attr('hidden', false);
-    })
+    var dono = "{{ $data->fc_dono }}";
+    var encode_dono = window.btoa(dono);
 
-    function click_modal_customer() {
-        $('#modal_customer').modal('show');
-        table_customer();
+    function click_modal_do_dtl() {
+        $('#modal_do_dtl').modal('show');
+        table_do_dtl();
     }
 
-    function clear_category() {
-        $('#category').val('Semua').trigger('change');
-    }
-
-    function click_modal_stock() {
-        $('#modal_stock').modal('show');
-        table_stock();
-    }
-
-    function click_modal_inventory() {
-        $('#modal_inventory').modal('show');
-        table_inventory();
-    }
-
-    function onchange_member_code(fc_membercode) {
-        $.ajax({
-            url: "/master/data-customer-first/" + fc_membercode,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                if (response.status === 200) {
-                    var data = response.data;
-                    $('#fc_membertaxcode').val(data.member_tax_code.fc_kode);
-                    $('#fc_membertaxcode_view').val(data.member_tax_code.fv_description);
-                    $('#fc_memberaddress_loading1').val(data.fc_memberaddress_loading1);
-                    $('#fc_memberaddress_loading2').val(data.fc_memberaddress_loading2);
-                } else {
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
-    function table_customer() {
-        var tb_customer = $('#tb_customer').DataTable({
+    function table_do_dtl() {
+        var tb_do_dtl = $('#tb_do_dtl').DataTable({
+            // apabila data kosong
             processing: true,
             serverSide: true,
             destroy: true,
             ajax: {
-                url: "/master/get-data-customer-so-datatables/" + $('#fc_branch').val(),
-                type: 'GET'
-            },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 7]
-            }, ],
-            columns: [{
-                    data: 'fc_membercode'
-                },
-                {
-                    data: 'fc_membername1'
-                },
-                {
-                    data: 'fc_memberaddress1'
-                },
-                {
-                    data: 'member_type_business.fv_description'
-                },
-                {
-                    data: 'member_typebranch.fv_description'
-                },
-                {
-                    data: 'member_legal_status.fv_description'
-                },
-                {
-                    data: 'fc_membernpwp_no'
-                },
-                {
-                    data: 'fc_membernpwp_no'
-                },
-            ],
-            rowCallback: function(row, data) {
-                $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-success btn-sm mr-1" onclick="detail_customer('${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
-            }
-        });
-    }
-
-    function table_stock() {
-        var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
-        var tb_stock = $('#tb_stock').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                url: "/master/get-data-stock-so-datatables",
+                url: "/apps/retur-barang/detail/datatables-do-detail/" + encode_dono,
                 type: 'GET',
-                data: function(d) {
-                    d.category = $('#category').val();
-                },
-                dataSrc: function(data) {
-                    data.data.forEach(function(row) {
-                        switch (tipe_bisnis) {
-                            case 'PERSONAL':
-                                row.fm_price_default = row.fm_price_enduser;
-                                break;
-                            case 'DISTRIBUTOR':
-                                row.fm_price_default = row.fm_price_distributor;
-                                break;
-                            case 'RETAIL':
-                                row.fm_price_default = row.fm_price_default;
-                                break;
-                            case 'RUMAH SAKIT':
-                                row.fm_price_default = row.fm_price_project;
-                                break;
-                            case 'END USER':
-                                row.fm_price_default = row.fm_price_enduser;
-                                break;
-                            default:
-                                row.fm_price_default = "";
-                        }
-                    });
-                    return data.data;
-                }
-
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 2, 5, 7]
-            }],
-            columns: [{
-                    data: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false
-                },
-                {
-                    data: 'fc_stockcode'
-                },
-                {
-                    data: 'fc_namelong',
-                    render: function(data, type, row) {
-                        if (!data) {
-                            return row.stock.fc_namelong;
-                        }
-                        return data;
-                    }
-                },
-                {
-                    data: 'fc_brand',
-                    render: function(data, type, row) {
-                        if ($('#category').val() === 'Semua') {
-                            if (row && row.fc_brand) {
-                                return row.fc_brand;
-                            } else {
-                                return data;
-                            }
-                        } else if ($('#category').val() === 'Khusus') {
-                            if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
-                                return row.stock.fc_brand;
-                            } else {
-                                return data;
-                            }
-                        } else {
-                            return data;
-                        }
-                    }
-                },
-                {
-                    data: 'fc_subgroup',
-                    render: function(data, type, row) {
-                        if ($('#category').val() === 'Semua') {
-                            if (row && row.fc_subgroup) {
-                                return row.fc_subgroup;
-                            } else {
-                                return data;
-                            }
-                        } else if ($('#category').val() === 'Khusus') {
-                            if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
-                                return row.stock.fc_subgroup;
-                            } else {
-                                return data;
-                            }
-                        } else {
-                            return data;
-                        }
-                    }
-                },
-                {
-                    data: 'namepack.fv_description',
-                    render: function(data, type, row) {
-                        if (!data) {
-                            return row.stock.namepack.fv_description;
-                        }
-                        return data;
-                    }
-                },
-                {
-                    data: 'fm_price_default',
-                    render: function(data, type, row) {
-                        if ($('#category').val() == 'Khusus') {
-                            if (row.fm_price_customer == undefined) {
-                                return data
-                            } else {
-                                return row.fm_price_customer.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-                            }
-
-                        } else {
-                            return data.toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            });
-                        }
-                    }
-                },
-                {
-                    data: null
-                },
-            ],
-            rowCallback: function(row, data) {
-                // console.log(data)
-                if (!data.fc_nameshort) {
-                    data.fc_nameshort = data.stock.fc_nameshort;
-                }
-
-                if ($('#category').val() == 'Khusus') {
-                    $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock_customer('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
-                } else {
-                    $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"></i> Pilih</button>
-                `);
-                }
-
-            }
-        });
-        // Reload datatable when category is changed
-        $('#category').on('change', function() {
-            var url = $(this).val() === 'Semua' ? '/master/get-data-stock-so-datatables' :
-                '/master/get-data-stock_customer-so-datatables';
-            tb_stock.ajax.url(url).load();
-        });
-    }
-
-    function table_inventory() {
-        // var fc_sono = "{{ $data->fc_sono }}";
-        // var fc_sono_encode = window.btoa(fc_sono);
-        var tb_inventory = $('#tb_inventory').DataTable({
-            processing: true,
-            serverSide: true,
-            destroy: true,
-            order: [
-                [7, 'asc']
-            ],
-            ajax: {
-                url: "/apps/sales-order/detail/datatables-inventory",
-                type: 'GET'
-            },
-            columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5]
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -769,22 +370,16 @@
                     orderable: false
                 },
                 {
-                    data: 'fc_stockcode'
+                    data: 'invstore.stock.fc_stockcode'
                 },
                 {
-                    data: 'stock.fc_namelong'
+                    data: 'invstore.stock.fc_namelong'
                 },
                 {
-                    data: 'stock.fc_brand'
+                    data: 'invstore.stock.fc_namepack'
                 },
                 {
-                    data: 'stock.fc_subgroup'
-                },
-                {
-                    data: 'stock.fc_typestock2'
-                },
-                {
-                    data: 'stock.fc_namepack'
+                    data: 'fn_qty_do'
                 },
                 {
                     data: 'fd_expired',
@@ -794,122 +389,14 @@
                     data: 'fc_batch'
                 },
                 {
-                    data: 'fn_quantity'
+                    data: null
                 },
             ],
-        });
-    }
-
-    function detail_stock(id) {
-        // console.log($id)
-        var fc_stockcode = window.btoa(id)
-        $.ajax({
-            url: "/master/get-data-where-field-id-first/Stock/fc_stockcode/" + fc_stockcode,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                var data = response.data;
-                // console.log(data.tempsodetail[0].fm_so_price);
-                var tipe_bisnis = "{{ $data->customer->member_type_business->fc_kode }}";
-                if (tipe_bisnis == 'DISTRIBUTOR') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_distributor));
-                } else if (tipe_bisnis == 'RETAIL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_default));
-                } else if (tipe_bisnis == 'HOSPITAL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_project));
-                } else if (tipe_bisnis == 'PERSONAL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_enduser));
-                } else if (tipe_bisnis == 'ENDUSER') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_enduser));
-                } else {
-                    $('#fm_so_price').val(fungsiRupiah(""));
-                }
-                $('#fc_stockcode').val(data.fc_stockcode);
-                $('#fc_barcode').val(data.fc_barcode);
-
-                $("#modal_stock").modal('hide');
+            rowCallback: function(row, data) {
+                $('td:eq(7)', row).html(`
+                    <button class="btn btn-warning btn-sm" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"> </i> Pilih</button>
+                `);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
-    function detail_stock_customer(id) {
-        // console.log($id)
-        var fc_stockcode = window.btoa(id);
-        console.log(fc_stockcode)
-        $.ajax({
-            url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + fc_stockcode,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                var data = response.data;
-                // console.log(data.tempsodetail[0].fm_so_price);
-                var tipe_bisnis = "{{ $data->customer->member_type_business->fc_kode }}";
-                if (tipe_bisnis == 'DISTRIBUTOR') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
-                } else if (tipe_bisnis == 'RETAIL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
-                } else if (tipe_bisnis == 'HOSPITAL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
-                } else if (tipe_bisnis == 'PERSONAL') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
-                } else if (tipe_bisnis == 'ENDUSER') {
-                    $('#fm_so_price').val(fungsiRupiah(data.fm_price_customer));
-                } else {
-                    $('#fm_so_price').val(fungsiRupiah(""));
-                }
-                $('#fc_stockcode').val(data.fc_stockcode);
-                $('#fc_barcode').val(data.fc_barcode);
-
-                $("#modal_stock").modal('hide');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
-    function detail_customer($id) {
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url: "/master/data-customer-first/" + $id,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                var data = response.data;
-                $('#modal_loading').modal('hide');
-                $("#modal_customer").modal('hide');
-                Object.keys(data).forEach(function(key) {
-                    var elem_name = $('[name=' + key + ']');
-                    elem_name.val(data[key]);
-                });
-
-                $('#fc_member_branchtype_desc').val(data.member_typebranch.fv_description);
-                $('#fc_membertypebusiness_desc').val(data.member_type_business.fv_description);
-                $('#fc_memberlegalstatus_desc').val(data.member_legal_status.fv_description);
-                $('#status_pkp').val(data.member_tax_code.fv_description);
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
         });
     }
 
@@ -919,101 +406,170 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/sales-order/detail/datatables",
+            url: "/apps/retur-barang/detail/datatables",
             type: 'GET',
         },
         columnDefs: [{
-            className: 'text-center',
-            targets: [0, 2, 4, 5, 6, 7, 8, 9, 10]
-        }, ],
+                className: 'text-center',
+                targets: [0, 3, 4, 5, 6, 7, 8, 9]
+            },
+            {
+                className: 'text-nowrap',
+                targets: [9]
+            },
+            {
+                targets: -1,
+                data: null,
+                defaultContent: '<button class="btn btn-danger btn-sm delete-btn"><i class="fa fa-trash"></i> Hapus Item</button>'
+            }
+        ],
         columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false
             },
             {
-                data: 'fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'namepack.fv_description'
+                data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'fn_so_qty'
+                data: 'fc_batch'
             },
             {
-                data: 'fn_so_bonusqty'
+                data: 'fc_catnumber'
             },
             {
-                data: 'fm_so_price',
+                data: 'fd_expired',
+                "render": function(data, type, row) {
+                    return moment(data).format(
+                        // format tanggal
+                        'DD MMMM YYYY'
+                    );
+                }
+            },
+            {
+                data: 'fn_returqty'
+            },
+            {
+                data: 'fn_price',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
-                data: 'fm_so_disc'
-            },
-            {
-                data: 'fm_so_disc'
-            },
-            {
-                data: 'fn_so_value',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
-            },
-            {
-                data: 'fv_description',
-                defaultContent: '-',
-            },
-            {
-                data: null,
-            },
-
+                data: null
+            }
 
         ],
         rowCallback: function(row, data) {
-            var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
-
-            $('td:eq(11)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+            const item_barcode = data.fc_barcode;
+            const item_row = data.fn_rownum;
+            // kirim 2 parameter di data-id di button hapus
+            $('td:eq(9)', row).html(`
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
-        footerCallback: function(row, data, start, end, display) {
-
-            let count_quantity = 0;
-            let total_harga = 0;
-            let grand_total = 0;
-
-            for (var i = 0; i < data.length; i++) {
-                count_quantity += data[i].fn_so_qty;
-                total_harga += data[i].total_harga;
-                grand_total += data[i].total_harga;
-            }
-
-            $('#count_quantity').html(count_quantity);
-            // $('#total_harga').html(fungsiRupiah(grand_total));
-            // $('#grand_total').html("Rp. " + fungsiRupiah(total_harga));
-            // servpay
-            if (data.length != 0) {
-                $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_servpay));
-                $("#fm_servpay").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_tax));
-                $("#fm_tax").trigger("change");
-                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_brutto));
-                $("#grand_total").trigger("change");
-                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempsomst.fm_netto));
-                $("#total_harga").trigger("change");
-                $('#fm_so_disc').html("Rp. " + fungsiRupiah(data[0].tempsomst.fn_disctotal));
-                $("#fm_so_disc").trigger("change");
-                $('#count_item').html(data[0].tempsomst.fn_sodetail);
-                $("#count_item").trigger("change");
-            }
-        }
+        initComplete: function() {
+            $('table').on('click', '.delete-btn', function(e) {
+                e.preventDefault();
+                var barcode = $(this).data('id');
+                // data row
+                var row = $(this).data('row');
+                // console.log(barcode);
+                swal({
+                        title: "Anda yakin ingin menghapus item ini?",
+                        icon: "warning",
+                        buttons: ["Batal", "Hapus"],
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        // modal loading
+                        $('#modal_loading').modal('show');
+                        if (willDelete) {
+                            $.ajax({
+                                url: '/apps/retur-barang/delete-item/' + barcode +
+                                    '/' + row,
+                                type: 'DELETE',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                success: function(response) {
+                                    // tutup modal loading
+                                    if (response.status == 200) {
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal(
+                                                'hide');
+                                        }, 500);
+                                        deliver_item.ajax.reload();
+                                        tb.ajax.reload();
+                                        swal("Item telah dihapus!", {
+                                            icon: "success",
+                                        });
+                                    } else if (response.status == 201) {
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal(
+                                                'hide');
+                                        }, 500);
+                                        deliver_item.ajax.reload();
+                                        tb.ajax.reload();
+                                        swal("Item telah dihapus!", {
+                                            icon: "success",
+                                        });
+                                        location.href = response.link;
+                                    }
+                                },
+                                error: function(xhr) {
+                                    $('#modal_loading').modal('hide');
+                                    swal("Oops!",
+                                        "Terjadi kesalahan saat menghapus item.",
+                                        "error");
+                                }
+                            });
+                        } else {
+                            setTimeout(function() {
+                                $('#modal_loading').modal(
+                                    'hide');
+                            }, 500);
+                        }
+                    });
+            });
+        },
     });
 
-    function click_delete() {
+    function detail_stock($id) {
+        var fc_stockcode = window.btoa($id)
+        console.log($id)
+        $.ajax({
+            url: "/master/get_data_where_field_id_first/DoDetail/fc_stockcode/" + fc_stockcode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                var data = response.data;
+                $('#fn_price').val(fungsiRupiah(data.fn_price))
+                $('#fc_stockcode').val(data.fc_stockcode);
+                $('#fc_barcode').val(data.fc_barcode);
+
+                $("#modal_stock").modal('hide');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function click_cancel() {
         swal({
                 title: 'Apakah anda yakin?',
-                text: 'Apakah anda yakin akan menghapus data SO ini?',
+                text: 'Apakah anda yakin akan mengcancel Retur Barang ini?',
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true,
@@ -1022,7 +578,7 @@
                 if (willDelete) {
                     $("#modal_loading").modal('show');
                     $.ajax({
-                        url: '/apps/sales-order/delete',
+                        url: '/apps/retur-barang/cancel',
                         type: "DELETE",
                         dataType: "JSON",
                         success: function(response) {
@@ -1117,54 +673,5 @@
             }
         });
     });
-
-    // sementara
-    function save_so() {
-        swal({
-                title: 'Apakah anda yakin?',
-                text: 'Apakah anda yakin akan menyimpan data SO ini?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $("#modal_loading").modal('show');
-                    $.ajax({
-                        url: '/apps/sales-order/detail/lock',
-                        type: "GET",
-                        dataType: "JSON",
-                        success: function(response) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            if (response.status === 201) {
-                                $("#modal").modal('hide');
-                                iziToast.success({
-                                    title: 'Success!',
-                                    message: response.message,
-                                    position: 'topRight'
-                                });
-                                window.location.href = response.link;
-                            } else {
-                                swal(response.message, {
-                                    icon: 'error',
-                                });
-                            }
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                .responseText + ")", {
-                                    icon: 'error',
-                                });
-                        }
-                    });
-                }
-            });
-    }
 </script>
 @endsection
