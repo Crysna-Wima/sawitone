@@ -131,13 +131,13 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tanggal Kirim</label>
-                                    <input type="text" class="form-control" value="{{ $data->domst->fd_dodate }}" readonly>
+                                    <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($data->domst->fd_dodate)->format('d/m/Y') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tanggal Diterima</label>
-                                    <input type="text" class="form-control" value="{{ $data->domst->fd_doarivaldate }}" readonly>
+                                    <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($data->domst->fd_doarivaldate)->format('d/m/Y') }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-12">
