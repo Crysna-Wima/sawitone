@@ -23,7 +23,12 @@ class TempReturMaster extends Model
 
     // returdtl
     public function tempreturdtl(){
-     return $this->hasMany(TempRetuDetail::class, 'fc_returno', 'fc_returno')->withTrashed();
+     return $this->hasMany(TempReturDetail::class, 'fc_returno', 'fc_returno');
      }
+
+     // domst
+    public function domst(){
+     return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
+    }
 
 }
