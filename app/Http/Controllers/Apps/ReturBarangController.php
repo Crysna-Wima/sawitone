@@ -6,34 +6,32 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
-use App\Models\DoMaster;
-use App\Models\DoDetail;
-use App\Models\ReturMaster;
-use App\Models\ReturDetail;
+use App\Models\TempReturMaster;
+use App\Models\TempReturDetail;
 use Carbon\Carbon;
 use DateTime;
 use DB;
 use Validator;
+use App\Helpers\ApiFormatter;
 
 class ReturBarangController extends Controller
 {
     public function index()
     {
+        $temp_retur_master = TempReturMaster::with('domst')->where('fc_returno', auth()->user()->fc_userid)->first();
+        $temp_retur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->get();
+        $total = count($temp_retur_detail);
+        if(!empty($temp_retur_master)){
+            $data['data'] = $temp_retur_master;
+            $data['total'] = $total;
+            return view('apps.retur-barang.detail',$data);
+            // dd($data['total']);
+            
+        }
         return view('apps.retur-barang.index');
     }
 
-    public function detail($fc_dono)
-    {
-        $decoded_fc_dono = base64_decode($fc_dono);
-        session(['fc_dono_global' => $decoded_fc_dono]);
-        $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $decoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        $data['fc_dono'] = $decoded_fc_dono;
-
-        return view('apps.retur-barang.detail', $data);
-    }
-
-    public function store_retur(Request $request)
+    public function store_update(Request $request)
     {
         // validator
         $validator = Validator::make($request->all(), [
@@ -48,11 +46,11 @@ class ReturBarangController extends Controller
             ];
         }
 
-        $retur_mst = ReturMaster::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $retur_mst = TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if (empty($retur_mst)) {
             // create TempInvoiceMst
-            $create = ReturMaster::create([
+            $insert = TempReturMaster::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_returno' => auth()->user()->fc_userid,
@@ -62,11 +60,11 @@ class ReturBarangController extends Controller
                 'fc_userid' => auth()->user()->fc_userid,
             ]);
 
-            if ($create) {
+            if ($insert) {
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/retur-barang/create/' . base64_encode($request->fc_dono)
+                    'link' => '/apps/retur-barang'
                 ];
             } else {
                 return [

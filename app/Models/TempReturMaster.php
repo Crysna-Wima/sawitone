@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Blameable;
 use App\Traits\CompositeKey;
 
-class TempRetuMaster extends Model
+class TempReturMaster extends Model
 {
     use HasFactory, Blameable, LogsActivity, CompositeKey;
 
