@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Blameable;
 use App\Traits\CompositeKey;
 
-class TempRetuDetail extends Model
+class TempReturDetail extends Model
 {
     use HasFactory, Blameable, LogsActivity, CompositeKey;
 
@@ -23,7 +23,17 @@ class TempRetuDetail extends Model
 
    // tempreturmaster
     public function tempreturmaster(){
-     return $this->belongsTo(TempRetuMaster::class, 'fc_returno', 'fc_returno')->withTrashed();
+     return $this->belongsTo(TempReturMaster::class, 'fc_returno', 'fc_returno')->withTrashed();
      }
+
+    // domst
+    public function domst(){
+     return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono')->withTrashed();
+    }
+
+    // returmst
+    public function returmst(){
+     return $this->belongsTo(TempReturMaster::class, 'fc_returno', 'fc_returno')->withTrashed();
+    }
 
 }
