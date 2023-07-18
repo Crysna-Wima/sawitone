@@ -559,6 +559,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/cancel', 'Apps\ReturBarangController@cancel');
 
             Route::prefix('detail')->group(function () {
+                Route::post('/store-update','Apps\ReturBarangDetailController@store_update');
                 Route::get('/datatables', 'Apps\ReturBarangDetailController@datatables');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\ReturBarangDetailController@datatables_do_detail');
             });

@@ -162,6 +162,14 @@
                                     <label>Kode Barang</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="fc_barcode" name="fc_barcode" readonly hidden>
+                                        <input type="text" class="form-control" id="fc_batch" name="fc_batch" readonly hidden>
+                                        <input type="text" class="form-control" id="fc_namepack" name="fc_namepack" readonly hidden>
+                                        <input type="text" class="form-control" id="fc_catnumber" name="fc_catnumber" readonly hidden>
+                                        <input type="text" class="form-control" id="fd_expired" name="fd_expired" readonly hidden>
+                                        <input type="text" class="form-control" id="fn_price" name="fn_price" readonly hidden>
+                                        <input type="text" class="form-control" id="fn_disc" name="fn_disc" readonly hidden>
+                                        <input type="text" class="form-control" id="fn_value" name="fn_value" readonly hidden>
+                                        <input type="text" class="form-control" id="fc_status" name="fc_status" readonly hidden>
                                         <input type="text" class="form-control" id="fc_stockcode" name="fc_stockcode" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button" onclick="click_modal_do_dtl()"><i class="fa fa-search"></i></button>
@@ -197,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12 text-right">
-                                <button class="btn btn-success ml-1">Tambahkan</button>
+                                <button type="submit" class="btn btn-success ml-1">Tambahkan</button>
                             </div>
                         </div>
                     </form>
@@ -394,14 +402,14 @@
             ],
             rowCallback: function(row, data) {
                 $('td:eq(7)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="detail_stock('${data.fc_stockcode}')"><i class="fa fa-check"> </i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="detail_stock_barang('${data.fc_barcode}','${data.invstore.stock.fc_stockcode}')"><i class="fa fa-check"> </i> Pilih</button>
                 `);
             },
         });
     }
 
     var tb = $('#tb').DataTable({
-        // apabila data kosong
+        // apabila data kosongs
         processing: true,
         serverSide: true,
         destroy: true,
@@ -540,20 +548,28 @@
         },
     });
 
-    function detail_stock($id) {
-        var fc_stockcode = window.btoa($id)
-        console.log($id)
+    function detail_stock_barang($id, fc_stockcode) {
+        var fc_barcode = window.btoa($id)
+        console.log(fc_barcode)
         $.ajax({
-            url: "/master/get_data_where_field_id_first/DoDetail/fc_stockcode/" + fc_stockcode,
+            url: "/master/get-data-where-field-id-first/DoDetail/fc_barcode/" + fc_barcode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
+                $("#modal_do_dtl").modal('hide');
                 var data = response.data;
                 $('#fn_price').val(fungsiRupiah(data.fn_price))
-                $('#fc_stockcode').val(data.fc_stockcode);
-                $('#fc_barcode').val(data.fc_barcode);
+                $('#fc_stockcode').val(fc_stockcode);
+                $('#fc_barcode').val($id); 
+                $('#fc_batch').val(data.fc_batch);
+                $('#fc_namepack').val(data.fc_namepack);
+                $('#fc_catnumber').val(data.fc_catnumber);
+                $('#fd_expired').val(data.fd_expired);
+                $('#fn_price').val(data.fn_price);
+                $('#fn_disc').val(data.fn_disc);
+                $('#fn_value').val(data.fn_value);
+                $('#fc_status').val(data.fc_status);
 
-                $("#modal_stock").modal('hide');
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 setTimeout(function() {
