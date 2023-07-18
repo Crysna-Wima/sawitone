@@ -182,7 +182,7 @@ class DeliveryOrderController extends Controller
     public function datatables(){
         $data = SoMaster::with('customer')
         ->where('fc_sotype', 'Retail')
-        ->where('fc_sostatus', ['F', 'P'])  
+        ->whereIn('fc_sostatus', ['F', 'P'])  
         ->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
