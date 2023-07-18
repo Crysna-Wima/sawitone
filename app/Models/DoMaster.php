@@ -34,5 +34,14 @@ class DoMaster extends Model
         return $this->hasOne(InvMaster::class, 'fc_dono', 'fc_dono');
     }
     
+    // returmst
+    public function returmst(){
+        return $this->hasOne(TempReturMaster::class, 'fc_dono', 'fc_dono');
+    }
+
+    // returdtl
+    public function returdtl(){
+        return $this->hasMany(TempReturDetail::class, 'fc_dono', 'fc_dono');
+    }
 
 }

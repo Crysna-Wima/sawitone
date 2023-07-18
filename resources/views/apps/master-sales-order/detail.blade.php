@@ -103,7 +103,7 @@
                                     <button type="submit" class="btn btn-danger" hidden>Cancel SO</button>
                                     @else
                                     <button type="submit" class="btn btn-danger">Cancel SO</button>
-                                    @endif  
+                                    @endif
                                 </form>
                             </div>
                         </div>
@@ -203,6 +203,7 @@
                                         <th scope="col" class="text-center">Disc.(Rp)</th>
                                         <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center">Catatan</th>
+                                        <th scope="col" class="text-center">Status</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -368,7 +369,7 @@
             targets: [7],
             defaultContent: "-",
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+            targets: [0, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -395,7 +396,7 @@
             },
             {
                 data: null,
-                render: function ( data, type, row ) {
+                render: function(data, type, row) {
                     return row.fn_so_qty - row.fn_do_qty;
                 }
             },
@@ -414,7 +415,20 @@
                 data: 'fv_description',
                 defaultContent: "-",
             },
+            {
+                data: null,
+            },
         ],
+        rowCallback: function(row, data) {
+            if (data.fn_do_qty == 0) {
+                $('td:eq(12)', row).html('<span class="badge badge-primary"><i class="fa fa-hourglass"></i> Menunggu</span>');
+            } else if (data.fn_do_qty < data.fn_so_qty != 0) {
+                $('td:eq(12)', row).html('<span class="badge badge-warning"><i class="fa fa-spinner"></i> Pending</span>');
+            } else {
+                $('td:eq(12)', row).html('<span class="badge badge-success"><i class="fa fa-check"></i> Selesai</span>');
+            }
+            // <a href="/apps/master-sales-order/pdf/${fc_dono}/${fc_sono}" target="_blank"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-file"></i> PDF</button></a>
+        },
         footerCallback: function(row, data, start, end, display) {
 
             let count_quantity = 0;
