@@ -15,21 +15,21 @@
 
     p,
     label {
-        font-size: 12px;
+        font-size: 16px!important;
     }
 
     table {
-        font-size: 11px;
+        font-size: 16px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: .8rem;
+        font-size: 16px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: .8rem;
+        font-size: 16px!important;
     }
 
     .tp-1 td{
@@ -42,7 +42,7 @@
     }
 
     .table-header {
-        font-size: 11px;
+        font-size: 16px!important;
     }
 
     .next-page {
@@ -89,15 +89,15 @@
     }
 
     .table-lg td{
-        font-size: .8rem!important;
+        font-size: 16px!important;
     }
 
     .table-xl td {
-        font-size: .9rem !important;
+        font-size: 16px!important;
     }
 
     .div-lg p{
-        font-size: .6rem;
+        font-size: 16px!important;
     }
 
     .fw-bold{
@@ -169,9 +169,11 @@
         z-index: -1000;
     }
 
-    /* .header p {
-        font-size: 12px;
-    } */
+    .table-lg,
+    .table-lg th,
+    .table-lg td {
+        border: 2px solid black;
+    }
 </style>
 
 <body>
@@ -183,7 +185,8 @@
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
-            <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
+            <p>Jl. Raya Jemursari No.329-331,</p>
+            <p>Sidosermo, Kec. Wonocolo,</p>
             <p>Surabaya, Jawa Timur (60297)</p>
             <p><b>dexa-arfindopratama.com</b></p>
             <br>
@@ -203,8 +206,9 @@
 
 <div class="content">
     <br><br>
-        <p style="font-weight: bold; font-size: 14px;">Pengiriman Barang</p>
-        <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%" border="1">
+    <br><br>
+        <p style="font-weight: bold; font-size: 18px;">Pengiriman Barang</p>
+        <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%;" border="1">
             <tr>
                 <th>No</th>
                 <th>Kode Barang</th>

@@ -261,9 +261,9 @@
             // console.log(fc_sono);
 
             $('td:eq(6)', row).html(`<i class="${data.fc_status}"></i>`);
-            if (data['fc_sostatus'] == 'R') {
+            if (data['fc_status'] == 'R') {
                 $('td:eq(6)', row).html('<span class="badge badge-primary">Terbit</span>');
-            } else if (data['fc_sostatus'] == 'I') {
+            } else if (data['fc_status'] == 'I') {
                 $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
             } else {
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
@@ -410,9 +410,9 @@
             // console.log(fc_sono);
 
             $('td:eq(5)', row).html(`<i class="${data.fc_status}"></i>`);
-            if (data['fc_sostatus'] == 'R') {
+            if (data['fc_status'] == 'R') {
                 $('td:eq(5)', row).html('<span class="badge badge-primary">Terbit</span>');
-            } else if (data['fc_sostatus'] == 'I') {
+            } else if (data['fc_status'] == 'I') {
                 $('td:eq(5)', row).html('<span class="badge badge-warning">Pending</span>');
             } else {
                 $('td:eq(5)', row).html('<span class="badge badge-success">Lunas</span>');

@@ -570,28 +570,28 @@
                         url: '/apps/invoice-cprr/submit',
                         data: data,
                         success: function(response) {
-                            // tampilkan modal section alert
+                            console.log(response.status);
                             if (response.status == 300 || response.status == 301) {
-                                // hide loading
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-                                $('#alert-message').html(response.message);
-                                $('#alertModal').modal('show');
+                                $('#modal_loading').modal('hide');
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
                             } else {
-                                setTimeout(function() {
-                                    $('#modal_loading').modal('hide');
-                                }, 500);
-                                // tampilkan flas message bootstrap id alert-success
-
+                                $('#modal_loading').modal('hide');
                                 swal(response.message, {
                                     icon: 'success',
                                 });
-                                // redirect ke halaman sales order
-                                // hapus local storage
-
-                                window.location.href = "/apps/invoice-cprr";
+                                setTimeout(function() {
+                                    window.location.href = "/apps/invoice-cprr";
+                                }, 500);
                             }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            $('#modal_loading').modal('hide');
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
                         }
                     });
                 }

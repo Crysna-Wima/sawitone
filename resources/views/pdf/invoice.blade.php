@@ -12,26 +12,6 @@
         font-family: 'Roboto Mono', monospace;
     }
 
-
-    p,
-    label {
-        font-size: 12px;
-    }
-
-    table {
-        font-size: 11px;
-    }
-
-    table th {
-        padding: 6px 4px;
-        font-size: .8rem;
-    }
-
-    table td {
-        padding: 6px 4px;
-        font-size: .8rem;
-    }
-
     .tp-1 td{
         padding: 9px 4px!important;
     }
@@ -39,10 +19,6 @@
     .no-space td {
         padding: 2px 6px;
         margin: 0;
-    }
-
-    .table-header {
-        font-size: 11px;
     }
 
     .next-page {
@@ -86,18 +62,6 @@
 
     .daftar_isi li {
         padding: 8px 0 0 5px !important;
-    }
-
-    .table-lg td{
-        font-size: .8rem!important;
-    }
-
-    .table-xl td {
-        font-size: .9rem !important;
-    }
-
-    .div-lg p{
-        font-size: .9rem!important;
     }
 
     .fw-bold{
@@ -159,8 +123,52 @@
         padding-bottom: 15px;
     }
 
-    .content p {
-        font-size: .8rem;
+    /* font size*/
+    
+
+    p,
+    label {
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 14px!important;
+    }
+
+    table th {
+        padding: 6px 4px;
+        font-size: 14px!important;
+    }
+
+    table td {
+        padding: 6px 4px;
+        font-size: 14px!important;
+    }
+
+    .table-header {
+        font-size: 14px!important;
+    }
+
+    .table-lg td{
+        font-size: 14px!important;
+    }
+
+    .table-xl td {
+        font-size: 14px!important;
+    }
+
+    .div-lg p{
+        font-size: 14px!important;
+    }
+
+    .footer p {
+        font-size: 13px!important;
+    }
+
+    .table-lg,
+    .table-lg th,
+    .table-lg td {
+        border: 2px solid black;
     }
 </style>
 
@@ -179,14 +187,14 @@
             <p>{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
             <p>{{ $inv_mst->fc_address }}</p>
             @else
-            <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
+            <p>{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</p>
             <p>{{ $inv_mst->fc_address }}</p>
             @endif
         </div>
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
-            <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
-            <p>Surabaya, Jawa Timur (60297)</p>
+            <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
+            <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
             <p><b>dexa-arfindopratama.com</b></p>
         </div>
     </div>
@@ -194,8 +202,7 @@
 
 <div class="content">
         <br><br><br>
-        <p style="text-align: center; font-weight:bold; font-size: 15px">INVOICE</p>
-        <p style="text-align: center; font-weight:bold;">({{ $inv_mst->fc_invno }})</p>
+        <p style="text-align: center; font-weight:bold; font-size: 16px">INVOICE</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             @if($inv_mst->fc_invtype == 'SALES')
             <tr>
@@ -222,7 +229,7 @@
                 @if($inv_mst->fc_invtype == 'SALES')
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                <td style="width: 30%">03.125.501.1-609.000</td>
                 @elseif($inv_mst->fc_invtype == 'PURCHASE')
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
@@ -230,7 +237,7 @@
                 @else
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->somst->customer->fc_membernpwp_no ?? '-' }}</td>
+                <td style="width: 30%">03.125.501.1-609.000</td>
                 @endif
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
@@ -324,8 +331,8 @@
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
-                <th>Kode CPRR</th>
-                <th>Nama CPRR</th>
+                <th>Nama</th>
+                <th>Satuan</th>
                 <th>Jumlah</th>
                 <th>Harga Satuan</th>
                 <th>Catatan</th>
@@ -337,7 +344,6 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fc_detailitem }}</td>
-                        <td>{{ $item->cospertes->fc_cprrname }}</td>
                         <td>{{ $item->nameunity->fv_description }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
@@ -385,9 +391,6 @@
             </tr>
             @endif
         </table> -->
-
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Catatan</p>
-        <p style="font-size: .8rem; margin-left: 5%">{{ $inv_mst->fv_description ?? '-' }}</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;">
             <tr>
                 <td>Total</td>
@@ -438,7 +441,6 @@
 
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br><br>
-            <br><br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
                 <td style="width: 50% !important; text-align: right;">Diterima Oleh,</td>
@@ -450,26 +452,27 @@
                 @elseif($inv_mst->fc_invtype == 'PURCHASE')
                 <td style="width: 50% !important; text-align: right;">{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</td>
                 @else
-                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</td>
+                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</td>
                 @endif
             </tr>
             <br><br/>
             <br><br/>
             <tr >
                 <td style="width: 50% !important; text-align: left;">( {{ $nama_pj }} )</td>
-                <td style="width: 50% !important; text-align: right;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: right;">(..........................)</td>
             </tr>
         </table>
 
-        <div class="container" id="so-pdf">
+        <div class="container">
             <div class="footer" style="height: 100px">
                 <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
+                    <p><b>Catatan : </b>{{ $inv_mst->fv_description ?? '-' }}</p>
                     <p><b>Syarat Pembayaran :</b></p>
                     <p>- Pembayaran harap di selesaikan dalam waktu 30 hari dari tanggal Faktur</p>
                     <p>- Pembayaran harap dilakukan dengan Giro Bilyet / Cross Cheque atau transfer ke bank kami.</p>
                     @if($inv_mst->fc_invtype == 'SALES')
                     <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
-                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname1 }}</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname }}</p>
                     <p>&nbsp;&nbsp;A/C {{ $inv_mst->bank->fc_bankcode }}</p>
                     @elseif($inv_mst->fc_invtype == 'PURCHASE')
                     <p>&nbsp;&nbsp;Atas Nama : {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
@@ -477,7 +480,7 @@
                     <p>&nbsp;&nbsp;A/C {{ $inv_mst->fc_bankcode }}</p>
                     @else
                     <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
-                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname1 }}</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname }}</p>
                     <p>&nbsp;&nbsp;A/C {{ $inv_mst->bank->fc_bankcode }}</p>
                     @endif
                     <p>- Pembayaran di anggap lunas apabila sudah CAIR</p>

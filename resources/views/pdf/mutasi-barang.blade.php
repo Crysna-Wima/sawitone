@@ -15,21 +15,21 @@
 
     p,
     label {
-        font-size: 12px;
+        font-size: 16px!important;
     }
 
     table {
-        font-size: 11px;
+        font-size: 16px!important;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: .8rem;
+        font-size: 16px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: .8rem;
+        font-size: 16px!important;
     }
 
     .tp-1 td{
@@ -42,7 +42,7 @@
     }
 
     .table-header {
-        font-size: 11px;
+        font-size: 16px!important;
     }
 
     .next-page {
@@ -89,15 +89,15 @@
     }
 
     .table-lg td{
-        font-size: .8rem!important;
+        font-size: 16px!important;
     }
 
     .table-xl td {
-        font-size: .9rem !important;
+        font-size: 16px!important;
     }
 
     .div-lg p{
-        font-size: .9rem!important;
+        font-size: 16px!important;
     }
 
     .fw-bold{
@@ -160,7 +160,13 @@
     }
 
     .content p {
-        font-size: .8rem;
+        font-size: 18px!important;
+    }
+
+    .table-lg,
+    .table-lg th,
+    .table-lg td {
+        border: 2px solid black;
     }
 </style>
 
@@ -172,14 +178,14 @@
             </div>
             <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
                 <p><b>PT DEXA ARFINDO PRATAMA</b></p>
-                <p>Jl. Raya Jemursari No.329-331, Sidosermo, Kec. Wonocolo</p>
-                <p>Surabaya, Jawa Timur (60297)</p>
+                <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
+                <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
                 <p><b>dexa-arfindopratama.com</b></p>
             </div>
         </div>
     </div>
     <div class="content">
-        <p style="text-align: center; font-weight:bold; font-size:15px;">TANDA TERIMA MUTASI</p>
+        <p style="text-align: center; font-weight:bold;">TANDA TERIMA MUTASI</p>
         <br>
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
@@ -209,7 +215,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">
-        <p style="font-size: .8rem; margin-left: 2%">Lokasi Awal :</p>
+        <p style="font-size: 16px; margin-left: 2%">Lokasi Awal :</p>
             <tr>
                 <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
                 <td style="width: 5px"></td>
@@ -219,7 +225,7 @@
                 <td style="width: 16%"></td>
             </tr>
             <tr>
-                <td style="width: 50%">{{ $mutasi_mst->warehouse_start->fc_warehouseaddress }}</td>
+                <td style="width: 70%">{{ $mutasi_mst->warehouse_start->fc_warehouseaddress }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -229,7 +235,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-        <p style="font-size: .8rem; margin-left: 2%">Lokasi Tujuan :</p>
+        <p style="font-size: 16px; margin-left: 2%">Lokasi Tujuan :</p>
             <tr>
                 <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 5px"></td>
@@ -239,7 +245,7 @@
                 <td style="width: 16%"></td>
             </tr>
             <tr>
-                <td style="width: 50%">{{ $mutasi_mst->warehouse_destination->fc_warehouseaddress }}</td>
+                <td style="width: 70%">{{ $mutasi_mst->warehouse_destination->fc_warehouseaddress }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -280,7 +286,6 @@
 
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br><br>
-            <br><br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">Telah diterima di,</td>
                 <td style="width: 50% !important; text-align: right;">Telah dikirim dari,</td>
@@ -292,7 +297,7 @@
             <br><br/>
             <br><br/>
             <tr >
-                <td style="width: 50% !important; text-align: left;">(..................................................)</td>
+                <td style="width: 50% !important; text-align: left;">(..................)</td>
                 <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
             </tr>
         </table>
