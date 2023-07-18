@@ -490,6 +490,7 @@
                     "render": function(data, type, full, meta) {
                         // console.log('data'+data.fn_sorrownum);
                         var selectedOption = $('#category').val();
+                        var barcodeEncode = window.btoa(data.fc_barcode);
                         // looping data data.stock.sodtl[index].fn_so_qty
                         if (selectedOption == "Bonus") {
                             let qty = 0;
@@ -501,11 +502,11 @@
                                     break;
                                 }
                             }
-
+                            
                             if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                                return `<input type="number" id="bonus_quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                             } else {
-                                return `<input type="number" id="bonus_quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                return `<input type="number" id="bonus_quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${qty}">`;
                             }
                             // reload datatable
 
@@ -517,17 +518,16 @@
                                         .fn_do_qty;
                                     break;
                                 }
-
                             }
 
                             // console.log("qty"+qty);
                             if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                                return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                             } else {
                                 if (qty < 0) {
-                                    return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="0">`;
+                                    return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="0">`;
                                 }
-                                return `<input type="number" id="quantity_cart_stock_${data.fc_barcode}" min="0" class="form-control" value="${qty}">`;
+                                return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${qty}">`;
                             }
                         }
 
@@ -576,14 +576,6 @@
                                 } else {
                                     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
                                 }
-                            // if (qty == 0) {
-                            //     return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            // } else {
-                            //     return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
-                            // }
-                            // else {
-                            //     return `<button type="button" class="btn btn-danger"><i class="fa fa-lock"></i></button>`;
-                            // }
                         }
 
                     }
@@ -634,6 +626,7 @@
         let stock_name = 'input[name="pname[]'
         // ambil 8 string fc_barcode dari depan
         let fc_barcode_8 = fc_barcode.substring(0, 40);
+        var barcodeEncode = window.btoa(fc_barcode);
         console.log($('').val());
         // console.log(fc_barcode);
         // modal loading
@@ -645,8 +638,8 @@
                 'fc_barcode': fc_barcode,
                 'fc_stockcode': fc_stockcode,
                 'short_barcode': fc_barcode_8,
-                'quantity': $(`#quantity_cart_stock_${fc_barcode}`).val(),
-                'bonus_quantity': $(`#bonus_quantity_cart_stock_${fc_barcode}`).val(),
+                'quantity': $(`#quantity_cart_stock_${barcodeEncode}`).val(),
+                'bonus_quantity': $(`#bonus_quantity_cart_stock_${barcodeEncode}`).val(),
                 'fc_sono': '{{ $data->fc_sono }}',
             },
             dataType: 'JSON',
@@ -1053,7 +1046,7 @@
                     });
                 }
             });
-    }
+    } 
 
     function cek_submit(){
         $("#modal_loading").modal('show');
