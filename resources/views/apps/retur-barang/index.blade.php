@@ -138,7 +138,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tanggal Kirim</label>
-                                    <input type="text" class="form-control" id="fd_doarivaldate" name="fd_doarivaldate" readonly>
+                                    <input type="text" class="form-control" id="fd_dodate" name="fd_dodate" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -254,7 +254,7 @@
             rowCallback: function(row, data) {
                 var fc_dono = window.btoa(data.fc_dono);
                 $('td:eq(6)', row).html(
-                    `<button class="btn btn-warning btn-sm" onclick="get_dono('${data.fc_dono}')"><i class="fa fa-check"></i> Pilih</button></a>`
+                    `<button class="btn btn-warning btn-sm" onclick="detail_do('${data.fc_dono}')"><i class="fa fa-check"></i> Pilih</button></a>`
                 );
 
             }
@@ -264,6 +264,32 @@
     function get_dono($fc_dono) {
         $('#fc_dono').val($fc_dono);
         $('#modal_do').modal('hide');
+    }
+
+    function detail_do(fc_dono){
+        // encode
+        var fc_dono = window.btoa(fc_dono);
+        console.log(fc_dono)
+        $.ajax({
+            url : "/apps/retur-barang/detail-delivery-order/" + fc_dono,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response){
+                $("#modal_do").modal('hide');
+                var data = response.data;
+                $('#fc_membernpwp_no').val(data.somst.customer.fc_membernpwp_no);
+                $('#fc_membername1').val(data.somst.customer.fc_membername1);
+                $('#fc_custreceiver').val(data.fc_custreceiver);
+                $('#fd_doarivaldate').val(data.fd_doarivaldate);
+                $('#fc_memberaddress_loading').val(data.fc_memberaddress_loading);
+                $('#fd_dodate').val(data.fd_dodate);
+                // $('#status_pkp').val(data.member_tax_code.fv_description + " (" + data.member_tax_code.fc_action + "%" + ")");
+                
+
+            },error: function (jqXHR, textStatus, errorThrown){
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            }
+        });
     }
 </script>
 @endsection

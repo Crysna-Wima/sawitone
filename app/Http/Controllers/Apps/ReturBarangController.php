@@ -13,6 +13,7 @@ use DateTime;
 use DB;
 use Validator;
 use App\Helpers\ApiFormatter;
+use App\Models\DoMaster;
 
 class ReturBarangController extends Controller
 {
@@ -29,6 +30,19 @@ class ReturBarangController extends Controller
             
         }
         return view('apps.retur-barang.index');
+    }
+
+    public function detail_deliver_order($fc_dono){
+        // decode fc_dono
+        $fc_dono = base64_decode($fc_dono);
+        $data = DoMaster::with('somst.customer.member_tax_code','somst.customer.member_legal_status')->where('fc_dono', $fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        // retur json
+        return response()->json(
+            [
+                'data' => $data,
+                'status' => 'success'
+            ]
+        );
     }
 
     public function store_update(Request $request)
