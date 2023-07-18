@@ -261,11 +261,6 @@
         });
     }
 
-    function get_dono($fc_dono) {
-        $('#fc_dono').val($fc_dono);
-        $('#modal_do').modal('hide');
-    }
-
     function detail_do(fc_dono){
         // encode
         var fc_dono = window.btoa(fc_dono);
@@ -277,12 +272,14 @@
             success: function(response){
                 $("#modal_do").modal('hide');
                 var data = response.data;
+                $('#fc_dono').val(data.fc_dono);
                 $('#fc_membernpwp_no').val(data.somst.customer.fc_membernpwp_no);
                 $('#fc_membername1').val(data.somst.customer.fc_membername1);
                 $('#fc_custreceiver').val(data.fc_custreceiver);
                 $('#fd_doarivaldate').val(data.fd_doarivaldate);
                 $('#fc_memberaddress_loading').val(data.fc_memberaddress_loading);
                 $('#fd_dodate').val(data.fd_dodate);
+                $('#status_pkp').val(data.somst.customer.member_tax_code.fv_description + " (" + data.somst.customer.member_tax_code.fc_action + "%" + ")");
                 // $('#status_pkp').val(data.member_tax_code.fv_description + " (" + data.member_tax_code.fc_action + "%" + ")");
                 
 
