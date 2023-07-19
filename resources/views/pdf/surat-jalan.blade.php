@@ -174,6 +174,12 @@
     .table-lg td {
         border: 2px solid black;
     }
+
+    @media print {
+        #print {
+            font-family: 'Roboto Mono', monospace;
+        }
+    }
 </style>
 
 <body>
@@ -181,7 +187,7 @@
         <div id="watermark"><img src="{{ public_path('/assets/img/cancelled.png') }}" width="45%"></div>
     <?php endif; ?>
     <main>
-    <div class="container" id="sj-pdf">
+    <div class="container" id="print">
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
             <p><b>PT DEXA ARFINDO PRATAMA</b></p>
@@ -204,7 +210,7 @@
     </div>
 </div>
 
-<div class="content">
+<div class="content" id="print">
     <br><br>
     <br><br>
         <p style="font-weight: bold; font-size: 18px;">Pengiriman Barang</p>

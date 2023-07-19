@@ -168,10 +168,16 @@
     .table-lg td {
         border: 2px solid black;
     }
+
+    @media print {
+        #print {
+            font-family: 'Roboto Mono', monospace;
+        }
+    }
 </style>
 
 <body>
-    <div class="container" id="gr-pdf">
+    <div class="container" id="print">
         <div class="header" style="height: 100px">
             <div style="position: absolute; left: 0; top: 0">
                 <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
@@ -184,7 +190,7 @@
             </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content" id="print">
         <p style="text-align: center; font-weight:bold;">TANDA TERIMA MUTASI</p>
         <br>
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
