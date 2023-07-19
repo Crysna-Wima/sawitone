@@ -115,7 +115,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Jumlah Stock</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="{{ $jumlah_stock }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-8">
@@ -138,9 +138,15 @@
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
+                                    @php
+                                    use Carbon\Carbon;
+                                    $start_date = Carbon::parse($data->fd_stockopname_start);
+                                    $today = Carbon::today();
+                                    $days_difference = $start_date->diffInDays($today);
+                                @endphp
                                     <label>Telah Berlangsung</label>
-                                    <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="text" class="form-control" value="" readonly>
+                                    <div class="input-group" >
+                                        <input type="text" class="form-control" value="{{ $days_difference }}" readonly>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 Hari
@@ -153,7 +159,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Stock Teropname</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-size:large" value=" " id="" name="">0/0 Stock</h5>
+                                        <h5 class="text-success" style="font-size:large" value=" " id="" name="">0/{{ $jumlah_stock }} Stock</h5>
                                     </div>
                                 </div>
                             </div>
