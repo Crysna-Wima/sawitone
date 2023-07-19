@@ -98,8 +98,9 @@ class ReturBarangController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->delete();
             TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->delete();
+            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->delete();
+            
 
 			DB::commit();
 
