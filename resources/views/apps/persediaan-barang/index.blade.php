@@ -56,7 +56,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h4>Data Persediaan Barang</h4>
-                    <a href="/apps/konversi-stock" class="btn btn-success">Konversi Stock</a>
+                    <div class="d-flex justify-content-between">
+                        <a href="/apps/konversi-stock" class="btn btn-primary mr-2">Konversi Stock</a>
+                        <a href="/apps/stock-opname" class="btn btn-warning">Stock Opname</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -264,7 +267,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        pageLength : 5,
+        pageLength: 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-dexa",
             type: 'GET'
@@ -313,7 +316,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        pageLength : 5,
+        pageLength: 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-gudanglain",
             type: 'GET'
@@ -363,7 +366,7 @@
         processing: true,
         serverSide: true,
         destroy: true,
-        pageLength : 5,
+        pageLength: 5,
         ajax: {
             url: "/apps/persediaan-barang/datatables-semua",
             type: 'GET'

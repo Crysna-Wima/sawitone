@@ -566,5 +566,14 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\ReturBarangDetailController@datatables_do_detail');
             });
         });
+
+        Route::prefix('stock-opname')->group(function () {
+            Route::get('/', 'Apps\StockOpnameController@index');
+            Route::delete('/cancel', 'Apps\StockOpnameController@cancel');
+            Route::get('/detail-gudang/{fc_warehousecode}', 'Apps\StockOpnameController@detail_gudang');
+
+            Route::prefix('detail')->group(function () {
+            });
+        });
     });
 });
