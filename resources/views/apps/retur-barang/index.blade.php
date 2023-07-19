@@ -207,6 +207,9 @@
     }
 
     function table_do() {
+        if ($.fn.DataTable.isDataTable('#tb')) {
+            $('#tb').DataTable().destroy();
+        }
         var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
