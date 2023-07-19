@@ -507,12 +507,13 @@
                                 },
                                 success: function(response) {
                                     // tutup modal loading
+                                    console.log(response.status)
                                     if (response.status == 200) {
                                         setTimeout(function() {
                                             $('#modal_loading').modal(
                                                 'hide');
                                         }, 500);
-                                        deliver_item.ajax.reload();
+                                        // deliver_item.ajax.reload();
                                         tb.ajax.reload();
                                         swal("Item telah dihapus!", {
                                             icon: "success",
@@ -522,7 +523,7 @@
                                             $('#modal_loading').modal(
                                                 'hide');
                                         }, 500);
-                                        deliver_item.ajax.reload();
+                                        // deliver_item.ajax.reload();
                                         tb.ajax.reload();
                                         swal("Item telah dihapus!", {
                                             icon: "success",
