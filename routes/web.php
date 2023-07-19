@@ -555,7 +555,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('retur-barang')->group(function () {
             Route::get('/', 'Apps\ReturBarangController@index');
             Route::get('/detail-delivery-order/{fc_dono}', 'Apps\ReturBarangController@detail_deliver_order');
-            // Route::post('/store-update','Apps\ReturBarangController@store_update');
+            Route::post('/store-update','Apps\ReturBarangController@store_update');
             Route::delete('/cancel', 'Apps\ReturBarangController@cancel');
 
             Route::prefix('detail')->group(function () {
