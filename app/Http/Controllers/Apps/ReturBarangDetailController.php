@@ -52,6 +52,21 @@ class ReturBarangDetailController extends Controller
         }
 
         $tempretur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+        $tempretur_detail_sumquantity = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->sum('fn_returqty');
+
+        if(($request->fn_returqty + $tempretur_detail_sumquantity) > $request->fn_qty_do){
+            return [
+                'status' => 300,
+                'message' => 'Jumlah retur melebihi jumlah DO'
+            ];
+        }
+
+        if($request->fn_returqty > $request->fn_qty_do){
+            return [
+                'status' => 300,
+                'message' => 'Jumlah retur tidak boleh melebihi jumlah DO'
+            ];
+        }
    
         $fn_rownum = 1;
         if (!empty($tempretur_detail)) {
