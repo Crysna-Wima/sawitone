@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
-use App\Models\StockInquiri;
-use App\Models\TempReturMaster;
-use App\Models\TempReturDetail;
+use App\Models\StockOpname;
+use App\Models\TempStockOpnameDetail;
 use App\Models\Warehouse;
 
 use Carbon\Carbon;
@@ -21,6 +20,14 @@ class StockOpnameController extends Controller
 {
     public function index()
     {
+        $stockopname_master = StockOpname::with('warehouse')->where('fc_stockopname_no', auth()->user()->fc_userid)->first();
+        $temp_stockopname_detail = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->get();
+        $total = count($temp_stockopname_detail);
+        if(!empty($stockopname_master)){
+            $data['data'] = $stockopname_master;
+            $data['total'] = $total;
+            return view('apps.stock-opname.detail',$data);
+        }
         return view('apps.stock-opname.index');
     }
 
@@ -41,8 +48,8 @@ class StockOpnameController extends Controller
     {
         // validator
         $validator = Validator::make($request->all(), [
-            'fc_dono' => 'required',
-            'fd_returdate' => 'required'
+            'fc_warehousecode' => 'required',
+            'fd_stockopname_start' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -52,17 +59,18 @@ class StockOpnameController extends Controller
             ];
         }
 
-        $retur_mst = TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $stockopname_mst = StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
 
-        if (empty($retur_mst)) {
+        if (empty($stockopname_mst)) {
             // create TempInvoiceMst
-            $insert = TempReturMaster::create([
+            $insert = StockOpname::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
-                'fc_returno' => auth()->user()->fc_userid,
-                'fc_dono' => $request->fc_dono,
-                'fc_status' => 'I',
-                'fd_returdate' => date('Y-m-d H:i:s', strtotime($request->fd_returdate)),
+                'fc_stockopname_no' => auth()->user()->fc_userid,
+                'fc_warehousecode' => $request->fc_warehousecode,
+                'fc_stockopname_type' => $request->fc_stockopname_type,
+                'fc_stockopname_status' => 'I',
+                'fd_stockopname_start' => date('Y-m-d H:i:s', strtotime($request->fd_stockopname_start)),
                 'fc_userid' => auth()->user()->fc_userid,
             ]);
 
@@ -70,7 +78,7 @@ class StockOpnameController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/retur-barang'
+                    'link' => '/apps/stock-opname'
                 ];
             } else {
                 return [
@@ -90,14 +98,14 @@ class StockOpnameController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)->delete();
-            TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->delete();
+            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
+            TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
 
 			DB::commit();
 
 			return [
 				'status' => 201, // SUCCESS
-                'link' => '/apps/retur-barang',
+                'link' => '/apps/stock-opname',
 				'message' => 'Data berhasil dihapus'
 			];
 		}

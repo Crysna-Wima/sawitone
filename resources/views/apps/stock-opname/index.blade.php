@@ -114,7 +114,7 @@
         <div class="col-12 col-md-8 col-lg-7">
             <div class="card">
                 <div class="card-header">
-                    <h4>Detail Gudang</h4>
+                    <h4>Detail Opname</h4>
                     <div class="card-header-action">
                         <a data-collapse="#mycard-collapse2" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                     </div>
@@ -150,7 +150,7 @@
                                 <div class="form-group">
                                     <label>Telah Berlangsung</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="number" id="fd_stockopname_start" class="form-control" name="fd_stockopname_start" readonly>
+                                        <input type="number" id="" class="form-control" name="" readonly>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 Hari

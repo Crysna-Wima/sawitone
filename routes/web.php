@@ -571,6 +571,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\StockOpnameController@index');
             Route::delete('/cancel', 'Apps\StockOpnameController@cancel');
             Route::get('/detail-gudang/{fc_warehousecode}', 'Apps\StockOpnameController@detail_gudang');
+            Route::post('/store-update','Apps\StockOpnameController@store_update');
 
             Route::prefix('detail')->group(function () {
             });
