@@ -36,4 +36,9 @@ class TempReturDetail extends Model
      return $this->belongsTo(TempReturMaster::class, 'fc_returno', 'fc_returno')->withTrashed();
     }
 
+    // invstore
+    public function invstore(){
+     return $this->belongsTo(InvStore::class, 'fc_barcode', 'fc_barcode');
+    }
+
 }

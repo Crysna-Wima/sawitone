@@ -58,4 +58,9 @@ class Invstore extends Model
     public function stockinquiri(){
         return $this->hasMany(StockInquiri::class, ['fc_barcode','fc_warehousecode'], ['fc_barcode','fc_warehousecode']);
     }
+
+    // tempreturdtl
+    public function tempreturdtl(){
+        return $this->hasMany(TempReturDetail::class, 'fc_barcode', 'fc_barcode');
+    }
 }

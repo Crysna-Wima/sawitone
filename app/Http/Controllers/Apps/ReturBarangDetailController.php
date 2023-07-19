@@ -19,7 +19,7 @@ class ReturBarangDetailController extends Controller
 {
     public function datatables()
     {
-        $data = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->get();
+        $data = TempReturDetail::with('invstore.stock')->where('fc_returno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -51,6 +51,21 @@ class ReturBarangDetailController extends Controller
             ];
         }
 
+        $tempretur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+   
+        $fn_rownum = 1;
+        if (!empty($tempretur_detail)) {
+            $fn_rownum =  $tempretur_detail->fn_rownum + 1;
+        }
+
+        if ($fn_rownum === null) {
+            return [
+                'status' => 300,
+                'link' => '/apps/retur-barang',
+                'message' => 'fn_rownum cannot be null'
+            ];
+        }
+
         // insert ke ReturnDetail
         $insert_data = TempReturDetail::create([
              'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -59,15 +74,18 @@ class ReturBarangDetailController extends Controller
              'fc_barcode' => $request->fc_barcode,
              'fc_batch' => $request->fc_batch,
              'fc_namepack' => $request->fc_namepack,
+             'fn_rownum' => $fn_rownum,
              'fc_catnumber' => $request->fc_catnumber,
              'fd_expired' => $request->fd_expired,
              'fn_price' => $request->fn_price_edit,
              'fn_disc' => $request->fn_disc,
              'fn_value' => $request->fn_value,
-             'fc_status' => $request->fc_status,
+             'fc_status' => 'I',
              'fn_returqty' => $request->fn_returqty,
              'fv_description' => $request->fv_description
         ]);
+
+      
 
         // jika insert berhasil
         if($insert_data){
@@ -82,8 +100,75 @@ class ReturBarangDetailController extends Controller
                 'message' => 'Error'
             ];
         }
-        // dd($request);
+        // dd($fn_rownum);
         
+    }
+
+
+    public function submit_return_barang(){
+        $check_retur_dtl = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch',auth()->user()->fc_branch)->count();
+        if($check_retur_dtl< 1){
+            return [
+                'status' => 300,
+                'message' => 'Item yang diretur kosong'
+            ];
+        }
+        try {
+            DB::beginTransaction();
+            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                ->update([
+                    'fc_returstatus' => 'F'
+                    ]);
+
+            TempReturDetail::where('fc_returno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->delete();
+            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->delete();
+            
+            DB::commit();
+
+            
+
+            return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/retur-barang',
+				'message' => 'Submit berhasil'
+			];
+        }catch(\Exception $e){
+            return [
+                'status' => 300,
+                'message' => $e->getMessage()
+            ];
+        }
+        // dd($request);
+    }
+
+    public function delete_item($fc_barcode, $fn_rownum){
+      
+        $delete_item =  TempReturDetail::where('fc_returno', auth()->user()->fc_userid)
+                    ->where('fn_rownum', $fn_rownum)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                    ->delete();
+            
+        if($delete_item){
+            return [
+                'status' => 200, 
+                'message' => 'Item berhasil dihapus'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Item gagal dihapus'
+            ];
+        }
+           
     }
 
     

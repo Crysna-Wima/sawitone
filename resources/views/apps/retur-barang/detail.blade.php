@@ -300,7 +300,7 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="/apps/retur-barang/submit" method="post">
+        <form id="form_submit_edit" action="/apps/retur-barang/detail/submit" method="post">
             <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
             @csrf
             @method('put')
@@ -437,19 +437,16 @@
                 orderable: false
             },
             {
-                data: 'invstore.fc_stockcode'
+                data: 'fc_barcode'
             },
             {
                 data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'invstore.stock.fc_namepack'
+                data: 'fc_namepack'
             },
             {
                 data: 'fc_batch'
-            },
-            {
-                data: 'fc_catnumber'
             },
             {
                 data: 'fd_expired',
@@ -459,6 +456,9 @@
                         'DD MMMM YYYY'
                     );
                 }
+            },
+            {
+                data: 'fc_catnumber'
             },
             {
                 data: 'fn_returqty'
@@ -498,7 +498,7 @@
                         $('#modal_loading').modal('show');
                         if (willDelete) {
                             $.ajax({
-                                url: '/apps/retur-barang/delete-item/' + barcode +
+                                url: '/apps/retur-barang/detail/delete-item/' + barcode +
                                     '/' + row,
                                 type: 'DELETE',
                                 headers: {
@@ -550,7 +550,7 @@
 
     function detail_stock_barang($id, fc_stockcode) {
         var fc_barcode = window.btoa($id)
-        console.log(fc_barcode)
+        // console.log(fc_barcode)
         $.ajax({
             url: "/master/get-data-where-field-id-first/DoDetail/fc_barcode/" + fc_barcode,
             type: "GET",
