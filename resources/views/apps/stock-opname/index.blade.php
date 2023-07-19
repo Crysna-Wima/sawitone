@@ -97,7 +97,7 @@
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="fc_warehousecode" name="fc_warehousecode" readonly>
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary" onclick="click_modal_gudang()" type="button"><i class="fa fa-search"></i></button>
+                                                <button id="btn" class="btn btn-primary" onclick="click_modal_gudang()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +125,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Jumlah Stock</label>
-                                    <input type="text" class="form-control" id="jumlah_stock" name="jumlah_stock" readonly>
+                                    <input type="text" class="form-control" id="jumlah_stock" name="jumlah_stock" value="0" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-8">
@@ -150,7 +150,7 @@
                                 <div class="form-group">
                                     <label>Telah Berlangsung</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="number" id="" class="form-control" name="" readonly>
+                                        <input type="number" id="" class="form-control" name="" value="0" readonly>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 Hari
@@ -163,8 +163,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Stock Teropname</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-size:large" value=" "
-                                            id="" name="">0/0 Stock</h5>
+                                        <h5 class="text-success" style="font-size:large" value=" " id="" name="">0/0 Stock</h5>
                                     </div>
                                 </div>
                             </div>
@@ -214,6 +213,22 @@
 
 @section('js')
 <script>
+    $("#fc_stockopname_type").change(function() {
+        if ($('#fc_stockopname_type').val() === 'Semua') {
+            $('input[id="fc_warehousecode"]').val("ALLDEXA");
+            $('input[id="fc_rackname"]').val("Seluruh Dexa");
+            $('input[id="fc_warehouseaddress"]').val("Seluruh Dexa");
+            $('input[id="fc_warehousepos"]').val("Seluruh Dexa");
+            $('#btn').attr('disabled', true);
+        } else {
+            $('input[id="fc_warehousecode"]').val("");
+            $('input[id="fc_rackname"]').val("");
+            $('input[id="fc_warehouseaddress"]').val("");
+            $('input[id="fc_warehousepos"]').val("");
+            $('#btn').attr('disabled', false);
+        }
+    });
+
     function click_modal_gudang() {
         $('#modal_gudang').modal('show');
         table_gudang();
@@ -223,6 +238,7 @@
         var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
+            destroy: true,
             order: [
                 [1, 'asc']
             ],
@@ -288,7 +304,6 @@
                 $('#fc_rackname').val(data.fc_rackname);
                 $('#fc_warehouseaddress').val(data.fc_warehouseaddress);
                 $('#fc_warehousepos').val(data.fc_warehousepos);
-                $('#jumlah_stock').val(data.sum_quantity);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {

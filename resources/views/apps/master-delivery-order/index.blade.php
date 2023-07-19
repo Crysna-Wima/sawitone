@@ -678,6 +678,8 @@
                     $('td:eq(6)', row).html('<span class="badge badge-info">Terbayar</span>');
                 } else if (data['fc_dostatus'] == 'CC') {
                     $('td:eq(6)', row).html('<span class="badge badge-danger">Cancel</span>');
+                } else if (data['fc_dostatus'] == 'L') {
+                    $('td:eq(6)', row).html('<span class="badge badge-danger">Lock</span>');
                 } else {
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
