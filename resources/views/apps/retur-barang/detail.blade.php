@@ -480,6 +480,22 @@
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
+        footerCallback: function(row, data, start, end, display) {
+            if (data.length != 0) {
+                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].returmst.fm_servpay));
+                $("#fm_servpay_calculate").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].returmst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].returmst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].returmst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].returmst.fm_disctotal));
+                $("#fm_disctotal").trigger("change");
+                $('#count_item').html(data[0].returmst.fn_invdetail);
+                $("#count_item").trigger("change");
+            }
+        },
         initComplete: function() {
             $('table').on('click', '.delete-btn', function(e) {
                 e.preventDefault();

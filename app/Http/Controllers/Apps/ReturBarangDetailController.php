@@ -19,7 +19,7 @@ class ReturBarangDetailController extends Controller
 {
     public function datatables()
     {
-        $data = TempReturDetail::with('invstore.stock')->where('fc_returno', auth()->user()->fc_userid)->get();
+        $data = TempReturDetail::with('returmst','invstore.stock')->where('fc_returno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -156,8 +156,19 @@ class ReturBarangDetailController extends Controller
                     ->where('fc_branch', auth()->user()->fc_branch)
                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                     ->delete();
+        
+        $cout_retur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
             
         if($delete_item){
+            if($cout_retur_detail < 2){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/retur-barang'
+                ];
+            }
             return [
                 'status' => 200, 
                 'message' => 'Item berhasil dihapus'
