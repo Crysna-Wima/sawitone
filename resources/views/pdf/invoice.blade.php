@@ -8,6 +8,12 @@
         font-family: 'Roboto Mono', monospace;
     }
 
+    @media print {
+        #print {
+            font-family: 'Roboto Mono', monospace;
+        }
+    }
+
     * {
         font-family: 'Roboto Mono', monospace;
     }
@@ -43,16 +49,6 @@
         position: relative;
         justify-content: center;
         flex-direction: column;
-    }
-
-    .background-header{
-        height: 350px;
-        background-size: 100% auto;
-        bottom: 0;
-        position: absolute;
-        width: 100%;
-        background-repeat: no-repeat;
-        background-image: url({{ public_path('assets-pdf/bg.jpg') }})
     }
 
     .container {
@@ -173,7 +169,7 @@
 </style>
 
 <body>
-<div class="container" id="so-pdf">
+<div class="container" id="print">
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0">
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
@@ -200,7 +196,7 @@
     </div>
 </div>
 
-<div class="content">
+<div class="content" id="print">
         <br><br><br>
         <p style="text-align: center; font-weight:bold; font-size: 16px">INVOICE</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
@@ -327,7 +323,7 @@
             @endif
         </table>
         @else
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Data CPRR</p>
+        <p style="font-weight: bold; margin-left: 5%">Data CPRR</p>
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
