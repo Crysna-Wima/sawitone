@@ -574,7 +574,27 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update','Apps\StockOpnameController@store_update');
 
             Route::prefix('detail')->group(function () {
+                Route::get('/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatables');
+                Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
             });
+        });
+        
+        Route::prefix('daftar-retur-barang')->group(function () {
+            Route::get('/', 'Apps\DaftarReturBarangController@index');
+            Route::get('/detail/{fc_returno}', 'Apps\DaftarReturBarangController@detail');
+            Route::get('/datatables', 'Apps\DaftarReturBarangController@datatables');
+            Route::get('/datatables-detail/{fc_returno}', 'Apps\DaftarReturBarangController@datatables_detail');
+
+            Route::post('/pdf', 'Apps\DaftarReturBarangController@pdf');
+            Route::get('/get_pdf/{fc_returno}/{nama_pj}', 'Apps\DaftarReturBarangController@get_pdf');
+
+        Route::prefix('master-coa')->group(function () {
+            Route::get('/', 'DataMaster\MasterCoaController@index');
+            Route::get('/detail/{fc_coacode}', 'DataMaster\MasterCoaController@detail');
+            Route::get('/datatables', 'DataMaster\MasterCoaController@datatables');
+            Route::get('/{layer}', 'DataMaster\MasterCoaController@getParent');
+            Route::post('/store-update', 'DataMaster\MasterCoaController@storeUpdate');
+            Route::delete('/delete/{fc_coacode}', 'DataMaster\MasterCoaController@delete');
         });
     });
 });

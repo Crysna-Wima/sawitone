@@ -290,6 +290,7 @@
                                         <th scope="col" class="text-center">CAT.</th>
                                         <th scope="col" class="text-center">Qty Retur</th>
                                         <th scope="col" class="text-center">Harga</th>
+                                        <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
@@ -332,6 +333,7 @@
                                     <th scope="col" class="text-center">Nama Barang</th>
                                     <th scope="col" class="text-center">Satuan</th>
                                     <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Qty Retur</th>
                                     <th scope="col" class="text-center">Exp. Date</th>
                                     <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -372,7 +374,7 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 2, 3, 4, 5, 6, 7]
+                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
@@ -392,6 +394,9 @@
                     data: 'fn_qty_do'
                 },
                 {
+                    data: 'fn_qty_retur'
+                },
+                {
                     data: 'fd_expired',
                     render: formatTimestamp
                 },
@@ -403,7 +408,7 @@
                 },
             ],
             rowCallback: function(row, data) {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                     <button type="button" class="btn btn-warning btn-sm" onclick="detail_stock_barang('${data.fc_barcode}','${data.invstore.stock.fc_stockcode}')"><i class="fa fa-check"> </i> Pilih</button>
                 `);
             },
@@ -421,11 +426,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
             },
             {
                 className: 'text-nowrap',
-                targets: [9]
+                targets: [10]
             },
             {
                 targets: -1,
@@ -468,6 +473,10 @@
             {
                 data: 'fn_price',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null
@@ -579,7 +588,7 @@
                 var data = response.data;
                 // $('#fn_price').val(fungsiRupiah(data.fn_price))
                 $('#fc_stockcode').val(fc_stockcode);
-                $('#fc_barcode').val($id); 
+                $('#fc_barcode').val($id);
                 $('#fc_batch').val(data.fc_batch);
                 $('#fc_namepack').val(data.fc_namepack);
                 $('#fc_catnumber').val(data.fc_catnumber);

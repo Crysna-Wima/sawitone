@@ -84,7 +84,7 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" value="{{ $data->fd_stockopname_start }}" readonly>
+                                        <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($data->fd_stockopname_start)->format('d/m/Y') }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -121,19 +121,19 @@
                             <div class="col-4 col-md-4 col-lg-8">
                                 <div class="form-group">
                                     <label>Nama Gudang</label>
-                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_rackname }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_rackname ?? 'Seluruh Dexa' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-12">
                                 <div class="form-group">
                                     <label>Alamat Gudang</label>
-                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_warehouseaddress }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_warehouseaddress ?? 'Seluruh Dexa' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Jenis Gudang</label>
-                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_warehousepos }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $data->warehouse->fc_warehousepos ?? 'Seluruh Dexa' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
@@ -143,9 +143,9 @@
                                     $start_date = Carbon::parse($data->fd_stockopname_start);
                                     $today = Carbon::today();
                                     $days_difference = $start_date->diffInDays($today);
-                                @endphp
+                                    @endphp
                                     <label>Telah Berlangsung</label>
-                                    <div class="input-group" >
+                                    <div class="input-group">
                                         <input type="text" class="form-control" value="{{ $days_difference }}" readonly>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
@@ -182,14 +182,14 @@
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Gudang</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
                                         <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -204,24 +204,24 @@
                 <div class="card-header">
                     <h4>Stock yang Diopname</h4>
                     <div class="card-header-action">
-                        <button type="button" onclick="click_stock_opname()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambahkan Biaya Lain</button>
+                        <button type="button" onclick="click_stock_opname()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Stock Opname</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="tb" width="100%">
+                            <table class="table table-striped" id="tb_satuan" width="100%">
                                 <thead style="white-space: nowrap">
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Gudang</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Kode Barang</th>
                                         <th scope="col" class="text-center">Nama Barang</th>
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Exp. Date</th>
                                         <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -259,18 +259,21 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="text-center">No</th>
-                                <th scope="col" class="text-center">Gudang</th>
+                                <th scope="col" class="text-center">Kode Barang</th>
                                 <th scope="col" class="text-center">Kode Barang</th>
                                 <th scope="col" class="text-center">Nama Barang</th>
                                 <th scope="col" class="text-center">Satuan</th>
                                 <th scope="col" class="text-center">Batch</th>
                                 <th scope="col" class="text-center">Exp. Date</th>
                                 <th scope="col" class="text-center">Qty</th>
-                                <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                <th scope="col" class="text-center" style="width: 10%">Actions</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -279,9 +282,202 @@
 
 @section('js')
 <script>
+    var warehousecode = "{{ $data->fc_warehousecode }}";
+    var encode_warehousecode = window.btoa(warehousecode);
+
     function click_stock_opname() {
         $('#modal_stock_opname').modal('show');
     }
+
+    var tb = $('#tb').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
+            type: 'GET',
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            {
+                visible: false,
+                searchable: true,
+                targets: [1]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_barcode'
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'stock.fc_namelong'
+            },
+            {
+                data: 'stock.fc_namepack'
+            },
+            {
+                data: 'fc_batch'
+            },
+            {
+                data: 'fd_expired',
+                render: formatTimestamp
+            },
+            {
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `
+                    <div class="input-group">
+                        <input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.stock.fc_namepack}</span>
+                        </div>
+                    </div>`;
+                }
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            if (data['fc_status'] == 'L') {
+            $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-lock"> </i></button>
+                `);
+            } else {
+                $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fa fa-unlock-alt"> </i> Kunci</button>
+                `);
+            } 
+        },
+    });
+
+    var tb_inventory = $('#tb_inventory').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
+            type: 'GET',
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            {
+                visible: false,
+                searchable: true,
+                targets: [1]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_barcode'
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'stock.fc_namelong'
+            },
+            {
+                data: 'stock.fc_namepack'
+            },
+            {
+                data: 'fc_batch'
+            },
+            {
+                data: 'fd_expired',
+                render: formatTimestamp
+            },
+            {
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">`;
+                }
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"> </i> Pilih</button>
+                `);
+        },
+    });
+
+    var tb_satuan = $('#tb_satuan').DataTable({
+        // apabila data kosong
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        ajax: {
+            url: "/apps/stock-opname/detail/datatables-satuan",
+            type: 'GET',
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            {
+                visible: false,
+                searchable: true,
+                targets: [1]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_barcode'
+            },
+            {
+                data: 'stock.fc_stockcode'
+            },
+            {
+                data: 'stock.fc_namelong'
+            },
+            {
+                data: 'stock.fc_namepack'
+            },
+            {
+                data: 'stock.fc_batch'
+            },
+            {
+                data: 'stock.fd_expired',
+                render: formatTimestamp
+            },
+            {
+                data: 'fn_quantity',
+            },
+            {
+                data: null
+            },
+        ],
+        rowCallback: function(row, data) {
+            $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"> </i> Hapus</button>
+                `);
+        },
+    });
+
 
     function click_cancel() {
         swal({
