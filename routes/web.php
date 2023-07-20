@@ -578,5 +578,15 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
             });
         });
+
+        Route::prefix('daftar-retur-barang')->group(function () {
+            Route::get('/', 'Apps\DaftarReturBarangController@index');
+            Route::get('/detail/{fc_returno}', 'Apps\DaftarReturBarangController@detail');
+            Route::get('/datatables', 'Apps\DaftarReturBarangController@datatables');
+            Route::get('/datatables-detail/{fc_returno}', 'Apps\DaftarReturBarangController@datatables_detail');
+
+            Route::post('/pdf', 'Apps\DaftarReturBarangController@pdf');
+            Route::get('/get_pdf/{fc_returno}/{nama_pj}', 'Apps\DaftarReturBarangController@get_pdf');
+        });
     });
 });
