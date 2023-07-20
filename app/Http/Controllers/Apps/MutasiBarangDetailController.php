@@ -95,16 +95,17 @@ class MutasiBarangDetailController extends Controller
 
 
         // jika ada fc_stockcode yang sama di $temppodtl
-        if (!empty($temp_detail)) {
-            // jika ditemukan $count_barcode error produk yang sama telah diinputkan
-            if (count($count_stockcode) > 0) {
-                return [
-                    'status' => 300,
-                    'total' => $total,
-                    'message' => 'Produk yang sama telah diinputkan'
-                ];
-            }
-        }
+           // jika ditemukan $count_barcode error produk yang sama telah diinputkan
+        // if (!empty($temp_detail)) {
+         
+        //     if (count($count_stockcode) > 0) {
+        //         return [
+        //             'status' => 300,
+        //             'total' => $total,
+        //             'message' => 'Produk yang sama telah diinputkan'
+        //         ];
+        //     }
+        // }
 
 
         $fn_mutationrownum = 1;
