@@ -172,7 +172,7 @@
         @if($data->fc_stockopname_type == 'ALLDEXA' || $data->fc_stockopname_type == 'BRANCH')
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>Stock yang Diopname</h4>
                 </div>
                 <div class="card-body">
@@ -503,7 +503,7 @@
         if (tipe == 'unlock') {
             swal({
                 title: "Konfirmasi",
-                text: "Apakah kamu yakin membuka kunci?",
+                text: "Apakah kamu yakin ingin membuka kunci data ini?",
                 icon: "warning",
                 buttons: ["Cancel", "Update"],
                 dangerMode: true,
@@ -544,6 +544,7 @@
                     });
                     $("#modal_loading").modal('hide');
                     tb.ajax.reload();
+                    location.reload();
                 } else {
                     swal(response.message, {
                         icon: 'error',

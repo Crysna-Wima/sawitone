@@ -28,11 +28,19 @@ class StockOpnameController extends Controller
         if (!empty($stockopname_master)) {
             if ($stockopname_master->fc_warehousecode == 'ALLDEXA') {
                 $jumlah_stock = Invstore::all()->where('fc_branch', auth()->user()->fc_branch)->count();
+                $stock_teropname = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
+                    ->where('fc_status', 'L')
+                    ->where('fc_branch', auth()->user()->fc_branch)->count();
                 $data['jumlah_stock'] = $jumlah_stock;
+                $data['stock_teropname'] = $stock_teropname;
             } else {
                 $jumlah_stock = Invstore::where('fc_warehousecode', $stockopname_master->fc_warehousecode)
                     ->where('fc_branch', auth()->user()->fc_branch)->count();
+                $stock_teropname = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
+                    ->where('fc_status', 'L')
+                    ->where('fc_branch', auth()->user()->fc_branch)->count();
                 $data['jumlah_stock'] = $jumlah_stock;
+                $data['stock_teropname'] = $stock_teropname;
             }
             $data['data'] = $stockopname_master;
             $data['total'] = $total;
