@@ -110,8 +110,9 @@ class StockOpnameController extends Controller
         DB::beginTransaction();
 
 		try{
-            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
             TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
+            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
+          
 
 			DB::commit();
 

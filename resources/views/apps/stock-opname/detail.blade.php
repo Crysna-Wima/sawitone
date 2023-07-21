@@ -285,12 +285,14 @@
     var warehousecode = "{{ $data->fc_warehousecode }}";
     var encode_warehousecode = window.btoa(warehousecode);
 
+    var tipe_opname = '{{  $data->fc_stockopname_type }}' ?? '';
+
     function click_stock_opname() {
         $('#modal_stock_opname').modal('show');
     }
 
     var tb = $('#tb').DataTable({
-        // apabila data kosong
+        // apabila data kosongs
         processing: true,
         serverSide: true,
         destroy: true,
@@ -323,7 +325,8 @@
                 data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'invstore.stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack',
+                defaultContent: '-'
             },
             {
                 data: 'invstore.fc_batch'
@@ -339,7 +342,7 @@
                     <div class="input-group">
                         <input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.stock.fc_namepack}</span>
+                            <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
                         </div>
                     </div>`;
                 }
@@ -367,7 +370,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/datatables" ,
+            url: "/apps/stock-opname/detail/inventory/datatables/" + encode_warehousecode ,
             type: 'GET', 
         },
         columnDefs: [{
@@ -454,9 +457,9 @@
             {
                 data: 'invstore.stock.fc_namelong'
             },
-            {
-                data: 'invstore.stock.fc_namepack'
-            },
+            // {
+            //     data: 'invstore.stock.fc_namepack'
+            // },
             {
                 data: 'invstore.fc_batch'
             },
