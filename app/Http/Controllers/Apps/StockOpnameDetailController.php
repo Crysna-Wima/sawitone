@@ -39,7 +39,7 @@ class StockOpnameDetailController extends Controller
     }
 
     public function lock_update(Request $request){
-    
+            // dd($request);
             if($request->tipe == 'lock'){
                    $data = TempStockOpnameDetail::where('fn_rownum', $request->fn_rownum)
                 ->where('fc_stockopname_no', auth()->user()->fc_userid)->update([
