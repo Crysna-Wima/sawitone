@@ -194,13 +194,13 @@
             <p><b>dexa-arfindopratama.com</b></p>
             <br>
             <p><b>Kepada</b></p>
-            <p>{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->somst->customer->fc_membername1 }}</p>
+            <p>{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->domst->somst->customer->fc_membername1 }}</p>
             <p><b>Alamat Pengiriman</b></p>
             <p>{{ $retur_mst->domst->somst->customer->fc_memberaddress_loading1 }}</p>
         </div>
         <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
             <p><b>RETUR BARANG</b></p>
-            <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
+            <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
             <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $retur_mst->fd_returdate )->isoFormat('D MMMM Y'); }}</p>
             <p>No. DO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_dono }}</p>
         </div>
@@ -219,18 +219,19 @@
                 <th>Batch</th>
                 <th>Expired Date</th>
                 <th>Jumlah</th>
-                <th>Jumlah</th>
+                <th>Harga Satuan</th>
             </tr>
 
-            @if(isset($do_dtl))
-                @foreach ($do_dtl as $item)
+            @if(isset($retur_dtl))
+                @foreach ($retur_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->invstore->stock->fc_stockcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
-                        <td>{{ $item->fn_qty_do }} {{ $item->invstore->stock->fc_namepack }}</td>
+                        <td>{{ $item->fn_returqty }} {{ $item->invstore->stock->fc_namepack }}</td>
+                        <td>Rp. {{ number_format($item->fn_price,0,',','.')}}</td>
                     </tr>
                 @endforeach
             @else
@@ -249,12 +250,12 @@
             </tr>
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
-                <td style="width: 50% !important; text-align: right;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
+                <td style="width: 50% !important; text-align: right;">{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->domst->somst->customer->fc_membername1 }}</td>
             </tr>
             <br><br/>
             <br><br/>
             <tr >
-                <td style="width: 50% !important; text-align: left;">(......................)</td>
+                <td style="width: 50% !important; text-align: left;">({{ $nama_pj }})</td>
                 <td style="width: 50% !important; text-align: right;">(......................)</td>
             </tr>
         </table>
