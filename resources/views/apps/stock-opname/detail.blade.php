@@ -159,7 +159,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Stock Teropname</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-size:large" value=" " id="" name="">0/{{ $jumlah_stock }} Stock</h5>
+                                        <h5 class="text-success" style="font-size:large" id="stock_teropname" name="stock_teropname">{{ $stock_teropname ?? '0' }}/{{ $jumlah_stock }} Stock</h5>
                                     </div>
                                 </div>
                             </div>
@@ -364,7 +364,7 @@
         rowCallback: function(row, data) {
             if (data['fc_status'] == 'L') {
                 $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-danger btn-sm" data-id="${data.fn_rownum}" data-tipe="unlock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-lock"> </i></button>
+                    <button type="button" class="btn btn-danger btn-md" data-id="${data.fn_rownum}" data-tipe="unlock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-lock"> </i></button>
                 `);
             } else {
                 $('td:eq(7)', row).html(`
@@ -499,13 +499,6 @@
         var quantity_edit = $(quantity).data('quantity');
         var tipe = $(quantity).data('tipe');
         var newQuantity = parseFloat($(`#fn_quantity_${id}`).val());
-
-        // if (newQuantity === quantity) {
-        //     swal("No changes made.", {
-        //         icon: 'info'
-        //     });
-        //     return;
-        // }
 
         if (tipe == 'unlock') {
             swal({
