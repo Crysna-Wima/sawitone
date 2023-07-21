@@ -392,19 +392,19 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'invstore.fc_stockcode'
+                data: 'fc_stockcode'
             },
             {
-                data: 'invstore.stock.fc_namelong'
+                data: 'stock.fc_namelong'
             },
             {
-                data: 'invstore.stock.fc_namepack'
+                data: 'stock.fc_namepack'
             },
             {
-                data: 'invstore.fc_batch'
+                data: 'fc_batch'
             },
             {
-                data: 'invstore.fd_expired',
+                data: 'fd_expired',
                 render: formatTimestamp
             },
             {

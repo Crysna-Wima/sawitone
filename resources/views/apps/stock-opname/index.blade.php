@@ -214,7 +214,7 @@
 @section('js')
 <script>
     $("#fc_stockopname_type").change(function() {
-        if ($('#fc_stockopname_type').val() === 'Semua') {
+        if ($('#fc_stockopname_type').val() === 'ALLDEXA') {
             $('input[id="fc_warehousecode"]').val("ALLDEXA");
             $('input[id="fc_rackname"]').val("Seluruh Dexa");
             $('input[id="fc_warehouseaddress"]').val("Seluruh Dexa");
