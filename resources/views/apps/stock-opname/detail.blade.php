@@ -169,7 +169,7 @@
             </div>
         </div>
         {{-- STOCK OPNAME --}}
-        @if($data->fc_stockopname_type == 'Semua' || $data->fc_stockopname_type == 'Cabang')
+        @if($data->fc_stockopname_type == 'ALLDEXA' || $data->fc_stockopname_type == 'BRANCH')
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
                 <div class="card-header">
@@ -295,7 +295,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
+            url: "/apps/stock-opname/detail/datatables",
             type: 'GET',
         },
         columnDefs: [{
@@ -317,19 +317,19 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
@@ -367,8 +367,8 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
-            type: 'GET',
+            url: "/apps/stock-opname/detail/datatables" ,
+            type: 'GET', 
         },
         columnDefs: [{
                 className: 'text-center',
@@ -389,19 +389,19 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
@@ -449,19 +449,19 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'stock.fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'stock.fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'stock.fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
