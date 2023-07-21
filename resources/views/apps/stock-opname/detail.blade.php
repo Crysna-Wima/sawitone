@@ -420,7 +420,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">`;
+                    var barcodeEncode = window.btoa(data.fc_barcode);
+                    return `<input type="number" id="fn_quantity_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                 }
             },
             {
@@ -429,7 +430,7 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"> </i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="select_stock('${data.fc_barcode}')"><i class="fa fa-check"> </i> Pilih</button>
                 `);
         },
     });
@@ -485,8 +486,10 @@
             },
         ],
         rowCallback: function(row, data) {
+            var url_delete = '/apps/stock-opname/detail/delete/' + data.fn_rownum;
+
             $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"> </i> Hapus</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="delete_item('${url_delete}','${data.invstore.stock.fc_namelong}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -565,6 +568,99 @@
                 });
             }
         });
+    }
+
+    function select_stock(fc_barcode) {
+        var barcodeEncode = window.btoa(fc_barcode);
+
+        // modal loading
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: '/apps/stock-opname/detail/select_stock',
+            type: "POST",
+            data: {
+                'fc_barcode': fc_barcode,
+                'fn_quantity': $(`#fn_quantity_${barcodeEncode}`).val(),
+            },
+            dataType: 'JSON',
+            success: function(response, textStatus, jQxhr) {
+                // modal loading hide
+                $('#modal_loading').modal('hide');
+                if (response.status === 200) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    location.reload();
+                } else {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXhr, textStatus, errorThrown) {
+                $('#modal_loading').modal('hide');
+                console.log(errorThrown);
+                console.warn(jqXhr.responseText);
+            },
+        });
+    }
+
+    function delete_item(url, nama) {
+        swal({
+                title: 'Warning!',
+                text: 'Apakah anda yakin akan menghapus data ' + nama + "?",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: url,
+                        type: "DELETE",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+
+                            if (response.status === 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_satuan.ajax.reload(null, false);
+                                //  location.href = location.href;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
     }
 
     function click_cancel() {

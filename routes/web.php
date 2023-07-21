@@ -575,6 +575,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::prefix('detail')->group(function () {
                 Route::put('/lock-update','Apps\StockOpnameDetailController@lock_update');
+                Route::post('/select_stock', 'Apps\StockOpnameDetailController@select_stock');
+                Route::delete('/delete/{fn_rownum}', 'Apps\StockOpnameDetailController@delete_item');
                 Route::get('/inventory/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatable_inventory');
                 Route::get('/datatables', 'Apps\StockOpnameDetailController@datatables');
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
