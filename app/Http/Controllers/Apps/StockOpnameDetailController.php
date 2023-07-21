@@ -38,4 +38,5 @@ class StockOpnameDetailController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
 }
