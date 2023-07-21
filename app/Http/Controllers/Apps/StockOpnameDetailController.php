@@ -38,6 +38,49 @@ class StockOpnameDetailController extends Controller
             ->make(true);
     }
 
+    public function lock_update(Request $request){
+    
+            if($request->tipe == 'lock'){
+                   $data = TempStockOpnameDetail::where('fn_rownum', $request->fn_rownum)
+                ->where('fc_stockopname_no', auth()->user()->fc_userid)->update([
+                    'fc_status' => 'U',
+                    'fn_quantity' => $request->fn_quantity,
+                ]);
+
+                if($data){
+                    return [
+                        'status' => 200,
+                        'message' => 'Data berhasil diupdate'
+                    ];
+                }else{
+                    return [
+                        'status' => 300,
+                        'message' => 'Data gagal diupdate'
+                    ];
+                }
+            }else{
+               $data = TempStockOpnameDetail::where('fn_rownum', $request->fn_rownum)
+                ->where('fc_stockopname_no', auth()->user()->fc_userid)->update([
+                    'fc_status' => 'L',
+                    'fn_quantity' => $request->fn_quantity,
+                ]); 
+
+                if($data){
+                    return [
+                        'status' => 200,
+                        'message' => 'Data berhasil diupdate'
+                    ];
+                }else{
+                    return [
+                        'status' => 300,
+                        'message' => 'Data gagal diupdate'
+                    ];
+                }
+            }
+        
+        // 
+    }
+
 
     public function datatables_satuan()
     {

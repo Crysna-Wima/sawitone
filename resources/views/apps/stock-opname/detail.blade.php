@@ -340,7 +340,7 @@
                 render: function(data, type, full, meta) {
                     return `
                     <div class="input-group">
-                        <input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">
+                        <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}">
                         <div class="input-group-append">
                             <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
                         </div>
@@ -354,11 +354,11 @@
         rowCallback: function(row, data) {
             if (data['fc_status'] == 'L') {
             $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-lock"> </i></button>
+                    <button type="button" class="btn btn-danger btn-sm" data-id="${data.fn_rownum}" data-tipe="unlock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-lock"> </i></button>
                 `);
             } else {
                 $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fa fa-unlock-alt"> </i> Kunci</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-id="${data.fn_rownum}" data-tipe="lock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-unlock-alt"> </i> Kunci</button>
                 `);
             } 
         },
@@ -481,6 +481,67 @@
         },
     });
 
+    function editLockStatus(quantity){
+        var id = $(quantity).data('id');
+        var quantity = $(quantity).data('quantity');
+        var tipe = $(quantity).data('tipe');
+        var newQuantity = parseFloat($(`#fn_quantity_${id}`).val());
+
+        // if (newQuantity === quantity) {
+        //     swal("No changes made.", {
+        //         icon: 'info'
+        //     });
+        //     return;
+        // }
+
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah kamu yakin ingin update?",
+            icon: "warning",
+            buttons: ["Cancel", "Update"],
+            dangerMode: true,
+        }).then(function(confirm) {
+            if (confirm) {
+                updateLock(id, newQuantity, tipe);
+            }
+        });
+    }
+
+    function updateLock(id, newQuantity, tipe) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/stock-opname/detail/lock-update',
+            type: 'PUT',
+            data: {
+                fn_rownum: id,
+                fn_quantity: newQuantity,
+                tipe: tipe
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function click_cancel() {
         swal({

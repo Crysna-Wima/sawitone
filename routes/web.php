@@ -574,6 +574,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update','Apps\StockOpnameController@store_update');
 
             Route::prefix('detail')->group(function () {
+                Route::put('/lock-update','Apps\StockOpnameDetailController@lock_update');
                 Route::get('/inventory/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatable_inventory');
                 Route::get('/datatables', 'Apps\StockOpnameDetailController@datatables');
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
