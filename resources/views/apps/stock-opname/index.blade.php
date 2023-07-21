@@ -72,9 +72,9 @@
                                         <label>Tipe Opname</label>
                                         <select class="form-control select2 required-field" name="fc_stockopname_type" id="fc_stockopname_type">
                                             <option value="" selected disabled>- Pilih -</option>
-                                            <option value="Satuan">Satuan</option>
-                                            <option value="Cabang">Cabang</option>
-                                            <option value="Semua">Semua</option>
+                                            <option value="DAILY">Satuan</option>
+                                            <option value="BRANCH">Cabang</option>
+                                            <option value="ALLDEXA">Semua</option>
                                         </select>
                                     </div>
                                 </div>
