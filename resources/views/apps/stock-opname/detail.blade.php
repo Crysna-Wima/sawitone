@@ -483,7 +483,7 @@
 
     function editLockStatus(quantity){
         var id = $(quantity).data('id');
-        var quantity = $(quantity).data('quantity');
+        var quantity_edit = $(quantity).data('quantity');
         var tipe = $(quantity).data('tipe');
         var newQuantity = parseFloat($(`#fn_quantity_${id}`).val());
 
