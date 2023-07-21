@@ -33,7 +33,7 @@ class StockOpnameController extends Controller
             //             ->where('fc_branch', auth()->user()->fc_branch)->sum('fn_quantity');
             // }
             $jumlah_stock = Invstore::where('fc_warehousecode', $stockopname_master->fc_warehousecode)
-                        ->where('fc_branch', auth()->user()->fc_branch)->sum('fn_quantity');
+                        ->where('fc_branch', auth()->user()->fc_branch)->count();
             $data['data'] = $stockopname_master;
             $data['total'] = $total;
             $data['jumlah_stock'] = $jumlah_stock;
