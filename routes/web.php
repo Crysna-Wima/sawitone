@@ -587,7 +587,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::post('/pdf', 'Apps\DaftarReturBarangController@pdf');
             Route::get('/get_pdf/{fc_returno}/{nama_pj}', 'Apps\DaftarReturBarangController@get_pdf');
-
+        });
         Route::prefix('master-coa')->group(function () {
             Route::get('/', 'DataMaster\MasterCoaController@index');
             Route::get('/detail/{fc_coacode}', 'DataMaster\MasterCoaController@detail');
