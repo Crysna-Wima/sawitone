@@ -338,13 +338,23 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `
-                    <div class="input-group">
-                        <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
-                        </div>
-                    </div>`;
+                    if (data.fc_status == 'L') {
+                        return `
+                        <div class="input-group">
+                            <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
+                            </div>
+                        </div>`;
+                    } else {
+                        return `
+                        <div class="input-group">
+                            <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
+                            </div>
+                        </div>`;
+                    }
                 }
             },
             {
@@ -353,14 +363,14 @@
         ],
         rowCallback: function(row, data) {
             if (data['fc_status'] == 'L') {
-            $('td:eq(7)', row).html(`
+                $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-danger btn-sm" data-id="${data.fn_rownum}" data-tipe="unlock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-lock"> </i></button>
                 `);
             } else {
                 $('td:eq(7)', row).html(`
                     <button type="button" class="btn btn-primary btn-sm" data-id="${data.fn_rownum}" data-tipe="lock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-unlock-alt"> </i> Kunci</button>
                 `);
-            } 
+            }
         },
     });
 
@@ -370,8 +380,8 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/inventory/datatables/" + encode_warehousecode ,
-            type: 'GET', 
+            url: "/apps/stock-opname/detail/inventory/datatables/" + encode_warehousecode,
+            type: 'GET',
         },
         columnDefs: [{
                 className: 'text-center',
@@ -457,9 +467,9 @@
             {
                 data: 'invstore.stock.fc_namelong'
             },
-            // {
-            //     data: 'invstore.stock.fc_namepack'
-            // },
+            {
+                data: 'invstore.stock.fc_namepack'
+            },
             {
                 data: 'invstore.fc_batch'
             },
@@ -481,9 +491,9 @@
         },
     });
 
-    function editLockStatus(quantity){
+    function editLockStatus(quantity) {
         var id = $(quantity).data('id');
-        var quantity = $(quantity).data('quantity');
+        var quantity_edit = $(quantity).data('quantity');
         var tipe = $(quantity).data('tipe');
         var newQuantity = parseFloat($(`#fn_quantity_${id}`).val());
 
@@ -494,17 +504,31 @@
         //     return;
         // }
 
-        swal({
-            title: "Konfirmasi",
-            text: "Apakah kamu yakin ingin update?",
-            icon: "warning",
-            buttons: ["Cancel", "Update"],
-            dangerMode: true,
-        }).then(function(confirm) {
-            if (confirm) {
-                updateLock(id, newQuantity, tipe);
-            }
-        });
+        if (tipe == 'unlock') {
+            swal({
+                title: "Konfirmasi",
+                text: "Apakah kamu yakin membuka kunci?",
+                icon: "warning",
+                buttons: ["Cancel", "Update"],
+                dangerMode: true,
+            }).then(function(confirm) {
+                if (confirm) {
+                    updateLock(id, newQuantity, tipe);
+                }
+            });
+        } else {
+            swal({
+                title: "Konfirmasi",
+                text: "Apakah kamu yakin ingin update data ini?",
+                icon: "warning",
+                buttons: ["Cancel", "Update"],
+                dangerMode: true,
+            }).then(function(confirm) {
+                if (confirm) {
+                    updateLock(id, newQuantity, tipe);
+                }
+            });
+        }
     }
 
     function updateLock(id, newQuantity, tipe) {
