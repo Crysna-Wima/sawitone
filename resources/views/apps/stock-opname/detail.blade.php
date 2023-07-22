@@ -233,7 +233,7 @@
         @endif
     </div>
     <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="" method="post">
+        <form id="form_submit_edit" action="/apps/stock-opname/detail/submit-stockopname" method="post">
             <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
             @csrf
             @method('put')
@@ -636,7 +636,14 @@
                                 $("#modal").modal('hide');
                                 tb_satuan.ajax.reload(null, false);
                                 //  location.href = location.href;
-                            } else {
+                            } else if(response.status === 201){
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_satuan.ajax.reload(null, false);
+                                location.href = response.link;
+                            }else {
                                 swal(response.message, {
                                     icon: 'error',
                                 });

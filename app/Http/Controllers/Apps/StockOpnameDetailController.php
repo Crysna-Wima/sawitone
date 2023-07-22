@@ -28,8 +28,7 @@ class StockOpnameDetailController extends Controller
             ->make(true);
     }
 
-    public function datatables_satuan()
-    {
+    public function datatables_satuan(){
         $data = TempStockOpnameDetail::with('invstore.stock')->where('fc_stockopname_no', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
@@ -145,13 +144,21 @@ class StockOpnameDetailController extends Controller
         }
     }
 
-    public function delete_item($fn_rownum)
-    {
+    public function delete_item($fn_rownum){
         $delete = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
             ->where('fn_rownum', $fn_rownum)
             ->delete();
+        
+        $count_data = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->count(); 
 
         if ($delete) {
+            if($count_data <= 1){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/stock-opname'
+                ];
+            }
             return [
                 'status' => 200,
                 'message' => 'Data berhasil dihapus'
@@ -160,6 +167,30 @@ class StockOpnameDetailController extends Controller
             return [
                 'status' => 300,
                 'message' => 'Data gagal dihapus'
+            ];
+        }
+    }
+
+    public function submit_stockopname(Request $request){
+        try {
+            DB::beginTransaction();
+            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)
+                                                ->where('fc_branch', auth()->user()->fc_branch)->update([
+                                                 'fc_stockopname_status' => 'F',
+                                                 'fd_stockopname_end' => Carbon::now()->toDateTimeString()
+                                                ]);
+            TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
+                                                ->where('fc_branch', auth()->user()->fc_branch)->delete();
+            DB::commit();
+            return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/stock-opname',
+				'message' => 'Submit berhasil'
+			];
+        } catch (\Exception $e) {
+            return [
+                'status' => 300,
+                'message' => $e->getMessage()
             ];
         }
     }

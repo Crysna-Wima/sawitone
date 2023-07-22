@@ -580,6 +580,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/inventory/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatable_inventory');
                 Route::get('/datatables', 'Apps\StockOpnameDetailController@datatables');
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
+                Route::put('/submit-stockopname', 'Apps\StockOpnameDetailController@submit_stockopname');
             });
         });
         
