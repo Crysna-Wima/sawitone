@@ -574,8 +574,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update','Apps\StockOpnameController@store_update');
 
             Route::prefix('detail')->group(function () {
-                Route::get('/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatables');
+                Route::put('/lock-update','Apps\StockOpnameDetailController@lock_update');
+                Route::post('/select_stock', 'Apps\StockOpnameDetailController@select_stock');
+                Route::delete('/delete/{fn_rownum}', 'Apps\StockOpnameDetailController@delete_item');
+                Route::get('/inventory/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatable_inventory');
+                Route::get('/datatables', 'Apps\StockOpnameDetailController@datatables');
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
+                Route::put('/submit-stockopname', 'Apps\StockOpnameDetailController@submit_stockopname');
             });
         });
         
@@ -588,6 +593,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/pdf', 'Apps\DaftarReturBarangController@pdf');
             Route::get('/get_pdf/{fc_returno}/{nama_pj}', 'Apps\DaftarReturBarangController@get_pdf');
         });
+
         Route::prefix('master-coa')->group(function () {
             Route::get('/', 'DataMaster\MasterCoaController@index');
             Route::get('/detail/{fc_coacode}', 'DataMaster\MasterCoaController@detail');
@@ -595,6 +601,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/{layer}', 'DataMaster\MasterCoaController@getParent');
             Route::post('/store-update', 'DataMaster\MasterCoaController@storeUpdate');
             Route::delete('/delete/{fc_coacode}', 'DataMaster\MasterCoaController@delete');
+        });
+
+        Route::prefix('transaksi')->group(function () {
+            Route::get('/', 'Apps\TransaksiController@index');
         });
     });
 });

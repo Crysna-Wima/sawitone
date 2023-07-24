@@ -72,9 +72,9 @@
                                         <label>Tipe Opname</label>
                                         <select class="form-control select2 required-field" name="fc_stockopname_type" id="fc_stockopname_type">
                                             <option value="" selected disabled>- Pilih -</option>
-                                            <option value="Satuan">Satuan</option>
-                                            <option value="Cabang">Cabang</option>
-                                            <option value="Semua">Semua</option>
+                                            <option value="DAILY">SATUAN</option>
+                                            <option value="BRANCH">CABANG</option>
+                                            <option value="ALLDEXA">SEMUA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -214,7 +214,7 @@
 @section('js')
 <script>
     $("#fc_stockopname_type").change(function() {
-        if ($('#fc_stockopname_type').val() === 'Semua') {
+        if ($('#fc_stockopname_type').val() === 'ALLDEXA') {
             $('input[id="fc_warehousecode"]').val("ALLDEXA");
             $('input[id="fc_rackname"]').val("Seluruh Dexa");
             $('input[id="fc_warehouseaddress"]').val("Seluruh Dexa");

@@ -487,7 +487,7 @@
             const item_barcode = data.fc_barcode;
             const item_row = data.fn_rownum;
             // kirim 2 parameter di data-id di button hapus
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                     <button class="btn btn-danger btn-sm delete-btn" data-id="${item_barcode}" data-row="${item_row}"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },

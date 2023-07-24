@@ -22,4 +22,5 @@ class TempStockOpnameDetail extends Model
     public function invstore(){
         return $this->hasOne(Invstore::class, ['fc_barcode','fc_warehousecode'], ['fc_barcode','fc_warehousecode']);
     }
+    
 }

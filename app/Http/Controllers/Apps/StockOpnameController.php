@@ -23,27 +23,35 @@ class StockOpnameController extends Controller
     {
         $stockopname_master = StockOpname::with('warehouse')->where('fc_stockopname_no', auth()->user()->fc_userid)->first();
         $temp_stockopname_detail = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->get();
-        
+
         $total = count($temp_stockopname_detail);
-        if(!empty($stockopname_master)){
-            // if ($stockopname_master->fc_warehousecode == 'ALLDEXA'){
-            //     $jumlah_stock = Invstore::all()->where('fc_branch', auth()->user()->fc_branch)->count();
-            // } else {
-            //     $jumlah_stock = Invstore::where('fc_warehousecode', $stockopname_master->fc_warehousecode)
-            //             ->where('fc_branch', auth()->user()->fc_branch)->sum('fn_quantity');
-            // }
-            $jumlah_stock = Invstore::where('fc_warehousecode', $stockopname_master->fc_warehousecode)
-                        ->where('fc_branch', auth()->user()->fc_branch)->sum('fn_quantity');
+        if (!empty($stockopname_master)) {
+            if ($stockopname_master->fc_warehousecode == 'ALLDEXA') {
+                $jumlah_stock = Invstore::all()->where('fc_branch', auth()->user()->fc_branch)->count();
+                $stock_teropname = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
+                    ->where('fc_status', 'L')
+                    ->where('fc_branch', auth()->user()->fc_branch)->count();
+                $data['jumlah_stock'] = $jumlah_stock;
+                $data['stock_teropname'] = $stock_teropname;
+            } else {
+                $jumlah_stock = Invstore::where('fc_warehousecode', $stockopname_master->fc_warehousecode)
+                    ->where('fc_branch', auth()->user()->fc_branch)->count();
+                $stock_teropname = TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)
+                    ->where('fc_status', 'L')
+                    ->where('fc_branch', auth()->user()->fc_branch)->count();
+                $data['jumlah_stock'] = $jumlah_stock;
+                $data['stock_teropname'] = $stock_teropname;
+            }
             $data['data'] = $stockopname_master;
             $data['total'] = $total;
-            $data['jumlah_stock'] = $jumlah_stock;
-            return view('apps.stock-opname.detail',$data);
-          
+
+            return view('apps.stock-opname.detail', $data);
         }
         return view('apps.stock-opname.index');
     }
 
-    public function detail_gudang($fc_warehousecode){
+    public function detail_gudang($fc_warehousecode)
+    {
 
         $fc_warehousecode = base64_decode($fc_warehousecode);
         $data = Warehouse::where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -105,32 +113,31 @@ class StockOpnameController extends Controller
             ];
         }
     }
-    
-    public function cancel(){
+
+    public function cancel()
+    {
         DB::beginTransaction();
 
-		try{
-            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
+        try {
             TempStockOpnameDetail::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
+            StockOpname::where('fc_stockopname_no', auth()->user()->fc_userid)->delete();
 
-			DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            DB::commit();
+
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/stock-opname',
-				'message' => 'Data berhasil dihapus'
-			];
-		}
+                'message' => 'Stock Opname berhasil di Cancel'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
 }

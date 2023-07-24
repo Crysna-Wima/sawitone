@@ -159,7 +159,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Stock Teropname</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-size:large" value=" " id="" name="">0/{{ $jumlah_stock }} Stock</h5>
+                                        <h5 class="text-success" style="font-size:large" id="stock_teropname" name="stock_teropname">{{ $stock_teropname ?? '0' }}/{{ $jumlah_stock }} Stock</h5>
                                     </div>
                                 </div>
                             </div>
@@ -169,10 +169,10 @@
             </div>
         </div>
         {{-- STOCK OPNAME --}}
-        @if($data->fc_stockopname_type == 'Semua' || $data->fc_stockopname_type == 'Cabang')
+        @if($data->fc_stockopname_type == 'ALLDEXA' || $data->fc_stockopname_type == 'BRANCH')
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>Stock yang Diopname</h4>
                 </div>
                 <div class="card-body">
@@ -233,7 +233,7 @@
         @endif
     </div>
     <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="" method="post">
+        <form id="form_submit_edit" action="/apps/stock-opname/detail/submit-stockopname" method="post">
             <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
             @csrf
             @method('put')
@@ -285,17 +285,19 @@
     var warehousecode = "{{ $data->fc_warehousecode }}";
     var encode_warehousecode = window.btoa(warehousecode);
 
+    var tipe_opname = '{{  $data->fc_stockopname_type }}' ?? '';
+
     function click_stock_opname() {
         $('#modal_stock_opname').modal('show');
     }
 
     var tb = $('#tb').DataTable({
-        // apabila data kosong
+        // apabila data kosongs
         processing: true,
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
+            url: "/apps/stock-opname/detail/datatables",
             type: 'GET',
         },
         columnDefs: [{
@@ -317,31 +319,42 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack',
+                defaultContent: '-'
             },
             {
-                data: 'fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `
-                    <div class="input-group">
-                        <input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">
-                        <div class="input-group-append">
-                            <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.stock.fc_namepack}</span>
-                        </div>
-                    </div>`;
+                    if (data.fc_status == 'L') {
+                        return `
+                        <div class="input-group">
+                            <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
+                            </div>
+                        </div>`;
+                    } else {
+                        return `
+                        <div class="input-group">
+                            <input type="number" id="fn_quantity_${data.fn_rownum}" min="0" class="form-control" value="${data.fn_quantity}">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-success" style="color: white; font-weight:600">${data.invstore.stock.fc_namepack}</span>
+                            </div>
+                        </div>`;
+                    }
                 }
             },
             {
@@ -350,14 +363,14 @@
         ],
         rowCallback: function(row, data) {
             if (data['fc_status'] == 'L') {
-            $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-lock"> </i></button>
+                $('td:eq(7)', row).html(`
+                    <button type="button" class="btn btn-danger btn-md" data-id="${data.fn_rownum}" data-tipe="unlock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-lock"> </i></button>
                 `);
             } else {
                 $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-primary btn-sm" onclick=""><i class="fa fa-unlock-alt"> </i> Kunci</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-id="${data.fn_rownum}" data-tipe="lock" data-quantity="${data.fn_quantity}" data onclick="editLockStatus(this)"><i class="fa fa-unlock-alt"> </i> Kunci</button>
                 `);
-            } 
+            }
         },
     });
 
@@ -367,7 +380,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/stock-opname/detail/datatables/" + encode_warehousecode,
+            url: "/apps/stock-opname/detail/inventory/datatables/" + encode_warehousecode,
             type: 'GET',
         },
         columnDefs: [{
@@ -407,7 +420,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fn_quantity" min="0" class="form-control" value="${data.fn_quantity}">`;
+                    var barcodeEncode = window.btoa(data.fc_barcode);
+                    return `<input type="number" id="fn_quantity_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                 }
             },
             {
@@ -416,7 +430,7 @@
         ],
         rowCallback: function(row, data) {
             $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm" onclick=""><i class="fa fa-check"> </i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm" onclick="select_stock('${data.fc_barcode}')"><i class="fa fa-check"> </i> Pilih</button>
                 `);
         },
     });
@@ -449,19 +463,19 @@
                 data: 'fc_barcode'
             },
             {
-                data: 'stock.fc_stockcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'stock.fc_namelong'
+                data: 'invstore.stock.fc_namelong'
             },
             {
-                data: 'stock.fc_namepack'
+                data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'stock.fc_batch'
+                data: 'invstore.fc_batch'
             },
             {
-                data: 'stock.fd_expired',
+                data: 'invstore.fd_expired',
                 render: formatTimestamp
             },
             {
@@ -472,12 +486,183 @@
             },
         ],
         rowCallback: function(row, data) {
+            var url_delete = '/apps/stock-opname/detail/delete/' + data.fn_rownum;
+
             $('td:eq(7)', row).html(`
-                    <button type="button" class="btn btn-danger btn-sm" onclick=""><i class="fa fa-trash"> </i> Hapus</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="delete_item('${url_delete}','${data.invstore.stock.fc_namelong}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
 
+    function editLockStatus(quantity) {
+        var id = $(quantity).data('id');
+        var quantity_edit = $(quantity).data('quantity');
+        var tipe = $(quantity).data('tipe');
+        var newQuantity = parseFloat($(`#fn_quantity_${id}`).val());
+
+        if (tipe == 'unlock') {
+            swal({
+                title: "Konfirmasi",
+                text: "Apakah kamu yakin ingin membuka kunci data ini?",
+                icon: "warning",
+                buttons: ["Cancel", "Update"],
+                dangerMode: true,
+            }).then(function(confirm) {
+                if (confirm) {
+                    updateLock(id, newQuantity, tipe);
+                }
+            });
+        } else {
+            swal({
+                title: "Konfirmasi",
+                text: "Apakah kamu yakin ingin update data ini?",
+                icon: "warning",
+                buttons: ["Cancel", "Update"],
+                dangerMode: true,
+            }).then(function(confirm) {
+                if (confirm) {
+                    updateLock(id, newQuantity, tipe);
+                }
+            });
+        }
+    }
+
+    function updateLock(id, newQuantity, tipe) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/stock-opname/detail/lock-update',
+            type: 'PUT',
+            data: {
+                fn_rownum: id,
+                fn_quantity: newQuantity,
+                tipe: tipe
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb.ajax.reload();
+                    location.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function select_stock(fc_barcode) {
+        var barcodeEncode = window.btoa(fc_barcode);
+
+        // modal loading
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: '/apps/stock-opname/detail/select_stock',
+            type: "POST",
+            data: {
+                'fc_barcode': fc_barcode,
+                'fn_quantity': $(`#fn_quantity_${barcodeEncode}`).val(),
+            },
+            dataType: 'JSON',
+            success: function(response, textStatus, jQxhr) {
+                // modal loading hide
+                $('#modal_loading').modal('hide');
+                if (response.status === 200) {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    location.reload();
+                } else {
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXhr, textStatus, errorThrown) {
+                $('#modal_loading').modal('hide');
+                console.log(errorThrown);
+                console.warn(jqXhr.responseText);
+            },
+        });
+    }
+
+    function delete_item(url, nama) {
+        swal({
+                title: 'Warning!',
+                text: 'Apakah anda yakin akan menghapus data ' + nama + "?",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: url,
+                        type: "DELETE",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+
+                            if (response.status === 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_satuan.ajax.reload(null, false);
+                                //  location.href = location.href;
+                            } else if(response.status === 201){
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_satuan.ajax.reload(null, false);
+                                location.href = response.link;
+                            }else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+    }
 
     function click_cancel() {
         swal({

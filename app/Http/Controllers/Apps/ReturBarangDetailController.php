@@ -14,6 +14,8 @@ use App\Models\TempReturDetail;
 use DB;
 use Validator;
 use App\Helpers\ApiFormatter;
+use App\Models\TempStockOpnameDetail;
+use Carbon\Carbon;
 
 class ReturBarangDetailController extends Controller
 {
@@ -134,21 +136,16 @@ class ReturBarangDetailController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                 ->update([
-                    'fc_returstatus' => 'F'
-                    ]);
+                    'fc_returstatus' => 'F',
+                    'fd_stockopname_end' => Carbon::now()->toDateTimeString() 
+                ]);
 
-            TempReturDetail::where('fc_returno', auth()->user()->fc_userid)
-                        ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                        ->delete();
-            TempReturMaster::where('fc_returno', auth()->user()->fc_userid)
+            TempStockOpnameDetail::where('fc_returno', auth()->user()->fc_userid)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->delete();
             
             DB::commit();
-
-            
 
             return [
 				'status' => 201, // SUCCESS
