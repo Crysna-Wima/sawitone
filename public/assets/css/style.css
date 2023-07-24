@@ -76,7 +76,8 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .ion,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fas,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .far,
 a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fal,
-a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab,
+a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fa-solid {
   margin-left: 4px;
 }
 
@@ -3761,7 +3762,8 @@ body.sidebar-mini .main-sidebar .sidebar-menu>li>a .ion,
 body.sidebar-mini .main-sidebar .sidebar-menu>li>a .fas,
 body.sidebar-mini .main-sidebar .sidebar-menu>li>a .far,
 body.sidebar-mini .main-sidebar .sidebar-menu>li>a .fab,
-body.sidebar-mini .main-sidebar .sidebar-menu>li>a .fal {
+body.sidebar-mini .main-sidebar .sidebar-menu>li>a .fal,
+body.sidebar-mini .main-sidebar .sidebar-menu>li>a .fa-solid {
   margin: 0;
   font-size: 20px;
 }
