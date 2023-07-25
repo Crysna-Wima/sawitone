@@ -310,6 +310,7 @@
                                     <label>Qty</label>
                                     <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro" required>
                                     <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
+                                    <input  min="0" class="form-control" name="fn_price" id="fn_price" hidden>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -466,10 +467,15 @@
         }
 
         function click_modal_select(data) {
-            var stockcode = $(data).data('stockcode');
+            var stockcode = window.btoa($(data).data('stockcode'));
             var barcode = $(data).data('barcode');
+
+            // encode stockcode
+            
             // pono
             var pono = window.btoa($(data).data('pono'));
+            // console.log(pono)
+            // console.log(stockcode)
 
             $('#fc_catnumber').val('');
             $('#fc_batch').val('');
@@ -478,7 +484,7 @@
             $('#modal_loading').modal('show');
 
             // value id fc_stockcode
-            $('#fc_stockcode').val(stockcode);
+            $('#fc_stockcode').val($(data).data('stockcode'));
             $('#fc_barcode').val(barcode);
 
             $.ajax({
@@ -497,6 +503,8 @@
                     $('#fc_pono').val(data.fc_pono);
 
                     $('#fn_qty_ro').val(qty);
+
+                    $('#fn_price').val(data.fm_po_price);
 
                     $('#fn_qty_po').val(data.fn_po_qty);
                     $('#fn_qty_po').trigger('change');

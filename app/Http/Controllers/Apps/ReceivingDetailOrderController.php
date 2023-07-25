@@ -119,8 +119,10 @@ class ReceivingDetailOrderController extends Controller
 
     public function detail_item($fc_stockcode, $fc_pono)
     {
+        //decode stockcode
+        $decode_fc_stockcode = base64_decode($fc_stockcode);
         $decode_fc_pono = base64_decode($fc_pono);
-        $data = PoDetail::with('stock')->where('fc_stockcode', $fc_stockcode)
+        $data = PoDetail::with('stock')->where('fc_stockcode', $decode_fc_stockcode)
             ->where('fc_pono', $decode_fc_pono)
             ->first();
         // kirim dalam bentuk json
@@ -137,6 +139,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_barcode' => 'required',
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
+                'fn_price' => 'required',
                 // 'fd_expired_date' => 'required',
                 // 'fc_catnumber' => 'required',
                 'fc_batch' => 'required',
@@ -178,6 +181,7 @@ class ReceivingDetailOrderController extends Controller
             'fn_qty_ro' => $request->fn_qty_ro,
             'fd_expired_date' => $request->fd_expired_date,
             'fc_batch' => $request->fc_batch,
+            'fn_price' => $request->fn_price,
             // 'fc_catnumber' => $request->fc_catnumber,
             'fc_status' => 'Reguler'
         ], $request->all());
