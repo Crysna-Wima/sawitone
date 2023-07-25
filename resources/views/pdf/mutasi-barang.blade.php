@@ -5,31 +5,31 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
     * {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
 
     p,
     label {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .tp-1 td{
@@ -42,7 +42,7 @@
     }
 
     .table-header {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .next-page {
@@ -89,15 +89,15 @@
     }
 
     .table-lg td{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .table-xl td {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .div-lg p{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .fw-bold{
@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: 18px!important;
+        font-size: 15px!important;
     }
 
     .table-lg,
@@ -171,7 +171,7 @@
 
     @media print {
         #print {
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Courier New', Courier, monospace;
         }
     }
 </style>
@@ -221,7 +221,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">
-        <p style="font-size: 16px; margin-left: 2%">Lokasi Awal :</p>
+        <p style="margin-left: 2%">Lokasi Awal :</p>
             <tr>
                 <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
                 <td style="width: 5px"></td>
@@ -241,7 +241,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-        <p style="font-size: 16px; margin-left: 2%">Lokasi Tujuan :</p>
+        <p style="margin-left: 2%">Lokasi Tujuan :</p>
             <tr>
                 <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 5px"></td>

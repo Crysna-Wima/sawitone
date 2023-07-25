@@ -15,21 +15,21 @@
 
     p,
     label {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .tp-1 td{
@@ -42,7 +42,7 @@
     }
 
     .table-header {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .next-page {
@@ -89,15 +89,15 @@
     }
 
     .table-lg td{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .table-xl td {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .div-lg p{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .fw-bold{
