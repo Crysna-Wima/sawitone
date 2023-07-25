@@ -474,8 +474,8 @@
             
             // pono
             var pono = window.btoa($(data).data('pono'));
-            console.log(pono)
-            console.log(stockcode)
+            // console.log(pono)
+            // console.log(stockcode)
 
             $('#fc_catnumber').val('');
             $('#fc_batch').val('');
