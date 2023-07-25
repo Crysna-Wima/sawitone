@@ -310,7 +310,7 @@
                                     <label>Qty</label>
                                     <input type="number" min="0" class="form-control" name="fn_qty_ro" id="fn_qty_ro" required>
                                     <input type="number" min="0" class="form-control" name="fn_qty_po" id="fn_qty_po" hidden>
-                                    <input type="number" min="0" class="form-control" name="fn_price" id="fn_price" hidden>
+                                    <input  min="0" class="form-control" name="fn_price" id="fn_price" hidden>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
