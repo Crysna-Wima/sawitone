@@ -149,64 +149,6 @@
     .dropdown-list .dropdown-header {
       font-weight: bold;
     }
-
-    /* .searchBox {
-      background: white;
-      height: 40px;
-      border-radius: 40px;
-      padding: 10px;
-    }
-
-    .searchBox:hover>.searchInput {
-      width: 240px;
-      padding: 0 6px;
-    }
-
-    .searchBox:hover>.searchButton {
-      background: white;
-      color: #0A9447;
-    }
-
-    .searchButton {
-      color: #0A9447;
-      float: right;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: 0.4s;
-      border: none;
-      cursor: pointer;
-    }
-
-    .searchInput {
-      border: none;
-      background: none;
-      outline: none;
-      float: left;
-      padding: 0;
-      color: black;
-      font-size: 16px;
-      transition: 0.4s;
-      width: 0px;
-    }
-
-    @media screen and (max-width: 620px) {
-      .searchBox:hover>.searchInput {
-        width: 150px;
-        padding: 0 6px;
-      }
-    }
-
-    @media screen and (max-width: 396px) {
-      .searchBox:hover>.searchInput {
-        width: 100px;
-        padding: 0 10px;
-      }
-    } */
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>

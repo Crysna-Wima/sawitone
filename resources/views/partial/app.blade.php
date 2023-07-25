@@ -117,6 +117,7 @@
     <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
     <script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/stisla.js') }}"></script>
+    
 
     <!-- JS Libraies -->
     <script src="{{ asset('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -124,6 +125,7 @@
     <script src="{{ asset('assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{asset('assets/modules/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+    <script src="https://kit.fontawesome.com/499d56f37a.js" crossorigin="anonymous"></script>
     {{-- <script src="{{asset('assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script> --}}
 
     <!-- Template JS File -->
