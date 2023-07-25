@@ -21,6 +21,13 @@ class MasterMappingController extends Controller
         return view('apps.master-mapping.index');
     }
 
+    public function create($fc_mappingcode)
+    {
+        $data = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $fc_mappingcode)->first();
+
+        return view('apps.master-mapping.create', $data);
+    }
+
     public function datatables()
     {
         $data = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->get();

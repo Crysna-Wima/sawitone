@@ -92,7 +92,7 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Deskripsi</label>
-                                <textarea name="fv_description" id="fv_description" style="height: 50px" class="form-control"></textarea>
+                                <input type="text" name="fv_description" id="fv_description" class="form-control">
                             </div>
                         </div>
                     </div>
