@@ -124,41 +124,41 @@
 
     p,
     label {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     table {
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     .table-header {
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     .table-lg td{
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     .table-xl td {
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     .div-lg p{
-        font-size: 14px!important;
+        font-size: 15px!important;
     }
 
     .footer p {
-        font-size: 13px!important;
+        font-size: 12px!important;
     }
 
     .table-lg,
