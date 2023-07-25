@@ -466,8 +466,11 @@
         }
 
         function click_modal_select(data) {
-            var stockcode = $(data).data('stockcode');
+            var stockcode = window.btoa($(data).data('stockcode'));
             var barcode = $(data).data('barcode');
+
+            // encode stockcode
+            
             // pono
             var pono = window.btoa($(data).data('pono'));
 

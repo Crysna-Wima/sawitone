@@ -119,8 +119,10 @@ class ReceivingDetailOrderController extends Controller
 
     public function detail_item($fc_stockcode, $fc_pono)
     {
+        //decode stockcode
+        $decode_fc_stockcode = base64_decode($fc_stockcode);
         $decode_fc_pono = base64_decode($fc_pono);
-        $data = PoDetail::with('stock')->where('fc_stockcode', $fc_stockcode)
+        $data = PoDetail::with('stock')->where('fc_stockcode', $decode_fc_stockcode)
             ->where('fc_pono', $decode_fc_pono)
             ->first();
         // kirim dalam bentuk json
