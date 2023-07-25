@@ -180,6 +180,7 @@ class ReceivingDetailOrderController extends Controller
             'fn_qty_ro' => $request->fn_qty_ro,
             'fd_expired_date' => $request->fd_expired_date,
             'fc_batch' => $request->fc_batch,
+            'fn_price' => $request->fn_price,
             // 'fc_catnumber' => $request->fc_catnumber,
             'fc_status' => 'Reguler'
         ], $request->all());
