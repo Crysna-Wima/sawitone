@@ -5,11 +5,11 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
     * {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
 
@@ -177,7 +177,7 @@
 
     @media print {
         #print {
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Courier New', Courier, monospace;
         }
     }
 </style>

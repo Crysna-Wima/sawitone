@@ -77,14 +77,14 @@ class MasterReceivingOrderController extends Controller
 
 
         // generate qrcode ke pdf
-        $customPaper = array(0, 0, 400, 595);        
+        // $customPaper = array(0, 0, 400, 595);        
         $pdf = PDF::loadView(
             'pdf.qr-code',
             [
                 'qrcode' => $qrcode,
                 'count' => $count_decode
             ]
-        )->setPaper($customPaper);
+        )->setPaper('a4');
 
 
         return $pdf->stream();

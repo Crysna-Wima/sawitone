@@ -606,5 +606,12 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
         });
+
+        Route::prefix('master-mapping')->group(function () {
+            Route::get('/', 'Apps\MasterMappingController@index');
+            Route::get('/datatables', 'Apps\MasterMappingController@datatables');
+            Route::post('/store-update','Apps\MasterMappingController@store_update');
+
+        });
     });
 });
