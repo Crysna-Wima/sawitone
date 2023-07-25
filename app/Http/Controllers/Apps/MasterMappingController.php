@@ -7,7 +7,6 @@ use App\Models\MappingMaster;
 
 use Carbon\Carbon;
 use DB;
-use App\Models\NotificationDetail;
 use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Validator;
