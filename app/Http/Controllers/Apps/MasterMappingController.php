@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Http\Controllers\Controller;
+use App\Models\MappingDetail;
 use App\Models\MappingMaster;
 
 use Carbon\Carbon;
@@ -27,6 +28,22 @@ class MasterMappingController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('sum_debit', function ($row) {
+                $sum_debit = MappingDetail::where('fc_mappingpos', "D")
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_mappingcode', $row->fc_mappingcode)
+                    ->count();
+    
+                return $sum_debit;
+            })
+            ->addColumn('sum_credit', function ($row) {
+                $sum_credit = MappingDetail::where('fc_mappingpos', "C")
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_mappingcode', $row->fc_mappingcode)
+                    ->count();
+    
+                return $sum_credit;
+            })
             ->make(true);
         // dd($data);
     }
