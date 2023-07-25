@@ -139,6 +139,7 @@ class ReceivingDetailOrderController extends Controller
                 'fc_barcode' => 'required',
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
+                'fn_price' => 'required',
                 // 'fd_expired_date' => 'required',
                 // 'fc_catnumber' => 'required',
                 'fc_batch' => 'required',

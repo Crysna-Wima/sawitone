@@ -505,7 +505,6 @@
                     $('#fn_qty_ro').val(qty);
 
                     $('#fn_price').val(data.fm_po_price);
-                    console.log(data.fm_po_price)
 
                     $('#fn_qty_po').val(data.fn_po_qty);
                     $('#fn_qty_po').trigger('change');
