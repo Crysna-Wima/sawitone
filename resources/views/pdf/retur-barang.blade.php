@@ -5,31 +5,31 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
     * {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Courier New', Courier, monospace;
     }
 
 
     p,
     label {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .tp-1 td{
@@ -42,7 +42,7 @@
     }
 
     .table-header {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .next-page {
@@ -89,15 +89,15 @@
     }
 
     .table-lg td{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .table-xl td {
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .div-lg p{
-        font-size: 16px!important;
+        font-size: 15px!important;
     }
 
     .fw-bold{
@@ -177,7 +177,7 @@
 
     @media print {
         #print {
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Courier New', Courier, monospace;
         }
     }
 </style>

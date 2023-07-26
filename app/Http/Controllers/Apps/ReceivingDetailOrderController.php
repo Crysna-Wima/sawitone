@@ -139,7 +139,6 @@ class ReceivingDetailOrderController extends Controller
                 'fc_barcode' => 'required',
                 'fc_nameshort' => 'required',
                 'fn_qty_ro' => 'required',
-                'fn_price' => 'required',
                 // 'fd_expired_date' => 'required',
                 // 'fc_catnumber' => 'required',
                 'fc_batch' => 'required',
@@ -181,7 +180,7 @@ class ReceivingDetailOrderController extends Controller
             'fn_qty_ro' => $request->fn_qty_ro,
             'fd_expired_date' => $request->fd_expired_date,
             'fc_batch' => $request->fc_batch,
-            'fn_price' => $request->fn_price,
+            // 'fn_price' => $request->fn_price,
             // 'fc_catnumber' => $request->fc_catnumber,
             'fc_status' => 'Reguler'
         ], $request->all());

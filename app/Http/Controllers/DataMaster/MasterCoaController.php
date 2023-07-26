@@ -118,6 +118,7 @@ class MasterCoaController extends Controller
                 'fn_layer' => $request->fn_layer,
                 'fc_parentcode' => $request->fc_parentcode,
                 'fc_coaname' => $request->fc_coaname,
+                'fv_description' => $request->fv_description,
             ], $request->all());
 
             if($insertRecord){
