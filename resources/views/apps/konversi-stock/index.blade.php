@@ -13,13 +13,13 @@
                         <div class="row">
                             <input type="text" id="barcode_result_convert" name="barcode_result_convert" hidden>
                             <input type="text" id="stockcode_to_convert" name="stockcode_to_convert" hidden>
-                            <div class="col-12 col-lg-3 col-sm-5">
+                            <div class="col-12 col-lg-4 col-sm-5">
                                 <div class="form-group">
                                     <label>Posisi Gudang</label>
                                     <select class="form-control select2 required-field required-field" name="fc_warehousecode" id="fc_warehousecode"></select>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-2 col-sm-4">
+                            <div class="col-12 col-lg-4 col-sm-4">
                                 <div class="form-group">
                                     <label>Pilih Stock</label>
                                     <div class="input-group mb-3">
@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-2 col-sm-3">
+                            <div class="col-12 col-lg-4 col-sm-3">
                                 <div class="form-group">
                                     <label>Jumlah</label>
                                     <div class="input-group mb-3">
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-2 col-sm-6">
+                            <div class="col-12 col-lg-4 col-sm-6">
                                 <div class="form-group">
                                     <label>Konversikan Ke</label>
                                     <div class="input-group mb-3">
@@ -52,7 +52,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-3 col-sm-6">
+                            <div class="col-12 col-lg-8 col-sm-6">
                                 <div class="form-group">
                                     <label>Skala</label>
                                     <div class="d-flex justify-content-center">
