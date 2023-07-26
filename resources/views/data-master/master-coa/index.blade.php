@@ -230,6 +230,7 @@
                     if($('#fn_layer').val() == 0){
                         $('#fc_parentcode').append(`<option value="0" selected>COA INDUK</option>`);
                         $('#fc_parentcode').prop('disabled', true);
+                        $('#fc_parentcode_hidden').val(0);
                     } else {
                         $("#fc_parentcode").append(`<option selected disabled>- Pilih -</option>`);
                         for(var i = 0; i < data.length; i++){
@@ -314,7 +315,7 @@
       ],
       rowCallback : function(row, data){
         var id = window.btoa(data.id);
-        var url_delete = "/data-master/master-coa/delete/" + id
+        var url_delete = "/apps/master-coa/delete/" + id
         
         if(data.fc_directpayment == 'T'){
             $('td:eq(6)', row).html(`<span class="badge badge-success">YA</span>`);
