@@ -116,6 +116,7 @@ class MasterCoaController extends Controller
                 'fc_branch' => $request->fc_branch,
                 'fc_coacode' => $request->fc_coacode,
                 'fn_layer' => $request->fn_layer,
+                'fc_directpayment' => $request->fc_directpayment,
                 'fc_parentcode' => $request->fc_parentcode,
                 'fc_coaname' => $request->fc_coaname,
                 'fv_description' => $request->fv_description,
@@ -143,6 +144,7 @@ class MasterCoaController extends Controller
         if($deleteRecord){
             return [
                 'status' => 200,
+                'link' => '/apps/master-coa',
                 'message' => "Data Berhasil Dihapus",
             ];
         } else {

@@ -1,21 +1,23 @@
 <html>
 
 <head>
+<link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>
     @page {
+        size: 8.5in 11in;
         margin: 40px 40px;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     * {
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
 
     p,
     label {
-        font-size: 15px!important;
+        font-size: 15px;
     }
 
     table {
@@ -24,7 +26,9 @@
 
     table th {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 16px;
+        font-weight: regular;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     table td {
@@ -176,8 +180,16 @@
     }
 
     @media print {
-        #print {
-            font-family: 'Courier New', Courier, monospace;
+        html,
+        body {
+            width: 8.5in;
+            height: 11in;
+            display: block;
+            font-family: 'lucida-console-regular', sans-serif;
+        }
+
+        @page {
+            size: 8.5in 11in;
         }
     }
 </style>
@@ -187,20 +199,20 @@
     <div class="container" id="print">
     <div class="header" style="height: 100px">
         <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
-            <p><b>PT DEXA ARFINDO PRATAMA</b></p>
+            <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331,</p>
             <p>Sidosermo, Kec. Wonocolo,</p>
             <p>Surabaya, Jawa Timur (60297)</p>
-            <p><b>dexa-arfindopratama.com</b></p>
+            <p>dexa-arfindopratama.com</p>
             <br>
-            <p><b>Kepada</b></p>
+            <p style="font-size: 16px;">Kepada</p>
             <p>{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->domst->somst->customer->fc_membername1 }}</p>
-            <p><b>Alamat Pengiriman</b></p>
+            <p style="font-size: 16px;">Alamat Pengiriman</p>
             <p>{{ $retur_mst->domst->somst->customer->fc_memberaddress_loading1 }}</p>
         </div>
         <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
-            <p><b>RETUR BARANG</b></p>
-            <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
+            <p style="font-size: 16px;">RETUR BARANG</p>
+            <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
             <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $retur_mst->fd_returdate )->isoFormat('D MMMM Y'); }}</p>
             <p>No. DO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_dono }}</p>
         </div>
@@ -210,7 +222,8 @@
 <div class="content" id="print">
     <br><br>
     <br><br>
-        <p style="font-weight: bold; font-size: 18px;">Barang yang Diretur</p>
+    <br>
+        <p style="font-size: 16px;">Barang yang Diretur</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%;" border="1">
             <tr>
                 <th>No</th>

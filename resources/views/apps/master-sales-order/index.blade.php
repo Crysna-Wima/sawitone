@@ -73,6 +73,7 @@
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -93,6 +94,7 @@
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -119,6 +121,7 @@
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -139,6 +142,7 @@
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -159,6 +163,7 @@
                                                 <th scope="col" class="text-center">Tanggal</th>
                                                 <th scope="col" class="text-center">Expired</th>
                                                 <th scope="col" class="text-center">Tipe</th>
+                                                <th scope="col" class="text-center">Operator</th>
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
@@ -335,11 +340,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 9]
+                    targets: [3, 10]
                 },
             ],
             columns: [{
@@ -360,6 +365,9 @@
                 },
                 {
                     data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
                 },
                 {
                     data: 'customer.fc_membername1'
@@ -395,33 +403,33 @@
                     var fc_dono = window.btoa(undefined);
                 }
 
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'F') {
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-primary">Menunggu</span>');
                 } else if (data['fc_sostatus'] == 'C') {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-success">Selesai</span>');
                 } else if (data['fc_sostatus'] == 'DD') {
-                    $('td:eq(7)', row).html('<span class="badge badge-info">DO Tuntas</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-info">DO Tuntas</span>');
                 } else if (data['fc_sostatus'] == 'P') {
-                    $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-warning">Pending</span>');
                 } else if (data['fc_sostatus'] == 'CC') {
-                    $('td:eq(7)', row).html('<span class="badge badge-danger">Cancel</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-danger">Cancel</span>');
                 } else if (data['fc_sostatus'] == 'CL') {
-                    $('td:eq(7)', row).html('<span class="badge badge-danger">Close</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-danger">Close</span>');
                 } else if (data['fc_sostatus'] == 'WA') {
-                    $('td:eq(7)', row).html('<span class="badge badge-warning">Menunggu Perizinan</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-warning">Menunggu Perizinan</span>');
                 }  
                 else {
-                    $('td:eq(7)', row).html('<span class="badge badge-danger">Lock</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-danger">Lock</span>');
                 }
 
                 if (data['fc_sostatus'] == 'CC' || data['fc_sostatus'] == 'CL') {
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
                     <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
                 `);
                 } else {
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
                     <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
                     <button class="btn btn-danger btn-sm ml-1" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
@@ -444,11 +452,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 9]
+                    targets: [3, 10]
                 },
             ],
             columns: [{
@@ -469,6 +477,9 @@
                 },
                 {
                     data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
                 },
                 {
                     data: 'customer.fc_membername1'
@@ -497,14 +508,14 @@
                 var fc_sono = window.btoa(data.fc_sono);
                 // console.log(fc_sono);
 
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'F') {
-                    $('td:eq(7)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-primary">Menunggu</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
             <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
@@ -525,11 +536,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 9]
+                    targets: [3, 10]
                 },
             ],
             columns: [{
@@ -550,6 +561,9 @@
                 },
                 {
                     data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
                 },
                 {
                     data: 'customer.fc_membername1'
@@ -578,14 +592,14 @@
                 var fc_sono = window.btoa(data.fc_sono);
                 // console.log(fc_sono);
 
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'P') {
-                    $('td:eq(7)', row).html('<span class="badge badge-warning">Pending</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-warning">Pending</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
             <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
@@ -606,11 +620,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 9]
+                    targets: [3, 10]
                 },
             ],
             columns: [{
@@ -631,6 +645,9 @@
                 },
                 {
                     data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
                 },
                 {
                     data: 'customer.fc_membername1'
@@ -659,14 +676,14 @@
                 var fc_sono = window.btoa(data.fc_sono);
                 // console.log(fc_sono);
 
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'C') {
-                    $('td:eq(7)', row).html('<span class="badge badge-success">Selesai</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-success">Selesai</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
             <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>
@@ -687,11 +704,11 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 6, 7]
+                    targets: [0, 5, 6, 7]
                 },
                 {
                     className: 'text-nowrap',
-                    targets: [3, 9]
+                    targets: [3, 10]
                 },
             ],
             columns: [{
@@ -712,6 +729,9 @@
                 },
                 {
                     data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
                 },
                 {
                     data: 'customer.fc_membername1'
@@ -740,14 +760,14 @@
                 var fc_sono = window.btoa(data.fc_sono);
                 // console.log(fc_sono);
 
-                $('td:eq(7)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
                 if (data['fc_sostatus'] == 'DD') {
-                    $('td:eq(7)', row).html('<span class="badge badge-info">DO Tuntas</span>');
+                    $('td:eq(8)', row).html('<span class="badge badge-info">DO Tuntas</span>');
                 } else {
                     $(row).hide();
                 }
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
             <a href="/apps/master-sales-order/detail/${fc_sono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}','${data.fc_sono}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-danger btn-sm" onclick="closeSO('${data.fc_sono}')"><i class="fa fa-times"></i> Close SO</button>

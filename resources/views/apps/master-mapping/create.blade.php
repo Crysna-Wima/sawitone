@@ -43,7 +43,7 @@
 
 <div class="section-body">
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-12">
+        <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h4>Informasi Umum</h4>

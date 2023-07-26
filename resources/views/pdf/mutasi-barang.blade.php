@@ -1,21 +1,23 @@
 <html>
 
 <head>
+<link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>
     @page {
+        size: 8.5in 11in;
         margin: 40px 40px;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     * {
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
 
     p,
     label {
-        font-size: 15px!important;
+        font-size: 15px;
     }
 
     table {
@@ -24,7 +26,9 @@
 
     table th {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 16px;
+        font-weight: regular;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     table td {
@@ -147,10 +151,6 @@
         width: 100%;
     }
 
-    .content{
-        margin-top: 25px
-    }
-
     .pt-1 > * {
         padding-top: 15px;
     }
@@ -170,8 +170,16 @@
     }
 
     @media print {
-        #print {
-            font-family: 'Courier New', Courier, monospace;
+        html,
+        body {
+            width: 8.5in;
+            height: 11in;
+            display: block;
+            font-family: 'lucida-console-regular', sans-serif;
+        }
+
+        @page {
+            size: 8.5in 11in;
         }
     }
 </style>
@@ -183,15 +191,15 @@
                 <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
             </div>
             <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
-                <p><b>PT DEXA ARFINDO PRATAMA</b></p>
+                <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
                 <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
                 <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
-                <p><b>dexa-arfindopratama.com</b></p>
+                <p>dexa-arfindopratama.com</p>
             </div>
         </div>
     </div>
     <div class="content" id="print">
-        <p style="text-align: center; font-weight:bold;">TANDA TERIMA MUTASI</p>
+        <p style="text-align: center; font-size: 16px;">TANDA TERIMA MUTASI</p>
         <br>
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
@@ -221,9 +229,9 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">
-        <p style="margin-left: 2%">Lokasi Awal :</p>
+        <p style="font-size: 16px; margin-left: 2%">Lokasi Awal :</p>
             <tr>
-                <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
+                <td>{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
                 <td style="width: 5px"></td>
                 <td style="width: 16%"></td>
                 <td></td>
@@ -241,9 +249,9 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-        <p style="margin-left: 2%">Lokasi Tujuan :</p>
+        <p style="font-size: 16px; margin-left: 2%">Lokasi Tujuan :</p>
             <tr>
-                <td style="font-weight: bold;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
+                <td>{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 5px"></td>
                 <td style="width: 16%"></td>
                 <td></td>
@@ -260,7 +268,7 @@
             </tr>
         </table>
 
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Detail Barang</p>
+        <p style="font-size: 16px; margin-left: 5%">Detail Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No.</th>

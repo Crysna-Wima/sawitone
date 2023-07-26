@@ -121,9 +121,8 @@ class MasterDeliveryOrderController extends Controller
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
         } elseif($fc_dostatus == "APR") {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_dostatus','NA')
-            ->orWhere('fc_dostatus','AC')
-            ->orWhere('fc_dostatus','RJ')->get();
+            ->where('fc_dostatus',['NA', 'AC', 'RJ'])
+            ->get();
         } else {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dostatus', $fc_dostatus)->get();
         }
@@ -227,7 +226,7 @@ class MasterDeliveryOrderController extends Controller
         session(['fc_dono_global' => $decode_fc_dono]);
         $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('letter');
         return $pdf->stream();
     }
 

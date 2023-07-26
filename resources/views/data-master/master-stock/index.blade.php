@@ -174,7 +174,7 @@
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_batch" value="F" class="selectgroup-input" checked>
+                                        <input type="radio" name="fl_batch" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
@@ -189,7 +189,7 @@
                                         <span class="selectgroup-button">Yes</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fl_expired" value="F" class="selectgroup-input" checked>
+                                        <input type="radio" name="fl_expired" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">No</span>
                                     </label>
                                 </div>
