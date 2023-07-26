@@ -13,45 +13,41 @@
     }
 
     #qrcode {
-        height: 0.9cm;
-        width: 0.9cm;
+        height: 12mm;
+        width: 12mm;
     }
 
-    #logo {
-        width: 1cm;
-    }
+    /* #logo {
+        margin-top: 1px;
+        font-size: 7px;
+    } */
 
     .container-qr {
+        align-content: center;
         text-align: center;
-        display: block;
-        margin-top: -3px;
+        margin-top: 4px;
     }
 
     .template-qr {
-        align-content: center;
         border: 0.5px solid #000;
         height: 1.4cm;
         width: 1.4cm;
-        padding: 3px;
-        margin-right: -5px;
-        margin-top: 3mm;
+        padding: 2.2px;
         text-align: center;
-        display: inline-block;
+        display: block;
     }
 
     .container {
-        width: 9.4cm;
-        height: 1.5cm;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+        width: 90mm;
+        height: 15mm;
     }
 </style>
 
 <body>
     <div class="container">
-        @for ($i = 0; $i < $count; $i++) <div class="template-qr">
-            <img id="logo" src="{{ public_path('/assets/img/logo-dexa.png') }}">
+        @for ($i = 0; $i < $count; $i++)  <div class="template-qr">
+            <!-- <img id="logo" src="{{ public_path('/assets/img/logo-dexa.png') }}"> -->
+            <!-- <p id="logo">PT. DEXA</p> -->
             <div class="container-qr" id="qr">
                 <img id="qrcode" src="data:image/png;base64, {!! base64_encode($qrcode) !!}">
             </div>
