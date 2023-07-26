@@ -144,6 +144,7 @@ class MasterCoaController extends Controller
         if($deleteRecord){
             return [
                 'status' => 200,
+                'link' => '/apps/master-coa',
                 'message' => "Data Berhasil Dihapus",
             ];
         } else {
