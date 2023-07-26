@@ -105,7 +105,13 @@
                             </div>
                             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-sales-order/export-excel" method="POST" target="_blank">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">Export Excel</button>
+                                    </form>
                                     <table class="table table-striped" id="tb_pending" width="100%">
+                                     
+                                        
                                         <thead>
                                             <tr>
                                                 <th scope="col" class="text-center">No</th>
@@ -219,6 +225,10 @@
 
 @section('js')
     <script>
+        document.getElementById("exportForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            this.submit();
+        });
         // untuk form input nama penanggung jawab
         $(document).ready(function() {
             var isNamePjShown = false;

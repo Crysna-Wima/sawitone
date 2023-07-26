@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\SalesOrderExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ use App\Models\SoMaster;
 use App\Models\SoDetail;
 use App\Models\DoDetail;
 use App\Models\TempSoPay;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterSalesOrderController extends Controller
 {
@@ -175,5 +177,9 @@ class MasterSalesOrderController extends Controller
             'status' => 300,
             'message' => 'Data gagal dicancel'
         ];
+    }
+
+    public function export_excel(){
+        return Excel::download(new SalesOrderExport, 'so_master_pending.xlsx');
     }
 }
