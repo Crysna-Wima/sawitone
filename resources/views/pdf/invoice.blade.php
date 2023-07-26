@@ -1,21 +1,17 @@
 <html>
 
 <head>
+<link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>
     @page {
+        size: 8.5in 11in;
         margin: 40px 40px;
-        font-family: 'Courier New', Courier, monospace;
-    }
-
-    @media print {
-        #print {
-            font-family: 'Courier New', Courier, monospace;
-        }
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     * {
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     .tp-1 td{
@@ -72,10 +68,12 @@
 
     .table-center thead tr th, .table-center tbody tr td{
         text-align: center;
+        padding: 3px;
     }
 
     .table-start thead tr th, .table-start tbody tr td{
         vertical-align: start;
+        padding: 3px;
     }
 
     .table-center-start thead tr th{
@@ -120,51 +118,65 @@
     }
 
     /* font size*/
-    
-
     p,
     label {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     table {
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 13px;
+        font-weight: regular;
+        font-family: 'lucida-console-regular', sans-serif;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 13px;
     }
 
     .table-header {
-        font-size: 15px!important;
+        font-size: 13px;
     }
 
     .table-lg td{
-        font-size: 15px!important;
+        font-size: 13px;
     }
 
     .table-xl td {
-        font-size: 15px!important;
+        font-size: 13px;
     }
 
     .div-lg p{
-        font-size: 15px!important;
+        font-size: 13px;
     }
 
     .footer p {
-        font-size: 12px!important;
+        font-size: 10px;
     }
 
     .table-lg,
     .table-lg th,
     .table-lg td {
         border: 2px solid black;
+    }
+
+    @media print {
+        html,
+        body {
+            width: 8.5in;
+            height: 11in;
+            display: block;
+            font-family: 'lucida-console-regular', sans-serif;
+        }
+
+        @page {
+            size: 8.5in 11in;
+        }
     }
 </style>
 
@@ -175,7 +187,7 @@
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
         <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
-            <p><b>Kepada Yth</b></p>
+            <p style="font-size: 14px;">Kepada Yth</p>
             @if($inv_mst->fc_invtype == 'SALES')
             <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
             <p>{{ $inv_mst->fc_address }}</p>
@@ -188,17 +200,17 @@
             @endif
         </div>
         <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
-            <p><b>PT DEXA ARFINDO PRATAMA</b></p>
+            <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
             <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
-            <p><b>dexa-arfindopratama.com</b></p>
+            <p>dexa-arfindopratama.com</p>
         </div>
     </div>
 </div>
 
 <div class="content" id="print">
         <br><br><br>
-        <p style="text-align: center; font-weight:bold; font-size: 16px">INVOICE</p>
+        <p style="text-align: center; font-size: 15px; margin: 0;">INVOICE</p>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             @if($inv_mst->fc_invtype == 'SALES')
             <tr>
@@ -239,7 +251,7 @@
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</td>
             </tr>
-            <tr class="pb-1">
+            <tr class="">
                 <td>Nomor</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 30%">{{ $inv_mst->fc_invno }}</td>
@@ -251,7 +263,7 @@
 
         @if($inv_mst->fc_invtype == 'SALES')
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Dikirim</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+        <table class="table-lg table-center" style="margin-bottom: 5px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Kode Barang</th>
@@ -288,7 +300,7 @@
         </table>
         @elseif($inv_mst->fc_invtype == 'PURCHASE')
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Diterima</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+        <table class="table-lg table-center" style="margin-bottom: 5px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Kode Barang</th>
@@ -323,8 +335,8 @@
             @endif
         </table>
         @else
-        <p style="font-weight: bold; margin-left: 5%">Data CPRR</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+        <p style="font-size: 14px; margin-left: 5%">Data CPRR</p>
+        <table class="table-lg table-center" style="margin-bottom: 5px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
                 <th>Nama</th>
@@ -409,7 +421,7 @@
                 <td></td>
                 <td style="width: 5px"></td>
                 <td style="width: 28%"></td>
-                <td><b>Tagihan</b></td>
+                <td>Tagihan</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_brutto,0,',','.')}}</td>
             </tr>
@@ -436,7 +448,7 @@
         </table>
 
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
-            <br><br>
+            <br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
                 <td style="width: 50% !important; text-align: right;">Diterima Oleh,</td>
@@ -462,8 +474,8 @@
         <div class="container">
             <div class="footer" style="height: 100px">
                 <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
-                    <p><b>Catatan : </b>{{ $inv_mst->fv_description ?? '-' }}</p>
-                    <p><b>Syarat Pembayaran :</b></p>
+                    <p style="font-size: 11px;">Catatan : {{ $inv_mst->fv_description ?? '-' }}</p>
+                    <p style="font-size: 11px;">Syarat Pembayaran :</p>
                     <p>- Pembayaran harap di selesaikan dalam waktu 30 hari dari tanggal Faktur</p>
                     <p>- Pembayaran harap dilakukan dengan Giro Bilyet / Cross Cheque atau transfer ke bank kami.</p>
                     @if($inv_mst->fc_invtype == 'SALES')
