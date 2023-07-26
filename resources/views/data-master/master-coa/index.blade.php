@@ -356,7 +356,12 @@
             },
             {
                 data: 'fm_balance',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                render: function(data, type, row) {
+                    return row.fm_balance.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: 'fv_description',
