@@ -225,6 +225,8 @@
                 var data = response.data;
                 setTimeout(function(){ $('#modal_loading').modal('hide');}, 500);
                 if(response.status == 200){
+                    $("#fc_parentcode").empty();
+                    $('#fc_parentcode').prop('disabled', false);
                     if($('#fn_layer').val() == 0){
                         $('#fc_parentcode').append(`<option value="0" selected>COA INDUK</option>`);
                         $('#fc_parentcode').prop('disabled', true);
