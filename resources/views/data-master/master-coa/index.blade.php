@@ -11,6 +11,12 @@
         content: ' *';
         display:inline;
     }
+
+    .required-select #label-select:after {
+        color: #e32;
+        content: ' *';
+        display:inline;
+    }
 </style>
 @endsection
 @section('content')
@@ -36,6 +42,7 @@
                            <th scope="col" class="text-center">Kode COA</th>
                            <th scope="col" class="text-center">Nama</th>
                            <th scope="col" class="text-center">Layer</th>
+                           <th scope="col" class="text-center">Direct Payment</th>
                            <th scope="col" class="text-center">Nama Induk</th>
                            <th scope="col" class="text-center">Deskripsi</th>
                            <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -62,7 +69,7 @@
                 </button>
             </div>
             <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit" action="/data-master/master-coa/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/apps/master-coa/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <input type="text" name="fc_parentcode" id="fc_parentcode_hidden" hidden>
                 <div class="modal-body">
@@ -97,7 +104,22 @@
                                 <input type="number" min="0" class="form-control required-field" onchange="get_parent()" name="fn_layer" id="fn_layer">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-9">
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group required-select">
+                                <label id="label-select">Direct Payment</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_directpayment" value="T" class="selectgroup-input">
+                                        <span class="selectgroup-button">YA</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_directpayment" value="F" class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button">TIDAK</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-6">
                             <div class="form-group required">
                                 <label>COA Induk</label>
                                 <select name="fc_parentcode" id="fc_parentcode" class="select2 required-field"></select>
@@ -271,6 +293,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0, 1, 2, 3, 5, 6, 7, 8] },
+         { className: 'text-nowrap', targets: [9] },
       ],
       columns: [
          { data: 'DT_RowIndex', searchable: false, orderable: false},
@@ -279,6 +302,7 @@
          { data: 'fc_coacode' },
          { data: 'fc_coaname' },
          { data: 'fn_layer' },
+         { data: 'fc_directpayment' },
          { 
             data: 'parent.fc_coaname',
             defaultContent: '<span class="badge bg-primary text-light">COA INDUK</span>',
@@ -290,7 +314,13 @@
         var id = window.btoa(data.id);
         var url_delete = "/data-master/master-coa/delete/" + id
         
-        $('td:eq(8)', row).html(`
+        if(data.fc_directpayment == 'T'){
+            $('td:eq(6)', row).html(`<span class="badge badge-success">YA</span>`);
+        }else{
+            $('td:eq(6)', row).html(`<span class="badge badge-danger">TIDAK</span>`);
+        }
+
+        $('td:eq(9)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${data.fc_coacode}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
         `);
