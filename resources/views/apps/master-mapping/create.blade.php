@@ -242,6 +242,8 @@
     var mappingcode = "{{ $data->fc_mappingcode }}";
     var encode_mappingcode = window.btoa(mappingcode);
 
+    // console.log(encode_mappingcode)
+
     function click_add_debit() {
         $('#modal_debit').modal('show');
     }
@@ -278,7 +280,7 @@
                 data: 'fc_mappingcode'
             },
             {
-                data: 'fc_mappingname'
+                data: 'mst_coa.fc_coaname'
             },
             {
                 data: null
@@ -286,12 +288,14 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/master-mapping/delete/" + data.fc_mappingcode;
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
+            var fc_coacode = window.btoa(data.fc_coacode);
+            var url_delete = "/apps/master-mapping/delete/debit/" + fc_coacode;
+           
 
             $('td:eq(3)', row).html(`
                     <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_mappingname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -321,10 +325,10 @@
                 orderable: false
             },
             {
-                data: 'fc_mappingcode'
+                data: 'fc_coacode'
             },
             {
-                data: 'fc_mappingname'
+                data: 'mst_coa.fc_coaname'
             },
             {
                 data: null
@@ -332,12 +336,12 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/master-mapping/delete/" + data.fc_mappingcode;
+            var url_delete = "/apps/master-mapping/delete/kredit/" + data.fc_mappingcode;
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
 
             $('td:eq(3)', row).html(`
                     <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_mappingname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -398,6 +402,43 @@
         },
     });
 
+    function select_coa_debit(fc_coacode){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/master-mapping/create/insert-debit',
+            type: 'POST',
+            data: {
+                fc_coacode: fc_coacode,
+                fc_mappingcode: mappingcode,
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb_coa_debit.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+
+
     var tb_coa_kredit = $('#tb_coa_kredit').DataTable({
         processing: true,
         serverSide: true,
@@ -453,6 +494,41 @@
                 `);
         },
     });
+
+    function select_coa_kredit(fc_coacode){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/master-mapping/create/insert-kredit',
+            type: 'POST',
+            data: {
+                fc_coacode: fc_coacode,
+                fc_mappingcode: mappingcode,
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function click_cancel(mappingcode) {
         swal({

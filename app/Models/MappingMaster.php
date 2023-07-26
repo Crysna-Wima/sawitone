@@ -20,5 +20,7 @@ class MappingMaster extends Model
     protected $primaryKey = 'fc_mappingcode';
     public $incrementing = false;
     protected $guarded = ['type'];
+    
+
 
 }

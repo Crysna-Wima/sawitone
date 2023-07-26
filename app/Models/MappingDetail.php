@@ -18,5 +18,9 @@ class MappingDetail extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
- 
+    // master_coa
+    public function mst_coa()
+    {
+        return $this->belongsTo(MasterCoa::class, 'fc_coacode', 'fc_coacode');
+    }
 }

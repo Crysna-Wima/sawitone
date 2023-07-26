@@ -613,7 +613,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update','Apps\MasterMappingController@store_update');
             Route::delete('/cancel/{fc_mappingcode}', 'Apps\MasterMappingController@cancel');
 
+            Route::prefix('delete')->group(function () {
+                Route::delete('/debit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_debit');
+            });
+
             Route::prefix('create')->group(function () {
+                Route::post('/insert-debit', 'Apps\MasterMappingCreateController@insert_debit');
+                Route::post('/insert-kredit', 'Apps\MasterMappingCreateController@insert_kredit');
                 Route::get('/{fc_mappingcode}', 'Apps\MasterMappingCreateController@create');
                 Route::get('/datatables-debit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_debit');
                 Route::get('/datatables-kredit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_kredit');

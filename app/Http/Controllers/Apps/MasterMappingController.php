@@ -19,6 +19,19 @@ class MasterMappingController extends Controller
 
     public function index()
     {
+        $mapping_mst = MappingMaster::where('created_by', auth()->user()->fc_userid)
+        ->where('fc_status', 'I')
+        ->where('fc_branch', auth()->user()->fc_branch)->first();
+        $cek_exist = MappingMaster::where('created_by', auth()->user()->fc_userid)
+                                    ->where('fc_status', 'I')
+                                    ->where('fc_branch', auth()->user()->fc_branch)->count();
+        if($cek_exist > 0){
+            $fc_mappingcode = $mapping_mst->fc_mappingcode;
+            $data['data'] = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $fc_mappingcode)->first();
+
+            return view('apps.master-mapping.create', $data);
+        }
+
         return view('apps.master-mapping.index');
     }
 

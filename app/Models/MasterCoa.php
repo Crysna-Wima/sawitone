@@ -31,4 +31,10 @@ class MasterCoa extends Model
     public function children(){
         return $this->hasMany(MasterCoa::class, 'fc_parentcode', 'fc_coacode')->withTrashed();
     }
+
+    // mappingdtl
+    public function mappingdtl_coa()
+    {
+        return $this->hasMany(MappingDetail::class, 'fc_coacode', 'fc_coacode');
+    }
 }
