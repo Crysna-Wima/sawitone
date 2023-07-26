@@ -24,7 +24,7 @@ class MasterMappingController extends Controller
 
     public function datatables()
     {
-        $data = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingMaster::where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -73,7 +73,7 @@ class MasterMappingController extends Controller
                 'fc_mappingcode' => $request->fc_mappingcode,
                 'fc_mappingname' => $request->fc_mappingname,
                 'fc_status' => 'I',
-                'fv_desription' => $request->fv_desription,
+                'fv_description' => $request->fv_description,
                 'created_by' => auth()->user()->fc_userid,
             ]);
 
@@ -81,7 +81,7 @@ class MasterMappingController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/master-mapping/create'
+                    'link' => '/apps/master-mapping/create/' . base64_encode( $request->fc_mappingcode)
                 ];
             } else {
                 return [
@@ -95,5 +95,35 @@ class MasterMappingController extends Controller
                 'message' => 'Data sudah ada'
             ];
         }
+    }
+
+    public function cancel($fc_mappingcode){
+        $encoded_fc_mappingcode = base64_decode($fc_mappingcode);
+        DB::beginTransaction();
+
+		try{
+            MappingDetail::where('fc_mappingcode', $encoded_fc_mappingcode)->delete();
+            MappingMaster::where('fc_mappingcode', $encoded_fc_mappingcode)->delete();
+            
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/master-mapping',
+				'message' => 'Data berhasil dihapus'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
     }
 }
