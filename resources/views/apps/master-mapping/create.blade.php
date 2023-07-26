@@ -295,7 +295,7 @@
 
             $('td:eq(3)', row).html(`
                     <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -336,12 +336,14 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/master-mapping/delete/kredit/" + data.fc_mappingcode;
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
+            var fc_coacode = window.btoa(data.fc_coacode);
+            var url_delete = "/apps/master-mapping/delete/kredit/" + fc_coacode;
+           
 
             $('td:eq(3)', row).html(`
                     <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -397,7 +399,7 @@
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
 
             $('td:eq(6)', row).html(`
-                    <button class="btn btn-warning btn-sm mr-1" onclick="select_coa_debit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_coa_debit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
                 `);
         },
     });
@@ -413,11 +415,12 @@
             },
             success: function(response) {
                 if (response.status == 200) {
-                    swal(response.message, {
-                        icon: 'success',
-                    });
+                    // swal(response.message, {
+                    //     icon: 'success',
+                    // });
                     $("#modal_loading").modal('hide');
-                    tb_coa_debit.ajax.reload();
+                        $('#modal_debit').modal('hide');
+                    tb_debit.ajax.reload();
                 } else {
                     swal(response.message, {
                         icon: 'error',
@@ -490,7 +493,7 @@
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
 
             $('td:eq(6)', row).html(`
-                    <button class="btn btn-warning btn-sm mr-1" onclick="select_coa_kredit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_coa_kredit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
                 `);
         },
     });
@@ -506,11 +509,12 @@
             },
             success: function(response) {
                 if (response.status == 200) {
-                    swal(response.message, {
-                        icon: 'success',
-                    });
+                    // swal(response.message, {
+                    //     icon: 'success',
+                    // });
                     $("#modal_loading").modal('hide');
-                    tb.ajax.reload();
+                    $('#modal_kredit').modal('hide');
+                    tb_kredit.ajax.reload();
                 } else {
                     swal(response.message, {
                         icon: 'error',

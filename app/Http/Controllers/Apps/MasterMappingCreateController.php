@@ -69,33 +69,35 @@ class MasterMappingCreateController extends Controller
         ->where('fc_mappingpos', "D")
         ->where('fc_branch', auth()->user()->fc_branch)->count();
 
-        if($count_coa > 1){
+        if($count_coa > 0){
             return [
                 'status' => 300,
                 'message' => 'Kode COA sudah ada'
             ];
+        }else{
+            $data = MappingDetail::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_mappingcode' => $request->fc_mappingcode,
+                'fc_coacode' => $request->fc_coacode,
+                'fc_mappingpos' => "D",
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($data){
+                return [
+                    'status' => 200,
+                    'message' => 'Debit berhasil diinsert',
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Debit gagal diinsert',
+                ];
+            } 
         }
 
-        $data = MappingDetail::create([
-            'fc_divisioncode' => auth()->user()->fc_divisioncode,
-            'fc_branch' => auth()->user()->fc_branch,
-            'fc_mappingcode' => $request->fc_mappingcode,
-            'fc_coacode' => $request->fc_coacode,
-            'fc_mappingpos' => "D",
-            'fc_created_by' => auth()->user()->fc_userid
-        ]);
-
-        if($data){
-            return [
-                'status' => 200,
-                'message' => 'Debit berhasil diinsert',
-            ];
-        }else{
-            return [
-                'status' => 300,
-                'message' => 'Debit gagal diinsert',
-            ];
-        } 
+        
     }
 
     public function insert_kredit(Request $request){
@@ -108,26 +110,40 @@ class MasterMappingCreateController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-        $data = MappingDetail::create([
-            'fc_divisioncode' => auth()->user()->fc_divisioncode,
-            'fc_branch' => auth()->user()->fc_branch,
-            'fc_mappingcode' => $request->fc_mappingcode,
-            'fc_coacode' => $request->fc_coacode,
-            'fc_mappingpos' => "C",
-            'fc_created_by' => auth()->user()->fc_userid
-        ]);
+        $count_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+        ->where('fc_coacode', $request->fc_coacode)
+        ->where('fc_mappingpos', "C")
+        ->where('fc_branch', auth()->user()->fc_branch)->count();
 
-        if($data){
-            return [
-                'status' => 200,
-                'message' => 'Kredit berhasil diinsert',
-            ];
-        }else{
+        if($count_coa > 0){
             return [
                 'status' => 300,
-                'message' => 'Kredit gagal diinsert',
+                'message' => 'Kode COA sudah ada'
             ];
-        } 
+        }else{
+            $data = MappingDetail::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_mappingcode' => $request->fc_mappingcode,
+                'fc_coacode' => $request->fc_coacode,
+                'fc_mappingpos' => "C",
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($data){
+                return [
+                    'status' => 200,
+                    'message' => 'Kredit berhasil diinsert',
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Kredit gagal diinsert',
+                ];
+            } 
+        }
+
+       
     }
 
     public function delete_debit($fc_coacode){

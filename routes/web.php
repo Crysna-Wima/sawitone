@@ -615,6 +615,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::prefix('delete')->group(function () {
                 Route::delete('/debit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_debit');
+                Route::delete('/kredit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_kredit');
             });
 
             Route::prefix('create')->group(function () {

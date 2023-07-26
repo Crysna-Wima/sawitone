@@ -614,9 +614,13 @@
                      //  tb.ajax.reload(null, false);
                      //  console.log(response.status);
                       if(response.status == 200){
+                        console.log(tb_debit);
                          swal(response.message, {  icon: 'success', });
                          $("#modal").modal('hide');
-                         tb.ajax.reload(null, false);
+                         if (typeof tb !== 'undefined') {
+                           tb.ajax.reload(null, false);
+                         }
+                         
                          if (typeof tb_so !== 'undefined') {
                            tb_so.ajax.reload(null, false); 
                          }
@@ -626,6 +630,14 @@
                          if(typeof tb_lain !== 'undefined'){
                            tb_lain.ajax.reload(null,false);
                          }
+
+                         if(typeof tb_debit !== 'undefined'){
+                           tb_debit.ajax.reload(null,false);
+                         }
+
+                           if(typeof tb_kredit !== 'undefined'){
+                              tb_kredit.ajax.reload(null,false);
+                           }
                         //  location.href = location.href;
                       }else if(response.status == 201){
                         swal(response.message, {  icon: 'success', });
