@@ -318,10 +318,10 @@
                 data: 'fc_mappingname'
             },
             {
-                data: null
+                data: 'sum_debit'
             },
             {
-                data: null
+                data: 'sum_credit'
             },
             {
                 data: 'fv_description'
