@@ -76,25 +76,25 @@
                 orderable: false
             },
             {
-                data: 'fc_mappingcode'
+                data: 'fc_trxno'
             },
             {
-                data: 'fc_mappingname'
+                data: 'mapping.fc_mappingname'
             },
             {
-                data: 'sum_debit'
+                data: 'fd_trxdate_byuser'
             },
             {
-                data: 'sum_credit'
+                data: 'fc_userid'
             },
             {
-                data: 'fv_description'
+                data: 'fc_docreference'
             },
             {
-                data: 'fv_description'
+                data: 'fm_balance'
             },
             {
-                data: 'fv_description'
+                data: 'transaksitype.fv_description'
             },
             {
                 data: null,

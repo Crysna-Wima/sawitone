@@ -17,9 +17,6 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Informasi Umum</h4>
-                    <div class="card-header-action">
-                        <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
-                    </div>
                 </div>
                 <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
                 <form id="form_submit" action="/apps/transaksi/store-update" method="POST" autocomplete="off">
@@ -66,7 +63,7 @@
                                     <div class="form-group">
                                         <label>Nama mapping</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="fc_mappingname" name="fc_mappingname">
+                                            <input type="text" class="form-control" id="fc_mappingname" name="fc_mappingname" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +211,7 @@
 
     function get_data_jurnal(){
         $.ajax({
-            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JURNALTYPE",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JOURNALTYPE",
             type: "GET",
             dataType: "JSON",
             success: function(response){
