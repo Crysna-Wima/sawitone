@@ -111,8 +111,8 @@ class MasterCoaController extends Controller
                     'deleted_at' => null
                 ])->first();
     
-                if ($parentRecord && $parentRecord->fc_rootstatus == 'F') {
-                    $parentRecord->update(['fc_rootstatus' => 'T']);
+                if ($parentRecord && $parentRecord->fc_rootstatus == 'T') {
+                    $parentRecord->update(['fc_rootstatus' => 'F']);
                 }
     
 
