@@ -15,7 +15,7 @@ class SalesOrderExport implements FromView, ShouldAutoSize
     use Exportable;
     private $masterSoPending;
     public function __construct(){
-        $this->masterSoPending = SoMaster::with('domst','customer')->where('fc_sostatus', 'P')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $this->masterSoPending = SoMaster::with('domst','customer')->where('fc_sotype', 'Retail')->where('fc_sostatus', 'P')->where('fc_branch', auth()->user()->fc_branch)->get();
     }
 
     public function view(): ViewView{

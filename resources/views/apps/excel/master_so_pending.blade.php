@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Master Sales Order Pending</title>
+    <title>Daftar Sales Order Pending</title>
 </head>
+
 <body>
-    <h1>Master Sales Order Pending</h1>
     <table>
         <thead>
             <tr>
-                <th scope="col" class="text-center">No</th>
-                <th scope="col" class="text-center">No. SO</th>
-                <th scope="col" class="text-center">Tanggal</th>
-                <th scope="col" class="text-center">Expired</th>
-                <th scope="col" class="text-center">Tipe</th>
-                <th scope="col" class="text-center">Customer</th>
-                <th scope="col" class="text-center">Item</th>
-                <th scope="col" class="text-center">Status</th>
-                <th scope="col" class="text-center">Total</th>
+                <th style="text-align: center; font-weight: bold">No</th>
+                <th style="text-align: center; font-weight: bold">No. SO</th>
+                <th style="text-align: center; font-weight: bold">Tanggal</th>
+                <th style="text-align: center; font-weight: bold">Expired</th>
+                <th style="text-align: center; font-weight: bold">Tipe</th>
+                <th style="text-align: center; font-weight: bold">Operator</th>
+                <th style="text-align: center; font-weight: bold">Customer</th>
+                <th style="text-align: center; font-weight: bold">Item</th>
+                <th style="text-align: center; font-weight: bold">Total</th>
             </tr>
         </thead>
         <tbody>
@@ -32,10 +32,10 @@
                     <td>{{ $data->fd_sodatesysinput }}</td>
                     <td>{{ $data->fd_soexpired }}</td>
                     <td>{{ $data->fc_sotype }}</td>
+                    <td>{{ $data->fc_userid }}</td>
                     <td>{{ $data->customer->fc_membername1 }}</td>
                     <td>{{ $data->fn_sodetail }}</td>
-                    <td>{{ $data->fc_sostatus }}</td>
-                    <td>{{ $data->fm_brutto }}</td>
+                    <td>Rp. {{ number_format($data->fm_brutto,0,',','.')}}</td>
                 </tr>
             @endforeach
         </tbody>
