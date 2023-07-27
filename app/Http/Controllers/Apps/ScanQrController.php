@@ -29,7 +29,9 @@ class ScanQrController extends Controller
     }
 
     public function detail_barang($fc_barcode){
-        $data = Invstore::with('stock','warehouse')->where('fc_barcode', $fc_barcode)->first();
+        // decode fc_barcode
+        $decode_fc_barcode = base64_decode($fc_barcode);
+        $data = Invstore::with('stock','warehouse')->where('fc_barcode', $decode_fc_barcode)->first();
 
         // return json status 200 jika berhasil jika gagal 300
         if ($data) {
