@@ -15,7 +15,21 @@ class MasterCoaController extends Controller
 {
     public function index()
     {
-        return view('data-master.master-coa.index');
+        $deepestLayer = MasterCoa::select('fn_layer')->orderBy('fn_layer','DESC')->first();
+        
+        $stringRelasi = 'children';
+        for($i = 1; $i <  $deepestLayer->fn_layer; $i++){
+            $stringRelasi .= '.children';
+        }
+
+        $coacode = MasterCoa::with('parent', $stringRelasi)
+        ->where([
+            'fn_layer' =>  0,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+        ])->get();
+        
+        return view('data-master.master-coa.index', $coacode);
     }
 
     public function detail($fc_coacode)
@@ -111,8 +125,8 @@ class MasterCoaController extends Controller
                     'deleted_at' => null
                 ])->first();
     
-                if ($parentRecord && $parentRecord->fc_rootstatus == 'F') {
-                    $parentRecord->update(['fc_rootstatus' => 'T']);
+                if ($parentRecord && $parentRecord->fc_rootstatus == 'T') {
+                    $parentRecord->update(['fc_rootstatus' => 'F']);
                 }
     
 
