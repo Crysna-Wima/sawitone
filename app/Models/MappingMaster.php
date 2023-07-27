@@ -21,6 +21,8 @@ class MappingMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
     
-
+    public function trxaccountingmst(){
+        return $this->belongsTo(TrxAccountingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
+    }
 
 }

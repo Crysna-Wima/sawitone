@@ -27,4 +27,8 @@ class TransaksiType extends Model
         
     }
 
+    public function trxaccountingmst(){
+        return $this->belongsTo(TrxAccountingMaster::class,'fc_kode','fc_informtrx');
+    }
+
 }

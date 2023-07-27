@@ -608,6 +608,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\TransaksiController@index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/select-mapping/{fc_mappingcode}', 'Apps\TransaksiController@select_mapping');
+            Route::get('/datatables', 'Apps\TransaksiController@datatables');
         });
 
         Route::prefix('master-mapping')->group(function () {
