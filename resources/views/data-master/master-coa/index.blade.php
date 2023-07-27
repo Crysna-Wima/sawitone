@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title','Master COA')
+@section('title','Chart Of Account')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -26,30 +26,55 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Master COA</h4>
+                    <h4>Data COA</h4>
                     <div class="card-header-action">
                         <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Data COA</button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb" width="100%">
-                            <thead style="white-space: nowrap">
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Divisi</th>
-                                    <th scope="col" class="text-center">Cabang</th>
-                                    <th scope="col" class="text-center">Kode COA</th>
-                                    <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Layer</th>
-                                    <th scope="col" class="text-center">Direct Payment</th>
-                                    <th scope="col" class="text-center">Nama Induk</th>
-                                    <th scope="col" class="text-center">Balance</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
-                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <div id="accordion1">
+                        <div class="accordion">
+                            <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="false">
+                                <h4>1000 [KAS BESAR]</h4>
+                                <h4>Rp. 0</h4>
+                            </div>
+                            <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion1">
+                                <p>Deskripsi 1</p>
+                                <div id="accordion1-1">
+                                    <div class="accordion">
+                                        <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-1-1" aria-expanded="false">
+                                            <h4>10001 [KAS SEDANG]</h4>
+                                            <h4>Rp. 0</h4>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-1-1" data-parent="#accordion1-1">
+                                            <p>Sub Deskripsi 1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="accordion2">
+                        <div class="accordion">
+                            <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-2" aria-expanded="false">
+                                <h4>20001 [HUTANG]</h4>
+                                <h4>Rp. 0</h4>
+                            </div>
+                            <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion2">
+                                <p>Deskripsi 2</p>
+                                <div id="accordion2-2">
+                                    <div class="accordion">
+                                        <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-2-2" aria-expanded="false">
+                                            <h4>200001 [HUTANG BANK - BNI]</h4>
+                                            <h4>Rp. 0</h4>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-2-2" data-parent="#accordion2-2">
+                                            <p>Sub Deskripsi 2</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
