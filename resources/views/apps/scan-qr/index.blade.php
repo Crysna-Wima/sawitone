@@ -318,14 +318,15 @@
 
         function table_detail_barang() {
             var fc_barcode = $('#result').val();
-            var url = "/apps/penggunaan-cprr/detail-barang/" + fc_barcode;
+            var fc_barcode_encode = window.btoa(fc_barcode);
+            var url = "/apps/scan-qr/detail-barang/" + fc_barcode_encode;
 
             $.ajax({
                 url: url,
                 type: "GET",
                 beforeSend: function() {
                     // Show the loading modal
-                    $('#modal_loading').modal('show');
+                        $('#modal_loading').modal('show');
                 },
                 success: function(response) {
                     // Close the loading modal
@@ -344,7 +345,9 @@
                         $('#fd_expired').val(response.data.fd_expired);
 
                         // Show the modal_barcode modal
-                        $('#modal_barcode').modal('show');
+                        setTimeout(function(){
+                            $('#modal_barcode').modal('show');
+                        }, 600);
                     } else {
                         $('#modal_loading').modal('hide');
                         swal(response.message, {
