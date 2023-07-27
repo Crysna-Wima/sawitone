@@ -9,38 +9,43 @@ use App\Models\MasterCoa;
 use Illuminate\Http\Request;
 use Validator;
 use DataTables;
+use DB;
 
 class MasterCoaController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('data-master.master-coa.index');
     }
 
-    public function detail($fc_coacode){
+    public function detail($fc_coacode)
+    {
         $coacode = base64_decode($fc_coacode);
 
         $data = MasterCoa::with('parent')
-        ->where([
-            'fc_coacode' =>  $coacode,
-            'fc_divisioncode' => auth()->user()->fc_divisioncode,
-            'fc_branch' => auth()->user()->fc_branch,
-        ])
-        ->first();
+            ->where([
+                'fc_coacode' =>  $coacode,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->first();
 
         return ApiFormatter::getResponse($data);
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $data = MasterCoa::with('branch', 'parent')->where([
             'fc_branch' => auth()->user()->fc_branch,
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
         ])->get();
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function getParent($layer){
+    public function getParent($layer)
+    {
         $fn_layer = base64_decode($layer);
 
         $data = MasterCoa::where([
@@ -48,12 +53,12 @@ class MasterCoaController extends Controller
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fn_layer' => $fn_layer - 1,
         ])
-        ->get();
-        
-        if(empty($data)){
+            ->get();
+
+        if (empty($data)) {
             return [
                 'status' => 200,
-                'data'=> ['INDUK COA']
+                'data' => ['INDUK COA']
             ];
         }
 
@@ -68,7 +73,7 @@ class MasterCoaController extends Controller
             'fc_coaname' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first(),
@@ -77,71 +82,83 @@ class MasterCoaController extends Controller
         // dd($request);
         $request->request->add(['fc_branch' => auth()->user()->fc_branch, 'fc_divisioncode' => auth()->user()->fc_divisioncode]);
 
-        // jika type form adalah update 
-        if(!empty($request->type) && $request->type == 'update'){
-            $updateRecord = MasterCoa::updateOrCreate([
-                'fc_coacode' => $request->fc_coacode,
-            ], $request->all());
+        DB::beginTransaction();
 
-            if($updateRecord){
-                return [
-                        'status' => 200, // SUCCESS
-                        'message' => 'Data berhasil diupdate'
-                    ];
+        try {
+            if (!empty($request->type) && $request->type == 'update') {
+                $updateRecord = MasterCoa::updateOrCreate([
+                    'fc_coacode' => $request->fc_coacode,
+                ], $request->all());
+
+                if (!$updateRecord) {
+                    throw new \Exception('Oops! Terjadi kesalahan saat mengupdate data');
+                }
             } else {
-                return [
-                    'status' => 300,
-                    'message' => 'Oops! Terjadi kesalahan saat mengupdate data'
-                ];
-            }    
+                $countRecord = MasterCoa::where([
+                    'fc_coacode' => $request->fc_coacode,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_parentcode' => $request->fc_parentcode,
+                    'deleted_at' => null
+                ])->count();
 
-        }else {
-            $countRecord = MasterCoa::where([
-                'fc_coacode' => $request->fc_coacode,
-                'fc_divisioncode' => auth()->user()->fc_divisioncode,
-                'fc_branch' => auth()->user()->fc_branch,
-                'fc_parentcode' => $request->fc_parentcode,
-                'deleted_at' => null
-            ])->count();
+                if ($countRecord > 0) {
+                    throw new \Exception('Mohon maaf, kode COA sudah tersedia');
+                }
 
-            if($countRecord > 0){
-                return [
-                    'status' => 300,
-                    'message' => "Mohon maaf, kode COA sudah tersedia",
-                ];
+                $parentRecord = MasterCoa::where([
+                    'fc_coacode' => $request->fc_parentcode,
+                    'deleted_at' => null
+                ])->first();
+    
+                if ($parentRecord && $parentRecord->fc_rootstatus == 'F') {
+                    $parentRecord->update(['fc_rootstatus' => 'T']);
+                }
+    
+
+                $insertRecord = MasterCoa::create([
+                    'fc_divisioncode' => $request->fc_divisioncode,
+                    'fc_branch' => $request->fc_branch,
+                    'fc_coacode' => $request->fc_coacode,
+                    'fn_layer' => $request->fn_layer,
+                    'fc_directpayment' => $request->fc_directpayment,
+                    'fc_parentcode' => $request->fc_parentcode,
+                    'fc_coaname' => $request->fc_coaname,
+                    'fv_description' => $request->fv_description,
+                ], $request->all());
+
+                if (!$insertRecord) {
+                    throw new \Exception('Oops! Terjadi kesalahan saat menambahkan data');
+                }
             }
 
-            $insertRecord = MasterCoa::create([
-                'fc_divisioncode' => $request->fc_divisioncode,
-                'fc_branch' => $request->fc_branch,
-                'fc_coacode' => $request->fc_coacode,
-                'fn_layer' => $request->fn_layer,
-                'fc_directpayment' => $request->fc_directpayment,
-                'fc_parentcode' => $request->fc_parentcode,
-                'fc_coaname' => $request->fc_coaname,
-                'fv_description' => $request->fv_description,
-            ], $request->all());
+            // Commit transaksi apabila sukses
+            DB::commit();
 
-            if($insertRecord){
-                return [
-                    'status' => 200,
-                    'message' => "Data COA berhasil ditambahkan",
-                ];
-            } else {
-                return [
-                    'status' => 300,
-                    'message' => 'Oops! Terjadi kesalahan saat menambahkan data',
-                ];
-            }
+            // Return success response
+            return [
+                'status' => 200,
+                'message' => (!empty($request->type) && $request->type == 'update') ? 'Data berhasil diupdate' : 'Data COA berhasil ditambahkan',
+            ];
+        } catch (\Exception $e) {
+            // Rollback apabila terjadi error
+            DB::rollback();
+
+            // Return error response
+            return [
+                'status' => 300,
+                'message' => $e->getMessage(),
+            ];
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $idDecode = base64_decode($id);
 
         $deleteRecord = MasterCoa::where('id', $idDecode)->delete();
 
-        if($deleteRecord){
+        if ($deleteRecord) {
             return [
                 'status' => 200,
                 'link' => '/apps/master-coa',
@@ -153,6 +170,5 @@ class MasterCoaController extends Controller
                 'message' => "Ooops!! Data Gagal Dihapus ...",
             ];
         }
-
     }
 }
