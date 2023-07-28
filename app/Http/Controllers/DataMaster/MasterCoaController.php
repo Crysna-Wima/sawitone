@@ -55,7 +55,7 @@ class MasterCoaController extends Controller
             $html .= '<button type="button" class="btn btn-sm btn-success" onclick="add_child(' . $item->fn_layer + 1 .', \'' . $item->fc_coacode . '\', \'' . $item->fc_coaname . '\');"><i class="fa fa-plus"></i> Tambah Child COA</button>';
             $html .= '</div>';
             $html .= '</div>';
-    
+            
             // apabila terdapat children
             if ($subItems->count() > 0) {
                 $html .= '<div id="accordion' . ($level + 1) . '">';
