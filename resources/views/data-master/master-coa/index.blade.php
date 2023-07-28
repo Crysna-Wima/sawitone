@@ -182,7 +182,8 @@
             text: fc_coaname
         });
         $('#fc_parentcode').val(fc_coaname);
-        $('#fc_parentcode').append(coaIndukOption)
+        $('#fc_parentcode').append(coaIndukOption);
+        $('#fc_coacode').prop('readonly', false);
         $('#fc_coaname').prop('readonly', false);
         $('#fn_layer').prop('readonly', true);
     }
@@ -240,6 +241,8 @@
                 if (response.status == 200) {
                     var value = data.fc_directpayment;
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
+                    var value2 = data. fc_balancestatus;
+                    $("input[name= fc_balancestatus][value=" + value2 + "]").prop('checked', true);
                     $('#fc_coacode').val(data.fc_coacode);
                     $('#fc_coacode').prop('readonly', true);
                     $('#fc_coaname').val(data.fc_coaname);
@@ -256,9 +259,8 @@
                         $('#fc_parentcode').prop('disabled', true);
                         $('#fc_parentcode_hidden').val(data.parent.fc_coacode);
                     }
-
+                    $('#fc_group').append(`<option value="${data.fc_group}" selected>${data.transaksitype.fv_description}</option>`);
                     $('#fv_description').val(data.fv_description);
-
                 } else {
                     iziToast.error({
                         title: 'Error!',
