@@ -52,7 +52,7 @@
                                     <div class="form-group required">
                                         <label>Kode mapping</label>
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="fc_mappingcode" name="fc_mappingcode" readonly>
+                                            <input type="text" class="form-control required-field" id="fc_mappingcode" name="fc_mappingcode" readonly>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" onclick="click_modal_mapping()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
@@ -70,11 +70,11 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="form-group required">
                                         <label>Tipe Jurnal</label>
-                                        <select class="form-control select2" name="fc_informtrx" id="fc_informtrx"></select>
+                                        <select class="form-control select2" name="fc_informtrx" id="fc_informtrx" required></select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3">
-                                    <div class="form-group">
+                                <div class="col-12 col-md-6 col-lg-3" id="doc-ref" hidden>
+                                    <div class="form-group required">
                                         <label>Dokumen Referensi</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="fc_docreference" name="fc_docreference">
@@ -139,6 +139,20 @@
         changeYear: true,
     });
 
+    $("#fc_informtrx").change(function() {
+        var data = $(this).val()
+        console.log(data);
+        if (data == 'LREF') {
+            $('input[id="fc_docreference"]').val("");
+            $('#doc-ref').attr('hidden', false);
+            $('#fc_docreference').attr('required', true);
+        } else {
+            $('input[id="fc_docreference"]').val("");
+            $('#doc-ref').attr('hidden', true);
+            $('#fc_docreference').attr('required', false);
+        }
+    });
+
     $(document).ready(function() {
         get_data_branch();
         get_data_jurnal();
@@ -148,23 +162,26 @@
         $('#modal_mapping').modal('show');
     }
 
-    
-    function select_mapping(fc_mappingcode){
+
+    function select_mapping(fc_mappingcode) {
         // encode
         var mappingcode = window.btoa(fc_mappingcode);
         $.ajax({
-            url : "/apps/transaksi/select-mapping/" + mappingcode,
+            url: "/apps/transaksi/select-mapping/" + mappingcode,
             type: "GET",
             dataType: "JSON",
-            success: function(response){
+            success: function(response) {
                 $("#modal_do").modal('hide');
                 var data = response.data;
 
                 $('#fc_mappingcode').val(data.fc_mappingcode);
                 $('#fc_mappingname').val(data.fc_mappingname);
 
-            },error: function (jqXHR, textStatus, errorThrown){
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
@@ -209,28 +226,31 @@
         });
     }
 
-    function get_data_jurnal(){
+    function get_data_jurnal() {
         $.ajax({
             url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JOURNALTYPE",
             type: "GET",
             dataType: "JSON",
-            success: function(response){
-                if(response.status === 200){
+            success: function(response) {
+                if (response.status === 200) {
                     var data = response.data;
                     $("#fc_informtrx").empty();
                     $("#fc_informtrx").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_informtrx").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
-                }else{
+                } else {
                     iziToast.error({
                         title: 'Error!',
                         message: response.message,
                         position: 'topRight'
                     });
                 }
-            },error: function (jqXHR, textStatus, errorThrown){
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {  icon: 'error', });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
             }
         });
     }
