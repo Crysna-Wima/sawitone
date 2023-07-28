@@ -48,7 +48,13 @@ class MasterCoaController extends Controller
             $html .= '<h4>Rp. ' . $item->fm_balance . '</h4>';
             $html .= '</div>';
             $html .= '<div class="accordion-body collapse" id="panel-body-' . $item->fc_coacode . '" data-parent="#accordion' . $level . '">';
+            $html .= '<div class="d-flex justify-content-between mb-2">';
             $html .= '<p>' . $item->fv_description . '</p>';
+            $html .= '<div class="d-flex justify-content-between mb-2">';
+            $html .= '<button type="button" class="btn btn-sm btn-warning mr-2" onclick="edit();"><i class="fas fa-edit"></i> Edit</button>';
+            $html .= '<button type="button" class="btn btn-sm btn-success" onclick="add_child();"><i class="fa fa-plus"></i> Tambah Child COA</button>';
+            $html .= '</div>';
+            $html .= '</div>';
     
             // apabila terdapat children
             if ($subItems->count() > 0) {
@@ -168,6 +174,8 @@ class MasterCoaController extends Controller
                     'fc_coacode' => $request->fc_coacode,
                     'fn_layer' => $request->fn_layer,
                     'fc_directpayment' => $request->fc_directpayment,
+                    'fc_group' => $request->fc_group,
+                    'fc_balancestatus' => $request->fc_balancestatus,
                     'fc_parentcode' => $request->fc_parentcode,
                     'fc_coaname' => $request->fc_coaname,
                     'fv_description' => $request->fv_description,
@@ -185,6 +193,7 @@ class MasterCoaController extends Controller
             return [
                 'status' => 200,
                 'message' => (!empty($request->type) && $request->type == 'update') ? 'Data berhasil diupdate' : 'Data COA berhasil ditambahkan',
+                'link' => '/apps/master-coa'
             ];
         } catch (\Exception $e) {
             // Rollback apabila terjadi error

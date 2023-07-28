@@ -65,58 +65,78 @@
                                 <input type="text" class="form-control" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Cabang</label>
                                 <select type="text" class="form-control" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-9">
-                            <div class="form-group required">
-                                <label>Kode COA</label>
-                                <input type="text" class="form-control required-field" name="fc_coacode" id="fc_coacode">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-12">
-                            <div class="form-group required">
-                                <label>Nama COA</label>
-                                <input type="text" class="form-control required-field" name="fc_coaname" id="fc_coaname">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Layer</label>
                                 <input type="number" min="0" class="form-control required-field" onchange="get_parent()" name="fn_layer" id="fn_layer">
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required-select">
-                                <label id="label-select">Direct Payment</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" value="T" class="selectgroup-input">
-                                        <span class="selectgroup-button">YA</span>
-                                    </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" value="F" class="selectgroup-input" checked="">
-                                        <span class="selectgroup-button">TIDAK</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>COA Induk</label>
                                 <select name="fc_parentcode" id="fc_parentcode" class="select2 required-field"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Deskripsi</label>
-                                <textarea name="fv_description" id="fv_description" style="height: 50px" class="form-control"></textarea>
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <div class="form-group required">
+                                <label>Kode COA</label>
+                                <input type="text" class="form-control required-field" name="fc_coacode" id="fc_coacode">
                             </div>
                         </div>
-
+                        <div class="col-12 col-md-6 col-lg-9">
+                            <div class="form-group required">
+                                <label>Nama COA</label>
+                                <input type="text" class="form-control required-field" name="fc_coaname" id="fc_coaname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required-select">
+                                <label id="label-select">Direct Payment</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input">
+                                        <span class="selectgroup-button">YA</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button">TIDAK</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required-select">
+                                <label id="label-select">Status Neraca</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input">
+                                        <span class="selectgroup-button">KREDIT</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button">DEBIT</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required">
+                                <label>Group</label>
+                                <select name="fc_group" id="fc_group" class="select2 required-field"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group">
+                                <label>Catatan</label>
+                                <input type="text" class="form-control" name="fv_description" id="fv_description">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -126,13 +146,13 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('js')
 <script>
     $(document).ready(function() {
         get_data_branch();
+        get_data_grup()
     })
 
     function add() {
@@ -142,8 +162,22 @@
         $('#fc_parentcode').empty();
         $('#fc_parentcode_hidden').empty();
         $('#fc_coacode').prop('readonly', false);
+        $('#fn_layer').prop('readonly', true);
+        $('#fn_layer').val(0);
+        $('#fc_parentcode').append(`<option value="0" selected>COA INDUK</option>`)
+        $('#fc_parentcode').prop('disabled', true);
+        $('#fc_parentcode').val(0);
+        $('#fc_parentcode_hidden').val(0);
+    }
+
+    function add_child() {
+        $("#modal").modal('show');
+        $(".modal-title").text('Tambah Data Child COA');
+        $("#form_submit")[0].reset();
+        $('#fc_parentcode').empty();
+        $('#fc_parentcode_hidden').empty();
+        $('#fc_coacode').prop('readonly', false);
         $('#fn_layer').prop('readonly', false);
-        $('#fc_parentcode').prop('disabled', false);
     }
 
     function edit(fc_coacode) {
@@ -151,6 +185,35 @@
         $(".modal-title").text('Update Data COA');
         $("#type").val('update');
         get_detail(fc_coacode);
+    }
+
+    function get_data_grup() {
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JOURNALGRP",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_group").empty();
+                    $("#fc_group").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_group").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     }
 
     function get_detail(fc_coacode) {
@@ -227,6 +290,7 @@
                     if ($('#fn_layer').val() == 0) {
                         $('#fc_parentcode').append(`<option value="0" selected>COA INDUK</option>`);
                         $('#fc_parentcode').prop('disabled', true);
+                        $('#fc_parentcode').val(0);
                         $('#fc_parentcode_hidden').val(0);
                     } else {
                         $("#fc_parentcode").append(`<option selected disabled>- Pilih -</option>`);
