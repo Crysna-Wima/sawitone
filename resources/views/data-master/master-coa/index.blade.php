@@ -170,14 +170,21 @@
         $('#fc_parentcode_hidden').val(0);
     }
 
-    function add_child() {
+    function add_child(fn_layer,fc_coacode,fc_coaname) {
         $("#modal").modal('show');
         $(".modal-title").text('Tambah Data Child COA');
         $("#form_submit")[0].reset();
         $('#fc_parentcode').empty();
         $('#fc_parentcode_hidden').empty();
-        $('#fc_coacode').prop('readonly', false);
-        $('#fn_layer').prop('readonly', false);
+        $('#fn_layer').val(fn_layer);
+        const coaIndukOption = $('<option>', {
+            value: fc_coacode,
+            text: fc_coaname
+        });
+        $('#fc_parentcode').val(fc_coaname);
+        $('#fc_parentcode').append(coaIndukOption)
+        $('#fc_coaname').prop('readonly', false);
+        $('#fn_layer').prop('readonly', true);
     }
 
     function edit(fc_coacode) {
