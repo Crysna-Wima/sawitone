@@ -61,7 +61,6 @@ class MasterCoaController extends Controller
             $html .= '</div>';
             $html .= '</div>';
         }
-    
         return $html;
     }
 
