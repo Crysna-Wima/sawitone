@@ -182,7 +182,8 @@
             text: fc_coaname
         });
         $('#fc_parentcode').val(fc_coaname);
-        $('#fc_parentcode').append(coaIndukOption)
+        $('#fc_parentcode').append(coaIndukOption);
+        $('#fc_coacode').prop('readonly', false);
         $('#fc_coaname').prop('readonly', false);
         $('#fn_layer').prop('readonly', true);
     }
