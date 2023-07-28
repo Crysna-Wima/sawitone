@@ -191,7 +191,7 @@ class MasterCoaController extends Controller
 
             // Return success response
             return [
-                'status' => 200,
+                'status' => 201,
                 'message' => (!empty($request->type) && $request->type == 'update') ? 'Data berhasil diupdate' : 'Data COA berhasil ditambahkan',
                 'link' => '/apps/master-coa'
             ];

@@ -256,7 +256,7 @@
                         $('#fc_parentcode').prop('disabled', true);
                         $('#fc_parentcode_hidden').val(data.parent.fc_coacode);
                     }
-
+                    $('#fc_group').append(`<option value="${data.fc_group}" selected>${data.fc_group}</option>`);
                     $('#fv_description').val(data.fv_description);
 
                 } else {
