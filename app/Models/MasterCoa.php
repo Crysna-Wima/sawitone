@@ -32,6 +32,10 @@ class MasterCoa extends Model
         return $this->hasMany(MasterCoa::class, 'fc_parentcode', 'fc_coacode')->withTrashed();
     }
 
+    public function transaksitype(){
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_group')->withTrashed();
+    }
+
     // mappingdtl
     public function mappingdtl_coa()
     {

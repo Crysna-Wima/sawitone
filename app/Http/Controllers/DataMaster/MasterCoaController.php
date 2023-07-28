@@ -74,7 +74,7 @@ class MasterCoaController extends Controller
     {
         $coacode = base64_decode($fc_coacode);
 
-        $data = MasterCoa::with('parent')
+        $data = MasterCoa::with('parent', 'transaksitype')
             ->where([
                 'fc_coacode' =>  $coacode,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
