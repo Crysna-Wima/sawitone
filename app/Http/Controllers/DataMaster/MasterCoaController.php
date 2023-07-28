@@ -28,8 +28,41 @@ class MasterCoaController extends Controller
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
         ])->get();
+
+        $formattedData = $this->rekurAccordion($coacode);
         
-        return view('data-master.master-coa.index', $coacode);
+        return view('data-master.master-coa.index', ['formattedData' => $formattedData]);
+        // return ApiFormatter::getResponse($coacode);
+    }
+
+    private function rekurAccordion($coaItems, $level = 0){
+        $html = '';
+        // looping sebanyak data
+        foreach ($coaItems as $item) {
+            $subItems = $item->children;
+    
+            // kode html view
+            $html .= '<div class="accordion">';
+            $html .= '<div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-' . $item->fc_coacode . '" aria-expanded="false">';
+            $html .= '<h4>' . $item->fc_coacode . ' [' . $item->fc_coaname . ']</h4>';
+            $html .= '<h4>Rp. ' . $item->fm_balance . '</h4>';
+            $html .= '</div>';
+            $html .= '<div class="accordion-body collapse" id="panel-body-' . $item->fc_coacode . '" data-parent="#accordion' . $level . '">';
+            $html .= '<p>' . $item->fv_description . '</p>';
+    
+            // apabila terdapat children
+            if ($subItems->count() > 0) {
+                $html .= '<div id="accordion' . ($level + 1) . '">';
+                // tampilkan apabila terdapat children dengan rekursif
+                $html .= $this->rekurAccordion($subItems, $level + 1);
+                $html .= '</div>';
+            }
+    
+            $html .= '</div>';
+            $html .= '</div>';
+        }
+    
+        return $html;
     }
 
     public function detail($fc_coacode)

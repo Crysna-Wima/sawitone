@@ -32,8 +32,27 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="accordion0">
-                        {!! $formattedData !!}
+                    <div id="accordion1">
+                        <div class="accordion">
+                            <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="false">
+                                <h4>1000 [KAS BESAR]</h4>
+                                <h4>Rp. 0</h4>
+                            </div>
+                            <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion1">
+                                <p>Deskripsi 1</p>
+                                <div id="accordion2">
+                                    <div class="accordion">
+                                        <div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-1-1" aria-expanded="false">
+                                            <h4>10001 [KAS SEDANG]</h4>
+                                            <h4>Rp. 0</h4>
+                                        </div>
+                                        <div class="accordion-body collapse" id="panel-body-1-1" data-parent="#accordion2">
+                                            <p>Sub Deskripsi 1</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
