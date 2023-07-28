@@ -51,7 +51,7 @@ class MasterCoaController extends Controller
             $html .= '<div class="d-flex justify-content-between mb-2">';
             $html .= '<p>' . $item->fv_description . '</p>';
             $html .= '<div class="d-flex justify-content-between mb-2">';
-            $html .= '<button type="button" class="btn btn-sm btn-warning mr-2" onclick="edit(' . $item->fc_coacode . ');"><i class="fas fa-edit"></i> Edit</button>';
+            $html .= '<button type="button" class="btn btn-sm btn-warning mr-2" onclick="edit(\'' . $item->fc_coacode . '\');"><i class="fas fa-edit"></i> Edit</button>';
             $html .= '<button type="button" class="btn btn-sm btn-success" onclick="add_child(' . $item->fn_layer + 1 .', \'' . $item->fc_coacode . '\', \'' . $item->fc_coaname . '\');"><i class="fa fa-plus"></i> Tambah Child COA</button>';
             $html .= '</div>';
             $html .= '</div>';
