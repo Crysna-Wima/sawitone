@@ -120,7 +120,6 @@
                                     <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Debit</th>
                                     <th scope="col" class="text-center">Kredit</th>
-                                    <th scope="col" class="text-center">Hold</th>
                                     <th scope="col" class="text-center">Tipe</th>
                                     <th scope="col" class="text-center">Transaksi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -248,7 +247,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -271,9 +270,6 @@
                 data: 'sum_credit'
             },
             {
-                data: 'fc_hold'
-            },
-            {
                 data: 'tipe.fv_description'
             },
             {
@@ -286,14 +282,7 @@
 
         rowCallback: function(row, data) {
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
-
-            if (data.fc_hold == 'T') {
-                $('td:eq(5)', row).html(`<span class="badge badge-success">YA</span>`);
-            } else {
-                $('td:eq(5)', row).html(`<span class="badge badge-danger">TIDAK</span>`);
-            }
-
-            $('td:eq(8)', row).html(`
+            $('td:eq(7)', row).html(`
                     <button type="button"class="btn btn-warning btn-sm" onclick="get_detail('${data.fc_mappingcode}')"><i class="fas fa-check"></i> Pilih</button>
                 `);
         },
