@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class TrxAccountingDetail extends Model
+class TempTrxAccountingDetail extends Model
 {
     use HasFactory, Blameable, CompositeKey, LogsActivity;
 

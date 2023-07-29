@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 
-class TrxAccountingMaster extends Model
+class TempTrxAccountingMaster extends Model
 {
     use HasFactory, Blameable, CompositeKey, LogsActivity;
 
@@ -22,4 +22,11 @@ class TrxAccountingMaster extends Model
     protected $guarded = ['type'];
 
     
+    public function transaksitype(){
+        return $this->belongsTo(TransaksiType::class, 'fc_informtrx', 'fc_kode');
+    }
+
+    public function mapping(){
+        return $this->belongsTo(MappingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
+    }
 }
