@@ -443,7 +443,7 @@
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
                     var value2 = data[0].mst_coa.fc_balancestatus;
                     $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
-                    if(data[0].mst_coa.transaksitype == null){
+                    if (data[0].mst_coa.transaksitype == null) {
                         $('#fc_group').append(`<option value="" selected>-</option>`);
                     } else {
                         $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
@@ -483,7 +483,7 @@
                     $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
                     var value2 = data[0].mst_coa.fc_balancestatus;
                     $("input[name=fc_balancestatus_kredit][value=" + value2 + "]").prop('checked', true);
-                    if(data[0].mst_coa.transaksitype == null){
+                    if (data[0].mst_coa.transaksitype == null) {
                         $('#fc_group_kredit').append(`<option value="" selected>-</option>`);
                     } else {
                         $('#fc_group_kredit').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
@@ -520,7 +520,7 @@
                     $("#fc_coacode").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_coacode").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
-                    }                    
+                    }
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -554,7 +554,7 @@
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_coacode_kredit").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
                     }
-                    
+
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -602,13 +602,24 @@
                 data: 'coamst.fc_coaname'
             },
             {
-                data: 'fm_nominal'
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success" style="color: white; font-weight:600">Rp</span>
+                                </div>
+                                <input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">
+                            </div>`;
+                }
             },
             {
                 data: 'fc_paymentmethod'
             },
             {
-                data: 'fv_description'
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<input type="text" id="fv_description_${data.fn_rownum}" class="form-control">`;
+                }
             },
             {
                 data: null,
@@ -653,13 +664,24 @@
                 data: 'coamst.fc_coaname'
             },
             {
-                data: 'fm_nominal'
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success" style="color: white; font-weight:600">Rp</span>
+                                </div>
+                                <input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">
+                            </div>`;
+                }
             },
             {
                 data: 'fc_paymentmethod'
             },
             {
-                data: 'fv_description'
+                data: null,
+                render: function(data, type, full, meta) {
+                    return `<input type="text" id="fv_description_${data.fn_rownum}" class="form-control">`;
+                }
             },
             {
                 data: null,
