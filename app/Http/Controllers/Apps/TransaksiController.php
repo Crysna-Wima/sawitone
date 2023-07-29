@@ -27,6 +27,10 @@ class TransaksiController extends Controller
         return view('apps.transaksi.index');
     }
 
+    public function bookmark_index(){
+        return view('apps.transaksi.bookmark-index');
+    }
+
     public function create()
     {
         $temp_trxaccounting_mst = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch')->where('fc_trxno', auth()->user()->fc_userid)->first();
@@ -69,7 +73,8 @@ class TransaksiController extends Controller
 
     public function datatables_mapping()
     {
-        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->where('fc_userid', auth()->user()->fc_userid)->get();
+        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_userid', auth()->user()->fc_userid)->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+
 
         return DataTables::of($data)
             ->addIndexColumn()

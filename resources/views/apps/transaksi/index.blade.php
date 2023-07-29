@@ -18,7 +18,7 @@
                 <div class="card-header">
                     <h4>Data Transaksi</h4>
                     <div class="card-header-action">
-                        <a href="#" type="button" class="btn btn-warning mr-1"><i class="fas fa-bookmark"></i> Bookmark</a>
+                        <a href="/apps/transaksi/bookmark-index" type="button" class="btn btn-warning mr-1"><i class="fas fa-bookmark"></i> Bookmark</a>
                         <a href="/apps/transaksi/create-index" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Data Transaksi</a>
                     </div>
                 </div>

@@ -642,6 +642,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
+            Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
