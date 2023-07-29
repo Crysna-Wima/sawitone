@@ -605,14 +605,6 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/delete/{fc_coacode}', 'DataMaster\MasterCoaController@delete');
         });
 
-        Route::prefix('transaksi')->group(function () {
-            Route::get('/', 'Apps\TransaksiController@index');
-            Route::get('/create-index', 'Apps\TransaksiController@create');
-            Route::get('/select-mapping/{fc_mappingcode}', 'Apps\TransaksiController@select_mapping');
-            Route::get('/datatables', 'Apps\TransaksiController@datatables');
-            Route::post('/store-update', 'Apps\TransaksiController@store_update');
-        });
-
         Route::prefix('master-mapping')->group(function () {
             Route::get('/', 'Apps\MasterMappingController@index');
             Route::get('/detail/{fc_mappingcode}', 'Apps\MasterMappingController@detail');
@@ -636,6 +628,15 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/datatables-debit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_debit');
                 Route::get('/datatables-kredit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_kredit');
             });
+        });
+
+        Route::prefix('transaksi')->group(function () {
+            Route::get('/', 'Apps\TransaksiController@index');
+            Route::get('/create-index', 'Apps\TransaksiController@create');
+            Route::get('/datatables', 'Apps\TransaksiController@datatables');
+            Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
+            Route::post('/store-update', 'Apps\TransaksiController@store_update');
+            Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
         });
     });
 });
