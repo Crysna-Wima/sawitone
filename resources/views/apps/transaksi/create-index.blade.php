@@ -20,6 +20,7 @@
                 </div>
                 <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
                 <form id="form_submit" action="/apps/transaksi/store-update" method="POST" autocomplete="off">
+                    <input type="text" class="form-control" name="fc_mappingtrxtype_hidden" id="fc_mappingtrxtype_hidden" readonly hidden>
                     <div class="collapse show" id="mycard-collapse">
                         <div class="card-body">
                             <div class="row">
@@ -70,14 +71,17 @@
                                 <div class="col-12 col-md-6 col-lg-3">
                                     <div class="form-group required">
                                         <label>Tipe Jurnal</label>
-                                        <select class="form-control select2" name="fc_informtrx" id="fc_informtrx" required></select>
+                                        <select class="form-control select2" name="fc_mappingtrxtype" id="fc_mappingtrxtype" required disabled></select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-lg-3" id="doc-ref" hidden>
-                                    <div class="form-group required">
+                                <div class="col-12 col-md-6 col-lg-3" id="doc-ref">
+                                    <div class="form-group">
                                         <label>Dokumen Referensi</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="fc_docreference" name="fc_docreference">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" readonly>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -114,9 +118,10 @@
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Mapping</th>
                                     <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Jumlah Debit</th>
-                                    <th scope="col" class="text-center">Jumlah Kredit</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
+                                    <th scope="col" class="text-center">Debit</th>
+                                    <th scope="col" class="text-center">Kredit</th>
+                                    <th scope="col" class="text-center">Tipe</th>
+                                    <th scope="col" class="text-center">Transaksi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                 </tr>
                             </thead>
@@ -139,51 +144,53 @@
         changeYear: true,
     });
 
-    $("#fc_informtrx").change(function() {
-        var data = $(this).val()
-        console.log(data);
-        if (data == 'LREF') {
-            $('input[id="fc_docreference"]').val("");
-            $('#doc-ref').attr('hidden', false);
-            $('#fc_docreference').attr('required', true);
-        } else {
-            $('input[id="fc_docreference"]').val("");
-            $('#doc-ref').attr('hidden', true);
-            $('#fc_docreference').attr('required', false);
-        }
-    });
-
     $(document).ready(function() {
         get_data_branch();
-        get_data_jurnal();
     })
 
     function click_modal_mapping() {
         $('#modal_mapping').modal('show');
     }
 
-
-    function select_mapping(fc_mappingcode) {
-        // encode
+    function get_detail(fc_mappingcode) {
+        $('#modal_loading').modal('show');
         var mappingcode = window.btoa(fc_mappingcode);
-        $.ajax({
-            url: "/apps/transaksi/select-mapping/" + mappingcode,
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                $("#modal_do").modal('hide');
-                var data = response.data;
 
-                $('#fc_mappingcode').val(data.fc_mappingcode);
-                $('#fc_mappingname').val(data.fc_mappingname);
+        $.ajax({
+            url: "/apps/transaksi/get-detail/" + mappingcode,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(response) {
+                var data = response.data;
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    $('#fc_mappingcode').val(data.fc_mappingcode);
+                    $('#fc_mappingname').val(data.fc_mappingname);
+                    $('#fc_mappingtrxtype').append(`<option value="${data.fc_mappingtrxtype}" selected>${data.transaksi.fv_description}</option>`);
+                    $('#fc_mappingtrxtype').prop('disabled', true);
+                    $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
+
+                    $('#modal_mapping').modal('hide');
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
                     icon: 'error',
                 });
             }
-        });
+        })
     }
 
     function get_data_branch() {
@@ -226,35 +233,6 @@
         });
     }
 
-    function get_data_jurnal() {
-        $.ajax({
-            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JOURNALTYPE",
-            type: "GET",
-            dataType: "JSON",
-            success: function(response) {
-                if (response.status === 200) {
-                    var data = response.data;
-                    $("#fc_informtrx").empty();
-                    $("#fc_informtrx").append(`<option value="" selected disabled> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_informtrx").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                    }
-                } else {
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
@@ -264,15 +242,15 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "/apps/master-mapping/datatables",
+            url: "/apps/transaksi/datatables-mapping",
             type: 'GET',
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, ]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
-            targets: [6]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -292,7 +270,10 @@
                 data: 'sum_credit'
             },
             {
-                data: 'fv_description'
+                data: 'tipe.fv_description'
+            },
+            {
+                data: 'transaksi.fv_description'
             },
             {
                 data: null,
@@ -300,8 +281,9 @@
         ],
 
         rowCallback: function(row, data) {
-            $('td:eq(6)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="select_mapping('${data.fc_mappingcode}')"><i class="fas fa-check"></i> Pilih</button>
+            var fc_mappingcode = window.btoa(data.fc_mappingcode);
+            $('td:eq(7)', row).html(`
+                    <button type="button"class="btn btn-warning btn-sm" onclick="get_detail('${data.fc_mappingcode}')"><i class="fas fa-check"></i> Pilih</button>
                 `);
         },
     });

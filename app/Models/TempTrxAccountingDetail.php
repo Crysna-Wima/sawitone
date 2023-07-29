@@ -12,6 +12,7 @@ class TrxAccountingDetail extends Model
 {
     use HasFactory, Blameable, CompositeKey, LogsActivity;
 
+
     protected static $logAttributes = ["*"];
 
     protected $table = 't_temp_trxaccountingdtl';
