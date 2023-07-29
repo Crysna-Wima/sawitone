@@ -21,6 +21,9 @@ class TempTrxAccountingMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
     
     public function transaksitype(){
         return $this->belongsTo(TransaksiType::class, 'fc_mappingtrxtype', 'fc_kode')->where('fc_trx','JOURNALTYPE');
