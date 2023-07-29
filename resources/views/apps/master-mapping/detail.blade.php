@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Buat Mapping')
+@section('title', 'Detail Mapping')
 @section('css')
 <style>
     #tb_wrapper .row:nth-child(2) {
@@ -52,35 +52,35 @@
                     </div>
                 </div>
                 <input type="text" id="fc_branch" value="{{ auth()->user()->fc_branch }}" hidden>
-                <div class="collapse" id="mycard-collapse">
+                <div class="collapse show" id="mycard-collapse">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Cabang</label>
                                     <input type="text" class="form-control" name="" id="" value="{{ $data->branch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Kode Mapping</label>
                                     <input type="text" class="form-control" name="" id="" value="{{ $data->fc_mappingcode }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Nama Mapping</label>
                                     <input type="text" class="form-control" name="" id="" value="{{ $data->fc_mappingname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Operator</label>
                                     <input type="text" class="form-control" name="" id="" value="{{ $data->created_by }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group required-select">
+                                <div class="form-group">
                                     <label id="label-select">Hold</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
@@ -95,13 +95,13 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Tipe</label>
                                     <input type="text" class="form-control" name="fc_mappingcashtype" id="fc_mappingcashtype" value="{{ $data->tipe->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-3">
-                                <div class="form-group required">
+                                <div class="form-group">
                                     <label>Transaksi</label>
                                     <input type="text" class="form-control" name="fc_mappingtrxtype" id="fc_mappingtrxtype" value="{{ $data->transaksi->fv_description }}" readonly>
                                 </div>
@@ -117,9 +117,6 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Mapping Debit</h4>
-                    <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="click_add_debit();"><i class="fa fa-plus mr-1"></i> Tambah Debit</button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -144,9 +141,6 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Mapping Kredit</h4>
-                    <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="click_add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -168,87 +162,12 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="/apps/master-mapping/submit/{{ $data->fc_mappingcode }}" method="post">
-            <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-            @csrf
-            @method('put')
-            <button type="submit" class="btn btn-success">Submit Mapping</button>
-        </form>
+        <a href="/apps/master-mapping"><button type="button" class="btn btn-info">Back</button></a>
     </div>
 </div>
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_debit" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Pilih Debit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_coa_debit" width="100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Kode COA</th>
-                                    <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Layer</th>
-                                    <th scope="col" class="text-center">COA Induk</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
-                                    <th scope="col" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" role="dialog" id="modal_kredit" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Pilih Kredit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped" id="tb_coa_kredit" width="100%">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Kode COA</th>
-                                    <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Layer</th>
-                                    <th scope="col" class="text-center">COA Induk</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
-                                    <th scope="col" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -424,14 +343,6 @@
         })
     }
 
-    function click_add_debit() {
-        $('#modal_debit').modal('show');
-    }
-
-    function click_add_kredit() {
-        $('#modal_kredit').modal('show');
-    }
-
     var tb_debit = $('#tb_debit').DataTable({
         processing: true,
         serverSide: true,
@@ -475,7 +386,6 @@
 
             $('td:eq(3)', row).html(`
                     <button type="button" class="btn btn-primary btn-sm mr-1" onclick="detail('${data.fc_coacode}')"><i class="fa fa-eye"> </i> Detail</button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
                 `);
         },
     });
@@ -522,250 +432,9 @@
 
 
             $('td:eq(3)', row).html(`
-                    <button type="button" class="btn btn-primary btn-sm mr-1" onclick="detail('${data.fc_coacode}')"><i class="fa fa-eye"> </i> Detail</button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.mst_coa.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button type="button" class="btn btn-primary btn-sm mr-1" onclick="detail('${data.fc_coacode}')"><i class="fa fa-eye"> </i> Detail</button>
                 `);
         },
     });
-
-    var tb_coa_debit = $('#tb_coa_debit').DataTable({
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        pageLength: 5,
-        order: [
-            [1, 'desc']
-        ],
-        ajax: {
-            url: "/apps/master-coa/datatables",
-            type: 'GET',
-        },
-        columnDefs: [{
-            className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6]
-        }, {
-            className: 'text-nowrap',
-            targets: []
-        }],
-        columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                orderable: false
-            },
-            {
-                data: 'fc_coacode'
-            },
-            {
-                data: 'fc_coaname'
-            },
-            {
-                data: 'fn_layer'
-            },
-            {
-                data: 'parent.fc_coaname',
-                defaultContent: '<span class="badge bg-primary text-light">COA INDUK</span>',
-            },
-            {
-                data: 'fv_description',
-                defaultContent: '-'
-            },
-            {
-                data: null
-            },
-        ],
-
-        rowCallback: function(row, data) {
-            var url_delete = "/apps/master-mapping/delete/" + data.fc_mappingcode;
-            var fc_mappingcode = window.btoa(data.fc_mappingcode);
-
-            $('td:eq(6)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_coa_debit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
-                `);
-        },
-    });
-
-    function select_coa_debit(fc_coacode) {
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url: '/apps/master-mapping/create/insert-debit',
-            type: 'POST',
-            data: {
-                fc_coacode: fc_coacode,
-                fc_mappingcode: mappingcode,
-            },
-            success: function(response) {
-                if (response.status === 200) {
-                    iziToast.success({
-                        title: 'Success!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                    $('#modal_loading').modal('hide');
-                    $('#modal_debit').modal('hide');
-                    tb_debit.ajax.reload();
-                } else {
-                    iziToast.error({
-                        title: 'Gagal!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },
-            error: function(xhr, status, error) {
-                $("#modal_loading").modal('hide');
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
-    var tb_coa_kredit = $('#tb_coa_kredit').DataTable({
-        processing: true,
-        serverSide: true,
-        destroy: true,
-        pageLength: 5,
-        order: [
-            [1, 'desc']
-        ],
-        ajax: {
-            url: "/apps/master-coa/datatables",
-            type: 'GET',
-        },
-        columnDefs: [{
-            className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
-        }, {
-            className: 'text-nowrap',
-            targets: [6]
-        }],
-        columns: [{
-                data: 'DT_RowIndex',
-                searchable: false,
-                orderable: false
-            },
-            {
-                data: 'fc_coacode'
-            },
-            {
-                data: 'fc_coaname'
-            },
-            {
-                data: 'fn_layer'
-            },
-            {
-                data: 'parent.fc_coaname',
-                defaultContent: '<span class="badge bg-primary text-light">COA INDUK</span>',
-            },
-            {
-                data: 'fv_description',
-                defaultContent: '-'
-            },
-            {
-                data: null
-            },
-        ],
-
-        rowCallback: function(row, data) {
-            var url_delete = "/apps/master-mapping/delete/" + data.fc_mappingcode;
-            var fc_mappingcode = window.btoa(data.fc_mappingcode);
-
-            $('td:eq(6)', row).html(`
-                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_coa_kredit('${data.fc_coacode}')"><i class="fas fa-check"></i> Pilih</button>
-                `);
-        },
-    });
-
-    function select_coa_kredit(fc_coacode) {
-        $("#modal_loading").modal('show');
-        $.ajax({
-            url: '/apps/master-mapping/create/insert-kredit',
-            type: 'POST',
-            data: {
-                fc_coacode: fc_coacode,
-                fc_mappingcode: mappingcode,
-            },
-            success: function(response) {
-                if (response.status === 200) {
-                    iziToast.success({
-                        title: 'Success!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                    $('#modal_loading').modal('hide');
-                    $('#modal_kredit').modal('hide');
-                    tb_kredit.ajax.reload();
-                } else {
-                    iziToast.error({
-                        title: 'Gagal!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-            },
-            error: function(xhr, status, error) {
-                $("#modal_loading").modal('hide');
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
-                    icon: 'error',
-                });
-            }
-        });
-    }
-
-    function click_cancel() {
-        swal({
-                title: 'Apakah anda yakin?',
-                text: 'Apakah anda yakin akan mengcancel Buat Mapping ini?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $("#modal_loading").modal('show');
-                    $.ajax({
-                        url: '/apps/master-mapping/cancel/' + encode_mappingcode,
-                        type: "DELETE",
-                        dataType: "JSON",
-                        success: function(response) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            if (response.status === 201) {
-                                $("#modal").modal('hide');
-                                iziToast.success({
-                                    title: 'Success!',
-                                    message: response.message,
-                                    position: 'topRight'
-                                });
-                                window.location.href = response.link;
-                            } else {
-                                iziToast.error({
-                                    title: 'Gagal!',
-                                    message: response.message,
-                                    position: 'topRight'
-                                });
-                            }
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                .responseText + ")", {
-                                    icon: 'error',
-                                });
-                        }
-                    });
-                }
-            });
-    }
 </script>
 @endsection

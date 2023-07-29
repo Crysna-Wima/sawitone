@@ -21,12 +21,12 @@ class MasterMappingController extends Controller
     public function index()
     {
         $mapping_mst = MappingMaster::where('created_by', auth()->user()->fc_userid)
-        ->where('fc_status', 'I')
-        ->where('fc_branch', auth()->user()->fc_branch)->first();
+            ->where('fc_status', 'I')
+            ->where('fc_branch', auth()->user()->fc_branch)->first();
         $cek_exist = MappingMaster::where('created_by', auth()->user()->fc_userid)
-                                    ->where('fc_status', 'I')
-                                    ->where('fc_branch', auth()->user()->fc_branch)->count();
-        if($cek_exist > 0){
+            ->where('fc_status', 'I')
+            ->where('fc_branch', auth()->user()->fc_branch)->count();
+        if ($cek_exist > 0) {
             $fc_mappingcode = $mapping_mst->fc_mappingcode;
             $data['data'] = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $fc_mappingcode)->first();
 
@@ -36,9 +36,18 @@ class MasterMappingController extends Controller
         return view('apps.master-mapping.index');
     }
 
+    public function detail($fc_mappingcode)
+    {
+        $decode_fc_mappingcode = base64_decode($fc_mappingcode);
+        session(['fc_mappingcode_global' => $decode_fc_mappingcode]);
+        $data['data'] = MappingMaster::with('branch', 'transaksi', 'tipe')->where('fc_mappingcode', $decode_fc_mappingcode)->where('fc_branch', auth()->user()->fc_branch)->first();
+        return view('apps.master-mapping.detail', $data);
+        // dd($data);
+    }
+
     public function datatables()
     {
-        $data = MappingMaster::where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingMaster::with('transaksi', 'tipe')->where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -47,7 +56,7 @@ class MasterMappingController extends Controller
                     ->where('fc_branch', auth()->user()->fc_branch)
                     ->where('fc_mappingcode', $row->fc_mappingcode)
                     ->count();
-    
+
                 return $sum_debit;
             })
             ->addColumn('sum_credit', function ($row) {
@@ -55,7 +64,7 @@ class MasterMappingController extends Controller
                     ->where('fc_branch', auth()->user()->fc_branch)
                     ->where('fc_mappingcode', $row->fc_mappingcode)
                     ->count();
-    
+
                 return $sum_credit;
             })
             ->make(true);
@@ -116,7 +125,7 @@ class MasterMappingController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/master-mapping/create/' . base64_encode( $request->fc_mappingcode)
+                    'link' => '/apps/master-mapping/create/' . base64_encode($request->fc_mappingcode)
                 ];
             } else {
                 return [
@@ -132,68 +141,102 @@ class MasterMappingController extends Controller
         }
     }
 
-    public function cancel($fc_mappingcode){
+    public function hold($fc_mappingcode)
+    {
+        $data = MappingMaster::where('fc_mappingcode', $fc_mappingcode)->update([
+                'fc_hold' => 'T',
+            ]);
+
+        if ($data) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil di Hold'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal di Hold'
+            ];
+        }
+    }
+
+    public function unhold($fc_mappingcode)
+    {
+        $data = MappingMaster::where('fc_mappingcode', $fc_mappingcode)->update([
+                'fc_hold' => 'F',
+            ]);
+
+        if ($data) {
+            return [
+                'status' => 200,
+                'message' => 'Buka Hold berhasil'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Buka Hold gagal'
+            ];
+        }
+    }
+
+    public function cancel($fc_mappingcode)
+    {
         $encoded_fc_mappingcode = base64_decode($fc_mappingcode);
         DB::beginTransaction();
 
-		try{
+        try {
             MappingDetail::where('fc_mappingcode', $encoded_fc_mappingcode)->delete();
             MappingMaster::where('fc_mappingcode', $encoded_fc_mappingcode)->delete();
-            
 
-			DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            DB::commit();
+
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/master-mapping',
-				'message' => 'Data berhasil dihapus'
-			];
-		}
+                'message' => 'Data berhasil dihapus'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
 
-    public function submit($fc_mappingcode){
+    public function submit($fc_mappingcode)
+    {
         DB::beginTransaction();
 
-		try{
+        try {
             MappingMaster::where([
                 'fc_mappingcode' =>  $fc_mappingcode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
             ])
-            ->update([
-                'fc_status' => "F",
-                'updated_at' => Carbon::now(),
-            ]);
+                ->update([
+                    'fc_status' => "F",
+                    'updated_at' => Carbon::now(),
+                ]);
 
-			DB::commit();
+            DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/master-mapping',
-				'message' => 'Data berhasil disubmit'
-			];
-		}
+                'message' => 'Data berhasil disubmit'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
 }

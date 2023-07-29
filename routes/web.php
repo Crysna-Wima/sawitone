@@ -614,9 +614,12 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-mapping')->group(function () {
             Route::get('/', 'Apps\MasterMappingController@index');
+            Route::get('/detail/{fc_mappingcode}', 'Apps\MasterMappingController@detail');
             Route::get('/datatables', 'Apps\MasterMappingController@datatables');
             Route::get('/{action}', 'Apps\MasterMappingController@get_transaksi');
             Route::post('/store-update','Apps\MasterMappingController@store_update');
+            Route::put('/hold/{fc_mappingcode}','Apps\MasterMappingController@hold');
+            Route::put('/unhold/{fc_mappingcode}','Apps\MasterMappingController@unhold');
             Route::delete('/cancel/{fc_mappingcode}', 'Apps\MasterMappingController@cancel');
             Route::put('/submit/{fc_mappingcode}','Apps\MasterMappingController@submit');
 

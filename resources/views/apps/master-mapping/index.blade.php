@@ -94,7 +94,7 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Tipe</label>
-                                <select name="fc_mappingcashtype" id="fc_mappingcashtype" onchange="get_transaksi()"class="select2 required-field"></select>
+                                <select name="fc_mappingcashtype" id="fc_mappingcashtype" onchange="get_transaksi()" class="select2 required-field"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
@@ -333,10 +333,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
-            targets: [8]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -359,10 +359,10 @@
                 data: 'fc_hold'
             },
             {
-                data: 'fc_mappingcashtype'
+                data: 'tipe.fv_description'
             },
             {
-                data: 'fc_mappingtrxtype'
+                data: 'transaksi.fv_description'
             },
             {
                 data: null,
@@ -374,13 +374,121 @@
             var url_delete = "/apps/master-mapping/delete/" + data.fc_mappingcode;
             var fc_mappingcode = window.btoa(data.fc_mappingcode);
 
-            $('td:eq(6)', row).html(`
+            if (data.fc_hold == 'T') {
+                $('td:eq(5)', row).html(`<span class="badge badge-success">YA</span>`);
+            } else {
+                $('td:eq(5)', row).html(`<span class="badge badge-danger">TIDAK</span>`);
+            }
+
+            if (data.fc_hold == 'T') {
+                $('td:eq(8)', row).html(`
                     <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}','${data.fc_mappingcode}')"><i class="fa fa-edit"></i> Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_mappingname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <button class="btn btn-warning btn-sm" onclick="unhold('${data.fc_mappingcode}')"><i class="fas fa-unlock"> </i> Buka Hold</button>
                 `);
+            } else {
+                $('td:eq(8)', row).html(`
+                    <a href="/apps/master-mapping/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
+                    <button class="btn btn-danger btn-sm" onclick="hold('${data.fc_mappingcode}')"><i class="fas fa-lock"> </i> Hold</button>
+                `);
+            }
         },
     });
+
+    function hold(fc_mappingcode) {
+        swal({
+            title: "Konfirmasi",
+            text: "Anda yakin ingin Hold data ini?",
+            type: "warning",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then((save) => {
+            if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                    url: '/apps/master-mapping/hold/' + fc_mappingcode,
+                    type: 'PUT',
+                    data: {
+                        fc_hold : 'T',
+                    },
+                    success: function(response) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        if (response.status == 200) {
+                            swal(response.message, {
+                                icon: 'success',
+                            });
+                            $("#modal").modal('hide');
+                            tb.ajax.reload();
+                        } else {
+                            swal(response.message, {
+                                icon: 'error',
+                            });
+                            $("#modal").modal('hide');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                            .responseText + ")", {
+                                icon: 'error',
+                            });
+                    }
+                });
+            }
+        });
+    }
+
+    function unhold(fc_mappingcode) {
+        swal({
+            title: "Konfirmasi",
+            text: "Anda yakin ingin Membuka Hold data ini?",
+            type: "warning",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then((save) => {
+            if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                    url: '/apps/master-mapping/unhold/' + fc_mappingcode,
+                    type: 'PUT',
+                    data: {
+                        fc_hold : 'F',
+                    },
+                    success: function(response) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        if (response.status == 200) {
+                            swal(response.message, {
+                                icon: 'success',
+                            });
+                            $("#modal").modal('hide');
+                            tb.ajax.reload();
+                        } else {
+                            swal(response.message, {
+                                icon: 'error',
+                            });
+                            $("#modal").modal('hide');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                            .responseText + ")", {
+                                icon: 'error',
+                            });
+                    }
+                });
+            }
+        });
+    }
 
     $('.modal').css('overflow-y', 'auto');
 </script>
