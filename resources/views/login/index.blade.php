@@ -5,8 +5,8 @@
   <meta name="robots" content="noindex">
   <meta name="robots" content="nofollow">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; ADMIN PANEL KHARISMA</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/public_page/images/favicon.ico')}}">
+  <title>Login &mdash; DEXA</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/public_page/images/dexa.png')}}">
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/css/login/bootstrap.min.css') }}">

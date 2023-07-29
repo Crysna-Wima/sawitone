@@ -19,7 +19,7 @@ class MasterMappingCreateController extends Controller
     public function create($fc_mappingcode)
     {
         $encoded_fc_mappingcode = base64_decode($fc_mappingcode);
-        $data['data'] = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $encoded_fc_mappingcode)->first();
+        $data['data'] = MappingMaster::with('transaksi', 'tipe', 'branch')->where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $encoded_fc_mappingcode)->first();
 
         return view('apps.master-mapping.create', $data);
     }

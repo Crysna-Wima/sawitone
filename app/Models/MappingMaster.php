@@ -25,4 +25,16 @@ class MappingMaster extends Model
         return $this->belongsTo(TrxAccountingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
     }
 
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
+    public function tipe(){
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_mappingcashtype');
+    }
+
+    public function transaksi(){
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_mappingtrxtype');
+    }
+
 }

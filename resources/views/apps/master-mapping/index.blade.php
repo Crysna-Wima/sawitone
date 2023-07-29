@@ -7,6 +7,12 @@
         content: ' *';
         display: inline;
     }
+
+    .required-select #label-select:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
 </style>
 @endsection
 
@@ -18,7 +24,7 @@
                 <div class="card-header">
                     <h4>Data Mapping</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="click_modal_add();"><i class="fa fa-plus mr-1"></i> Tambah Data Mapping</button>
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Data Mapping</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -29,9 +35,11 @@
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center">Kode Mapping</th>
                                     <th scope="col" class="text-center">Nama</th>
-                                    <th scope="col" class="text-center">Jumlah Debit</th>
-                                    <th scope="col" class="text-center">Jumlah Kredit</th>
-                                    <th scope="col" class="text-center">Deskripsi</th>
+                                    <th scope="col" class="text-center">Debit</th>
+                                    <th scope="col" class="text-center">Kredit</th>
+                                    <th scope="col" class="text-center">Hold</th>
+                                    <th scope="col" class="text-center">Tipe</th>
+                                    <th scope="col" class="text-center">Transaksi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                 </tr>
                             </thead>
@@ -45,7 +53,7 @@
 @endsection
 
 @section('modal')
-<div class="modal fade" role="dialog" id="modal_add" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header br">
@@ -59,109 +67,67 @@
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-3" hidden>
                             <div class="form-group required">
                                 <label>Division Code</label>
                                 <input type="text" class="form-control" name="fc_divisioncode" id="fc_divisioncode" value="{{ auth()->user()->fc_divisioncode }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-3 col-lg-4">
                             <div class="form-group required">
                                 <label>Cabang</label>
                                 <select class="form-control select2" name="fc_branch" id="fc_branch"></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-6">
-                            <div class="form-group required">
-                                <label>Kode Mapping</label>
-                                <input type="text" class="form-control required-field" name="fc_mappingcode" id="fc_mappingcode">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group required">
                                 <label>Operator</label>
                                 <input type="text" class="form-control required-field" name="" id="" value="{{ auth()->user()->fc_username }}" readonly>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3 col-lg-9">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required">
+                                <label>Kode Mapping</label>
+                                <input type="text" class="form-control required-field" name="fc_mappingcode" id="fc_mappingcode">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required">
+                                <label>Tipe</label>
+                                <select name="fc_mappingcashtype" id="fc_mappingcashtype" onchange="get_transaksi()"class="select2 required-field"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required">
+                                <label>Transaksi</label>
+                                <select name="fc_mappingtrxtype" id="fc_mappingtrxtype" class="select2 required-field"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group required-select">
+                                <label id="label-select">Hold</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_hold" id="fc_hold" value="T" class="selectgroup-input">
+                                        <span class="selectgroup-button">YA</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="fc_hold" id="fc_hold" value="F" class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button">TIDAK</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Nama Mapping</label>
                                 <input type="text" class="form-control required-field" name="fc_mappingname" id="fc_mappingname">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Deskripsi</label>
-                                <input type="text" name="fv_description" id="fv_description" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header br">
-                <h5 class="modal-title">Edit Data Mapping</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <input type="text" class="form-control" name="fc_branch_view_edit" id="fc_branch_view_edit" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit_cprr" action="/apps/master-mapping/update" method="POST" autocomplete="off">
-                @csrf
-                @method('PUT')
-                <input type="text" name="type" id="type" hidden>
-                <div class="modal-body">
-                    <div class="row">
-                    <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required">
-                                <label>Division Code</label>
-                                <input type="text" class="form-control" name="fc_divisioncode_edit" id="fc_divisioncode_edit" value="{{ auth()->user()->fc_divisioncode }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required">
-                                <label>Cabang</label>
-                                <select class="form-control select2" name="fc_branch_edit" id="fc_branch_edit"></select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-6">
-                            <div class="form-group required">
-                                <label>Kode Mapping</label>
-                                <input type="text" class="form-control required-field" name="fc_mappingcode_edit" id="fc_mappingcode_edit">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-3">
-                            <div class="form-group required">
-                                <label>Operator</label>
-                                <input type="text" class="form-control required-field" name="" id="" value="{{ auth()->user()->fc_username }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-9">
-                            <div class="form-group required">
-                                <label>Nama Mapping</label>
-                                <input type="text" class="form-control required-field" name="fc_mappingname_edit" id="fc_mappingname_edit">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Deskripsi</label>
-                                <textarea name="fv_description_edit" id="fv_description_edit" style="height: 50px" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -174,10 +140,76 @@
     $(document).ready(function() {
         get_data_branch();
         get_data_branch_edit();
+        get_data_tipe();
     })
 
-    function click_modal_add() {
-        $('#modal_add').modal('show');
+    function add() {
+        $("#modal").modal('show');
+        $(".modal-title").text('Tambah Data Mapping');
+        $("#form_submit")[0].reset();
+    }
+
+    function get_data_tipe() {
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/MAPPINGTYPE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_mappingcashtype").empty();
+                    $("#fc_mappingcashtype").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_mappingcashtype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function get_transaksi() {
+        $('#modal_loading').modal('show');
+        var fc_action = window.btoa($('#fc_mappingcashtype').val());
+        $.ajax({
+            url: "/apps/master-mapping/" + fc_action,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_mappingtrxtype").empty();
+                    $("#fc_mappingtrxtype").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_mappingtrxtype").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     }
 
     function get_data_branch() {
@@ -301,10 +333,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, ]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
-            targets: [6]
+            targets: [8]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -324,7 +356,13 @@
                 data: 'sum_credit'
             },
             {
-                data: 'fv_description'
+                data: 'fc_hold'
+            },
+            {
+                data: 'fc_mappingcashtype'
+            },
+            {
+                data: 'fc_mappingtrxtype'
             },
             {
                 data: null,

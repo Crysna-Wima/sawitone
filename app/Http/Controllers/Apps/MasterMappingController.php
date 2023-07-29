@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use App\Models\MappingDetail;
 use App\Models\MappingMaster;
-
+use App\Models\TransaksiType;
 use Carbon\Carbon;
 use DB;
 use Auth;
@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Validator;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Helpers\ApiFormatter;
 
 class MasterMappingController extends Controller
 {
@@ -61,6 +62,25 @@ class MasterMappingController extends Controller
         // dd($data);
     }
 
+    public function get_transaksi($action)
+    {
+        $fc_action = base64_decode($action);
+
+        $data = TransaksiType::where([
+            'fc_action' => $fc_action,
+        ])
+            ->get();
+
+        if (empty($data)) {
+            return [
+                'status' => 200,
+                'data' => ['INDUK COA']
+            ];
+        }
+
+        return ApiFormatter::getResponse($data);
+    }
+
     public function store_update(Request $request)
     {
         // validator
@@ -85,8 +105,10 @@ class MasterMappingController extends Controller
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_mappingcode' => $request->fc_mappingcode,
                 'fc_mappingname' => $request->fc_mappingname,
+                'fc_mappingcashtype' => $request->fc_mappingcashtype,
+                'fc_mappingtrxtype' => $request->fc_mappingtrxtype,
                 'fc_status' => 'I',
-                'fv_description' => $request->fv_description,
+                'fc_hold' => $request->fc_hold,
                 'created_by' => auth()->user()->fc_userid,
             ]);
 

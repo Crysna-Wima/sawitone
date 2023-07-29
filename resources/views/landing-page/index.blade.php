@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Home &mdash; ADMIN PANEL KHARISMA</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/public_page/images/favicon.ico')}}">
+  <title>Home &mdash; DEXA</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/public_page/images/dexa.png')}}">
   <!-- Bootstrap , fonts & icons  -->
   <link rel="stylesheet" href="{{ asset('assets/css/login/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/fontawesome/css/all.min.css') }}">

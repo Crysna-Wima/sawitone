@@ -74,7 +74,7 @@ class MasterCoaController extends Controller
     {
         $coacode = base64_decode($fc_coacode);
 
-        $data = MasterCoa::with('parent', 'transaksitype')
+        $data = MasterCoa::with('branch','parent', 'transaksitype')
             ->where([
                 'fc_coacode' =>  $coacode,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -90,6 +90,7 @@ class MasterCoaController extends Controller
         $data = MasterCoa::with('branch', 'parent')->where([
             'fc_branch' => auth()->user()->fc_branch,
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_rootstatus' => 'F'
         ])->get();
         return DataTables::of($data)
             ->addIndexColumn()
