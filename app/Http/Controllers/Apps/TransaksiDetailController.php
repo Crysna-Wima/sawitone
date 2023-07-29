@@ -15,6 +15,7 @@ use Auth;
 use App\Helpers\ApiFormatter;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
+use App\Models\MasterCoa;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -35,5 +36,18 @@ class TransaksiDetailController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function get_coa()
+    {
+        $data = MappingDetail::with('mst_coa')->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        if (empty($data)) {
+            return [
+                'status' => 200,
+            ];
+        }
+
+        return ApiFormatter::getResponse($data);
     }
 }

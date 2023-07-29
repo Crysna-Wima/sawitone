@@ -653,6 +653,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables-debit', 'Apps\TransaksiDetailController@datatables_debit');
                 Route::get('/datatables-kredit', 'Apps\TransaksiDetailController@datatables_kredit');
+                Route::get('/get-coa', 'Apps\TransaksiDetailController@get_coa');
             });
         });
     });
