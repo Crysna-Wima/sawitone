@@ -88,7 +88,7 @@ class MappingUserController extends Controller
             ];
         }
 
-        $mapping_user = MappingUser::where('fc_mappingcode', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $mapping_user = MappingUser::where('fc_userid', $request->fc_userid)->where('fc_mappingcode', $request->fc_mappingcode)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if (empty($mapping_user)) {
             // create TempInvoiceMst
