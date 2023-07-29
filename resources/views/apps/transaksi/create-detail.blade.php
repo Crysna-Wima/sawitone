@@ -437,11 +437,15 @@
                 if (response.status === 200) {
                     var data = response.data;
                     console.log(data);
-                    var value = data.mst_coa.fc_directpayment;
+                    var value = data.fc_directpayment;
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
-                    var value2 = data.mst_coa.fc_balancestatus;
-                    $("input[name=fc_balancestatus][value=" + value + "]").prop('checked', true);
-                    $('#fc_group').append(`<option value="${data.mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
+                    var value2 = data.fc_balancestatus;
+                    $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
+                    if (data.fc_group == null){
+                        $('#fc_group').append(`<option value="-" selected>-</option>`);
+                    } else {
+                        
+                    }
                 } else {
                     iziToast.error({
                         title: 'Error!',
