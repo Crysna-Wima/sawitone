@@ -27,6 +27,10 @@ class TransaksiController extends Controller
         return view('apps.transaksi.index');
     }
 
+    public function bookmark_index(){
+        return view('apps.transaksi.bookmark-index');
+    }
+
     public function create()
     {
         $temp_trxaccounting_mst = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch')->where('fc_trxno', auth()->user()->fc_userid)->first();
