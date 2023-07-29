@@ -426,6 +426,7 @@
     function get_data_coa() {
         $('#modal_loading').modal('show');
         var fc_coacode = window.btoa($('#fc_coacode').val());
+        // console.log(fc_coacode);
         $.ajax({
             url: "/apps/transaksi/detail/" + fc_coacode,
             type: "GET",
@@ -437,11 +438,15 @@
                 if (response.status === 200) {
                     var data = response.data;
                     console.log(data);
-                    var value = data.mst_coa.fc_directpayment;
+                    var value = data[0].mst_coa.fc_directpayment;
+                    // console.log(value)
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
-                    var value2 = data.mst_coa.fc_balancestatus;
+                    var value2 = data[0].mst_coa.fc_balancestatus;
                     $("input[name=fc_balancestatus][value=" + value + "]").prop('checked', true);
-                    $('#fc_group').append(`<option value="${data.mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
+                    if(data[0].grup == null){
+                        $('#fc_group').append(`<option value="" selected></option>`);
+                    }
+                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
                 } else {
                     iziToast.error({
                         title: 'Error!',
