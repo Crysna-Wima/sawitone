@@ -28,7 +28,7 @@
                             <div class="col-12 col-md-6 col-lg-2">
                                 <div class="form-group required">
                                     <label>Cabang</label>
-                                    <input type="text" class="form-control" id="fc_userid" value="{{ $data->dc_branch }}" readonly>
+                                    <input type="text" class="form-control" id="fc_userid" value="{{ $data->fc_branch }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-2">
@@ -37,11 +37,11 @@
                                     <input type="text" class="form-control" id="fc_userid" value="{{ $data->fc_userid }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-12 col-md-6 col-lg-2">
                                 <div class="form-group required">
                                     <label>Tgl Transaksi</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
-                                        <input type="text" id="fd_trxdate_byuser" class="form-control" name="fd_trxdate_byuser" value="{{ $data->fd_trxdate_byuser }}" readonly>
+                                        <input type="text" id="fd_trxdate_byuser" class="form-control" name="fd_trxdate_byuser" value="{{ \Carbon\Carbon::parse( $data->fd_trxdate_byuser )->isoFormat('D MMMM Y'); }}" readonly>
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 <i class="fas fa-calendar"></i>
@@ -50,10 +50,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="form-group required">
+                                    <label>Tipe Jurnal</label>
+                                    <input type="text" class="form-control" id="fc_mappingtrxtype" name="fc_mappingtrxtype" value="{{ $data->transaksitype->fv_description }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>Dokumen Referensi</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" value="{{ $data->fc_docreference }}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="">
+                        <div class="form-row">
+                            <div class="col-12 col-md-6 col-lg-3 mr-4">
                                 <div class="form-group required">
                                     <label>Kode mapping</label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group">
                                         <input type="text" class="form-control" id="fc_mappingcode" name="fc_mappingcode" value="{{ $data->fc_mappingcode }}" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" disabled onclick="click_modal_mapping()" type="button"><i class="fa fa-search"></i></button>
@@ -61,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-6 col-lg-2 mr-4">
                                 <div class="form-group">
                                     <label>Nama mapping</label>
                                     <div class="input-group">
@@ -69,22 +93,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group required">
-                                    <label>Tipe Jurnal</label>
-                                    <input type="text" class="form-control" id="fc_informtrx" name="fc_informtrx" value="{{ $data->fc_informtrx }}">
+                            <div class="col-12 col-md-3 col-lg-2 mr-3">
+                                <div class="form-group d-flex-row">
+                                    <label>Debit</label>
+                                    <div class="text mt-2">
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-3">
-                                <div class="form-group">
-                                    <label>Dokumen Referensi</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" value="{{ $data->fc_docreference }}">
+                            <div class="col-12 col-md-3 col-lg-2 mr-3">
+                                <div class="form-group d-flex-row">
+                                    <label id="label_kekurangan">Kredit</label>
+                                    <div class="text mt-2">
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kekurangan">
+                                            Rp. 0,00</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-2">
+                                <div class="form-group d-flex-row">
+                                    <label>Balance</label>
+                                    <div class="text mt-2">
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="">Rp.
+                                            0,00</h5>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -99,7 +135,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <h3>Total : Rp. 0</h3>
                         <div class="table-responsive">
                             <table class="table table-striped" id="tb_debit" width="100%">
                                 <thead style="white-space: nowrap">
@@ -130,7 +165,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <h3>Total : Rp. 0</h3>
                         <div class="table-responsive">
                             <table class="table table-striped" id="tb_kredit" width="100%">
                                 <thead style="white-space: nowrap">

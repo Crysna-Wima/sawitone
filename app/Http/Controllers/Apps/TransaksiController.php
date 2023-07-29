@@ -29,7 +29,7 @@ class TransaksiController extends Controller
 
     public function create()
     {
-        $temp_trxaccounting_mst = TempTrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', auth()->user()->fc_userid)->first();
+        $temp_trxaccounting_mst = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch')->where('fc_trxno', auth()->user()->fc_userid)->first();
         $temp_trxaccounting_dtl = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)->get();
 
         $total = count($temp_trxaccounting_dtl);
@@ -68,7 +68,7 @@ class TransaksiController extends Controller
 
     public function datatables_mapping()
     {
-        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->where('fc_userid', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
