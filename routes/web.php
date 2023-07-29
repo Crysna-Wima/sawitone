@@ -645,11 +645,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
+            Route::get('/datatables-bookmark', 'Apps\TransaksiController@datatables_bookmark');
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
             Route::get('/datatables-invoice', 'Apps\TransaksiController@datatables_invoice');
             Route::post('/store-update', 'Apps\TransaksiController@store_update');
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
             Route::delete('/cancel_transaksi','Apps\TransaksiController@cancel_transaksi');
+            Route::get('/lanjutkan-bookmark/{fc_trxno}','Apps\TransaksiController@lanjut_bookmark');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables-debit', 'Apps\TransaksiDetailController@datatables_debit');
