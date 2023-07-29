@@ -135,6 +135,42 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_doc" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Dokumen Referensi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_doc" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. Invoice</th>
+                                    <th scope="col" class="text-center">Tgl Terbit</th>
+                                    <th scope="col" class="text-center">Jatuh Tempo</th>
+                                    <th scope="col" class="text-center">Customer</th>
+                                    <th scope="col" class="text-center">Tagihan</th>
+                                    <th scope="col" class="text-center">Catatan</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -148,8 +184,17 @@
         get_data_branch();
     })
 
+    function click_modal_doc() {
+        $('#modal_doc').modal('show');
+    }
+
     function click_modal_mapping() {
         $('#modal_mapping').modal('show');
+    }
+
+    function get($fc_invno) {
+        $('#fc_docreference').val($fc_invno);
+        $('#modal_doc').modal('hide');
     }
 
     function get_detail(fc_mappingcode) {
@@ -181,17 +226,18 @@
                             $('#fc_docreference').prop('readonly', true);
                             $('#fc_docreference').prop('required', false);
 
-                            if ($('#button_ref').length === 0) {
-                                var buttonElement = `
+
+                        if ($('#button_ref').length === 0) {
+                            var buttonElement = `
                                     <div class="input-group-append" id="button_ref">
                                         <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
                                     </div>
                                 `;
-                                $('#grup_input').append(buttonElement);
-                            }
+                            $('#grup_input').append(buttonElement);
                         }
+                    }
 
-                
+
 
                     $('#modal_mapping').modal('hide');
                 } else {
@@ -254,6 +300,67 @@
         });
     }
 
+    var tb_doc = $('#tb_doc').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 5,
+        order: [
+            [2, 'desc']
+        ],
+        ajax: {
+            url: '/apps/transaksi/datatables-invoice',
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 6]
+            },
+            {
+                className: 'text-nowrap',
+                targets: [2, 3, 7]
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_invno'
+            },
+            {
+                data: 'fd_inv_releasedate',
+                render: formatTimestamp
+            },
+            {
+                data: 'fd_inv_agingdate',
+                render: formatTimestamp
+            },
+            {
+                data: 'customer.fc_membername1'
+            },
+            {
+                data: 'fm_brutto',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-'
+            },
+            {
+                data: null
+            },
+        ],
+
+        rowCallback: function(row, data) {
+            var fc_invno = window.btoa(data.fc_invno);
+
+            $('td:eq(7)', row).html(`
+                <button type="button"class="btn btn-warning btn-sm" onclick="get('${data.fc_invno}')"><i class="fas fa-check"></i> Pilih</button>
+         `);
+        }
+    });
+
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
@@ -282,7 +389,7 @@
                 data: 'fc_mappingcode'
             },
             {
-                data: 'fc_mappingname'
+                data: 'mappingmst.fc_mappingname'
             },
             {
                 data: 'sum_debit'
@@ -309,7 +416,7 @@
         },
     });
 
-        function click_delete() {
+    function click_delete() {
         swal({
                 title: 'Apakah anda yakin?',
                 text: 'Apakah anda yakin akan cancel Transaksi Accounting?',

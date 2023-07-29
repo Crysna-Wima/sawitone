@@ -25,5 +25,8 @@ class MappingUser extends Model
         return $this->hasOne(MappingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
     }
 
+    public function user(){
+        return $this->hasOne(User::class, 'fc_userid', 'fc_userid');
+    }
 
 }

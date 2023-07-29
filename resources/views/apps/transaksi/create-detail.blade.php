@@ -88,32 +88,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-row-item" style="margin-right: 30px">
-                            <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Debit</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                            </div>
-                        </div>
-                        <div class="flex-row-item" style="margin-right: 30px">
-                            <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Kredit</p>
-                                <p class="text-danger flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                            </div>
-                        </div>
-                        <div class="flex-row-item">
-                            <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Balance</p>
-                                <p class="flex-row-item text-right" style="font-size: medium" id="">0,00</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         {{-- Debit --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
@@ -132,6 +106,9 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Kode COA</th>
                                         <th scope="col" class="text-center">Nama COA</th>
+                                        <th scope="col" class="text-center">Nominal</th>
+                                        <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
@@ -159,6 +136,9 @@
                                         <th scope="col" class="text-center">No</th>
                                         <th scope="col" class="text-center">Kode COA</th>
                                         <th scope="col" class="text-center">Nama COA</th>
+                                        <th scope="col" class="text-center">Nominal</th>
+                                        <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
                                 </thead>
@@ -168,15 +148,15 @@
                 </div>
             </div>
         </div>
-        <div class="button text-right mb-4">
-            <form id="form_submit_edit" action="/apps/transaksi/submit" method="post">
-                <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-                <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
-                @csrf
-                @method('put')
-                <button type="submit" class="btn btn-success">Submit Transaksi</button>
-            </form>
-        </div>
+    </div>
+    <div class="button text-right mb-4">
+        <form id="form_submit_edit" action="/apps/transaksi/submit" method="post">
+            <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+            <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+            @csrf
+            @method('put')
+            <button type="submit" class="btn btn-success">Submit Transaksi</button>
+        </form>
     </div>
 </div>
 @endsection
@@ -327,7 +307,7 @@
         });
     }
 
-    var tb = $('#tb').DataTable({
+    var tb_debit = $('#tb_debit').DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
@@ -336,7 +316,7 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "/apps/master-mapping/datatables",
+            url: "/apps/transaksi/detail/datatables",
             type: 'GET',
         },
         columnDefs: [{

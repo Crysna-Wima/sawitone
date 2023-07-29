@@ -83,7 +83,6 @@ class MasterMappingController extends Controller
         if (empty($data)) {
             return [
                 'status' => 200,
-                'data' => ['INDUK COA']
             ];
         }
 

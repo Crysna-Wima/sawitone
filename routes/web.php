@@ -630,14 +630,30 @@ Route::group(['middleware' => ['cek_login']], function () {
             });
         });
 
+        Route::prefix('mapping-user')->group(function () {
+            Route::get('/', 'Apps\MappingUserController@index');
+            Route::get('/datatables', 'Apps\MappingUserController@datatables');
+            Route::get('/get-user', 'Apps\MappingUserController@get_user');
+            Route::get('/get-mapping', 'Apps\MappingUserController@get_mapping');
+            Route::post('/store-update', 'Apps\MappingUserController@store_update');
+            Route::get('/detail/{fc_mappingcode}', 'Apps\MappingUserController@detail');
+            Route::delete('/delete/{id}', 'Apps\MappingUserController@delete');
+        });
+
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
+            Route::get('/datatables-invoice', 'Apps\TransaksiController@datatables_invoice');
             Route::post('/store-update', 'Apps\TransaksiController@store_update');
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
             Route::delete('/cancel_transaksi','Apps\TransaksiController@cancel_transaksi');
+
+            Route::prefix('detail')->group(function () {
+                Route::get('/datatables-debit', 'Apps\TransaksiDetailController@datatables_debit');
+                Route::get('/datatables-kredit', 'Apps\TransaksiDetailController@datatables_kredit');
+            });
         });
     });
 });
