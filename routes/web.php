@@ -652,6 +652,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
             Route::delete('/cancel_transaksi','Apps\TransaksiController@cancel_transaksi');
             Route::put('/lanjutkan-bookmark/{fc_trxno}','Apps\TransaksiController@lanjutkan_bookmark');
+            Route::put('/pending','Apps\TransaksiController@pending');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables-debit', 'Apps\TransaksiDetailController@datatables_debit');

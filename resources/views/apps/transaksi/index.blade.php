@@ -28,11 +28,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">No. Transaksi</th>
-                                    <th scope="col" class="text-center">Nama Transaksi</th>
+                                    <th scope="col" class="text-center text-nowrap">No. Transaksi</th>
+                                    <th scope="col" class="text-center text-nowrap">Nama Transaksi</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Operator</th>
-                                    <th scope="col" class="text-center">Referensi Doc</th>
+                                    <th scope="col" class="text-center text-nowrap">Referensi Doc</th>
                                     <th scope="col" class="text-center">Balance</th>
                                     <th scope="col" class="text-center">Informasi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -83,7 +83,8 @@
                 data: 'mapping.fc_mappingname'
             },
             {
-                data: 'fd_trxdate_byuser'
+                data: 'fd_trxdate_byuser',
+                render: formatTimestamp
             },
             {
                 data: 'fc_userid'
@@ -92,7 +93,13 @@
                 data: 'fc_docreference'
             },
             {
-                data: 'fm_balance'
+                data: 'fm_balance',
+                render: function(data, type, row) {
+                    return row.fm_balance.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: 'transaksitype.fv_description'

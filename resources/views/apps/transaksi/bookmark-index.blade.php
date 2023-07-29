@@ -24,11 +24,11 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">No. Transaksi</th>
-                                    <th scope="col" class="text-center">Nama Transaksi</th>
+                                    <th scope="col" class="text-center text-nowrap">No. Transaksi</th>
+                                    <th scope="col" class="text-center text-nowrap">Nama Transaksi</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Operator</th>
-                                    <th scope="col" class="text-center">Referensi Doc</th>
+                                    <th scope="col" class="text-center text-nowrap">Referensi Doc</th>
                                     <th scope="col" class="text-center">Balance</th>
                                     <th scope="col" class="text-center">Informasi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -59,10 +59,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
-            targets: [8]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -76,7 +76,8 @@
                 data: 'mapping.fc_mappingname'
             },
             {
-                data: 'fd_trxdate_byuser'
+                data: 'fd_trxdate_byuser',
+                render: formatTimestamp
             },
             {
                 data: 'fc_userid'
@@ -85,7 +86,13 @@
                 data: 'fc_docreference'
             },
             {
-                data: 'fm_balance'
+                data: 'fm_balance',
+                render: function(data, type, row) {
+                    return row.fm_balance.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: 'transaksitype.fv_description'
@@ -100,7 +107,7 @@
             var fc_trxno = window.btoa(data.fc_trxno);
 
             $('td:eq(8)', row).html(`
-                    <a href="/apps/transaksi/lanjutkan-bookmark" class="btn btn-success btn-sm mr-1 lanjutkan-btn">Lanjutkan</a>
+                    <a href="/apps/transaksi/lanjutkan-bookmark" class="btn btn-warning btn-sm mr-1 lanjutkan-btn"><i class="fas fa-forward mr-1"></i> Lanjutkan</a>
                 `);
 
                 $(row).on('click', '.lanjutkan-btn', function(event) {

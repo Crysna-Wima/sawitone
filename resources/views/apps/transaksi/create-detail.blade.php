@@ -37,7 +37,7 @@
                                     <input type="text" class="form-control" id="fc_userid" value="{{ $data->fc_userid }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-2">
+                            <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group required">
                                     <label>Tgl Transaksi</label>
                                     <div class="input-group" data-date-format="dd-mm-yyyy">
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-3">
+                            <div class="col-12 col-md-6 col-lg-2">
                                 <div class="form-group required">
                                     <label>Tipe Jurnal</label>
                                     <input type="text" class="form-control" id="fc_mappingtrxtype" name="fc_mappingtrxtype" value="{{ $data->transaksitype->fv_description }}" readonly>
@@ -702,7 +702,7 @@
 
     function click_cancel() {
         swal({
-                title: 'Apakah anda yakin?',
+                title: 'Konfirmasi',
                 text: 'Apakah anda yakin akan cancel Transaksi Accounting?',
                 icon: 'warning',
                 buttons: true,
@@ -757,6 +757,58 @@
                     });
                 }
             });
+    }
+
+    function click_pending() {
+        swal({
+            title: 'Konfirmasi',
+            text: 'Apakah anda yakin akan Pending Transaksi Accounting ini?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then((save) => {
+            if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                    url: '/apps/transaksi/pending',
+                    type: 'PUT',
+                    data: {
+                        fc_status: 'P',
+                    },
+                    success: function(response) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        if (response.status == 200) {
+                            iziToast.success({
+                                title: 'Success!',
+                                message: response.message,
+                                position: 'topRight'
+                            });
+                            $("#modal").modal('hide');
+                            location.href = response.link;
+                        } else {
+                            iziToast.error({
+                                title: 'Gagal!',
+                                message: response.message,
+                                position: 'topRight'
+                            });
+                            $("#modal").modal('hide');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                            .responseText + ")", {
+                                icon: 'error',
+                            });
+                    }
+                });
+            }
+        });
+
     }
 </script>
 

@@ -313,11 +313,11 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 6]
+                targets: [0, 1, 2, 3, 5, 6, 7]
             },
             {
                 className: 'text-nowrap',
-                targets: [2, 3, 7]
+                targets: [4]
             },
         ],
         columns: [{

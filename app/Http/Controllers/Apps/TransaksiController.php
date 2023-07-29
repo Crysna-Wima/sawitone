@@ -7,7 +7,7 @@ use App\Models\MappingMaster;
 use App\Models\MappingDetail;
 use Carbon\Carbon;
 use DB;
-use App\Models\NotificationDetail;
+use App\Models\TrxAccountingMaster;
 use App\Models\TempTrxAccountingMaster;
 use App\Models\TempTrxAccountingDetail;
 use Validator;
@@ -63,7 +63,7 @@ class TransaksiController extends Controller
     }
 
     public function datatables(){
-        $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -74,7 +74,7 @@ class TransaksiController extends Controller
     public function datatables_bookmark(){
         $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')
         ->where('fc_status', 'P')
-        ->where('created_by', auth()->user()->fc_userid)
+        ->where('fc_userid', auth()->user()->fc_userid)
         ->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
@@ -193,6 +193,26 @@ class TransaksiController extends Controller
 
     }
 
+    public function pending()
+    {
+        $data = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
+                'fc_status' => 'P',
+            ]);
+
+        if ($data) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil di Pending',
+                'link' => '/apps/transaksi'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal di Pending'
+            ];
+        }
+    }
+
     public function cancel_transaksi(){
         DB::beginTransaction();
 
@@ -205,7 +225,7 @@ class TransaksiController extends Controller
 			return [
 				'status' => 201, // SUCCESS
                 'link' => '/apps/transaksi',
-				'message' => 'Data berhasil dihapus'
+				'message' => 'Data berhasil dicancel'
 			];
 		}
 
