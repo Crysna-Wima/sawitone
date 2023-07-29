@@ -446,7 +446,7 @@
                     if(data[0].grup == null){
                         $('#fc_group').append(`<option value="" selected></option>`);
                     }
-                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
+                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].grup.fv_description}</option>`);
                 } else {
                     iziToast.error({
                         title: 'Error!',

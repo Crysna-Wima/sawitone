@@ -169,6 +169,30 @@ class TransaksiController extends Controller
         }
     }
 
+    public function lanjutkan_bookmark($fc_trxno){
+        //decode
+        $trxno = base64_decode($fc_trxno);
+        // update TempTrxAccountingMst sementara, jika sudah ada data TrxAccountingMst
+        $update = TempTrxAccountingMaster::where('fc_trxno', $trxno)->update([
+            'fc_status' => 'I',
+            'fc_trxno' => auth()->user()->fc_userid,
+        ]);
+        if ($update) {
+            // return response
+            return[
+                'status' => 201,
+                'message' =>'success',
+                'link' => '/apps/transaksi/create-index'
+            ];
+        } else {
+            return[
+                'status' => 300,
+                'message' =>'failed'
+            ];
+        }
+
+    }
+
     public function cancel_transaksi(){
         DB::beginTransaction();
 
