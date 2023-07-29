@@ -630,6 +630,16 @@ Route::group(['middleware' => ['cek_login']], function () {
             });
         });
 
+        Route::prefix('mapping-user')->group(function () {
+            Route::get('/', 'Apps\MappingUserController@index');
+            Route::get('/datatables', 'Apps\MappingUserController@datatables');
+            Route::get('/get-user', 'Apps\MappingUserController@get_user');
+            Route::get('/get-mapping', 'Apps\MappingUserController@get_mapping');
+            Route::post('/store-update', 'Apps\MappingUserController@store_update');
+            Route::get('/detail/{fc_mappingcode}', 'Apps\MappingUserController@detail');
+            Route::delete('/delete/{id}', 'Apps\MappingUserController@delete');
+        });
+
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
