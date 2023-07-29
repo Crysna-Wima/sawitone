@@ -99,6 +99,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <h3>Total : Rp. 0</h3>
                         <div class="table-responsive">
                             <table class="table table-striped" id="tb_debit" width="100%">
                                 <thead style="white-space: nowrap">
@@ -129,6 +130,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <h3>Total : Rp. 0</h3>
                         <div class="table-responsive">
                             <table class="table table-striped" id="tb_kredit" width="100%">
                                 <thead style="white-space: nowrap">
