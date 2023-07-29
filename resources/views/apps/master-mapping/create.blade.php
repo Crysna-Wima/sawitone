@@ -594,18 +594,21 @@
                 fc_mappingcode: mappingcode,
             },
             success: function(response) {
-                if (response.status == 200) {
-                    // swal(response.message, {
-                    //     icon: 'success',
-                    // });
-                    $("#modal_loading").modal('hide');
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_loading').modal('hide');
                     $('#modal_debit').modal('hide');
                     tb_debit.ajax.reload();
                 } else {
-                    swal(response.message, {
-                        icon: 'error',
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
                     });
-                    $("#modal_loading").modal('hide');
                 }
             },
             error: function(xhr, status, error) {
@@ -686,18 +689,21 @@
                 fc_mappingcode: mappingcode,
             },
             success: function(response) {
-                if (response.status == 200) {
-                    // swal(response.message, {
-                    //     icon: 'success',
-                    // });
-                    $("#modal_loading").modal('hide');
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_loading').modal('hide');
                     $('#modal_kredit').modal('hide');
                     tb_kredit.ajax.reload();
                 } else {
-                    swal(response.message, {
-                        icon: 'error',
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
                     });
-                    $("#modal_loading").modal('hide');
                 }
             },
             error: function(xhr, status, error) {
@@ -740,8 +746,10 @@
                                 });
                                 window.location.href = response.link;
                             } else {
-                                swal(response.message, {
-                                    icon: 'error',
+                                iziToast.error({
+                                    title: 'Gagal!',
+                                    message: response.message,
+                                    position: 'topRight'
                                 });
                             }
 
