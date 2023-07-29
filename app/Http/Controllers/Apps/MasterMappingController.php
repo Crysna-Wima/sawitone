@@ -161,4 +161,39 @@ class MasterMappingController extends Controller
 
 		}
     }
+
+    public function submit($fc_mappingcode){
+        DB::beginTransaction();
+
+		try{
+            MappingMaster::where([
+                'fc_mappingcode' =>  $fc_mappingcode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            ])
+            ->update([
+                'fc_status' => "F",
+                'updated_at' => Carbon::now(),
+            ]);
+
+			DB::commit();
+
+			return [
+				'status' => 201, // SUCCESS
+                'link' => '/apps/master-mapping',
+				'message' => 'Data berhasil disubmit'
+			];
+		}
+
+		catch(\Exception $e){
+
+			DB::rollback();
+
+			return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+
+		}
+    }
 }

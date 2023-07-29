@@ -618,6 +618,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/{action}', 'Apps\MasterMappingController@get_transaksi');
             Route::post('/store-update','Apps\MasterMappingController@store_update');
             Route::delete('/cancel/{fc_mappingcode}', 'Apps\MasterMappingController@cancel');
+            Route::put('/submit/{fc_mappingcode}','Apps\MasterMappingController@submit');
 
             Route::prefix('delete')->group(function () {
                 Route::delete('/debit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_debit');

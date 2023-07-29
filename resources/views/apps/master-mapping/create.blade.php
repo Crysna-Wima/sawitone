@@ -168,7 +168,7 @@
         </div>
     </div>
     <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="/apps/master-mapping/submit" method="post">
+        <form id="form_submit_edit" action="/apps/master-mapping/submit/{{ $data->fc_mappingcode }}" method="post">
             <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
             @csrf
             @method('put')
@@ -718,7 +718,7 @@
         });
     }
 
-    function click_cancel(mappingcode) {
+    function click_cancel() {
         swal({
                 title: 'Apakah anda yakin?',
                 text: 'Apakah anda yakin akan mengcancel Buat Mapping ini?',
