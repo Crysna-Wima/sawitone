@@ -649,6 +649,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-update', 'Apps\TransaksiController@store_update');
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
             Route::delete('/cancel_transaksi','Apps\TransaksiController@cancel_transaksi');
+
+            Route::prefix('detail')->group(function () {
+                Route::get('/datatables-debit', 'Apps\TransaksiDetailController@datatables_debit');
+                Route::get('/datatables-kredit', 'Apps\TransaksiDetailController@datatables_kredit');
+            });
         });
     });
 });
