@@ -218,10 +218,14 @@
                     $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
 
                     if (data.fc_mappingtrxtype === 'GNRL') {
-                        $('#fc_docreference').prop('readonly', false);
-                        $('#button_ref').remove();
-                    } else {
-                        $('#fc_docreference').prop('readonly', true);
+                            $('#fc_docreference').prop('readonly', false);
+                            // required input
+                            $('#fc_docreference').prop('required', false);
+                            $('#button_ref').remove();
+                        } else {
+                            $('#fc_docreference').prop('readonly', true);
+                            $('#fc_docreference').prop('required', true);
+
 
                         if ($('#button_ref').length === 0) {
                             var buttonElement = `
