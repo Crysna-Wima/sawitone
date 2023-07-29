@@ -174,9 +174,12 @@
 
                     if (data.fc_mappingtrxtype === 'LREF') {
                             $('#fc_docreference').prop('readonly', false);
+                            // required input
+                            $('#fc_docreference').prop('required', true);
                             $('#button_ref').remove();
                         } else {
                             $('#fc_docreference').prop('readonly', true);
+                            $('#fc_docreference').prop('required', false);
 
                             if ($('#button_ref').length === 0) {
                                 var buttonElement = `
