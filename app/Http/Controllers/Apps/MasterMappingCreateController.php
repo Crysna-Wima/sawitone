@@ -64,16 +64,28 @@ class MasterMappingCreateController extends Controller
             ];
         }
 
+        $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+        ->where('fc_coacode',$request->fc_coacode)
+       ->where('fc_mappingpos', "C")
+       ->where('fc_branch', auth()->user()->fc_branch)->count();
+
         $count_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
         ->where('fc_coacode', $request->fc_coacode)
         ->where('fc_mappingpos', "D")
         ->where('fc_branch', auth()->user()->fc_branch)->count();
 
-        if($count_coa > 0){
+        if($exist_coa > 0){
             return [
                 'status' => 300,
-                'message' => 'Kode COA sudah ada'
+                'message' => 'Kode COA sudah ada di Kredit'
             ];
+        }
+
+        if($count_coa > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Kode COA sudah ada'
+                ];
         }else{
             $data = MappingDetail::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -110,16 +122,28 @@ class MasterMappingCreateController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
+        $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+         ->where('fc_coacode',$request->fc_coacode)
+        ->where('fc_mappingpos', "D")
+        ->where('fc_branch', auth()->user()->fc_branch)->count();
+
         $count_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
         ->where('fc_coacode', $request->fc_coacode)
         ->where('fc_mappingpos', "C")
         ->where('fc_branch', auth()->user()->fc_branch)->count();
 
-        if($count_coa > 0){
+        if($exist_coa > 0){
             return [
                 'status' => 300,
-                'message' => 'Kode COA sudah ada'
+                'message' => 'Kode COA sudah ada di Debit'
             ];
+        }
+
+        if($count_coa > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Kode COA sudah ada'
+                ];
         }else{
             $data = MappingDetail::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,

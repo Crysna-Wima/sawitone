@@ -537,7 +537,7 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "/apps/master-coa/datatables",
+            url: "/apps/master-coa/for-mapping/datatables",
             type: 'GET',
         },
         columnDefs: [{
@@ -609,10 +609,12 @@
                         message: response.message,
                         position: 'topRight'
                     });
+
+                    $('#modal_loading').modal('hide');
+                    $('#modal_debit').modal('hide');
                 }
             },
             error: function(xhr, status, error) {
-                $("#modal_loading").modal('hide');
                 setTimeout(function() {
                     $('#modal_loading').modal('hide');
                 }, 500);
@@ -632,7 +634,7 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "/apps/master-coa/datatables",
+            url: "/apps/master-coa/for-mapping/datatables",
             type: 'GET',
         },
         columnDefs: [{
@@ -704,10 +706,11 @@
                         message: response.message,
                         position: 'topRight'
                     });
+                    $('#modal_loading').modal('hide');
+                    $('#modal_kredit').modal('hide');
                 }
             },
             error: function(xhr, status, error) {
-                $("#modal_loading").modal('hide');
                 setTimeout(function() {
                     $('#modal_loading').modal('hide');
                 }, 500);
