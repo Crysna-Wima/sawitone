@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb_bookmark" width="100%">
+                        <table class="table table-striped" id="tb" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>

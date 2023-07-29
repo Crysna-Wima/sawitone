@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Transaksi Accounting')
+@section('title', 'Bookmark Transaksi Accounting')
 @section('css')
 <style>
     .required label:after {
