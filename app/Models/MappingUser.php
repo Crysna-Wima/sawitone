@@ -21,4 +21,8 @@ class MappingUser extends Model
     public $incrementing = false;
     protected $guarded = ['id'];
 
+    public function mappingmst(){
+        return $this->hasOne(MappingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
+    }
+
 }

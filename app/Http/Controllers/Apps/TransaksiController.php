@@ -13,6 +13,7 @@ use App\Models\TempTrxAccountingDetail;
 use Validator;
 use Auth;
 use App\Helpers\ApiFormatter;
+use App\Models\MappingUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -66,7 +67,7 @@ class TransaksiController extends Controller
 
     public function datatables_mapping()
     {
-        $data = MappingMaster::with('transaksi', 'tipe')->where('fc_hold', 'F')->where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingUser::with('mappingmst', 'transaksi', 'tipe')->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
