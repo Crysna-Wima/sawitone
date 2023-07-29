@@ -16,15 +16,11 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Transaksi</h4>
-                    <div class="card-header-action">
-                        <a href="#" type="button" class="btn btn-warning mr-1"><i class="fas fa-bookmark"></i> Bookmark</a>
-                        <a href="/apps/transaksi/create-index" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Data Transaksi</a>
-                    </div>
+                    <h4>Daftar Transaksi</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb" width="100%">
+                        <table class="table table-striped" id="tb_bookmark" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
@@ -45,4 +41,100 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    var tb_bookmark = $('#tb_bookmark').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        pageLength: 5,
+        order: [
+            [1, 'desc']
+        ],
+        ajax: {
+            url: "/apps/transaksi/datatables-bookmark",
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+        }, {
+            className: 'text-nowrap',
+            targets: [8]
+        }],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_trxno'
+            },
+            {
+                data: 'mapping.fc_mappingname'
+            },
+            {
+                data: 'fd_trxdate_byuser'
+            },
+            {
+                data: 'fc_userid'
+            },
+            {
+                data: 'fc_docreference'
+            },
+            {
+                data: 'fm_balance'
+            },
+            {
+                data: 'transaksitype.fv_description'
+            },
+            {
+                data: null,
+            },
+        ],
+
+        rowCallback: function(row, data) {
+            // encode data.fc_trxno
+            var fc_trxno = window.btoa(data.fc_trxno);
+
+            $('td:eq(8)', row).html(`
+                    <a href="/apps/transaksi/lanjutkan-bookmark" class="btn btn-success btn-sm mr-1 lanjutkan-btn">Lanjutkan</a>
+                `);
+
+                $(row).on('click', '.lanjutkan-btn', function(event) {
+                event.preventDefault();
+
+                var fc_mappingcode = $(row).attr('id');
+                var url_lanjutkan = "/apps/transaksi/lanjutkan-bookmark/" + fc_trxno;
+
+                showConfirmationDialog(url_lanjutkan);
+             });
+        },
+    });
+
+    function showConfirmationDialog(url_lanjutkan) {
+            swal({
+                title: "Are you sure?",
+                text: "Lanjutkan buat transaksi?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willProceed) => {
+                if (willProceed) {
+                    // User clicked the "Proceed" button in the SweetAlert dialog
+                    sendPUTRequest(url_lanjutkan);
+                } else {
+                    // User clicked the "Cancel" button in the SweetAlert dialog
+                    console.log("PUT request canceled.");
+                }
+            });
+        }
+
+
+    $('.modal').css('overflow-y', 'auto');
+</script>
+
 @endsection
