@@ -270,10 +270,10 @@
                 data: 'sum_credit'
             },
             {
-                data: 'tipe.fv_description'
+                data: 'mappingmst.tipe.fv_description'
             },
             {
-                data: 'transaksi.fv_description'
+                data: 'mappingmst.transaksi.fv_description'
             },
             {
                 data: null,
