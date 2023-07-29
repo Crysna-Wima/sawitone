@@ -77,9 +77,9 @@
                                 <div class="col-12 col-md-6 col-lg-3" id="doc-ref">
                                     <div class="form-group">
                                         <label>Dokumen Referensi</label>
-                                        <div class="input-group mb-3">
+                                        <div class="input-group mb-3" id="grup_input">
                                             <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" readonly>
-                                            <div class="input-group-append">
+                                            <div class="input-group-append" id="button_ref">
                                                 <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
@@ -171,6 +171,24 @@
                     $('#fc_mappingtrxtype').append(`<option value="${data.fc_mappingtrxtype}" selected>${data.transaksi.fv_description}</option>`);
                     $('#fc_mappingtrxtype').prop('disabled', true);
                     $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
+
+                    if (data.fc_mappingtrxtype === 'LREF') {
+                            $('#fc_docreference').prop('readonly', false);
+                            $('#button_ref').remove();
+                        } else {
+                            $('#fc_docreference').prop('readonly', true);
+
+                            if ($('#button_ref').length === 0) {
+                                var buttonElement = `
+                                    <div class="input-group-append" id="button_ref">
+                                        <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
+                                    </div>
+                                `;
+                                $('#grup_input').append(buttonElement);
+                            }
+                        }
+
+                
 
                     $('#modal_mapping').modal('hide');
                 } else {
@@ -287,6 +305,65 @@
                 `);
         },
     });
+
+        function click_delete() {
+        swal({
+                title: 'Apakah anda yakin?',
+                text: 'Apakah anda yakin akan cancel Transaksi Accounting?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/transaksi/cancel_transaksi',
+                        type: "DELETE",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status === 200) {
+
+                                $("#modal").modal('hide');
+                                iziToast.success({
+                                    title: 'Success!',
+                                    message: response.message,
+                                    position: 'topRight'
+                                });
+
+                                tb.ajax.reload(null, false);
+                            } else if (response.status === 201) {
+                                $("#modal").modal('hide');
+                                iziToast.success({
+                                    title: 'Success!',
+                                    message: response.message,
+                                    position: 'topRight'
+                                });
+                                // arahkan ke link
+                                location.href = response.link;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+    }
 </script>
 
 @endsection
