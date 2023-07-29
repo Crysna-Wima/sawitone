@@ -28,7 +28,7 @@
                             <div class="col-12 col-md-6 col-lg-2">
                                 <div class="form-group required">
                                     <label>Cabang</label>
-                                    <input type="text" class="form-control" id="fc_userid" value="{{ $data->dc_branch }}" readonly>
+                                    <input type="text" class="form-control" id="fc_userid" value="{{ $data->fc_branch }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-2">
@@ -72,7 +72,7 @@
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group required">
                                     <label>Tipe Jurnal</label>
-                                    <input type="text" class="form-control" id="fc_informtrx" name="fc_informtrx" value="{{ $data->fc_informtrx }}">
+                                    <input type="text" class="form-control" id="fc_informtrx" name="fc_informtrx" value="{{ $data->transaksitype->fv_description }}">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
