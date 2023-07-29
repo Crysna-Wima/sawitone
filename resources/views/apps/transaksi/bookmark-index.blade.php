@@ -124,11 +124,30 @@
             })
             .then((willProceed) => {
                 if (willProceed) {
-                    // User clicked the "Proceed" button in the SweetAlert dialog
                     sendPUTRequest(url_lanjutkan);
                 } else {
-                    // User clicked the "Cancel" button in the SweetAlert dialog
                     console.log("PUT request canceled.");
+                }
+            });
+        }
+
+        function sendPUTRequest(url_lanjutkan) {
+            $('#modal_loading').modal('show');
+            $.ajax({
+                url: url_lanjutkan,
+                type: 'PUT',
+                success: function(response) {
+                    $('#modal_loading').modal('hide');
+                    if(response.status == 201){
+                        // arahkan ke response.link
+                        window.location.href = response.link;
+                    }else{
+                        swal("Error", response.message, "error");
+                    }
+                },
+                error: function(error) {
+                    $('#modal_loading').modal('hide');
+                    swal("Error", error.message, "error");
                 }
             });
         }
