@@ -256,11 +256,11 @@
                                 <label id="label-select">Direct Payment</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="">
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">TIDAK</span>
                                     </label>
                                 </div>
@@ -271,11 +271,11 @@
                                 <label id="label-select">Status Neraca</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">KREDIT</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">DEBIT</span>
                                     </label>
                                 </div>
@@ -318,7 +318,7 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Kode COA</label>
-                                <select name="fc_coacode_kredit" id="fc_coacode_kredit" class="select2 required-field"></select>
+                                <select name="fc_coacode_kredit" id="fc_coacode_kredit" onchange="get_data_coa_kredit()" class="select2 required-field"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -379,6 +379,7 @@
     $(document).ready(function() {
         get_data_payment();
         get_coa();
+        get_coa_kredit();
     })
 
     function add_debit() {
@@ -439,14 +440,54 @@
                     var data = response.data;
                     console.log(data);
                     var value = data[0].mst_coa.fc_directpayment;
-                    // console.log(value)
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
                     var value2 = data[0].mst_coa.fc_balancestatus;
-                    $("input[name=fc_balancestatus][value=" + value + "]").prop('checked', true);
-                    if(data[0].grup == null){
-                        $('#fc_group').append(`<option value="" selected></option>`);
+                    $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
+                    if(data[0].mst_coa.transaksitype == null){
+                        $('#fc_group').append(`<option value="" selected>-</option>`);
+                    } else {
+                        $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
                     }
-                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function get_data_coa_kredit() {
+        $('#modal_loading').modal('show');
+        var fc_coacode = window.btoa($('#fc_coacode_kredit').val());
+        // console.log(fc_coacode);
+        $.ajax({
+            url: "/apps/transaksi/detail/kredit/" + fc_coacode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    console.log(data);
+                    var value = data[0].mst_coa.fc_directpayment;
+                    $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
+                    var value2 = data[0].mst_coa.fc_balancestatus;
+                    $("input[name=fc_balancestatus_kredit][value=" + value2 + "]").prop('checked', true);
+                    if(data[0].mst_coa.transaksitype == null){
+                        $('#fc_group_kredit').append(`<option value="" selected>-</option>`);
+                    } else {
+                        $('#fc_group_kredit').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+                    }
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -479,8 +520,35 @@
                     $("#fc_coacode").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_coacode").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
-                    }
+                    }                    
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
+    function get_coa_kredit() {
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: "/apps/transaksi/detail/get-coa-kredit",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
                     $("#fc_coacode_kredit").empty();
                     $("#fc_coacode_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {

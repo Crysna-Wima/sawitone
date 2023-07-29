@@ -23,9 +23,4 @@ class MappingDetail extends Model
     {
         return $this->belongsTo(MasterCoa::class, 'fc_coacode', 'fc_coacode');
     }
-
-    public function grup()
-    {
-        return $this->belongsTo(TransaksiType::class, 'fc_kode', 'fc_group');
-    }
 }
