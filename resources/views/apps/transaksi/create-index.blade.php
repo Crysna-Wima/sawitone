@@ -217,14 +217,14 @@
                     $('#fc_mappingtrxtype').prop('disabled', true);
                     $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
 
-                    if (data.fc_mappingtrxtype === 'LREF') {
+                    if (data.fc_mappingtrxtype === 'GNRL') {
                             $('#fc_docreference').prop('readonly', false);
                             // required input
-                            $('#fc_docreference').prop('required', true);
+                            $('#fc_docreference').prop('required', false);
                             $('#button_ref').remove();
                         } else {
                             $('#fc_docreference').prop('readonly', true);
-                            $('#fc_docreference').prop('required', false);
+                            $('#fc_docreference').prop('required', true);
 
 
                         if ($('#button_ref').length === 0) {
