@@ -77,9 +77,9 @@
                                 <div class="col-12 col-md-6 col-lg-3" id="doc-ref">
                                     <div class="form-group">
                                         <label>Dokumen Referensi</label>
-                                        <div class="input-group mb-3">
+                                        <div class="input-group mb-3" id="grup_input">
                                             <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" readonly>
-                                            <div class="input-group-append">
+                                            <div class="input-group-append" id="button_ref">
                                                 <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
@@ -171,6 +171,24 @@
                     $('#fc_mappingtrxtype').append(`<option value="${data.fc_mappingtrxtype}" selected>${data.transaksi.fv_description}</option>`);
                     $('#fc_mappingtrxtype').prop('disabled', true);
                     $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
+
+                    if (data.fc_mappingtrxtype === 'LREF') {
+                            $('#fc_docreference').prop('readonly', false);
+                            $('#button_ref').remove();
+                        } else {
+                            $('#fc_docreference').prop('readonly', true);
+
+                            if ($('#button_ref').length === 0) {
+                                var buttonElement = `
+                                    <div class="input-group-append" id="button_ref">
+                                        <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
+                                    </div>
+                                `;
+                                $('#grup_input').append(buttonElement);
+                            }
+                        }
+
+                
 
                     $('#modal_mapping').modal('hide');
                 } else {
