@@ -31,4 +31,10 @@ class TransaksiType extends Model
         return $this->belongsTo(TrxAccountingMaster::class,'fc_kode','fc_informtrx');
     }
 
+    public function temptrxaccountingmst(){
+        return $this->hasMany(TempTrxAccountingMaster::class,'fc_kode','fc_informtrx');
+    }
+
+    
+
 }

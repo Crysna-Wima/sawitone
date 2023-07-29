@@ -38,6 +38,7 @@ class TransaksiController extends Controller
             $data['total'] = $total;
 
             return view('apps.transaksi.create-detail', $data);
+            // dd($data);
         }
         return view('apps.transaksi.create-index');
     }
@@ -119,7 +120,6 @@ class TransaksiController extends Controller
         $temp_trxaccounting_mst = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if (empty($temp_trxaccounting_mst)) {
-            // create TempInvoiceMst
             $insert = TempTrxAccountingMaster::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
