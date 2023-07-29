@@ -599,6 +599,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'DataMaster\MasterCoaController@index');
             Route::get('/detail/{fc_coacode}', 'DataMaster\MasterCoaController@detail');
             Route::get('/datatables', 'DataMaster\MasterCoaController@datatables');
+            Route::get('/for-mapping/datatables', 'DataMaster\MasterCoaController@datatables_coa_mapping');
             Route::get('/{layer}', 'DataMaster\MasterCoaController@getParent');
             Route::post('/store-update', 'DataMaster\MasterCoaController@storeUpdate');
             Route::delete('/delete/{fc_coacode}', 'DataMaster\MasterCoaController@delete');
