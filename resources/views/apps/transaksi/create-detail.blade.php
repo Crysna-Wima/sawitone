@@ -248,7 +248,7 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Kode COA</label>
-                                <select name="fc_coacode" id="fc_coacode" class="select2 required-field"></select>
+                                <select name="fc_coacode" id="fc_coacode" onchange="get_data_coa()" class="select2 required-field"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -256,11 +256,11 @@
                                 <label id="label-select">Direct Payment</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" disabled>
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input">
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="" disabled>
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">TIDAK</span>
                                     </label>
                                 </div>
@@ -271,11 +271,11 @@
                                 <label id="label-select">Status Neraca</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input" disabled>
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input">
                                         <span class="selectgroup-button">KREDIT</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="" disabled>
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="">
                                         <span class="selectgroup-button">DEBIT</span>
                                     </label>
                                 </div>
@@ -376,13 +376,7 @@
 
 @section('js')
 <script>
-    $(".datepicker").datepicker({
-        changeMonth: true,
-        changeYear: true,
-    });
-
     $(document).ready(function() {
-        get_data_grup();
         get_data_payment();
         get_coa();
     })
@@ -429,24 +423,25 @@
         });
     }
 
-    function get_data_grup() {
+    function get_data_coa() {
+        $('#modal_loading').modal('show');
+        var fc_coacode = window.btoa($('#fc_coacode').val());
         $.ajax({
-            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/JOURNALGRP",
+            url: "/apps/transaksi/detail/" + fc_coacode,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-                    $("#fc_group").empty();
-                    $("#fc_group").append(`<option value="" selected disabled> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_group").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                    }
-                    $("#fc_group_kredit").empty();
-                    $("#fc_group_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_group_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                    }
+                    console.log(data);
+                    var value = data.mst_coa.fc_directpayment;
+                    $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
+                    var value2 = data.mst_coa.fc_balancestatus;
+                    $("input[name=fc_balancestatus][value=" + value + "]").prop('checked', true);
+                    $('#fc_group').append(`<option value="${data.mst_coa.fc_group}" selected>${data.grup.fv_description}</option>`);
                 } else {
                     iziToast.error({
                         title: 'Error!',

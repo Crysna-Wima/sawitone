@@ -97,6 +97,7 @@ class MappingUserController extends Controller
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_userid' => $request->fc_userid,
                 'fc_mappingcode' => $request->fc_mappingcode,
+                'fc_hold' => $request->fc_hold,
                 'fv_description' => $request->fv_description,
             ]);
 
