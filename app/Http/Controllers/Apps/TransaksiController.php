@@ -69,7 +69,7 @@ class TransaksiController extends Controller
 
     public function datatables_mapping()
     {
-        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_userid', auth()->user()->fc_userid)->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()

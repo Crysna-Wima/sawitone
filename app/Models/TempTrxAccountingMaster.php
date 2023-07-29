@@ -29,4 +29,9 @@ class TempTrxAccountingMaster extends Model
     public function mapping(){
         return $this->belongsTo(MappingMaster::class, 'fc_mappingcode', 'fc_mappingcode');
     }
+
+    // mappinguser
+    public function mappinguser(){
+        return $this->belongsTo(MappingMaster::class, 'fc_mappinguser', 'fc_mappingcode');
+    }
 }
