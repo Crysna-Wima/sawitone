@@ -13,6 +13,7 @@ use App\Models\TempTrxAccountingDetail;
 use Validator;
 use Auth;
 use App\Helpers\ApiFormatter;
+use App\Models\InvMaster;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
 use App\Models\MasterCoa;
@@ -304,4 +305,83 @@ class TransaksiDetailController extends Controller
             ];
         }
     }
+
+    public function submit_transaksi(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'status_balance' => 'required',
+            'tipe_jurnal' => 'required',
+            'jumlah_balance' => 'required'
+        ]);
+    
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+    
+        DB::beginTransaction();
+        try {
+            // Fetch TempTrxAccountingMaster
+            $temp_master = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                ->where('fc_branch', auth()->user()->fc_branch)->first();
+    
+            // Fetch InvMaster
+            $invmst = InvMaster::where('fc_invno', $temp_master->fc_docreference)
+                ->where('fc_branch', auth()->user()->fc_branch)->first();
+    
+            // Fetch temp detail count
+            $exist_detail = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                ->where('fm_nominal', '!=', 0)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->count();
+    
+            if ($exist_detail < 1) {
+                throw new \Exception('Oops! Item debit atau kredit tidak boleh kosong');
+            } else if ($request->status_balance == 'false') {
+                throw new \Exception('Oops! Gagal submit karena tidak balance');
+            } else {
+                if ($request->tipe_jurnal == 'LREF') {
+                    if ($request->jumlah_balance > ($invmst->fm_brutto - $invmst->fm_paidvalue)) {
+                        throw new \Exception('Oops! Balance Transaksi melebihi tagihan yang tertera');
+                    }
+                }
+    
+                // Update TempTrxAccountingMaster
+                $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)->update([
+                        'fc_status' => 'F',
+                        'fv_description' => $request->fv_description_submit
+                    ]);
+    
+                // Delete temp detail and master
+                TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)->delete();
+                TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)->delete();
+    
+                if (!$update) {
+                    throw new \Exception('Oops! Gagal submit');
+                }
+    
+                DB::commit();
+    
+                return [
+                    'status' => 201,
+                    'message' => 'Submit Berhasil',
+                    'link' => '/apps/transaksi'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+    
+            // Return error response
+            return [
+                'status' => 300,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+    
 }
