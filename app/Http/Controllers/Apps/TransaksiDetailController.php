@@ -123,7 +123,6 @@ class TransaksiDetailController extends Controller
                 return response()->json([
                     'status' => 201,
                     'message' => 'Data berhasil dihapus',
-                    'link' => '/apps/transaksi/create-index'
                 ]);
             }
             return response()->json([
