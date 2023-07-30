@@ -183,7 +183,9 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit_edit" action="/apps/transaksi/submit" method="post">
+            <form id="form_submit_edit" action="/apps/transaksi/detail/submit_transaksi" method="post">
+                @csrf
+                @method('put')
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -205,9 +207,12 @@
                 <div class="button text-right mb-4">
                     <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
                     <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
-                    @csrf
-                    @method('put')
-                    <button type="submit" class="btn btn-success">Submit Transaksi</button>
+                      
+                        <input type="text" name="status_balance" id="status_balance" hidden>
+                        <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                        <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
+                        <button type="submit" class="btn btn-success">Submit Transaksi</button>
+                 
                 </div>
             </form>
         </div>
@@ -394,6 +399,8 @@
 
 @section('js')
 <script>
+    // var editCatatan =  $('#fv_description').val();
+    // $('#fv_description_submit').val(editCatatan);
     $(document).ready(function() {
         get_data_payment();
         get_coa();
@@ -419,6 +426,8 @@
 
             balance = debit - kredit;
             if (balance == 0) {
+                $('#status_balance').val('true');
+                $('#jumlah_balance').val(parseFloat(debit));
                 $('#balance').html("Rp. 0");
                 iziToast.info({
                     title: 'Info!',
@@ -426,6 +435,7 @@
                     position: 'topRight'
                 });
             } else {
+                $('#status_balance').val('false');
                 $('#balance').html("Rp. " + fungsiRupiah(parseFloat(balance)));
                 iziToast.info({
                     title: 'Info!',

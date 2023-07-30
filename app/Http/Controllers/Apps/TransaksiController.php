@@ -172,11 +172,22 @@ class TransaksiController extends Controller
     public function lanjutkan_bookmark($fc_trxno){
         //decode
         $trxno = base64_decode($fc_trxno);
-        // update TempTrxAccountingMst sementara, jika sudah ada data TrxAccountingMst
+        $exist_data = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->count();
+
+        if($exist_data > 0){
+            return [
+                'status' => 300,
+                'message' => 'Terdapat input transaksi yang belum selesai'
+            ];
+        }
+
         $update = TempTrxAccountingMaster::where('fc_trxno', $trxno)->update([
             'fc_status' => 'I',
             'fc_trxno' => auth()->user()->fc_userid,
         ]);
+        
         if ($update) {
             // return response
             return[
