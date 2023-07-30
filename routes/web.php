@@ -661,6 +661,8 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/get-coa-kredit', 'Apps\TransaksiDetailController@get_coa_kredit');
                 Route::get('/{coacode}', 'Apps\TransaksiDetailController@get_data_coa');
                 Route::get('/kredit/{coacode}', 'Apps\TransaksiDetailController@get_data_coa_kredit');
+                Route::post('/store-debit', 'Apps\TransaksiDetailController@store_debit');
+                Route::post('/store-kredit', 'Apps\TransaksiDetailController@store_kredit');
             });
         });
     });

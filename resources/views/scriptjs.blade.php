@@ -76,6 +76,7 @@
                          $("#form_submit")[0].reset();
                          reset_all_select();
                          tb.ajax.reload(null, false);
+                 
                       }
                       else if(response.status == 201){
                          swal(response.message, { icon: 'success', });
@@ -293,7 +294,7 @@
                       if(response.status == 200){
                          swal(response.message, { icon: 'success', });
                         //  $("#modal").modal('hide');
-                         $("#form_submit")[0].reset();
+                         $("#form_submit_custom")[0].reset();
                          reset_all_select();
                          tb.ajax.reload(null, false);
                       }
