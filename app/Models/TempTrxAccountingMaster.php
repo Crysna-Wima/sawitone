@@ -26,7 +26,7 @@ class TempTrxAccountingMaster extends Model
     }
     
     public function transaksitype(){
-        return $this->belongsTo(TransaksiType::class, 'fc_mappingtrxtype', 'fc_kode')->where('fc_trx','JOURNALTYPE');
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_mappingtrxtype')->where('fc_trx','JOURNALTYPE');
     }
 
     public function mapping(){

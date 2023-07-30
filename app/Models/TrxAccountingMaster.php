@@ -20,7 +20,7 @@ class TrxAccountingMaster extends Model
     protected $guarded = ['type'];
 
     public function transaksitype(){
-        return $this->belongsTo(TransaksiType::class, 'fc_informtrx', 'fc_kode');
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_mappingtrxtype');
     }
 
     public function mapping(){
