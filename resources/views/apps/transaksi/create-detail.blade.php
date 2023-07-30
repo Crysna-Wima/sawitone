@@ -308,6 +308,7 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Metode Pembayaran</label>
+                                <input name="fc_paymentmethod" id="fc_paymentmethod_hidden" type="text" hidden>
                                 <select name="fc_paymentmethod" id="fc_paymentmethod" class="select2" required></select>
                             </div>
                         </div>
@@ -378,6 +379,7 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Metode Pembayaran</label>
+                                <input name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit_hidden" type="text" hidden>
                                 <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="select2 " required></select>
                             </div>
                         </div>
@@ -456,10 +458,13 @@
 
 
     function add_debit() {
+
+        $('#fc_paymentmethod').prop('disabled', false);
         $('#modal_debit').modal('show');
     }
 
     function add_kredit() {
+        $('#fc_paymentmethod_kredit').prop('disabled', false);
         $('#modal_kredit').modal('show');
     }
 
@@ -512,13 +517,18 @@
                     console.log(data);
                     var value = data[0].mst_coa.fc_directpayment;
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
+                    if(value == "F") {
+                        $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
+                        $('#fc_paymentmethod').prop('disabled', true);
+                        $('#fc_paymentmethod_hidden').val("NON");
+                    }
                     var value2 = data[0].mst_coa.fc_balancestatus;
                     $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
                     if (data[0].mst_coa.transaksitype == null) {
                         $('#fc_group').append(`<option value="" selected>-</option>`);
                     }
                     $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
-
+                    
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -552,6 +562,11 @@
                     console.log(data);
                     var value = data[0].mst_coa.fc_directpayment;
                     $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
+                    if(value == "F") {
+                        $('#fc_paymentmethod_kredit').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
+                        $('#fc_paymentmethod_kredit').prop('disabled', true);
+                        $('#fc_paymentmethod_kredit_hidden').val("NON");
+                    }
                     var value2 = data[0].mst_coa.fc_balancestatus;
                     $("input[name=fc_balancestatus_kredit][value=" + value2 + "]").prop('checked', true);
                     if (data[0].mst_coa.transaksitype == null) {
@@ -576,9 +591,11 @@
     }
 
     function get_coa() {
+        var mappingMst = window.btoa("{{ $data->fc_mappingcode }}");
+
         $('#modal_loading').modal('show');
         $.ajax({
-            url: "/apps/transaksi/detail/get-coa",
+            url: "/apps/transaksi/detail/get-coa/" + mappingMst,
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -609,9 +626,10 @@
     }
 
     function get_coa_kredit() {
+        var mappingMst = window.btoa("{{ $data->fc_mappingcode }}");
         $('#modal_loading').modal('show');
         $.ajax({
-            url: "/apps/transaksi/detail/get-coa-kredit",
+            url: "/apps/transaksi/detail/get-coa-kredit/" + mappingMst,
             type: "GET",
             dataType: "JSON",
             success: function(response) {

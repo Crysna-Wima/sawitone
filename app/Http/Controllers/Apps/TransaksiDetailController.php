@@ -86,9 +86,16 @@ class TransaksiDetailController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function get_coa()
-    {
-        $data = MappingDetail::with('mst_coa')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function get_coa($mappingMst){
+        $fc_mappingcode = base64_decode($mappingMst); 
+
+        $data = MappingDetail::with('mst_coa')
+        ->where([
+            'fc_mappingcode' => $fc_mappingcode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_mappingpos' => 'D',
+        ])->get();
 
         if (empty($data)) {
             return [
@@ -99,9 +106,16 @@ class TransaksiDetailController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function get_coa_kredit()
-    {
-        $data = MappingDetail::with('mst_coa')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function get_coa_kredit($mappingMst){
+        $fc_mappingcode = base64_decode($mappingMst); 
+
+        $data = MappingDetail::with('mst_coa')
+        ->where([
+            'fc_mappingcode' => $fc_mappingcode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_mappingpos' => 'C',
+        ])->get();
 
         if (empty($data)) {
             return [

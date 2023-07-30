@@ -143,7 +143,7 @@ class TransaksiController extends Controller
                 'fc_trxno' => auth()->user()->fc_userid,
                 'fc_mappingcode' => $request->fc_mappingcode,
                 'fc_mappingtrxtype' => $request->fc_mappingtrxtype_hidden,
-                'fc_docreference' => $request->fc_docreference,
+                'fc_docreference' => $request->fc_docreference !== null ? $request->fc_docreference : "",
                 'fc_status' => 'I',
                 'fd_trxdate_byuser' => date('Y-m-d H:i:s', strtotime($request->fd_trxdate_byuser)),
                 'fc_userid' => auth()->user()->fc_userid,

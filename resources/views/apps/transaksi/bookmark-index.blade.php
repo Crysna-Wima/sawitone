@@ -106,6 +106,10 @@
             // encode data.fc_trxno
             var fc_trxno = window.btoa(data.fc_trxno);
 
+            if(data.fc_docreference == ""){
+                $('td:eq(5)', row).html(`<i><b>No Reference</b></i>`);
+            }
+
             $('td:eq(8)', row).html(`
                     <a href="/apps/transaksi/lanjutkan-bookmark" class="btn btn-warning btn-sm mr-1 lanjutkan-btn"><i class="fas fa-forward mr-1"></i> Lanjutkan</a>
                 `);

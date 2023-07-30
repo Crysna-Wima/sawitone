@@ -185,7 +185,13 @@
     })
 
     function click_modal_doc() {
-        $('#modal_doc').modal('show');
+        if($('#fc_mappingcode').val() != ""){
+            $('#modal_doc').modal('show');
+        } else  {
+            swal("Silahkan mengisi mapping terlebih dahulu", {
+                    icon: 'warning',
+            });
+        }
     }
 
     function click_modal_mapping() {
@@ -199,6 +205,7 @@
 
     function get_detail(fc_mappingcode) {
         $('#modal_loading').modal('show');
+        $('#fc_docreference').val("");
         var mappingcode = window.btoa(fc_mappingcode);
 
         $.ajax({
