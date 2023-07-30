@@ -145,7 +145,7 @@
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -175,7 +175,7 @@
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
                                         <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                        <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -184,15 +184,29 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="button text-right mb-4">
-        <form id="form_submit_edit" action="/apps/transaksi/submit" method="post">
-            <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-            <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
-            @csrf
-            @method('put')
-            <button type="submit" class="btn btn-success">Submit Transaksi</button>
-        </form>
+        <div class="col-12 col-md-12 col-lg-12">
+            <form id="form_submit_edit" action="/apps/transaksi/submit" method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button text-right mb-4">
+                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    @csrf
+                    @method('put')
+                    <button type="submit" class="btn btn-success">Submit Transaksi</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
@@ -246,9 +260,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group ">
+                            <div class="form-group required">
                                 <label>Kode COA</label>
-                                <select name="fc_coacode" id="fc_coacode" onchange="get_data_coa()" class="select2 "></select>
+                                <select name="fc_coacode" id="fc_coacode" onchange="get_data_coa()" class="select2" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -256,11 +270,11 @@
                                 <label id="label-select">Direct Payment</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" >
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="" >
+                                        <input type="radio" name="fc_directpayment" id="fc_directpayment" value="F" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">TIDAK</span>
                                     </label>
                                 </div>
@@ -271,11 +285,11 @@
                                 <label id="label-select">Status Neraca</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="C" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">KREDIT</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="">
+                                        <input type="radio" name="fc_balancestatus" id="fc_balancestatus" value="D" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">DEBIT</span>
                                     </label>
                                 </div>
@@ -284,13 +298,13 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group ">
                                 <label>Group</label>
-                                <select name="fc_group" id="fc_group" class="select2"></select>
+                                <select name="fc_group" id="fc_group" class="select2" disabled></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Metode Pembayaran</label>
-                                <select name="fc_paymentmethod" id="fc_paymentmethod" class="select2"></select>
+                                <select name="fc_paymentmethod" id="fc_paymentmethod" class="select2" required></select>
                             </div>
                         </div>
                     </div>
@@ -316,9 +330,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group ">
+                            <div class="form-group required">
                                 <label>Kode COA</label>
-                                <select name="fc_coacode_kredit" id="fc_coacode_kredit" onchange="get_data_coa_kredit()" class="select2 -field"></select>
+                                <select name="fc_coacode_kredit" id="fc_coacode_kredit" onchange="get_data_coa_kredit()" class="select2 -field" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -326,11 +340,11 @@
                                 <label id="label-select">Direct Payment</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment_kredit" id="fc_directpayment_kredit" value="T" class="selectgroup-input">
+                                        <input type="radio" name="fc_directpayment_kredit" id="fc_directpayment_kredit" value="T" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_directpayment_kredit" id="fc_directpayment_kredit" value="F" class="selectgroup-input" checked="">
+                                        <input type="radio" name="fc_directpayment_kredit" id="fc_directpayment_kredit" value="F" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">TIDAK</span>
                                     </label>
                                 </div>
@@ -341,11 +355,11 @@
                                 <label id="label-select">Status Neraca</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus_kredit" id="fc_balancestatus_kredit" value="C" class="selectgroup-input">
+                                        <input type="radio" name="fc_balancestatus_kredit" id="fc_balancestatus_kredit" value="C" class="selectgroup-input" disabled>
                                         <span class="selectgroup-button">KREDIT</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="fc_balancestatus_kredit" id="fc_balancestatus_kredit" value="D" class="selectgroup-input" >
+                                        <input type="radio" name="fc_balancestatus_kredit" id="fc_balancestatus_kredit" value="D" class="selectgroup-input" checked="" disabled>
                                         <span class="selectgroup-button">DEBIT</span>
                                     </label>
                                 </div>
@@ -354,13 +368,13 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group ">
                                 <label>Group</label>
-                                <select name="fc_group_kredit" id="fc_group_kredit" class="select2 "></select>
+                                <select name="fc_group_kredit" id="fc_group_kredit" class="select2" disabled></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group required">
                                 <label>Metode Pembayaran</label>
-                                <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="select2 "></select>
+                                <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="select2 " required></select>
                             </div>
                         </div>
                     </div>
@@ -392,7 +406,7 @@
 
     function get_data_payment() {
         $.ajax({
-            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/PaymentACC",
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/PAYMENTACC",
             type: "GET",
             dataType: "JSON",
             success: function(response) {
@@ -400,12 +414,10 @@
                     var data = response.data;
                     $("#fc_paymentmethod").empty();
                     $("#fc_paymentmethod").append(`<option value="" selected disabled> - Pilih - </option>`);
-                    for (var i = 0; i < data.length; i++) {
-                        $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                    }
                     $("#fc_paymentmethod_kredit").empty();
                     $("#fc_paymentmethod_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
+                        $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
@@ -445,9 +457,9 @@
                     $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
                     if (data[0].mst_coa.transaksitype == null) {
                         $('#fc_group').append(`<option value="" selected>-</option>`);
-                    } 
-                        $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
-                    
+                    }
+                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -585,10 +597,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6]
         }, {
             className: 'text-nowrap',
-            targets: [6]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -604,16 +616,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-success" style="color: white; font-weight:600">Rp</span>
-                                </div>
-                                <input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">
-                            </div>`;
+                    return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
                 }
             },
             {
-                data: 'fc_paymentmethod'
+                data: 'payment.fv_description',
+                defaultContent: '-'
             },
             {
                 data: null,
@@ -627,8 +635,12 @@
         ],
 
         rowCallback: function(row, data) {
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
+            var fc_coacode = window.btoa(data.fc_coacode);
+
             $('td:eq(6)', row).html(`
-                    
+                <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fas fa-edit"> </i></button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
     });
@@ -647,10 +659,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6]
         }, {
             className: 'text-nowrap',
-            targets: [6]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -666,16 +678,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-success" style="color: white; font-weight:600">Rp</span>
-                                </div>
-                                <input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">
-                            </div>`;
+                    return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
                 }
             },
             {
-                data: 'fc_paymentmethod'
+                data: 'payment.fv_description',
+                defaultContent: '-'
             },
             {
                 data: null,
@@ -689,124 +697,152 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode;
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             $('td:eq(6)', row).html(`
-            <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fas fa-edit"> </i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fas fa-edit"> </i></button>
+            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
     });
 
-    $('#form_submit_debit').on('submit', function(e){
-       e.preventDefault();
+    $('#form_submit_debit').on('submit', function(e) {
+        e.preventDefault();
 
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
 
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((save) => {
-             if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_submit_debit').attr('action'),
-                   type: $('#form_submit_debit').attr('method'),
-                   data: $('#form_submit_debit').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal_debit").modal('hide');
-                         $("#form_submit_debit")[0].reset();
-                         reset_all_select();
-                         tb_debit.ajax.reload(null, false);
-                 
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         tb_debit.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
-                });
-             }
-       });
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_submit_debit').attr('action'),
+                        type: $('#form_submit_debit').attr('method'),
+                        data: $('#form_submit_debit').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal_debit").modal('hide');
+                                $("#form_submit_debit")[0].reset();
+                                reset_all_select();
+                                tb_debit.ajax.reload(null, false);
+
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_debit.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
 
-    $('#form_submit_kredit').on('submit', function(e){
-       e.preventDefault();
+    $('#form_submit_kredit').on('submit', function(e) {
+        e.preventDefault();
 
-       var form_id = $(this).attr("id");
-       if(check_required(form_id) === false){
-          swal("Oops! Mohon isi field yang kosong", { icon: 'warning', });
-          return;
-       }
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
 
-       swal({
-             title: 'Yakin?',
-             text: 'Apakah anda yakin akan menyimpan data ini?',
-             icon: 'warning',
-             buttons: true,
-             dangerMode: true,
-       })
-       .then((save) => {
-             if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                   url:  $('#form_submit_kredit').attr('action'),
-                   type: $('#form_submit_kredit').attr('method'),
-                   data: $('#form_submit_kredit').serialize(),
-                   success: function(response){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      if(response.status == 200){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal_kredit").modal('hide');
-                         $("#form_submit_kredit")[0].reset();
-                         reset_all_select();
-                         tb_kredit.ajax.reload(null, false);
-                 
-                      }
-                      else if(response.status == 201){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         location.href = response.link;
-                      }
-                      else if(response.status == 203){
-                         swal(response.message, { icon: 'success', });
-                         $("#modal").modal('hide');
-                         tb_debit.ajax.reload(null, false);
-                      }
-                      else if(response.status == 300){
-                         swal(response.message, { icon: 'error', });
-                      }
-                   },error: function (jqXHR, textStatus, errorThrown){
-                      setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
-                   }
-                });
-             }
-       });
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_submit_kredit').attr('action'),
+                        type: $('#form_submit_kredit').attr('method'),
+                        data: $('#form_submit_kredit').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal_kredit").modal('hide');
+                                $("#form_submit_kredit")[0].reset();
+                                reset_all_select();
+                                tb_kredit.ajax.reload(null, false);
+
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_debit.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
 
     function click_cancel() {

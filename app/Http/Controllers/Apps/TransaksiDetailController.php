@@ -23,7 +23,7 @@ use Yajra\DataTables\DataTables;
 class TransaksiDetailController extends Controller
 {
     public function datatables_debit(){
-        $data = TempTrxAccountingDetail::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = TempTrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'D')->where('fc_branch', auth()->user()->fc_branch)->where('fc_trxno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -31,7 +31,7 @@ class TransaksiDetailController extends Controller
     }
 
     public function datatables_kredit(){
-        $data = TempTrxAccountingDetail::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = TempTrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'C')->where('fc_branch', auth()->user()->fc_branch)->where('fc_trxno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -104,6 +104,30 @@ class TransaksiDetailController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
+    public function delete($fc_coacode, $fn_rownum)
+    {
+        // hitung jumlah data di TempPoDetail
+        $count_trx_dtl = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)->where('fc_branch', auth()->user()->fc_branch)->count();
+        $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)->where('fn_rownum', $fn_rownum)->delete();
+        if ($delete) {
+            if($count_trx_dtl < 2){
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                    'link' => '/apps/transaksi/create-index'
+                ]);
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+    }
+
     public function store_debit(Request $request){
         $validator = Validator::make($request->all(), [
             'fc_coacode' => 'required',
@@ -173,7 +197,7 @@ class TransaksiDetailController extends Controller
             'fc_coacode' => $request->fc_coacode_kredit,
             'fn_rownum' => $fn_rownum,
             'fc_statuspos' => 'C',
-            'fc_paymentmethod_kredit' => $request->fc_paymentmethod_kredit,
+            'fc_paymentmethod' => $request->fc_paymentmethod_kredit,
             'created_by' => auth()->user()->fc_userid
         ]);
 

@@ -20,4 +20,11 @@ class TempTrxAccountingDetail extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
+    public function coamst(){
+        return $this->hasOne(MasterCoa::class, 'fc_coacode', 'fc_coacode');
+    }
+
+    public function payment(){
+        return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_paymentmethod')->where('fc_trx', 'PAYMENTACC');
+    }
 }
