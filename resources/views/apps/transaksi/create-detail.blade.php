@@ -97,7 +97,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Debit</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-weight: bold; font-size:large" value=" " id="grand_total" name="grand_total">Rp. 0,00</h5>
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" id="debit" name="debit">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -105,8 +105,7 @@
                                 <div class="form-group d-flex-row">
                                     <label id="label_kekurangan">Kredit</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kekurangan">
-                                            Rp. 0,00</h5>
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kredit" name="kredit">Rp. 0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -114,8 +113,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Balance</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="">Rp.
-                                            0,00</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance">Rp.0,00</h5>
                                     </div>
                                 </div>
                             </div>
@@ -196,9 +194,9 @@
                                     <input type="text" name="fv_description" id="fv_description" class="form-control">
                                     @else
                                     <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}">
-                                        
+
                                     @endif
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -401,6 +399,45 @@
         get_coa();
         get_coa_kredit();
     })
+
+    $.ajax({
+        url: "{{ url('apps/transaksi/detail/datatables') }}",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+            let debit = 0;
+            let kredit = 0;
+            let balance = 0;
+
+            for (var i = 0; i < data.data.length; i++) {
+                if (data.data[i].fc_statuspos == 'D') {
+                    debit += parseFloat(data.data[i].fm_nominal);
+                } else {
+                    kredit += parseFloat(data.data[i].fm_nominal);
+                }
+            }
+
+            balance = debit - kredit;
+            if (balance == 0) {
+                $('#balance').html("Rp. 0");
+                iziToast.info({
+                    title: 'Info!',
+                    message: 'Debit dan Kredit sudah Balance, Anda bisa melakukan Submit',
+                    position: 'topRight'
+                });
+            } else {
+                $('#balance').html("Rp. " + fungsiRupiah(parseFloat(balance)));
+                iziToast.info({
+                    title: 'Info!',
+                    message: 'Kurang Rp. ' + fungsiRupiah(parseFloat(balance)) + ' agar Balance',
+                    position: 'topRight'
+                });
+            }
+            $('#debit').html("Rp. " + fungsiRupiah(parseFloat(debit)));
+            $('#kredit').html("Rp. " + fungsiRupiah(parseFloat(kredit)));
+        }
+    });
+
 
     function add_debit() {
         $('#modal_debit').modal('show');
@@ -632,7 +669,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if(data.fv_description == null){
+                    if (data.fv_description == null) {
                         return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
                     }
                     return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
@@ -652,6 +689,12 @@
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
+        // footerCallback: function(row, data, start, end, display) {
+        //     if (data.length != 0) {
+        //         $('#debit').html("Rp. " + fungsiRupiah(data[0].fm_nominal));
+        //         $("#debit").trigger("change");
+        //     }
+        // },
     });
 
     var tb_kredit = $('#tb_kredit').DataTable({
@@ -697,7 +740,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if(data.fv_description == null){
+                    if (data.fv_description == null) {
                         return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
                     }
                     return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
@@ -717,9 +760,15 @@
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
+        // footerCallback: function(row, data, start, end, display) {
+        //     if (data.length != 0) {
+        //         $('#kredit').html("Rp. " + fungsiRupiah(data[0].fm_nominal));
+        //         $("#kredit").trigger("change");
+        //     }
+        // },
     });
 
-    function editDetailTransaksi(button){
+    function editDetailTransaksi(button) {
         var rownum = $(button).data('rownum');
         var nominal = $(button).data('nominal');
         var description = $(button).data('description');
@@ -737,17 +786,17 @@
             dangerMode: true,
         }).then(function(confirm) {
             if (confirm) {
-                if(tipe == 'D'){
+                if (tipe == 'D') {
                     updateDebitTransaksi(rownum, newnominal, newdescription);
-                }else{
+                } else {
                     updateKreditTransaksi(rownum, newnominal, newdescription);
                 }
-               
+
             }
         });
     }
 
-    function updateDebitTransaksi(rownum, nominal, description){
+    function updateDebitTransaksi(rownum, nominal, description) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/update-debit-transaksi',
@@ -763,6 +812,7 @@
                         icon: 'success',
                     });
                     $("#modal_loading").modal('hide');
+                    window.location.href = window.location.href;
                     tb_debit.ajax.reload();
                 } else {
                     swal(response.message, {
@@ -783,7 +833,7 @@
         });
     }
 
-    function updateKreditTransaksi(rownum, nominal, description){
+    function updateKreditTransaksi(rownum, nominal, description) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/update-kredit-transaksi',
@@ -799,6 +849,7 @@
                         icon: 'success',
                     });
                     $("#modal_loading").modal('hide');
+                    window.location.href = window.location.href;
                     tb_kredit.ajax.reload();
                 } else {
                     swal(response.message, {

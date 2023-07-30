@@ -22,6 +22,14 @@ use Yajra\DataTables\DataTables;
 
 class TransaksiDetailController extends Controller
 {
+    public function datatables(){
+        $data = TempTrxAccountingDetail::with('coamst', 'payment')->where('fc_branch', auth()->user()->fc_branch)->where('fc_trxno', auth()->user()->fc_userid)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function datatables_debit(){
         $data = TempTrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'D')->where('fc_branch', auth()->user()->fc_branch)->where('fc_trxno', auth()->user()->fc_userid)->get();
 
