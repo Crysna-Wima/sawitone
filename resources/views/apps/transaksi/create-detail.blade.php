@@ -405,6 +405,8 @@
         type: "GET",
         dataType: "JSON",
         success: function(data) {
+            var count_data = data.data.length;
+            console.log(count_data);
             let debit = 0;
             let kredit = 0;
             let balance = 0;
@@ -418,11 +420,25 @@
             }
 
             balance = debit - kredit;
-            if (balance == 0) {
+            if (balance == 0 && debit !== 0 && kredit !== 0) {
                 $('#balance').html("Rp. 0");
                 iziToast.info({
                     title: 'Info!',
                     message: 'Debit dan Kredit sudah Balance, Anda bisa melakukan Submit',
+                    position: 'topRight'
+                });
+            } else if (count_data == 0) {
+                $('#balance').html("Rp. 0");
+                iziToast.warning({
+                    title: 'Warning!',
+                    message: 'Anda belum mengisi Data Kredit dan Debit',
+                    position: 'topRight'
+                });
+            } else if (debit == 0 && kredit == 0) {
+                $('#balance').html("Rp. 0");
+                iziToast.warning({
+                    title: 'Warning!',
+                    message: 'Anda belum mengisi Nominal Kredit dan Debit',
                     position: 'topRight'
                 });
             } else {
@@ -686,7 +702,7 @@
 
             $('td:eq(6)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
+                <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
         // footerCallback: function(row, data, start, end, display) {
@@ -757,7 +773,7 @@
 
             $('td:eq(6)', row).html(`
             <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
+            <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
         // footerCallback: function(row, data, start, end, display) {
@@ -1007,6 +1023,64 @@
                 }
             });
     });
+
+    function click_delete(url, nama) {
+        swal({
+                title: 'Konfirmasi?',
+                text: 'Apakah anda yakin akan menghapus data ' + nama + "?",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: url,
+                        type: "DELETE",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            //  tb.ajax.reload(null, false);
+                            //  console.log(response.status);
+                            if (response.status == 200) {
+                                console.log(tb_debit);
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_debit.ajax.reload(null, false);
+                                tb_kredit.ajax.reload(null, false);
+                                window.location.href = window.location.href;
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_debit.ajax.reload(null, false);
+                                tb_kredit.ajax.reload(null, false);
+                                window.location.href = window.location.href;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
+    }
 
     function click_cancel() {
         swal({
