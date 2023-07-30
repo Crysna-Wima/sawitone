@@ -213,4 +213,74 @@ class TransaksiDetailController extends Controller
             ];
         }
     }
+
+    public function update_debit_transaksi(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update data
+        $update = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+        ->where('fn_rownum', $request->fn_rownum)
+        ->where('fc_statuspos', 'D')->update([
+            'fm_nominal' => $request->fm_nominal,
+            'fv_description' => $request->fv_description,
+            'updated_by' => auth()->user()->fc_userid
+        ]);
+
+        if($update){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
+            ];
+        }
+    }
+
+    public function update_kredit_transaksi(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update data
+        $update = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+        ->where('fn_rownum', $request->fn_rownum)
+        ->where('fc_statuspos', 'C')->update([
+            'fm_nominal' => $request->fm_nominal,
+            'fv_description' => $request->fv_description,
+            'updated_by' => auth()->user()->fc_userid
+        ]);
+
+        if($update){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
+            ];
+        }
+    }
 }

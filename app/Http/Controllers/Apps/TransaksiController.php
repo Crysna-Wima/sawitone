@@ -193,10 +193,11 @@ class TransaksiController extends Controller
 
     }
 
-    public function pending()
+    public function pending(Request $request)
     {
         $data = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
                 'fc_status' => 'P',
+                'fv_description' => $request->fv_description
             ]);
 
         if ($data) {
@@ -239,5 +240,9 @@ class TransaksiController extends Controller
 			];
 
 		}
+    }
+
+    public function submit_transaksi(Request $request){
+
     }
 }

@@ -192,7 +192,13 @@
                             <div class="col-12 col-md-6 col-lg-12">
                                 <div class="form-group">
                                     <label>Catatan</label>
+                                    @if ($data->fv_description == null)
                                     <input type="text" name="fv_description" id="fv_description" class="form-control">
+                                    @else
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}">
+                                        
+                                    @endif
+                                   
                                 </div>
                             </div>
                         </div>
@@ -626,7 +632,10 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" class="form-control">`;
+                    if(data.fv_description == null){
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    }
+                    return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
                 }
             },
             {
@@ -639,7 +648,7 @@
             var fc_coacode = window.btoa(data.fc_coacode);
 
             $('td:eq(6)', row).html(`
-                <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fas fa-edit"> </i></button>
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
@@ -688,7 +697,10 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" class="form-control">`;
+                    if(data.fv_description == null){
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    }
+                    return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
                 }
             },
             {
@@ -701,11 +713,111 @@
             var fc_coacode = window.btoa(data.fc_coacode);
 
             $('td:eq(6)', row).html(`
-            <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fas fa-edit"> </i></button>
+            <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
         },
     });
+
+    function editDetailTransaksi(button){
+        var rownum = $(button).data('rownum');
+        var nominal = $(button).data('nominal');
+        var description = $(button).data('description');
+        var newnominal = parseFloat($(`#fm_nominal_${rownum}`).val());
+        var newdescription = $(`#fv_description_${rownum}`).val();
+        var tipe = $(button).data('tipe');
+
+        // console.log(tipe)
+
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah kamu yakin ingin update data tersebut?",
+            icon: "warning",
+            buttons: ["Cancel", "Update"],
+            dangerMode: true,
+        }).then(function(confirm) {
+            if (confirm) {
+                if(tipe == 'D'){
+                    updateDebitTransaksi(rownum, newnominal, newdescription);
+                }else{
+                    updateKreditTransaksi(rownum, newnominal, newdescription);
+                }
+               
+            }
+        });
+    }
+
+    function updateDebitTransaksi(rownum, nominal, description){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/detail/update-debit-transaksi',
+            type: 'PUT',
+            data: {
+                fn_rownum: rownum,
+                fm_nominal: nominal,
+                fv_description: description,
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb_debit.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function updateKreditTransaksi(rownum, nominal, description){
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/detail/update-kredit-transaksi',
+            type: 'PUT',
+            data: {
+                fn_rownum: rownum,
+                fm_nominal: nominal,
+                fv_description: description,
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    tb_kredit.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    $("#modal_loading").modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     $('#form_submit_debit').on('submit', function(e) {
         e.preventDefault();
@@ -918,7 +1030,7 @@
                     url: '/apps/transaksi/pending',
                     type: 'PUT',
                     data: {
-                        fc_status: 'P',
+                        fv_description: $('#fv_description').val(),
                     },
                     success: function(response) {
                         setTimeout(function() {
