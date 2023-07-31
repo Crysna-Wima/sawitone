@@ -312,6 +312,9 @@ class TransaksiDetailController extends Controller
             'status_balance' => 'required',
             'tipe_jurnal' => 'required',
             'jumlah_balance' => 'required'
+        ], [
+            'status_balance.required' => 'Nominal Debit dan Kredit masih 0',
+            'jumlah_balance.required' => 'Debit dan Kredit belum Balance, '
         ]);
     
         if($validator->fails()) {

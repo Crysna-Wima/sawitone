@@ -19,6 +19,10 @@ class TrxAccountingMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
+    public function branch(){
+        return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
+    }
+
     public function transaksitype(){
         return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_mappingtrxtype');
     }
