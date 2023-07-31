@@ -405,6 +405,7 @@
     // $('#fv_description_submit').val(editCatatan);
     $(document).ready(function() {
         get_data_payment();
+        get_data_payment_kredit();
         get_coa();
         get_coa_kredit();
     })
@@ -488,11 +489,38 @@
                 if (response.status === 200) {
                     var data = response.data;
                     $("#fc_paymentmethod").empty();
+                   
                     $("#fc_paymentmethod").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function get_data_payment_kredit() {
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/PAYMENTACC",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
                     $("#fc_paymentmethod_kredit").empty();
                     $("#fc_paymentmethod_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
