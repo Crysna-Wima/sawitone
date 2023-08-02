@@ -38,7 +38,7 @@ class TempReturDetail extends Model
 
     // invstore
     public function invstore(){
-     return $this->belongsTo(InvStore::class, 'fc_barcode', 'fc_barcode');
+     return $this->belongsTo(Invstore::class, 'fc_barcode', 'fc_barcode');
     }
 
 }
