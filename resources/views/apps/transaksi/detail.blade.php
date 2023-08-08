@@ -93,7 +93,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Debit</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-success" style="font-weight: bold; font-size:large" id="debit" name="debit"></h5>
+                                        <h5 class="text-success" style="font-weight: bold; font-size:large" id="debit" name="debit">Rp. 0</h5>
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                 <div class="form-group d-flex-row">
                                     <label id="label_kekurangan">Kredit</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kredit" name="kredit"></h5>
+                                        <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kredit" name="kredit">Rp. 0</h5>
                                     </div>
                                 </div>
                             </div>

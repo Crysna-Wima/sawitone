@@ -194,11 +194,21 @@
     }
 </style>
 
+@for ($i = 0; $i < 3; $i++)
 <body>
     <main>
     <div class="container" id="print">
     <div class="header" style="height: 100px">
-        <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
+        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
+        @if ($i == 0)
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
+        @elseif ($i == 1)
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
+        @else
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
+        @endif
+        </div>
+        <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
             <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331,</p>
             <p>Sidosermo, Kec. Wonocolo,</p>
@@ -210,7 +220,7 @@
             <p style="font-size: 16px;">Alamat Pengiriman</p>
             <p>{{ $retur_mst->domst->somst->customer->fc_memberaddress_loading1 }}</p>
         </div>
-        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
+        <div style="position: absolute; right: 0px; top: 30; text-align: left;" class="no-margin">
             <p style="font-size: 16px;">RETUR BARANG</p>
             <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
             <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $retur_mst->fd_returdate )->isoFormat('D MMMM Y'); }}</p>
@@ -220,6 +230,7 @@
 </div>
 
 <div class="content" id="print">
+    <br><br>
     <br><br>
     <br><br>
     <br>
@@ -275,5 +286,6 @@
     <div>
     </main>
 </body>
+@endfor
 
 </html>

@@ -179,8 +179,16 @@
             size: 8.5in 11in;
         }
     }
+
+    .kotak {
+        border: 0.5px solid #000;
+        height: 0.6cm;
+        width: 1cm;
+        padding: 2px;
+    }
 </style>
 
+@for ($i = 0; $i < 3; $i++)
 <body>
     <?php if ($do_mst->fc_dostatus == 'CC') : ?>
         <div id="watermark"><img src="{{ public_path('/assets/img/cancelled.png') }}" width="45%"></div>
@@ -188,7 +196,16 @@
     <main>
         <div class="container" id="print">
             <div class="header" style="height: 100px">
-                <div style="position: absolute; left: 0; top: 0; text-align: left;" class="no-margin">
+                <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
+                @if ($i == 0)
+                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
+                @elseif ($i == 1)
+                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
+                @else
+                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
+                @endif
+                </div>
+                <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
                     <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
                     <p>Jl. Raya Jemursari No.329-331,</p>
                     <p>Sidosermo, Kec. Wonocolo,</p>
@@ -200,7 +217,7 @@
                     <p style="font-size: 16px;">Alamat Pengiriman</p>
                     <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
                 </div>
-                <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
+                <div style="position: absolute; right: 0px; top: 30; text-align: left;" class="no-margin">
                     <p style="font-size: 16px;">SURAT JALAN</p>
                     <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
                     <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
@@ -210,6 +227,7 @@
         </div>
 
         <div class="content" id="print">
+            <br><br>
             <br><br>
             <br><br>
             <br>
@@ -263,5 +281,6 @@
             <div>
     </main>
 </body>
+@endfor
 
 </html>

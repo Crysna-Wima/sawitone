@@ -70,12 +70,13 @@
                                 <div class="col-12 col-md-6 col-lg-6">
                                     <div class="form-group required">
                                         <label>Tipe Opname</label>
-                                        <select class="form-control select2 required-field" name="fc_stockopname_type" id="fc_stockopname_type">
+                                        <input type="text" class="form-control" name="fc_stockopname_type" id="fc_stockopname_type" value="DAILY" readonly>
+                                        <!-- <select class="form-control select2 required-field" name="fc_stockopname_type" id="fc_stockopname_type">
                                             <option value="" selected disabled>- Pilih -</option>
                                             <option value="DAILY">SATUAN</option>
                                             <option value="BRANCH">CABANG</option>
                                             <option value="ALLDEXA">SEMUA</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6">
