@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">
-                                    <label>Dokumen Referensi</label>
+                                    <label>Tipe Referensi</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" value="{{ $data->fc_docreference }}" readonly>
                                     </div>
