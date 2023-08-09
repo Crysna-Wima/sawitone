@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Transaksi Accounting')
+@section('title', 'Giro Berjalan')
 @section('css')
 <style>
     .required label:after {
@@ -16,16 +16,11 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Transaksi</h4>
-                    <div class="card-header-action">
-                        <a href="/apps/transaksi/giro" type="button" class="btn btn-info mr-1"><i class="fas fa-money-check mr-1"></i> Giro Berjalan</a>
-                        <a href="/apps/transaksi/bookmark-index" type="button" class="btn btn-warning mr-1"><i class="fas fa-bookmark mr-1"></i> Bookmark</a>
-                        <a href="/apps/transaksi/create-index" type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Data Transaksi</a>
-                    </div>
+                    <h4>Daftar Giro</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb" width="100%">
+                        <table class="table table-striped" id="tb_bookmark" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
@@ -33,7 +28,7 @@
                                     <th scope="col" class="text-center text-nowrap">Nama Transaksi</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Operator</th>
-                                    <th scope="col" class="text-center text-nowrap">Tipe Referensi</th>
+                                    <th scope="col" class="text-center text-nowrap">Referensi Doc</th>
                                     <th scope="col" class="text-center">Balance</th>
                                     <th scope="col" class="text-center">Informasi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -48,12 +43,9 @@
 </div>
 @endsection
 
-@section('modal')
-@endsection
-
 @section('js')
 <script>
-    var tb = $('#tb').DataTable({
+    var tb_bookmark = $('#tb_bookmark').DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
@@ -62,7 +54,7 @@
             [1, 'desc']
         ],
         ajax: {
-            url: "/apps/transaksi/datatables",
+            url: "/apps/transaksi/datatables-bookmark",
             type: 'GET',
         },
         columnDefs: [{
@@ -111,13 +103,19 @@
         ],
 
         rowCallback: function(row, data) {
+            // encode data.fc_trxno
             var fc_trxno = window.btoa(data.fc_trxno);
 
+            if (data.fc_docreference == "") {
+                $('td:eq(5)', row).html(`<i><b>No Reference</b></i>`);
+            }
+
             $('td:eq(8)', row).html(`
-                    <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
+                    <a href="/apps/transaksi/lanjutkan-bookmark" class="btn btn-warning btn-sm mr-1 lanjutkan-btn"><i class="fas fa-forward mr-1"></i> Lanjutkan</a>
                 `);
         },
     });
+
 
     $('.modal').css('overflow-y', 'auto');
 </script>

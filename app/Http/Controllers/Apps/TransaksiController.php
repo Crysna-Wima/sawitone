@@ -32,6 +32,10 @@ class TransaksiController extends Controller
         return view('apps.transaksi.bookmark-index');
     }
 
+    public function giro(){
+        return view('apps.transaksi.giro');
+    }
+
     public function detail($fc_trxno)
     {
         $decode_fc_trxno = base64_decode($fc_trxno);
