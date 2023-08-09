@@ -32,7 +32,7 @@
                                     <th scope="col" class="text-center text-nowrap">Nama Transaksi</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Operator</th>
-                                    <th scope="col" class="text-center text-nowrap">Referensi Doc</th>
+                                    <th scope="col" class="text-center text-nowrap">Tipe Referensi</th>
                                     <th scope="col" class="text-center">Balance</th>
                                     <th scope="col" class="text-center">Informasi</th>
                                     <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -66,10 +66,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
-            targets: [8]
+            targets: []
         }],
         columns: [{
                 data: 'DT_RowIndex',
