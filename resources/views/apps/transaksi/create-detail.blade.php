@@ -469,8 +469,8 @@
 
 
     function add_debit() {
-
         $('#fc_paymentmethod').prop('disabled', false);
+        $('#fc_paymentmethod_hidden').empty();
         $('#modal_debit').modal('show');
     }
 
