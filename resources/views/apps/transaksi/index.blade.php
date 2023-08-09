@@ -110,12 +110,10 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/delete/" + data.fc_mappingcode;
-            var fc_mappingcode = window.btoa(data.fc_mappingcode);
+            var fc_trxno = window.btoa(data.fc_trxno);
 
             $('td:eq(8)', row).html(`
-                    <a href="/apps/transaksi/detail/${fc_mappingcode}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_mappingname}')"><i class="fa fa-trash"> </i> Hapus</button>
+                    <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
                 `);
         },
     });

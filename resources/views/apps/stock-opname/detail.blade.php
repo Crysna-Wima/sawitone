@@ -203,7 +203,8 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Stock yang Diopname</h4>
-                    <div class="card-header-action">
+                    <div class="card-header-action d-flex justify-content-between">
+                        <button type="button" onclick="click_inventory()" class="btn btn-warning mr-2"><i class="fa-solid fa-boxes-stacked mr-1"></i> Cek Persediaan</button>
                         <button type="button" onclick="click_stock_opname()" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Stock Opname</button>
                     </div>
                 </div>
@@ -278,6 +279,44 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_inventory" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Ketersediaan Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_persediaan" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Kode Barang</th>
+                                    <th scope="col" class="text-center">Nama Barang</th>
+                                    <th scope="col" class="text-center">Brand</th>
+                                    <th scope="col" class="text-center">Sub Group</th>
+                                    <th scope="col" class="text-center">Tipe Stock</th>
+                                    <th scope="col" class="text-center">Satuan</th>
+                                    <th scope="col" class="text-center">Expired Date</th>
+                                    <th scope="col" class="text-center">Batch</th>
+                                    <th scope="col" class="text-center">Qty</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -289,6 +328,10 @@
 
     function click_stock_opname() {
         $('#modal_stock_opname').modal('show');
+    }
+
+    function click_inventory() {
+        $('#modal_inventory').modal('show');
     }
 
     var tb = $('#tb').DataTable({
@@ -372,6 +415,57 @@
                 `);
             }
         },
+    });
+
+    var tb_persediaan = $('#tb_persediaan').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        order: [
+            [7, 'asc']
+        ],
+        ajax: {
+            url: "/apps/stock-opname/detail/datatables-persediaan/" + encode_warehousecode,
+            type: 'GET'
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_stockcode'
+            },
+            {
+                data: 'stock.fc_namelong'
+            },
+            {
+                data: 'stock.fc_brand'
+            },
+            {
+                data: 'stock.fc_subgroup'
+            },
+            {
+                data: 'stock.fc_typestock2'
+            },
+            {
+                data: 'stock.fc_namepack'
+            },
+            {
+                data: 'fd_expired',
+                render: formatTimestamp
+            },
+            {
+                data: 'fc_batch'
+            },
+            {
+                data: 'fn_quantity'
+            },
+        ],
     });
 
     var tb_inventory = $('#tb_inventory').DataTable({
@@ -636,14 +730,14 @@
                                 $("#modal").modal('hide');
                                 tb_satuan.ajax.reload(null, false);
                                 //  location.href = location.href;
-                            } else if(response.status === 201){
+                            } else if (response.status === 201) {
                                 swal(response.message, {
                                     icon: 'success',
                                 });
                                 $("#modal").modal('hide');
                                 tb_satuan.ajax.reload(null, false);
                                 location.href = response.link;
-                            }else {
+                            } else {
                                 swal(response.message, {
                                     icon: 'error',
                                 });

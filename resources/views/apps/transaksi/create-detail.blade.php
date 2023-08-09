@@ -314,7 +314,7 @@
                             <div class="form-group required">
                                 <label>Metode Pembayaran</label>
                                 <input name="fc_paymentmethod" id="fc_paymentmethod_hidden" type="text" hidden>
-                                <select name="fc_paymentmethod" id="fc_paymentmethod" class="select2" required></select>
+                                <select name="fc_paymentmethod" id="fc_paymentmethod" class="form-control" required></select>
                             </div>
                         </div>
                     </div>
@@ -385,7 +385,7 @@
                             <div class="form-group required">
                                 <label>Metode Pembayaran</label>
                                 <input name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit_hidden" type="text" hidden>
-                                <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="select2 " required></select>
+                                <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="form-control" required></select>
                             </div>
                         </div>
                     </div>
@@ -487,13 +487,13 @@
             success: function(response) {
                 if (response.status === 200) {
                     var data = response.data;
-                    $("#fc_paymentmethod").empty();
-                    $("#fc_paymentmethod").append(`<option value="" selected disabled> - Pilih - </option>`);
                     $("#fc_paymentmethod_kredit").empty();
                     $("#fc_paymentmethod_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    $("#fc_paymentmethod").empty();
+                    $("#fc_paymentmethod").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                        $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                          $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({

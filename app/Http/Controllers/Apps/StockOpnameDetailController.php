@@ -47,6 +47,17 @@ class StockOpnameDetailController extends Controller
             ->make(true);
     }
 
+    public function datatables_persediaan($fc_warehousecode)
+    {
+        // decode fc_warehousecode
+        $fc_warehousecode = base64_decode($fc_warehousecode);
+        $data = Invstore::with('stock')->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function lock_update(Request $request)
     {
         // dd($request);

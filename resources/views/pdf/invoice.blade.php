@@ -180,6 +180,7 @@
     }
 </style>
 
+@for ($i = 0; $i < 3; $i++)
 <body>
 <div class="container" id="print">
     <div class="header" style="height: 100px">
@@ -199,7 +200,16 @@
             <p>{{ $inv_mst->fc_address }}</p>
             @endif
         </div>
-        <div style="position: absolute; right: 0; top: 10px; text-align: right;" class="no-margin">
+        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
+        @if ($i == 0)
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
+        @elseif ($i == 1)
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
+        @else
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
+        @endif
+        </div>
+        <div style="position: absolute; right: 0; top: 45px; text-align: right;" class="no-margin">
             <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
             <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
@@ -497,6 +507,7 @@
         </div>
     <div>
 </body>
+@endfor
 
 </html>
 

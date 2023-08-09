@@ -483,37 +483,37 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_dono}', 'Apps\InvoicePenjualanController@detail');
             Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@delete');
-            Route::delete('/cancel-invoice','Apps\InvoicePenjualanDetailController@cancel_invoice');
-            Route::put('/update-fm-unityprice','Apps\InvoicePenjualanDetailController@update_unityprice');
+            Route::delete('/cancel-invoice', 'Apps\InvoicePenjualanDetailController@cancel_invoice');
+            Route::put('/update-fm-unityprice', 'Apps\InvoicePenjualanDetailController@update_unityprice');
 
             Route::prefix('create')->group(function () {
-                Route::post('/store-invoice','Apps\InvoicePenjualanController@create_invoice');
-                Route::post('/store-detail','Apps\InvoicePenjualanDetailController@insert_item');
+                Route::post('/store-invoice', 'Apps\InvoicePenjualanController@create_invoice');
+                Route::post('/store-detail', 'Apps\InvoicePenjualanDetailController@insert_item');
                 Route::put('/update-inform/{fc_invno}', 'Apps\InvoicePenjualanDetailController@update_inform');
                 Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
-                Route::put('/submit-invoice','Apps\InvoicePenjualanDetailController@submit_invoice');
+                Route::put('/submit-invoice', 'Apps\InvoicePenjualanDetailController@submit_invoice');
             });
         });
 
         Route::prefix('invoice-pembelian')->group(function () {
             Route::get('/datatables-biaya-lain', 'Apps\InvoicePembelianDetailController@datatables_biaya_lain');
-            Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
+            Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
             Route::get('/', 'Apps\InvoicePembelianController@index');
             Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePembelianDetailController@delete');
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
-            Route::delete('/cancel-invoice','Apps\InvoicePembelianDetailController@cancel_invoice');
-            Route::put('/update-fm-unityprice','Apps\InvoicePembelianDetailController@update_unityprice');
-            
+            Route::delete('/cancel-invoice', 'Apps\InvoicePembelianDetailController@cancel_invoice');
+            Route::put('/update-fm-unityprice', 'Apps\InvoicePembelianDetailController@update_unityprice');
+
 
             Route::prefix('create')->group(function () {
-                Route::post('/store-invoice','Apps\InvoicePembelianController@create_invoice');
-                Route::post('/store-detail','Apps\InvoicePembelianDetailController@insert_item');
-                Route::put('/update-info/{fc_invno}','Apps\InvoicePembelianDetailController@update_inform');
+                Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
+                Route::post('/store-detail', 'Apps\InvoicePembelianDetailController@insert_item');
+                Route::put('/update-info/{fc_invno}', 'Apps\InvoicePembelianDetailController@update_inform');
                 Route::get('/{fc_rono}', 'Apps\InvoicePembelianDetailController@create');
                 Route::get('/datatables-ro-detail/{fc_rono}', 'Apps\InvoicePembelianDetailController@datatables_ro_detail');
-                Route::put('/submit-invoice','Apps\InvoicePembelianDetailController@submit_invoice');
+                Route::put('/submit-invoice', 'Apps\InvoicePembelianDetailController@submit_invoice');
             });
         });
 
@@ -531,13 +531,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoiceCprrDetailController@delete');
         });
 
-        Route::prefix('konversi-stock')->group(function(){
+        Route::prefix('konversi-stock')->group(function () {
             Route::get('/', 'Apps\StockKonversiController@index');
             Route::get('/stock-stockcode/{fc_stockcode}', 'Apps\StockKonversiController@stock_stockcode');
             Route::get('/invstore-stockcode/{fc_stockcode}/{fc_warehousecode}/{fd_expired}/{fc_batch}', 'Apps\StockKonversiController@invstore_stockcode');
             Route::get('/invstore-warehouse/{fc_warehousecode}', 'Apps\StockKonversiController@invstore_warehouse');
             Route::get('/history-konversi', 'Apps\StockKonversiController@datatable_inquiry');
-            
+
             Route::POST('/', 'Apps\StockKonversiController@konversi');
         });
 
@@ -556,13 +556,13 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('retur-barang')->group(function () {
             Route::get('/', 'Apps\ReturBarangController@index');
             Route::get('/detail-delivery-order/{fc_dono}', 'Apps\ReturBarangController@detail_deliver_order');
-            Route::post('/store-update','Apps\ReturBarangController@store_update');
+            Route::post('/store-update', 'Apps\ReturBarangController@store_update');
             Route::delete('/cancel', 'Apps\ReturBarangController@cancel');
 
             Route::prefix('detail')->group(function () {
                 Route::delete('/delete-item/{fc_barcode}/{row}', 'Apps\ReturBarangDetailController@delete_item');
                 Route::put('/submit', 'Apps\ReturBarangDetailController@submit_return_barang');
-                Route::post('/store-update','Apps\ReturBarangDetailController@store_update');
+                Route::post('/store-update', 'Apps\ReturBarangDetailController@store_update');
                 Route::get('/datatables', 'Apps\ReturBarangDetailController@datatables');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\ReturBarangDetailController@datatables_do_detail');
             });
@@ -572,19 +572,20 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\StockOpnameController@index');
             Route::delete('/cancel', 'Apps\StockOpnameController@cancel');
             Route::get('/detail-gudang/{fc_warehousecode}', 'Apps\StockOpnameController@detail_gudang');
-            Route::post('/store-update','Apps\StockOpnameController@store_update');
+            Route::post('/store-update', 'Apps\StockOpnameController@store_update');
 
             Route::prefix('detail')->group(function () {
-                Route::put('/lock-update','Apps\StockOpnameDetailController@lock_update');
+                Route::put('/lock-update', 'Apps\StockOpnameDetailController@lock_update');
                 Route::post('/select_stock', 'Apps\StockOpnameDetailController@select_stock');
                 Route::delete('/delete/{fn_rownum}', 'Apps\StockOpnameDetailController@delete_item');
                 Route::get('/inventory/datatables/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatable_inventory');
                 Route::get('/datatables', 'Apps\StockOpnameDetailController@datatables');
+                Route::get('/datatables-persediaan/{fc_warehousecode}', 'Apps\StockOpnameDetailController@datatables_persediaan');
                 Route::get('/datatables-satuan', 'Apps\StockOpnameDetailController@datatables_satuan');
                 Route::put('/submit-stockopname', 'Apps\StockOpnameDetailController@submit_stockopname');
             });
         });
-        
+
         Route::prefix('daftar-retur-barang')->group(function () {
             Route::get('/', 'Apps\DaftarReturBarangController@index');
             Route::get('/detail/{fc_returno}', 'Apps\DaftarReturBarangController@detail');
@@ -610,11 +611,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_mappingcode}', 'Apps\MasterMappingController@detail');
             Route::get('/datatables', 'Apps\MasterMappingController@datatables');
             Route::get('/{action}', 'Apps\MasterMappingController@get_transaksi');
-            Route::post('/store-update','Apps\MasterMappingController@store_update');
-            Route::put('/hold/{fc_mappingcode}','Apps\MasterMappingController@hold');
-            Route::put('/unhold/{fc_mappingcode}','Apps\MasterMappingController@unhold');
+            Route::post('/store-update', 'Apps\MasterMappingController@store_update');
+            Route::put('/hold/{fc_mappingcode}', 'Apps\MasterMappingController@hold');
+            Route::put('/unhold/{fc_mappingcode}', 'Apps\MasterMappingController@unhold');
             Route::delete('/cancel/{fc_mappingcode}', 'Apps\MasterMappingController@cancel');
-            Route::put('/submit/{fc_mappingcode}','Apps\MasterMappingController@submit');
+            Route::put('/submit/{fc_mappingcode}', 'Apps\MasterMappingController@submit');
 
             Route::prefix('delete')->group(function () {
                 Route::delete('/debit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_debit');
@@ -642,17 +643,21 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
+            Route::get('/get-data/{fc_trxno}', 'Apps\TransaksiController@detail');
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
+            Route::get('/data/{fc_trxno}', 'Apps\TransaksiController@data');
+            Route::get('/data-debit/{fc_trxno}', 'Apps\TransaksiController@data_debit');
+            Route::get('/data-kredit/{fc_trxno}', 'Apps\TransaksiController@data_kredit');
             Route::get('/datatables-bookmark', 'Apps\TransaksiController@datatables_bookmark');
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
             Route::get('/datatables-invoice', 'Apps\TransaksiController@datatables_invoice');
             Route::post('/store-update', 'Apps\TransaksiController@store_update');
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
-            Route::delete('/cancel_transaksi','Apps\TransaksiController@cancel_transaksi');
-            Route::put('/lanjutkan-bookmark/{fc_trxno}','Apps\TransaksiController@lanjutkan_bookmark');
-            Route::put('/pending','Apps\TransaksiController@pending');
+            Route::delete('/cancel_transaksi', 'Apps\TransaksiController@cancel_transaksi');
+            Route::put('/lanjutkan-bookmark/{fc_trxno}', 'Apps\TransaksiController@lanjutkan_bookmark');
+            Route::put('/pending', 'Apps\TransaksiController@pending');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables', 'Apps\TransaksiDetailController@datatables');

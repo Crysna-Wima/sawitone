@@ -600,8 +600,10 @@
                         message: response.message,
                         position: 'topRight'
                     });
-                    $('#modal_loading').modal('hide');
                     $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     tb_debit.ajax.reload();
                 } else {
                     iziToast.error({
@@ -610,8 +612,10 @@
                         position: 'topRight'
                     });
 
-                    $('#modal_loading').modal('hide');
                     $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {
@@ -697,8 +701,11 @@
                         message: response.message,
                         position: 'topRight'
                     });
-                    $('#modal_loading').modal('hide');
+                    
                     $('#modal_kredit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                     tb_kredit.ajax.reload();
                 } else {
                     iziToast.error({
@@ -706,8 +713,10 @@
                         message: response.message,
                         position: 'topRight'
                     });
-                    $('#modal_loading').modal('hide');
                     $('#modal_kredit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {
