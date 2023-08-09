@@ -36,7 +36,10 @@ class DaftarCprrController extends Controller
     }
 
     public function datatables_so_payment(){
-        $data = TempSoPay::where('fc_sono', session('fc_sono_global'))->get();
+        $data = TempSoPay::where('fc_sono', session('fc_sono_global'))
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -45,7 +48,10 @@ class DaftarCprrController extends Controller
 
     public function datatables_so_detail()
     {
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', session('fc_sono_global'))->get();
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack','somst')->where('fc_sono', session('fc_sono_global'))
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -57,9 +63,16 @@ class DaftarCprrController extends Controller
 
     public function datatables($fc_sostatus){
         if($fc_sostatus == "ALL") {
-            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Cost Per Test')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Cost Per Test')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->get();
         } else {
-            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Cost Per Test')->where('fc_branch', auth()->user()->fc_branch)->where('fc_sostatus', $fc_sostatus)->get();
+            $data = SoMaster::with('domst','customer')->where('fc_sotype', 'Cost Per Test')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_sostatus', $fc_sostatus)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->get();
         }
 
         return DataTables::of($data)
@@ -74,7 +87,10 @@ class DaftarCprrController extends Controller
         $fc_sono = $request->fc_sono;
 
         // update
-        $so_master = SoMaster::where('fc_sono', $fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $so_master = SoMaster::where('fc_sono', $fc_sono)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->first();
 
         $update_status = $so_master->update([
             'fc_sostatus' => 'CC',

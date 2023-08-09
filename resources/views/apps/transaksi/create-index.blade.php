@@ -146,7 +146,7 @@
             <div class="modal-header br">
                 <h5 class="modal-title">Pilih Tipe Referensi</h5>
                 <div class="card-header-action">
-                    <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" name="Category" id="category">
+                    <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" id="category">
                         <option value="Penjualan" selected>Penjualan</option>
                         <option value="Pembelian">Pembelian</option>
                     </select>
