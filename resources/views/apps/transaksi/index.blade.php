@@ -18,7 +18,7 @@
                 <div class="card-header">
                     <h4>Data Transaksi</h4>
                     <div class="card-header-action">
-                        <a href="/apps/transaksi/giro" type="button" class="btn btn-info mr-1"><i class="fas fa-money-check mr-1"></i> Giro Berjalan</a>
+                        <a href="/apps/transaksi/giro" type="button" class="btn btn-info mr-1"><i class="fas fa-money-check mr-1"></i> Cek Giro</a>
                         <a href="/apps/transaksi/bookmark-index" type="button" class="btn btn-warning mr-1"><i class="fas fa-bookmark mr-1"></i> Bookmark</a>
                         <a href="/apps/transaksi/create-index" type="button" class="btn btn-success"><i class="fa fa-plus mr-1"></i> Tambah Data Transaksi</a>
                     </div>
