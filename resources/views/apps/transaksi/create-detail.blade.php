@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-3">
                                 <div class="form-group">
-                                    <label>Dokumen Referensi</label>
+                                    <label>Tipe Referensi</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" value="{{ $data->fc_docreference }}" readonly>
                                     </div>
@@ -142,6 +142,8 @@
                                         <th scope="col" class="text-center">Nama COA</th>
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">No. Giro</th>
+                                        <th scope="col" class="text-center">Jatuh Tempo</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
@@ -172,6 +174,8 @@
                                         <th scope="col" class="text-center">Nama COA</th>
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">No. Giro</th>
+                                        <th scope="col" class="text-center">Jatuh Tempo</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
@@ -207,12 +211,12 @@
                 <div class="button text-right mb-4">
                     <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
                     <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
-                      
-                        <input type="text" name="status_balance" id="status_balance" hidden>
-                        <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
-                        <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
-                        <button type="submit" class="btn btn-success">Submit Transaksi</button>
-                 
+
+                    <input type="text" name="status_balance" id="status_balance" hidden>
+                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
+                    <button type="submit" class="btn btn-success">Submit Transaksi</button>
+
                 </div>
             </form>
         </div>
@@ -317,6 +321,25 @@
                                 <select name="fc_paymentmethod" id="fc_paymentmethod" class="form-control" required></select>
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="no_giro" hidden>
+                            <div class="form-group required">
+                                <label>No. Giro</label>
+                                <input name="fc_refno" id="fc_refno" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="tgl_giro" hidden>
+                            <div class="form-group required">
+                                <label>Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="text" id="fd_agingref" class="form-control datepicker" name="fd_agingref" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -386,6 +409,25 @@
                                 <label>Metode Pembayaran</label>
                                 <input name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit_hidden" type="text" hidden>
                                 <select name="fc_paymentmethod_kredit" id="fc_paymentmethod_kredit" class="form-control" required></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="no_giro_kredit" hidden>
+                            <div class="form-group required">
+                                <label>No. Giro</label>
+                                <input name="fc_refno_kredit" id="fc_refno_kredit" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="tgl_giro_kredit" hidden>
+                            <div class="form-group required">
+                                <label>Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="text" id="fd_agingref_kredit" class="form-control datepicker" name="fd_agingref_kredit" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -493,8 +535,40 @@
                     $("#fc_paymentmethod").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
-                          $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
+
+                    $("#fc_paymentmethod").change(function() {
+                        if ($('#fc_paymentmethod').val() === "GIRO") {
+                            $('#no_giro').attr('hidden', false);
+                            $('#tgl_giro').attr('hidden', false);
+                            $('#fc_refno').attr('required', true);
+                            $('#fd_agingref').attr('required', true);
+                        } else {
+                            $('#no_giro').attr('hidden', true);
+                            $('#tgl_giro').attr('hidden', true);
+                            $('#fc_refno').attr('required', false);
+                            $('#fd_agingref').attr('required', false);
+                            $('input[id="fc_refno"]').val("");
+                            $('input[id="fd_agingref"]').val("");
+                        }
+                    });
+
+                    $("#fc_paymentmethod_kredit").change(function() {
+                        if ($('#fc_paymentmethod_kredit').val() === "GIRO") {
+                            $('#no_giro_kredit').attr('hidden', false);
+                            $('#tgl_giro_kredit').attr('hidden', false);
+                            $('#fc_refno_kredit').attr('required', true);
+                            $('#fd_agingref_kredit').attr('required', true);
+                        } else {
+                            $('#no_giro_kredit').attr('hidden', true);
+                            $('#tgl_giro_kredit').attr('hidden', true);
+                            $('#fc_refno_kredit').attr('required', false);
+                            $('#fd_agingref_kredit').attr('required', false);
+                            $('input[id="fc_refno_kredit"]').val("");
+                            $('input[id="fd_agingref_kredit"]').val("");
+                        }
+                    });
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -528,7 +602,7 @@
                     console.log(data);
                     var value = data[0].mst_coa.fc_directpayment;
                     $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
-                    if(value == "F") {
+                    if (value == "F") {
                         $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
                         $('#fc_paymentmethod').prop('disabled', true);
                         $('#fc_paymentmethod_hidden').val("NON");
@@ -539,7 +613,7 @@
                         $('#fc_group').append(`<option value="" selected>-</option>`);
                     }
                     $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
-                    
+
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -573,7 +647,7 @@
                     console.log(data);
                     var value = data[0].mst_coa.fc_directpayment;
                     $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
-                    if(value == "F") {
+                    if (value == "F") {
                         $('#fc_paymentmethod_kredit').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
                         $('#fc_paymentmethod_kredit').prop('disabled', true);
                         $('#fc_paymentmethod_kredit_hidden').val("NON");
@@ -685,7 +759,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -712,6 +786,14 @@
                 defaultContent: '-'
             },
             {
+                data: 'fc_refno',
+                defaultContent: '-'
+            },
+            {
+                data: 'fd_agingref',
+                defaultContent: '-',
+            },
+            {
                 data: null,
                 render: function(data, type, full, meta) {
                     if (data.fv_description == null) {
@@ -729,7 +811,7 @@
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            $('td:eq(6)', row).html(`
+            $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
                 <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
@@ -783,6 +865,14 @@
                 defaultContent: '-'
             },
             {
+                data: 'fc_refno',
+                defaultContent: '-'
+            },
+            {
+                data: 'fd_agingref',
+                defaultContent: '-',
+            },
+            {
                 data: null,
                 render: function(data, type, full, meta) {
                     if (data.fv_description == null) {
@@ -800,7 +890,7 @@
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            $('td:eq(6)', row).html(`
+            $('td:eq(8)', row).html(`
             <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
             <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
@@ -1221,6 +1311,8 @@
         });
 
     }
+
+    $('.modal').css('overflow-y', 'auto');
 </script>
 
 @endsection

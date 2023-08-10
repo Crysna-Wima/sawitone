@@ -25,8 +25,16 @@ class SalesOrderDetailController extends Controller
 {
     public function datatables()
     {
-        $data = TempSoDetail::with('branch', 'warehouse', 'stock', 'namepack','tempsomst')->where('fc_sono', auth()->user()->fc_userid)->get();
-        $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)->sum('fm_valuepayment');
+        $data = TempSoDetail::with('branch', 'warehouse', 'stock', 'namepack','tempsomst')
+        ->where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+
+        $nominal = TempSoPay::where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->sum('fm_valuepayment');
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -45,6 +53,7 @@ class SalesOrderDetailController extends Controller
             $query->where('fc_warehousepos', '=', 'INTERNAL');
         })
         ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
         ->get();
 
         // $data = Invstore::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -55,7 +64,10 @@ class SalesOrderDetailController extends Controller
     }
 
     public function save_catatan(Request $request){
-        $data = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->first();
         $data->fv_description = $request->fv_description_mst;
         $data->save();
 
@@ -75,7 +87,10 @@ class SalesOrderDetailController extends Controller
     }
 
     public function store_update(request $request){
-        $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $count_sodtl = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
         $total = count($count_sodtl);
         $validator = Validator::make($request->all(), [
             'fc_stockcode' => 'required',
@@ -200,7 +215,10 @@ class SalesOrderDetailController extends Controller
     public function delete($fc_sono, $fn_sorownum)
     {
         // hitung jumlah TempSoDetail
-        $count_sodtl = TempSoDetail::where('fc_sono', $fc_sono)->count();
+        $count_sodtl = TempSoDetail::where('fc_sono', $fc_sono)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->count();
         $insert_tempsodetail = TempSoDetail::where(['fc_sono' => $fc_sono, 'fn_sorownum' => $fn_sorownum])->delete();
 
         if($insert_tempsodetail){
@@ -228,7 +246,10 @@ class SalesOrderDetailController extends Controller
         try {
             // TempSoMaster::where(['fc_sono' => auth()->user()->fc_userid, 'fc_sostatus' => 'I'])->update(['fc_sostatus' => 'F']);
 
-            $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+            $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->get();
             $total = count($temp_detail);
 
 

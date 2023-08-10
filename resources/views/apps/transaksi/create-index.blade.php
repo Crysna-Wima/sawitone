@@ -7,6 +7,10 @@
         content: ' *';
         display: inline;
     }
+
+    .select2-selection__rendered{
+        margin-right: 15px;
+    }
 </style>
 @endsection
 
@@ -76,11 +80,11 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3" id="doc-ref">
                                     <div class="form-group">
-                                        <label>Dokumen Referensi</label>
+                                        <label>Tipe Referensi</label>
                                         <div class="input-group mb-3" id="grup_input">
                                             <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" readonly>
                                             <div class="input-group-append" id="button_ref">
-                                                <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
+                                                <button class="btn btn-primary" onclick="click_modal()" type="button"><i class="fa fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,29 +140,52 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" id="modal_doc" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" role="dialog" id="modal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header br">
-                <h5 class="modal-title">Pilih Dokumen Referensi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Pilih Tipe Referensi</h5>
+                <div class="card-header-action">
+                    <select data-dismiss="modal" name="category" onchange="" class="form-control select2 required-field" id="category">
+                        <option value="Penjualan" selected>Penjualan</option>
+                        <option value="Pembelian">Pembelian</option>
+                    </select>
+                </div>
             </div>
             <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
+                <div class="modal-body" id="customer">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="tb_doc" width="100%">
+                        <table class="table table-striped" id="tb_cust" width="100%">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">No. Invoice</th>
-                                    <th scope="col" class="text-center">Tgl Terbit</th>
-                                    <th scope="col" class="text-center">Jatuh Tempo</th>
-                                    <th scope="col" class="text-center">Customer</th>
-                                    <th scope="col" class="text-center">Tagihan</th>
-                                    <th scope="col" class="text-center">Catatan</th>
-                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                    <th scope="col" class="text-center">No.</th>
+                                    <th scope="col" class="text-center">Kode</th>
+                                    <th scope="col" class="text-center">Nama</th>
+                                    <th scope="col" class="text-center">Alamat</th>
+                                    <th scope="col" class="text-center text-nowrap">Tipe Bisnis</th>
+                                    <th scope="col" class="text-center text-nowrap">Tipe Cabang</th>
+                                    <th scope="col" class="text-center text-nowrap">Status Legal</th>
+                                    <th scope="col" class="text-center">NPWP</th>
+                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-body" id="supplier" hidden>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_supp" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No.</th>
+                                    <th scope="col" class="text-center">Kode</th>
+                                    <th scope="col" class="text-center">Nama</th>
+                                    <th scope="col" class="text-center">Alamat</th>
+                                    <th scope="col" class="text-center text-nowrap">Tipe Bisnis</th>
+                                    <th scope="col" class="text-center text-nowrap">Tipe Cabang</th>
+                                    <th scope="col" class="text-center text-nowrap">Status Legal</th>
+                                    <th scope="col" class="text-center">NPWP</th>
+                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                 </tr>
                             </thead>
                         </table>
@@ -184,12 +211,22 @@
         get_data_branch();
     })
 
-    function click_modal_doc() {
-        if($('#fc_mappingcode').val() != ""){
-            $('#modal_doc').modal('show');
-        } else  {
+    $("#category").change(function() {
+        if ($('#category').val() === 'Penjualan') {
+            $('#customer').attr('hidden', false);
+            $('#supplier').attr('hidden', true);
+        } else {
+            $('#customer').attr('hidden', true);
+            $('#supplier').attr('hidden', false);
+        }
+    });
+
+    function click_modal() {
+        if ($('#fc_mappingcode').val() != "") {
+            $('#modal').modal('show');
+        } else {
             swal("Silahkan mengisi mapping terlebih dahulu", {
-                    icon: 'warning',
+                icon: 'warning',
             });
         }
     }
@@ -198,9 +235,14 @@
         $('#modal_mapping').modal('show');
     }
 
-    function get($fc_invno) {
-        $('#fc_docreference').val($fc_invno);
-        $('#modal_doc').modal('hide');
+    function get_cust($fc_membercode) {
+        $('#fc_docreference').val($fc_membercode);
+        $('#modal').modal('hide');
+    }
+
+    function get_supp($fc_suppliercode) {
+        $('#fc_docreference').val($fc_suppliercode);
+        $('#modal').modal('hide');
     }
 
     function get_detail(fc_mappingcode) {
@@ -225,19 +267,19 @@
                     $('#fc_mappingtrxtype_hidden').val(data.fc_mappingtrxtype);
 
                     if (data.fc_mappingtrxtype === 'GNRL') {
-                            $('#fc_docreference').prop('readonly', false);
-                            // required input
-                            $('#fc_docreference').prop('required', false);
-                            $('#button_ref').remove();
-                        } else {
-                            $('#fc_docreference').prop('readonly', true);
-                            $('#fc_docreference').prop('required', true);
+                        $('#fc_docreference').prop('readonly', false);
+                        // required input
+                        $('#fc_docreference').prop('required', false);
+                        $('#button_ref').remove();
+                    } else {
+                        $('#fc_docreference').prop('readonly', true);
+                        $('#fc_docreference').prop('required', true);
 
 
                         if ($('#button_ref').length === 0) {
                             var buttonElement = `
                                     <div class="input-group-append" id="button_ref">
-                                        <button class="btn btn-primary" onclick="click_modal_doc()" type="button"><i class="fa fa-search"></i></button>
+                                        <button class="btn btn-primary" onclick="click_modal()" type="button"><i class="fa fa-search"></i></button>
                                     </div>
                                 `;
                             $('#grup_input').append(buttonElement);
@@ -307,64 +349,103 @@
         });
     }
 
-    var tb_doc = $('#tb_doc').DataTable({
+    var tb_cust = $('#tb_cust').DataTable({
         processing: true,
         serverSide: true,
-        pageLength: 5,
-        order: [
-            [2, 'desc']
-        ],
+        destroy: true,
+        pageLength : 5,
         ajax: {
-            url: '/apps/transaksi/datatables-invoice',
+            url: "/master/get-data-customer-so-datatables/" + $('#fc_branch_view').val(),
             type: 'GET'
         },
         columnDefs: [{
-                className: 'text-center',
-                targets: [0, 1, 2, 3, 5, 6, 7]
-            },
-            {
-                className: 'text-nowrap',
-                targets: [4]
-            },
-        ],
+            className: 'text-center',
+            targets: [0, 8]
+        }, ],
         columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false
+            },{
+                data: 'fc_membercode'
             },
             {
-                data: 'fc_invno'
+                data: 'fc_membername1'
             },
             {
-                data: 'fd_inv_releasedate',
-                render: formatTimestamp
+                data: 'fc_memberaddress1'
             },
             {
-                data: 'fd_inv_agingdate',
-                render: formatTimestamp
+                data: 'member_type_business.fv_description'
             },
             {
-                data: 'customer.fc_membername1'
+                data: 'member_typebranch.fv_description'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: 'member_legal_status.fv_description'
             },
             {
-                data: 'fv_description',
-                defaultContent: '-'
+                data: 'fc_membernpwp_no'
+            },
+            {
+                data: 'fc_membernpwp_no'
+            },
+        ],
+        rowCallback: function(row, data) {
+            var fc_membercode = window.btoa(data.fc_membercode);
+            $('td:eq(8)', row).html(`
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_cust('${data.fc_membercode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
+        }
+    });
+
+    var tb_supp = $('#tb_supp').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        pageLength : 5,
+        ajax: {
+            url: "/apps/purchase-order/get-data-supplier-po-datatables/" + $('#fc_branch_view').val(),
+            type: 'GET'
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 8]
+        }, ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },{
+                data: 'fc_suppliercode',
+            },
+            {
+                data: 'fc_suppliername1'
+            },
+            {
+                data: 'fc_supplier_npwpaddress1'
+            },
+            {
+                data: 'fc_suppliertypebusiness'
+            },
+            {
+                data: 'fc_branchtype'
+            },
+            {
+                data: 'fc_supplierlegalstatus'
+            },
+            {
+                data: 'fc_supplierNPWP'
             },
             {
                 data: null
             },
         ],
-
         rowCallback: function(row, data) {
-            var fc_invno = window.btoa(data.fc_invno);
-
-            $('td:eq(7)', row).html(`
-                <button type="button"class="btn btn-warning btn-sm" onclick="get('${data.fc_invno}')"><i class="fas fa-check"></i> Pilih</button>
-         `);
+            var fc_suppliercode = window.btoa(data.fc_suppliercode);
+            $('td:eq(8)', row).html(`
+                    <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_supp('${data.fc_suppliercode}')"><i class="fa fa-check"></i> Pilih</button>
+                `);
         }
     });
 

@@ -22,8 +22,15 @@ use App\Models\TempSoPay;
 class SalesOrderController extends Controller
 {
     public function index(){
-        $temp_so_master = TempSoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')->where('fc_sono', auth()->user()->fc_userid)->first();
-        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->get();
+        $temp_so_master = TempSoMaster::with('branch','member_tax_code','sales','customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status')
+        ->where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->first();
+        $temp_detail = TempSoDetail::where('fc_sono', auth()->user()->fc_userid)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
         $total = count($temp_detail);
         if(!empty($temp_so_master)){
             $data['data'] = $temp_so_master;
@@ -55,7 +62,10 @@ class SalesOrderController extends Controller
 
         $request->request->add(['fc_sono' => auth()->user()->fc_userid]);
 
-        $customer = Customer::where('fc_membercode', $request->fc_membercode)->first();
+        $customer = Customer::where('fc_membercode', $request->fc_membercode)
+        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->first();
 
         TempSoMaster::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -82,9 +92,18 @@ class SalesOrderController extends Controller
         DB::beginTransaction();
 
 		try{
-            TempSoDetail::where('fc_sono', auth()->user()->fc_userid)->delete();
-            TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->delete();
-            TempSoPay::where('fc_sono',auth()->user()->fc_userid)->delete();
+            TempSoDetail::where('fc_sono', auth()->user()->fc_userid)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->delete();
+            TempSoMaster::where('fc_sono', auth()->user()->fc_userid)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->delete();
+            TempSoPay::where('fc_sono',auth()->user()->fc_userid)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->delete();
 
 			DB::commit();
 

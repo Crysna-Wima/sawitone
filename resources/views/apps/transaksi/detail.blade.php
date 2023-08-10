@@ -135,6 +135,8 @@
                                         <th scope="col" class="text-center">Nama COA</th>
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">No. Giro</th>
+                                        <th scope="col" class="text-center">Jatuh Tempo</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                     </tr>
                                 </thead>
@@ -161,6 +163,8 @@
                                         <th scope="col" class="text-center">Nama COA</th>
                                         <th scope="col" class="text-center">Nominal</th>
                                         <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">No. Giro</th>
+                                        <th scope="col" class="text-center">Jatuh Tempo</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                     </tr>
                                 </thead>
@@ -239,7 +243,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -267,6 +271,14 @@
             {
                 data: 'payment.fv_description',
                 defaultContent: '-'
+            },
+            {
+                data: 'fc_refno',
+                defaultContent: '-'
+            },
+            {
+                data: 'fd_agingref',
+                defaultContent: '-',
             },
             {
                 data: 'fv_description',
@@ -292,7 +304,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -319,6 +331,14 @@
             },
             {
                 data: 'payment.fv_description',
+                defaultContent: '-'
+            },
+            {
+                data: 'fc_refno',
+                defaultContent: '-'
+            },
+            {
+                data: 'fd_agingref',
                 defaultContent: '-'
             },
             {
