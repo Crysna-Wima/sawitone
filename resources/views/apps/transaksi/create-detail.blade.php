@@ -324,14 +324,14 @@
                         <div class="col-12 col-md-6 col-lg-6" id="no_giro" hidden>
                             <div class="form-group required">
                                 <label>No. Giro</label>
-                                <input name="fc_refno" id="fc_refno" class="form-control" required>
+                                <input name="fc_refno" id="fc_refno" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6" id="tgl_giro" hidden>
                             <div class="form-group required">
                                 <label>Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
-                                    <input type="text" id="fd_agingref" class="form-control datepicker" name="fd_agingref" required>
+                                    <input type="text" id="fd_agingref" class="form-control datepicker" name="fd_agingref">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-calendar"></i>
@@ -414,14 +414,14 @@
                         <div class="col-12 col-md-6 col-lg-6" id="no_giro_kredit" hidden>
                             <div class="form-group required">
                                 <label>No. Giro</label>
-                                <input name="fc_refno_kredit" id="fc_refno_kredit" class="form-control" required>
+                                <input name="fc_refno_kredit" id="fc_refno_kredit" class="form-control">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6" id="tgl_giro_kredit" hidden>
                             <div class="form-group required">
                                 <label>Jatuh Tempo</label>
                                 <div class="input-group" data-date-format="dd-mm-yyyy">
-                                    <input type="text" id="fd_agingref_kredit" class="form-control datepicker" name="fd_agingref_kredit" required>
+                                    <input type="text" id="fd_agingref_kredit" class="form-control datepicker" name="fd_agingref_kredit">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <i class="fas fa-calendar"></i>

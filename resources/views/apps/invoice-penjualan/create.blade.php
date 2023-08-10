@@ -434,7 +434,10 @@
             @method('put')
             <input type="hidden" name="fc_invtype" value="{{ utf8_encode('SALES') }}">
             <input type="hidden" name="fc_status" value="{{ utf8_encode('R') }}">
+
+            @if($temp->fc_bankcode != '' && $temp->fc_address != '')
             <button type="submit" class="btn btn-success">Terbitkan Invoice</button>
+            @endif
         </form>
 
 

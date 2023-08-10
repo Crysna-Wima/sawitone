@@ -460,8 +460,8 @@
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br>
             <tr >
-                <td style="width: 50% !important; text-align: left;">Dikirim Oleh,</td>
-                <td style="width: 50% !important; text-align: right;">Diterima Oleh,</td>
+                <td style="width: 50% !important; text-align: left;">Hormat Kami,</td>
+                <td style="width: 50% !important; text-align: right;">Penerima,</td>
             </tr>
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>

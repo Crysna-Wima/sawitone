@@ -127,8 +127,8 @@ class TransaksiController extends Controller
         // dd($data);
     }
 
-    public function datatables_giro(){
-        $data = Giro::with('transaksi.mapping', 'coa')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function datatables_giro($fc_giropos){
+        $data = Giro::with('transaksi.mapping', 'coa')->where('fc_giropos', $fc_giropos)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
