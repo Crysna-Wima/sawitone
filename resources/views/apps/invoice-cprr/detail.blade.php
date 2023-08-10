@@ -433,13 +433,13 @@
                 <h5 class="modal-title">Pilih CPRR</h5>
                 <div class="card-header-action">
                     <select data-dismiss="modal" onchange="" class="form-control select2 required-field" name="category" id="category">
-                        <option value="Semua" selected>Khusus&nbsp;&nbsp;</option>
-                        <option value="Khusus">Semua&nbsp;&nbsp;</option>
+                        <option value="Semua" selected>Semua&nbsp;&nbsp;</option>
+                        <option value="Khusus">Khusus&nbsp;&nbsp;</option>
                     </select>
                 </div>
             </div>
             <form id="form_ttd" autocomplete="off">
-                <div class="modal-body">
+                <div class="modal-body" id="semua">
                     <div class="table-responsive">
                         <table class="table table-striped" id="tb_cprr" width="100%">
                             <thead>
@@ -455,9 +455,25 @@
                         </table>
                     </div>
                 </div>
+                <div class="modal-body" id="khusus" hidden>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tb_cprr_cust" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">Kode CPRR</th>
+                                    <th scope="col" class="text-center">Nama Pemeriksaan</th>
+                                    <th scope="col" class="text-center">Harga</th>
+                                    <th scope="col" class="text-center">Catatan</th>
+                                    <th scope="col" class="text-center" style="width: 10%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </form>
             <div class="modal-footer bg-whitesmoke br">
-                <button type="button" id="click_category" class="btn btn-secondary" onclick="clear_category()" data-dismiss="modal">Close</button>
+                <button type="button" id="click_category" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -544,12 +560,21 @@
 
     function click_modal_cprr() {
         $('#modal_cprr').modal('show');
-        table_cprr();
     }
 
     function click_addon_invdtl() {
         $('#modal_addon').modal('show');
     }
+
+    $("#category").change(function() {
+        if ($('#category').val() === 'Semua') {
+            $('#semua').attr('hidden', false);
+            $('#khusus').attr('hidden', true);
+        } else {
+            $('#semua').attr('hidden', true);
+            $('#khusus').attr('hidden', false);
+        }
+    });
 
     $("#submit_button").click(function() {
         swal({
@@ -798,10 +823,11 @@
         });
     }
 
-    function table_cprr() {
-        var fc_membercode = window.btoa($('#fc_membercode').val());
 
-        var tb_cptt = $('#tb_cprr').DataTable({
+        var fc_membercode = window.btoa($('#fc_membercode').val());
+        // console.log(fc_membercode)
+
+        var tb_cprr_cust = $('#tb_cprr_cust').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
@@ -848,7 +874,83 @@
                     <button type="button" onclick="choosen('${data.id}')" class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</butoon>
                 `);
             }
+        });
+
+        var tb_cprr = $('#tb_cprr').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            ajax: {
+                url: '/data-master/master-cprr/datatables',
+                type: 'GET',
+                data: function(dData) {
+                    dData.category = $("#categori").val();
+                },
+            },
+            columnDefs: [{
+                className: 'text-center',
+                targets: []
+            }],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false,
+                },
+                {
+                    data: 'fc_cprrcode',
+                },
+                {
+                    data: 'fc_cprrname'
+                },
+                {
+                    data: 'fm_price',
+                    render: function(data, type, row) {
+                        return '0'.toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        })
+                    }
+                },
+                {
+                    data: 'fv_description'
+                },
+                {
+                    data: null,
+                }
+            ],
+            rowCallback: function(row, data) {
+                $("td:eq(5)", row).html(`
+                    <button type="button" onclick="choosen_cprr('${data.id}')" class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</butoon>
+                `);
+            }
         })
+    
+
+    function choosen_cprr(id) {
+        $("modal_loading").modal('show');
+        var fc_id = window.btoa(id);
+        $.ajax({
+            url: "/data-master/master-cprr/detail/" + fc_id,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                var data = response.data;
+
+                $("#modal_cprr").modal('hide');
+                $("#fc_detailitem").val(data.fc_cprrcode);
+                // $("#fm_unityprice").val(data.fm_price);
+                $("#fv_description").val(data.fv_description);
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     }
 
     function choosen(id) {

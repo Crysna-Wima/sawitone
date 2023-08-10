@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\DataMaster;
 
+use App\Helpers\ApiFormatter;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -42,6 +43,17 @@ class MasterCprrController extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function detail($id)
+    {
+        $idCprr = base64_decode($id);
+        
+        $data = Cospertes::where([
+            'id' => $idCprr,
+        ])->first();
+        
+        return ApiFormatter::getResponse($data);
     }
 
     public function store_update(request $request)
