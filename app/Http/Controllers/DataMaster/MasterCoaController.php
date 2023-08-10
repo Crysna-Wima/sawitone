@@ -43,11 +43,11 @@ class MasterCoaController extends Controller
     
             // kode html view
             $html .= '<div class="accordion">';
-            $html .= '<div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-' . $item->fc_coacode . '" aria-expanded="false">';
+            $html .= '<div class="accordion-header collapsed d-flex justify-content-between" role="button" data-toggle="collapse" data-target="#panel-body-' . $item->id . '" aria-expanded="false">';
             $html .= '<h4>' . $item->fc_coacode . ' [' . $item->fc_coaname . ']</h4>';
             $html .= '<h4>Rp. ' . $item->fm_balance . '</h4>';
             $html .= '</div>';
-            $html .= '<div class="accordion-body collapse" id="panel-body-' . $item->fc_coacode . '" data-parent="#accordion' . $level . '">';
+            $html .= '<div class="accordion-body collapse" id="panel-body-' . $item->id . '" data-parent="#accordion' . $level . '">';
             $html .= '<div class="d-flex justify-content-between mb-2">';
             $html .= '<p>' . $item->fv_description . '</p>';
             $html .= '<div class="d-flex justify-content-between mb-2">';
