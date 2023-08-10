@@ -39,6 +39,9 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-12 col-lg-12 text-right">
+            <a href="/apps/transaksi" type="button" class="btn btn-info mr-1">Back</a>
+        </div>
     </div>
 </div>
 @endsection
