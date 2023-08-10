@@ -15,7 +15,7 @@ class Giro extends Model
     protected static $logAttributes = ["*"];
 
     protected $table = 't_giro';
-    protected $primaryKey = 'fc_trxno';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $guarded = ['type'];
 
