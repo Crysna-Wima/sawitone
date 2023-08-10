@@ -416,7 +416,7 @@
             <div class="button text-right mb-4">
                 <input type="text" value="R" name="fc_status" id="fc_status" hidden>
 
-                @if($data->fn_invdetail >= 1 && $data->fc_status == "I")
+                @if($data->fn_invdetail >= 1 && $data->fc_status == "I" && $data->fc_bankcode != '' && $data->fc_address != '')
                 <button id="submit_button" class="btn btn-primary">Submit</button>
                 @endif
             </div>

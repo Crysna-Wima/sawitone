@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Tanggal Terbit</label>
                                         <div class="input-group date">
                                             <input type="text" id="fd_inv_releasedate" name="fd_inv_releasedate" class="form-control"
@@ -77,13 +77,13 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>No. Dokumen RS</label>
                                         <input type="text" class="form-control" id="fc_suppdocno" name="fc_suppdocno" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6">
-                                    <div class="form-group">
+                                    <div class="form-group required">
                                         <label>Jatuh Tempo</label>
                                         <div class="input-group date">
                                             <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control"

@@ -287,18 +287,10 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->pomst->fc_potransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->pomst->fc_potransport ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-12 col-md-6 col-lg-4">
-                            <div class="form-group">
-                                <label>Transporter</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $ro_mst->fc_transporter }}" readonly>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Penerima</label>
@@ -404,7 +396,9 @@
             @method('put')
             <input type="hidden" name="fc_invtype" value="{{ utf8_encode('PURCHASE') }}">
             <input type="hidden" name="fc_status" value="{{ utf8_encode('R') }}">
+            @if($temp->fc_bankcode != '' && $temp->fc_address != '')
             <button type="submit" class="btn btn-success">Terbitkan Invoice</button>
+            @endif
         </form>
 
 
