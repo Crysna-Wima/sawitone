@@ -22,9 +22,9 @@
                 <div class="card-header">
                     <h4>Daftar Giro</h4>
                     <div class="card-header-action">
-                        <select data-dismiss="modal" name="category" class="form-control select2" id="category">
-                            <option value="C" selected>Giro Diterima</option>
-                            <option value="D">Giro Keluar</option>
+                        <select name="category" class="form-control select2" id="category">
+                            <option value="D" selected>Giro Masuk</option>
+                            <option value="C">Giro Keluar</option>
                         </select>
                     </div>
                 </div>
@@ -88,9 +88,6 @@
         serverSide: true,
         destroy: true,
         pageLength: 5,
-        order: [
-            [4, 'desc']
-        ],
         ajax: {
             url: "/apps/transaksi/datatables-giro/D",
             type: 'GET',
@@ -124,7 +121,8 @@
                 data: 'fc_girostatus'
             },
             {
-                data: 'fv_description'
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null,
@@ -132,9 +130,21 @@
         ],
 
         rowCallback: function(row, data) {
-            $('td:eq(7)', row).html(`
-                    <a href="#" class="btn btn-info btn-sm mr-1"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</a>
+            if (data['fc_girostatus'] == 'W') {
+                $('td:eq(5)', row).html('<span class="badge badge-primary">Menunggu</span>');
+            } else {
+                $('td:eq(5)', row).html('<span class="badge badge-success">Tuntas</span>');
+            }
+
+            if (data['fc_girostatus'] == 'W') {
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-info btn-sm ml-1" onclick="tuntaskan('${data.id}')"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</button>
                 `);
+            } else {
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-check"></i></button>
+                `);
+            }
         },
     });
 
@@ -143,9 +153,6 @@
         serverSide: true,
         destroy: true,
         pageLength: 5,
-        order: [
-            [4, 'desc']
-        ],
         ajax: {
             url: "/apps/transaksi/datatables-giro/C",
             type: 'GET',
@@ -179,7 +186,8 @@
                 data: 'fc_girostatus'
             },
             {
-                data: 'fv_description'
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null,
@@ -187,11 +195,74 @@
         ],
 
         rowCallback: function(row, data) {
-            $('td:eq(7)', row).html(`
-                    <a href="#" class="btn btn-info btn-sm mr-1"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</a>
+            if (data['fc_girostatus'] == 'W') {
+                $('td:eq(5)', row).html('<span class="badge badge-primary">Menunggu</span>');
+            } else {
+                $('td:eq(5)', row).html('<span class="badge badge-success">Tuntas</span>');
+            }
+
+            if (data['fc_girostatus'] == 'W') {
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-info btn-sm ml-1" onclick="tuntaskan('${data.id}')"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</button>
                 `);
+            } else {
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-check"></i></button>
+                `);
+            }
         },
     });
+
+    function tuntaskan(id) {
+        swal({
+            title: "Konfirmasi",
+            text: "Anda yakin ingin menuntaskan Giro ini?",
+            type: "warning",
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        }).then((save) => {
+            if (save) {
+                $("#modal_loading").modal('show');
+                $.ajax({
+                    url: '/apps/transaksi/clear',
+                    type: 'PUT',
+                    data: {
+                        fc_girostatus: 'C',
+                        id: id
+                    },
+                    success: function(response) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        if (response.status == 200) {
+                            swal(response.message, {
+                                icon: 'success',
+                            });
+                            $("#modal").modal('hide');
+                            tb_giro_masuk.ajax.reload();
+                            tb_giro_keluar.ajax.reload();
+                        } else {
+                            swal(response.message, {
+                                icon: 'error',
+                            });
+                            $("#modal").modal('hide');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        setTimeout(function() {
+                            $('#modal_loading').modal('hide');
+                        }, 500);
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                            .responseText + ")", {
+                                icon: 'error',
+                            });
+                    }
+                });
+            }
+        });
+    }
+
     $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

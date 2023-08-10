@@ -128,7 +128,11 @@ class TransaksiController extends Controller
     }
 
     public function datatables_giro($fc_giropos){
-        $data = Giro::with('transaksi.mapping', 'coa')->where('fc_giropos', $fc_giropos)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = Giro::with('transaksi.mapping', 'coa')->where('fc_giropos', $fc_giropos)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->orderBy('fc_girostatus', 'DESC')
+            ->orderBy('fd_agingref', 'ASC')
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -276,6 +280,29 @@ class TransaksiController extends Controller
                 'message' => 'Data gagal di Pending'
             ];
         }
+    }
+
+    public function clear(Request $request){
+        $id = $request->id;
+        $fc_girostatus = $request->fc_girostatus;
+        $data = Giro::where('id', $id)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $data->update([
+            'fc_girostatus' => $fc_girostatus,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dituntaskan',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal dituntaskan'
+        ];
     }
 
     public function cancel_transaksi(){
