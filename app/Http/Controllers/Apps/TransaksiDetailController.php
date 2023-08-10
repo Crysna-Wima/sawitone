@@ -178,7 +178,7 @@ class TransaksiDetailController extends Controller
             'fc_statuspos' => 'D',
             'fc_paymentmethod' => $request->fc_paymentmethod,
             'fc_refno' => $request->fc_refno,
-            'fd_agingref' => date('d-m-Y H:i:s', strtotime($request->fd_agingref)),
+            'fd_agingref' => date('Y-m-d H:i:s', strtotime($request->fd_agingref)),
             'created_by' => auth()->user()->fc_userid
         ]);
 
@@ -223,7 +223,7 @@ class TransaksiDetailController extends Controller
             'fc_statuspos' => 'C',
             'fc_paymentmethod' => $request->fc_paymentmethod_kredit,
             'fc_refno' => $request->fc_refno_kredit,
-            'fd_agingref' => date('d-m-Y H:i:s', strtotime($request->fd_agingref_kredit)),
+            'fd_agingref' => date('Y-m-d H:i:s', strtotime($request->fd_agingref_kredit)),
             'created_by' => auth()->user()->fc_userid
         ]);
 

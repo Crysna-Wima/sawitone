@@ -7,6 +7,7 @@ use App\Models\MappingMaster;
 use App\Models\MappingDetail;
 use Carbon\Carbon;
 use DB;
+use App\Models\Giro;
 use App\Models\TrxAccountingMaster;
 use App\Models\TrxAccountingDetail;
 use App\Models\TempTrxAccountingMaster;
@@ -119,6 +120,15 @@ class TransaksiController extends Controller
         ->where('fc_status', 'P')
         ->where('fc_userid', auth()->user()->fc_userid)
         ->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
+
+    public function datatables_giro(){
+        $data = Giro::with('transaksi.mapping', 'coa')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
