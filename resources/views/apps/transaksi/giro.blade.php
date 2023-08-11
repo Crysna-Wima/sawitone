@@ -20,7 +20,8 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Daftar Giro</h4>
+                    <h4 id="masuk">Daftar Giro Masuk</h4>
+                    <h4 id="keluar" hidden>Daftar Giro Keluar</h4>
                     <div class="card-header-action">
                         <select name="category" class="form-control select2" id="category">
                             <option value="D" selected>Giro Masuk</option>
@@ -77,9 +78,13 @@
         if ($('#category').val() === 'D') {
             $('#giro-masuk').attr('hidden', false);
             $('#giro-keluar').attr('hidden', true);
+            $('#masuk').attr('hidden', false);
+            $('#keluar').attr('hidden', true);
         } else {
             $('#giro-masuk').attr('hidden', true);
             $('#giro-keluar').attr('hidden', false);
+            $('#masuk').attr('hidden', true);
+            $('#keluar').attr('hidden', false);
         }
     });
 

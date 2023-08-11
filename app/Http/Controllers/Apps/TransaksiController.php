@@ -181,7 +181,9 @@ class TransaksiController extends Controller
         // validator
         $validator = Validator::make($request->all(), [
             'fc_mappingcode' => 'required',
-            'fc_docreference' => 'required_if:fc_informtrx,==,LREF',
+            'fc_docreference' => 'required',
+        ], [
+            'fc_docreference.required' => 'Referensi wajib diisi',
         ]);
 
         if ($validator->fails()) {

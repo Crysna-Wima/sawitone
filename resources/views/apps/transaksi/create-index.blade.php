@@ -79,8 +79,8 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3" id="doc-ref">
-                                    <div class="form-group">
-                                        <label>Tipe Referensi</label>
+                                    <div class="form-group required">
+                                        <label>Referensi</label>
                                         <div class="input-group mb-3" id="grup_input">
                                             <input type="text" class="form-control" id="fc_docreference" name="fc_docreference" readonly>
                                             <div class="input-group-append" id="button_ref">
