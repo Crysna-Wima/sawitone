@@ -57,12 +57,20 @@
                 <div class="card-header d-flex justify-content-between">
                     <h4>Data Persediaan Barang</h4>
                     <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary mr-2" onclick="click_filter_export()" id="filterButton"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
+                            {{-- <form id="exportForm" action="/apps/persediaan-barang/export-kartu-stock" method="POST" target="_blank">
+                                @csrf
+                                <div class="button text-right mr-2">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
+                                </div>
+                            </form> --}}
                         <a href="/apps/konversi-stock" class="btn btn-primary mr-2">Konversi Stock</a>
                         <a href="/apps/stock-opname" class="btn btn-warning">Stock Opname</a>
                     </div>
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      
                         <li class="nav-item">
                             <a class="nav-link active show" id="dexa-tab" data-toggle="tab" href="#dexa" role="tab" aria-controls="dexa" aria-selected="true">Gudang Internal</a>
                         </li>
@@ -144,6 +152,7 @@
 </div>
 @endsection
 
+
 @section('modal')
 <div class="modal fade" role="dialog" id="modal_inventory_dexa" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xl" role="document">
@@ -177,6 +186,44 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <form id="filterForm" action="/apps/persediaan-barang/export-kartu-stock" method="POST" target="_blank">
+        @csrf
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Kartu Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              
+                    <div class="form-group">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" class="form-control" id="startDate" name="start_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" class="form-control" id="endDate" name="end_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="warehouse">Warehouse:</label>
+                        <select class="form-control" id="warehousefilter" name="warehousefilter">
+                            <!-- Opsi-opsi warehouse -->
+                        </select>
+                    </div>
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="applyFilter">Apply Filter</button>
+            </div>
+        </div>
+    </div>
+</form>
 </div>
 
 <div class="modal fade" role="dialog" id="modal_inventory_gudanglain" data-keyboard="false" data-backdrop="static">
@@ -249,6 +296,31 @@
 
 @section('js')
 <script>
+     function click_filter_export(){
+        $("#filterModal").modal("show");
+
+        var warehouseSelect = $('#warehousefilter');
+            warehouseSelect.empty().append(new Option('Loading...', '', true, true)).prop('disabled', true);
+
+            $.ajax({
+                url: '/apps/persediaan-barang/get-warehouse',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    warehouseSelect.empty().prop('disabled', false);
+                    $.each(data.warehouse, function (index, warehouse) {
+                        warehouseSelect.append(new Option(warehouse.fc_rackname, warehouse.fc_warehousecode));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert('Kesalahan saat mengambil data');
+                    warehouseSelect.empty().prop('disabled', false);
+                }
+            });
+
+     }
+
     function click_modal_inventory_dexa(fc_stockcode, fc_namelong) {
         $('#modal_inventory_dexa').modal('show');
         table_inventory_dexa(fc_stockcode, fc_namelong);

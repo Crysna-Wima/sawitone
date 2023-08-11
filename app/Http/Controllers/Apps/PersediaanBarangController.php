@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\KartuStockExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Convert;
@@ -16,6 +17,8 @@ use App\Models\Invstore;
 use App\Models\Warehouse;
 use App\Models\MutasiMaster;
 use App\Models\Stock;
+use App\Models\StockInquiri;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PersediaanBarangController extends Controller
 {
@@ -198,5 +201,43 @@ class PersediaanBarangController extends Controller
 
         $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function get_warehouse(){
+        $data['warehouse'] = Warehouse::where('fc_branch', auth()->user()->fc_branch)->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+
+        return response()->json($data);
+    }
+
+    public function get_stock(){
+        $data['stock'] = Stock::where('fc_divisioncode', auth()->user()->fc_divisioncode)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return response()->json($data);
+    }
+
+    public function export_kartu_stock(Request $request){
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        $warehouseFilter = $request->input('warehousefilter');
+        $filename = 'Kartu Stok : ' . now()->format('Y-m-d_His') . '.xlsx';
+        $range_date = date('d M Y', strtotime($startDate)) . ' - ' . date('d M Y', strtotime($endDate));
+        $query = StockInquiri::with('warehouse', 'invstore.stock')
+            ->where('fc_branch', auth()->user()->fc_branch);
+    
+        if (!empty($startDate)) {
+            $query->where('fd_inqdate', '>=', $startDate);
+        }
+    
+        if (!empty($endDate)) {
+            $query->where('fd_inqdate', '<=', $endDate);
+        }
+    
+        if (!empty($warehouseFilter)) {
+            $query->where('fc_warehousecode', $warehouseFilter);
+        }
+    
+        $kartuStock = $query->get();
+    
+        return Excel::download(new KartuStockExport($kartuStock, $range_date), $filename);
     }
 }

@@ -429,7 +429,9 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-semua', 'Apps\PersediaanBarangController@datatables_semua');
             Route::get('/datatables-inventory-dexa/{fc_stockcode}', 'Apps\PersediaanBarangController@datatables_inventory_dexa');
             Route::get('/datatables-inventory-gudanglain/{fc_stockcode}', 'Apps\PersediaanBarangController@datatables_inventory_gudanglain');
-
+            Route::post('/export-kartu-stock', 'Apps\PersediaanBarangController@export_kartu_stock');
+            Route::get('/get-warehouse', 'Apps\PersediaanBarangController@get_warehouse');
+            Route::get('/get-stock', 'Apps\PersediaanBarangController@get_stock');
             Route::get('/pdf/{fc_warehousecode}', 'Apps\PersediaanBarangController@pdf');
         });
 
