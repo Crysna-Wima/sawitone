@@ -297,7 +297,7 @@
 @section('js')
 <script>
      function click_filter_export(){
-        $("#filterModal").modal("show");
+      
 
         var warehouseSelect = $('#warehousefilter');
             // warehouseSelect.empty().append(new Option('Loading...', '', true, true)).prop('disabled', true);
@@ -312,6 +312,8 @@
                 success: function (data) {
                     // warehouseSelect.empty().prop('disabled', false);
                     $("#modal_loading").modal('hide');
+                    setTimeout(function () {  $("#filterModal").modal("show"); }, 500);
+                   
                     $.each(data.warehouse, function (index, warehouse) {
                         warehouseSelect.append(new Option(warehouse.fc_rackname, warehouse.fc_warehousecode));
                     });
