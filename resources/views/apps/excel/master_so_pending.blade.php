@@ -47,7 +47,6 @@
         <td>{{ $data->fc_sotype }}</td>
         <td>{{ $data->fc_userid }}</td>
         <td>{{ $data->customer->fc_membername1 }}</td>
-        <td>{{ $data->fn_sodetail }}</td>
         <td>Rp. {{ number_format($data->fm_brutto,0,',','.')}}</td>
     </tr>
    
@@ -60,7 +59,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td>&nbsp;</td>
+        {{-- <td>&nbsp;</td> --}}
     </tr>
     <tr>
         <td>&nbsp;</td>
