@@ -20,7 +20,7 @@ class SalesOrderExport implements FromView, ShouldAutoSize
         if($this->status == 'A'){
             $this->masterSoPending = SoMaster::with('domst.dodtl','customer')->where('fc_sotype', 'Retail')->where('fc_branch', auth()->user()->fc_branch)->get();
         }
-        $this->masterSoPending = SoMaster::with('sodtl.stock','domst.dodtl','customer')->where('fc_sotype', 'Retail')->where('fc_sostatus', ['P', 'C'])->where('fc_branch', auth()->user()->fc_branch)->get();
+        $this->masterSoPending = SoMaster::with('sodtl.stock','domst.dodtl','customer')->where('fc_sotype', 'Retail')->where('fc_sostatus', 'P')->where('fc_branch', auth()->user()->fc_branch)->get();
     }
 
     public function view(): ViewView{
