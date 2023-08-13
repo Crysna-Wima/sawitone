@@ -300,14 +300,18 @@
         $("#filterModal").modal("show");
 
         var warehouseSelect = $('#warehousefilter');
-            warehouseSelect.empty().append(new Option('Loading...', '', true, true)).prop('disabled', true);
+            // warehouseSelect.empty().append(new Option('Loading...', '', true, true)).prop('disabled', true);
+            warehouseSelect.empty()
+            // loading
+            $("#modal_loading").modal('show');
 
             $.ajax({
                 url: '/apps/persediaan-barang/get-warehouse',
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    warehouseSelect.empty().prop('disabled', false);
+                    // warehouseSelect.empty().prop('disabled', false);
+                    $("#modal_loading").modal('hide');
                     $.each(data.warehouse, function (index, warehouse) {
                         warehouseSelect.append(new Option(warehouse.fc_rackname, warehouse.fc_warehousecode));
                     });
