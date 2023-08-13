@@ -192,8 +192,8 @@ class MasterSalesOrderController extends Controller
         //     return Excel::download(new SalesOrderExport('A'), 'so_master_all.xlsx');
         // }
 
-
+        
         return Excel::download(new SalesOrderExport, 'so_master_pending.xlsx');
-       
+      
     }
 }
