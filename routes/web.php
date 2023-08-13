@@ -219,7 +219,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::post('/pdf', 'Apps\MasterSalesOrderController@pdf');
             Route::get('/get_pdf/{fc_dono}/{fc_sono}/{nama_pj}', 'Apps\MasterSalesOrderController@get_pdf');
-            Route::post('export-excel', 'Apps\MasterSalesOrderController@export_excel');
+            Route::post('/export-excel/{status}', 'Apps\MasterSalesOrderController@export_excel');
         });
 
         Route::prefix('daftar-cprr')->group(function () {

@@ -53,4 +53,9 @@ class SoMaster extends Model
     public function mutasimst(){
         return $this->belongsTo(MutasiMaster::class, 'fc_sono', 'fc_sono');
     }
+
+    // sodtl
+    public function sodtl(){
+        return $this->hasMany(SoDetail::class, 'fc_sono', 'fc_sono');
+    }
 }
