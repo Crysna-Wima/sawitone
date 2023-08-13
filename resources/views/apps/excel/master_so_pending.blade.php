@@ -17,10 +17,7 @@
             text-align: left;
         }
 
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold; 
-        }
+        
     </style>
 </head>
 
@@ -29,16 +26,16 @@
 <table width="900">
     <tbody>
        
-    <tr>
-        <th width="10">No</th>
-        <th width="30">No. SO</th>
-        <th width="30">Tanggal</th>
-        <th width="30">Expired</th>
-        <th width="30">Tipe</th>
-        <th width="30">Operator</th>
-        <th width="30">Customer</th>
-        <th width="30">Total</th>
-    </tr>
+        <tr>
+            <th width="10" style="font-weight: bold;">No</th>
+            <th width="30" style="font-weight: bold;">No. SO</th>
+            <th width="30" style="font-weight: bold;">Tanggal</th>
+            <th width="30" style="font-weight: bold;">Expired</th>
+            <th width="30" style="font-weight: bold;">Tipe</th>
+            <th width="30" style="font-weight: bold;">Operator</th>
+            <th width="30" style="font-weight: bold;">Customer</th>
+            <th width="30" style="font-weight: bold;">Total</th>
+        </tr>
     @php $i = 1; @endphp
     @foreach($masterSoPending as $data)
   
@@ -57,7 +54,7 @@
     @php $itemCount = count($data->sodtl); @endphp
     <tr>
         <td>&nbsp;</td>
-        <td>Item:{{ $itemCount }} </td>
+        <td style="font-weight: bold;">Item:{{ $itemCount }} </td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -67,13 +64,13 @@
     </tr>
     <tr>
         <td>&nbsp;</td>
-        <td>Katalog</td>
-        <td>Nama Barang</td>
-        <td>Satuan</td>
-        <td>Qty</td>
-        <td>Terkirim</td>
-        <td>Catatan</td>
-        <td>Status</td>
+        <td style="font-weight: bold;">Katalog</td>
+        <td style="font-weight: bold;">Nama Barang</td>
+        <td style="font-weight: bold;">Satuan</td>
+        <td style="font-weight: bold;">Qty</td>
+        <td style="font-weight: bold;">Terkirim</td>
+        <td style="font-weight: bold;">Catatan</td>
+        <td style="font-weight: bold;">Status</td>
     </tr>
     @foreach($data->sodtl as $item)
     <tr>
