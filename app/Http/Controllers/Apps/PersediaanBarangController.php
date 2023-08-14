@@ -220,7 +220,7 @@ class PersediaanBarangController extends Controller
     public function export_kartu_stock(Request $request){
         $startDate = $request->start_date;
         $endDate = $request->end_date;
-        $warehouseFilter = $request->input('warehousefilter');
+        $warehouseFilter = $request->warehousefilter;
         $filename = 'Kartu Stok : ' . now()->format('Y-m-d_His') . '.xlsx';
         $range_date = date('d M Y', strtotime($startDate)) . ' - ' . date('d M Y', strtotime($endDate));
         $query = StockInquiri::with('warehouse', 'invstore.stock')
@@ -238,7 +238,7 @@ class PersediaanBarangController extends Controller
             $query->where('fc_warehousecode', $warehouseFilter);
         }
     
-        $kartuStock = $query->get();
+        $kartuStock = $query->orderBy('fc_warehousecode')->orderBy('fd_inqdate')->get();
     
         return Excel::download(new KartuStockExport($kartuStock, $range_date), $filename);
     }
