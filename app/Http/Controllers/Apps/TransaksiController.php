@@ -15,6 +15,7 @@ use App\Models\TempTrxAccountingDetail;
 use Validator;
 use Auth;
 use App\Helpers\ApiFormatter;
+use App\Models\Approvement;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
 use Illuminate\Database\Eloquent\Builder;
@@ -85,6 +86,21 @@ class TransaksiController extends Controller
             ->addIndexColumn()
             ->make(true);
         // dd($data);
+    }
+
+    public function get($fc_trxno)
+    {
+        $trxno = base64_decode($fc_trxno);
+
+        $data = TrxAccountingMaster::with('transaksitype', 'mapping')
+            ->where([
+                'fc_trxno' =>  $trxno,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->first();
+
+        return ApiFormatter::getResponse($data);
     }
 
     public function data($fc_trxno){
@@ -224,6 +240,45 @@ class TransaksiController extends Controller
             return [
                 'status' => 300,
                 'message' => 'Data sudah ada'
+            ];
+        }
+    }
+
+    public function request_approval(Request $request)
+    {
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_annotation' => 'required',
+        ], [
+            'fc_annotation.required' => 'Keterangan wajib diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $insert = Approvement::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_applicantid' => auth()->user()->fc_userid,
+            'fc_annotation' => $request->fc_annotation,
+            'fc_approvalstatus' => 'W',
+            'fd_userinput' => Carbon::now(),
+        ]);
+
+        if ($insert) {
+            return [
+                'status' => 201,
+                'message' => 'Request berhasil dikirim',
+                'link' => '/apps/transaksi'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Request gagal dikirim'
             ];
         }
     }

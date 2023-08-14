@@ -25,6 +25,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        @if (auth()->user()->fc_groupuser == 'IN_MNGACT' && auth()->user()->fl_level == 3)
                         <table class="table table-striped" id="tb" width="100%">
                             <thead>
                                 <tr>
@@ -40,6 +41,23 @@
                                 </tr>
                             </thead>
                         </table>
+                        @else
+                        <table class="table table-striped" id="tb_applicant" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center text-nowrap">No. Transaksi</th>
+                                    <th scope="col" class="text-center text-nowrap">Nama Transaksi</th>
+                                    <th scope="col" class="text-center">Tanggal</th>
+                                    <th scope="col" class="text-center">Operator</th>
+                                    <th scope="col" class="text-center text-nowrap">Referensi</th>
+                                    <th scope="col" class="text-center">Balance</th>
+                                    <th scope="col" class="text-center">Informasi</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -49,10 +67,90 @@
 @endsection
 
 @section('modal')
+<div class="modal fade" role="dialog" id="modal_request" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Request Approval</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/apps/transaksi/request-approval" method="POST" autocomplete="off">
+                <input type="text" class="form-control" name="fc_branch" id="fc_branch" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-8">
+                            <div class="form-group">
+                                <label>No. Transaksi</label>
+                                <input name="fc_trxno" id="fc_trxno" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Pemohon</label>
+                                <input name="fc_applicantid" id="fc_applicantid" value="{{ auth()->user()->fc_userid}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Keterangan</label>
+                                <input name="fc_annotation" id="fc_annotation" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    function request_edit(fc_trxno) {
+        $("#modal_request").modal('show');
+        get(fc_trxno)
+    }
+
+    function get(fc_trxno) {
+        var trxno = window.btoa(fc_trxno);
+
+        $.ajax({
+            url: "/apps/transaksi/get/" + trxno,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(response) {
+                var data = response.data;
+                setTimeout(function() {
+                }, 500);
+
+                if (response.status == 200) {
+                    console.log(data);
+                    $('#fc_trxno').val(data.fc_trxno);
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        })
+    }
+
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
@@ -67,10 +165,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
-            targets: []
+            targets: [8]
         }],
         columns: [{
                 data: 'DT_RowIndex',
@@ -115,6 +213,74 @@
 
             $('td:eq(8)', row).html(`
                     <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
+                    <button class="btn btn-warning btn-sm" onclick="edit('${data.fc_trxno}')"><i class="fas fa-edit"></i> Edit</button>
+                `);
+        },
+    });
+
+    var tb_applicant = $('#tb_applicant').DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        pageLength: 5,
+        order: [
+            [1, 'desc']
+        ],
+        ajax: {
+            url: "/apps/transaksi/datatables",
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+        }, {
+            className: 'text-nowrap',
+            targets: [8]
+        }],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_trxno'
+            },
+            {
+                data: 'mapping.fc_mappingname'
+            },
+            {
+                data: 'fd_trxdate_byuser',
+                render: formatTimestamp
+            },
+            {
+                data: 'fc_userid'
+            },
+            {
+                data: 'fc_docreference'
+            },
+            {
+                data: 'fm_balance',
+                render: function(data, type, row) {
+                    return row.fm_balance.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'transaksitype.fv_description'
+            },
+            {
+                data: null,
+            },
+        ],
+
+        rowCallback: function(row, data) {
+            var fc_trxno = window.btoa(data.fc_trxno);
+
+            $('td:eq(8)', row).html(`
+                    <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
+                    <button class="btn btn-warning btn-sm" onclick="request_edit('${data.fc_trxno}')"><i class="fas fa-edit"></i> Edit</button>
                 `);
         },
     });

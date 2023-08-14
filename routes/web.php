@@ -647,6 +647,7 @@ Route::group(['middleware' => ['cek_login']], function () {
         Route::prefix('transaksi')->group(function () {
             Route::get('/', 'Apps\TransaksiController@index');
             Route::get('/get-data/{fc_trxno}', 'Apps\TransaksiController@detail');
+            Route::get('/get/{fc_trxno}', 'Apps\TransaksiController@get');
             Route::get('/giro', 'Apps\TransaksiController@giro');
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
@@ -659,6 +660,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
             Route::get('/datatables-invoice', 'Apps\TransaksiController@datatables_invoice');
             Route::post('/store-update', 'Apps\TransaksiController@store_update');
+            Route::post('/request-approval', 'Apps\TransaksiController@request_approval');
             Route::get('/get-detail/{fc_mappingcode}', 'Apps\TransaksiController@get_detail');
             Route::delete('/cancel_transaksi', 'Apps\TransaksiController@cancel_transaksi');
             Route::put('/lanjutkan-bookmark/{fc_trxno}', 'Apps\TransaksiController@lanjutkan_bookmark');
@@ -680,6 +682,15 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::delete('/delete/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@delete');
                 Route::put('/submit_transaksi', 'Apps\TransaksiDetailController@submit_transaksi');
             });
+        });
+
+        Route::prefix('approvement')->group(function () {
+            Route::get('/', 'Apps\ApprovementController@index');
+            Route::get('/datatables', 'Apps\ApprovementController@datatables');
+            Route::get('/datatables-applicant', 'Apps\ApprovementController@datatables_applicant');
+            Route::put('/cancel', 'Apps\ApprovementController@cancel');
+            Route::put('/reject', 'Apps\ApprovementController@reject');
+            Route::put('/accept', 'Apps\ApprovementController@accept');
         });
     });
 });
