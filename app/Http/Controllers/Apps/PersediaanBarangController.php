@@ -152,7 +152,7 @@ class PersediaanBarangController extends Controller
         //         return $sumQuantity;
         //     })
         //     ->make(true);
-        ini_set('max_execution_time', 600); 
+        // ini_set('max_execution_time', 600); 
         $data = Stock::where('fc_divisioncode', auth()->user()->fc_divisioncode)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->get();
@@ -164,7 +164,7 @@ class PersediaanBarangController extends Controller
                 return $sumQuantity;
             })
             ->make(true);
-            ini_restore('max_execution_time');
+            // ini_restore('max_execution_time');
     }
 
     public function datatables_inventory_dexa($fc_stockcode)
