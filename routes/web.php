@@ -688,9 +688,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\ApprovementController@index');
             Route::get('/datatables', 'Apps\ApprovementController@datatables');
             Route::get('/datatables-applicant', 'Apps\ApprovementController@datatables_applicant');
-            Route::put('/cancel', 'Apps\ApprovementController@cancel');
-            Route::put('/reject', 'Apps\ApprovementController@reject');
-            Route::put('/accept', 'Apps\ApprovementController@accept');
+            Route::put('/cancel-approval', 'Apps\ApprovementController@cancel');
+            Route::post('/reject', 'Apps\ApprovementController@reject');
+            Route::post('/accept', 'Apps\ApprovementController@accept');
+            Route::get('/get/{fc_approvalno}', 'Apps\ApprovementController@get');
+            Route::get('/get-detail/{fc_approvalno}', 'Apps\ApprovementController@get_data');
         });
     });
 });
