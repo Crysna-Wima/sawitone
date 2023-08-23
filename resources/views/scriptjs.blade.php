@@ -319,7 +319,24 @@
                       }
                    },error: function (jqXHR, textStatus, errorThrown){
                       setTimeout(function () {  $('#modal_loading').modal('hide'); }, 500);
-                      swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                      var errorMessage = "Mohon maaf masih ada data yang tidak sesuai";
+
+                      // Khusus jika error di transaksi apabila coacode null
+                        var responseObj = JSON.parse(jqXHR.responseText);
+                        if (responseObj.message.includes("SQLSTATE[23000]: Integrity constraint violation")) {
+                           var startIndex = responseObj.message.indexOf("SQLSTATE[23000]: Integrity constraint violation");
+                           var endIndex = responseObj.message.indexOf("(SQL:");
+                           // potong string yang sesuai dengan pesan dari object respon
+                           var specificErrorMessage = responseObj.message.substring(startIndex, endIndex).trim();
+                           if(specificErrorMessage == "SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'fc_coacode' cannot be null"){
+                              swal(errorMessage, {  icon: 'error', });
+                           }else{
+                              swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                           }
+                        }else{
+                           swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {  icon: 'error', });
+                        }
+                    
                    }
                 });
              }

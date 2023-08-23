@@ -23,7 +23,7 @@
                     <h4>Informasi Umum</h4>
                 </div>
                 <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-                <form id="form_submit" action="/apps/transaksi/store-update" method="POST" autocomplete="off">
+                <form id="form_submit_edit" action="/apps/transaksi/store-update" method="POST" autocomplete="off">
                     <input type="text" class="form-control" name="fc_mappingtrxtype_hidden" id="fc_mappingtrxtype_hidden" readonly hidden>
                     <div class="collapse show" id="mycard-collapse">
                         <div class="card-body">
