@@ -38,6 +38,14 @@ class TransaksiController extends Controller
         return view('apps.transaksi.giro');
     }
 
+    public function edit($fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        session(['fc_trxno_global' => $decode_fc_trxno]);
+        $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['fc_trxno'] = $decode_fc_trxno;
+        return view('apps.transaksi.edit', $data);
+    }
+
     public function detail($fc_trxno)
     {
         $decode_fc_trxno = base64_decode($fc_trxno);
@@ -265,6 +273,7 @@ class TransaksiController extends Controller
             'fc_branch' => auth()->user()->fc_branch,
             'fc_applicantid' => auth()->user()->fc_userid,
             'fc_annotation' => $request->fc_annotation,
+            'fc_trxno' => $request->fc_trxno,
             'fc_approvalstatus' => 'W',
             'fd_userinput' => Carbon::now(),
         ]);
@@ -388,9 +397,5 @@ class TransaksiController extends Controller
 			];
 
 		}
-    }
-
-    public function submit_transaksi(Request $request){
-
     }
 }

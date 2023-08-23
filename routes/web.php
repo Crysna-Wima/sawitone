@@ -649,6 +649,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-data/{fc_trxno}', 'Apps\TransaksiController@detail');
             Route::get('/get/{fc_trxno}', 'Apps\TransaksiController@get');
             Route::get('/giro', 'Apps\TransaksiController@giro');
+            Route::get('/edit/{fc_trxno}', 'Apps\TransaksiController@edit');
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
@@ -682,6 +683,15 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::delete('/delete/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@delete');
                 Route::put('/submit_transaksi', 'Apps\TransaksiDetailController@submit_transaksi');
             });
+
+            Route::prefix('edit')->group(function () {
+                Route::post('/edit-debit/{fc_trxno}', 'Apps\TransaksiDetailController@edit_debit');
+                Route::post('/edit-kredit/{fc_trxno}', 'Apps\TransaksiDetailController@edit_kredit');
+                Route::put('update-edit-debit-transaksi/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_debit_transaksi');
+                Route::put('update-edit-kredit-transaksi/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_kredit_transaksi');
+                Route::delete('/delete/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@edit_delete');
+                Route::put('/submit-edit/{fc_trxno}', 'Apps\TransaksiDetailController@submit_edit');
+            });
         });
 
         Route::prefix('approvement')->group(function () {
@@ -693,6 +703,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/accept', 'Apps\ApprovementController@accept');
             Route::get('/get/{fc_approvalno}', 'Apps\ApprovementController@get');
             Route::get('/get-detail/{fc_approvalno}', 'Apps\ApprovementController@get_data');
+            Route::put('/edit/{fc_trxno}', 'Apps\ApprovementController@edit');
         });
     });
 });
