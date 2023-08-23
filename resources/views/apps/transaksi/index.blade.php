@@ -210,13 +210,52 @@
 
         rowCallback: function(row, data) {
             var fc_trxno = window.btoa(data.fc_trxno);
+            var url_lanjutkan = "/apps/approvement/edit/" + fc_trxno;
 
             $('td:eq(8)', row).html(`
                     <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-warning btn-sm" onclick="edit('${data.fc_trxno}')"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-warning btn-sm" onclick="edit('${url_lanjutkan}')"><i class="fas fa-edit"></i> Edit</button>
                 `);
         },
     });
+
+    function edit(url_lanjutkan) {
+        swal({
+                title: "Apakah anda yakin?",
+                text: "Ingin melakukan edit transaksi?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willProceed) => {
+                if (willProceed) {
+                    sendPUTRequest(url_lanjutkan);
+                } else {
+                    console.log("PUT request canceled.");
+                }
+            });
+    }
+
+    function sendPUTRequest(url_lanjutkan) {
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: url_lanjutkan,
+            type: 'PUT',
+            success: function(response) {
+                $('#modal_loading').modal('hide');
+                if (response.status == 201) {
+                    // arahkan ke response.link
+                    window.location.href = response.link;
+                } else {
+                    swal("Error", response.message, "error");
+                }
+            },
+            error: function(error) {
+                $('#modal_loading').modal('hide');
+                swal("Error", error.message, "error");
+            }
+        });
+    }
 
     var tb_applicant = $('#tb_applicant').DataTable({
         processing: true,

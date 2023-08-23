@@ -180,7 +180,7 @@
     }
 </style>
 
-@for ($i = 0; $i < 3; $i++)
+@for ($i = 0; $i < 5; $i++)
 <body>
 <div class="container" id="print">
     <div class="header" style="height: 100px">
@@ -205,8 +205,12 @@
             <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
         @elseif ($i == 1)
             <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
-        @else
+        @elseif ($i == 2)
             <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
+        @elseif ($i == 3)
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 3</p>
+        @else
+            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 4</p>
         @endif
         </div>
         <div style="position: absolute; right: 0; top: 45px; text-align: right;" class="no-margin">

@@ -283,10 +283,10 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4]
         }, {
             className: 'text-nowrap',
-            targets: []
+            targets: [5]
         }],
         columns: [{
                 data: 'fc_approvalno'
@@ -310,7 +310,9 @@
         ],
 
         rowCallback: function(row, data) {
-            var fc_approvalno = window.btoa(data.fc_approvalno);
+            var fc_trxno = window.btoa(data.fc_trxno);
+            console.log(fc_trxno);
+            var url_lanjutkan = "/apps/approvement/edit/" + fc_trxno;
 
             if (data['fc_approvalstatus'] == 'W') {
                 $('td:eq(2)', row).html('<span class="badge badge-primary">Menunggu</span>');
@@ -332,17 +334,64 @@
                 $('td:eq(5)', row).html(`
                     <button class="btn btn-danger btn-sm" onclick="cancel('${data.fc_approvalno}')"><i class="fas fa-ban"></i> Cancel</button>
                 `);
-            } else if (data['fc_approvalstatus'] == 'C'){
+            } else if (data['fc_approvalstatus'] == 'C') {
                 $('td:eq(5)', row).html(`
                     <button class="btn btn-primary btn-sm" onclick="detail_applicant('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
                 `);
+            } else if (data['fc_approvalstatus'] == 'R') {
+                $('td:eq(5)', row).html(`
+                <button class="btn btn-primary btn-sm mr-1" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
+                `);
+            } else if (data['fc_approvalstatus'] == 'A' && data['fc_approvalused'] == 'T') {
+                $('td:eq(5)', row).html(`
+                <button class="btn btn-primary btn-sm mr-1" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
+                `);
             } else {
                 $('td:eq(5)', row).html(`
-                    <button class="btn btn-primary btn-sm" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
+                    <button class="btn btn-primary btn-sm mr-1" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
+                    <button class="btn btn-warning btn-sm edit-btn" onclick="showConfirmationDialog('${url_lanjutkan}');"><i class="fas fa-forward mr-1"></i> Ke Transaksi</button>
                 `);
             }
         },
     });
+
+    function showConfirmationDialog(url_lanjutkan) {
+        swal({
+                title: "Apakah anda yakin?",
+                text: "Ingin melakukan edit transaksi?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willProceed) => {
+                if (willProceed) {
+                    sendPUTRequest(url_lanjutkan);
+                } else {
+                    console.log("PUT request canceled.");
+                }
+            });
+    }
+
+    function sendPUTRequest(url_lanjutkan) {
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: url_lanjutkan,
+            type: 'PUT',
+            success: function(response) {
+                $('#modal_loading').modal('hide');
+                if (response.status == 201) {
+                    // arahkan ke response.link
+                    window.location.href = response.link;
+                } else {
+                    swal("Error", response.message, "error");
+                }
+            },
+            error: function(error) {
+                $('#modal_loading').modal('hide');
+                swal("Error", error.message, "error");
+            }
+        });
+    }
 
     var tb_accessor = $('#tb_accessor').DataTable({
         processing: true,
@@ -407,7 +456,7 @@
                 $('td:eq(6)', row).html(`
                     <button class="btn btn-primary btn-sm" onclick="detail_applicant('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
                 `);
-            } else if (data['fc_approvalstatus'] == 'W'){
+            } else if (data['fc_approvalstatus'] == 'W') {
                 $('td:eq(6)', row).html(`
                     <button class="btn btn-danger btn-sm mr-1" onclick="reject('${data.fc_approvalno}')"><i class="fas fa-x mr-1"></i> Reject</button>
                     <button class="btn btn-success btn-sm" onclick="accept('${data.fc_approvalno}')"><i class="fas fa-check mr-1"></i> Accept</button>

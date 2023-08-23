@@ -13,6 +13,8 @@ use File;
 use DB;
 
 use App\Models\Approvement;
+use App\Models\TrxAccountingMaster;
+use App\Models\TrxAccountingDetail;
 
 class ApprovementController extends Controller
 {
@@ -156,5 +158,40 @@ class ApprovementController extends Controller
             'status' => 300,
             'message' => 'Approval gagal diaccept'
         ];
+    }
+
+    public function edit($fc_trxno){
+        //decode
+        $trxno = base64_decode($fc_trxno);
+        $encode_trxno = base64_encode($trxno);
+        $exist_data = TrxAccountingMaster::where('fc_trxno', $fc_trxno)
+        ->where('fc_status', 'U')
+        ->first();
+
+        if($exist_data > 0){
+            return [
+                'status' => 300,
+                'message' => 'Maaf Transaksi sedang Diperbaiki'
+            ];
+        }
+
+        $update = TrxAccountingMaster::where('fc_trxno', $trxno)->update([
+            'fc_status' => 'U',
+        ]);
+        
+        if ($update) {
+            // return response
+            return[
+                'status' => 201,
+                'message' =>'success',
+                'link' => '/apps/transaksi/edit/' . $encode_trxno
+            ];
+        } else {
+            return[
+                'status' => 300,
+                'message' =>'failed'
+            ];
+        }
+
     }
 }

@@ -10,9 +10,12 @@ use DB;
 use App\Models\NotificationDetail;
 use App\Models\TempTrxAccountingMaster;
 use App\Models\TempTrxAccountingDetail;
+use App\Models\TrxAccountingMaster;
+use App\Models\TrxAccountingDetail;
 use Validator;
 use Auth;
 use App\Helpers\ApiFormatter;
+use App\Models\Approvement;
 use App\Models\InvMaster;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
@@ -150,6 +153,29 @@ class TransaksiDetailController extends Controller
         ];
     }
 
+    public function edit_delete($fc_coacode, $fn_rownum)
+    {
+        // hitung jumlah data di TempPoDetail
+        $count_trx_dtl = TrxAccountingDetail::where('fc_coacode', $fc_coacode)->where('fc_branch', auth()->user()->fc_branch)->count();
+        $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)->where('fn_rownum', $fn_rownum)->delete();
+        if ($delete) {
+            if($count_trx_dtl < 2){
+                return response()->json([
+                    'status' => 201,
+                    'message' => 'Data berhasil dihapus',
+                ]);
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data berhasil dihapus'
+            ]);
+        }
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+    }
+
     public function store_debit(Request $request){
         $validator = Validator::make($request->all(), [
             'fc_coacode' => 'required',
@@ -236,6 +262,170 @@ class TransaksiDetailController extends Controller
             return [
                 'status' => 300,
                 'message' => 'Data gagal disimpan'
+            ];
+        }
+    }
+
+    public function edit_debit(Request $request, string $fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $validator = Validator::make($request->all(), [
+            'fc_coacode' => 'required',
+            'fc_paymentmethod' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $temp_detail = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)->orderBy('fn_rownum', 'DESC')->first();
+        $fn_rownum = 1;
+        if (!empty($temp_detail)) {
+            $fn_rownum = $temp_detail->fn_rownum + 1;
+        }
+
+        $insert_debit = TrxAccountingDetail::create([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_trxno' => $decode_fc_trxno,
+            'fn_rownum' => $fn_rownum,
+            'fc_coacode' => $request->fc_coacode,
+            'fc_statuspos' => 'D',
+            'fc_paymentmethod' => $request->fc_paymentmethod,
+            'fc_refno' => $request->fc_refno,
+            'fd_agingref' => $request->fd_agingref,
+            'created_by' => auth()->user()->fc_userid
+        ]);
+
+        if($insert_debit){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil disimpan'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan'
+            ];
+        }
+    }
+
+    public function edit_kredit(Request $request, string $fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $validator = Validator::make($request->all(), [
+            'fc_coacode_kredit' => 'required',
+            'fc_paymentmethod_kredit' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $temp_detail = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)->orderBy('fn_rownum', 'DESC')->first();
+        $fn_rownum = 1;
+        if (!empty($temp_detail)) {
+            $fn_rownum = $temp_detail->fn_rownum + 1;
+        }
+
+        $insert_kredit = TrxAccountingDetail::create([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_trxno' => $decode_fc_trxno,
+            'fc_coacode' => $request->fc_coacode_kredit,
+            'fn_rownum' => $fn_rownum,
+            'fc_statuspos' => 'C',
+            'fc_paymentmethod' => $request->fc_paymentmethod_kredit,
+            'fc_refno' => $request->fc_refno_kredit,
+            'fd_agingref' => $request->fd_agingref_kredit,
+            'created_by' => auth()->user()->fc_userid
+        ]);
+
+        if($insert_kredit){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil disimpan'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal disimpan'
+            ];
+        }
+    }
+
+    public function update_edit_debit_transaksi(Request $request, string $fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update data
+        $update = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+        ->where('fn_rownum', $request->fn_rownum)
+        ->where('fc_statuspos', 'D')->update([
+            'fm_nominal' => $request->fm_nominal,
+            'fv_description' => $request->fv_description,
+            'updated_by' => auth()->user()->fc_userid
+        ]);
+
+        if($update){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
+            ];
+        }
+    }
+
+    public function update_edit_kredit_transaksi(Request $request, string $fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // update data
+        $update = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+        ->where('fn_rownum', $request->fn_rownum)
+        ->where('fc_statuspos', 'C')->update([
+            'fm_nominal' => $request->fm_nominal,
+            'fv_description' => $request->fv_description,
+            'updated_by' => auth()->user()->fc_userid
+        ]);
+
+        if($update){
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diubah'
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
             ];
         }
     }
@@ -390,5 +580,82 @@ class TransaksiDetailController extends Controller
             ];
         }
     }
+
+    public function submit_edit(Request $request, string $fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        // validator
+        $validator = Validator::make($request->all(), [
+            'status_balance' => 'required',
+            'tipe_jurnal' => 'required',
+            'jumlah_balance' => 'required'
+        ], [
+            'status_balance.required' => 'Nominal Debit dan Kredit masih 0',
+            'jumlah_balance.required' => 'Debit dan Kredit belum Balance, '
+        ]);
     
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+    
+        DB::beginTransaction();
+        try {
+            // Fetch TempTrxAccountingMaster
+            $temp_master = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)
+                ->where('fc_branch', auth()->user()->fc_branch)->first();
+    
+            // Fetch InvMaster
+            $invmst = InvMaster::where('fc_invno', $temp_master->fc_docreference)
+                ->where('fc_branch', auth()->user()->fc_branch)->first();
+    
+            // Fetch temp detail count
+            $exist_detail = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                ->where('fm_nominal', '!=', 0)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->count();
+    
+            if ($exist_detail < 1) {
+                throw new \Exception('Oops! Item debit atau kredit tidak boleh kosong');
+            } else if ($request->status_balance == 'false') {
+                throw new \Exception('Oops! Gagal submit karena tidak balance');
+            } else {
+                if ($request->tipe_jurnal == 'LREF') {
+                    if ($request->jumlah_balance > ($invmst->fm_brutto - $invmst->fm_paidvalue)) {
+                        throw new \Exception('Oops! Balance Transaksi melebihi tagihan yang tertera');
+                    }
+                }
+    
+                // Update TrxAccountingMaster
+                $update = [TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)
+                    ->where('fc_branch', auth()->user()->fc_branch)->update([
+                        'fc_status' => 'F',
+                    ]), Approvement::where('fc_trxno', $decode_fc_trxno)
+                    ->where('fc_branch', auth()->user()->fc_branch)->update([
+                        'fc_approvalused' => 'T',
+                    ])];
+    
+                if (!$update) {
+                    throw new \Exception('Oops! Gagal submit');
+                }
+    
+                DB::commit();
+    
+                return [
+                    'status' => 201,
+                    'message' => 'Submit Berhasil',
+                    'link' => '/apps/transaksi'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+    
+            // Return error response
+            return [
+                'status' => 300,
+                'message' => $e->getMessage(),
+            ];
+        }
+    } 
 }
