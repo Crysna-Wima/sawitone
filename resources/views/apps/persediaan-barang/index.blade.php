@@ -336,7 +336,9 @@
                     warehouseSelect.empty().prop('disabled', false);
                 }
             });
-            $("#modal_loading").modal('hide');
+            setTimeout(function() {
+                $("#modal_loading").modal('hide');
+            }, 500);
 
         }
 
