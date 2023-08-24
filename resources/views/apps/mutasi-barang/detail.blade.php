@@ -330,7 +330,7 @@
         rowCallback: function(row, data) {
             $('td:eq(6)', row).html(`
             <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`);
-            
+
             if (data.fn_so_qty > data.fn_do_qty) {
                 $('td:eq(6)', row).html(
                     `
@@ -441,25 +441,26 @@
                 {
                     "data": null,
                     "render": function(data, type, full, meta) {
-                            for (let index = 0; index < data.stock.sodtl.length; index++) {
-                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                            index]
-                                        .fn_do_qty;
-                                    break;
-                                }
+                        var barcodeEncode = window.btoa(data.fc_barcode);
 
+                        for (let index = 0; index < data.stock.sodtl.length; index++) {
+                            if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                        index]
+                                    .fn_do_qty;
+                                break;
                             }
+                        }
 
-                            // console.log("qty"+qty);
-                            if (qty >= data.fn_quantity) {
-                                return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="${data.fn_quantity}">`;
-                            } else {
-                                if (qty < 0) {
-                                    return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="0">`;
-                                }
-                                return `<input type="number" id="quantity_cart_stock" min="0" class="form-control" value="${qty}">`;
+                        // console.log("qty"+qty);
+                        if (qty >= data.fn_quantity) {
+                            return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
+                        } else {
+                            if (qty < 0) {
+                                return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="0">`;
                             }
+                            return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${qty}">`;
+                        }
                         // }
 
                     }
@@ -467,40 +468,20 @@
                 {
                     "data": null,
                     "render": function(data, type, full, meta) {
-                        var selectedOption = $('#category').val();
-                        if (selectedOption == "Bonus") {
-                            let qty = 0;
-                            // looping data stock.sodtl[index].fn_so_qty
-                            for (let index = 0; index < data.stock.sodtl.length; index++) {
-                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
-                                        index].fn_do_bonusqty;
-                                    break;
-                                }
-                            }
-                            if (qty == 0) {
-                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}','${data.stock.fc_namelong}')">Select</button>`;
-                            }
-
-                        } else {
-                            for (let index = 0; index < data.stock.sodtl.length; index++) {
-                                if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
-                                    break;
-                                }
-                            }
-
-                            // console.log("qty"+qty);
-
-                            if (qty == 0) {
-                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                            } else {
-                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}','${data.stock.fc_namelong}')">Select</button>`;
+                        for (let index = 0; index < data.stock.sodtl.length; index++) {
+                            if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
+                                var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                        index]
+                                    .fn_do_qty;
+                                break;
                             }
                         }
 
+                        if (qty == 0) {
+                            return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                        } else {
+                            return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                        }
                     }
                 }
             ],
@@ -539,7 +520,8 @@
         });
     }
 
-    function select_stock(fc_barcode, fc_stockcode, fc_namelong) {
+    function select_stock(fc_barcode, fc_stockcode) {
+        var barcodeEncode = window.btoa(fc_barcode);
         // modal loading
         $('#modal_loading').modal('show');
         $.ajax({
@@ -548,9 +530,8 @@
             data: {
                 'fc_barcode': fc_barcode,
                 'fc_stockcode': fc_stockcode,
-                'fn_qty': $(`#quantity_cart_stock`).val(),
+                'fn_qty': $(`#quantity_cart_stock_${barcodeEncode}`).val(),
                 'fc_sono': '{{ $data->fc_sono }}',
-                'fc_namelong': fc_namelong,
             },
             dataType: 'JSON',
             success: function(response, textStatus, jQxhr) {
@@ -627,7 +608,7 @@
             var url_delete = "/apps/mutasi-barang/detail/delete/" + data.fc_mutationno + '/' + data.fn_mutationrownum;
 
             $('td:eq(6)', row).html(`
-                    <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Mutasi Barang Detail')"><i class="fa fa-trash"></i> Hapus Item</button>
+                    <button class="btn btn-danger btn-sm" onclick="delete_action_dtl('${url_delete}', 'Mutasi Barang ini')"><i class="fa fa-trash"></i> Hapus Item</button>
                 `);
         },
         // footer callback
@@ -756,7 +737,5 @@
             }
         });
     });
-
-    
 </script>
 @endsection

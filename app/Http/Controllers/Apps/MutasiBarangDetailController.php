@@ -23,9 +23,9 @@ class MutasiBarangDetailController extends Controller
     public function datatables_inventory($fc_startpoint_code)
     {
         $data = Invstore::with('stock')
-        ->where('fc_warehousecode', $fc_startpoint_code)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
+            ->where('fc_warehousecode', $fc_startpoint_code)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -34,24 +34,27 @@ class MutasiBarangDetailController extends Controller
 
     public function datatables()
     {
-        $data = TempMutasiDetail::with('warehouse', 'stock','invstore')->where('fc_mutationno', auth()->user()->fc_userid)->get();
+        $data = TempMutasiDetail::with('warehouse', 'stock', 'invstore')->where('fc_mutationno', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function store_mutasi_detail(Request $request){
-         // validator
-         $validator = Validator::make($request->all(), [
-            'fc_stockcode' => 'required',
-            'fc_barcode' => 'required',
-            // 'fc_namelong' => 'required',
-            'fn_qty' => 'required',
-         ]
+    public function store_mutasi_detail(Request $request)
+    {
+        // validator
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'fc_stockcode' => 'required',
+                'fc_barcode' => 'required',
+                // 'fc_namelong' => 'required',
+                'fn_qty' => 'required',
+            ]
         );
-        
-        if($validator->fails()) {
+
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
@@ -60,13 +63,13 @@ class MutasiBarangDetailController extends Controller
 
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
         $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
-                                      ->where('fc_sono', $request->fc_sono)
-                                      ->where('fc_branch', auth()->user()->fc_branch)
-                                        ->first();
+            ->where('fc_sono', $request->fc_sono)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first();
         $sodtlLength = count($data_stock_sodtl->stock->sodtl);
         $qty = 0;
         for ($i = 0; $i < $sodtlLength; $i++) {
-            $qty += $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty;
+            $qty == $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty;
         }
         if ($qty >= $data_stock->fn_quantity) {
             if ($request->fn_qty > $data_stock->fn_quantity) {
@@ -76,11 +79,18 @@ class MutasiBarangDetailController extends Controller
                 ];
             }
         }
-
-        if ($request->fn_qty > $qty) {
+        
+        if ($request->fn_qty > $data_stock_sodtl->fn_so_qty) {
             return [
                 'status' => 300,
                 'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
+            ];
+        }
+
+        if ($request->fn_qty == 0) {
+            return [
+                'status' => 300,
+                'message' => 'Quantity yang diinputkan masih 0'
             ];
         }
 
@@ -95,9 +105,9 @@ class MutasiBarangDetailController extends Controller
 
 
         // jika ada fc_stockcode yang sama di $temppodtl
-           // jika ditemukan $count_barcode error produk yang sama telah diinputkan
+        // jika ditemukan $count_barcode error produk yang sama telah diinputkan
         if (!empty($temp_detail)) {
-         
+
             if (count($count_stockcode) > 0) {
                 return [
                     'status' => 300,
@@ -122,22 +132,22 @@ class MutasiBarangDetailController extends Controller
             'fn_mutationrownum' => $fn_mutationrownum,
             'fc_barcode' => $request->fc_barcode,
             'fn_qty' => $request->fn_qty,
-       ]);
+        ]);
 
-         if($insert){
-                return [
-                 'status' => 200,
-                 'link' => '/apps/mutasi-barang',
-                 'message' => 'Data berhasil disimpan',
-                ];
-        }else{
-                return [
-                 'status' => 300,
-                 'link' => '/apps/mutasi-barang',
-                 'message' => 'Data gagal disimpan'
-                ];
+        if ($insert) {
+            return [
+                'status' => 200,
+                'link' => '/apps/mutasi-barang',
+                'message' => 'Data berhasil disimpan',
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'link' => '/apps/mutasi-barang',
+                'message' => 'Data gagal disimpan'
+            ];
         }
-    // dd($request);
+        // dd($request);
     }
 
     public function delete($fc_mutationno, $fn_mutationrownum)
@@ -146,7 +156,7 @@ class MutasiBarangDetailController extends Controller
         $count_mutasi_dtl = TempMutasiDetail::where('fc_mutationno', $fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->count();
         $delete = TempMutasiDetail::where('fc_mutationno', $fc_mutationno)->where('fn_mutationrownum', $fn_mutationrownum)->delete();
         if ($delete) {
-            if($count_mutasi_dtl < 2){
+            if ($count_mutasi_dtl < 2) {
                 return response()->json([
                     'status' => 201,
                     'message' => 'Data berhasil dihapus',
@@ -164,9 +174,10 @@ class MutasiBarangDetailController extends Controller
         ];
     }
 
-    public function submit(Request $request){
+    public function submit(Request $request)
+    {
         $count_mutasi_dtl = TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->count();
-        if($count_mutasi_dtl < 1){
+        if ($count_mutasi_dtl < 1) {
             return response()->json([
                 'status' => 300,
                 'message' => 'Tambahkan item terlebih dahulu'
@@ -174,44 +185,41 @@ class MutasiBarangDetailController extends Controller
         }
 
         DB::beginTransaction();
-         
-            try {
-                $temp_mutasi_master = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->update([
-                    'fc_statusmutasi' => 'P',
-                    'fc_description' => $request->fc_description,
-                    'fd_date_bysystem' => Carbon::now()
-                ]);
-                // dd($request);
-                // tampilkan data yang di update dari $temp_so_master
+
+        try {
+            $temp_mutasi_master = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)->update([
+                'fc_statusmutasi' => 'P',
+                'fc_description' => $request->fc_description,
+                'fd_date_bysystem' => Carbon::now()
+            ]);
+            // dd($request);
+            // tampilkan data yang di update dari $temp_so_master
 
 
-                TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
-                TempMutasiMaster::where(['fc_mutationno' => auth()->user()->fc_userid])->delete();
+            TempMutasiDetail::where('fc_mutationno', auth()->user()->fc_userid)->delete();
+            TempMutasiMaster::where(['fc_mutationno' => auth()->user()->fc_userid])->delete();
 
-                DB::commit();
-                if ($temp_mutasi_master) {
-                    return [
-                        'status' => 201, // SUCCESS
-                        'link' => '/apps/mutasi-barang',
-                        'message' => 'Submit Mutasi Berhasil'
-                    ];
-                }
-            } catch (\Exception $e) {
-
-                DB::rollBack();
-
+            DB::commit();
+            if ($temp_mutasi_master) {
                 return [
-                    'status'     => 300, // GAGAL
-                    'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+                    'status' => 201, // SUCCESS
+                    'link' => '/apps/mutasi-barang',
+                    'message' => 'Submit Mutasi Berhasil'
                 ];
             }
+        } catch (\Exception $e) {
+
+            DB::rollBack();
 
             return [
-                'status' => 300,
-                'message' => 'Data gagal disimpan',
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
             ];
+        }
 
+        return [
+            'status' => 300,
+            'message' => 'Data gagal disimpan',
+        ];
     }
-
 }
-
