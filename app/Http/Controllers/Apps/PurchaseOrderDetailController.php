@@ -167,7 +167,7 @@ class PurchaseOrderDetailController extends Controller
             'fv_description' => $request->fv_description,
             'fc_destination' => $request->fc_membername1,
             'fc_address_loading1' => $request->fc_memberaddress_loading1,
-            'fd_poexpired' => $request->fd_poexpired,
+            'fd_poexpired' => date('Y-m-d H:i:s', strtotime($request->fd_poexpired)),
         ]);
 
         $temp_po_master = TempPoMaster::with('branch', 'supplier_tax_code', 'sales', 'supplier.supplier_type_business', 'supplier.supplier_typebranch', 'supplier.supplier_legal_status')->where('fc_pono', auth()->user()->fc_userid)->first();
