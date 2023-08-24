@@ -26,4 +26,8 @@ class ReturMaster extends Model
      return $this->belongsTo(DoMaster::class, 'fc_dono', 'fc_dono');
     }
 
+    public function returdtl(){
+        return $this->hasMany(ReturDetail::class, 'fc_returno', 'fc_returno');
+    }
+
 }

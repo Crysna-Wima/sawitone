@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\ReturExport;
 use App\Helpers\Convert;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Models\ReturDetail;
 use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
 use App\Models\TransaksiType;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 
 class DaftarReturBarangController extends Controller
@@ -83,5 +85,9 @@ class DaftarReturBarangController extends Controller
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.retur-barang', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function export_excel(){
+      return Excel::download(new ReturExport, 'retur_master_all.xlsx');
     }
 }

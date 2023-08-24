@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\MutasiExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Convert;
@@ -12,6 +13,7 @@ use PDF;
 
 use Carbon\Carbon;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class DaftarMutasiBarangController extends Controller
@@ -136,5 +138,15 @@ class DaftarMutasiBarangController extends Controller
                 'status' => 300,
                 'message' => 'Data gagal disimpan',
             ];
+    }
+
+    public function export_excel($status){
+        if($status == 'internal'){
+            return Excel::download(new MutasiExport('INTERNAL'), 'mutasi_master_internal.xlsx');
+        }else if($status == 'eksternal'){
+            return Excel::download(new MutasiExport('EKSTERNAL'), 'mutasi_master_eksternal.xlsx');
+        }else{
+            return Excel::download(new MutasiExport('BELUM'), 'mutasi_master_all.xlsx');
+        }
     }
 }

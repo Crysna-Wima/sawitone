@@ -49,6 +49,12 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <form id="exportForm" action="/apps/daftar-retur-barang/export-excel" method="POST" target="_blank">
+                            @csrf
+                            <div class="button text-right mb-3">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                            </div>
+                        </form>
                         <table class="table table-striped" id="tb" width="100%">
                             <thead>
                                 <tr>

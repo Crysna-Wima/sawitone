@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\ReceivingOrderExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ use DB;
 
 use App\Models\RoMaster;
 use App\Models\RoDetail;
+use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Yajra\DataTables\DataTables as DataTables;
 
@@ -111,5 +113,15 @@ class MasterReceivingOrderController extends Controller
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.receiving-order', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function export_excel($status){
+        if($status == 'terbayar'){
+            return Excel::download(new ReceivingOrderExport('P'), 'bpb_master_terbayar.xlsx');
+        }else if($status == 'diterima'){
+            return Excel::download(new ReceivingOrderExport('R'), 'bpb_master_diterima.xlsx');
+        }else{
+            return Excel::download(new ReceivingOrderExport('A'), 'bpb_master_all.xlsx');
+        }
     }
 }

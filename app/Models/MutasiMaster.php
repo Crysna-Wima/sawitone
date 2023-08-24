@@ -36,4 +36,9 @@ class MutasiMaster extends Model
     public function warehouse_destination(){
         return $this->hasOne(Warehouse::class, 'fc_warehousecode', 'fc_destination_code');
     }
+
+    // mutasidtl
+    public function mutasidtl() {
+        return $this->hasMany(MutasiDetail::class,'fc_mutationno','fc_mutationno');
+    }
 }

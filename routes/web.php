@@ -303,6 +303,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/accept_approval', 'Apps\MasterDeliveryOrderController@accept_approval');
             Route::put('/submit', 'Apps\MasterDeliveryOrderController@submit');
             Route::put('/edit', 'Apps\MasterDeliveryOrderController@editDO');
+            Route::post('/export-excel/{status}', 'Apps\MasterDeliveryOrderController@export_excel');
         });
 
         Route::prefix('received-order')->group(function () {
@@ -400,6 +401,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/generate-qr/{fc_barcode}/{count}/{fd_expired_date}/{fc_batch}', 'Apps\MasterReceivingOrderController@generateQRCodePDF');
             Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf');
             Route::get('/get_pdf/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf');
+            Route::post('/export-excel/{status}', 'Apps\MasterReceivingOrderController@export_excel');
         });
 
         Route::prefix('penerimaan-barang')->group(function () {
@@ -466,6 +468,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/pdf', 'Apps\DaftarMutasiBarangController@pdf');
             Route::get('/get_pdf/{fc_mutationno}/{nama_pj}', 'Apps\DaftarMutasiBarangController@get_pdf');
             Route::put('/submit', 'Apps\DaftarMutasiBarangController@submit');
+            Route::post('/export-excel/{status}', 'Apps\DaftarMutasiBarangController@export_excel');
         });
 
         Route::prefix('penggunaan-cprr')->group(function () {
@@ -597,6 +600,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::post('/pdf', 'Apps\DaftarReturBarangController@pdf');
             Route::get('/get_pdf/{fc_returno}/{nama_pj}', 'Apps\DaftarReturBarangController@get_pdf');
+            Route::post('/export-excel', 'Apps\DaftarReturBarangController@export_excel');
         });
 
         Route::prefix('master-coa')->group(function () {

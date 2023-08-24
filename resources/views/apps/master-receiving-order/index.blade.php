@@ -65,6 +65,12 @@
                             <div class="tab-pane fade active show" id="semua" role="tabpanel"
                                 aria-labelledby="semua-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-receiving-order/export-excel/all" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_semua" width="100%">
                                         <thead>
                                             <tr>
@@ -85,6 +91,12 @@
                             </div>
                             <div class="tab-pane fade" id="terbayar" role="tabpanel" aria-labelledby="terbayar-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-receiving-order/export-excel/terbayar" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_terbayar" width="100%">
                                         <thead>
                                             <tr>
@@ -105,6 +117,12 @@
                             </div>
                             <div class="tab-pane fade" id="diterima" role="tabpanel" aria-labelledby="diterima-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-receiving-order/export-excel/diterima" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_diterima" width="100%">
                                         <thead>
                                             <tr>

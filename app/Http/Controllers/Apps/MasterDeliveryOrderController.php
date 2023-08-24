@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\SuratJalanExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use App\Models\DoDetail;
 use App\Models\DoMaster;
 use App\Models\InvMaster;
 use App\Models\Invstore;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterDeliveryOrderController extends Controller
@@ -395,6 +397,19 @@ class MasterDeliveryOrderController extends Controller
                     'message' => 'Accept gagal'
                 ]
             );
+        }
+    }
+
+
+    public function export_excel($status){
+        if($status == 'kirim'){
+            return Excel::download(new SuratJalanExport('D'), 'do_master_Kirim.xlsx');
+        }else if($status == 'diterima'){
+            return Excel::download(new SuratJalanExport('R'), 'do_master_diterima.xlsx');
+        }else if($status == 'approval'){
+            return Excel::download(new SuratJalanExport('AC'), 'do_master_approve.xlsx');
+        }else{
+            return Excel::download(new SuratJalanExport('A'), 'do_master_all.xlsx');
         }
     }
 }

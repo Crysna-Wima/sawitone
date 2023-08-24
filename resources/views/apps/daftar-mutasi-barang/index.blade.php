@@ -72,6 +72,12 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="internal" role="tabpanel" aria-labelledby="internal-tab">
                             <div class="table-responsive">
+                                <form id="exportForm" action="/apps/daftar-mutasi-barang/export-excel/internal" method="POST" target="_blank">
+                                    @csrf
+                                    <div class="button text-right mb-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                    </div>
+                                </form>
                                 <table class="table table-striped" id="tb_internal" width="100%">
                                     <thead>
                                         <tr>
@@ -91,6 +97,12 @@
                         </div>
                         <div class="tab-pane fade" id="belum-terlaksana" role="tabpanel" aria-labelledby="belum-terlaksana-tab">
                             <div class="table-responsive">
+                                <form id="exportForm" action="/apps/daftar-mutasi-barang/export-excel/belum" method="POST" target="_blank">
+                                    @csrf
+                                    <div class="button text-right mb-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                    </div>
+                                </form>
                                 <table class="table table-striped" id="tb_belum_terlaksana" width="100%">
                                     <thead>
                                         <tr>
@@ -110,6 +122,12 @@
                         </div>
                         <div class="tab-pane fade" id="eksternal" role="tabpanel" aria-labelledby="eksternal-tab">
                             <div class="table-responsive">
+                                <form id="exportForm" action="/apps/daftar-mutasi-barang/export-excel/eksternal" method="POST" target="_blank">
+                                    @csrf
+                                    <div class="button text-right mb-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                    </div>
+                                </form>
                                 <table class="table table-striped" id="tb_eksternal" width="100%">
                                     <thead>
                                         <tr>
