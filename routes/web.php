@@ -368,6 +368,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_pono}', 'Apps\MasterPurchaseOrderController@detail');
             Route::put('/close', 'Apps\MasterPurchaseOrderController@close_po');
             Route::put('/cancel_po', 'Apps\MasterPurchaseOrderController@cancel_po');
+            Route::post('/export-excel/{status}', 'Apps\MasterPurchaseOrderController@export_excel');
         });
 
         Route::prefix('receiving-order')->group(function () {

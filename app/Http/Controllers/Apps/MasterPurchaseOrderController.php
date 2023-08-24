@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\PurchaseOrderExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ use App\Models\PoMaster;
 use App\Models\PoDetail;
 use App\Models\RoMaster;
 use App\Models\RoDetail;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterPurchaseOrderController extends Controller
@@ -203,6 +205,24 @@ class MasterPurchaseOrderController extends Controller
             'status' => 300,
             'message' => 'Data gagal dicancel'
         ];
+    }
+
+    public function export_excel($status){
+        if($status == 'pemesanan'){
+            return Excel::download(new PurchaseOrderExport('F'), 'po_master_pemesanan.xlsx');
+        }else if($status == 'pending'){
+            return Excel::download(new PurchaseOrderExport('P'), 'po_master_pending.xlsx');
+        }else if($status == 'lock'){
+            return Excel::download(new PurchaseOrderExport('L'), 'po_master_lock.xlsx');
+        }else if($status == 'terkirim'){
+            return Excel::download(new PurchaseOrderExport('S'), 'po_master_terkirim.xlsx');
+        }else if($status == 'cancel'){
+            return Excel::download(new PurchaseOrderExport('CC'), 'po_master_cancel.xlsx');
+        }else if($status == 'close'){
+            return Excel::download(new PurchaseOrderExport('CL'), 'po_master_close.xlsx');
+        }else{
+            return Excel::download(new PurchaseOrderExport('A'), 'po_master_all.xlsx');
+        }
     }
 
 }

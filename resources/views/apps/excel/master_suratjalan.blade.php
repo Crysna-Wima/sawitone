@@ -66,7 +66,7 @@
     </tr>
     @foreach($data->dodtl as $item)
     <tr>
-        <td>{{ $loop->iteration }}</td>
+        <td>&nbsp;</td>
         <td>{{ $item->invstore->stock->fc_stockcode }}</td>
         <td>{{ $item->invstore->stock->fc_namelong }}</td>
         <td>{{ $item->fc_batch }}</td>

@@ -73,6 +73,12 @@
                             <div class="tab-pane fade active show" id="semua" role="tabpanel"
                                 aria-labelledby="semua-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-purchase-order/export-excel/all" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_semua" width="100%">
                                         <thead>
                                             <tr>
@@ -94,6 +100,12 @@
                             </div>
                             <div class="tab-pane fade" id="pemesanan" role="tabpanel" aria-labelledby="pemesanan-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-purchase-order/export-excel/pemesanan" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_pemesanan" width="100%">
                                         <thead>
                                             <tr>
@@ -115,6 +127,12 @@
                             </div>
                             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-purchase-order/export-excel/pending" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_pending" width="100%">
                                         <thead>
                                             <tr>
@@ -136,6 +154,12 @@
                             </div>
                             <div class="tab-pane fade" id="terkirim" role="tabpanel" aria-labelledby="terkirim-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-purchase-order/export-excel/terkirim" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_terkirim" width="100%">
                                         <thead>
                                             <tr>

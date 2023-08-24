@@ -19,11 +19,11 @@ class ReceivingOrderExport implements FromView, ShouldAutoSize
     public function __construct($status){
         $this->status = $status;
         if($this->status == 'P'){
-            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock')->where('fc_rostatus', 'P')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock', 'pomst.supplier')->where('fc_rostatus', 'P')->where('fc_branch', auth()->user()->fc_branch)->get();
         }else if($this->status == 'R'){
-            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock')->where('fc_rostatus', 'R')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock', 'pomst.supplier')->where('fc_rostatus', 'R')->where('fc_branch', auth()->user()->fc_branch)->get();
         }else{
-            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $this->masterBpb =  RoMaster::with('rodtl.invstore.stock', 'pomst.supplier')->where('fc_branch', auth()->user()->fc_branch)->get();
         }
     }
 
