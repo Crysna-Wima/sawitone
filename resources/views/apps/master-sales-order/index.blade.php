@@ -65,6 +65,12 @@
                             <div class="tab-pane fade active show" id="semua" role="tabpanel"
                                 aria-labelledby="semua-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/all" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_semua" width="100%">
                                         <thead>
                                             <tr>
@@ -86,12 +92,12 @@
                             </div>
                             <div class="tab-pane fade" id="menunggu" role="tabpanel" aria-labelledby="menunggu-tab">
                                 <div class="table-responsive">
-                                    {{-- <form id="exportForm" action="/apps/master-sales-order/export-excel/menunggu" method="POST" target="_blank">
+                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/menunggu" method="POST" target="_blank">
                                         @csrf
                                         <div class="button text-right mb-3">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
                                         </div>
-                                    </form> --}}
+                                    </form>
                                     <table class="table table-striped" id="tb_menunggu" width="100%">
                                         <thead>
                                             <tr>
@@ -142,12 +148,12 @@
                             </div>
                             <div class="tab-pane fade" id="selesai" role="tabpanel" aria-labelledby="selesai-tab">
                                 <div class="table-responsive">
-                                    {{-- <form id="exportForm" action="/apps/master-sales-order/export-excel/clear" method="POST" target="_blank">
+                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/clear" method="POST" target="_blank">
                                         @csrf
                                         <div class="button text-right mb-3">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
                                         </div>
-                                    </form> --}}
+                                    </form>
                                     <table class="table table-striped" id="tb_selesai" width="100%">
                                         <thead>
                                             <tr>
@@ -169,12 +175,12 @@
                             </div>
                             <div class="tab-pane fade" id="do-tuntas" role="tabpanel" aria-labelledby="do-tuntas-tab">
                                 <div class="table-responsive">
-                                    {{-- <form id="exportForm" action="/apps/master-sales-order/export-excel/dodone" method="POST" target="_blank">
+                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/dodone" method="POST" target="_blank">
                                         @csrf
                                         <div class="button text-right mb-3">
                                             <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
                                         </div>
-                                    </form> --}}
+                                    </form>
                                     <table class="table table-striped" id="tb_do_done" width="100%">
                                         <thead>
                                             <tr>
