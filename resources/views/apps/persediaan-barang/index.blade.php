@@ -57,12 +57,12 @@
                     <div class="card-header d-flex justify-content-between">
                         <h4>Data Persediaan Barang</h4>
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-primary mr-2" onclick="click_filter_export()"
+                            <button type="button" class="btn btn-info mr-2" onclick="click_filter_export()"
                                 id="filterButton"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
                             {{-- <form id="exportForm" action="/apps/persediaan-barang/export-kartu-stock" method="POST" target="_blank">
                                 @csrf
                                 <div class="button text-right mr-2">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
+                                    <button type="submit" class="btn btn-info"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
                                 </div>
                             </form> --}}
                             <a href="/apps/konversi-stock" class="btn btn-primary mr-2">Konversi Stock</a>
