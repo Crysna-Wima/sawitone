@@ -75,7 +75,7 @@ class MutasiBarangController extends Controller
     public function datatables_so_internal(){
         $data = SoMaster::with('customer')
         ->where('fc_sotype', 'Memo Internal')
-        ->where('fc_sostatus',['F', 'P'])
+        ->whereIn('fc_sostatus',['F', 'P'])
         ->where('fc_branch', auth()->user()->fc_branch)
         ->get();
 
