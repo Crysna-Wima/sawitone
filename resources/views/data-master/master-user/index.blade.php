@@ -63,7 +63,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
+                <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
@@ -141,6 +141,7 @@
                                         id="fc_membercode"></select>
                                 </div>
                             </div>
+                            
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Expired Date</label>
@@ -158,6 +159,9 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
+                                    <label class="form-label" for="customFile">Tanda Tangan</label>
+                                    <input type="file" class="form-control" name="image_file" id="customFile" />
+                                    <br>
                                     <label>Description</label>
                                     <textarea name="fv_description" id="fv_description" style="height: 90px" class="form-control"></textarea>
                                 </div>
@@ -181,7 +185,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="/data-master/master-user/store-update" method="POST" autocomplete="off">
+                <form id="form_submit_edit" action="/data-master/master-user/store-update" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
@@ -268,6 +272,9 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
+                                    <label class="form-label" for="customFile">Tanda Tangan</label>
+                                    <input type="file" class="form-control" name="image_file" id="customFile" />
+                                    <br>
                                     <label>Description</label>
                                     <textarea name="fv_description" id="fv_description" style="height: 90px" class="form-control"></textarea>
                                 </div>

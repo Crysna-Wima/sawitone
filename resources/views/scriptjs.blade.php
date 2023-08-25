@@ -48,6 +48,9 @@
       e.preventDefault();
 
       var form_id = $(this).attr("id");
+      var formData = new FormData($('#form_submit')[0]);
+      // Menambahkan data tambahan jika diperlukan
+       formData.append('image_file', $('#customFile')[0].files[0]);
       if (check_required(form_id) === false) {
          swal("Oops! Mohon isi field yang kosong", {
             icon: 'warning',
@@ -68,7 +71,10 @@
                $.ajax({
                   url: $('#form_submit').attr('action'),
                   type: $('#form_submit').attr('method'),
-                  data: $('#form_submit').serialize(),
+                  data: formData,
+                  contentType: false,
+                   processData: false,
+                  // data: $('#form_submit').serialize(),
                   success: function(response) {
                      setTimeout(function() {
                         $('#modal_loading').modal('hide');
@@ -331,6 +337,9 @@
       e.preventDefault();
 
       var form_id = $(this).attr("id");
+      var formData = new FormData($('#form_submit_edit')[0]);
+      // Menambahkan data tambahan jika diperlukan
+       formData.append('image_file', $('#customFile')[0].files[0]);
       if (check_required(form_id) === false) {
          swal("Oops! Mohon isi field yang kosong", {
             icon: 'warning',
@@ -348,10 +357,13 @@
          .then((save) => {
             if (save) {
                $("#modal_loading").modal('show');
+               
                $.ajax({
                   url: $('#form_submit_edit').attr('action'),
                   type: $('#form_submit_edit').attr('method'),
-                  data: $('#form_submit_edit').serialize(),
+                  data: formData,
+                  contentType: false,
+                   processData: false,
                   success: function(response) {
                      setTimeout(function() {
                         $('#modal_loading').modal('hide');

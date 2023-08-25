@@ -120,6 +120,16 @@ class MasterUserController extends Controller
             }
         }
 
+        if ($request->hasFile('image_file')) {
+            $imageFile = $request->file('image_file');
+            $imagePath = 'tandatangan/images'; // Subdirektori dalam public
+            $imageName = time() . '_' . $imageFile->getClientOriginalName();
+            $imageFile->move(public_path($imagePath), $imageName);
+    
+            $request->merge(['fv_ttdpath' => $imagePath . '/' . $imageName]);
+        }
+    
+
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
         User::updateOrCreate([
             'id' => $request->id,
