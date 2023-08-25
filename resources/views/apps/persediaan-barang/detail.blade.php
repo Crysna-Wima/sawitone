@@ -197,14 +197,17 @@
             },
         ],
         rowCallback: function(row, data) {
+            var fc_namelong = window.btoa(data.stock.fc_namelong);
+            var fc_stockcode = window.btoa(data.fc_stockcode);
             $('td:eq(8)', row).html(`
-                <button class="btn btn-warning btn-sm" onclick="click_modal_detail_inventory('${data.fc_stockcode}', '${data.stock.fc_namelong}')"><i class="fa fa-eye"></i> Detail</button>
+                <button class="btn btn-warning btn-sm" onclick="click_modal_detail_inventory('${fc_stockcode}', '${fc_namelong}')"><i class="fa fa-eye"></i> Detail</button>
                 `);
         },
     });
 
     function table_detail_inventory(fc_stockcode, fc_namelong) {
         var fc_warehousecode = "{{ $gudang_mst->fc_warehousecode }}";
+        var namelong = window.atob(fc_namelong);
         var tb_detail_inventory = $('#tb_detail_inventory').DataTable({
             processing: true,
             serverSide: true,
@@ -240,7 +243,7 @@
             ],
 
         });
-        $('#product_name').text(fc_namelong);
+        $('#product_name').text(namelong);
     }
 </script>
 @endsection
