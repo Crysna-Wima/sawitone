@@ -979,7 +979,7 @@
             var url_delete = "/apps/sales-order/detail/delete/" + data.fc_sono + '/' + data.fn_sorownum;
 
             $('td:eq(11)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action_dtl('${url_delete}','SO Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
         },
         footerCallback: function(row, data, start, end, display) {

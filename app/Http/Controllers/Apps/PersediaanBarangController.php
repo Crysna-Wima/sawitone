@@ -51,7 +51,8 @@ class PersediaanBarangController extends Controller
 
     public function datatables_detail_inventory($fc_stockcode, $fc_warehousecode)
     {
-        $data = Invstore::with('stock')->where('fc_stockcode', $fc_stockcode)->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $decode_fc_stockcode = base64_decode($fc_stockcode);
+        $data = Invstore::with('stock')->where('fc_stockcode', $decode_fc_stockcode)->where('fc_warehousecode', $fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
