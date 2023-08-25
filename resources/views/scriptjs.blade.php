@@ -49,8 +49,11 @@
 
       var form_id = $(this).attr("id");
       var formData = new FormData($('#form_submit')[0]);
-      // Menambahkan data tambahan jika diperlukan
-       formData.append('image_file', $('#customFile')[0].files[0]);
+        // Cek apakah input dengan nama 'image_file' ada dan memiliki file terpilih
+      var imageInput = $('#customFile')[0];
+      if (imageInput && imageInput.files.length > 0) {
+         formData.append('image_file', imageInput.files[0]);
+      }
       if (check_required(form_id) === false) {
          swal("Oops! Mohon isi field yang kosong", {
             icon: 'warning',
@@ -339,7 +342,10 @@
       var form_id = $(this).attr("id");
       var formData = new FormData($('#form_submit_edit')[0]);
       // Menambahkan data tambahan jika diperlukan
-       formData.append('image_file', $('#customFile')[0].files[0]);
+      var imageInput = $('#customFile')[0];
+      if (imageInput && imageInput.files.length > 0) {
+         formData.append('image_file', imageInput.files[0]);
+      }
       if (check_required(form_id) === false) {
          swal("Oops! Mohon isi field yang kosong", {
             icon: 'warning',

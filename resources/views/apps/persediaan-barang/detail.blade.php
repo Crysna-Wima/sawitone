@@ -207,7 +207,9 @@
 
     function table_detail_inventory(fc_stockcode, fc_namelong) {
         var fc_warehousecode = "{{ $gudang_mst->fc_warehousecode }}";
+        
         var namelong = window.atob(fc_namelong);
+        namelong = namelong.replace(/&#039;/g, "'");
         var tb_detail_inventory = $('#tb_detail_inventory').DataTable({
             processing: true,
             serverSide: true,
