@@ -120,10 +120,12 @@ class MasterDeliveryOrderController extends Controller
 
     public function datatables($fc_dostatus){
         if($fc_dostatus == "ALL") {
-            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
+            ->whereIn('fc_dostatus',['D', 'P', 'CC', 'L', 'R'])
+            ->get();
         } elseif($fc_dostatus == "APR") {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_dostatus',['NA', 'AC', 'RJ'])
+            ->whereIn('fc_dostatus',['NA', 'AC', 'RJ'])
             ->get();
         } else {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dostatus', $fc_dostatus)->get();
