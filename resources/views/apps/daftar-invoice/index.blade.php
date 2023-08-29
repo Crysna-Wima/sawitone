@@ -265,6 +265,8 @@
                 $('td:eq(6)', row).html('<span class="badge badge-primary">Terbit</span>');
             } else if (data['fc_status'] == 'I') {
                 $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
+            } else if (data['fc_status'] == 'L') {
+                $('td:eq(6)', row).html('<span class="badge badge-danger">Lock</span>');
             } else {
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
@@ -339,6 +341,8 @@
                 $('td:eq(6)', row).html('<span class="badge badge-primary">Terbit</span>');
             } else if (data['fc_status'] == 'I') {
                 $('td:eq(6)', row).html('<span class="badge badge-warning">Pending</span>');
+            } else if (data['fc_status'] == 'L') {
+                $('td:eq(6)', row).html('<span class="badge badge-danger">Lock</span>');
             } else {
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
@@ -414,6 +418,8 @@
                 $('td:eq(5)', row).html('<span class="badge badge-primary">Terbit</span>');
             } else if (data['fc_status'] == 'I') {
                 $('td:eq(5)', row).html('<span class="badge badge-warning">Pending</span>');
+            } else if (data['fc_status'] == 'L') {
+                $('td:eq(5)', row).html('<span class="badge badge-danger">Lock</span>');
             } else {
                 $('td:eq(5)', row).html('<span class="badge badge-success">Lunas</span>');
             }
