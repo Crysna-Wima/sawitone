@@ -118,7 +118,7 @@ class DaftarInvoiceController extends Controller
         
         return [
             'status' => 201,
-            'message' => 'PDF Berhasil ditampilkan',
+            'message' => 'Invoice Berhasil ditampilkan',
             'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'],
         ];
     }
@@ -129,6 +129,31 @@ class DaftarInvoiceController extends Controller
         $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('letter');
+        return $pdf->stream();
+    }
+
+    public function kwitansi(Request $request){
+        // dd($request);
+        $encode_fc_invno = base64_encode($request->fc_invno);
+        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        if($request->name_pj){
+            $data['nama_pj'] = $request->name_pj;
+        }else{
+            $data['nama_pj'] = auth()->user()->fc_username;
+        }
+        
+        return [
+            'status' => 201,
+            'message' => 'Kwitansi Berhasil ditampilkan',
+            'link' => '/apps/daftar-invoice/get_kwitansi/' . $encode_fc_invno . '/' . $data['nama_pj'],
+        ];
+    }
+
+    public function get_kwitansi($fc_invno, $nama_pj){
+        $decode_fc_invno = base64_decode($fc_invno);
+        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['nama_pj'] = $nama_pj;
+        $pdf = PDF::loadView('pdf.kwitansi', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
