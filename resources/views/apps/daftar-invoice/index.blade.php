@@ -158,6 +158,47 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_ttd" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Penanda Tangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit_kwitansi" action="/apps/daftar-invoice/kwitansi" method="POST" autocomplete="off">
+                @csrf
+                <input type="text" name="fc_invno" id="fc_invno_input2" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group-2">
+                                <label class="d-block">Nama</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="nama_user" id="nama_user" checked="">
+                                    <label class="form-check-label" for="nama_user">
+                                        {{ auth()->user()->fc_username }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="nama_user_lainnya" id="nama_user_lainnya">
+                                    <label class="form-check-label" for="nama_user_lainnya">
+                                        Lainnya
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -165,6 +206,7 @@
     // untuk form input nama penanggung jawab
     $(document).ready(function() {
         var isNamePjShown = false;
+        var isNamePjShown2 = false;
 
         $('#name_user_lainnya').click(function() {
             // Uncheck #name_user
@@ -193,6 +235,35 @@
         $('#name_pj').focus(function() {
             $('.form-group:last').toggle();
         });
+
+
+        $('#nama_user_lainnya').click(function() {
+            // Uncheck #name_user
+            $('#nama_user').prop('checked', false);
+
+            // Show #form_pj
+            if (!isNamePjShown2) {
+                $('.form-group-2').append(
+                    '<div class="form-group" id="form_pj_2"><label>Nama PJ</label><input type="text" class="form-control" name="nama_pj" id="nama_pj"></div>'
+                );
+                isNamePjShown2 = true;
+            }
+        });
+
+        $('#nama_user').click(function() {
+            // Uncheck #name_user_lainnya
+            $('#nama_user_lainnya').prop('checked', false);
+
+            // Hide #form_pj
+            if (isNamePjShown2) {
+                $('#form_pj_2').remove();
+                isNamePjShown2 = false;
+            }
+        });
+
+        $('#nama_pj').focus(function() {
+            $('.form-group-2:last').toggle();
+        });
     });
 
     // untuk memunculkan nama penanggung jawab
@@ -200,6 +271,12 @@
         // #fc_pono_input value
         $('#fc_invno_input').val(fc_invno);
         $('#modal_nama').modal('show');
+    };
+
+    function click_modal_ttd(fc_invno) {
+        // #fc_pono_input value
+        $('#fc_invno_input2').val(fc_invno);
+        $('#modal_ttd').modal('show');
     };
 
     var tb_penjualan = $('#tb_penjualan').DataTable({
@@ -273,8 +350,8 @@
 
             $('td:eq(8)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/SALES"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
-         `);
+            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>`)
         }
     });
 
@@ -349,7 +426,8 @@
 
             $('td:eq(8)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/PURCHASE"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
         }
     });
@@ -426,7 +504,8 @@
 
             $('td:eq(8)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
         }
     });
