@@ -88,6 +88,10 @@ class MasterUserController extends Controller
             $validation_array['fc_username'] = 'required|unique:t_user,fc_username,NULL,fc_username,deleted_at,NULL';
         }
 
+        if ($request->hasFile('image_file')) {
+            $validation_array['image_file'] = 'required|image';
+        }
+
        $validator = Validator::make($request->all(), $validation_array);
 
         if($validator->fails()) {
