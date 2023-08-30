@@ -560,6 +560,13 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-do-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_do_detail');
             Route::get('/datatables-ro-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_ro_detail');
             Route::get('/datatables-cprr/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_cprr');
+            Route::get('/get/{fc_invno}', 'Apps\DaftarInvoiceController@get');
+            Route::get('/get-user', 'Apps\DaftarInvoiceController@get_user');
+            Route::get('/need-approve', 'Apps\DaftarInvoiceController@approve');
+        });
+
+        Route::prefix('approval-invoice')->group(function () {
+            Route::get('/', 'Apps\ApprovalInvoiceController@index');
         });
 
         Route::prefix('retur-barang')->group(function () {

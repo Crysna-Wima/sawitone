@@ -127,7 +127,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_pdf" action="/apps/daftar-invoice/pdf" method="POST" autocomplete="off">
+            <form id="form_submit_cek" action="/apps/daftar-invoice/pdf" method="POST" autocomplete="off">
                 @csrf
                 <input type="text" name="fc_invno" id="fc_invno_input" hidden>
                 <div class="modal-body">
@@ -136,17 +136,12 @@
                             <div class="form-group">
                                 <label class="d-block">Nama</label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="name_user" id="name_user" checked="">
-                                    <label class="form-check-label" for="name_user">
+                                    <input class="form-check-input" type="radio" name="name_pj" id="{{ auth()->user()->fc_username }}" checked="" value="{{ auth()->user()->fc_username }}">
+                                    <label class="form-check-label" for="{{ auth()->user()->fc_username }}">
                                         {{ auth()->user()->fc_username }}
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="name_user_lainnya" id="name_user_lainnya">
-                                    <label class="form-check-label" for="name_user_lainnya">
-                                        Lainnya
-                                    </label>
-                                </div>
+                                <div id="name_user_lainnya"></div>
                             </div>
                         </div>
                     </div>
@@ -199,44 +194,99 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_request" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Request Approval</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="/apps/daftar-invoice/request-approval" method="POST" autocomplete="off">
+                <input type="text" class="form-control" name="fc_branch" id="fc_branch" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-8">
+                            <div class="form-group">
+                                <label>No. Invoice</label>
+                                <input name="fc_invno" id="fc_invno_req" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Pemohon</label>
+                                <input name="fc_applicantid" id="fc_applicantid" value="{{ auth()->user()->fc_userid}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Keterangan</label>
+                                <input name="fc_annotation" id="fc_annotation" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    $(document).ready(function() {
+        get_user();
+    })
+
+    function need_approval(fc_invno) {
+        $("#modal_nama").modal('hide');
+        $("#modal_request").modal('show');
+        get(fc_invno);
+    }
+
+    function get(fc_invno) {
+        var invno = window.btoa(fc_invno);
+
+        $.ajax({
+            url: "/apps/daftar-invoice/get/" + invno,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(response) {
+                var data = response.data;
+                setTimeout(function() {
+                }, 500);
+
+                if (response.status == 200) {
+                    console.log(data);
+                    $('#fc_invno_req').val(data.fc_invno);
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        })
+    }
+
     // untuk form input nama penanggung jawab
     $(document).ready(function() {
-        var isNamePjShown = false;
         var isNamePjShown2 = false;
-
-        $('#name_user_lainnya').click(function() {
-            // Uncheck #name_user
-            $('#name_user').prop('checked', false);
-
-            // Show #form_pj
-            if (!isNamePjShown) {
-                $('.form-group').append(
-                    '<div class="form-group" id="form_pj"><label>Nama PJ</label><input type="text" class="form-control" name="name_pj" id="name_pj"></div>'
-                );
-                isNamePjShown = true;
-            }
-        });
-
-        $('#name_user').click(function() {
-            // Uncheck #name_user_lainnya
-            $('#name_user_lainnya').prop('checked', false);
-
-            // Hide #form_pj
-            if (isNamePjShown) {
-                $('#form_pj').remove();
-                isNamePjShown = false;
-            }
-        });
-
-        $('#name_pj').focus(function() {
-            $('.form-group:last').toggle();
-        });
-
-
         $('#nama_user_lainnya').click(function() {
             // Uncheck #name_user
             $('#nama_user').prop('checked', false);
@@ -265,6 +315,48 @@
             $('.form-group-2:last').toggle();
         });
     });
+
+    function get_user() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/apps/daftar-invoice/get-user",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#name_user_lainnya").append(`
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="name_pj" id="${data[i].fc_userid}" value="${data[i].fc_userid}">
+                                <label class="form-check-label" for="${data[i].fc_userid}"">
+                                    ${data[i].fc_userid}
+                                </label>
+                            </div>
+                        `);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     // untuk memunculkan nama penanggung jawab
     function click_modal_nama(fc_invno) {
@@ -502,6 +594,77 @@
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
         }
+    });
+
+    $('#form_submit_cek').on('submit', function(e) {
+        e.preventDefault();
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_submit_cek').attr('action'),
+                        type: $('#form_submit_cek').attr('method'),
+                        data: $('#form_submit_cek').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status === 301) {
+                                $("#modal").modal('hide');
+                                swal({
+                                    title: 'Membutuhkan Approval',
+                                    text: 'Invoice ini Membutuhkan Approval, Apakah anda ingin melanjutkan?',
+                                    icon: 'warning',
+                                    buttons: true,
+                                    dangerMode: true,
+                                }).then((willContinue) => {
+                                    if (willContinue) {
+                                        need_approval(fc_invno);
+                                    }
+                                });
+                            } else if (response.status == 300){
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            } else {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                $("#modal_nama").modal('hide');
+                                //  location.href = response.link;
+                                window.open(
+                                    response.link,
+                                    '_blank' // <- This is what makes it open in a new window.
+                                );
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     });
 </script>
 @endsection
