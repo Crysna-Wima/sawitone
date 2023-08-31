@@ -12,23 +12,28 @@ use App\Models\RoDetail;
 use App\Models\DoDetail;
 use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
+use App\Helpers\ApiFormatter;
+use App\Models\Approval;
 use App\Models\TransaksiType;
+use App\Models\User;
 use Validator;
+use Carbon\Carbon;
 
 class DaftarInvoiceController extends Controller
 {
-    public function index(){
-        return view('apps.daftar-invoice.index');     
+    public function index()
+    {
+        return view('apps.daftar-invoice.index');
     }
 
     public function detail($fc_invno, $fc_invtype)
     {
         $decode_fc_invno = base64_decode($fc_invno);
         session(['fc_invno_global' => $decode_fc_invno]);
-        if($fc_invtype == "SALES") {
+        if ($fc_invtype == "SALES") {
             $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->get();
-        } else if ($fc_invtype == "PURCHASE"){
+        } else if ($fc_invtype == "PURCHASE") {
             $data['inv_mst'] = InvoiceMst::with('pomst', 'romst', 'supplier')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->get();
         } else {
@@ -40,108 +45,140 @@ class DaftarInvoiceController extends Controller
         // dd($data);
     }
 
-    public function datatables($fc_invtype){
-        
-        $data = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invtype', $fc_invtype)->get();
+    public function datatables($fc_invtype)
+    {
+
+        $data = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invtype', $fc_invtype)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_inv_detail($fc_invno){
+    public function datatables_inv_detail($fc_invno)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
         $data = InvoiceDtl::with('invmst', 'cospertes', 'nameunity')
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_invno', $decode_fc_invno)
-        ->where('fc_status', 'ADDON')
-        ->get();
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invno', $decode_fc_invno)
+            ->where('fc_status', 'ADDON')
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
 
-    public function datatables_do_detail($fc_invno){
+    public function datatables_do_detail($fc_invno)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
         $data = InvoiceDtl::with('invstore.stock', 'invmst')
-        ->where('fc_invno', $decode_fc_invno)
-        ->where('fc_status','DEFAULT')
-        ->where('fc_invtype' , "SALES")
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
+            ->where('fc_invno', $decode_fc_invno)
+            ->where('fc_status', 'DEFAULT')
+            ->where('fc_invtype', "SALES")
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
         // dd($fc_dono);
     }
 
-    public function datatables_ro_detail($fc_invno){
+    public function datatables_ro_detail($fc_invno)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
         $data = InvoiceDtl::with('invstore.stock', 'invmst')
-        ->where('fc_invno', $decode_fc_invno)
-        ->where('fc_status','DEFAULT')
-        ->where('fc_invtype' , "PURCHASE")
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
-        
+            ->where('fc_invno', $decode_fc_invno)
+            ->where('fc_status', 'DEFAULT')
+            ->where('fc_invtype', "PURCHASE")
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function datatables_cprr($fc_invno){
+    public function datatables_cprr($fc_invno)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
         $data = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')
-        ->where('fc_invno', $decode_fc_invno)
-        ->where('fc_status','DEFAULT')
-        ->where('fc_invtype' , "CPRR")
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
-        
+            ->where('fc_invno', $decode_fc_invno)
+            ->where('fc_status', 'DEFAULT')
+            ->where('fc_invtype', "CPRR")
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function pdf(Request $request){
+    public function pdf(Request $request)
+    {
         // dd($request);
         $encode_fc_invno = base64_encode($request->fc_invno);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
-        if($request->name_pj){
+
+        if ($request->name_pj === auth()->user()->fc_userid) {
             $data['nama_pj'] = $request->name_pj;
-        }else{
-            $data['nama_pj'] = auth()->user()->fc_username;
+
+            $insert = Approval::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_applicantid' => $request->name_pj,
+                'fc_accessorid' => $request->name_pj,
+                'fc_annotation' => 'No Need Approval',
+                'fd_accessorrespon' => 'No Need Approval',
+                'fc_docno' => $request->fc_invno,
+                'fd_userinput' => Carbon::now(),
+            ]);
+
+            if ($insert) {
+                return [
+                    'status' => 201,
+                    'message' => 'Invoice Berhasil ditampilkan',
+                    'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'],
+                ];
+            } else {
+                $data['fc_invno'] = $request->fc_invno;
+
+                return [
+                    'status' => 300,
+                    'message' => 'Invoice Gagal ditampilkan'
+                ];
+            }
+            dd($request);
+        } else {
+            return [
+                'status' => 301,
+            ];
         }
-        
-        return [
-            'status' => 201,
-            'message' => 'Invoice Berhasil ditampilkan',
-            'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'],
-        ];
     }
 
-    public function get_pdf($fc_invno, $nama_pj){
+    public function get_pdf($fc_invno, $nama_pj)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('letter');
         return $pdf->stream();
     }
 
-    public function kwitansi(Request $request){
+    public function kwitansi(Request $request)
+    {
         // dd($request);
         $encode_fc_invno = base64_encode($request->fc_invno);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
-        if($request->name_pj){
+        $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        if ($request->name_pj) {
             $data['nama_pj'] = $request->name_pj;
-        }else{
+        } else {
             $data['nama_pj'] = auth()->user()->fc_username;
         }
-        
+
         return [
             'status' => 201,
             'message' => 'Kwitansi Berhasil ditampilkan',
@@ -149,12 +186,37 @@ class DaftarInvoiceController extends Controller
         ];
     }
 
-    public function get_kwitansi($fc_invno, $nama_pj){
+    public function get_kwitansi($fc_invno, $nama_pj)
+    {
         $decode_fc_invno = base64_decode($fc_invno);
-        $data['inv_mst'] = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['nama_pj'] = $nama_pj;
         $pdf = PDF::loadView('pdf.kwitansi', $data)->setPaper('a4');
         return $pdf->stream();
+    }
+
+    public function get_user()
+    {
+        $data = User::where([
+            // 'fc_groupuser' => 'IN_MNGSLS',
+            'fl_level' => '3',
+        ])->get();
+
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function get($fc_invno)
+    {
+        $invno = base64_decode($fc_invno);
+
+        $data = InvoiceMst::where([
+                'fc_invno' =>  $invno,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->first();
+
+        return ApiFormatter::getResponse($data);
     }
 
 }
