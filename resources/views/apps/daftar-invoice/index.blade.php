@@ -350,7 +350,7 @@
     }
 
 
-    function cekExistApproval(fc_invno){
+    function cekExistApproval(fc_invno) {
         $("#modal_loading").modal('show');
         // encode fc_invno
         var fc_invno_encode = window.btoa(fc_invno);
@@ -364,18 +364,21 @@
                 }, 500);
                 if (response.status === 200) {
                     // console.log(response)
-                    if(response.approve == 'wait'){
+                    if (response.approve == 'wait') {
                         swal(response.message, {
                             icon: 'error',
                         });
-                    }else if(response.approve == 'pdf'){
+                    } else if (response.approve == 'pdf') {
                         // arahkan ke response.link
+                        tb_penjualan.ajax.reload(null, false);
+                        tb_pembelian.ajax.reload(null, false);
+                        tb_cprr.ajax.reload(null, false);
                         window.open(response.link,
-                           '_blank' 
+                            '_blank'
                         );
-                    } else if(response.approve == 'request'){
+                    } else if (response.approve == 'request') {
                         click_modal_nama(fc_invno);
-                    }else{
+                    } else {
                         swal("Oops! Terjadi kesalahan segera hubungi tim IT", {
                             icon: 'error',
                         });
@@ -488,7 +491,7 @@
 
             $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/SALES"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>`)
         }
     });
@@ -567,7 +570,7 @@
 
             $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/PURCHASE"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
         }

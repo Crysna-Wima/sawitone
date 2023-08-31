@@ -59,7 +59,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade active" id="perizinan" role="tabpanel" aria-labelledby="perizinan-tab">
+                        <div class="tab-pane fade" id="perizinan" role="tabpanel" aria-labelledby="perizinan-tab">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="tb_accessor" width="100%">
                                     <thead>
