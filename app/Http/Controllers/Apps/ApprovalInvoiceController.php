@@ -10,11 +10,13 @@ use App\Helpers\ApiFormatter;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables as DataTables;
 use File;
+use PDF;
 use DB;
 
 use App\Models\Approval;
 use App\Models\InvoiceMst;
 use App\Models\InvoiceDtl;
+use App\Models\User;
 
 class ApprovalInvoiceController extends Controller
 {
@@ -163,8 +165,11 @@ class ApprovalInvoiceController extends Controller
         $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_docno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_docno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $request->fc_accessorid;
+    
+        $increment = InvoiceMst::where('fc_invno', $request->fc_docno)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->increment('fn_printout', 1);
 
-        dd($encode_fc_docno);
         return [
             'status' => 201,
             'message' => 'Invoice Berhasil ditampilkan',
@@ -172,11 +177,11 @@ class ApprovalInvoiceController extends Controller
         ];
     }
 
-
     public function get_pdf($fc_docno, $fc_accessorid)
     {
         $decode_fc_docno = base64_decode($fc_docno);
         $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_docno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['user'] = User::where('fc_userid', $fc_accessorid)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_docno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $fc_accessorid;
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('letter');

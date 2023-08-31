@@ -49,4 +49,8 @@ class InvoiceMst extends Model
     public function bank(){
         return $this->hasOne(BankAcc::class, 'fc_bankcode', 'fc_bankcode');
     }
+
+    public function user(){
+        return $this->hasOne(User::class, 'fc_userid', 'fc_accessorid');
+    }
 }

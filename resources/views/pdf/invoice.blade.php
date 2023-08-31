@@ -477,8 +477,15 @@
                 <td style="width: 50% !important; text-align: right;">{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</td>
                 @endif
             </tr>
-            <br><br/>
-            <br><br/>
+            @if ($i == 0)
+                <br><br>
+                <br><br>
+            @elseif ($user->fv_ttdpath == null)
+                <br><br>
+                <br><br>
+            @else
+                <img src="{{ $user->fv_ttdpath }}" alt="" width="80" height="80">
+            @endif
             <tr >
                 <td style="width: 50% !important; text-align: left;">( {{ $nama_pj }} )</td>
                 <td style="width: 50% !important; text-align: right;">(..........................)</td>

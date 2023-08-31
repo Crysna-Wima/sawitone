@@ -377,6 +377,7 @@
                            icon: 'success',
                         });
                         $("#modal").modal('hide');
+                        $("#modal_pdf").modal('hide');
                         //  location.href = response.link;
                         window.open(
                            response.link,

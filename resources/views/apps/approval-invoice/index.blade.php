@@ -296,6 +296,36 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_pdf" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Penanda Tangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit_pdf" action="/apps/approval-invoice/pdf" method="POST" autocomplete="off">
+                @csrf
+                <input type="text" name="fc_docno" id="fc_docno_input" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input name="fc_accessorid" id="fc_accessorid_pdf" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -324,6 +354,11 @@
         $("#modal_approvdetail").modal('show');
         get_detail(fc_approvalno);
     }
+
+    function click_modal_pdf(fc_approvalno) {
+        $('#modal_pdf').modal('show');
+        get_detail(fc_approvalno);
+    };
 
     var tb_applicant = $('#tb_applicant').DataTable({
         processing: true,
@@ -401,7 +436,7 @@
             } else {
                 $('td:eq(5)', row).html(`
                     <button class="btn btn-primary btn-sm mr-1" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
-                    <button class="btn btn-warning btn-sm mr-1" onclick="#"><i class="fa fa-file"></i> PDF</button>
+                    <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_pdf('${data.fc_approvalno}')"><i class="fa fa-file"></i> PDF</button>
                 `);
             }
         },
@@ -545,6 +580,9 @@
                     $('#fd_accessorrespon_dtl').val(data.fd_accessorrespon);
                     $('#fd_approvaldate_dtl').val(data.fd_approvaldate);
                     $('#fc_accessorid_dtl').val(data.fc_accessorid);
+
+                    $('#fc_docno_input').val(data.fc_docno);
+                    $('#fc_accessorid_pdf').val(data.fc_accessorid);
                 } else {
                     iziToast.error({
                         title: 'Error!',
