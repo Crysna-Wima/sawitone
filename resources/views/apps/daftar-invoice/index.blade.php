@@ -243,45 +243,50 @@
         get_user();
     })
 
-    function need_approval(fc_invno) {
+    // Pembuatan variabel Global-Ephemeral untuk menyimpan sementara invno 
+    var globalInvno;
+
+    function need_approval() {
         $("#modal_nama").modal('hide');
         $("#modal_request").modal('show');
-        get(fc_invno);
+        get(globalInvno);
     }
 
-    function get(fc_invno) {
-        var invno = window.btoa(fc_invno);
+    // Modifikasi Fungsi Get agar bisa mengakses invno 
+    function get(invno) {
+        var fc_invno = window.atob(invno);
+        console.log(fc_invno);
+        $('#fc_invno_req').val(fc_invno);
+        // $.ajax({
+        //     url: "/apps/daftar-invoice/get/" + fc_invno,
+        //     type: 'GET',
+        //     dataType: 'JSON',
+        //     success: function(response) {
+        //         var data = response.data;
+        //         setTimeout(function() {
+        //         }, 500);
 
-        $.ajax({
-            url: "/apps/daftar-invoice/get/" + invno,
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(response) {
-                var data = response.data;
-                setTimeout(function() {
-                }, 500);
+        //         if (response.status == 200) {
+        //             console.log(data);
+        //             $('#fc_invno_req').val(data.fc_invno);
+        //         } else {
+        //             iziToast.error({
+        //                 title: 'Error!',
+        //                 message: response.message,
+        //                 position: 'topRight'
+        //             });
+        //         }
 
-                if (response.status == 200) {
-                    console.log(data);
-                    $('#fc_invno_req').val(data.fc_invno);
-                } else {
-                    iziToast.error({
-                        title: 'Error!',
-                        message: response.message,
-                        position: 'topRight'
-                    });
-                }
-
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-                    icon: 'error',
-                });
-            }
-        })
+        //     },
+        //     error: function(jqXHR, textStatus, errorThrown) {
+        //         setTimeout(function() {
+        //             $('#modal_loading').modal('hide');
+        //         }, 500);
+        //         swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+        //             icon: 'error',
+        //         });
+        //     }
+        // })
     }
 
     // untuk form input nama penanggung jawab
@@ -363,6 +368,8 @@
         // #fc_pono_input value
         $('#fc_invno_input').val(fc_invno);
         $('#modal_nama').modal('show');
+
+        globalInvno = window.btoa(fc_invno);
     };
 
     function click_modal_ttd(fc_invno) {
@@ -639,7 +646,7 @@
                                     dangerMode: true,
                                 }).then((willContinue) => {
                                     if (willContinue) {
-                                        need_approval(fc_invno);
+                                        need_approval();
                                     }
                                 });
                             } else if (response.status == 300){
