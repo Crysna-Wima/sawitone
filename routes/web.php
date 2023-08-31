@@ -565,6 +565,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/need-approve', 'Apps\DaftarInvoiceController@approve');
             Route::post('/request-approval', 'Apps\DaftarInvoiceController@request_approval');
             Route::post('/cek-approval', 'Apps\DaftarInvoiceController@cek_approval');
+            Route::get('/cek-exist-approval/{fc_invno}', 'Apps\DaftarInvoiceController@cek_exist_approval');
         });
 
         Route::prefix('retur-barang')->group(function () {
