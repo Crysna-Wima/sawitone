@@ -296,6 +296,7 @@ class DaftarInvoiceController extends Controller
 
                 return [
                     'status' => 200,
+                    'approve' => 'pdf',
                     'message' => 'Approval berhasil dikirim',
                     'link' => '/apps/daftar-invoice/get_pdf/' . $fc_invno . '/' . $get_accesor,
                 ];
