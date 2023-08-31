@@ -275,21 +275,42 @@ class DaftarInvoiceController extends Controller
         }
     }
 
-    // public function cek_approval(Request $request)
-    // {
-    //     $cek = Approval::where('fc_docno', $request->fc_invno)
-    //         ->where('fc_approvalstatus', 'A')
-    //         ->exists();
+    public function cek_exist_approval($fc_invno)
+    {
+        // decode fc_invno
+        $decode_fc_invno = base64_decode($fc_invno);
+        $cek_step1 = Approval::where('fc_docno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->exists();
 
-    //     if ($cek) {
-    //         return [
-    //             'status' => 200,
-    //         ];
-    //     } else {
-    //         return [
-    //             'status' => 300,
-    //             'message' => 'Approval yang sama sedang diajukan oleh user lain'
-    //         ];
-    //     }
-    // }
+        // dd($cek);
+        if ($cek_step1) {
+            $cek_step2 = Approval::where('fc_docno', $decode_fc_invno)
+                ->where('fc_approvalstatus', 'A')->where('fc_branch', auth()->user()->fc_branch)
+                ->exists();
+            $accesor =  Approval::where('fc_docno', $decode_fc_invno)
+            ->where('fc_approvalstatus', 'A')->where('fc_branch', auth()->user()->fc_branch)->first();
+           
+            if($cek_step2){
+                $get_accesor = $accesor->fc_accessorid;
+                return [
+                    'status' => 200,
+                    'approve' => 'pdf',
+                    'message' => 'Approval berhasil dikirim',
+                    'link' => '/apps/daftar-invoice/get_pdf/' . $fc_invno . '/' . $get_accesor,
+                ];
+            }else{
+                return [
+                    'status' => 200,
+                    'approve' => 'wait',
+                    'message' => 'Mohon ditunggu Invoice sedang proses Approvement',
+                ];
+            }
+            
+        } else {
+            return [
+                'status' => 200,
+                'approve' => 'request',
+                'message' => 'Pilih Penandatangan !!',
+            ];
+        }
+    }
 }
