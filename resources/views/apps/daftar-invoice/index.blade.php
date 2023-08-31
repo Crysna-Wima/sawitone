@@ -60,11 +60,12 @@
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Invoice</th>
                                             <th scope="col" class="text-center">No. SJ</th>
-                                            <th scope="col" class="text-center">Tgl Terbit</th>
-                                            <th scope="col" class="text-center">Jatuh Tempo</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Terbit</th>
+                                            <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
+                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -79,11 +80,12 @@
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Invoice</th>
                                             <th scope="col" class="text-center">No. BPB</th>
-                                            <th scope="col" class="text-center">Tgl Terbit</th>
-                                            <th scope="col" class="text-center">Jatuh Tempo</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Terbit</th>
+                                            <th scope="col" class="text-center  text-nowrap">Jatuh Tempo</th>
                                             <th scope="col" class="text-center">Supplier</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
+                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -97,11 +99,12 @@
                                         <tr>
                                             <th scope="col" class="text-center">No</th>
                                             <th scope="col" class="text-center">No. Invoice</th>
-                                            <th scope="col" class="text-center">Tgl Terbit</th>
-                                            <th scope="col" class="text-center">Jatuh Tempo</th>
+                                            <th scope="col" class="text-center text-nowrap">Tgl Terbit</th>
+                                            <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
+                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -378,7 +381,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 8]
+                targets: [3, 9]
             },
         ],
         columns: [{
@@ -411,6 +414,9 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fn_printout',
+            },
+            {
                 data: null
             },
         ],
@@ -430,7 +436,7 @@
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(8)', row).html(`
+            $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/SALES"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>`)
@@ -454,7 +460,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 8]
+                targets: [3, 9]
             },
         ],
         columns: [{
@@ -487,6 +493,9 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fn_printout',
+            },
+            {
                 data: null
             },
         ],
@@ -506,7 +515,7 @@
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(8)', row).html(`
+            $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/PURCHASE"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
@@ -531,7 +540,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [2, 3, 8]
+                targets: [2, 3, 9]
             },
         ],
         columns: [{
@@ -561,6 +570,9 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fn_printout',
+            },
+            {
                 data: 'fv_description',
                 defaultContent: '-'
             },
@@ -584,7 +596,7 @@
                 $('td:eq(5)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(8)', row).html(`
+            $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
@@ -642,6 +654,9 @@
                                     icon: 'success',
                                 });
                                 $("#modal").modal('hide');
+                                tb_penjualan.ajax.reload(null, false);
+                                tb_pembelian.ajax.reload(null, false);
+                                tb_cprr.ajax.reload(null, false);
                                 $("#modal_nama").modal('hide');
                                 //  location.href = response.link;
                                 window.open(

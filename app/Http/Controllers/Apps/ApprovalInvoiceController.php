@@ -166,7 +166,7 @@ class ApprovalInvoiceController extends Controller
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_docno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $request->fc_accessorid;
     
-        $increment = InvoiceMst::where('fc_invno', $request->fc_docno)
+        InvoiceMst::where('fc_invno', $request->fc_docno)
         ->where('fc_branch', auth()->user()->fc_branch)
         ->increment('fn_printout', 1);
 

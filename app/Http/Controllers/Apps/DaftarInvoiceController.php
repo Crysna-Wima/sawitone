@@ -137,6 +137,10 @@ class DaftarInvoiceController extends Controller
             ]);
 
             if ($insert) {
+                InvoiceMst::where('fc_invno', $request->fc_invno)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->increment('fn_printout', 1);
+
                 return [
                     'status' => 201,
                     'message' => 'Invoice Berhasil ditampilkan',
@@ -165,6 +169,7 @@ class DaftarInvoiceController extends Controller
         $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
+        $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('letter');
         return $pdf->stream();
     }
