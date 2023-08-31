@@ -563,10 +563,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get/{fc_invno}', 'Apps\DaftarInvoiceController@get');
             Route::get('/get-user', 'Apps\DaftarInvoiceController@get_user');
             Route::get('/need-approve', 'Apps\DaftarInvoiceController@approve');
-        });
-
-        Route::prefix('approval-invoice')->group(function () {
-            Route::get('/', 'Apps\ApprovalInvoiceController@index');
+            Route::post('/request-approval', 'Apps\DaftarInvoiceController@request_approval');
         });
 
         Route::prefix('retur-barang')->group(function () {
@@ -718,6 +715,19 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get/{fc_approvalno}', 'Apps\ApprovementController@get');
             Route::get('/get-detail/{fc_approvalno}', 'Apps\ApprovementController@get_data');
             Route::put('/edit/{fc_trxno}', 'Apps\ApprovementController@edit');
+        });
+
+        Route::prefix('approval-invoice')->group(function () {
+            Route::get('/', 'Apps\ApprovalInvoiceController@index');
+            Route::get('/datatables-accessor', 'Apps\ApprovalInvoiceController@datatables_accessor');
+            Route::get('/datatables-applicant', 'Apps\ApprovalInvoiceController@datatables_applicant');
+            Route::put('/cancel-approval', 'Apps\ApprovalInvoiceController@cancel');
+            Route::post('/reject', 'Apps\ApprovalInvoiceController@reject');
+            Route::post('/accept', 'Apps\ApprovalInvoiceController@accept');
+            Route::get('/get/{fc_approvalno}', 'Apps\ApprovalInvoiceController@get');
+            Route::get('/get-detail/{fc_approvalno}', 'Apps\ApprovalInvoiceController@get_data');
+            Route::post('/pdf', 'Apps\ApprovalInvoiceController@pdf');
+            Route::get('/get_pdf/{fc_docno}/{nama_pj}', 'Apps\ApprovalInvoiceController@get_pdf');
         });
     });
 });

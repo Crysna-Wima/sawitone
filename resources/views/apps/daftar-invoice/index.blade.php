@@ -206,6 +206,7 @@
             </div>
             <form id="form_submit" action="/apps/daftar-invoice/request-approval" method="POST" autocomplete="off">
                 <input type="text" class="form-control" name="fc_branch" id="fc_branch" value="{{ auth()->user()->fc_branch}}" readonly hidden>
+                <input type="text" name="name_pj" id="name_pj_req" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-8">
@@ -255,39 +256,21 @@
     // Modifikasi Fungsi Get agar bisa mengakses invno 
     function get(invno) {
         var fc_invno = window.atob(invno);
-        console.log(fc_invno);
         $('#fc_invno_req').val(fc_invno);
-        // $.ajax({
-        //     url: "/apps/daftar-invoice/get/" + fc_invno,
-        //     type: 'GET',
-        //     dataType: 'JSON',
-        //     success: function(response) {
-        //         var data = response.data;
-        //         setTimeout(function() {
-        //         }, 500);
 
-        //         if (response.status == 200) {
-        //             console.log(data);
-        //             $('#fc_invno_req').val(data.fc_invno);
-        //         } else {
-        //             iziToast.error({
-        //                 title: 'Error!',
-        //                 message: response.message,
-        //                 position: 'topRight'
-        //             });
-        //         }
+        var globalName = document.getElementsByName('name_pj');
+        for (i = 0; i < globalName.length; i++) {
+            if (globalName[i].checked)
+                var name_pj = globalName[i].value;
+        };
 
-        //     },
-        //     error: function(jqXHR, textStatus, errorThrown) {
-        //         setTimeout(function() {
-        //             $('#modal_loading').modal('hide');
-        //         }, 500);
-        //         swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
-        //             icon: 'error',
-        //         });
-        //     }
-        // })
+        $('#name_pj_req').val(name_pj);
+
     }
+
+    // function get(name) {
+    //     $('#name_pj_req').val(name_pj);
+    // }
 
     // untuk form input nama penanggung jawab
     $(document).ready(function() {
@@ -649,7 +632,7 @@
                                         need_approval();
                                     }
                                 });
-                            } else if (response.status == 300){
+                            } else if (response.status == 300) {
                                 swal(response.message, {
                                     icon: 'error',
                                 });

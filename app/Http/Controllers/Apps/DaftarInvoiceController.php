@@ -144,13 +144,14 @@ class DaftarInvoiceController extends Controller
                 ];
             } else {
                 $data['fc_invno'] = $request->fc_invno;
+                $data['name_pj'] = $request->name_pj;
 
                 return [
                     'status' => 300,
                     'message' => 'Invoice Gagal ditampilkan'
                 ];
             }
-            dd($request);
+
         } else {
             return [
                 'status' => 301,
@@ -210,13 +211,62 @@ class DaftarInvoiceController extends Controller
         $invno = base64_decode($fc_invno);
 
         $data = InvoiceMst::where([
-                'fc_invno' =>  $invno,
-                'fc_divisioncode' => auth()->user()->fc_divisioncode,
-                'fc_branch' => auth()->user()->fc_branch,
-            ])
+            'fc_invno' =>  $invno,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+        ])
             ->first();
 
         return ApiFormatter::getResponse($data);
     }
 
+    public function request_approval(Request $request)
+    {
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_annotation' => 'required',
+        ], [
+            'fc_annotation.required' => 'Keterangan wajib diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        if (Approval::where('fc_docno', $request->fc_invno)
+        ->where('fc_approvalstatus', 'W')
+        ->exists())
+        {
+            return [
+                'status' => 300,
+                'message' => 'Approval yang sama sedang diajukan oleh user lain'
+            ];
+        } else {
+            $insert = Approval::create([
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_applicantid' => auth()->user()->fc_userid,
+                'fc_accessorid' => $request->name_pj,
+                'fc_annotation' => $request->fc_annotation,
+                'fc_docno' => $request->fc_invno,
+                'fd_userinput' => Carbon::now(),
+            ]);
+
+            if ($insert) {
+                return [
+                    'status' => 201,
+                    'message' => 'Request berhasil dikirim',
+                    'link' => '/apps/daftar-invoice'
+                ];
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Request gagal dikirim'
+                ];
+            }
+        }   
+    }
 }
