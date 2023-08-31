@@ -64,11 +64,12 @@
                                 <table class="table table-striped" id="tb_accessor" width="100%">
                                     <thead>
                                         <tr>
+                                            <th scope="col" class="text-center">No.</th>
                                             <th scope="col" class="text-center text-nowrap">No. Approval</th>
                                             <th scope="col" class="text-center">Pemohon</th>
+                                            <th scope="col" class="text-center">Referensi Dok.</th>
                                             <th scope="col" class="text-center">Tanggal</th>
                                             <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center">Penggunaan</th>
                                             <th scope="col" class="text-center">Keterangan</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -453,16 +454,24 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6]
         }, {
             className: 'text-nowrap',
-            targets: [6]
+            targets: [7]
         }],
         columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
                 data: 'fc_approvalno'
             },
             {
                 data: 'fc_applicantid'
+            },
+            {
+                data: 'fc_docno'
             },
             {
                 data: 'fd_userinput',
@@ -470,9 +479,6 @@
             },
             {
                 data: 'fc_approvalstatus'
-            },
-            {
-                data: 'fc_approvalused'
             },
             {
                 data: 'fc_annotation'
@@ -486,32 +492,26 @@
             var fc_approvalno = window.btoa(data.fc_approvalno);
 
             if (data['fc_approvalstatus'] == 'W') {
-                $('td:eq(3)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-primary">Menunggu</span>');
             } else if (data['fc_approvalstatus'] == 'R') {
-                $('td:eq(3)', row).html('<span class="badge badge-danger">Ditolak</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-danger">Ditolak</span>');
             } else if (data['fc_approvalstatus'] == 'C') {
-                $('td:eq(3)', row).html('<span class="badge badge-danger">Cancel</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-danger">Cancel</span>');
             } else {
-                $('td:eq(3)', row).html('<span class="badge badge-success">Diterima</span>');
-            }
-
-            if (data['fc_approvalused'] == 'F') {
-                $('td:eq(4)', row).html('<span class="badge badge-danger">Belum Digunakan</span>');
-            } else {
-                $('td:eq(4)', row).html('<span class="badge badge-success">Telah Digunakan</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-success">Diterima</span>');
             }
 
             if (data['fc_approvalstatus'] == 'C') {
-                $('td:eq(6)', row).html(`
+                $('td:eq(7)', row).html(`
                     <button class="btn btn-primary btn-sm" onclick="detail_applicant('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
                 `);
             } else if (data['fc_approvalstatus'] == 'W') {
-                $('td:eq(6)', row).html(`
+                $('td:eq(7)', row).html(`
                     <button class="btn btn-danger btn-sm mr-1" onclick="reject('${data.fc_approvalno}')"><i class="fas fa-x mr-1"></i> Reject</button>
                     <button class="btn btn-success btn-sm" onclick="accept('${data.fc_approvalno}')"><i class="fas fa-check mr-1"></i> Accept</button>
                 `);
             } else {
-                $('td:eq(6)', row).html(`
+                $('td:eq(7)', row).html(`
                     <button class="btn btn-primary btn-sm" onclick="detail_approval('${data.fc_approvalno}')"><i class="fas fa-eye"></i> Detail</button>
                 `);
             }

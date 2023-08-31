@@ -130,6 +130,7 @@ class DaftarInvoiceController extends Controller
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_applicantid' => $request->name_pj,
                 'fc_accessorid' => $request->name_pj,
+                'fc_approvalstatus' => 'A',
                 'fc_annotation' => 'No Need Approval',
                 'fd_accessorrespon' => 'No Need Approval',
                 'fc_docno' => $request->fc_invno,
@@ -138,8 +139,8 @@ class DaftarInvoiceController extends Controller
 
             if ($insert) {
                 InvoiceMst::where('fc_invno', $request->fc_invno)
-                ->where('fc_branch', auth()->user()->fc_branch)
-                ->increment('fn_printout', 1);
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->increment('fn_printout', 1);
 
                 return [
                     'status' => 201,
@@ -155,7 +156,6 @@ class DaftarInvoiceController extends Controller
                     'message' => 'Invoice Gagal ditampilkan'
                 ];
             }
-
         } else {
             return [
                 'status' => 301,
@@ -242,9 +242,9 @@ class DaftarInvoiceController extends Controller
         }
 
         if (Approval::where('fc_docno', $request->fc_invno)
-        ->where('fc_approvalstatus', 'W')
-        ->exists())
-        {
+            ->where('fc_approvalstatus', 'W')
+            ->exists()
+        ) {
             return [
                 'status' => 300,
                 'message' => 'Approval yang sama sedang diajukan oleh user lain'
@@ -272,6 +272,24 @@ class DaftarInvoiceController extends Controller
                     'message' => 'Request gagal dikirim'
                 ];
             }
-        }   
+        }
     }
+
+    // public function cek_approval(Request $request)
+    // {
+    //     $cek = Approval::where('fc_docno', $request->fc_invno)
+    //         ->where('fc_approvalstatus', 'A')
+    //         ->exists();
+
+    //     if ($cek) {
+    //         return [
+    //             'status' => 200,
+    //         ];
+    //     } else {
+    //         return [
+    //             'status' => 300,
+    //             'message' => 'Approval yang sama sedang diajukan oleh user lain'
+    //         ];
+    //     }
+    // }
 }
