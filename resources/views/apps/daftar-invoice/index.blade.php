@@ -319,7 +319,7 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-                    console.log(data);
+                    // console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         $("#name_user_lainnya").append(`
                             <div class="form-check">
