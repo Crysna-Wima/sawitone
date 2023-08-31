@@ -349,6 +349,56 @@
         });
     }
 
+
+    function cekExistApproval(fc_invno){
+        $("#modal_loading").modal('show');
+        // encode fc_invno
+        var fc_invno_encode = window.btoa(fc_invno);
+        $.ajax({
+            url: "/apps/daftar-invoice/cek-exist-approval/" + fc_invno_encode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    // console.log(response)
+                    if(response.approve == 'wait'){
+                        swal(response.message, {
+                            icon: 'error',
+                        });
+                    }else if(response.approve == 'pdf'){
+                        // arahkan ke response.link
+                        window.open(response.link,
+                           '_blank' 
+                        );
+                    } else if(response.approve == 'request'){
+                        click_modal_nama(fc_invno);
+                    }else{
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT", {
+                            icon: 'error',
+                        });
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
     // untuk memunculkan nama penanggung jawab
     function click_modal_nama(fc_invno) {
         // #fc_pono_input value
@@ -598,38 +648,12 @@
 
             $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm mr-1" onclick="cek_approval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
             //  <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
         }
     });
-
-    function cek_approval(fc_invno) {
-        $("#modal_loading").modal('show');
-
-        $.ajax({
-            type: 'POST',
-            url: '/apps/daftar-invoice/cek-approval',
-            data: {
-                fc_invno: fc_invno,
-            },
-            success: function(response) {
-                setTimeout(function() {
-                    $('#modal_loading').modal('hide');
-                }, 500);
-
-                if (response.status == "200") {
-                    swal(response.message, {
-                        icon: 'success',
-                    });
-                    $("#modal").modal('hide');
-                } else {
-                    click_modal_nama();
-                }
-            },
-        });
-    }
 
     $('#form_submit_cek').on('submit', function(e) {
         e.preventDefault();
