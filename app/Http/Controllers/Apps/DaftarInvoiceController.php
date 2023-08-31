@@ -203,10 +203,9 @@ class DaftarInvoiceController extends Controller
 
     public function get_user()
     {
-        $data = User::where([
-            // 'fc_groupuser' => 'IN_MNGSLS',
-            'fl_level' => '3',
-        ])->get();
+        $data = User::whereIn('fc_groupuser', ['IN_MNGSLS', 'IN_STFSLS'])
+        ->where('fl_level', '3')
+        ->get();
 
         return ApiFormatter::getResponse($data);
     }
@@ -275,21 +274,22 @@ class DaftarInvoiceController extends Controller
         }
     }
 
-    // public function cek_approval(Request $request)
-    // {
-    //     $cek = Approval::where('fc_docno', $request->fc_invno)
-    //         ->where('fc_approvalstatus', 'A')
-    //         ->exists();
+    public function cek_approval(Request $request)
+    {
+        $cek = Approval::where('fc_docno', $request->fc_invno)
+            ->where('fc_approvalstatus', 'A')
+            ->exists();
 
-    //     if ($cek) {
-    //         return [
-    //             'status' => 200,
-    //         ];
-    //     } else {
-    //         return [
-    //             'status' => 300,
-    //             'message' => 'Approval yang sama sedang diajukan oleh user lain'
-    //         ];
-    //     }
-    // }
+        if ($cek == true) {
+            return [
+                'status' => 200,
+                'message' => 'BISA'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'TIDAK BISA'
+            ];
+        }
+    }
 }

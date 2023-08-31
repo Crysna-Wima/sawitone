@@ -598,11 +598,38 @@
 
             $('td:eq(9)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
+            <button class="btn btn-warning btn-sm mr-1" onclick="cek_approval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
          `);
+            //  <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
         }
     });
+
+    function cek_approval(fc_invno) {
+        $("#modal_loading").modal('show');
+
+        $.ajax({
+            type: 'POST',
+            url: '/apps/daftar-invoice/cek-approval',
+            data: {
+                fc_invno: fc_invno,
+            },
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+
+                if (response.status == "200") {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal").modal('hide');
+                } else {
+                    click_modal_nama();
+                }
+            },
+        });
+    }
 
     $('#form_submit_cek').on('submit', function(e) {
         e.preventDefault();
