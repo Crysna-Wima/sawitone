@@ -82,7 +82,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->fc_stockcode }}</td>
-                <td>{{ $item->stock->fc_namelong }}</td>
+                <td>{{ $item->stock->fc_namelong ?? 'N/A' }}</td>
                 <td>{{ $item->fn_po_qty }}</td>
                 <td>{{ $item->fc_namepack }}</td>
             </tr>
