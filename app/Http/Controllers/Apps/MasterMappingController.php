@@ -117,6 +117,7 @@ class MasterMappingController extends Controller
                 'fc_mappingtrxtype' => $request->fc_mappingtrxtype,
                 'fc_status' => 'I',
                 'fc_hold' => $request->fc_hold,
+                'fc_balancerelation' => $request->fc_balancerelation,
                 'created_by' => auth()->user()->fc_userid,
             ]);
 

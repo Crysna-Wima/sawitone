@@ -118,10 +118,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-12">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group required">
                                 <label>Nama Mapping</label>
                                 <input type="text" class="form-control required-field" name="fc_mappingname" id="fc_mappingname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="form-group required">
+                                <label>Relasi</label>
+                                <select class="form-control select2 required-field" name="fc_balancerelation" id="fc_balancerelation">
+                                    <option value="" selected disabled>- Pilih -</option>
+                                    <option value="1 to N">One to Many</option>
+                                    <option value="N to M">Many to Many</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -409,7 +419,7 @@
                     url: '/apps/master-mapping/hold/' + fc_mappingcode,
                     type: 'PUT',
                     data: {
-                        fc_hold : 'T',
+                        fc_hold: 'T',
                     },
                     success: function(response) {
                         setTimeout(function() {
@@ -457,7 +467,7 @@
                     url: '/apps/master-mapping/unhold/' + fc_mappingcode,
                     type: 'PUT',
                     data: {
-                        fc_hold : 'F',
+                        fc_hold: 'F',
                     },
                     success: function(response) {
                         setTimeout(function() {
