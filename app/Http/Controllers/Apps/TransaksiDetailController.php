@@ -155,6 +155,10 @@ class TransaksiDetailController extends Controller
                 ->where('fc_branch', auth()->user()->fc_branch)
                 ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                 ->sum('fm_nominal');
+            
+            $countItem = TempTrxAccountingDetail::where('fc_statuspos',  $deletedRow->fc_statuspos)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
 
                 // dd($remainingNominal);
             $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
@@ -164,21 +168,43 @@ class TransaksiDetailController extends Controller
             if ($delete) {
                 // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
                 if ($isCredit) {
-                    TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                    if($countItem < 2){
+                        TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                        ->where('fc_trxno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->update([
+                            'fm_nominal' => '0',
+                        ]);
+                    }else{
+                        TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
                         ->where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->update([
                             'fm_nominal' => $remainingNominal,
                         ]);
+                    }
+                   
                 } else {
-                    TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                    if($countItem < 2){
+                        TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                        ->where('fc_trxno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->update([
+                            'fm_nominal' => '0',
+                        ]);
+                    }else{
+                        TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
                         ->where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->update([
                             'fm_nominal' => $remainingNominal,
                         ]);
+                    }
+                  
                 }
 
                 DB::commit(); 
