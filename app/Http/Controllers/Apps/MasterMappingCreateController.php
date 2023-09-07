@@ -90,7 +90,7 @@ class MasterMappingCreateController extends Controller
                 if ($count_kredit > 1) {
                     return [
                         'status' => 300,
-                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit untuk fc_balancerelation 1 to N.'
+                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit karena relasi One to Many'
                     ];
                 }
             }
@@ -178,7 +178,7 @@ class MasterMappingCreateController extends Controller
                 if ($count_debit > 1) {
                     return [
                         'status' => 300,
-                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit untuk fc_balancerelation 1 to N.'
+                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit karena relasi One to Many'
                     ];
                 }
             }

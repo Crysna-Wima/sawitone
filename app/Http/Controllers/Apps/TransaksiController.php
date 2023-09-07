@@ -30,15 +30,18 @@ class TransaksiController extends Controller
         return view('apps.transaksi.index');
     }
 
-    public function bookmark_index(){
+    public function bookmark_index()
+    {
         return view('apps.transaksi.bookmark-index');
     }
 
-    public function giro(){
+    public function giro()
+    {
         return view('apps.transaksi.giro');
     }
 
-    public function edit($fc_trxno){
+    public function edit($fc_trxno)
+    {
         $decode_fc_trxno = base64_decode($fc_trxno);
         session(['fc_trxno_global' => $decode_fc_trxno]);
         $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -66,6 +69,33 @@ class TransaksiController extends Controller
             $data['data'] = $temp_trxaccounting_mst;
             $data['total'] = $total;
 
+            // cek di master mapping fc_balancerelation sama dengan '1 to N'
+            $cek_master_mapping = MappingMaster::where('fc_mappingcode', $temp_trxaccounting_mst->fc_mappingcode)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->first();
+
+            if ($cek_master_mapping && $cek_master_mapping->fc_balancerelation === '1 to N') {
+                // filter berdasarkan mappingcode
+                $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $temp_trxaccounting_mst->fc_mappingcode)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+
+                // klasifikasikan berdasarkan fc_mappingpos
+                $filter_debit = $cek_mapping_detail->where('fc_mappingpos', 'D');
+                $filter_kredit = $cek_mapping_detail->where('fc_mappingpos', 'C');
+
+                // Hitung jumlah Debit (mapping pos D)
+                $count_debit = $filter_debit->count();
+                // Hitung jumlah Kredit (mapping pos C)
+                $count_kredit = $filter_kredit->count();
+
+                if ($count_debit == 1){
+                    $data['lock'] = 'D';
+                } else if ($count_kredit == 1){
+                    $data['lock'] = 'C';
+                }
+            }
+
             return view('apps.transaksi.create-detail', $data);
             // dd($data);
         }
@@ -76,7 +106,7 @@ class TransaksiController extends Controller
     {
         $mappingcode = base64_decode($fc_mappingcode);
 
-        $data = MappingMaster::with('tipe','transaksi')
+        $data = MappingMaster::with('tipe', 'transaksi')
             ->where([
                 'fc_mappingcode' =>  $mappingcode,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -87,7 +117,8 @@ class TransaksiController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function datatables(){
+    public function datatables()
+    {
         $data = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_status', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
@@ -111,7 +142,8 @@ class TransaksiController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function data($fc_trxno){
+    public function data($fc_trxno)
+    {
         $decode_fc_trxno = base64_decode($fc_trxno);
         $data = TrxAccountingDetail::with('coamst', 'payment')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->get();
 
@@ -121,7 +153,8 @@ class TransaksiController extends Controller
         // dd($data);
     }
 
-    public function data_debit($fc_trxno){
+    public function data_debit($fc_trxno)
+    {
         $decode_fc_trxno = base64_decode($fc_trxno);
         $data = TrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'D')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->get();
 
@@ -130,7 +163,8 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
-    public function data_kredit($fc_trxno){
+    public function data_kredit($fc_trxno)
+    {
         $decode_fc_trxno = base64_decode($fc_trxno);
         $data = TrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'C')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->get();
 
@@ -139,11 +173,12 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
-    public function datatables_bookmark(){
+    public function datatables_bookmark()
+    {
         $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')
-        ->where('fc_status', 'P')
-        ->where('fc_userid', auth()->user()->fc_userid)
-        ->where('fc_branch', auth()->user()->fc_branch)->get();
+            ->where('fc_status', 'P')
+            ->where('fc_userid', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -151,7 +186,8 @@ class TransaksiController extends Controller
         // dd($data);
     }
 
-    public function datatables_giro($fc_giropos){
+    public function datatables_giro($fc_giropos)
+    {
         $data = Giro::with('transaksi.mapping', 'coa')->where('fc_giropos', $fc_giropos)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->orderBy('fc_girostatus', 'DESC')
@@ -166,7 +202,7 @@ class TransaksiController extends Controller
 
     public function datatables_mapping()
     {
-        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi','user')->where('fc_userid', auth()->user()->fc_userid)->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MappingUser::with('mappingmst.tipe', 'mappingmst.transaksi', 'user')->where('fc_userid', auth()->user()->fc_userid)->where('fc_hold', 'F')->where('fc_branch', auth()->user()->fc_branch)->get();
 
 
         return DataTables::of($data)
@@ -191,8 +227,9 @@ class TransaksiController extends Controller
         // dd($data);
     }
 
-    public function datatables_invoice(){
-        $data = InvoiceMst::with('domst','pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->get();
+    public function datatables_invoice()
+    {
+        $data = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -292,14 +329,15 @@ class TransaksiController extends Controller
         }
     }
 
-    public function lanjutkan_bookmark($fc_trxno){
+    public function lanjutkan_bookmark($fc_trxno)
+    {
         //decode
         $trxno = base64_decode($fc_trxno);
         $exist_data = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->count();
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->count();
 
-        if($exist_data > 0){
+        if ($exist_data > 0) {
             return [
                 'status' => 300,
                 'message' => 'Terdapat input transaksi yang belum selesai'
@@ -310,29 +348,28 @@ class TransaksiController extends Controller
             'fc_status' => 'I',
             'fc_trxno' => auth()->user()->fc_userid,
         ]);
-        
+
         if ($update) {
             // return response
-            return[
+            return [
                 'status' => 201,
-                'message' =>'success',
+                'message' => 'success',
                 'link' => '/apps/transaksi/create-index'
             ];
         } else {
-            return[
+            return [
                 'status' => 300,
-                'message' =>'failed'
+                'message' => 'failed'
             ];
         }
-
     }
 
     public function pending(Request $request)
     {
         $data = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
-                'fc_status' => 'P',
-                'fv_description' => $request->fv_description
-            ]);
+            'fc_status' => 'P',
+            'fv_description' => $request->fv_description
+        ]);
 
         if ($data) {
             return [
@@ -348,7 +385,8 @@ class TransaksiController extends Controller
         }
     }
 
-    public function clear(Request $request){
+    public function clear(Request $request)
+    {
         $id = $request->id;
         $fc_girostatus = $request->fc_girostatus;
         $data = Giro::where('id', $id)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -371,31 +409,29 @@ class TransaksiController extends Controller
         ];
     }
 
-    public function cancel_transaksi(){
+    public function cancel_transaksi()
+    {
         DB::beginTransaction();
 
-		try{
+        try {
             TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->delete();
             TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->delete();
 
-			DB::commit();
+            DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/transaksi',
-				'message' => 'Data berhasil dicancel'
-			];
-		}
+                'message' => 'Data berhasil dicancel'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
 }
