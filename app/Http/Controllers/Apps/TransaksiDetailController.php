@@ -632,7 +632,9 @@ class TransaksiDetailController extends Controller
                     ->where('fc_branch', auth()->user()->fc_branch)->update([
                         'fc_status' => 'F',
                     ]), Approvement::where('fc_trxno', $decode_fc_trxno)
-                    ->where('fc_branch', auth()->user()->fc_branch)->update([
+                    ->where('fc_approvalstatus', 'A')
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->update([
                         'fc_approvalused' => 'T',
                     ])];
     
