@@ -89,9 +89,9 @@ class TransaksiController extends Controller
                 // Hitung jumlah Kredit (mapping pos C)
                 $count_kredit = $filter_kredit->count();
 
-                if ($count_debit == 1){
+                if ($count_debit == 1) {
                     $data['lock'] = 'D';
-                } else if ($count_kredit == 1){
+                } else if ($count_kredit == 1) {
                     $data['lock'] = 'C';
                 }
             }
@@ -431,6 +431,30 @@ class TransaksiController extends Controller
             return [
                 'status'     => 300, // GAGAL
                 'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
+    }
+
+    public function cek_exist_approval($fc_trxno)
+    {
+        // decode fc_trxno
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $cek_step1 = Approvement::where('fc_trxno', $decode_fc_trxno)
+        ->where('fc_approvalused', 'F')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->exists();
+
+        // dd($cek);
+        if ($cek_step1) {
+            return [
+                'status' => 200,
+                'approve' => 'wait',
+                'message' => 'Transaksi ini sedang dalam proses Approvement',
+            ];
+        } else {
+            return [
+                'status' => 200,
+                'approve' => 'request',
             ];
         }
     }

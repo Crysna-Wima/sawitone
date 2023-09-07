@@ -116,6 +116,50 @@
         get(fc_trxno)
     }
 
+    function exist_approval(fc_trxno) {
+        $("#modal_loading").modal('show');
+        // encode fc_invno
+        var fc_trxno_encode = window.btoa(fc_trxno);
+        $.ajax({
+            url: "/apps/transaksi/cek-exist-approval/" + fc_trxno_encode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    // console.log(response)
+                    if (response.approve == 'wait') {
+                        swal(response.message, {
+                            icon: 'error',
+                        });
+                    } else if (response.approve == 'request') {
+                        request_edit(fc_trxno)
+                    } else {
+                        swal("Oops! Terjadi kesalahan segera hubungi tim IT", {
+                            icon: 'error',
+                        });
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
     function get(fc_trxno) {
         var trxno = window.btoa(fc_trxno);
 
@@ -319,7 +363,7 @@
 
             $('td:eq(8)', row).html(`
                     <a href="/apps/transaksi/get-data/${fc_trxno}" class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</a>
-                    <button class="btn btn-warning btn-sm" onclick="request_edit('${data.fc_trxno}')"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-warning btn-sm" onclick="exist_approval('${data.fc_trxno}')"><i class="fas fa-edit"></i> Edit</button>
                 `);
         },
     });

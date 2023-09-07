@@ -680,6 +680,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/lanjutkan-bookmark/{fc_trxno}', 'Apps\TransaksiController@lanjutkan_bookmark');
             Route::put('/pending', 'Apps\TransaksiController@pending');
             Route::put('/clear', 'Apps\TransaksiController@clear');
+            Route::get('/cek-exist-approval/{fc_trxno}', 'Apps\TransaksiController@cek_exist_approval');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables', 'Apps\TransaksiDetailController@datatables');
