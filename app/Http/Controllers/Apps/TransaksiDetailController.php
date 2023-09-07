@@ -165,6 +165,7 @@ class TransaksiDetailController extends Controller
                 // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
                 if ($isCredit) {
                     TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                        ->where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->update([
@@ -172,6 +173,7 @@ class TransaksiDetailController extends Controller
                         ]);
                 } else {
                     TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                        ->where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->update([
