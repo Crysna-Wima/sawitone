@@ -64,6 +64,39 @@ class MasterMappingCreateController extends Controller
             ];
         }
 
+        // cek di master mapping fc_balancerelation sama dengan '1 to N'
+        $cek_master_mapping = MappingMaster::where('fc_mappingcode', $request->fc_mappingcode)
+                            ->where('fc_branch', auth()->user()->fc_branch)
+                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->first();
+
+        if($cek_master_mapping && $cek_master_mapping->fc_balancerelation === '1 to N'){
+            // filter berdasarkan mappingcode
+            $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+                                ->where('fc_branch', auth()->user()->fc_branch)
+                                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+
+             // klasifikasikan berdasarkan fc_mappingpos
+            $filter_debit = $cek_mapping_detail->where('fc_mappingpos', 'D');
+            $filter_kredit = $cek_mapping_detail->where('fc_mappingpos', 'C');
+
+            // Hitung jumlah Debit (mapping pos D)
+            $count_debit = $filter_debit->count();
+            // Hitung jumlah Kredit (mapping pos C)
+            $count_kredit = $filter_kredit->count();
+
+             // Cek apakah sudah ada catatan Debit (mapping pos D) lebih dari satu
+            // Jika iya, pastikan hanya satu catatan Kredit (mapping pos C) yang diizinkan
+            if ($count_debit > 0) {
+                if ($count_kredit > 1) {
+                    return [
+                        'status' => 300,
+                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit untuk fc_balancerelation 1 to N.'
+                    ];
+                }
+            }
+
+        }
+
         $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
         ->where('fc_coacode',$request->fc_coacode)
        ->where('fc_mappingpos', "C")
@@ -107,9 +140,7 @@ class MasterMappingCreateController extends Controller
                     'message' => 'Debit gagal diinsert',
                 ];
             } 
-        }
-
-        
+        } 
     }
 
     public function insert_kredit(Request $request){
@@ -120,6 +151,38 @@ class MasterMappingCreateController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+         // cek di master mapping fc_balancerelation sama dengan '1 to N'
+         $cek_master_mapping = MappingMaster::where('fc_mappingcode', $request->fc_mappingcode)
+         ->where('fc_branch', auth()->user()->fc_branch)
+         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->first();
+
+        if($cek_master_mapping && $cek_master_mapping->fc_balancerelation === '1 to N'){
+            // filter berdasarkan mappingcode
+            $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+
+            // klasifikasikan berdasarkan fc_mappingpos
+            $filter_debit = $cek_mapping_detail->where('fc_mappingpos', 'D');
+            $filter_kredit = $cek_mapping_detail->where('fc_mappingpos', 'C');
+
+            // Hitung jumlah Debit (mapping pos D)
+            $count_debit = $filter_debit->count();
+            // Hitung jumlah Kredit (mapping pos C)
+            $count_kredit = $filter_kredit->count();
+
+             // hanya salah satu antara Debit atau Kredit yang boleh punya banyak record, lainnya hanya satu
+             if ($count_kredit > 0) {
+                if ($count_debit > 1) {
+                    return [
+                        'status' => 300,
+                        'message' => 'Hanya boleh ada satu catatan Debit atau Kredit untuk fc_balancerelation 1 to N.'
+                    ];
+                }
+            }
+
         }
 
         $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
