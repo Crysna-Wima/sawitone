@@ -152,6 +152,7 @@ class TransaksiDetailController extends Controller
             // Hitung jumlah nominal selain row yang dihapus
             $remainingNominal = TempTrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum) 
                 ->where('fc_statuspos',  $deletedRow->fc_statuspos)
+                ->where('fc_trxno', auth()->user()->fc_userid)
                 ->where('fc_branch', auth()->user()->fc_branch)
                 ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                 ->sum('fm_nominal');
