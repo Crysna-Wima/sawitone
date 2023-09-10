@@ -710,7 +710,7 @@
                     $('td:eq(6)', row).html('<span class="badge badge-success">Diterima</span>');
                 }
 
-                if (data['fc_invstatus'] == 'R') {
+                if (data['fc_invstatus'] == 'INV') {
                     $('td:eq(7)', row).html('<span class="badge badge-primary">Terbit</span>');
                 } else if (data['fc_invstatus'] == 'N') {
                     $('td:eq(7)', row).html('<span class="badge badge-danger">Belum Terbit</span>');
