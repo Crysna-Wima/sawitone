@@ -109,7 +109,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Balance</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance">Rp.0</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance">Rp. {{ number_format($data->fm_balance,0,',','.')}}</h5>
                                     </div>
                                 </div>
                             </div>

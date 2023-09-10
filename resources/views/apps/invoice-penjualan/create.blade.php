@@ -689,17 +689,18 @@
                 fm_unityprice: fmUnityPrice
             },
             success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
                 if (response.status == 200) {
                     swal(response.message, {
                         icon: 'success',
                     });
-                    $("#modal_loading").modal('hide');
                     tb.ajax.reload();
                 } else {
                     swal(response.message, {
                         icon: 'error',
                     });
-                    $("#modal_loading").modal('hide');
                 }
             },
             error: function(xhr, status, error) {
