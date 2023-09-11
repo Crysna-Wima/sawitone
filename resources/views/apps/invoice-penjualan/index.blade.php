@@ -40,7 +40,7 @@
             [3, 'desc']
         ],
         ajax: {
-            url: '/apps/master-delivery-order/datatables/R',
+            url: '/apps/invoice-penjualan/datatables',
             type: 'GET'
         },
         columnDefs: [{

@@ -55,7 +55,7 @@
           </div>
           <div class="col-xl-8 col-lg-9 order-lg-1 order-0">
             <div class="hero-area-image">
-              <img src="{{ asset('assets/img/bg-dexa-2.jpg') }}" alt="" class="w-100">
+              <img src="{{ asset('assets/img/bg-dexa-3.png') }}" alt="" class="w-100">
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
                 <i class="fas fa-circle"></i>
               </div>
               <h4>Penjualan</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Mengelola seluruh penjualan produk yang dimiliki oleh perusahaan.</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-9">
@@ -80,7 +80,7 @@
                 <i class="fas fa-circle"></i>
               </div>
               <h4>Pembelian</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Mengelola seluruh pembelian produk dari supplier.</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-9">
@@ -88,8 +88,26 @@
               <div class="circle-dot-3">
                 <i class="fas fa-circle"></i>
               </div>
+              <h4>Gudang</h4>
+              <p>Mengontrol persediaan barang yang ada pada inventory.</p>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-9">
+            <div class="single-features single-border position-relative">
+              <div class="circle-dot-4">
+                <i class="fas fa-circle"></i>
+              </div>
               <h4>Invoice</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Membuat tagihan atau faktur untuk pembayaran pada kegiatan penjualan ataupun pembelian.</p>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-9">
+            <div class="single-features single-border position-relative">
+              <div class="circle-dot-5">
+                <i class="fas fa-circle"></i>
+              </div>
+              <h4>Akuntansi</h4>
+              <p>Mengolah, dan menyajikan data transaksi, serta berbagai aktivitas yang berhubungan dengan keuangan perusahaan.</p>
             </div>
           </div>
         </div>

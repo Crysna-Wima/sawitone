@@ -40,6 +40,18 @@ class InvoicePenjualanController extends Controller
         return view('apps.invoice-penjualan.index');     
     }
 
+    public function datatables()
+    {
+        $data = DoMaster::with('somst.customer')->where('fc_dostatus', 'R')
+        ->where('fc_invstatus', '!=', 'INV')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function detail($fc_dono){
         $decoded_fc_dono = base64_decode($fc_dono);
         session(['fc_dono_global' => $decoded_fc_dono ]);

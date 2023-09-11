@@ -67,7 +67,11 @@ class InvoicePembelianController extends Controller
 
     public function datatables()
     {
-        $data = RoMaster::with('pomst.supplier')->where('fc_rostatus', 'R')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = RoMaster::with('pomst.supplier')->where('fc_rostatus', 'R')
+        ->where('fc_invstatus', '!=', 'INV')
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->get();
+        
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);

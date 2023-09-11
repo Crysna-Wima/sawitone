@@ -75,7 +75,7 @@
                 data: 'fn_rodetail'
             },
             {
-                data: 'invmst.fm_brutto',
+                data: 'fm_brutto',
                 defaultContent: 'Rp 0',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },

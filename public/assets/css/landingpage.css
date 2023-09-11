@@ -2305,6 +2305,42 @@ li.sub-menu--item.nav-item-has-children i {
   margin-bottom: 35px;
 }
 
+.feature-area-l-17 .feature-area-l-17-items .single-features .circle-dot-4 i {
+  font-size: 10px;
+  color: #FFCD28;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(166, 101, 251, 0.06);
+  margin-bottom: 35px;
+}
+
+.feature-area-l-17 .feature-area-l-17-items .single-features .circle-dot-5 i {
+  font-size: 10px;
+  color: #1916ee;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(166, 101, 251, 0.06);
+  margin-bottom: 35px;
+}
+
+.feature-area-l-17 .feature-area-l-17-items .single-features .circle-dot-6 i {
+  font-size: 10px;
+  color: #df23cf;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(166, 101, 251, 0.06);
+  margin-bottom: 35px;
+}
+
 .feature-area-l-17 .feature-area-l-17-items .single-features h4 {
   font-family: Inter;
   font-style: normal;
