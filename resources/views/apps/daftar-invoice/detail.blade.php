@@ -553,7 +553,7 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->supplier->fc_supplierbank1 }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">

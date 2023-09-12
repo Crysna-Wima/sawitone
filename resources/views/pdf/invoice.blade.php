@@ -225,6 +225,7 @@
 <div class="content" id="print">
         <br><br><br>
         <p style="text-align: center; font-size: 15px; margin: 0;">INVOICE</p>
+        <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             @if($inv_mst->fc_invtype == 'SALES')
             <tr>
@@ -313,7 +314,7 @@
 
         </table>
         @elseif($inv_mst->fc_invtype == 'PURCHASE')
-        <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Diterima</p>
+        <p style="font-size: .8rem; margin-left: 5%">Barang Diterima</p>
         <table class="table-lg table-center" style="margin-bottom: 5px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No</th>
