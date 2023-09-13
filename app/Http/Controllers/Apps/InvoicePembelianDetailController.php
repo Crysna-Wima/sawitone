@@ -15,8 +15,10 @@ use App\Models\DoMaster;
 use App\Models\DoDetail;
 use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
+use App\Models\Invstore;
 use App\Models\TempInvoiceDtl;
 use App\Models\TempInvoiceMst;
+use App\Helpers\ApiFormatter;
 use App\Models\TransaksiType;
 use DB;
 use Validator;
@@ -260,6 +262,21 @@ class InvoicePembelianDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
+    }
+
+    public function get_detail($fn_invrownum)
+    {
+        $rownum = base64_decode($fn_invrownum);
+
+        $data = RoDetail::with('invstore','stock')
+            ->where([
+                'fn_rownum' =>  $rownum,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->first();
+
+        return ApiFormatter::getResponse($data);
     }
 
     public function cancel_invoice(){

@@ -139,7 +139,7 @@ class MasterDeliveryOrderController extends Controller
 
     public function datatables_do_detail($fc_dono){
         $decode_dono = base64_decode($fc_dono);
-        $data = DoDetail::with('invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
+        $data = DoDetail::with('domst', 'invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
 
         return DataTables::of($data)
         ->addIndexColumn()

@@ -18,6 +18,8 @@ use App\Models\InvoiceMst;
 use App\Models\TempInvoiceDtl;
 use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
+use App\Models\Invstore;
+use App\Helpers\ApiFormatter;
 use DB;
 use Validator;
 
@@ -160,7 +162,7 @@ class InvoicePenjualanDetailController extends Controller
             ]);
         } else {
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
-
+            
             $insert_invdtl = TempInvoiceDtl::create([
                 'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -173,6 +175,8 @@ class InvoicePenjualanDetailController extends Controller
                 'fv_description' => $request->fv_description
             ]);
         }
+
+        dd($request);
 
         if ($insert_invdtl) {
             return response()->json([
@@ -267,10 +271,12 @@ class InvoicePenjualanDetailController extends Controller
             ];
         }
 
+        $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
+
         $update_unityprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,
         ])->update([
-            'fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)
+            'fm_unityprice' => $request->fm_unityprice
         ]);
 
         if ($update_unityprice) {
@@ -284,6 +290,21 @@ class InvoicePenjualanDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
+    }
+
+    public function get_detail($fn_invrownum)
+    {
+        $rownum = base64_decode($fn_invrownum);
+
+        $data = DoDetail::with('invstore','stock')
+            ->where([
+                'fn_rownum' =>  $rownum,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->first();
+
+        return ApiFormatter::getResponse($data);
     }
 
     public function cancel_invoice()

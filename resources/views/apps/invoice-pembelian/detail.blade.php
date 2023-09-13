@@ -168,35 +168,6 @@
                 </div>
             </div>
         </div>
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Barang Diterima</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Kode Barang</th>
-                                        <th scope="col" class="text-center">Nama Barang</th>
-                                        <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Batch</th>
-                                        <th scope="col" class="text-center">Exp. Date</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Harga Satuan</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
@@ -272,7 +243,7 @@
                         <div class="flex-row-item" style="margin-right: 30px">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="count_item">0,00</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
@@ -288,12 +259,12 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Total</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_netto">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="total_harga">0,00</p>
                             </div>
                         </div>
                         <div class="flex-row-item">
                             <div class="d-flex" style="gap: 5px; white-space: pre">
-                                <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
+                                <p class="text-secondary flex-row-item" style="font-size: medium">Lain-lain</p>
                                 <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
                             </div>
                             <div class="d-flex">
@@ -310,8 +281,37 @@
                             </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-weight: bold; font-size: medium">GRAND</p>
-                                <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="fm_brutto">Rp. 0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-weight: bold; font-size:medium" id="grand_total">Rp. 0,00</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Barang Diterima</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Batch</th>
+                                        <th scope="col" class="text-center">Exp. Date</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -348,11 +348,11 @@
                                         </div>
                                     </div>
                                     <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
-                                    <input type="hidden" id="fc_suppdocno"  class="form-control" value="{{ $ro_mst->pomst->fc_pono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $ro_mst->pomst->fc_pono }}" name="fc_suppdocno" required>
                                     <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $ro_mst->fc_rono }}" name="fc_child_suppdocno" required>
                                     <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliercode }}" name="fc_entitycode" required>
                                     <input type="hidden" id="fn_dodetail" class="form-control" value="{{ $ro_mst->fn_rodetail }}" name="fn_dodetail" required>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -458,7 +458,24 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
         ],
-        rowCallback: function(row, data) {}
+        rowCallback: function(row, data) {},
+        footerCallback: function(row, data, start, end, display) {
+            console.log(data);
+            if (data.length != 0) {
+                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].romst.fm_servpay));
+                $("#fm_servpay_calculate").trigger("change");
+                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].romst.fm_tax));
+                $("#fm_tax").trigger("change");
+                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].romst.fm_brutto));
+                $("#grand_total").trigger("change");
+                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].romst.fm_netto));
+                $("#total_harga").trigger("change");
+                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].romst.fm_disctotal));
+                $("#fm_disctotal").trigger("change");
+                $('#count_item').html(data[0].romst.fn_rodetail);
+                $("#count_item").trigger("change");
+            }
+        }
     });
 </script>
 @endsection

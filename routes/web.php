@@ -493,6 +493,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@delete');
             Route::delete('/cancel-invoice', 'Apps\InvoicePenjualanDetailController@cancel_invoice');
             Route::put('/update-fm-unityprice', 'Apps\InvoicePenjualanDetailController@update_unityprice');
+            Route::get('/get-detail/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@get_detail');
 
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice', 'Apps\InvoicePenjualanController@create_invoice');
@@ -509,6 +510,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
             Route::get('/', 'Apps\InvoicePembelianController@index');
             Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
+            Route::get('/get-detail/{fn_invrownum}', 'Apps\InvoicePembelianDetailController@get_detail');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePembelianDetailController@delete');
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
             Route::delete('/cancel-invoice', 'Apps\InvoicePembelianDetailController@cancel_invoice');

@@ -176,136 +176,6 @@
                 </div>
             </div>
         </div>
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Barang Terkirim</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Kode Barang</th>
-                                        <th scope="col" class="text-center">Nama Barang</th>
-                                        <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Batch</th>
-                                        <th scope="col" class="text-center">Exp. Date</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Harga Satuan</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Biaya Lainnya</h4>
-                    <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="click_modal_biaya();"><i class="fa fa-plus mr-1"></i> Tambah Biaya Lain</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb_lain" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Harga Satuan</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Catatan</th>
-                                        <th scope="col" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit" action="/apps/invoice-penjualan/create/update-inform/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
-                @csrf
-                @method('put')
-                <div class="card">
-                    <div class="card-body" style="padding-top: 30px!important;">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group required">
-                                    <label>Bank</label>
-                                    @if (empty($temp->fc_bankcode))
-                                    <select class="form-control select2 required-field" name="fc_bankcode" id="fc_bankcode" required></select>
-                                    @else
-                                    <select class="form-control select2" name="fc_bankcode" id="fc_bankcode">
-                                        <option value="{{ $temp->fc_bankcode }}" selected>
-                                            {{ $temp->bank->fv_bankname }}
-                                        </option>
-                                    </select>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-6">
-                                <div class="form-group required">
-                                    <label>Alamat Customer</label>
-                                    @if (empty($temp->fc_address))
-                                    <select class="form-control select2" name="fc_address" id="fc_address" required>
-                                        <option value="" selected disabled>- Pilih Alamat -</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
-                                    </select>
-                                    @else
-                                    <select class="form-control select2" name="fc_address" id="fc_address">
-                                        <option value="{{ $temp->fc_address }}" selected disabled>
-                                            {{ $temp->fc_address }}
-                                        </option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
-                                    </select>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="form-group">
-                                    <label>Catatan</label>
-                                    <div class="input-group">
-                                        @if (empty($temp->fv_description))
-                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
-                                        @else
-                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12">
-                                <div class="button text-right">
-                                    @if (empty($temp->fc_address) && empty($temp->fc_bankcode) && empty($temp->fv_description))
-                                    <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
-                                    @else
-                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
@@ -426,6 +296,134 @@
                 </div>
             </div>
         </div>
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Barang Terkirim</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Kode Barang</th>
+                                        <th scope="col" class="text-center">Nama Barang</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biaya Lainnya</h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" onclick="click_modal_biaya();"><i class="fa fa-plus mr-1"></i> Tambah Biaya Lain</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_lain" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Catatan</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/update-inform/{{ $temp->fc_invno }}" method="POST" autocomplete="off">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body" style="padding-top: 30px!important;">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Bank</label>
+                                    @if (empty($temp->fc_bankcode))
+                                    <select class="form-control select2 required-field" name="fc_bankcode" id="fc_bankcode" required></select>
+                                    @else
+                                    <select class="form-control select2" name="fc_bankcode" id="fc_bankcode">
+                                        <option value="{{ $temp->fc_bankcode }}" selected>
+                                            {{ $temp->bank->fv_bankname }}
+                                        </option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="form-group required">
+                                    <label>Alamat Customer</label>
+                                    @if (empty($temp->fc_address))
+                                    <select class="form-control select2" name="fc_address" id="fc_address" required>
+                                        <option value="" selected disabled>- Pilih Alamat -</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @else
+                                    <select class="form-control select2" name="fc_address" id="fc_address">
+                                        <option value="{{ $temp->fc_address }}" selected disabled>
+                                            {{ $temp->fc_address }}
+                                        </option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                    </select>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    <div class="input-group">
+                                        @if (empty($temp->fv_description))
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst">
+                                        @else
+                                        <input type="text" class="form-control" name="fv_description_mst" id="fv_description_mst" value="{{ $temp->fv_description }}">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="button text-right">
+                                    @if (empty($temp->fc_address) && empty($temp->fc_bankcode) && empty($temp->fv_description))
+                                    <button type="submit" class="btn btn-primary" id="btn_save">Simpan</button>
+                                    @else
+                                    <button type="submit" class="btn btn-warning" id="btn_save">Edit</button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="button text-right mb-4">
         <form id="form_submit_edit" action="/apps/invoice-penjualan/create/submit-invoice" method="post">
@@ -513,6 +511,39 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_detail" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Batch</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fc_batch" name="fc_batch" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>Expired Date</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="fd_expired" name="fd_expired" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -523,6 +554,49 @@
 
     function click_modal_biaya() {
         $("#modal_biaya").modal('show');
+    }
+
+    function detail(fn_invrownum) {
+        $("#modal_detail").modal('show');
+        get_detail(fn_invrownum);
+    }
+
+    function get_detail(fn_invrownum) {
+        $('#modal_loading').modal('show');
+        var rownum = window.btoa(fn_invrownum);
+
+        $.ajax({
+            url: "/apps/invoice-penjualan/get-detail/" + rownum,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(response) {
+                var data = response.data;
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+
+                if (response.status == 200) {
+                    console.log(data);
+                    $('#fc_batch').val(data.fc_batch);
+                    $('#fd_expired').val(formatTimestamp(data.fd_expired));
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        })
     }
 
     function get_data_bank() {
@@ -584,8 +658,11 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6, 7, 8, 9]
-        }, ],
+            targets: [0, 3, 4, 5, 6]
+        }, {
+            className: 'text-nowrap',
+            targets: [7]
+        },],
         columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
@@ -601,19 +678,20 @@
                 data: 'invstore.stock.fc_namepack'
             },
             {
-                data: 'invstore.fc_batch'
-            },
-            {
-                data: 'invstore.fd_expired',
-                render: formatTimestamp
-            },
-            {
                 data: 'fn_itemqty'
             },
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${data.fm_unityprice}">`;
+                    return `
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                Rp.
+                            </div>
+                        </div>
+                        <input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}"
+                    </div>`;
                 }
             },
             {
@@ -626,14 +704,17 @@
         ],
         rowCallback: function(row, data) {
             if (data.fn_price == 0) {
-                $('td:eq(9)', row).html(`
-                    <button type="submit" class="btn btn-primary">Save</button>`);
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
+                    <button type="submit" class="btn btn-sm btn-primary">Save</button>`);
             } else if (data.fc_invstatus === 'R') {
-                $('td:eq(9)', row).html(`
-                    <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
+                    <button type="submit" class="btn btn-sm btn-secondary" disabled>Edit</button>`);
             } else {
-                $('td:eq(9)', row).html(`
-                <button type="submit" class="btn btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)">Edit</button>`);
+                $('td:eq(7)', row).html(`
+                <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
+                <button type="submit" class="btn btn-sm btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)">Edit</button>`);
             }
         },
         footerCallback: function(row, data, start, end, display) {
@@ -657,7 +738,7 @@
     function editUnityPrice(button) {
         var id = $(button).data('id');
         var currentPrice = $(button).data('price');
-        var newPrice = parseFloat($(`#fm_unityprice_${id}`).val());
+        var newPrice = $(`#fm_unityprice_${id}`).val().toString().replace('.', '');
 
         if (newPrice === currentPrice) {
             swal("No changes made.", {
