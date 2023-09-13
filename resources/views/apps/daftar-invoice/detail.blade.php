@@ -429,182 +429,6 @@
         </div>
         @endif
 
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                @if($inv_mst->fc_invtype == 'SALES')
-                <div class="card-header">
-                    <h4>Barang Terkirim</h4>
-                </div>
-                @elseif($inv_mst->fc_invtype == 'PURCHASE')
-                <div class="card-header">
-                    <h4>Barang Diterima</h4>
-                </div>
-                @else
-                <div class="card-header">
-                    <h4>Data CPRR</h4>
-                </div>
-                @endif
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            @if($inv_mst->fc_invtype == 'SALES')
-                            <table class="table table-striped" id="tb_do" width="100%">
-                                @elseif($inv_mst->fc_invtype == 'PURCHASE')
-                                <table class="table table-striped" id="tb_ro" width="100%">
-                                    @else
-                                    <table class="table table-striped" id="tb_cprr" width="100%">
-                                        @endif
-                                        <thead style="white-space: nowrap">
-                                            @if($inv_mst->fc_invtype == 'CPRR')
-                                            <tr>
-                                                <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Kode CPRR</th>
-                                                <th scope="col" class="text-center">Nama</th>
-                                                <th scope="col" class="text-center">Satuan</th>
-                                                <th scope="col" class="text-center">Jumlah</th>
-                                                <th scope="col" class="text-center">Harga Satuan</th>
-                                                <th scope="col" class="text-center">Catatan</th>
-                                                <th scope="col" class="text-center">Total</th>
-                                            </tr>
-                                            @else
-                                            <tr>
-                                                <th scope="col" class="text-center">No</th>
-                                                <th scope="col" class="text-center">Kode Barang</th>
-                                                <th scope="col" class="text-center">Nama Barang</th>
-                                                <th scope="col" class="text-center">Satuan</th>
-                                                <th scope="col" class="text-center">Batch</th>
-                                                <th scope="col" class="text-center">Exp. Date</th>
-                                                <th scope="col" class="text-center">Qty</th>
-                                                <th scope="col" class="text-center">Harga Satuan</th>
-                                                <th scope="col" class="text-center">Total</th>
-                                                <th scope="col" class="text-center">Action</th>
-                                            </tr>
-                                            @endif
-                                        </thead>
-                                    </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- TABLE --}}
-        <div class="col-12 col-md-12 col-lg-12 place_detail">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Biaya Lainnya</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="tb_lain" width="100%">
-                                <thead style="white-space: nowrap">
-                                    <tr>
-                                        <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Keterangan</th>
-                                        <th scope="col" class="text-center">Satuan</th>
-                                        <th scope="col" class="text-center">Harga Satuan</th>
-                                        <th scope="col" class="text-center">Qty</th>
-                                        <th scope="col" class="text-center">Total</th>
-                                        <th scope="col" class="text-center">Catatan</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @if($inv_mst->fc_invtype == 'SALES')
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body" style="padding-top: 30px!important;">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Alamat</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Catatan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @elseif($inv_mst->fc_invtype == 'PURCHASE')
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body" style="padding-top: 30px!important;">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->supplier->fc_supplierbank1 }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Alamat Supplier</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Catatan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @else
-        <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body" style="padding-top: 30px!important;">
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="form-group required">
-                                <label>Alamat</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>Catatan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
-
         @if($inv_mst->fc_invtype == 'SALES')
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
@@ -848,6 +672,181 @@
         @else
 
         @endif
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                @if($inv_mst->fc_invtype == 'SALES')
+                <div class="card-header">
+                    <h4>Barang Terkirim</h4>
+                </div>
+                @elseif($inv_mst->fc_invtype == 'PURCHASE')
+                <div class="card-header">
+                    <h4>Barang Diterima</h4>
+                </div>
+                @else
+                <div class="card-header">
+                    <h4>Data CPRR</h4>
+                </div>
+                @endif
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            @if($inv_mst->fc_invtype == 'SALES')
+                            <table class="table table-striped" id="tb_do" width="100%">
+                                @elseif($inv_mst->fc_invtype == 'PURCHASE')
+                                <table class="table table-striped" id="tb_ro" width="100%">
+                                    @else
+                                    <table class="table table-striped" id="tb_cprr" width="100%">
+                                        @endif
+                                        <thead style="white-space: nowrap">
+                                            @if($inv_mst->fc_invtype == 'CPRR')
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th scope="col" class="text-center">Kode CPRR</th>
+                                                <th scope="col" class="text-center">Nama</th>
+                                                <th scope="col" class="text-center">Satuan</th>
+                                                <th scope="col" class="text-center">Jumlah</th>
+                                                <th scope="col" class="text-center">Harga Satuan</th>
+                                                <th scope="col" class="text-center">Catatan</th>
+                                                <th scope="col" class="text-center">Total</th>
+                                            </tr>
+                                            @else
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th scope="col" class="text-center">Kode Barang</th>
+                                                <th scope="col" class="text-center">Nama Barang</th>
+                                                <th scope="col" class="text-center">Satuan</th>
+                                                <th scope="col" class="text-center">Batch</th>
+                                                <th scope="col" class="text-center">Exp. Date</th>
+                                                <th scope="col" class="text-center">Qty</th>
+                                                <th scope="col" class="text-center">Harga Satuan</th>
+                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Action</th>
+                                            </tr>
+                                            @endif
+                                        </thead>
+                                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- TABLE --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Biaya Lainnya</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_lain" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
+                                        <th scope="col" class="text-center">Satuan</th>
+                                        <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Qty</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Catatan</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if($inv_mst->fc_invtype == 'SALES')
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body" style="padding-top: 30px!important;">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Alamat</label>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Catatan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @elseif($inv_mst->fc_invtype == 'PURCHASE')
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body" style="padding-top: 30px!important;">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->supplier->fc_supplierbank1 }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Alamat Supplier</label>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Catatan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body" style="padding-top: 30px!important;">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Bank</label>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Alamat</label>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Catatan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
     <div class="button text-right mb-4">
         <a href="/apps/daftar-invoice"><button type="button" class="btn btn-info">Back</button></a>
@@ -904,7 +903,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}" readonly>`;
+                    return `<input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}" readonly>`;
                 }
             },
             {
@@ -1026,7 +1025,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_unityprice_${data.fn_invrownum}" min="0" class="form-control" value="${fungsiRupiah(data.fm_unityprice)}" readonly>`;
+                    return `<input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}" readonly>`;
                 }
             },
             {
