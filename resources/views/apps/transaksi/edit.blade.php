@@ -124,7 +124,7 @@
                 <div class="card-header">
                     <h4>Debit</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="add_debit();"><i class="fa fa-plus mr-1"></i> Tambah Debit</button>
+                        <button type="button" id="btn-debit" class="btn btn-success" onclick="add_debit();"><i class="fa fa-plus mr-1"></i> Tambah Debit</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -156,7 +156,7 @@
                 <div class="card-header">
                     <h4>Kredit</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
+                        <button type="button" id="btn-kredit" class="btn btn-success" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -408,6 +408,18 @@
     $("#form_submit_kredit").attr("action", url_kredit)
     var url_submit = "/apps/transaksi/edit/submit-edit/" + encode_trxno;
     $("#form_submit_edit").attr("action", url_submit)
+
+    var lock = "{{ $lock }}"
+    if (lock == 'C') {
+        $('#btn-kredit').prop('hidden', true);
+    } else if (lock == 'D'){
+        $('#btn-debit').prop('hidden', true);
+    } else {
+        $('#btn-kredit').prop('hidden', false);
+        $('#btn-debit').prop('hidden', false);
+    }
+
+    console.log(lock);
 
     $(document).ready(function() {
         get_data_payment();
@@ -742,7 +754,11 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
+                    if (lock == 'D') {
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
+                    } else {
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
+                    }
                 }
             },
             {
@@ -760,10 +776,19 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (data.fv_description == null) {
-                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    if (lock == 'D') {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control" readonly>`;
+                        }
+                    } else {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
+                        }
                     }
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
                 }
             },
             {
@@ -772,13 +797,19 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/edit/delete/" + data.fc_coacode + "/" + data.fn_rownum;
+            var fc_trxno = window.btoa(data.fc_trxno);
+            var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
+            console.log(url_delete);
 
-            $('td:eq(8)', row).html(`
+            if (lock == 'D') {
+                $('td:eq(8)', row).html(` `)
+            } else {
+                $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
                 <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
+            }
         },
     });
 
@@ -815,7 +846,11 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
+                    if (lock == 'C') {
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
+                    } else {
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
+                    }
                 }
             },
             {
@@ -833,10 +868,19 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (data.fv_description == null) {
-                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    if (lock == 'C') {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control" readonly>`;
+                        }
+                    } else {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
+                        }
                     }
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
                 }
             },
             {
@@ -848,10 +892,14 @@
             var url_delete = "/apps/transaksi/edit/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            $('td:eq(8)', row).html(`
-            <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
-            <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
+            if (lock == 'C') {
+                $('td:eq(8)', row).html(` `)
+            } else {
+                $('td:eq(8)', row).html(`
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
+                <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
                 `);
+            }
         },
     });
 
@@ -859,7 +907,7 @@
         var rownum = $(button).data('rownum');
         var nominal = $(button).data('nominal');
         var description = $(button).data('description');
-        var newnominal = parseFloat($(`#fm_nominal_${rownum}`).val());
+        var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
 
