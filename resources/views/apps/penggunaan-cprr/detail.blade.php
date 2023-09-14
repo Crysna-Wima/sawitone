@@ -77,8 +77,11 @@
         {{-- TABLE --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>Data Penggunaan CPRR</h4>
+                    <div id="journal-cprr">
+                        <div class="btn btn-success">Buat Jurnal</div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -92,6 +95,7 @@
                                         <th scope="col" class="text-center">Tgl Penggunaan</th>
                                         <th scope="col" class="text-center">Batch</th>
                                         <th scope="col" class="text-center">Expired Date</th>
+                                        <th scope="col" class="text-center">Status Jurnal</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -113,6 +117,8 @@
 @section('js')
 <script>
     let fc_warehousecode = "{{ ($gudang_mst->fc_warehousecode) }}";
+
+
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
@@ -123,7 +129,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -131,10 +137,10 @@
                 orderable: false
             },
             {
-                data: 'fc_barcode'
+                data: 'invstore.fc_stockcode'
             },
             {
-                data: 'invstore.stock.fc_nameshort'
+                data: 'invstore.stock.fc_namelong'
             },
             {
                 data: 'fd_scanqrdate',
@@ -147,7 +153,97 @@
                 data: 'invstore.fd_expired',
                 render: formatTimestamp,
             },
+            {
+                data: 'fc_scanqrstatus',
+            }
         ],
+        rowCallback: function (row, data) {
+            if(data.fc_scanqrstatus == 'T') 
+                $('td:eq(6)', row).html('<span class="badge badge-primary"><i class="fa-solid fa-square-check"></i> Sudah</span>')
+    
+            else 
+                $('td:eq(6)', row).html('<span class="badge badge-danger"><i class="fa-solid fa-circle-xmark"></i> Belum</span>')
+        }
     });
+
+    $('#journal-cprr').on('click', function () {
+        $('#modal_loading').modal('show');
+        $.ajax({
+            url: '/apps/penggunaan-cprr/detail/'+ fc_warehousecode + '/journal',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(response) {
+                var data = response.data;
+                $('#modal_loading').modal('hide');
+
+                if (response.status == 200) {
+                    if (data.length > 0) {
+                        swal({
+                            title: 'Yakin?',
+                            text: 'Apakah anda yakin akan menjurnal ?',
+                            icon: 'warning',
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((save) => {
+                            if (save) {
+                            $("#modal_loading").modal('show');
+                            $.ajax({
+                                url: '/apps/penggunaan-cprr/detail/'+ fc_warehousecode + '/journal' ,
+                                type: 'POST',
+                                success: function(response) {
+
+                                    setTimeout(function() {
+                                        $('#modal_loading').modal('hide');
+                                    }, 500);
+
+                                    if (response.status == 201) {
+                                        
+                                        swal(response.message, { icon: 'success'});
+                                        $("#modal").modal('hide');
+                                        tb.ajax.reload();
+                                        
+                                    } else {
+                                        swal( response.message, { icon: 'error'} );
+                                    }
+                                    
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+
+                                    setTimeout(function() {
+                                        $('#modal_loading').modal('hide');
+                                    }, 500);
+                                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                        icon: 'error',
+                                    });
+
+                                }
+                            });
+                            }
+                        });
+                    } else {
+                        swal("Maaf, tidak ada penggunaan CPRR yang bisa dijurnal", { icon: 'warning'});
+                    }
+                } else {
+
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+
+                }
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        })
+    })
 </script>
 @endsection

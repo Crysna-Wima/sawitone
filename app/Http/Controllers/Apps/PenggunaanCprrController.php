@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Helpers\ApiFormatter;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Helpers\NoDocument;
+use App\Helpers\NoDocument; 
 use App\Helpers\Convert;
 
 use Yajra\DataTables\DataTables as DataTables;
@@ -56,12 +57,39 @@ class PenggunaanCprrController extends Controller
     public function datatables_detail($fc_warehousecode)
     {
         $data = ScanQr::with('invstore.stock')
-            ->where('fc_warehousecode', $fc_warehousecode)
-            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where([
+                'fc_warehousecode' => $fc_warehousecode,
+                'fc_branch' => auth()->user()->fc_branch,
+            ])
+            ->orderBy('fc_scanqrstatus', 'ASC')
+            ->orderBy('fd_scanqrdate', 'DESC')
             ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function detail_unjournal($fc_warehousecode)
+    {   
+        $data = ScanQr::with('invstore.stock')
+            ->where('fc_warehousecode', $fc_warehousecode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_scanqrstatus', 'F')
+            ->get();
+
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function journal_cprr ($fc_warehousecode){
+        $data = ScanQr::where('fc_warehousecode', $fc_warehousecode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_scanqrstatus', 'F')
+        ->update(['fc_scanqrstatus' => 'T']);
+
+        return [
+            'status' => 201,
+            'message' => 'Data berhasil dijurnal',
+        ];
     }
 }
