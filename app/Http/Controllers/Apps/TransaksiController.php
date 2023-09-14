@@ -94,6 +94,8 @@ class TransaksiController extends Controller
                 } else if ($count_kredit == 1) {
                     $data['lock'] = 'C';
                 }
+            } else {
+                $data['lock'] = 'N';
             }
 
             return view('apps.transaksi.create-detail', $data);

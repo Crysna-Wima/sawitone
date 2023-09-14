@@ -446,8 +446,11 @@
     var lock = "{{ $lock }}"
     if (lock == 'C') {
         $('#btn-kredit').prop('hidden', true);
-    } else {
+    } else if (lock == 'D'){
         $('#btn-debit').prop('hidden', true);
+    } else {
+        $('#btn-kredit').prop('hidden', false);
+        $('#btn-debit').prop('hidden', false);
     }
     // var editCatatan =  $('#fv_description').val();
     // $('#fv_description_submit').val(editCatatan);
