@@ -445,19 +445,19 @@
             var fc_approvalno = window.btoa(data.fc_approvalno);
 
             if (data['fc_approvalstatus'] == 'W') {
-                $('td:eq(3)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                $('td:eq(4)', row).html('<span class="badge badge-primary">Menunggu</span>');
             } else if (data['fc_approvalstatus'] == 'R') {
-                $('td:eq(3)', row).html('<span class="badge badge-danger">Ditolak</span>');
+                $('td:eq(4)', row).html('<span class="badge badge-danger">Ditolak</span>');
             } else if (data['fc_approvalstatus'] == 'C') {
-                $('td:eq(3)', row).html('<span class="badge badge-danger">Cancel</span>');
+                $('td:eq(4)', row).html('<span class="badge badge-danger">Cancel</span>');
             } else {
-                $('td:eq(3)', row).html('<span class="badge badge-success">Diterima</span>');
+                $('td:eq(4)', row).html('<span class="badge badge-success">Diterima</span>');
             }
 
             if (data['fc_approvalused'] == 'F') {
-                $('td:eq(4)', row).html('<span class="badge badge-danger">Belum Digunakan</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-danger">Belum Digunakan</span>');
             } else {
-                $('td:eq(4)', row).html('<span class="badge badge-success">Telah Digunakan</span>');
+                $('td:eq(5)', row).html('<span class="badge badge-success">Telah Digunakan</span>');
             }
 
             if (data['fc_approvalstatus'] == 'C') {

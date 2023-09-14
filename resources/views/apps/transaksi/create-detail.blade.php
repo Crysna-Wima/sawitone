@@ -446,7 +446,7 @@
     var lock = "{{ $lock }}"
     if (lock == 'C') {
         $('#btn-kredit').prop('hidden', true);
-    } else if (lock == 'D'){
+    } else if (lock == 'D') {
         $('#btn-debit').prop('hidden', true);
     } else {
         $('#btn-kredit').prop('hidden', false);
@@ -788,9 +788,9 @@
                 data: null,
                 render: function(data, type, full, meta) {
                     if (lock == 'D') {
-                        return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}" readonly>`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
                     }
                 }
             },
@@ -809,10 +809,19 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (data.fv_description == null) {
-                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    if (lock == 'D') {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control" readonly>`;
+                        }
+                    } else {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
+                        }
                     }
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
                 }
             },
             {
@@ -869,9 +878,9 @@
                 data: null,
                 render: function(data, type, full, meta) {
                     if (lock == 'C') {
-                        return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}" readonly>`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="number" id="fm_nominal_${data.fn_rownum}" min="0" class="form-control" value="${data.fm_nominal}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
                     }
                 }
             },
@@ -890,10 +899,19 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (data.fv_description == null) {
-                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                    if (lock == 'C') {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control" readonly>`;
+                        }
+                    } else {
+                        if (data.fv_description == null) {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                        } else {
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
+                        }
                     }
-                    return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
                 }
             },
             {
@@ -920,7 +938,7 @@
         var rownum = $(button).data('rownum');
         var nominal = $(button).data('nominal');
         var description = $(button).data('description');
-        var newnominal = parseFloat($(`#fm_nominal_${rownum}`).val());
+        var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
 

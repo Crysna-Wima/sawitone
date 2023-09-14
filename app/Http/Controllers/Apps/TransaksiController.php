@@ -46,6 +46,36 @@ class TransaksiController extends Controller
         session(['fc_trxno_global' => $decode_fc_trxno]);
         $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['fc_trxno'] = $decode_fc_trxno;
+
+        $trxaccounting_mst = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        // cek di master mapping fc_balancerelation sama dengan '1 to N'
+        $cek_master_mapping = MappingMaster::where('fc_mappingcode', $trxaccounting_mst->fc_mappingcode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->first();
+
+        if ($cek_master_mapping && $cek_master_mapping->fc_balancerelation === '1 to N') {
+            // filter berdasarkan mappingcode
+            $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $trxaccounting_mst->fc_mappingcode)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->get();
+
+            // klasifikasikan berdasarkan fc_mappingpos
+            $filter_debit = $cek_mapping_detail->where('fc_mappingpos', 'D');
+            $filter_kredit = $cek_mapping_detail->where('fc_mappingpos', 'C');
+
+            // Hitung jumlah Debit (mapping pos D)
+            $count_debit = $filter_debit->count();
+            // Hitung jumlah Kredit (mapping pos C)
+            $count_kredit = $filter_kredit->count();
+
+            if ($count_debit == 1) {
+                $data['lock'] = 'D';
+            } else if ($count_kredit == 1) {
+                $data['lock'] = 'C';
+            }
+        } else {
+            $data['lock'] = 'N';
+        }
         return view('apps.transaksi.edit', $data);
     }
 
