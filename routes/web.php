@@ -479,7 +479,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables-detail/{fc_warehousecode}', 'Apps\PenggunaanCprrController@datatables_detail');
             Route::get('/detail/{fc_warehousecode}/journal', 'Apps\PenggunaanCprrController@detail_unjournal');
             
-            Route::post('/detail/{fc_warehousecode}/journal', 'Apps\PenggunaanCprrController@journal_cprr');
+            Route::post('/detail/{fc_warehousecode}/journal/{fc_membercode}', 'Apps\PenggunaanCprrController@journal_cprr');
         });
 
         Route::prefix('scan-qr')->group(function () {

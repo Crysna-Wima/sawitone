@@ -118,7 +118,6 @@
 <script>
     let fc_warehousecode = "{{ ($gudang_mst->fc_warehousecode) }}";
 
-
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,
@@ -174,6 +173,8 @@
             dataType: 'JSON',
             success: function(response) {
                 var data = response.data;
+                var fc_membercode = data[0].fc_membercode;
+
                 $('#modal_loading').modal('hide');
 
                 if (response.status == 200) {
@@ -187,38 +188,38 @@
                         })
                         .then((save) => {
                             if (save) {
-                            $("#modal_loading").modal('show');
-                            $.ajax({
-                                url: '/apps/penggunaan-cprr/detail/'+ fc_warehousecode + '/journal' ,
-                                type: 'POST',
-                                success: function(response) {
+                                $("#modal_loading").modal('show');
+                                $.ajax({
+                                    url: '/apps/penggunaan-cprr/detail/'+ fc_warehousecode + '/journal/' + fc_membercode,
+                                    type: 'POST',
+                                    success: function(response) {
 
-                                    setTimeout(function() {
-                                        $('#modal_loading').modal('hide');
-                                    }, 500);
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal('hide');
+                                        }, 500);
 
-                                    if (response.status == 201) {
+                                        if (response.status == 201) {
+                                            
+                                            swal(response.message, { icon: 'success'});
+                                            $("#modal").modal('hide');
+                                            tb.ajax.reload();
+                                            
+                                        } else {
+                                            swal( response.message, { icon: 'error'} );
+                                        }
                                         
-                                        swal(response.message, { icon: 'success'});
-                                        $("#modal").modal('hide');
-                                        tb.ajax.reload();
-                                        
-                                    } else {
-                                        swal( response.message, { icon: 'error'} );
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+
+                                        setTimeout(function() {
+                                            $('#modal_loading').modal('hide');
+                                        }, 500);
+                                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                            icon: 'error',
+                                        });
+
                                     }
-                                    
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-
-                                    setTimeout(function() {
-                                        $('#modal_loading').modal('hide');
-                                    }, 500);
-                                    swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
-                                        icon: 'error',
-                                    });
-
-                                }
-                            });
+                                });
                             }
                         });
                     } else {

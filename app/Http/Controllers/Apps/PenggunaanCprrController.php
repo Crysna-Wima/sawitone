@@ -17,6 +17,7 @@ use DB;
 use App\Models\Warehouse;
 use App\Models\Invstore;
 use App\Models\ScanQr;
+use Auth;
 
 class PenggunaanCprrController extends Controller
 {
@@ -81,15 +82,36 @@ class PenggunaanCprrController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function journal_cprr ($fc_warehousecode){
-        $data = ScanQr::where('fc_warehousecode', $fc_warehousecode)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_scanqrstatus', 'F')
-        ->update(['fc_scanqrstatus' => 'T']);
+    public function journal_cprr ($fc_warehousecode, $fc_membercode){
+        DB::beginTransaction();
 
-        return [
-            'status' => 201,
-            'message' => 'Data berhasil dijurnal',
-        ];
+        try {
+            DB::select('CALL AUTOJOURNAL_SCANQR(?,?,?,?)', array(
+                Auth()->user()->fc_divisioncode, 
+                Auth()->user()->fc_branch,
+                $fc_membercode,
+                $fc_warehousecode
+            ));
+
+            $data = ScanQr::where('fc_warehousecode', $fc_warehousecode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_scanqrstatus', 'F')
+            ->update(['fc_scanqrstatus' => 'T']);
+
+            DB::commit();
+
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil dijurnal',
+            ];
+    
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+				'status' 	=> 300, // GAGAL
+				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
+			];
+        }
     }
 }
