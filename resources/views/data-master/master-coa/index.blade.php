@@ -57,6 +57,7 @@
             <form id="form_submit" action="/apps/master-coa/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <input type="text" name="fc_parentcode" id="fc_parentcode_hidden" hidden>
+                <input type="text" name="fc_group" id="fc_group_hidden" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-3 col-lg-3" hidden>
@@ -261,6 +262,8 @@
                     }
                     if(data.transaksitype != null){
                         $('#fc_group').append(`<option value="${data.fc_group}" selected>${data.transaksitype.fv_description}</option>`);
+                        $('#fc_group').prop('disabled', true);
+                        $('#fc_group_hidden').val(data.fc_group);
                     }
                     $('#fv_description').val(data.fv_description);
                 } else {

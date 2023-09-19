@@ -68,12 +68,12 @@
 
     .table-center thead tr th, .table-center tbody tr td{
         text-align: center;
-        padding: 3px;
+        padding: 1px;
     }
 
     .table-start thead tr th, .table-start tbody tr td{
         vertical-align: start;
-        padding: 3px;
+        padding: 1px;
     }
 
     .table-center-start thead tr th{
@@ -128,14 +128,14 @@
     }
 
     table th {
-        padding: 6px 4px;
+        padding: 1.5px;
         font-size: 13px;
         font-weight: regular;
         font-family: 'lucida-console-regular', sans-serif;
     }
 
     table td {
-        padding: 6px 4px;
+        padding: 1px;
         font-size: 13px;
     }
 
