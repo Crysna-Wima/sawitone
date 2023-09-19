@@ -314,6 +314,7 @@
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Diskon</th>
                                         <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -544,6 +545,82 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_disc" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Diskon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_update" action="/apps/invoice-penjualan/update-discprice" method="PUT" autocomplete="off">
+                <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
+                <input type="number" id="fm_discprice" name="fm_discprice" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Harga Satuan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fm_unityprice_diskon" name="fm_unityprice" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Tipe Diskon</label>
+                                <select class="form-control select2" name="tipe_diskon" id="tipe_diskon">
+                                    <option value="" selected disabled>- Pilih -</option>
+                                    <option value="Nominal">Nominal</option>
+                                    <option value="Persen">Persen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12" id="fm_discprice_nominal" hidden>
+                            <div class="form-group">
+                                <label>Diskon</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Rp.
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control format-rp" id="fm_discprice1" name="fm_discprice1" onkeyup="return onkeyupRupiah(this.id);">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12" id="fm_discprice_persen" hidden>
+                            <div class="form-group">
+                                <label>Diskon</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="fm_discprice2" name="fm_discprice2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Harga setelah diskon</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="total" name="total" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -551,6 +628,66 @@
     $(document).ready(function() {
         get_data_bank();
     })
+
+    function diskon(button) {
+        var id = $(button).data('id');
+        var currentPrice = $(button).data('price');
+        var newPrice = $(`#fm_unityprice_${id}`).val().toString().replace('.', '');
+
+        $("#modal_disc").modal('show');
+        $('#fn_invrownum').val(id);
+        $('#fm_unityprice_diskon').val(fungsiRupiah(newPrice));
+        $("#tipe_diskon").change(function() {
+            if ($('#tipe_diskon').val() === "Persen") {
+                $('#fm_discprice_persen').attr('hidden', false);
+                $('#fm_discprice_nominal').attr('hidden', true);
+
+                $('#fm_discprice_persen').on('input', function() {
+                    var hargaAwal = parseFloat($('#fm_unityprice_diskon').val().toString().replace(/[^\d|\,]/g, ''));
+                    var input = parseFloat($('#fm_discprice2').val());
+                    var hargaDiskon = parseFloat($('#fm_discprice2').val().toString().replace(/[^\d|\,]/g, '')) / 100;
+
+                    if (input > 100) {
+                        iziToast.warning({
+                            title: 'Warning!',
+                            message: 'Diskon lebih dari 100%',
+                            position: 'topRight'
+                        });
+                        $('#total').val("Error");
+                    } else {
+                        var total = hargaAwal - (hargaAwal * hargaDiskon);
+                        $('#total').val(fungsiRupiah(total));
+                    }
+                    var selisih = hargaAwal - total
+                    var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(discprice);
+                });
+            } else {
+                $('#fm_discprice_persen').attr('hidden', true);
+                $('#fm_discprice_nominal').attr('hidden', false);
+
+                $('#fm_discprice_nominal').on('input', function() {
+                    var hargaAwal = parseFloat($('#fm_unityprice_diskon').val().toString().replace(/[^\d|\,]/g, ''));
+                    var hargaDiskon = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
+
+                    if (hargaDiskon > hargaAwal) {
+                        iziToast.warning({
+                            title: 'Warning!',
+                            message: 'Nominal diskon lebih besar daripada harganya',
+                            position: 'topRight'
+                        });
+                        $('#total').val("Error");
+                    } else {
+                        var total = hargaAwal - hargaDiskon;
+                        $('#total').val(fungsiRupiah(total));
+                    }
+
+                    var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(discprice);
+                });
+            }
+        });
+    }
 
     function click_modal_biaya() {
         $("#modal_biaya").modal('show');
@@ -658,11 +795,11 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 3, 4, 5, 6]
+            targets: [0, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
-            targets: [7]
-        },],
+            targets: [8]
+        }, ],
         columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
@@ -695,6 +832,10 @@
                 }
             },
             {
+                data: 'fm_discprice',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+            },
+            {
                 data: 'fm_value',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
             },
@@ -704,17 +845,19 @@
         ],
         rowCallback: function(row, data) {
             if (data.fn_price == 0) {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>`);
             } else if (data.fc_invstatus === 'R') {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
                     <button type="submit" class="btn btn-sm btn-secondary" disabled>Edit</button>`);
             } else {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
-                <button type="submit" class="btn btn-sm btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)">Edit</button>`);
+                <button type="submit" class="btn btn-sm btn-info mr-1" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="diskon(this)"><i class="fa-solid fa-percent"></i></button>
+                <button type="submit" class="btn btn-sm btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)"><i class="fa fa-edit"></i></button>
+                `);
             }
         },
         footerCallback: function(row, data, start, end, display) {
@@ -746,7 +889,6 @@
             });
             return;
         }
-
         swal({
             title: "Konfirmasi",
             text: "Apakah kamu yakin ingin update harga tersebut?",
@@ -767,7 +909,7 @@
             type: 'PUT',
             data: {
                 fn_invrownum: id,
-                fm_unityprice: fmUnityPrice
+                fm_unityprice: fmUnityPrice,
             },
             success: function(response) {
                 setTimeout(function() {
@@ -940,6 +1082,50 @@
                     if (response.total < 1) {
                         window.location.href = response.link;
                     }
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
+
+    $('#form_update').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_update').attr('action'),
+            type: $('#form_update').attr('method'),
+            data: $('#form_update').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal_disc").modal('hide');
+                    $("#form_update")[0].reset();
+                    reset_all_select();
+                    tb.ajax.reload(null, false);
                 } else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',

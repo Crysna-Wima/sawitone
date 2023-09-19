@@ -300,6 +300,7 @@
                                         <th scope="col" class="text-center">Satuan</th>
                                         <th scope="col" class="text-center">Jumlah</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
+                                        <th scope="col" class="text-center">Diskon</th>
                                         <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center justify-content-center">Action</th>
@@ -529,9 +530,83 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_disc" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Diskon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_update" action="/apps/invoice-cprr/update-discprice" method="PUT" autocomplete="off">
+                <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
+                <input type="number" id="fm_discprice" name="fm_discprice" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Harga Satuan</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fm_unityprice_diskon" name="fm_unityprice" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Tipe Diskon</label>
+                                <select class="form-control select2" name="tipe_diskon" id="tipe_diskon">
+                                    <option value="" selected disabled>- Pilih -</option>
+                                    <option value="Nominal">Nominal</option>
+                                    <option value="Persen">Persen</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12" id="fm_discprice_nominal" hidden>
+                            <div class="form-group">
+                                <label>Diskon</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Rp.
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control format-rp" id="fm_discprice1" name="fm_discprice1" onkeyup="return onkeyupRupiah(this.id);">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12" id="fm_discprice_persen" hidden>
+                            <div class="form-group">
+                                <label>Diskon</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="fm_discprice2" name="fm_discprice2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Harga setelah diskon</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="total" name="total" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
-
-
 
 @section('js')
 <script>
@@ -653,7 +728,7 @@
             var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
             $('td:eq(7)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"></i></button>
             `);
         },
         footerCallback: function(row, data, start, end, display) {
@@ -685,7 +760,10 @@
         columnDefs: [{
             className: 'text-center',
             targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        }, ],
+        }, {
+            className: 'text-nowrap',
+            targets: [9]
+        } ],
         columns: [{
                 data: 'DT_RowIndex',
                 searchable: false,
@@ -714,6 +792,15 @@
                 }
             },
             {
+                data: 'fm_discprice',
+                render: function(data, type, row) {
+                    return row.fm_discprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
                 data: 'fv_description',
             },
             {
@@ -732,8 +819,9 @@
         rowCallback: function(row, data) {
             var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
-            $('td:eq(8)', row).html(`
-                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
+            $('td:eq(9)', row).html(`
+                <button type="submit" class="btn btn-sm btn-info mr-1" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="diskon(this)"><i class="fa-solid fa-percent"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i></button>
             `);
         },
         footerCallback: function(row, data, start, end, display) {
@@ -853,6 +941,67 @@
         });
    }
 
+   function diskon(button) {
+        var id = $(button).data('id');
+        var price = $(button).data('price');
+
+        console.log(price);
+
+        $("#modal_disc").modal('show');
+        $('#fn_invrownum').val(id);
+        $('#fm_unityprice_diskon').val(fungsiRupiah(price));
+        $("#tipe_diskon").change(function() {
+            if ($('#tipe_diskon').val() === "Persen") {
+                $('#fm_discprice_persen').attr('hidden', false);
+                $('#fm_discprice_nominal').attr('hidden', true);
+
+                $('#fm_discprice_persen').on('input', function() {
+                    var hargaAwal = parseFloat($('#fm_unityprice_diskon').val().toString().replace(/[^\d|\,]/g, ''));
+                    var input = parseFloat($('#fm_discprice2').val());
+                    var hargaDiskon = parseFloat($('#fm_discprice2').val().toString().replace(/[^\d|\,]/g, '')) / 100;
+
+                    if (input > 100) {
+                        iziToast.warning({
+                            title: 'Warning!',
+                            message: 'Diskon lebih dari 100%',
+                            position: 'topRight'
+                        });
+                        $('#total').val("Error");
+                    } else {
+                        var total = hargaAwal - (hargaAwal * hargaDiskon);
+                        $('#total').val(fungsiRupiah(total));
+                    }
+                    var selisih = hargaAwal - total
+                    var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(discprice);
+                });
+            } else {
+                $('#fm_discprice_persen').attr('hidden', true);
+                $('#fm_discprice_nominal').attr('hidden', false);
+
+                $('#fm_discprice_nominal').on('input', function() {
+                    var hargaAwal = parseFloat($('#fm_unityprice_diskon').val().toString().replace(/[^\d|\,]/g, ''));
+                    var hargaDiskon = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
+
+                    if (hargaDiskon > hargaAwal) {
+                        iziToast.warning({
+                            title: 'Warning!',
+                            message: 'Nominal diskon lebih besar daripada harganya',
+                            position: 'topRight'
+                        });
+                        $('#total').val("Error");
+                    } else {
+                        var total = hargaAwal - hargaDiskon;
+                        $('#total').val(fungsiRupiah(total));
+                    }
+
+                    var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(discprice);
+                });
+            }
+        });
+    }
+
     function choosen(id) {
         $("modal_loading").modal('show');
         var fc_id = window.btoa(id);
@@ -969,6 +1118,50 @@
                     if (response.total < 1) {
                         window.location.href = response.link;
                     }
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
+
+    $('#form_update').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_update').attr('action'),
+            type: $('#form_update').attr('method'),
+            data: $('#form_update').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    // swal(response.message, { icon: 'success', });
+                    $("#modal_disc").modal('hide');
+                    $("#form_update")[0].reset();
+                    reset_all_select();
+                    tb.ajax.reload(null, false);
                 } else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',

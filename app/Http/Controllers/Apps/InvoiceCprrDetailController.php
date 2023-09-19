@@ -23,6 +23,41 @@ class InvoiceCprrDetailController extends Controller
         return DataTables::of($invoiceCprrDtl)->addIndexColumn()->make(true);
     }
 
+    public function update_discprice(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'fm_discprice' => 'required',
+            'fn_invrownum' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $request->merge(['fm_discprice' => Convert::convert_to_double($request->fm_discprice)]);
+
+        $update_discprice = TempInvoiceDtl::where([
+            'fn_invrownum' => $request->fn_invrownum,
+        ])->update([
+            'fm_discprice' => $request->fm_discprice
+        ]);
+
+        if ($update_discprice) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diupdate'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+    }
+
     public function create(request $request){
         $fn_invrownum = 1;
         $tempInvDtl = TempInvoiceDtl::where([
