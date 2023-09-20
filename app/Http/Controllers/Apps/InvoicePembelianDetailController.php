@@ -109,7 +109,7 @@ class InvoicePembelianDetailController extends Controller
                 'fc_detailitem' => $request->fc_detailitem,
                 'fc_unityname' => $request->fc_unityname,
                 'fm_unityprice' => $request->fm_unityprice,
-                'fc_invtype' => 'SALES',
+                'fc_invtype' => 'PURCHASE',
                 'fn_itemqty' =>  $request->fn_itemqty,
                 'fv_description' => $request->fv_description,
             ]);
@@ -196,6 +196,7 @@ class InvoicePembelianDetailController extends Controller
         $data = TempInvoiceDtl::with('tempinvmst', 'nameunity')
         ->where('fc_invno', auth()->user()->fc_userid)
         ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_invtype', 'PURCHASE')
         ->where('fc_status', 'ADDON')
         ->get();
 

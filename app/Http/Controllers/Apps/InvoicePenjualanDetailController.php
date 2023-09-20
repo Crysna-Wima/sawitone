@@ -176,8 +176,6 @@ class InvoicePenjualanDetailController extends Controller
             ]);
         }
 
-        dd($request);
-
         if ($insert_invdtl) {
             return response()->json([
                 'status' => 200,

@@ -949,7 +949,7 @@
             var url_delete = "/apps/invoice-pembelian/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
             $('td:eq(7)', row).html(`
-                <button class="btn btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i> Hapus</button>`);
+                <button class="btn btn-sm btn-danger" onclick="delete_action('${url_delete}','Biaya Lainnya')"><i class="fa fa-trash"></i></button>`);
         },
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
