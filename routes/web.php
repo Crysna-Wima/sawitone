@@ -702,7 +702,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::post('/store-kredit', 'Apps\TransaksiDetailController@store_kredit');
                 Route::put('update-debit-transaksi', 'Apps\TransaksiDetailController@update_debit_transaksi');
                 Route::put('update-kredit-transaksi', 'Apps\TransaksiDetailController@update_kredit_transaksi');
-                Route::delete('/delete/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@delete');
+                Route::delete('/delete/{fc_coacode}/{fn_rownum}/{fc_balancerelation}', 'Apps\TransaksiDetailController@delete');
                 Route::put('/submit_transaksi', 'Apps\TransaksiDetailController@submit_transaksi');
                 Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
             });

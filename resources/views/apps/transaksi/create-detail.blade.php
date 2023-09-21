@@ -284,6 +284,7 @@
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" disabled>
+                                       <input type="text" name="fc_balancerelation" value="{{ $data->mapping->fc_balancerelation }}" hidden>
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
@@ -492,7 +493,9 @@
 
 @section('js')
 <script>
-    var createBy = "{{ $data->mapping->created_by }}"
+    var createBy = "{{ $data->mapping->created_by }}";
+    var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
+    var balancerelation_encode = window.btoa(fc_balancerelation);
     var lock = "{{ $lock }}"
     if (lock == 'C') {
         $('#btn-kredit').prop('hidden', true);
@@ -684,21 +687,22 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-                    console.log(data);
-                    var value = data[0].mst_coa.fc_directpayment;
-                    $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
-                    if (value == "F") {
-                        $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
-                        $('#fc_paymentmethod').prop('disabled', true);
-                        $('#fc_paymentmethod_hidden').val("NON");
+                    // console.log(data);
+                    if(data.length){
+                        var value = data[0].mst_coa.fc_directpayment;
+                        $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
+                        if (value == "F") {
+                            $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
+                            $('#fc_paymentmethod').prop('disabled', true);
+                            $('#fc_paymentmethod_hidden').val("NON");
+                        }
+                        var value2 = data[0].mst_coa.fc_balancestatus;
+                        $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
+                        if (data[0].mst_coa.transaksitype == null) {
+                            $('#fc_group').append(`<option value="" selected>-</option>`);
+                        }
+                        $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
                     }
-                    var value2 = data[0].mst_coa.fc_balancestatus;
-                    $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
-                    if (data[0].mst_coa.transaksitype == null) {
-                        $('#fc_group').append(`<option value="" selected>-</option>`);
-                    }
-                    $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
-
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -729,21 +733,24 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-
-                    var value = data[0].mst_coa.fc_directpayment;
-                    console.log(data);
-                    $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
-                    if (value == "F") {
-                        $('#fc_paymentmethod_kredit').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
-                        $('#fc_paymentmethod_kredit').prop('disabled', true);
-                        $('#fc_paymentmethod_kredit_hidden').val("NON");
-                    }
-                    var value2 = data[0].mst_coa.fc_balancestatus;
-                    $("input[name=fc_balancestatus_kredit][value=" + value2 + "]").prop('checked', true);
-                    if (data[0].mst_coa.transaksitype == null) {
-                        $('#fc_group_kredit').append(`<option value="" selected>-</option>`);
-                    } else {
-                        $('#fc_group_kredit').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+                    // console.log(data)
+                    // berikan jika data tidak empty
+                    if(data.length > 0){
+                        var value = data[0].mst_coa.fc_directpayment;
+                        // console.log(data);
+                        $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
+                        if (value == "F") {
+                            $('#fc_paymentmethod_kredit').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
+                            $('#fc_paymentmethod_kredit').prop('disabled', true);
+                            $('#fc_paymentmethod_kredit_hidden').val("NON");
+                        }
+                        var value2 = data[0].mst_coa.fc_balancestatus;
+                        $("input[name=fc_balancestatus_kredit][value=" + value2 + "]").prop('checked', true);
+                        if (data[0].mst_coa.transaksitype == null) {
+                            $('#fc_group_kredit').append(`<option value="" selected>-</option>`);
+                        } else {
+                            $('#fc_group_kredit').append(`<option value="${data[0].mst_coa.fc_group}" selected disabled>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+                        }
                     }
                 } else {
                     iziToast.error({
@@ -763,7 +770,7 @@
 
     function get_coa() {
         var mappingMst = window.btoa("{{ $data->fc_mappingcode }}");
-
+        // console.log(mappingMst)
         $('#modal_loading').modal('show');
         $.ajax({
             url: "/apps/transaksi/detail/get-coa/" + mappingMst,
@@ -809,6 +816,7 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
+                    // console.log(data)
                     $("#fc_coacode_kredit").empty();
                     $("#fc_coacode_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
@@ -907,7 +915,7 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (lock == 'D' && data.coamst.fc_directpayment == 'T') {
@@ -1001,6 +1009,7 @@
         ],
 
         rowCallback: function(row, data) {
+            
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
@@ -1056,6 +1065,7 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
+                fc_balancerelation: fc_balancerelation
             },
             success: function(response) {
                 if (response.status == 200) {
@@ -1093,6 +1103,7 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
+                fc_balancerelation: fc_balancerelation
             },
             success: function(response) {
                 if (response.status == 200) {
