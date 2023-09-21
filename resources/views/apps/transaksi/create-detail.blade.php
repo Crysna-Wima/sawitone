@@ -516,7 +516,6 @@
         dataType: "JSON",
         success: function(data) {
             var count_data = data.data.length;
-            console.log(count_data);
             let debit = 0;
             let kredit = 0;
             let balance = 0;
@@ -730,8 +729,9 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-                    console.log(data);
+
                     var value = data[0].mst_coa.fc_directpayment;
+                    console.log(data);
                     $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
                     if (value == "F") {
                         $('#fc_paymentmethod_kredit').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
@@ -882,7 +882,6 @@
             {
                 data: 'fd_agingref',
                 defaultContent: '-',
-                render: formatTimestamp
             },
             {
                 data: null,
@@ -977,7 +976,6 @@
             {
                 data: 'fd_agingref',
                 defaultContent: '-',
-                render: formatTimestamp
             },
             {
                 data: null,
@@ -1283,7 +1281,6 @@
                             //  tb.ajax.reload(null, false);
                             //  console.log(response.status);
                             if (response.status == 200) {
-                                console.log(tb_debit);
                                 swal(response.message, {
                                     icon: 'success',
                                 });

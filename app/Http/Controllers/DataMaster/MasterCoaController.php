@@ -85,29 +85,29 @@ class MasterCoaController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    // public function datatables()
-    // {
-    //     $data = MasterCoa::with('branch', 'parent')->where([
-    //         'fc_branch' => auth()->user()->fc_branch,
-    //         'fc_divisioncode' => auth()->user()->fc_divisioncode,
-    //         'fc_rootstatus' => 'F'
-    //     ])->get();
-    //     return DataTables::of($data)
-    //         ->addIndexColumn()
-    //         ->make(true);
-    // }
+    public function datatables()
+    {
+        $data = MasterCoa::with('branch', 'parent')->where([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_rootstatus' => 'F'
+        ])->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
 
-    // public function datatables_coa_mapping()
-    // {
-    //     $data = MasterCoa::with('branch', 'parent')->where([
-    //         'fc_branch' => auth()->user()->fc_branch,
-    //         'fc_divisioncode' => auth()->user()->fc_divisioncode,
-    //         'fc_rootstatus' => 'T'
-    //     ])->get();
-    //     return DataTables::of($data)
-    //         ->addIndexColumn()
-    //         ->make(true);
-    // }
+    public function datatables_coa_mapping()
+    {
+        $data = MasterCoa::with('branch', 'parent')->where([
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_rootstatus' => 'T'
+        ])->get();
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
 
     public function getParent($layer)
     {
