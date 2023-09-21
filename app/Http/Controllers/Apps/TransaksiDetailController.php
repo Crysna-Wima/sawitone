@@ -248,7 +248,9 @@ class TransaksiDetailController extends Controller
         $update_pembayaran = TempTrxAccountingDetail::where([
             'fn_rownum' => $request->fn_rownum,
         ])->update([
-            'fc_paymentmethod' => $request->fc_paymentmethod_edit
+            'fc_paymentmethod' => $request->fc_paymentmethod_edit,
+            'fc_refno' => $request->fc_refno_edit,
+            'fd_agingref' => $request->fd_agingref_edit
         ]);
 
         if ($update_pembayaran) {

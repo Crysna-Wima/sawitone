@@ -882,6 +882,7 @@
             {
                 data: 'fd_agingref',
                 defaultContent: '-',
+                render: formatTimestamp
             },
             {
                 data: null,
@@ -976,6 +977,7 @@
             {
                 data: 'fd_agingref',
                 defaultContent: '-',
+                render: formatTimestamp
             },
             {
                 data: null,
