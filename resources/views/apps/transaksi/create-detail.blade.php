@@ -439,10 +439,60 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_pembayaran" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Edit Pembayaran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_update" action="/apps/transaksi/detail/update-pembayaran" method="PUT" autocomplete="off">
+            <input name="fn_rownum" id="fn_rownum" type="text" hidden>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Metode Pembayaran</label>
+                                <input name="fc_paymentmethod_edit" id="fc_paymentmethod_edit_hidden" type="text" hidden>
+                                <select name="fc_paymentmethod_edit" id="fc_paymentmethod_edit" class="form-control" required></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="no_giro_edit" hidden>
+                            <div class="form-group required">
+                                <label>No. Giro</label>
+                                <input name="fc_refno_edit" id="fc_refno_edit" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" id="tgl_giro_edit" hidden>
+                            <div class="form-group required">
+                                <label>Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="text" id="fd_agingref_edit" class="form-control datepicker" name="fd_agingref_edit">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
+    var createBy = "{{ $data->mapping->created_by }}"
     var lock = "{{ $lock }}"
     if (lock == 'C') {
         $('#btn-kredit').prop('hidden', true);
@@ -530,6 +580,14 @@
         $('#modal_kredit').modal('show');
     }
 
+    function edit_pembayaran(button) {
+        var id = $(button).data('rownum');
+        var method = $(button).data('method');
+        $('#modal_pembayaran').modal('show');
+        $('#fn_rownum').val(id);
+        $('#fc_paymentmethod_edit').val(method);
+    }
+
     function get_data_payment() {
         $.ajax({
             url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/PAYMENTACC",
@@ -538,6 +596,8 @@
             success: function(response) {
                 if (response.status === 200) {
                     var data = response.data;
+                    $("#fc_paymentmethod_edit").empty();
+                    $("#fc_paymentmethod_edit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     $("#fc_paymentmethod_kredit").empty();
                     $("#fc_paymentmethod_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     $("#fc_paymentmethod").empty();
@@ -545,6 +605,7 @@
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_paymentmethod_edit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
 
                     $("#fc_paymentmethod").change(function() {
@@ -576,6 +637,22 @@
                             $('#fd_agingref_kredit').attr('required', false);
                             $('input[id="fc_refno_kredit"]').val("");
                             $('input[id="fd_agingref_kredit"]').val("");
+                        }
+                    });
+
+                    $("#fc_paymentmethod_edit").change(function() {
+                        if ($('#fc_paymentmethod_edit').val() === "GIRO") {
+                            $('#no_giro_edit').attr('hidden', false);
+                            $('#tgl_giro_edit').attr('hidden', false);
+                            $('#fc_refno_edit').attr('required', true);
+                            $('#fd_agingref_edit').attr('required', true);
+                        } else {
+                            $('#no_giro_edit').attr('hidden', true);
+                            $('#tgl_giro_edit').attr('hidden', true);
+                            $('#fc_refno_edit').attr('required', false);
+                            $('#fd_agingref_edit').attr('required', false);
+                            $('input[id="fc_refno_edit"]').val("");
+                            $('input[id="fd_agingref_edit"]').val("");
                         }
                     });
                 } else {
@@ -809,7 +886,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (lock == 'D') {
+                    if (createBy == 'SYS') {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
                         } else {
@@ -833,8 +910,12 @@
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            if (lock == 'D') {
-                $('td:eq(8)', row).html(` `)
+            if (lock == 'D' && data.coamst.fc_directpayment == 'T') {
+                $('td:eq(8)', row).html(`
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                `);
+            } else if (lock == 'D' && data.coamst.fc_directpayment != 'T'){
+                $('td:eq(8)', row).html(``);
             } else {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
@@ -858,7 +939,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6]
+            targets: [0, 1, 2, 3, 4, 5, 6, 8]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -899,7 +980,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    if (lock == 'C') {
+                    if (createBy == 'SYS') {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
                         } else {
@@ -923,8 +1004,12 @@
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            if (lock == 'C') {
-                $('td:eq(8)', row).html(` `)
+            if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
+                $('td:eq(8)', row).html(`
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                `)
+            } else if (lock == 'C' && data.coamst.fc_directpayment != 'T') {
+                $('td:eq(8)', row).html(``)
             } else {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
@@ -1342,6 +1427,53 @@
         });
 
     }
+
+    $('#form_update').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_update').attr('action'),
+            type: $('#form_update').attr('method'),
+            data: $('#form_update').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    swal(response.message, 
+                        { icon: 'success', }
+                    );
+                    $("#modal_pembayaran").modal('hide');
+                    $("#form_update")[0].reset();
+                    reset_all_select();
+                    tb_debit.ajax.reload(null, false);
+                    tb_kredit.ajax.reload(null, false);
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
 
     $('.modal').css('overflow-y', 'auto');
 </script>
