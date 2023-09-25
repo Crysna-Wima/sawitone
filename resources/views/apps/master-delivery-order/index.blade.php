@@ -58,11 +58,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="diterima-tab" data-toggle="tab" href="#diterima" role="tab" aria-controls="diterima" aria-selected="false">Diterima</a>
                         </li>
-                        @if (auth()->user()->fc_groupuser == 'IN_MNGWRH' && auth()->user()->fl_level == 3)
                         <li class="nav-item">
                             <a class="nav-link" id="approval-tab" data-toggle="tab" href="#approval" role="tab" aria-controls="approval" aria-selected="false">Approval</a>
                         </li>
-                        @endif
                     </ul>
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade active show" id="semua" role="tabpanel" aria-labelledby="semua-tab">

@@ -284,6 +284,7 @@
                 <th>No.</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
+                <th>Satuan</th>
                 <th>Batch</th>
                 <th>Expired Date</th>
                 <th>Qty</th>
@@ -295,6 +296,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fc_stockcode }}</td>
                         <td>{{ $item->stock->fc_namelong }}</td>
+                        <td>{{ $item->stock->fc_namepack }}</td>
                         <td>{{ $item->invstore->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_qty }}</td>

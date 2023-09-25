@@ -227,7 +227,9 @@
                     <th>Nomor Katalog</th>
                     <th>Nama Produk</th>
                     <th>Qty</th>
-                    <th>Unity</th>
+                    <th>Satuan</th>
+                    <th>Harga Satuan</th>
+                    <th>Total Harga</th>
                 </tr>
 
                 @if(isset($po_dtl))
@@ -238,6 +240,8 @@
                             <td>{{ $item->stock->fc_namelong }}</td>
                             <td>{{ $item->fn_po_qty }}</td>
                             <td>{{ $item->fc_namepack }}</td>
+                            <td>Rp. {{ number_format($item->fm_po_price,0,',','.')}}</td>
+                            <td>Rp. {{ number_format($item->fn_po_value,0,',','.')}}</td>
                         </tr>
                     @endforeach
 
