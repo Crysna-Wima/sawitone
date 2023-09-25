@@ -1329,6 +1329,16 @@
       return rupiah;
    }
 
+   function fungsiRupiahSystem(angka) {
+      let rupiah = angka.toLocaleString('id-ID', {
+         style: 'currency',
+         currency: 'IDR',
+         minimumFractionDigits: 2,
+      });
+
+      return rupiah;
+   }
+
 
 
    function convertToAngka(rupiah) {

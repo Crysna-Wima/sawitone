@@ -542,7 +542,7 @@
             </div>
             <form id="form_update" action="/apps/invoice-cprr/update-discprice" method="PUT" autocomplete="off">
                 <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
-                <input type="number" id="fm_discprice" name="fm_discprice" hidden>
+                <input type="hidden" id="fm_discprice" name="fm_discprice" >
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
@@ -592,6 +592,9 @@
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Harga setelah diskon</label>
+                               
+                                <input type="text" class="form-control" id="total_original" name="total_original" hidden>
+                              
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="total" name="total" readonly>
                                 </div>
@@ -733,15 +736,15 @@
         },
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
-                $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $('#fm_servpay').html(fungsiRupiahSystem(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].tempinvmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $('#grand_total').html(fungsiRupiahSystem(data[0].tempinvmst.fm_brutto));
                 $("#grand_total").trigger("change");
-                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $('#total_harga').html(fungsiRupiahSystem(data[0].tempinvmst.fm_netto));
                 $("#total_harga").trigger("change");
-                $('#fm_inv_disc').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $('#fm_inv_disc').html(fungsiRupiahSystem(data[0].tempinvmst.fm_disctotal));
                 $("#fm_inv_disc").trigger("change");
                 $('#count_item').html(data[0].tempinvmst.fn_invdetail);
                 $("#count_item").trigger("change");
@@ -826,15 +829,15 @@
         },
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
-                $('#fm_servpay').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $('#fm_servpay').html(fungsiRupiahSystem(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].tempinvmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $('#grand_total').html(fungsiRupiahSystem(data[0].tempinvmst.fm_brutto));
                 $("#grand_total").trigger("change");
-                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $('#total_harga').html(fungsiRupiahSystem(data[0].tempinvmst.fm_netto));
                 $("#total_harga").trigger("change");
-                $('#fm_inv_disc').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $('#fm_inv_disc').html(fungsiRupiahSystem(data[0].tempinvmst.fm_disctotal));
                 $("#fm_inv_disc").trigger("change");
                 $('#count_item').html(data[0].tempinvmst.fn_invdetail);
                 $("#count_item").trigger("change");
@@ -949,7 +952,7 @@
 
         $("#modal_disc").modal('show');
         $('#fn_invrownum').val(id);
-        $('#fm_unityprice_diskon').val(fungsiRupiah(price));
+        $('#fm_unityprice_diskon').val(fungsiRupiahSystem(price));
         $("#tipe_diskon").change(function() {
             if ($('#tipe_diskon').val() === "Persen") {
                 $('#fm_discprice_persen').attr('hidden', false);
@@ -969,11 +972,12 @@
                         $('#total').val("Error");
                     } else {
                         var total = hargaAwal - (hargaAwal * hargaDiskon);
-                        $('#total').val(fungsiRupiah(total));
+                        $('#total').val(fungsiRupiahSystem(total));
+                        $('#total_original').val(total);
                     }
                     var selisih = hargaAwal - total
-                    var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
-                    $('#fm_discprice').val(discprice);
+                    // var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(parseFloat(selisih));
                 });
             } else {
                 $('#fm_discprice_persen').attr('hidden', true);
@@ -992,7 +996,7 @@
                         $('#total').val("Error");
                     } else {
                         var total = hargaAwal - hargaDiskon;
-                        $('#total').val(fungsiRupiah(total));
+                        $('#total').val(fungsiRupiahSystem(total));
                     }
 
                     var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));

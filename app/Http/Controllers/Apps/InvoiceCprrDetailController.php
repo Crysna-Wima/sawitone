@@ -37,7 +37,7 @@ class InvoiceCprrDetailController extends Controller
             ];
         }
 
-        $request->merge(['fm_discprice' => Convert::convert_to_double($request->fm_discprice)]);
+        $request->merge(['fm_discprice' => number_format($request->fm_discprice, 2, '.', '')]);
 
         $update_discprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,

@@ -714,15 +714,15 @@
         },
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
-                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $('#fm_servpay_calculate').html(fungsiRupiahSystem(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].tempinvmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $('#grand_total').html(fungsiRupiahSystem(data[0].tempinvmst.fm_brutto));
                 $("#grand_total").trigger("change");
-                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $('#total_harga').html(fungsiRupiahSystem(data[0].tempinvmst.fm_netto));
                 $("#total_harga").trigger("change");
-                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $('#fm_disctotal').html(fungsiRupiahSystem(data[0].tempinvmst.fm_disctotal));
                 $("#fm_disctotal").trigger("change");
                 $('#count_item').html(data[0].tempinvmst.fn_invdetail);
                 $("#count_item").trigger("change");
@@ -737,7 +737,7 @@
 
         $("#modal_disc").modal('show');
         $('#fn_invrownum').val(id);
-        $('#fm_unityprice_diskon').val(fungsiRupiah(newPrice));
+        $('#fm_unityprice_diskon').val(fungsiRupiahSystem(newPrice));
         $("#tipe_diskon").change(function() {
             if ($('#tipe_diskon').val() === "Persen") {
                 $('#fm_discprice_persen').attr('hidden', false);
@@ -757,7 +757,7 @@
                         $('#total').val("Error");
                     } else {
                         var total = hargaAwal - (hargaAwal * hargaDiskon);
-                        $('#total').val(fungsiRupiah(total));
+                        $('#total').val(fungsiRupiahSystem(total));
                     }
                     var selisih = hargaAwal - total
                     var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
@@ -780,7 +780,7 @@
                         $('#total').val("Error");
                     } else {
                         var total = hargaAwal - hargaDiskon;
-                        $('#total').val(fungsiRupiah(total));
+                        $('#total').val(fungsiRupiahSystem(total));
                     }
 
                     var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
@@ -953,15 +953,15 @@
         },
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
-                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_servpay));
+                $('#fm_servpay_calculate').html(fungsiRupiahSystem(data[0].tempinvmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].tempinvmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#grand_total').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_brutto));
+                $('#grand_total').html(fungsiRupiahSystem(data[0].tempinvmst.fm_brutto));
                 $("#grand_total").trigger("change");
-                $('#total_harga').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_netto));
+                $('#total_harga').html(fungsiRupiahSystem(data[0].tempinvmst.fm_netto));
                 $("#total_harga").trigger("change");
-                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].tempinvmst.fm_disctotal));
+                $('#fm_disctotal').html(fungsiRupiahSystem(data[0].tempinvmst.fm_disctotal));
                 $("#fm_disctotal").trigger("change");
                 $('#count_item').html(data[0].tempinvmst.fn_invdetail);
                 $("#count_item").trigger("change");
