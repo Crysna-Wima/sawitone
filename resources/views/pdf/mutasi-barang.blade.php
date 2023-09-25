@@ -319,8 +319,20 @@
                 <td style="width: 50% !important; text-align: left;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 50% !important; text-align: right;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
             </tr>
-            <br><br/>
-            <br><br/>
+            <tr>
+                <td style="width: 50% !important; text-align: left;"><br><br></td>
+                <td style="width: 50% !important; text-align: right;">            
+                @if ($i == 0)
+                    <br><br>
+                    <br><br>
+                @elseif ($user->fv_ttdpath == null)
+                    <br><br>
+                    <br><br>
+                @else
+                    <img src="{{ $user->fv_ttdpath }}" alt="" width="120" height="120">
+                @endif
+                </td>
+            </tr>
             <tr >
                 <td style="width: 50% !important; text-align: left;">(..................)</td>
                 <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>

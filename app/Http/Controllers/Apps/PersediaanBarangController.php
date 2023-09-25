@@ -18,6 +18,7 @@ use App\Models\Warehouse;
 use App\Models\MutasiMaster;
 use App\Models\Stock;
 use App\Models\StockInquiri;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PersediaanBarangController extends Controller
@@ -242,5 +243,28 @@ class PersediaanBarangController extends Controller
         $kartuStock = $query->orderBy('fc_warehousecode')->orderBy('fd_inqdate')->get();
     
         return Excel::download(new KartuStockExport($kartuStock, $range_date), $filename);
+    }
+
+    public function generateQRCodePDF($fc_barcode, $count, $fd_expired_date, $fc_batch)
+    {
+
+        $fc_barcode_decode = base64_decode($fc_barcode);
+        $count_decode = base64_decode($count);
+
+        $qrcode = QrCode::size(250)->generate($fc_barcode_decode);
+
+        // generate qrcode ke pdf
+        $customPaper = array(0, 0, 300, 300);        
+        $pdf = PDF::loadView(
+            'pdf.qr-code2',
+            [
+                'qrcode' => $qrcode,
+                'count' => $count_decode
+            ]
+        )->setPaper($customPaper);
+
+
+        return $pdf->stream();
+        // dd($kode_qr);
     }
 }
