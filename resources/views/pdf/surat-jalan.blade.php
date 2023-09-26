@@ -5,7 +5,6 @@
 </head>
 <style>
     @page {
-        size: 8.5in 11in;
         margin: 40px 40px;
         font-family: 'lucida-console-regular', sans-serif;
     }
@@ -275,11 +274,23 @@
                     <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
                     <td style="width: 50% !important; text-align: right;">{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</td>
                 </tr>
-                <br><br />
-                <br><br />
+                <tr>
+                    <td style="width: 50% !important; text-align: left;"><br><br></td>
+                    <td style="width: 50% !important; text-align: right;">            
+                    @if ($i == 0)
+                        <br><br>
+                        <br><br>
+                    @elseif ($user->fv_ttdpath == null)
+                        <br><br>
+                        <br><br>
+                    @else
+                        <img src="{{ $user->fv_ttdpath }}" alt="" width="120" height="120">
+                    @endif
+                    </td>
+                </tr>
                 <tr>
                     <td style="width: 50% !important; text-align: left;">(......................)</td>
-                    <td style="width: 50% !important; text-align: right;">(......................)</td>
+                    <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
                 </tr>
             </table>
             <div>

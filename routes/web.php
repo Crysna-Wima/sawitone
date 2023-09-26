@@ -149,6 +149,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables', 'DataMaster\MasterStockController@datatables');
             Route::post('/store-update', 'DataMaster\MasterStockController@store_update');
             Route::delete('/delete/{fc_stockcode}/{fc_barcode}', 'DataMaster\MasterStockController@delete');
+            Route::put('/hold/{fc_barcode}', 'DataMaster\MasterStockController@hold');
+            Route::put('/unhold/{fc_barcode}', 'DataMaster\MasterStockController@unhold');
         });
 
         Route::prefix('master-cprr')->group(function () {
@@ -295,7 +297,8 @@ Route::group(['middleware' => ['cek_login']], function () {
 
             Route::post('/pdf', 'Apps\MasterDeliveryOrderController@pdf');
             Route::get('/get_pdf/{fc_dono}/{nama_pj}', 'Apps\MasterDeliveryOrderController@get_pdf');
-            Route::get('/pdf_sj/{fc_dono}', 'Apps\MasterDeliveryOrderController@pdf_sj');
+            Route::post('/pdf-sj', 'Apps\MasterDeliveryOrderController@pdf_sj');
+            Route::get('/get-sj/{fc_dono}/{nama_pj}', 'Apps\MasterDeliveryOrderController@get_pdf_sj');
             Route::get('/inv/{fc_dono}', 'Apps\MasterDeliveryOrderController@inv');
             Route::post('/inv/publish', 'Apps\MasterDeliveryOrderController@publish');
             Route::put('/cancel', 'Apps\MasterDeliveryOrderController@cancel');
@@ -436,6 +439,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-warehouse', 'Apps\PersediaanBarangController@get_warehouse');
             Route::get('/get-stock', 'Apps\PersediaanBarangController@get_stock');
             Route::get('/pdf/{fc_warehousecode}', 'Apps\PersediaanBarangController@pdf');
+            Route::get('/detail/generate-qr/{fc_barcode}/{count}/{fd_expired_date}/{fc_batch}', 'Apps\PersediaanBarangController@generateQRCodePDF');
         });
 
         Route::prefix('mutasi-barang')->group(function () {

@@ -328,13 +328,14 @@
 
         ],
         rowCallback: function(row, data) {
+            var fc_stockcode = window.btoa(data.stock.fc_stockcode);
             $('td:eq(6)', row).html(`
-            <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`);
+            <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`);
 
             if (data.fn_so_qty > data.fn_do_qty) {
                 $('td:eq(6)', row).html(
                     `
-                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${data.stock.fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`
+                        <button class="btn btn-warning btn-sm" data onclick="pilih_inventory('${fc_stockcode}')"><i class="fa fa-search"></i> Pilih Stock</button>`
                 );
             } else {
                 $('td:eq(6)', row).html(`

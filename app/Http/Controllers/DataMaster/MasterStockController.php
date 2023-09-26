@@ -123,4 +123,62 @@ class MasterStockController extends Controller
             'message' => "Data berhasil dihapus"
         ]);
     }
+
+    public function hold(Request $request, $fc_barcode){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $decode_fc_barcode = base64_decode($fc_barcode);
+
+        $fc_barcode = $decode_fc_barcode;
+        $fc_hold = $request->fc_hold;
+
+        // update
+        $stock = Stock::where('fc_barcode', $fc_barcode)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $stock->update([
+            'fc_hold' => $fc_hold,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil di hold',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal di hold'
+        ];
+    }
+
+    public function unhold(Request $request, $fc_barcode){
+        // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
+
+        $decode_fc_barcode = base64_decode($fc_barcode);
+
+        $fc_barcode = $decode_fc_barcode;
+        $fc_hold = $request->fc_hold;
+
+        // update
+        $stock = Stock::where('fc_barcode', $fc_barcode)->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        $update_status = $stock->update([
+            'fc_hold' => $fc_hold,
+        ]);
+
+
+        if ($update_status) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil di unhold',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Data gagal di unhold'
+        ];
+    }
 }

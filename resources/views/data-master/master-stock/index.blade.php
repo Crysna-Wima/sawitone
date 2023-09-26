@@ -37,6 +37,7 @@
                            <th scope="col" class="text-center">Barcode</th>
                            <th scope="col" class="text-center">Nama Pendek</th>
                            <th scope="col" class="text-center">Nama Panjang</th>
+                           <th scope="col" class="text-center">Hold</th>
                            <th scope="col" class="text-center">Batch</th>
                            <th scope="col" class="text-center">Expired</th>
                            <th scope="col" class="text-center">Serial Number</th>
@@ -725,7 +726,7 @@
       },
       columnDefs: [
          { className: 'text-center', targets: [0,7,8,9,10,11,12,13,14,25,30] },
-         { className: 'text-nowrap', targets: [42] },
+         { className: 'text-nowrap', targets: [43] },
       ],
       columns: [
          { data: 'DT_RowIndex',searchable: false, orderable: false},
@@ -735,6 +736,7 @@
          { data: 'fc_barcode' },
          { data: 'fc_nameshort' },
          { data: 'fc_namelong' },
+         { data: 'fc_hold' },
          { data: 'fl_batch' },
          { data: 'fl_expired' },
          { data: 'fl_serialnumber' },
@@ -778,64 +780,78 @@
         var url_edit   = "/data-master/master-stock/detail/" + stockcodeEncode + '/' + barcodeEncode;
         var url_delete = "/data-master/master-stock/delete/" + data.fc_stockcode + '/' + data.fc_barcode;
 
-        if(data.fl_batch == 'T'){
+        if(data.fc_hold == 'T'){
             $('td:eq(7)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(7)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_expired == 'T'){
+        if(data.fl_batch == 'T'){
             $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(8)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_serialnumber == 'T'){
+        if(data.fl_expired == 'T'){
             $('td:eq(9)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(9)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_catnumber == 'T'){
+        if(data.fl_serialnumber == 'T'){
             $('td:eq(10)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(10)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_blacklist == 'T'){
-            $('td:eq(12)', row).html(`<span class="badge badge-success">YES</span>`);
+        if(data.fl_catnumber == 'T'){
+            $('td:eq(11)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(12)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(11)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_taxtype == 'T'){
+        if(data.fl_blacklist == 'T'){
             $('td:eq(13)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(13)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_repsupplier == 'T'){
+        if(data.fl_taxtype == 'T'){
             $('td:eq(14)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
             $('td:eq(14)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        if(data.fl_disc_date == 'T'){
-            $('td:eq(26)', row).html(`<span class="badge badge-success">YES</span>`);
+        if(data.fl_repsupplier == 'T'){
+            $('td:eq(15)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(26)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(15)', row).html(`<span class="badge badge-danger">NO</span>`);
+        }
+
+        if(data.fl_disc_date == 'T'){
+            $('td:eq(27)', row).html(`<span class="badge badge-success">YES</span>`);
+        }else{
+            $('td:eq(27)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
         if(data.fl_disc_time == 'T'){
-            $('td:eq(31)', row).html(`<span class="badge badge-success">YES</span>`);
+            $('td:eq(32)', row).html(`<span class="badge badge-success">YES</span>`);
         }else{
-            $('td:eq(31)', row).html(`<span class="badge badge-danger">NO</span>`);
+            $('td:eq(32)', row).html(`<span class="badge badge-danger">NO</span>`);
         }
 
-        $('td:eq(42)', row).html(`
+        if(data.fc_hold == 'F'){
+            $('td:eq(43)', row).html(`
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_nameshort}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-danger btn-sm" onclick="hold('${barcodeEncode}')"><i class="fa fa-lock"> </i> Hold</button>
         `);
+        } else {
+            $('td:eq(43)', row).html(`
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+            <button class="btn btn-warning btn-sm" onclick="unhold('${barcodeEncode}')"><i class="fa fa-lock"> </i> Unhold</button>
+            `)
+        }
+        // <button class="btn btn-warning btn-sm" onclick="delete_action('${url_delete}','${data.fc_nameshort}')"><i class="fa fa-trash"> </i> Hapus</button>
       }
    });
 
@@ -918,6 +934,105 @@
           }
        });
     }
+
+    function hold(barcodeEncode) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin Hold stock ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/data-master/master-stock/hold/' + barcodeEncode,
+                        type: 'PUT',
+                        data: {
+                            fc_hold: 'T',
+                            fc_barcode: barcodeEncode
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
+        function unhold(barcodeEncode) {
+            swal({
+                title: "Konfirmasi",
+                text: "Anda yakin ingin Unhold stock ini?",
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/data-master/master-stock/unhold/' + barcodeEncode,
+                        type: 'PUT',
+                        data: {
+                            fc_hold: 'F',
+                            fc_barcode: barcodeEncode
+                        },
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
+
     $('.modal').css('overflow-y', 'auto');
 </script>
 @endsection

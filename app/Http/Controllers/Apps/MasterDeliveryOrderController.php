@@ -19,19 +19,22 @@ use App\Models\DoDetail;
 use App\Models\DoMaster;
 use App\Models\InvMaster;
 use App\Models\Invstore;
+use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterDeliveryOrderController extends Controller
 {
 
-    public function index(){
-        $data['do_mst']= DoMaster::with('somst.customer')->first();
+    public function index()
+    {
+        $data['do_mst'] = DoMaster::with('somst.customer')->first();
 
         return view('apps.master-delivery-order.index', $data);
     }
 
-    public function detail($fc_dono){
+    public function detail($fc_dono)
+    {
         // kalau encode pakai base64_encode
         // kalau decode pakai base64_decode
         $encoded_fc_dono = base64_decode($fc_dono);
@@ -42,7 +45,8 @@ class MasterDeliveryOrderController extends Controller
         // dd($data);
     }
 
-    public function submit(Request $request){
+    public function submit(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_dostatus' => 'required',
             'fc_dono' => 'required'
@@ -53,14 +57,14 @@ class MasterDeliveryOrderController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
         }
-        
+
         $decoded_dono = base64_decode($request->fc_dono);
         // update data fc_dostatus in DoMaster
         $do_mst = DoMaster::where('fc_dono', $decoded_dono)
-                  ->update([
-                    'fc_dostatus' => $request->fc_dostatus,
-                ]);
-        
+            ->update([
+                'fc_dostatus' => $request->fc_dostatus,
+            ]);
+
         // jika validasi sukses dan $do_master berhasil response 200
         if ($do_mst) {
             return response()->json(
@@ -81,7 +85,8 @@ class MasterDeliveryOrderController extends Controller
         // dd($request);
     }
 
-    public function editDo(Request $request){
+    public function editDo(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_dostatus' => 'required',
             'fc_dono' => 'required'
@@ -90,43 +95,41 @@ class MasterDeliveryOrderController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()]);
         }
-        
+
         // Transaction update data fc_dostatus in DoMaster dan DODTL
         DB::beginTransaction();
-        try{
+        try {
             DoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
             DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
-			DB::commit();
+            DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/delivery-order',
-				'message' => 'DO Berhasil di Edit'
-			];
-		}
+                'message' => 'DO Berhasil di Edit'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
         // dd($request);
     }
 
-    public function datatables($fc_dostatus){
-        if($fc_dostatus == "ALL") {
+    public function datatables($fc_dostatus)
+    {
+        if ($fc_dostatus == "ALL") {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
-            ->whereIn('fc_dostatus',['D', 'P', 'CC', 'L', 'R'])
-            ->get();
-        } elseif($fc_dostatus == "APR") {
+                ->whereIn('fc_dostatus', ['D', 'P', 'CC', 'L', 'R'])
+                ->get();
+        } elseif ($fc_dostatus == "APR") {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
-            ->whereIn('fc_dostatus',['NA', 'AC', 'RJ'])
-            ->get();
+                ->whereIn('fc_dostatus', ['NA', 'AC', 'RJ'])
+                ->get();
         } else {
             $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dostatus', $fc_dostatus)->get();
         }
@@ -137,36 +140,40 @@ class MasterDeliveryOrderController extends Controller
         // dd($data);
     }
 
-    public function datatables_do_detail($fc_dono){
+    public function datatables_do_detail($fc_dono)
+    {
         $decode_dono = base64_decode($fc_dono);
         $data = DoDetail::with('domst', 'invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
         // dd($fc_dono);
     }
 
-    public function datatables_detail(Request $request){
+    public function datatables_detail(Request $request)
+    {
         $data = DoMaster::with('somst.customer')->where('fc_dono', $request->fc_dono)->first();;
 
         // return response json
         return response()->json($data);
     }
 
-    public function datatables_invstore($fc_stockcode, $fc_warehousecode){
+    public function datatables_invstore($fc_stockcode, $fc_warehousecode)
+    {
         $data = Invstore::with('stock')
-                ->where('fc_stockcode', $fc_stockcode)
-                ->where('fc_warehousecode', $fc_warehousecode)
-                ->where('fc_branch',auth()->user()->fc_branch)
-                ->get();
-        
+            ->where('fc_stockcode', $fc_stockcode)
+            ->where('fc_warehousecode', $fc_warehousecode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function cancel(Request $request){
+    public function cancel(Request $request)
+    {
         // ubah fc_sostatus yang fc_sono sama dengan $request->fc_sono
 
         $fc_dono = $request->fc_dono;
@@ -192,14 +199,15 @@ class MasterDeliveryOrderController extends Controller
         ];
     }
 
-    public function pdf(Request $request){
+    public function pdf(Request $request)
+    {
         // dd($request);
         $encode_fc_dono = base64_encode($request->fc_dono);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        if($request->name_pj){
+        $data['do_mst'] = DoMaster::with('somst')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        if ($request->name_pj) {
             $data['nama_pj'] = $request->name_pj;
-        }else{
+        } else {
             $data['nama_pj'] = auth()->user()->fc_username;
         }
         // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
@@ -215,22 +223,44 @@ class MasterDeliveryOrderController extends Controller
         // dd($data['do_dtl']);
     }
 
-    public function get_pdf($fc_dono,$nama_pj){
+    public function get_pdf($fc_dono, $nama_pj)
+    {
         $decode_fc_dono = base64_decode($fc_dono);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['do_mst'] = DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
+        $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.report-do', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
-    public function pdf_sj($fc_dono)
+    public function pdf_sj(Request $request)
+    {
+        // dd($request);
+        $encode_fc_dono = base64_encode($request->fc_dono);
+        $data['do_mst'] = DoMaster::with('somst')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $request->fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        if ($request->name_pj) {
+            $data['nama_pj'] = $request->name_pj;
+        } else {
+            $data['nama_pj'] = auth()->user()->fc_username;
+        }
+
+        return [
+            'status' => 201,
+            'message' => 'PDF Berhasil ditampilkan',
+            'link' => '/apps/master-delivery-order/get-sj/' . $encode_fc_dono . '/' . $data['nama_pj'],
+        ];
+    }
+
+    public function get_pdf_sj($fc_dono, $nama_pj)
     {
         $decode_fc_dono = base64_decode($fc_dono);
-        session(['fc_dono_global' => $decode_fc_dono]);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('letter');
+        $data['do_mst'] = DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['nama_pj'] = $nama_pj;
+        $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
@@ -238,46 +268,50 @@ class MasterDeliveryOrderController extends Controller
     {
         $decode_fc_dono = base64_decode($fc_dono);
         session(['fc_dono_global' => $decode_fc_dono]);
-        $data['do_mst']= DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl']= DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['do_mst'] = DoMaster::with('somst')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // get data invmaster
         $data['inv_mst'] = InvMaster::where('fc_dono', $decode_fc_dono)->first();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();
     }
 
-    public function publish(Request $request){
-       // validasi semua request
-    //    dd($request);
-         $validator = Validator::make($request->all(),[
-          'fc_dono' => 'required',
-          'fc_divisioncode' => 'required',
-          'fc_branch' => 'required',
-        //   'fn_dodateinputuser' => 'required',
-          'fn_dodetail' => 'required',
-          'fm_disctotal' => 'required',
-          'fm_netto' => 'required',
-          'fm_servpay' => 'required',
-          'fm_tax' => 'required',
-          'fm_brutto' => 'required',
-          'fd_inv_releasedate' => 'required',
-          'fn_inv_agingday' => 'required',
-          'fd_inv_agingdate' => 'required'
-         ],
-         [
-            // pesan validasi
-            'fc_dono' => 'Nomor DO tidak boleh kosong',
-            'fc_divisioncode' => 'Kode Divisi tidak boleh kosong',
-            // 'fn_dodateinputuser' => 'Tanggal DO tidak boleh kosong',
-            'fd_inv_releasedate' => 'Tanggal Terbit Invoice tidak boleh kosong',
-            'fn_inv_agingday' => 'Masa Invoice tidak boleh kosong',
-            'fd_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
-         ]); 
+    public function publish(Request $request)
+    {
+        // validasi semua request
+        //    dd($request);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'fc_dono' => 'required',
+                'fc_divisioncode' => 'required',
+                'fc_branch' => 'required',
+                //   'fn_dodateinputuser' => 'required',
+                'fn_dodetail' => 'required',
+                'fm_disctotal' => 'required',
+                'fm_netto' => 'required',
+                'fm_servpay' => 'required',
+                'fm_tax' => 'required',
+                'fm_brutto' => 'required',
+                'fd_inv_releasedate' => 'required',
+                'fn_inv_agingday' => 'required',
+                'fd_inv_agingdate' => 'required'
+            ],
+            [
+                // pesan validasi
+                'fc_dono' => 'Nomor DO tidak boleh kosong',
+                'fc_divisioncode' => 'Kode Divisi tidak boleh kosong',
+                // 'fn_dodateinputuser' => 'Tanggal DO tidak boleh kosong',
+                'fd_inv_releasedate' => 'Tanggal Terbit Invoice tidak boleh kosong',
+                'fn_inv_agingday' => 'Masa Invoice tidak boleh kosong',
+                'fd_inv_agingdate' => 'Tanggal Jatuh Tempo Invoice tidak boleh kosong',
+            ]
+        );
 
-         // apabila validasi tidak sesuai
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()]);
-            }
+        // apabila validasi tidak sesuai
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
 
         // create  data in InvMaster
         $inv_mst = InvMaster::Create(
@@ -300,14 +334,15 @@ class MasterDeliveryOrderController extends Controller
                 'fn_inv_agingday' => $request->fn_inv_agingday,
                 'fd_inv_agingdate' => $request->fd_inv_agingdate,
                 'fd_inv_releasedate' => $request->fd_inv_releasedate,
-            ]);
+            ]
+        );
 
 
         // // update data fc_invstatus in DoMaster
         // $do_mst = DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_invstatus' => 'Y']);
 
-         // // jika validasi sukses dan $do_master berhasil response 200
-         if ($inv_mst) {
+        // // jika validasi sukses dan $do_master berhasil response 200
+        if ($inv_mst) {
             return response()->json(
                 [
                     'status' => 200,
@@ -322,11 +357,11 @@ class MasterDeliveryOrderController extends Controller
                 ]
             );
         }
-
     }
 
 
-    public function reject_approval(Request $request){
+    public function reject_approval(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_dostatus' => 'required',
             'fv_description' => 'required',
@@ -340,12 +375,12 @@ class MasterDeliveryOrderController extends Controller
         }
 
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono',$request->fc_dono)
-                  ->update([
-                    'fc_dostatus' => $request->fc_dostatus,
-                    'fv_description' => $request->fv_description,
-                ]);
-        
+        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)
+            ->update([
+                'fc_dostatus' => $request->fc_dostatus,
+                'fv_description' => $request->fv_description,
+            ]);
+
         // jika validasi sukses dan $do_master berhasil response 200
         if ($do_mst) {
             return response()->json(
@@ -365,9 +400,10 @@ class MasterDeliveryOrderController extends Controller
         }
     }
 
-    public function accept_approval(Request $request){
+    public function accept_approval(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'fc_dostatus' => 'required', 
+            'fc_dostatus' => 'required',
             'fc_dono' => 'required'
         ], [
             'fc_dostatus.required' => 'Pilih Accept Terlebih Dahulu',
@@ -379,10 +415,10 @@ class MasterDeliveryOrderController extends Controller
 
         // update data fc_dostatus in DoMaster
         $do_mst = DoMaster::where('fc_dono', $request->fc_dono)
-                  ->update([
-                    'fc_dostatus' => $request->fc_dostatus,
-                  ]);
-        
+            ->update([
+                'fc_dostatus' => $request->fc_dostatus,
+            ]);
+
         // jika validasi sukses dan $do_master berhasil response 200
         if ($do_mst) {
             return response()->json(
@@ -403,14 +439,15 @@ class MasterDeliveryOrderController extends Controller
     }
 
 
-    public function export_excel($status){
-        if($status == 'kirim'){
+    public function export_excel($status)
+    {
+        if ($status == 'kirim') {
             return Excel::download(new SuratJalanExport('D'), 'do_master_Kirim.xlsx');
-        }else if($status == 'diterima'){
+        } else if ($status == 'diterima') {
             return Excel::download(new SuratJalanExport('R'), 'do_master_diterima.xlsx');
-        }else if($status == 'approval'){
+        } else if ($status == 'approval') {
             return Excel::download(new SuratJalanExport('AC'), 'do_master_approve.xlsx');
-        }else{
+        } else {
             return Excel::download(new SuratJalanExport('A'), 'do_master_all.xlsx');
         }
     }

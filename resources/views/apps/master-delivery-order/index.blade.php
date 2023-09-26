@@ -378,6 +378,47 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" role="dialog" id="modal_nama2" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header br">
+                    <h5 class="modal-title">Pilih Penanda Tangan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form_submit_pdf2" action="/apps/master-delivery-order/pdf-sj" method="POST" autocomplete="off">
+                    @csrf
+                    <input type="text" name="fc_dono" id="fc_dono_input_ttd2" hidden>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group form_group_ttd2">
+                                    <label class="d-block">Nama</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="name_user2" id="name_user2" checked="">
+                                        <label class="form-check-label" for="name_user2">
+                                            {{ auth()->user()->fc_username }}
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="name_user_lainnya2" id="name_user_lainnya2">
+                                        <label class="form-check-label" for="name_user_lainnya2">
+                                            Lainnya
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     @endsection
 
     @section('js')
@@ -421,15 +462,49 @@
             $('#name_pj').focus(function() {
                 $('.form-group:last').toggle();
             });
+
+
+            var isNamePjShown = false;
+
+            $('#name_user_lainnya2').click(function() {
+                // Uncheck #name_user
+                $('#name_user2').prop('checked', false);
+
+                // Show #form_pj
+                if (!isNamePjShown) {
+                    $('.form_group_ttd2').append(
+                        '<div class="form-group" id="form_pj2"><label>Nama PJ</label><input type="text" class="form-control" name="name_pj2" id="name_pj2"></div>'
+                    );
+                    isNamePjShown = true;
+                }
+            });
+
+            $('#name_user2').click(function() {
+                // Uncheck #name_user_lainnya
+                $('#name_user_lainnya2').prop('checked', false);
+
+                // Hide #form_pj
+                if (isNamePjShown) {
+                    $('#form_pj2').remove();
+                    isNamePjShown = false;
+                }
+            });
+
+            $('#name_pj2').focus(function() {
+                $('.form-group:last').toggle();
+            });
         });
 
 
         // untuk memunculkan nama penanggung jawab
         function click_modal_nama(fc_dono) {
-            // console.log(fc_dono);
-            // #fc_dono_input_ttd value
             $('#fc_dono_input_ttd').val(fc_dono);
             $('#modal_nama').modal('show');
+        };
+
+        function click_modal_nama2(fc_dono) {
+            $('#fc_dono_input_ttd2').val(fc_dono);
+            $('#modal_nama2').modal('show');
         };
 
         function click_modal_invoice(fc_dono) {
@@ -643,7 +718,7 @@
         var tb = $('#tb_semua').DataTable({
             processing: true,
             serverSide: true,
-            pageLength : 5,
+            pageLength: 5,
             order: [
                 [3, 'desc']
             ],
@@ -716,60 +791,29 @@
                     $('td:eq(7)', row).html('<span class="badge badge-success">Lunas</span>');
                 }
 
-                if (data['fc_dostatus'] == 'I' || data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ' ) {
+                if (data['fc_dostatus'] == 'I' || data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ') {
                     $(row).hide();
                 } else if (data['fc_dostatus'] == 'D') {
                     $('td:eq(8)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                        <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
+                        <button class="btn btn-primary btn-sm ml-1" onclick="click_modal_nama2('${data.fc_dono}')"><i class="fa fa-truck"></i> Surat Jalan</button>
                         <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
                     );
                 } else {
                     $('td:eq(8)', row).html(
                         `
                         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                        <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                        <button class="btn btn-primary btn-sm ml-1" onclick="click_modal_nama2('${data.fc_dono}')"><i class="fa fa-truck"></i> Surat Jalan</button>`
                     );
                 }
-
-                // if (data['fc_dostatus'] == 'I' || data['fc_dostatus'] == 'NA' || data['fc_dostatus'] == 'AC' || data['fc_dostatus'] == 'RJ' ) {
-                //     $(row).hide();
-                // } else if (data['fc_dostatus'] == 'D') {
-                //     $('td:eq(7)', row).html(
-                //         `
-                //         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                //         <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>
-                //         <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
-                //     );
-                // } else if (data['fc_dostatus'] == 'CC') {
-                //     $('td:eq(7)', row).html(
-                //         `
-                //         <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                //         <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm ml-1"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
-                //     );
-                // } else {
-                //     if (data['fc_invstatus'] == 'N') {
-                //         $('td:eq(7)', row).html(
-                //             `
-                //             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                //             <button class="btn btn-info btn-sm ml-1" onclick="click_modal_invoice('${data.fc_dono}')">Terbitkan Invoice</button>`
-                //         );
-                //     } else {
-                //         $('td:eq(7)', row).html(
-                //             `
-                //             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                //             <a href="/apps/master-delivery-order/inv/${fc_dono}" target="_blank"><button class="btn btn-success btn-sm ml-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
-                //         );
-                //     }
-                // }
             }
         });
 
         var tb_pengiriman = $('#tb_pengiriman').DataTable({
             processing: true,
             serverSide: true,
-            pageLength : 5,
+            pageLength: 5,
             order: [
                 [3, 'desc']
             ],
@@ -840,17 +884,17 @@
                     $('td:eq(8)', row).html(
                         `
                     <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                    <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>
+                    <button class="btn btn-primary btn-sm ml-1" onclick="click_modal_nama2('${data.fc_dono}')"><i class="fa fa-truck"></i> Surat Jalan</button>
                     <button class="btn btn-danger btn-sm ml-1" onclick="cancelDO('${data.fc_dono}')"><i class="fa fa-times"></i> Cancel DO</button>`
                     );
-                } 
+                }
             }
         });
 
         var tb_diterima = $('#tb_diterima').DataTable({
             processing: true,
             serverSide: true,
-            pageLength : 5,
+            pageLength: 5,
             order: [
                 [3, 'desc']
             ],
@@ -921,16 +965,16 @@
                     $('td:eq(8)', row).html(
                         `
                             <button class="btn btn-warning btn-sm mr-1" onclick="click_modal_nama('${data.fc_dono}')"><i class="fa fa-file"></i> PDF</button>
-                            <a href="/apps/master-delivery-order/pdf_sj/${fc_dono}" target="_blank"><button class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Surat Jalan</button></a>`
+                            <button class="btn btn-primary btn-sm ml-1" onclick="click_modal_nama2('${data.fc_dono}')"><i class="fa fa-truck"></i> Surat Jalan</button>`
                     );
-                } 
+                }
             }
         });
 
         var tb_approval = $('#tb_approval').DataTable({
             processing: true,
             serverSide: true,
-            pageLength : 5,
+            pageLength: 5,
             order: [
                 [3, 'desc']
             ],
@@ -991,7 +1035,7 @@
                         <a href="/apps/master-delivery-order/detail/${fc_dono}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
                     `);
 
-                    if(data['fc_dostatus'] == 'AC'){
+                    if (data['fc_dostatus'] == 'AC') {
                         $('td:eq(7)', row).append(`
                             <button class="btn btn-success btn-sm mr-1" onClick="submitDO('${fc_dono}')">Submit</button>
                         `);
@@ -1001,6 +1045,79 @@
                 }
                 //<a href="/apps/master-delivery-order/inv/${data.fc_dono}" target="_blank"><button class="btn btn-success btn-sm mr-1"><i class="fa fa-credit-card"></i> Invoice</button></a>`
             }
+        });
+
+        $('#form_submit_pdf2').on('submit', function(e) {
+            e.preventDefault();
+
+            var form_id = $(this).attr("id");
+            if (check_required(form_id) === false) {
+                swal("Oops! Mohon isi field yang kosong", {
+                    icon: 'warning',
+                });
+                return;
+            }
+
+            swal({
+                    title: 'Yakin?',
+                    text: 'Apakah anda yakin akan menyimpan data ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((save) => {
+                    if (save) {
+                        $("#modal_loading").modal('show');
+                        $.ajax({
+                            url: $('#form_submit_pdf2').attr('action'),
+                            type: $('#form_submit_pdf2').attr('method'),
+                            data: $('#form_submit_pdf2').serialize(),
+                            success: function(response) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                if (response.status == 200) {
+                                    swal(response.message, {
+                                        icon: 'success',
+                                    });
+                                    $("#modal").modal('hide');
+                                    $("#form_submit_pdf2")[0].reset();
+                                    reset_all_select();
+                                    tb.ajax.reload(null, false);
+                                } else if (response.status == 201) {
+                                    swal(response.message, {
+                                        icon: 'success',
+                                    });
+                                    $("#modal").modal('hide');
+                                    $("#modal_pdf").modal('hide');
+                                    //  location.href = response.link;
+                                    window.open(
+                                        response.link,
+                                        '_blank' // <- This is what makes it open in a new window.
+                                    );
+                                } else if (response.status == 203) {
+                                    swal(response.message, {
+                                        icon: 'success',
+                                    });
+                                    $("#modal").modal('hide');
+                                    tb.ajax.reload(null, false);
+                                } else if (response.status == 300) {
+                                    swal(response.message, {
+                                        icon: 'error',
+                                    });
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                setTimeout(function() {
+                                    $('#modal_loading').modal('hide');
+                                }, 500);
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                    icon: 'error',
+                                });
+                            }
+                        });
+                    }
+                });
         });
     </script>
     @endsection

@@ -131,6 +131,7 @@
                                     <th scope="col" class="text-center">Expired Date</th>
                                     <th scope="col" class="text-center">Batch</th>
                                     <th scope="col" class="text-center">Qty</th>
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                         </table>
@@ -163,7 +164,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -199,15 +200,22 @@
         rowCallback: function(row, data) {
             var fc_namelong = window.btoa(data.stock.fc_namelong);
             var fc_stockcode = window.btoa(data.fc_stockcode);
+            var fc_rono = window.btoa(data.fc_rono);
+            var count = window.btoa(data.fn_qty_ro);
+            var expired_date = window.btoa(data.fd_expired_date);
+            var fc_batch = window.btoa(data.fc_batch);
+            var fc_barcode = window.btoa(data.fc_barcode);
+
             $('td:eq(8)', row).html(`
                 <button class="btn btn-warning btn-sm" onclick="click_modal_detail_inventory('${fc_stockcode}', '${fc_namelong}')"><i class="fa fa-eye"></i> Detail</button>
                 `);
+            // <a href="/apps/persediaan-barang/detail/generate-qr/${fc_barcode}/${count}/${expired_date}/${fc_batch}" target="_blank" class="btn btn-primary btn-sm ml-1"><i class="fa fa-qrcode"></i> Generate QR</a>
         },
     });
 
     function table_detail_inventory(fc_stockcode, fc_namelong) {
         var fc_warehousecode = "{{ $gudang_mst->fc_warehousecode }}";
-        
+
         var namelong = window.atob(fc_namelong);
         namelong = namelong.replace(/&#039;/g, "'");
         var tb_detail_inventory = $('#tb_detail_inventory').DataTable({
@@ -223,13 +231,13 @@
             },
             columnDefs: [{
                 className: 'text-center',
-                targets: [0, 1, 2, 3, 4]
+                targets: [0, 1, 2, 3, 4, 5]
             }, ],
             columns: [{
                     data: 'DT_RowIndex',
                     searchable: false,
                     orderable: false
-                },{
+                }, {
                     data: 'fc_stockcode'
                 },
                 {
@@ -242,8 +250,22 @@
                 {
                     data: 'fn_quantity'
                 },
+                {
+                    data: null
+                },
             ],
+            rowCallback: function(row, data) {
+                var count = window.btoa(data.fn_quantity);
+                var expired_date = window.btoa(data.fd_expired);
+                var fc_batch = window.btoa(data.fc_batch);
+                var fc_barcode = window.btoa(data.stock.fc_barcode);
 
+                console.log(data);
+                $('td:eq(5)', row).html(`
+                <a href="/apps/persediaan-barang/detail/generate-qr/${fc_barcode}/${count}/${expired_date}/${fc_batch}" target="_blank" class="btn btn-primary btn-sm ml-1"><i class="fa fa-qrcode"></i> Generate QR</a>
+                `);
+
+            },
         });
         $('#product_name').text(namelong);
     }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Convert;
 use App\Models\MutasiMaster;
 use App\Models\MutasiDetail;
+use App\Models\User;
 use Validator;
 use PDF;
 
@@ -98,6 +99,7 @@ class DaftarMutasiBarangController extends Controller
         $data['mutasi_mst']= MutasiMaster::with('warehouse_start', 'warehouse_destination', 'somst')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['mutasi_dtl']= MutasiDetail::with('invstore', 'stock')->where('fc_mutationno', $decode_fc_mutationno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
+        $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.mutasi-barang', $data)->setPaper('a4');
         return $pdf->stream();
         // dd($data);

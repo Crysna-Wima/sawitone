@@ -395,10 +395,10 @@
                                             </div>
 
                                             @if (empty($data->fd_poexpired))
-                                                <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                <input type="text" id="fd_poexpired" class="form-control"
                                                     name="fd_poexpired" required readonly>
                                             @else
-                                                <input type="text" id="fd_poexpired" class="form-control datepicker"
+                                                <input type="text" id="fd_poexpired" class="form-control"
                                                     name="fd_poexpired" value="{{ $data->fd_poexpired }}" required
                                                     readonly>
                                             @endif

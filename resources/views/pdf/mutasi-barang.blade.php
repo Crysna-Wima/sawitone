@@ -5,15 +5,14 @@
 </head>
 <style>
     @page {
-        size: 8.5in 11in;
-        margin: 40px 40px;
+        margin: 40px;
+        padding: 40px;
         font-family: 'lucida-console-regular', sans-serif;
     }
 
     * {
         font-family: 'lucida-console-regular', sans-serif;
     }
-
 
     p,
     label {
@@ -184,7 +183,7 @@
     }
 </style>
 
-@for ($i = 0; $i < 3; $i++)
+@for ($i = 0; $i < 4; $i++)
 <body>
     <div class="container" id="print">
         <div class="header" style="height: 100px">
@@ -196,8 +195,10 @@
                 <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
             @elseif ($i == 1)
                 <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
-            @else
+            @elseif ($i == 2)
                 <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
+            @else
+                <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 3</p>
             @endif
             </div>
             <div style="position: absolute; right: 0; top: 40px; text-align: right;" class="no-margin">
@@ -319,8 +320,20 @@
                 <td style="width: 50% !important; text-align: left;">{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 50% !important; text-align: right;">{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
             </tr>
-            <br><br/>
-            <br><br/>
+            <tr>
+                <td style="width: 50% !important; text-align: left;"><br><br></td>
+                <td style="width: 50% !important; text-align: right;">            
+                @if ($i == 0)
+                    <br><br>
+                    <br><br>
+                @elseif ($user->fv_ttdpath == null)
+                    <br><br>
+                    <br><br>
+                @else
+                    <img src="{{ $user->fv_ttdpath }}" alt="" width="120" height="120">
+                @endif
+                </td>
+            </tr>
             <tr >
                 <td style="width: 50% !important; text-align: left;">(..................)</td>
                 <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
