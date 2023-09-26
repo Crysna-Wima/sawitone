@@ -260,7 +260,7 @@ class MasterDeliveryOrderController extends Controller
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $decode_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
         $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('letter');
+        $pdf = PDF::loadView('pdf.surat-jalan', $data)->setPaper('a4');
         return $pdf->stream();
     }
 

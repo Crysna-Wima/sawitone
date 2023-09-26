@@ -5,7 +5,6 @@
 </head>
 <style>
     @page {
-        size: 8.5in 11in;
         margin: 40px 40px;
         font-family: 'lucida-console-regular', sans-serif;
     }
