@@ -1010,7 +1010,7 @@
 
         rowCallback: function(row, data) {
             
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum;
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode; 
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
