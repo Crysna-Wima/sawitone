@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Delivery Order</title>
 </head>
 <style>
     @page {

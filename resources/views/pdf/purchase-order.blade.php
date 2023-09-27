@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <title>Purchase Order</title>
 </head>
 <style>
     @page {
@@ -220,6 +221,7 @@
                 </tr>
             </table>
 
+            @if ($tampil_harga == 'T')
             <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Item</p>
             <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
                 <tr>
@@ -252,6 +254,36 @@
                 @endif
 
             </table>
+            @else
+            <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Item</p>
+            <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
+                <tr>
+                    <th>No.</th>
+                    <th>Nomor Katalog</th>
+                    <th>Nama Produk</th>
+                    <th>Qty</th>
+                    <th>Satuan</th>
+                </tr>
+
+                @if(isset($po_dtl))
+                    @foreach ($po_dtl as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->fc_stockcode }}</td>
+                            <td>{{ $item->stock->fc_namelong }}</td>
+                            <td>{{ $item->fn_po_qty }}</td>
+                            <td>{{ $item->fc_namepack }}</td>
+                        </tr>
+                    @endforeach
+
+                @else
+                <tr>
+                    <td colspan="12" class="text-center">Data Not Found</td>
+                </tr>
+                @endif
+
+            </table>
+            @endif
 
             <p style="font-size: .8rem; margin-left: 5%"><b>Catatan :</b> {{  $po_mst->fv_description ?? '-' }}</p>
             <p style="font-size: .8rem; margin-left: 5%"><b>Alamat Pengiriman :</b></p>

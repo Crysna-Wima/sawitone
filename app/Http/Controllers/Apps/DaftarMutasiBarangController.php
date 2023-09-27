@@ -43,7 +43,7 @@ class DaftarMutasiBarangController extends Controller
 
     public function datatables_internal()
     {
-        $data = MutasiMaster::with('warehouse')->where('fc_branch', auth()->user()->fc_branch)
+        $data = MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_type_mutation', 'INTERNAL')
             ->get();
         // $data = MutasiDetail::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -55,7 +55,7 @@ class DaftarMutasiBarangController extends Controller
 
     public function datatables_eksternal()
     {
-        $data = MutasiMaster::with('warehouse')->where('fc_branch', auth()->user()->fc_branch)
+        $data = MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_type_mutation', 'EKSTERNAL')
             ->get();
         // $data = MutasiDetail::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -67,7 +67,7 @@ class DaftarMutasiBarangController extends Controller
 
     public function datatables_belum_terlaksana()
     {
-        $data = MutasiMaster::with('warehouse')->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = MutasiMaster::with('warehouse_start', 'warehouse_destination')->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data = MutasiDetail::with('stock')->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)

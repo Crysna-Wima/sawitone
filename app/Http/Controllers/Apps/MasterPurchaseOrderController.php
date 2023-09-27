@@ -102,23 +102,23 @@ class MasterPurchaseOrderController extends Controller
         }else{
             $data['nama_pj'] = auth()->user()->fc_username;
         }
-        // $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
-        // return $pdf->stream();
-        // dd($data);
+        $data['tampil_harga'] = $request->tampil_harga;
 
         //redirect ke /apps/master-purchase-order/pdf dengan mengirimkan $data
         return [
             'status' => 201,
             'message' => 'PDF Berhasil ditampilkan',
-            'link' => '/apps/master-purchase-order/get_pdf/' . $encode_fc_pono . '/' . $data['nama_pj'],
+            'link' => '/apps/master-purchase-order/get_pdf/' . $encode_fc_pono . '/' . $data['nama_pj'] . '/' . $data['tampil_harga'] ,
         ];
     }
 
-    public function get_pdf($fc_pono,$nama_pj){
+    public function get_pdf($fc_pono,$nama_pj,$tampil_harga){
         $decode_fc_pono = base64_decode($fc_pono);
         $data['po_mst'] = PoMaster::with('supplier')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['po_dtl'] = PoDetail::with('branch', 'warehouse', 'stock', 'namepack')->where('fc_pono', $decode_fc_pono)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
+        $data['tampil_harga'] = $tampil_harga;
+
         $pdf = PDF::loadView('pdf.purchase-order', $data)->setPaper('a4');
         return $pdf->stream();
     }

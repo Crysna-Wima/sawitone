@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Transit Barang</title>
 </head>
 <style>
     @page {

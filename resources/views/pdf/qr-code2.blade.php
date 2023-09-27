@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>QR Code</title>
 </head>
 <style>
     @page {

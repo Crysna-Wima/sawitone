@@ -85,8 +85,8 @@
                                             <th scope="col" class="text-center">No. Mutasi</th>
                                             <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
-                                            <th scope="col" class="text-center">Lokasi Awal</th>
-                                            <th scope="col" class="text-center">Lokasi Tujuan</th>
+                                            <th scope="col" class="text-center text-nowrap">Lokasi Awal</th>
+                                            <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Item</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
@@ -110,7 +110,7 @@
                                             <th scope="col" class="text-center">No. Mutasi</th>
                                             <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
-                                            <th scope="col" class="text-center">Lokasi Awal</th>
+                                            <th scope="col" class="text-center text-nowrap"">Lokasi Awal</th>
                                             <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Item</th>
@@ -135,7 +135,7 @@
                                             <th scope="col" class="text-center">No. Mutasi</th>
                                             <th scope="col" class="text-center">No. SO</th>
                                             <th scope="col" class="text-center">Tanggal</th>
-                                            <th scope="col" class="text-center">Lokasi Awal</th>
+                                            <th scope="col" class="text-center text-nowrap">Lokasi Awal</th>
                                             <th scope="col" class="text-center text-nowrap">Lokasi Tujuan</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Item</th>
@@ -307,10 +307,10 @@
                 render: formatTimestamp
             },
             {
-                data: 'fc_startpoint_code'
+                data: 'warehouse_start.fc_rackname'
             },
             {
-                data: 'fc_destination_code'
+                data: 'warehouse_destination.fc_rackname'
             },
             {
                 data: 'fc_statusmutasi'
@@ -373,10 +373,10 @@
                 render: formatTimestamp
             },
             {
-                data: 'fc_startpoint_code'
+                data: 'warehouse_start.fc_rackname'
             },
             {
-                data: 'fc_destination_code'
+                data: 'warehouse_destination.fc_rackname'
             },
             {
                 data: 'fc_statusmutasi'
@@ -420,7 +420,7 @@
             className: 'text-center',
             targets: [0, 5, 6, 7, 8]
         }, ],
-        columns: [{
+        columns: [{ 
                 data: 'DT_RowIndex',
                 searchable: false,
                 orderable: false
@@ -436,10 +436,10 @@
                 render: formatTimestamp
             },
             {
-                data: 'fc_startpoint_code'
+                data: 'warehouse_start.fc_rackname'
             },
             {
-                data: 'fc_destination_code'
+                data: 'warehouse_destination.fc_rackname'
             },
             {
                 data: 'fc_statusmutasi'

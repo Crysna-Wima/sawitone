@@ -242,6 +242,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-12 col-lg-4">
+                                <div class="form-group">
+                                    <label>Tampilkan Harga</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item" style="margin: 0!important">
+                                            <input type="radio" name="tampil_harga" id="tampil_harga" value="T" class="selectgroup-input">
+                                            <span class="selectgroup-button">Yes</span>
+                                        </label>
+                                        <label class="selectgroup-item" style="margin: 0!important">
+                                            <input type="radio" checked name="tampil_harga" id="tampil_harga" checked="" value="F" class="selectgroup-input">
+                                            <span class="selectgroup-button">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">

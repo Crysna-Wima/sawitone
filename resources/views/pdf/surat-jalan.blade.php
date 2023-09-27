@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>Surat Jalan</title>
     <link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>

@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <title>Persediaan Gudang</title>
 </head>
 <style>
     @page {

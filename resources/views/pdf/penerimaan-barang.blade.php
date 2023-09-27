@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <title>Penerimaan Barang</title>
 </head>
 <style>
     @page {

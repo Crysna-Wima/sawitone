@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<title>BPB</title>
 </head>
 <style>
     @page {
