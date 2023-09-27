@@ -745,5 +745,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/pdf', 'Apps\ApprovalInvoiceController@pdf');
             Route::get('/get_pdf/{fc_docno}/{nama_pj}', 'Apps\ApprovalInvoiceController@get_pdf');
         });
+
+        Route::prefix('upcoming-stock')->group(function () {
+            Route::get('/', 'Apps\UpcomingStockController@index');
+            Route::get('/datatables', 'Apps\UpcomingStockController@datatables');
+            Route::get('/datatables-detail/{fc_stockcode}', 'Apps\UpcomingStockController@datatables_detail');
+        });
     });
 });
