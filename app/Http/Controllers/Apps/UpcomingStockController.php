@@ -21,23 +21,18 @@ class UpcomingStockController extends Controller
         return view('apps.upcoming-stock.index');
     }
 
-    public function datatables()
-    {
-        // $data = PoDetail::with('pomst', 'stock')
-        // ->where('fc_branch', auth()->user()->fc_branch)
-        // ->groupBy('fc_stockcode')
-        // ->orderBy('fc_stockcode')
-        // ->get();
-        $data = DB::select("SELECT a.fc_stockcode, COUNT(a.fc_stockcode), c.fc_namelong, c.fc_namepack 
-        FROM db_dexa.t_podtl a
-        LEFT OUTER JOIN db_dexa.t_pomst b ON a.fc_pono = b.fc_pono
-        LEFT OUTER JOIN db_dexa.t_stock c ON a.fc_stockcode = c.fc_stockcode
-        WHERE b.fd_poexpired >= SYSDATE()
-        AND (a.fn_po_qty - a.fn_ro_qty) > 0
-        GROUP BY a.fc_stockcode
-        ORDER BY a.fc_stockcode;");
+    public function datatables(){
+        $query = DB::table('db_dexa.t_podtl as a')
+        ->select('a.fc_stockcode', DB::raw('SUM(a.fn_po_qty - a.fn_ro_qty) AS total_qty'), 'c.fc_namelong', 'c.fc_namepack')
+        ->leftJoin('db_dexa.t_pomst as b', 'a.fc_pono', '=', 'b.fc_pono')
+        ->leftJoin('db_dexa.t_stock as c', 'a.fc_stockcode', '=', 'c.fc_stockcode')
+        ->where('b.fd_poexpired', '>=', DB::raw('SYSDATE()'))
+        ->whereRaw('(a.fn_po_qty - a.fn_ro_qty) > 0')
+        ->groupBy('a.fc_stockcode')
+        ->orderBy('a.fc_stockcode');
+        $data = $query->get();
 
-        return DataTables::of($data)
+        return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);
     }
@@ -45,20 +40,28 @@ class UpcomingStockController extends Controller
     public function datatables_detail($fc_stockcode)
     {
         $decode_fc_stockcode = base64_decode($fc_stockcode);
-        $data = DB::select("SELECT a.fc_stockcode, d.fc_namelong, d.fc_namepack, (a.fn_po_qty - a.fn_ro_qty) AS QTY, 
-            a.fc_pono, e.fc_suppliername1, b.fd_poexpired AS Kedatangan  FROM db_dexa.t_podtl a
-            LEFT OUTER JOIN db_dexa.t_pomst  b ON a.fc_pono = b.fc_pono
-            LEFT OUTER JOIN db_dexa.t_supplier c ON b.fc_suppliercode = c.fc_suppliercode
-            LEFT OUTER JOIN db_dexa.t_stock d ON d.fc_stockcode = a.fc_stockcode
-            LEFT OUTER JOIN db_dexa.t_supplier e ON b.fc_suppliercode = e.fc_suppliercode
-            WHERE a.fc_stockcode = $decode_fc_stockcode
-            AND b.fd_poexpired >= SYSDATE()
-            AND ((a.fn_po_qty - a.fn_ro_qty) > 0);
-        ");
 
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->make(true);
-        // dd($data);
+        $query = DB::table('db_dexa.t_podtl as a')
+            ->select(
+                'a.fc_stockcode',
+                'd.fc_namelong',
+                'd.fc_namepack',
+                DB::raw('(a.fn_po_qty - a.fn_ro_qty) AS QTY'),
+                'a.fc_pono',
+                'e.fc_suppliername1',
+                DB::raw('b.fd_poexpired AS "kedatangan"')
+            )
+            ->leftJoin('db_dexa.t_pomst as b', 'a.fc_pono', '=', 'b.fc_pono')
+            ->leftJoin('db_dexa.t_supplier as c', 'b.fc_suppliercode', '=', 'c.fc_suppliercode')
+            ->leftJoin('db_dexa.t_stock as d', 'd.fc_stockcode', '=', 'a.fc_stockcode')
+            ->leftJoin('db_dexa.t_supplier as e', 'b.fc_suppliercode', '=', 'e.fc_suppliercode')
+            ->where('a.fc_stockcode', $decode_fc_stockcode) 
+            ->where('b.fd_poexpired', '>=', DB::raw('SYSDATE()'))
+            ->whereRaw('(a.fn_po_qty - a.fn_ro_qty) > 0');
+
+        $data = $query->get();
+        return Datatables::of($data)
+        ->addIndexColumn()
+        ->make(true);
     }
 }

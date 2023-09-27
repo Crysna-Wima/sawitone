@@ -157,7 +157,7 @@
                 data: 'fc_namepack',
             },
             {
-                data: 'COUNT(a.fc_stockcode)',
+                data: 'total_qty',
                 defaultContent: '-'
             },
             {
@@ -211,7 +211,7 @@
                     data: 'fc_pono',
                 },
                 {
-                    data: 'Kedatangan',
+                    data: 'kedatangan',
                     render: formatTimestamp
                 },
                 {
