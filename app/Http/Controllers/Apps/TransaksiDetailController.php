@@ -19,6 +19,7 @@ use App\Helpers\ApiFormatter;
 use App\Models\Approvement;
 use App\Models\InvMaster;
 use App\Models\InvoiceMst;
+use App\Models\InvTrx;
 use App\Models\MappingUser;
 use App\Models\MasterCoa;
 use Illuminate\Database\Eloquent\Builder;
@@ -752,7 +753,29 @@ class TransaksiDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-    
+        
+        if ($request->fv_description !== null && str_contains($request->fv_description, 'INV/')) {
+            $invtrx = InvTrx::where('fc_invno', $request->fv_description)->first();
+            $currInv = TempTrxAccountingDetail::where([
+                'fc_trxno' => Auth()->user()->fc_userid,
+                'fn_rownum' => $request->fn_rownum,
+                'fc_branch' => Auth()->user()->fc_branch,
+                'fc_divisioncode' => Auth()->user()->fc_divisioncode
+            ])->first();
+
+            $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
+            $totalInvoice = $invtrx->fm_invnetto + $invtrx->fm_taxvalue;
+            if ($totalPaid + $request->fm_nominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah, karena melebihi total INV'
+                ];
+            }
+        } else {
+            $invtrx = null;
+        }
+
+
         DB::beginTransaction();
     
         try {
