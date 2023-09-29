@@ -73,7 +73,7 @@
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
-                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Catatan</th>
                                                 <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                             </tr>
                                         </thead>
@@ -94,7 +94,7 @@
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
-                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Catatan</th>
                                                 <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                             </tr>
                                         </thead>
@@ -115,7 +115,7 @@
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
-                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Catatan</th>
                                                 <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                             </tr>
                                         </thead>
@@ -136,7 +136,7 @@
                                                 <th scope="col" class="text-center">Customer</th>
                                                 <th scope="col" class="text-center">Item</th>
                                                 <th scope="col" class="text-center">Status</th>
-                                                <th scope="col" class="text-center">Total</th>
+                                                <th scope="col" class="text-center">Catatan</th>
                                                 <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                             </tr>
                                         </thead>
@@ -305,7 +305,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 5, 6, 7]
+                    targets: [0, 5, 6, 7, 9]
                 },
                 {
                     className: 'text-nowrap',
@@ -344,8 +344,8 @@
                     data: 'fc_sostatus'
                 },
                 {
-                    data: 'fm_brutto',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                    data: 'fv_description',
+                    defaultContent: '-'
                 },
                 {
                     data: null
@@ -417,7 +417,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 5, 6, 7]
+                    targets: [0, 5, 6, 7, 9]
                 },
                 {
                     className: 'text-nowrap',
@@ -456,8 +456,8 @@
                     data: 'fc_sostatus'
                 },
                 {
-                    data: 'fm_brutto',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                    data: 'fv_description',
+                    defaultContent: '-'
                 },
                 {
                     data: null
@@ -501,7 +501,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 5, 6, 7]
+                    targets: [0, 5, 6, 7, 9]
                 },
                 {
                     className: 'text-nowrap',
@@ -540,8 +540,8 @@
                     data: 'fc_sostatus'
                 },
                 {
-                    data: 'fm_brutto',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                    data: 'fv_description',
+                    defaultContent: '-'
                 },
                 {
                     data: null
@@ -585,7 +585,7 @@
             },
             columnDefs: [{
                     className: 'text-center',
-                    targets: [0, 5, 6, 7]
+                    targets: [0, 5, 6, 7, 9]
                 },
                 {
                     className: 'text-nowrap',
@@ -624,8 +624,8 @@
                     data: 'fc_sostatus'
                 },
                 {
-                    data: 'fm_brutto',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                    data: 'fv_description',
+                    defaultContent: '-'
                 },
                 {
                     data: null

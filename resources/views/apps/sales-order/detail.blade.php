@@ -347,18 +347,24 @@
                 <a href="#" class="btn btn-success">Save SO</a>
             </div>
             @else
-            @if ($total == 0)
-            <div class="button text-right mb-4">
+                @if ($data->fc_sotype == 'Memo Internal')
+                    @if ($total != 0 && $data->fv_description != null)
+                    <div class="button text-right mb-4">
+                        <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+                    </div>
+                    @else
+                    <div class="button text-right mb-4">
 
-            </div>
-            @else
-            <div class="button text-right mb-4">
-                <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
-            </div>
-            @endif
-            {{-- <div id="btn-payment" class="button text-right mb-4">
-                           
-                   </div> --}}
+                    </div>
+                    @endif
+                    {{-- <div id="btn-payment" class="button text-right mb-4">
+                                
+                        </div> --}}
+                @else
+                <div class="button text-right mb-4">
+                    <a href="/apps/sales-order/detail/payment" class="btn btn-success">Pembayaran</a>
+                </div>
+                @endif
             @endif
         </div>
     </div>
