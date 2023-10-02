@@ -24,6 +24,7 @@ use App\Models\MappingUser;
 use App\Models\MasterCoa;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Round;
 use Yajra\DataTables\DataTables;
 
 class TransaksiDetailController extends Controller
@@ -1205,7 +1206,13 @@ class TransaksiDetailController extends Controller
 
             $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
             $totalInvoice = $invtrx->fm_invnetto + $invtrx->fm_taxvalue;
-            if ($totalPaid + $request->fm_nominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
+
+            // Convert Value Request to Correct type number 
+            $currentNominal = str_replace(".", "", $request->fm_nominal);
+            $currentNominal = str_replace(",", ".", $currentNominal);
+            $currentNominal = (double) $currentNominal;
+            
+            if ($totalPaid + $currentNominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
                 return [
                     'status' => 300,
                     'message' => 'Data gagal diubah, karena melebihi total INV'
