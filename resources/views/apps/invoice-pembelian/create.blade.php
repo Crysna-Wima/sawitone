@@ -518,7 +518,7 @@
             </div>
             <form id="form_update" action="/apps/invoice-pembelian/update-discprice" method="PUT" autocomplete="off">
                 <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
-                <input type="number" id="fm_discprice" name="fm_discprice" hidden>
+                <input type="hidden" id="fm_discprice" name="fm_discprice">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
@@ -760,8 +760,8 @@
                         $('#total').val(fungsiRupiahSystem(total));
                     }
                     var selisih = hargaAwal - total
-                    var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
-                    $('#fm_discprice').val(discprice);
+                    // var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
+                    $('#fm_discprice').val(parseFloat(selisih));
                 });
             } else {
                 $('#fm_discprice_persen').attr('hidden', true);

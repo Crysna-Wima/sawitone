@@ -948,7 +948,7 @@
         var id = $(button).data('id');
         var price = $(button).data('price');
 
-        console.log(price);
+        // console.log(price);
 
         $("#modal_disc").modal('show');
         $('#fn_invrownum').val(id);
