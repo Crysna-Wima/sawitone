@@ -558,15 +558,15 @@
                 });
             } else {
                 $('#status_balance').val('false');
-                $('#balance').html("Rp. " + fungsiRupiah(parseFloat(balance)));
+                $('#balance').html(fungsiRupiahSystem(parseFloat(balance)));
                 iziToast.info({
                     title: 'Info!',
-                    message: 'Kurang Rp. ' + fungsiRupiah(parseFloat(balance)) + ' agar Balance',
+                    message: 'Kurang ' + fungsiRupiahSystem(parseFloat(balance)) + ' agar Balance',
                     position: 'topRight'
                 });
             }
-            $('#debit').html("Rp. " + fungsiRupiah(parseFloat(debit)));
-            $('#kredit').html("Rp. " + fungsiRupiah(parseFloat(kredit)));
+            $('#debit').html(fungsiRupiahSystem(parseFloat(debit)));
+            $('#kredit').html(fungsiRupiahSystem(parseFloat(kredit)));
         }
     });
 
@@ -873,9 +873,9 @@
                 data: null,
                 render: function(data, type, full, meta) {
                     if (lock == 'D') {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}">`;
                     }
                 }
             },
@@ -967,9 +967,9 @@
                 data: null,
                 render: function(data, type, full, meta) {
                     if (lock == 'C') {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}" readonly>`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_nominal)}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}">`;
                     }
                 }
             },

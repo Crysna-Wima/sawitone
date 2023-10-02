@@ -680,7 +680,7 @@
                                 Rp.
                             </div>
                         </div>
-                        <input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}"
+                        <input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_unityprice)}"
                     </div>`;
                 }
             },

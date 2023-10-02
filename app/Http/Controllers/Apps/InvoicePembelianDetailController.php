@@ -393,7 +393,7 @@ class InvoicePembelianDetailController extends Controller
             return [
 				'status' => 201, // SUCCESS
                 'link' => '/apps/invoice-pembelian',
-				'message' => 'Data berhasil dihapus'
+				'message' => 'Data berhasil disubmit'
 			];
         }catch(\Exception $e){
             return [
