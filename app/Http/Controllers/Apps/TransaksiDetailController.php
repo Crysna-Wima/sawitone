@@ -692,7 +692,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }else{
-                $updateD = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                $updateD = TempTrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'D')
                     ->update([
@@ -714,6 +714,7 @@ class TransaksiDetailController extends Controller
                         'message' => 'Data debit gagal diubah'
                     ];
                 }
+                // dd($request);
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -795,7 +796,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
           }else{
-            $updateC = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+            $updateC = TempTrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'C')
                     ->update([
