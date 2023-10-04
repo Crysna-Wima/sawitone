@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\CprrExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use App\Models\SoMaster;
 use App\Models\SoDetail;
 use App\Models\DoDetail;
 use App\Models\TempSoPay;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DaftarCprrController extends Controller
 {
@@ -79,6 +81,20 @@ class DaftarCprrController extends Controller
             ->addIndexColumn()
             ->make(true);
         // dd($data);
+    }
+
+    public function export_excel($status){
+        if($status == 'pending'){
+            return Excel::download(new CprrExport('P'), 'so_cprr_pending.xlsx');
+        }else if($status == 'clear'){
+            return Excel::download(new CprrExport('C'), 'so_cprr_clear.xlsx');
+        }else if($status == 'dodone'){
+            return Excel::download(new CprrExport('DD'), 'so_cprr_do_done.xlsx');
+        }else if($status == 'menunggu'){
+            return Excel::download(new CprrExport('F'), 'so_cprr_menunggu.xlsx');
+        }else{
+            return Excel::download(new CprrExport('A'), 'so_cprr_all.xlsx');
+        }
     }
 
     public function cancel_so(Request $request){

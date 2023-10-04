@@ -228,6 +228,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\DaftarCprrController@index');
             Route::get('/datatables/{fc_sostatus}', 'Apps\DaftarCprrController@datatables');
             Route::get('/detail/{fc_sono}', 'Apps\DaftarCprrController@detail');
+            Route::post('/export-excel/{status}', 'Apps\DaftarCprrController@export_excel');
             Route::put('/cancel_so', 'Apps\DaftarCprrController@cancel_so');
         });
 
@@ -236,6 +237,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables/{fc_sostatus}', 'Apps\DaftarMemoInternalController@datatables');
             Route::get('/detail/{fc_sono}', 'Apps\DaftarMemoInternalController@detail');
             Route::put('/cancel_so', 'Apps\DaftarMemoInternalController@cancel_so');
+            Route::post('/export-excel/{status}', 'Apps\DaftarMemoInternalController@export_excel');
         });
 
         Route::prefix('sales-order')->group(function () {

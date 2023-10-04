@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Exports\MemoInternalExport;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use App\Models\SoMaster;
 use App\Models\SoDetail;
 use App\Models\DoDetail;
 use App\Models\TempSoPay;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DaftarMemoInternalController extends Controller
 {
@@ -66,6 +68,20 @@ class DaftarMemoInternalController extends Controller
             ->addIndexColumn()
             ->make(true);
         // dd($data);
+    }
+
+    public function export_excel($status){
+        if($status == 'pending'){
+            return Excel::download(new MemoInternalExport('P'), 'memo_internal_pending.xlsx');
+        }else if($status == 'clear'){
+            return Excel::download(new MemoInternalExport('C'), 'memo_internal_clear.xlsx');
+        }else if($status == 'dodone'){
+            return Excel::download(new MemoInternalExport('DD'), 'memo_internal_do_done.xlsx');
+        }else if($status == 'menunggu'){
+            return Excel::download(new MemoInternalExport('F'), 'memo_internal_menunggu.xlsx');
+        }else{
+            return Excel::download(new MemoInternalExport('A'), 'memo_internal_all.xlsx');
+        }
     }
 
     public function cancel_so(Request $request){

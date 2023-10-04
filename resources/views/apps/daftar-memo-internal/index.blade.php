@@ -61,6 +61,12 @@
                             <div class="tab-pane fade active show" id="semua" role="tabpanel"
                                 aria-labelledby="semua-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/daftar-memo-internal/export-excel/all" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_semua" width="100%">
                                         <thead>
                                             <tr>
@@ -82,6 +88,12 @@
                             </div>
                             <div class="tab-pane fade" id="menunggu" role="tabpanel" aria-labelledby="menunggu-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/daftar-memo-internal/export-excel/menunggu" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_menunggu" width="100%">
                                         <thead>
                                             <tr>
@@ -103,6 +115,12 @@
                             </div>
                             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/daftar-memo-internal/export-excel/pending" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_pending" width="100%">
                                         <thead>
                                             <tr>
@@ -124,6 +142,12 @@
                             </div>
                             <div class="tab-pane fade" id="selesai" role="tabpanel" aria-labelledby="selesai-tab">
                                 <div class="table-responsive">
+                                    <form id="exportForm" action="/apps/daftar-memo-internal/export-excel/clear" method="POST" target="_blank">
+                                        @csrf
+                                        <div class="button text-right mb-3">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                        </div>
+                                    </form>
                                     <table class="table table-striped" id="tb_selesai" width="100%">
                                         <thead>
                                             <tr>
