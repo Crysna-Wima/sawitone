@@ -693,7 +693,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }else{
-                $updateD = TempTrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'D')
                     ->update([
@@ -797,7 +797,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
           }else{
-            $updateC = TempTrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+            $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'C')
                     ->update([
