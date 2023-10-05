@@ -894,17 +894,18 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
+                    console.log(data.fv_description)
                     if (createBy == 'SYS') {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control" readonly>`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" readonly>`;
                         }
                     } else {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value=${data.fv_description} class="form-control">`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
                         }
                     }
                 }
