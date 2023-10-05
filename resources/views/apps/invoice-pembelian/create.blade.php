@@ -673,15 +673,7 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                Rp.
-                            </div>
-                        </div>
-                        <input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_unityprice)}"
-                    </div>`;
+                    return `<input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_unityprice)}">`;
                 }
             },
             {
