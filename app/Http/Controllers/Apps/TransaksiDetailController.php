@@ -646,8 +646,9 @@ class TransaksiDetailController extends Controller
         } 
     
         DB::beginTransaction();
-    
+
         try {
+            
             if($request->fc_balancerelation === '1 to N'){
                 // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'D'
                 $totalNominalDLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
@@ -656,23 +657,31 @@ class TransaksiDetailController extends Controller
                     ->sum('fm_nominal');
         
                 // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'D'
+                $updateDataD = [
+                    'fv_description' => $request->fv_description,
+                    'updated_by' => auth()->user()->fc_userid
+                ];
+                
+                if (strpos($request->fm_nominal, 'Rp') === false) {
+                    $updateDataD['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+                }
                 $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'D')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
+                    ->update($updateDataD);
         
                 if ($updateD) {
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'C' dengan total nominal dari 'D'
+                    $updateDataC = [
+                        'updated_by' => auth()->user()->fc_userid
+                    ];
+                    // dd(strpos($request->fm_nominal, 'Rp'));
+                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                        $updateDataC['fm_nominal'] = Convert::convert_to_double($totalNominalDLama) + Convert::convert_to_double($request->fm_nominal);
+                    }
                     $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_statuspos', 'C')
-                        ->update([
-                            'fm_nominal' => Convert::convert_to_double($totalNominalDLama)+ Convert::convert_to_double($request->fm_nominal),
-                            'updated_by' => auth()->user()->fc_userid
-                        ]);
+                        ->update($updateDataC);
         
                     if ($updateC) {
                         DB::commit();
@@ -695,14 +704,18 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }else{
+                $updateDataD = [
+                    'fv_description' => $request->fv_description,
+                    'updated_by' => auth()->user()->fc_userid
+                ];
+                
+                if (strpos($request->fm_nominal, 'Rp') === false) {
+                    $updateDataD['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+                }
                 $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'D')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
+                    ->update($updateDataD);
                 
                 if ($updateD) {
                     DB::commit();
@@ -751,7 +764,7 @@ class TransaksiDetailController extends Controller
         DB::beginTransaction();
     
         try {
-            
+
           if($request->fc_balancerelation === '1 to N'){
             // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
             $totalNominalCLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
@@ -760,23 +773,31 @@ class TransaksiDetailController extends Controller
             ->sum('fm_nominal');
     
             // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'C'
+            $updateDataC = [
+                'fv_description' => $request->fv_description,
+                'updated_by' => auth()->user()->fc_userid
+            ];
+            
+            if (strpos($request->fm_nominal, 'Rp') === false) {
+                $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+            }
             $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                 ->where('fn_rownum', $request->fn_rownum)
                 ->where('fc_statuspos', 'C')
-                ->update([
-                    'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                    'fv_description' => $request->fv_description,
-                    'updated_by' => auth()->user()->fc_userid
-                ]);
+                ->update($updateDataC);
     
                 if ($updateC) {
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
+                    $updateDataD = [
+                        'updated_by' => auth()->user()->fc_userid
+                    ];
+                    // dd(strpos($request->fm_nominal, 'Rp'));
+                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                        $updateDataD['fm_nominal'] = Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal);
+                    }
                     $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_statuspos', 'D')
-                        ->update([
-                            'fm_nominal' => Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal),
-                            'updated_by' => auth()->user()->fc_userid
-                        ]);
+                        ->update($updateDataD);
         
                     if ($updateD) {
                         DB::commit();
@@ -799,14 +820,18 @@ class TransaksiDetailController extends Controller
                     ];
                 }
           }else{
+            $updateDataC = [
+                'fv_description' => $request->fv_description,
+                'updated_by' => auth()->user()->fc_userid
+            ];
+            
+            if (strpos($request->fm_nominal, 'Rp') === false) {
+                $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+            }
             $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'C')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
+                    ->update($updateDataC);
                 
                 if ($updateC) {
                     DB::commit();
@@ -861,23 +886,31 @@ class TransaksiDetailController extends Controller
                     ->sum('fm_nominal');
 
                 // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'D'
+                $updateDataD = [
+                    'fv_description' => $request->fv_description,
+                    'updated_by' => auth()->user()->fc_userid
+                ];
+                
+                if (strpos($request->fm_nominal, 'Rp') === false) {
+                    $updateDataD['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+                }
                 $updateD = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'D')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
+                    ->update($updateDataD);
 
                 if ($updateD) {
+                    $updateDataC = [
+                        'updated_by' => auth()->user()->fc_userid
+                    ];
+                    // dd(strpos($request->fm_nominal, 'Rp'));
+                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                        $updateDataC['fm_nominal'] = Convert::convert_to_double($totalNominalDLama) + Convert::convert_to_double($request->fm_nominal);
+                    }
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'C' dengan total nominal dari 'D'
                     $updateC = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_statuspos', 'C')
-                        ->update([
-                            'fm_nominal' => Convert::convert_to_double($totalNominalDLama)+ Convert::convert_to_double($request->fm_nominal),
-                            'updated_by' => auth()->user()->fc_userid
-                        ]);
+                        ->update($updateDataC);
 
                     if ($updateC) {
                         DB::commit();
@@ -955,6 +988,7 @@ class TransaksiDetailController extends Controller
         DB::beginTransaction();
     
         try {
+            // request merge fm_nominal
             if($request-> fc_balancerelation === '1 to N'){
                  // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
                 $totalNominalCLama = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
@@ -963,24 +997,31 @@ class TransaksiDetailController extends Controller
                 ->sum('fm_nominal');
         
                 // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'C'
+                $updateDataC = [
+                    'fv_description' => $request->fv_description,
+                    'updated_by' => auth()->user()->fc_userid
+                ];
+                
+                if (strpos($request->fm_nominal, 'Rp') === false) {
+                    $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+                }
                 $updateC = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'C')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
-        
+                    ->update($updateDataC);
+                                     
                 if ($updateC) {
-                
+                    $updateDataD = [
+                        'updated_by' => auth()->user()->fc_userid
+                    ];
+                    // dd(strpos($request->fm_nominal, 'Rp'));
+                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                        $updateDataD['fm_nominal'] = Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal);
+                    }
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
                     $updateD = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fc_statuspos', 'D')
-                        ->update([
-                            'fm_nominal' => Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal),
-                            'updated_by' => auth()->user()->fc_userid
-                        ]);
+                        ->update($updateDataD);
         
                     if ($updateD) {
                         DB::commit();
@@ -1003,14 +1044,18 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }else{
+                $updateDataC = [
+                    'fv_description' => $request->fv_description,
+                    'updated_by' => auth()->user()->fc_userid
+                ];
+                
+                if (strpos($request->fm_nominal, 'Rp') === false) {
+                    $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+                }
                 $updateC = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fn_rownum', $request->fn_rownum)
                     ->where('fc_statuspos', 'C')
-                    ->update([
-                        'fm_nominal' => Convert::convert_to_double($request->fm_nominal),
-                        'fv_description' => $request->fv_description,
-                        'updated_by' => auth()->user()->fc_userid
-                    ]);
+                    ->update($updateDataC);
                 
                 if ($updateC) {
                     DB::commit();
@@ -1026,6 +1071,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }
+            // dd($request);
         } catch (\Exception $e) {
             DB::rollback();
             return [
