@@ -451,6 +451,9 @@
                 </button>
             </div>
             <form id="form_update" action="/apps/transaksi/detail/update-pembayaran" method="PUT" autocomplete="off">
+            <input name="fv_description_payment" id="fv_description_payment" type="text" hidden>
+            <input name="fm_nominal_payment" id="fm_nominal_payment" type="hidden">
+            <input name="tipe" id="tipe" type="text" hidden>
             <input name="fn_rownum" id="fn_rownum" type="text" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -585,9 +588,16 @@
     function edit_pembayaran(button) {
         var id = $(button).data('rownum');
         var method = $(button).data('method');
+        var nominal = $(button).data('nominal');
+        var description = $(button).data('description');
+        var newdescription = $(`#fv_description_${id}`).val();
         $('#modal_pembayaran').modal('show');
         $('#fn_rownum').val(id);
         $('#fc_paymentmethod_edit').val(method);
+        // $('#fm_nominal').val(nominal);
+        $('#fv_description_payment').val(newdescription);
+        // console.log(button)
+        // editDetailTransaksi(button);
     }
 
     function get_data_payment() {
@@ -921,7 +931,7 @@
 
             if (lock == 'D' && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `);
             } else if (lock == 'D' && data.coamst.fc_directpayment != 'T'){
                 $('td:eq(8)', row).html(``);
@@ -1016,7 +1026,7 @@
 
             if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `)
             } else if (lock == 'C' && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(``)

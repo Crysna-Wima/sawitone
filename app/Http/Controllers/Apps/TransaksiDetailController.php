@@ -275,7 +275,8 @@ class TransaksiDetailController extends Controller
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
             'fc_refno' => $request->fc_refno_edit,
-            'fd_agingref' => $request->fd_agingref_edit
+            'fd_agingref' => $request->fd_agingref_edit,
+            'fv_description' => $request->fv_description_payment
         ]);
 
         if ($update_pembayaran) {
@@ -289,6 +290,7 @@ class TransaksiDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
+        // dd($request);
     }
 
     public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum)
