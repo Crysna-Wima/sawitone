@@ -188,7 +188,6 @@
     }
 </style>
 
-@for ($i = 0; $i < 5; $i++)
 <body>
     <?php if ($do_mst->fc_dostatus == 'CC') : ?>
         <div id="watermark"><img src="{{ public_path('/assets/img/cancelled.png') }}" width="45%"></div>
@@ -196,19 +195,6 @@
     <main>
         <div class="container" id="print">
             <div class="header" style="height: 100px">
-                <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
-                @if ($i == 0)
-                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
-                @elseif ($i == 1)
-                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
-                @elseif ($i == 2)
-                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
-                @elseif ($i == 3)
-                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 3</p>
-                @else
-                    <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 4</p>
-                @endif
-                </div>
                 <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
                     <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
                     <p>Jl. Raya Jemursari No.329-331,</p>
@@ -278,15 +264,8 @@
                 <tr>
                     <td style="width: 50% !important; text-align: left;"><br><br></td>
                     <td style="width: 50% !important; text-align: right;">            
-                    @if ($i == 0)
-                        <br><br>
-                        <br><br>
-                    @elseif ($user->fv_ttdpath == null)
-                        <br><br>
-                        <br><br>
-                    @else
-                        <img src="{{ $user->fv_ttdpath }}" alt="" width="120" height="120">
-                    @endif
+                    <br><br>
+                    <br><br>
                     </td>
                 </tr>
                 <tr>
@@ -297,6 +276,5 @@
             <div>
     </main>
 </body>
-@endfor
 
 </html>

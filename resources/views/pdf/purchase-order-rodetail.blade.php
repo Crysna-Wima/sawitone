@@ -181,7 +181,7 @@
 </div>
 
 <div class="content">
-        <p style="text-align: center; font-weight:bold; font-size:15px;">BUKTI PENERIMAAN BARANG</p>
+        <p style="text-align: center; font-weight:bold; font-size:15px;">PERFORMA BUKTI PENERIMAAN BARANG</p>
         <p style="text-align: center;">{{ $ro_mst->fc_rono }}</p>
         <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">

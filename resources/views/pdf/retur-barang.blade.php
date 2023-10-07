@@ -195,20 +195,10 @@
     }
 </style>
 
-@for ($i = 0; $i < 3; $i++)
 <body>
     <main>
     <div class="container" id="print">
     <div class="header" style="height: 100px">
-        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
-        @if ($i == 0)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
-        @elseif ($i == 1)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
-        @else
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
-        @endif
-        </div>
         <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
             <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331,</p>
@@ -287,6 +277,5 @@
     <div>
     </main>
 </body>
-@endfor
 
 </html>

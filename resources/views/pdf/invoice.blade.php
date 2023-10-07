@@ -180,7 +180,6 @@
     }
 </style>
 
-@for ($i = 0; $i < 5; $i++)
 <body>
 <div class="container" id="print">
     <div class="header" style="height: 100px">
@@ -200,20 +199,7 @@
             <p>{{ $inv_mst->fc_address }}</p>
             @endif
         </div>
-        <div style="position: absolute; right: 0px; top: 0; text-align: left;" class="no-margin">
-        @if ($i == 0)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">ASLI</p>
-        @elseif ($i == 1)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 1</p>
-        @elseif ($i == 2)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 2</p>
-        @elseif ($i == 3)
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 3</p>
-        @else
-            <p style="font-size: 16px; font-weight: bold; border: 0.5px solid #000; padding: 8px;">COPY 4</p>
-        @endif
-        </div>
-        <div style="position: absolute; right: 0; top: 45px; text-align: right;" class="no-margin">
+        <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
             <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
             <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
             <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
@@ -224,7 +210,11 @@
 
 <div class="content" id="print">
         <br><br><br>
+        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
         <p style="text-align: center; font-size: 15px; margin: 0;">INVOICE</p>
+        @else
+        <p style="text-align: center; font-size: 15px; margin: 0;">BUKTI PENERIMAAN BARANG</p>
+        @endif
         <br>
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
             @if($inv_mst->fc_invtype == 'SALES')
@@ -478,15 +468,8 @@
                 <td style="width: 50% !important; text-align: right;">{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</td>
                 @endif
             </tr>
-            @if ($i == 0)
-                <br><br>
-                <br><br>
-            @elseif ($user->fv_ttdpath == null)
-                <br><br>
-                <br><br>
-            @else
-                <img src="{{ $user->fv_ttdpath }}" alt="" width="80" height="80">
-            @endif
+            <br><br>
+            <br><br>
             <tr >
                 <td style="width: 50% !important; text-align: left;">( {{ $nama_pj }} )</td>
                 <td style="width: 50% !important; text-align: right;">(..........................)</td>
@@ -519,7 +502,6 @@
         </div>
     <div>
 </body>
-@endfor
 
 </html>
 
