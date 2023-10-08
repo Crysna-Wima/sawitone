@@ -227,7 +227,7 @@
 </div>
 
 <div class="content" id="print">
-        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
+        @if($inv_mst->fc_invtype == 'SALES' || $inv_mst->fc_invtype == 'CPRR')
         <br><br><br>
         <p style="text-align: center; font-size: 15px; margin: 0;">INVOICE</p>
         @else
@@ -258,7 +258,7 @@
             </tr>
             @endif
 
-            @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
+            @if($inv_mst->fc_invtype == 'SALES' || $inv_mst->fc_invtype == 'CPRR')
             <tr>
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
@@ -516,7 +516,7 @@
         @endif
         </table>
 
-        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
+        @if($inv_mst->fc_invtype == 'SALES' || $inv_mst->fc_invtype == 'CPRR')
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br>
             <tr >
@@ -557,7 +557,7 @@
         </table>
         @endif
 
-        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
+        @if($inv_mst->fc_invtype == 'SALES' || $inv_mst->fc_invtype == 'CPRR')
         <div class="container">
             <div class="footer" style="height: 100px">
                 <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
