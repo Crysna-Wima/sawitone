@@ -921,15 +921,15 @@
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
                 console.log(data);
-                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].invmst.fm_servpay));
+                $('#fm_servpay_calculate').html(fungsiRupiahSystem(data[0].invmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].invmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].invmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#fm_brutto').html("Rp. " + fungsiRupiah(data[0].invmst.fm_brutto));
+                $('#fm_brutto').html(fungsiRupiahSystem(data[0].invmst.fm_brutto));
                 $("#fm_brutto").trigger("change");
-                $('#fm_netto').html("Rp. " + fungsiRupiah(data[0].invmst.fm_netto));
+                $('#fm_netto').html(fungsiRupiahSystem(data[0].invmst.fm_netto));
                 $("#fm_netto").trigger("change");
-                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].invmst.fm_disctotal));
+                $('#fm_disctotal').html(fungsiRupiahSystem(data[0].invmst.fm_disctotal));
                 $("#fm_disctotal").trigger("change");
                 $('#count_item').html(data[0].fn_invdetail);
                 $("#count_item").trigger("change");
@@ -963,14 +963,24 @@
             },
             {
                 data: 'fm_unityprice',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                render: function(data, type, row) {
+                    return row.fm_unityprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: 'fn_itemqty'
             },
             {
                 data: 'fm_value',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                render: function(data, type, row) {
+                    return row.fm_value.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: 'fv_description',
@@ -1025,12 +1035,17 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    return `<input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiah(data.fm_unityprice)}" readonly>`;
+                    return `<input type="text" id="fm_unityprice_${data.fn_invrownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_unityprice)}" readonly>`;
                 }
             },
             {
                 data: 'fm_value',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                render: function(data, type, row) {
+                    return row.fm_value.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: null
@@ -1043,15 +1058,15 @@
         footerCallback: function(row, data, start, end, display) {
             if (data.length != 0) {
                 console.log(data);
-                $('#fm_servpay_calculate').html("Rp. " + fungsiRupiah(data[0].invmst.fm_servpay));
+                $('#fm_servpay_calculate').html(fungsiRupiahSystem(data[0].invmst.fm_servpay));
                 $("#fm_servpay_calculate").trigger("change");
-                $('#fm_tax').html("Rp. " + fungsiRupiah(data[0].invmst.fm_tax));
+                $('#fm_tax').html(fungsiRupiahSystem(data[0].invmst.fm_tax));
                 $("#fm_tax").trigger("change");
-                $('#fm_brutto').html("Rp. " + fungsiRupiah(data[0].invmst.fm_brutto));
+                $('#fm_brutto').html(fungsiRupiahSystem(data[0].invmst.fm_brutto));
                 $("#fm_brutto").trigger("change");
-                $('#fm_netto').html("Rp. " + fungsiRupiah(data[0].invmst.fm_netto));
+                $('#fm_netto').html(fungsiRupiahSystem(data[0].invmst.fm_netto));
                 $("#fm_netto").trigger("change");
-                $('#fm_disctotal').html("Rp. " + fungsiRupiah(data[0].invmst.fm_disctotal));
+                $('#fm_disctotal').html(fungsiRupiahSystem(data[0].invmst.fm_disctotal));
                 $("#fm_disctotal").trigger("change");
                 $('#count_item').html(data[0].invmst.fn_invdetail);
                 $("#count_item").trigger("change");

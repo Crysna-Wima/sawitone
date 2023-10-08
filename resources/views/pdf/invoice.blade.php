@@ -186,18 +186,11 @@
         <div style="position: absolute; left: 0; top: 0">
             <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
+        @if($inv_mst->fc_invtype == 'SALES')
         <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
             <p style="font-size: 14px;">Kepada Yth</p>
-            @if($inv_mst->fc_invtype == 'SALES')
             <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</p>
             <p>{{ $inv_mst->fc_address }}</p>
-            @elseif($inv_mst->fc_invtype == 'PURCHASE')
-            <p>{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
-            <p>{{ $inv_mst->fc_address }}</p>
-            @else
-            <p>{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</p>
-            <p>{{ $inv_mst->fc_address }}</p>
-            @endif
         </div>
         <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
             <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
@@ -205,14 +198,40 @@
             <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
             <p>dexa-arfindopratama.com</p>
         </div>
+        @elseif($inv_mst->fc_invtype == 'PURCHASE')
+        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+            <p style="font-size: 14px;">Kepada Yth</p>
+            <p>{{ $inv_mst->pomst->supplier->fc_supplierlegalstatus }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</p>
+            <p>{{ $inv_mst->supplier->fc_supplier_npwpaddress1 }}</p>
+        </div>
+        <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
+            <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
+            <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
+            <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
+            <p>dexa-arfindopratama.com</p>
+        </div>
+        @else
+        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+            <p style="font-size: 14px;">Kepada Yth</p>
+            <p>{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</p>
+            <p>{{ $inv_mst->fc_address }}</p>
+        </div>
+        <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
+            <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
+            <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
+            <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
+            <p>dexa-arfindopratama.com</p>
+        </div>
+        @endif
     </div>
 </div>
 
 <div class="content" id="print">
-        <br><br><br>
         @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
+        <br><br><br>
         <p style="text-align: center; font-size: 15px; margin: 0;">INVOICE</p>
         @else
+        <br><br><br>
         <p style="text-align: center; font-size: 15px; margin: 0;">BUKTI PENERIMAAN BARANG</p>
         @endif
         <br>
@@ -238,20 +257,12 @@
                 <td></td>
             </tr>
             @endif
+
+            @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
             <tr>
-                @if($inv_mst->fc_invtype == 'SALES')
                 <td>NPWP</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 30%">03.125.501.1-609.000</td>
-                @elseif($inv_mst->fc_invtype == 'PURCHASE')
-                <td>NPWP</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->pomst->supplier->fc_supplierNPWP ?? '-' }}</td>
-                @else
-                <td>NPWP</td>
-                <td style="width: 5px">:</td>
-                <td style="width: 30%">03.125.501.1-609.000</td>
-                @endif
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</td>
@@ -264,7 +275,51 @@
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y'); }}</td>
             </tr>
+            @else
+            <tr>
+                <td>No. BPB</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->fc_invno }}</td>
+                <td>Tgl Diterima</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->romst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}</td>
+            </tr>
+            <tr class="pb-1">
+                <td>No. Surat Jalan</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_sjno }}</td>
+                <td>No. PO</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->fc_suppdocno }}</td>
+            </tr>
+            @endif
         </table>
+        @if($inv_mst->fc_invtype == 'PURCHASE')
+        <table style="width: 90%; border-collapse: collapse; margin: auto; border-bottom: 1px dashed black;" class="no-space">
+            <tr>
+                <td>Penerima</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ $inv_mst->romst->fc_receiver }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alamat Pengiriman</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_address_loading }}</td>
+            </tr>
+            <tr class="pb-1">
+                <td>By</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_potransport }}</td>
+                <td></td>
+                <td style="width: 5px"></td>
+                <td style="width: 26%"></td>
+            </tr>
+        </table>
+        @else
+        @endif
 
         @if($inv_mst->fc_invtype == 'SALES')
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Barang Dikirim</p>
@@ -291,8 +346,8 @@
                         <td>{{ $item->invstore->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
-                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
-                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
+                        <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
 
@@ -328,8 +383,8 @@
                         <td>{{ $item->invstore->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
-                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
-                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
+                        <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
 
@@ -359,9 +414,9 @@
                         <td>{{ $item->fc_detailitem }}</td>
                         <td>{{ $item->nameunity->fv_description }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
-                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_unityprice, 2, ",", ".")}}</td>
                         <td>{{ $item->fv_description ?? '-'}}</td>
-                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fm_value, 2, ",", ".")}}</td>
                     </tr>
                 @endforeach
 
@@ -408,16 +463,16 @@
             <tr>
                 <td>Total</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 28%">Rp. {{ number_format($inv_mst->fm_netto,0,',','.')}}</td>
+                <td style="width: 28%">Rp. {{ number_format($inv_mst->fm_netto, 2, ",", ".")}}</td>
                 <td>Biaya Kirim</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format( $inv_mst->fm_servpay,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format( $inv_mst->fm_servpay, 2, ",", ".")}}</td>
             </tr>
 
             <tr>
                 <td>Pajak</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_tax,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_tax, 2, ",", ".")}}</td>
                 <td>Biaya Materai</td>
                 <td style="width: 5px">:</td>
                 <td style="width: 26%">Rp. 0</td>
@@ -428,11 +483,19 @@
                 <td style="width: 28%"></td>
                 <td>Tagihan</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_brutto,0,',','.')}}</td>
+                <td style="width: 26%">Rp. {{ number_format($inv_mst->fm_brutto, 2, ",", ".")}}</td>
             </tr>
         </table>
 
         <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+        @if ($inv_mst->fc_invtype == 'PURCHASE')
+            <tr>
+
+            </tr>
+            <tr>
+                
+            </tr>
+        @else
             <tr>
                 <td>Terbilang :</td>
                 <td></td>
@@ -450,8 +513,10 @@
                 <td></td>
                 <td></td>
             </tr>
+        @endif
         </table>
 
+        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always ">
             <br>
             <tr >
@@ -463,7 +528,7 @@
                 @if($inv_mst->fc_invtype == 'SALES')
                 <td style="width: 50% !important; text-align: right;">{{ $inv_mst->somst->customer->fc_memberlegalstatus }} {{ $inv_mst->somst->customer->fc_membername1 }}</td>
                 @elseif($inv_mst->fc_invtype == 'PURCHASE')
-                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }} {{ $inv_mst->pomst->supplier->fc_suppliername1 }}</td>
+                <td></td>
                 @else
                 <td style="width: 50% !important; text-align: right;">{{ $inv_mst->customer->fc_memberlegalstatus }} {{ $inv_mst->customer->fc_membername1 }}</td>
                 @endif
@@ -475,7 +540,24 @@
                 <td style="width: 50% !important; text-align: right;">(..........................)</td>
             </tr>
         </table>
+        @else
+        <table style="width: 100%;   margin: auto; dashed black; cellspacing=15 page-break-before:always page-break-after:always">
+            <br><br/>
+            <tr>
+                <td style="text-align: right;">Surabaya, {{ \Carbon\Carbon::now()->isoFormat('D MMMM Y'); }}</td>
+            </tr>
+            <tr >
+                <td style="width: 50% !important; text-align: right;">PT DEXA ARFINDO PRATAMA</td>
+            </tr>
+            <br><br/>
+            <br><br/>
+            <tr >
+                <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
+            </tr>
+        </table>
+        @endif
 
+        @if($inv_mst->fc_invtype == 'SALES' && $inv_mst->fc_invtype == 'CPRR')
         <div class="container">
             <div class="footer" style="height: 100px">
                 <div style="position: absolute; bottom: 0px; text-align: left; page-break-before:always page-break-after:always" class="no-margin">
@@ -500,6 +582,8 @@
                 </div>
             </div>
         </div>
+        @else
+        @endif
     <div>
 </body>
 

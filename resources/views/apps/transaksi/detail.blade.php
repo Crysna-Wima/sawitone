@@ -109,7 +109,7 @@
                                 <div class="form-group d-flex-row">
                                     <label>Balance</label>
                                     <div class="text mt-2">
-                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance">Rp. {{ number_format($data->fm_balance,0,',','.')}}</h5>
+                                        <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance">Rp. 0</h5>
                                     </div>
                                 </div>
                             </div>
@@ -207,6 +207,7 @@
 @section('js')
 <script>
     var trxno = "{{ $data->fc_trxno }}";
+    var balance = "{{ $data->fm_balance }}"
     var encode_trxno = window.btoa(trxno);
     
     $.ajax({
@@ -225,8 +226,9 @@
                 }
             }
             
-            $('#debit').html("Rp. " + fungsiRupiah(parseFloat(debit)));
-            $('#kredit').html("Rp. " + fungsiRupiah(parseFloat(kredit)));
+            $('#debit').html(fungsiRupiahSystem(parseFloat(debit)));
+            $('#kredit').html(fungsiRupiahSystem(parseFloat(kredit)));
+            $('#balance').html(fungsiRupiahSystem(parseFloat(balance)));
         }
     });
 
