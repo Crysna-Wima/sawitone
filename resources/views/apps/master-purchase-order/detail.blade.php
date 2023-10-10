@@ -310,6 +310,7 @@
     };
 
     let encode_fc_pono = "{{ base64_encode($po_master->fc_pono) }}";
+    // console.log(encode_fc_pono)
     var tb = $('#po_detail').DataTable({
         // apabila data kosong
         processing: true,

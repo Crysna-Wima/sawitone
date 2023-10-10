@@ -75,5 +75,10 @@ class Stock extends Model
         return $this->hasMany(StockCustomer::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();;
     }
 
+    // podetail
+    public function podetail(){
+        return $this->hasMany(PoDetail::class, 'fc_stockcode', 'fc_stockcode');
+    }
+
     
 }
