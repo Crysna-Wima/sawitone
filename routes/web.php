@@ -684,6 +684,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/data-debit/{fc_trxno}', 'Apps\TransaksiController@data_debit');
             Route::get('/data-kredit/{fc_trxno}', 'Apps\TransaksiController@data_kredit');
             Route::get('/datatables-bookmark', 'Apps\TransaksiController@datatables_bookmark');
+            Route::get('/datatables-bookmark-all', 'Apps\TransaksiController@datatables_bookmark_all');
             Route::get('/datatables-giro/{fc_giropos}', 'Apps\TransaksiController@datatables_giro');
             Route::get('/datatables-mapping', 'Apps\TransaksiController@datatables_mapping');
             Route::get('/datatables-invoice', 'Apps\TransaksiController@datatables_invoice');

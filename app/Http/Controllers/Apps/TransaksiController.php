@@ -218,6 +218,18 @@ class TransaksiController extends Controller
         // dd($data);
     }
 
+    public function datatables_bookmark_all()
+    {
+        $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')
+            ->where('fc_status', 'P')
+            ->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
+
     public function datatables_giro($fc_giropos)
     {
         $data = Giro::with('transaksi.mapping', 'coa')->where('fc_giropos', $fc_giropos)
