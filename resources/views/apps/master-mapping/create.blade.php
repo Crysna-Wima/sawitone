@@ -37,6 +37,84 @@
         content: ' *';
         display: inline;
     }
+
+    .form-check-label {
+        text-transform: capitalize;
+    }
+
+    .cbox{
+        margin-top: 25px;
+    }
+
+    .ks-cboxtags {        
+        list-style: none;
+    }
+
+    .ks-cboxtags {
+        display: inline;
+    }
+
+    .ks-cboxtags label {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, .9);
+        border: 2px solid rgba(139, 139, 139, .3);
+        color: #adadad;
+        border-radius: 25px;
+        white-space: nowrap;
+        margin: 3px 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags label {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    .ks-cboxtags label::before {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 12px;
+        padding: 2px 6px 2px 2px;
+        content: "\f067";
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label::before {
+        content: "\f00c";
+        transform: rotate(-360deg);
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label {
+        border: 2px solid #b6d7a8;
+        background-color: #0A9447;
+        color: #fff;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        display: absolute;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:focus+label {
+        border: 2px solid #97d508;
+    }
 </style>
 @endsection
 @section('content')
@@ -163,6 +241,94 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_submit" action="" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAll" value="1">
+                                <label class="form-check-label" for="checkAll">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                        <input type="checkbox" id="1" value="TES1">
+                                        <label for="1">TES1</label>
+
+                                        <input type="checkbox" id="2" value="TES2">
+                                        <label for="2">TES2</label>
+
+                                        <input type="checkbox" id="3" value="TES3">
+                                        <label for="3">TES3</label>
+
+                                        <input type="checkbox" id="4" value="TES4">
+                                        <label for="4">TES4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_submit" action="" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAll" value="1">
+                                <label class="form-check-label" for="checkAll">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                        <input type="checkbox" id="1" value="TES1">
+                                        <label for="1">TES1</label>
+
+                                        <input type="checkbox" id="2" value="TES2">
+                                        <label for="2">TES2</label>
+
+                                        <input type="checkbox" id="3" value="TES3">
+                                        <label for="3">TES3</label>
+
+                                        <input type="checkbox" id="4" value="TES4">
+                                        <label for="4">TES4</label>
+
+                                        
+                                        <input type="checkbox" id="5" value="TES4">
+                                        <label for="5">TES4</label>
+
+                                        
+                                        <input type="checkbox" id="6" value="TES4">
+                                        <label for="6">TES4</label>
+
+                                        
+                                        <input type="checkbox" id="7" value="TES4">
+                                        <label for="7">TES4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -349,6 +515,16 @@
 <script>
     var mappingcode = "{{ $data->fc_mappingcode }}";
     var encode_mappingcode = window.btoa(mappingcode);
+
+    $("#checkAll").click(function() {
+        if ($(this).is(':checked')) {
+            // check all the checkbox
+            $('input[type=checkbox]').prop('checked', true);
+        } else {
+            // un check all the checkbox
+            $('input[type=checkbox]').prop('checked', false);
+        }
+    });
 
     function detail(fc_coacode) {
         $("#modal").modal('show');
