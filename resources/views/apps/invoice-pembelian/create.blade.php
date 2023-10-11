@@ -767,6 +767,7 @@
                     } else {
                         var total = hargaAwal - (hargaAwal * hargaDiskon);
                         $('#total').val(fungsiRupiahSystem(total));
+                        $('#update').prop('disabled', false);
                     }
                     var selisih = hargaAwal - total
                     // var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
@@ -788,9 +789,11 @@
                             position: 'topRight'
                         });
                         $('#total').val("Error");
+                        $('#update').prop('disabled', true);
                     } else {
                         var total = hargaAwal - hargaDiskon;
                         $('#total').val(fungsiRupiahSystem(total));
+                        $('#update').prop('disabled', false);
                     }
 
                     var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
