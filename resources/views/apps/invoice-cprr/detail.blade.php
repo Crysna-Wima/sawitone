@@ -301,6 +301,7 @@
                                         <th scope="col" class="text-center">Jumlah</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
                                         <th scope="col" class="text-center">Diskon</th>
+                                        <th scope="col" class="text-center">Persen</th>
                                         <th scope="col" class="text-center">Catatan</th>
                                         <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center justify-content-center">Action</th>
@@ -543,6 +544,7 @@
             <form id="form_update" action="/apps/invoice-cprr/update-discprice" method="PUT" autocomplete="off">
                 <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
                 <input type="hidden" id="fm_discprice" name="fm_discprice" >
+                <input type="hidden" id="fm_discprecen" name="fm_discprecen">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
@@ -765,7 +767,7 @@
             targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
-            targets: [9]
+            targets: [10]
         } ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -804,6 +806,10 @@
                 }
             },
             {
+                data: 'fm_discprecen',
+                defaultContent: '-'
+            },
+            {
                 data: 'fv_description',
             },
             {
@@ -822,7 +828,7 @@
         rowCallback: function(row, data) {
             var url_delete = "/apps/invoice-cprr/detail/delete/" + data.fc_invno + '/' + data.fn_invrownum;
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
                 <button type="submit" class="btn btn-sm btn-info mr-1" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="diskon(this)"><i class="fa-solid fa-percent"></i></button>
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','CPRR Detail')"><i class="fa fa-trash"> </i></button>
             `);
@@ -963,6 +969,7 @@
                     var input = parseFloat($('#fm_discprice2').val());
                     var hargaDiskon = parseFloat($('#fm_discprice2').val().toString().replace(/[^\d|\,]/g, '')) / 100;
 
+                    console.log(input);
                     if (input > 100) {
                         iziToast.warning({
                             title: 'Warning!',
@@ -970,6 +977,7 @@
                             position: 'topRight'
                         });
                         $('#total').val("Error");
+                        $('#update').prop('disabled', true);
                     } else {
                         var total = hargaAwal - (hargaAwal * hargaDiskon);
                         $('#total').val(fungsiRupiahSystem(total));
@@ -978,6 +986,7 @@
                     var selisih = hargaAwal - total
                     // var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
                     $('#fm_discprice').val(parseFloat(selisih));
+                    $('#fm_discprecen').val(parseFloat(input));
                 });
             } else {
                 $('#fm_discprice_persen').attr('hidden', true);

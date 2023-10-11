@@ -305,11 +305,13 @@ class InvoicePenjualanDetailController extends Controller
         }
 
         $request->merge(['fm_discprice' => number_format($request->fm_discprice, 2, '.', '')]);
+        $request->merge(['fm_discprecen' => number_format($request->fm_discprecen, 2, '.', '')]);
 
         $update_discprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,
         ])->update([
-            'fm_discprice' => $request->fm_discprice
+            'fm_discprice' => $request->fm_discprice,
+            'fm_discprecen' => $request->fm_discprecen
         ]);
 
         if ($update_discprice) {

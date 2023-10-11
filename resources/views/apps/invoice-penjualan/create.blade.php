@@ -315,6 +315,7 @@
                                         <th scope="col" class="text-center">Qty</th>
                                         <th scope="col" class="text-center">Harga Satuan</th>
                                         <th scope="col" class="text-center">Diskon</th>
+                                        <th scope="col" class="text-center">Persen</th>
                                         <th scope="col" class="text-center">Total</th>
                                         <th scope="col" class="text-center">Action</th>
                                     </tr>
@@ -558,6 +559,7 @@
             <form id="form_update" action="/apps/invoice-penjualan/update-discprice" method="PUT" autocomplete="off">
                 <input type="number" id="fn_invrownum" name="fn_invrownum" hidden>
                 <input type="hidden" id="fm_discprice" name="fm_discprice">
+                <input type="hidden" id="fm_discprecen" name="fm_discprecen">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-6">
@@ -654,6 +656,7 @@
                             position: 'topRight'
                         });
                         $('#total').val("Error");
+                        $('#update').prop('disabled', true);
                     } else {
                         var total = hargaAwal - (hargaAwal * hargaDiskon);
                         $('#total').val(fungsiRupiahSystem(total));
@@ -661,6 +664,7 @@
                     var selisih = hargaAwal - total
                     // var discprice = parseFloat(selisih.toString().replace(/[^\d|\,]/g, ''));
                     $('#fm_discprice').val(parseFloat(selisih));
+                    $('#fm_discprecen').val(parseFloat(input));
                 });
             } else {
                 $('#fm_discprice_persen').attr('hidden', true);
@@ -798,7 +802,7 @@
             targets: [0, 3, 4, 5, 6, 7]
         }, {
             className: 'text-nowrap',
-            targets: [8]
+            targets: [9]
         }, ],
         columns: [{
                 data: 'DT_RowIndex',
@@ -825,11 +829,25 @@
             },
             {
                 data: 'fm_discprice',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                render: function(data, type, row) {
+                    return row.fm_discprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'fm_discprecen',
+                defaultContent: '-'
             },
             {
                 data: 'fm_value',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                render: function(data, type, row) {
+                    return row.fm_value.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
             },
             {
                 data: null
@@ -837,15 +855,15 @@
         ],
         rowCallback: function(row, data) {
             if (data.fn_price == 0) {
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>`);
             } else if (data.fc_invstatus === 'R') {
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
                     <button type="submit" class="btn btn-sm btn-secondary" disabled>Edit</button>`);
             } else {
-                $('td:eq(8)', row).html(`
+                $('td:eq(9)', row).html(`
                 <button class="btn btn-primary btn-sm mr-1" onclick="detail(${data.fn_invrownum})"><i class="fa fa-eye"></i></button>
                 <button type="submit" class="btn btn-sm btn-info mr-1" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="diskon(this)"><i class="fa-solid fa-percent"></i></button>
                 <button type="submit" class="btn btn-sm btn-warning" data-id="${data.fn_invrownum}" data-price="${data.fm_unityprice}" onclick="editUnityPrice(this)"><i class="fa fa-edit"></i></button>
