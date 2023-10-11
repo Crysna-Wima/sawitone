@@ -597,7 +597,7 @@
                             <div class="form-group">
                                 <label>Diskon</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" id="fm_discprice2" name="fm_discprice2">
+                                    <input type="number" step="any" min="0" max="100" class="form-control" id="fm_discprice2" name="fm_discprice2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             %
@@ -647,7 +647,7 @@
                 $('#fm_discprice_persen').on('input', function() {
                     var hargaAwal = parseFloat($('#fm_unityprice_diskon').val().toString().replace(/[^\d|\,]/g, ''));
                     var input = parseFloat($('#fm_discprice2').val());
-                    var hargaDiskon = parseFloat($('#fm_discprice2').val().toString().replace(/[^\d|\,]/g, '')) / 100;
+                    var hargaDiskon = parseFloat($('#fm_discprice2').val()) / 100;
 
                     if (input > 100) {
                         iziToast.warning({
