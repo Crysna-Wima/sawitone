@@ -658,6 +658,8 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/{fc_mappingcode}', 'Apps\MasterMappingCreateController@create');
                 Route::get('/datatables-debit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_debit');
                 Route::get('/datatables-kredit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@datatables_kredit');
+                Route::put('/trxaccmethod_debit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@update_trxaccmethod_debit');
+                Route::put('/trxaccmethod_kredit/{fc_mappingcode}', 'Apps\MasterMappingCreateController@update_trxaccmethod_kredit');
             });
         });
 

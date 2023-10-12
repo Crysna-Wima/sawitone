@@ -28,9 +28,12 @@ class MasterMappingController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)->count();
         if ($cek_exist > 0) {
             $fc_mappingcode = $mapping_mst->fc_mappingcode;
+            $data['fc_credit_previledge'] = json_decode($mapping_mst->fc_credit_previledge);
+            $data['fc_debit_previledge'] = json_decode($mapping_mst->fc_debit_previledge);
             $data['data'] = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $fc_mappingcode)->first();
-
+            $data['trxaccmethod'] = TransaksiType::where('fc_trx','TRXACCMETHOD')->get();
             return view('apps.master-mapping.create', $data);
+            // dd($data);
         }
 
         return view('apps.master-mapping.index');

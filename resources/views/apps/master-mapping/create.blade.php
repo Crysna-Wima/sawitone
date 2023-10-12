@@ -247,7 +247,7 @@
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <form id="form_submit" action="" method="POST">
+                    <form id="form_submit_accmethod_debit" action="/apps/master-mapping/create/trxaccmethod_debit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -260,17 +260,15 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-9" id="checkbox">
                                     <div class="ks-cboxtags">
-                                        <input type="checkbox" id="1" value="TES1">
-                                        <label for="1">TES1</label>
-
-                                        <input type="checkbox" id="2" value="TES2">
-                                        <label for="2">TES2</label>
-
-                                        <input type="checkbox" id="3" value="TES3">
-                                        <label for="3">TES3</label>
-
-                                        <input type="checkbox" id="4" value="TES4">
-                                        <label for="4">TES4</label>
+                                    @if($trxaccmethod)
+                                        @foreach($trxaccmethod as $index => $accmethod)
+                                            @php
+                                                $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
+                                            @endphp
+                                            <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }}>
+                                            <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                        @endforeach
+                                    @endif
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +283,7 @@
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <form id="form_submit" action="" method="POST">
+                    <form id="form_submit" action="/apps/master-mapping/create/trxaccmethod_kredit/{{ base64_encode($data->fc_mappingcode) }}"" method="POST">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -298,29 +296,15 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-9" id="checkbox">
                                     <div class="ks-cboxtags">
-                                        <input type="checkbox" id="1" value="TES1">
-                                        <label for="1">TES1</label>
-
-                                        <input type="checkbox" id="2" value="TES2">
-                                        <label for="2">TES2</label>
-
-                                        <input type="checkbox" id="3" value="TES3">
-                                        <label for="3">TES3</label>
-
-                                        <input type="checkbox" id="4" value="TES4">
-                                        <label for="4">TES4</label>
-
-                                        
-                                        <input type="checkbox" id="5" value="TES4">
-                                        <label for="5">TES4</label>
-
-                                        
-                                        <input type="checkbox" id="6" value="TES4">
-                                        <label for="6">TES4</label>
-
-                                        
-                                        <input type="checkbox" id="7" value="TES4">
-                                        <label for="7">TES4</label>
+                                        @if($trxaccmethod)
+                                            @foreach($trxaccmethod as $index => $accmethod)
+                                                @php
+                                                    $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
+                                                @endphp
+                                                <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }}>
+                                                <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>

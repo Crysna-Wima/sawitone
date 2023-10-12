@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use App\Models\MappingDetail;
 use App\Models\MappingMaster;
-
+use App\Models\TransaksiType;
 use Carbon\Carbon;
 use DB;
 use Auth;
@@ -19,9 +19,20 @@ class MasterMappingCreateController extends Controller
     public function create($fc_mappingcode)
     {
         $encoded_fc_mappingcode = base64_decode($fc_mappingcode);
-        $data['data'] = MappingMaster::with('transaksi', 'tipe', 'branch')->where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $encoded_fc_mappingcode)->first();
+        $mappingMaster = MappingMaster::where('fc_mappingcode', $encoded_fc_mappingcode)
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                        ->first();
 
+        $data['data'] = MappingMaster::with('transaksi', 'tipe', 'branch')
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_mappingcode', $encoded_fc_mappingcode)->first();
+
+        $data['trxaccmethod'] = TransaksiType::where('fc_trx','TRXACCMETHOD')->get();
+        $data['fc_credit_previledge'] = json_decode($mappingMaster->fc_credit_previledge);
+        $data['fc_debit_previledge'] = json_decode($mappingMaster->fc_debit_previledge);
         return view('apps.master-mapping.create', $data);
+        // dd($data);
     }
 
     public function datatables_debit($fc_mappingcode)
@@ -287,5 +298,77 @@ class MasterMappingCreateController extends Controller
                 'message' => 'Debit gagal dihapus',
             ];
         } 
+    }
+
+    public function update_trxaccmethod_debit($fc_mappingcode, Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'trxaccmethod' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $decode_fc_mappingcode = base64_decode($fc_mappingcode);
+
+        $json_encode = json_encode($request->trxaccmethod);
+
+        // insert ke t_mappingmst
+        $data_update = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->update([
+                                        'fc_debit_previledge' => $json_encode,
+                                        'updated_by' => auth()->user()->fc_userid
+                                    ]);
+        if($data_update){
+            return [
+                'status' => 201,
+                'link' => '/apps/master-mapping',
+                'message' => 'Metode Transaksi berhasil diupdate',
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Metode Transaksi gagal diupdate',
+            ];
+        }
+    }
+
+    public function update_trxaccmethod_kredit($fc_mappingcode, Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'trxaccmethod' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $decode_fc_mappingcode = base64_decode($fc_mappingcode);
+
+        $json_encode = json_encode($request->trxaccmethod);
+
+        // insert ke t_mappingmst
+        $data_update = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->update([
+                                        'fc_credit_previledge' => $json_encode,
+                                        'updated_by' => auth()->user()->fc_userid
+                                    ]);
+        if($data_update){
+            return [
+                'status' => 201,
+                'link' => '/apps/master-mapping',
+                'message' => 'Metode Transaksi berhasil diupdate',
+            ];
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Metode Transaksi gagal diupdate',
+            ];
+        }
     }
 }
