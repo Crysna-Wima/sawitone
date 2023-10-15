@@ -504,45 +504,162 @@
     var mappingcode = "{{ $data->fc_mappingcode }}";
     var encode_mappingcode = window.btoa(mappingcode);
 
-    // $("#checkAll").click(function() {
-    //     if ($(this).is(':checked')) {
-    //         // check all the checkbox
-    //         $('input[type=checkbox]').prop('checked', true);
-    //     } else {
-    //         // un check all the checkbox
-    //         $('input[type=checkbox]').prop('checked', false);
-    //     }
-    // });
+   // trxaccmethod transaksi
+    var checkAllKredit = $('#checkAllKredit');
+    var isCheckedKredit = checkAllKredit.is(':checked');
+    var checkAllDebit = $('#checkAllDebit');
+    var isCheckedDebit = checkAllDebit.is(':checked');
 
-   var checkAllKredit = $('#checkAllKredit');
-   var isCheckedKredit = checkAllKredit.is(':checked');
-   var checkAllDebit = $('#checkAllDebit');
-   var isCheckedDebit = checkAllDebit.is(':checked');
+    if (isCheckedDebit) {
+        $('input[id^="checkbox_debit"]').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', true);
+    }
 
-   if (isCheckedDebit) {
-    $('input[id^="checkbox_debit"]').prop('checked', false);
-    $('input[id^="checkbox_debit"]').prop('disabled', true);
-  }
+    checkAllDebit.change(function() {
+        isCheckedDebit = $(this).is(':checked');
+        isCheckedKredit = $(this).is(':checked');
 
-  checkAllDebit.change(function() {
-    isCheckedDebit = $(this).is(':checked');
+        $('input[id^="checkbox_debit"]').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', isCheckedDebit);
 
-    $('input[id^="checkbox_debit"]').prop('checked', false);
-    $('input[id^="checkbox_debit"]').prop('disabled', isCheckedDebit);
-  });
+        if(!isCheckedKredit){
+                $('input[id^="checkbox_kredit"]').prop('disabled', isCheckedDebit);
+         }
+    });
 
-  if (isCheckedKredit) {
-    $('input[id^="checkbox_kredit"]').prop('checked', false);
-    $('input[id^="checkbox_kredit"]').prop('disabled', true);
-  }
+    if (isCheckedKredit) {
+        $('input[id^="checkbox_kredit"]').prop('checked', false);
+        $('input[id^="checkbox_kredit"]').prop('disabled', true);
+    }
 
-  checkAllKredit.change(function() {
-    isCheckedKredit = $(this).is(':checked');
+    checkAllKredit.change(function() {
+        isCheckedKredit = $(this).is(':checked');
+        isCheckedDebit = $(this).is(':checked');
 
-    $('input[id^="checkbox_kredit"]').prop('checked', false);
-    $('input[id^="checkbox_kredit"]').prop('disabled', isCheckedKredit);
-  });
+        $('input[id^="checkbox_kredit"]').prop('checked', false);
+        $('input[id^="checkbox_kredit"]').prop('disabled', isCheckedKredit);
 
+        if(!isCheckedDebit){
+                 $('input[id^="checkbox_debit"]').prop('disabled', isCheckedDebit);
+        }
+   
+    });
+
+    // Handle 'ONCE' value credit atau debit
+    var onceDebitChecked = false;
+    var onceCreditChecked = false;
+
+    $('input[id^="checkbox_debit"]').each(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            onceDebitChecked = true;
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').each(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            onceCreditChecked = true;
+        }
+    });
+
+    if (onceDebitChecked) {
+        $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+    }
+    if (onceCreditChecked) {
+        $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+    }
+
+    $('input[id^="checkbox_debit"]').change(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+        } else {
+            $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', false);
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').change(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+        } else {
+            $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', false);
+        }
+    });
+     // END Handle 'ONCE' value credit atau debit
+
+     // Handle 'PAIR' value credit atau debit
+        var pairDebitChecked = false;
+        var pairCreditChecked = false;
+
+        $('input[id^="checkbox_debit"]').each(function() {
+            if ($(this).val() === 'PAIR' && $(this).is(':checked')) {
+                pairDebitChecked = true;
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').each(function() {
+            if ($(this).val() === 'PAIR' && $(this).is(':checked')) {
+                pairCreditChecked = true;
+            }
+        });
+
+        if (pairDebitChecked) {
+            $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+            $('#checkAllKredit').prop('checked', false);
+            $('input[id^="checkbox_debit"]').prop('disabled', false);
+        }
+        if (pairCreditChecked) {
+            $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+            $('#checkAllDebit').prop('checked', false);
+            $('input[id^="checkbox_debit"]').prop('disabled', false);
+        }
+
+        $('input[id^="checkbox_debit"]').change(function() {
+            if ($(this).val() === 'PAIR') {
+                if ($(this).is(':checked')) {
+
+                    var anyOnceChecked = $('input[id^="checkbox_debit"][value="ONCE"]:checked').length > 0;
+
+                    if (anyOnceChecked) {
+                        $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+                            $('#checkAllKredit').prop('checked', false);
+                            $('input[id^="checkbox_kredit"]').prop('disabled', false);
+                            $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+                    } else {
+                        $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+                        $('#checkAllKredit').prop('checked', false);
+                        $('input[id^="checkbox_kredit"]').prop('disabled', false);
+                    }
+                } else {
+                    $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', false);
+                }
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').change(function() {
+            // console.log($(this).val())
+            if ($(this).val() === 'PAIR') {
+                    if ($(this).is(':checked')) {
+                        var anyOnceChecked = $('input[id^="checkbox_kredit"][value="ONCE"]:checked').length > 0;
+                        
+                        if (anyOnceChecked) {
+                            $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+                            $('#checkAllDebit').prop('checked', false);
+                            $('input[id^="checkbox_debit"]').prop('disabled', false);
+                            $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+                        } else {
+                            $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+                            $('#checkAllDebit').prop('checked', false);
+                            $('input[id^="checkbox_debit"]').prop('disabled', false);
+                        }
+                        // console.log(anyOnceChecked)
+                    } else {
+                        $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', false);
+                    }
+                }
+        });
+     // END handle value 'PAIR' credit atau debit
+
+     
+  // End trxaccmethod transaksi
     function detail(fc_coacode) {
         $("#modal").modal('show');
         $(".modal-title").text('Detail COA');
