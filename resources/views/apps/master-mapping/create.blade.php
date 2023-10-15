@@ -253,7 +253,7 @@
                         <div class="form-group">
                             <label for="name">Hak Istimewa</label>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_debit_previledge) ? 'checked' : '' }}>
+                                <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checkAllDebit">General</label>
                             </div>
                             <hr>

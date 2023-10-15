@@ -496,6 +496,8 @@
 
 @section('js')
 <script>
+    let previledgeDebit = "{{ $data->mapping->fc_debit_previledge }}";
+    let previledgeCredit = "{{ $data->mapping->fc_credit_previledge }}";
     var createBy = "{{ $data->mapping->created_by }}";
     var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
     var balancerelation_encode = window.btoa(fc_balancerelation);
@@ -905,17 +907,20 @@
                 data: null,
                 render: function(data, type, full, meta) {
                     // console.log(data.fv_description)
+                    var isDescReadOnly = previledgeDebit.includes('DESC');
+                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    
                     if (createBy == 'SYS') {
                         if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" readonly>`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                         }
                     } else {
                         if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                         }
                     }
                 }
@@ -999,17 +1004,20 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
+                    var isDescReadOnly = previledgeCredit.includes('DESC');
+                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    
                     if (createBy == 'SYS') {
                         if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" readonly>`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" readonly>`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                         }
                     } else {
                         if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control">`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                         } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control">`;
+                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                         }
                     }
                 }
