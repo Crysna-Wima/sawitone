@@ -884,10 +884,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
+                    var isDescReadOnly = previledgeCredit.includes('VALUE');
+                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
                     if (lock == 'D') {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
                 }
             },
@@ -982,10 +984,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
+                    var isDescReadOnly = previledgeCredit.includes('VALUE');
+                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
                     if (lock == 'C') {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
-                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}">`;
+                        return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
                 }
             },
@@ -1122,7 +1126,8 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
-                fc_balancerelation: fc_balancerelation
+                fc_balancerelation: fc_balancerelation,
+                fc_credit_previledge: previledgeCredit
             },
             success: function(response) {
                 if (response.status == 200) {
