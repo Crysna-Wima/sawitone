@@ -128,7 +128,15 @@
                 <div class="card-header">
                     <h4>Debit</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus mr-1"></i> Tambah Debit</button>
+                        @if (in_array('LBPB', json_decode($data->mapping->fc_debit_previledge), true))
+                        <button type="button" class="btn btn-warning" id="btn-bpb-debit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
+                        <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
+                        @elseif (in_array('LINV', json_decode($data->mapping->fc_debit_previledge), true))
+                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
+                        <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
+                        @else
+                        <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -160,7 +168,15 @@
                 <div class="card-header">
                     <h4>Kredit</h4>
                     <div class="card-header-action">
+                        @if (in_array('LBPB', json_decode($data->mapping->fc_credit_previledge), true))
+                        <button type="button" class="btn btn-warning" id="btn-bpb-kredit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
+                        @elseif (in_array('LINV', json_decode($data->mapping->fc_credit_previledge), true))
+                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
+                        <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
+                        @else
+                        <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -284,7 +300,7 @@
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
                                         <input type="radio" name="fc_directpayment" id="fc_directpayment" value="T" class="selectgroup-input" disabled>
-                                       <input type="text" name="fc_balancerelation" value="{{ $data->mapping->fc_balancerelation }}" hidden>
+                                        <input type="text" name="fc_balancerelation" value="{{ $data->mapping->fc_balancerelation }}" hidden>
                                         <span class="selectgroup-button">YA</span>
                                     </label>
                                     <label class="selectgroup-item" style="margin: 0!important">
@@ -451,10 +467,10 @@
                 </button>
             </div>
             <form id="form_update" action="/apps/transaksi/detail/update-pembayaran" method="PUT" autocomplete="off">
-            <input name="fv_description_payment" id="fv_description_payment" type="text" hidden>
-            <input name="fm_nominal_payment" id="fm_nominal_payment" type="hidden">
-            <input name="tipe" id="tipe" type="text" hidden>
-            <input name="fn_rownum" id="fn_rownum" type="text" hidden>
+                <input name="fv_description_payment" id="fv_description_payment" type="text" hidden>
+                <input name="fm_nominal_payment" id="fm_nominal_payment" type="hidden">
+                <input name="tipe" id="tipe" type="text" hidden>
+                <input name="fn_rownum" id="fn_rownum" type="text" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
@@ -489,6 +505,78 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_invoice" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" style="width:90%" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Daftar Invoice</h5>
+                <div class="card-header-action">
+                </div>
+            </div>
+            <div class="place_alert_cart_stock text-center"></div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" width="100%" id="tb_invoice">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. Invoice</th>
+                                    <th scope="col" class="text-center">No. SJ</th>
+                                    <th scope="col" class="text-center text-nowrap">Tgl Terbit</th>
+                                    <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
+                                    <th scope="col" class="text-center">Customer</th>
+                                    <th scope="col" class="text-center">Tagihan</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_bpb" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" style="width:90%" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Daftar BPB</h5>
+                <div class="card-header-action">
+                </div>
+            </div>
+            <div class="place_alert_cart_stock text-center"></div>
+            <form id="form_ttd" autocomplete="off">
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" width="100%" id="tb_bpb">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">No</th>
+                                    <th scope="col" class="text-center">No. Invoice</th>
+                                    <th scope="col" class="text-center">No. BPB</th>
+                                    <th scope="col" class="text-center text-nowrap">Tgl Terbit</th>
+                                    <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
+                                    <th scope="col" class="text-center">Supplier</th>
+                                    <th scope="col" class="text-center">Tagihan</th>
+                                    <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
@@ -700,7 +788,7 @@
                 if (response.status === 200) {
                     var data = response.data;
                     // console.log(data);
-                    if(data.length){
+                    if (data.length) {
                         var value = data[0].mst_coa.fc_directpayment;
                         $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
                         if (value == "F") {
@@ -747,7 +835,7 @@
                     var data = response.data;
                     // console.log(data)
                     // berikan jika data tidak empty
-                    if(data.length > 0){
+                    if (data.length > 0) {
                         var value = data[0].mst_coa.fc_directpayment;
                         // console.log(data);
                         $("input[name=fc_directpayment_kredit][value=" + value + "]").prop('checked', true);
@@ -909,7 +997,7 @@
                     // console.log(data.fv_description)
                     var isDescReadOnly = previledgeDebit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-                    
+
                     if (createBy == 'SYS') {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
@@ -938,7 +1026,7 @@
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `);
-            } else if (lock == 'D' && data.coamst.fc_directpayment != 'T'){
+            } else if (lock == 'D' && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(``);
             } else {
                 $('td:eq(8)', row).html(`
@@ -1006,7 +1094,7 @@
                 render: function(data, type, full, meta) {
                     var isDescReadOnly = previledgeCredit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-                    
+
                     if (createBy == 'SYS') {
                         if (data.fv_description == null) {
                             return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
@@ -1028,8 +1116,8 @@
         ],
 
         rowCallback: function(row, data) {
-            
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode; 
+
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
@@ -1479,9 +1567,9 @@
                     $('#modal_loading').modal('hide');
                 }, 500);
                 if (response.status == 200) {
-                    swal(response.message, 
-                        { icon: 'success', }
-                    );
+                    swal(response.message, {
+                        icon: 'success',
+                    });
                     $("#modal_pembayaran").modal('hide');
                     $("#form_update")[0].reset();
                     reset_all_select();
@@ -1502,6 +1590,133 @@
                 });
             }
         });
+    });
+
+    var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
+    function look_inv() {
+        $("#modal_invoice").modal('show');
+    }
+
+    var tb_invoice = $('#tb_invoice').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 5,
+        order: [
+            [3, 'desc']
+        ],
+        ajax: {
+            url: '/apps/transaksi/detail/datatables-invoice/' + fc_docreference,
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+                className: 'text-nowrap',
+                targets: []
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_invno'
+            },
+            {
+                data: 'domst.fc_dono'
+            },
+            {
+                data: 'fd_inv_releasedate',
+                render: formatTimestamp
+            },
+            {
+                data: 'fd_inv_agingdate',
+                render: formatTimestamp
+            },
+            {
+                data: 'customer.fc_membername1'
+            },
+            {
+                data: 'fm_brutto',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            },
+            {
+                data: null
+            },
+        ],
+
+        rowCallback: function(row, data) {
+            var fc_invno = window.btoa(data.fc_invno);
+
+            $('td:eq(7)', row).html(`
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+        }
+    });
+
+    function look_bpb() {
+        $("#modal_bpb").modal('show');
+    }
+
+    var tb_bpb = $('#tb_bpb').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 5,
+        order: [
+            [3, 'desc']
+        ],
+        ajax: {
+            url: '/apps/transaksi/detail/datatables-bpb/' + fc_docreference,
+            type: 'GET'
+        },
+        columnDefs: [{
+                className: 'text-center',
+                targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            },
+            {
+                className: 'text-nowrap',
+                targets: []
+            },
+        ],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_invno'
+            },
+            {
+                data: 'romst.fc_rono'
+            },
+            {
+                data: 'fd_inv_releasedate',
+                render: formatTimestamp
+            },
+            {
+                data: 'fd_inv_agingdate',
+                render: formatTimestamp
+            },
+            {
+                data: 'supplier.fc_suppliername1'
+            },
+            {
+                data: 'fm_brutto',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+            },
+            {
+                data: null
+            },
+        ],
+
+        rowCallback: function(row, data) {
+            var fc_invno = window.btoa(data.fc_invno);
+
+            $('td:eq(7)', row).html(`
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+        }
     });
 
     $('.modal').css('overflow-y', 'auto');

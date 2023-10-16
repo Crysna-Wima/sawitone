@@ -53,6 +53,26 @@ class TransaksiDetailController extends Controller
             ->make(true);
     }
 
+    public function datatables_invoice($fc_docreference)
+    {
+        $decode_docreference = base64_decode($fc_docreference);
+        $data = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_entitycode', $decode_docreference)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_bpb($fc_docreference)
+    {
+        $decode_docreference = base64_decode($fc_docreference);
+        $data = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_entitycode', $decode_docreference)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function get_data_coa($coacode)
     {
         $fc_coacode = base64_decode($coacode);

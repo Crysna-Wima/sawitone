@@ -251,7 +251,7 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
-                            <label for="name">Hak Istimewa</label>
+                            <label for="name">Hak Istimewa Debit</label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checkAllDebit">General</label>
@@ -276,7 +276,11 @@
                             </div>
                         </div>
                         <div class="text-right">
+                            @if ($data->fc_debit_previledge == null)
                             <button type="submit" class="btn btn-primary">Simpan</button>
+                            @else
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -289,7 +293,7 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
-                            <label for="name">Hak Istimewa</label>
+                            <label for="name">Hak Istimewa Kredit</label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checkAllKredit">General</label>
@@ -314,7 +318,11 @@
                             </div>
                         </div>
                         <div class="text-right">
+                            @if ($data->fc_credit_previledge == null)
                             <button type="submit" class="btn btn-primary">Simpan</button>
+                            @else
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
                         </div>
                     </form>
                 </div>
