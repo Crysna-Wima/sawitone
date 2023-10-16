@@ -714,6 +714,8 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::delete('/delete/{fc_coacode}/{fn_rownum}/{fc_balancerelation}', 'Apps\TransaksiDetailController@delete');
                 Route::put('/submit_transaksi', 'Apps\TransaksiDetailController@submit_transaksi');
                 Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
+                Route::get('/datatables-invoice/{fc_docreference}', 'Apps\TransaksiDetailController@datatables_invoice');
+                Route::get('/datatables-bpb/{fc_docreference}', 'Apps\TransaksiDetailController@datatables_bpb');
             });
 
             Route::prefix('edit')->group(function () {
