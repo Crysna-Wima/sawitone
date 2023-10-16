@@ -1091,7 +1091,7 @@ class TransaksiDetailController extends Controller
                     ];
                 }
             }
-            // dd($request);
+            // dd(in_array('LINV', json_decode($request->fc_credit_previledge)));
         } catch (\Exception $e) {
             DB::rollback();
             return [
@@ -1292,4 +1292,6 @@ class TransaksiDetailController extends Controller
 
         return $invtrx;
     }
+
+    
 }
