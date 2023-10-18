@@ -168,7 +168,8 @@ class PersediaanBarangController extends Controller
         $decode_fc_warehousecode = base64_decode($fc_warehousecode);
         session(['fc_warehousecode_global' => $decode_fc_warehousecode]);
         $data['gudang_mst'] = Warehouse::where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['gudang_dtl'] = Invstore::with('stock')->where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->take(20)->get();
+        $data['gudang_dtl'] = Invstore::with('stock')->where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)
+        ->paginate(200);
 
         $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
         return $pdf->stream();
