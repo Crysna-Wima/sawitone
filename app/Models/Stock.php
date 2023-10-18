@@ -12,7 +12,7 @@ use App\Helpers\Convert;
 
 class Stock extends Model
 {
-    use HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
+    use \Awobaz\Compoships\Compoships, HasFactory, Blameable, SoftDeletes, LogsActivity, CompositeKey;
 
     protected static $logAttributes = ["*"];
 
@@ -52,7 +52,7 @@ class Stock extends Model
     }
 
     public function invstore(){
-        return $this->hasMany(Invstore::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->hasMany(Invstore::class, ['fc_stockcode'], ['fc_stockcode']);
     }
 
     // sodtl

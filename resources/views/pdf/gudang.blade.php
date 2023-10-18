@@ -21,6 +21,11 @@
 
     table {
         font-size: 11px;
+         width: 100%;
+    }
+
+    table th, table td {
+        width: auto; 
     }
 
     table th {
@@ -30,7 +35,7 @@
 
     table td {
         padding: 6px 4px;
-        font-size: .8rem;
+        font-size: .5rem;
     }
 
     .tp-1 td{
