@@ -27,6 +27,7 @@ Route::prefix('master')->group(function () {
     Route::get('/get-data-all/{model}', 'DataMasterController@get_data_all');
     Route::get('/get-data-by-id/{model}/{id}', 'DataMasterController@get_data_by_id');
     Route::get('/get-data-where-field-id-first/{model}/{where_field}/{id}', 'DataMasterController@get_data_where_field_id_first');
+    Route::get('/get-data-where-field-id-first-so-khusus/{model}/{where_field}/{id}', 'DataMasterController@get_data_where_field_id_first_so_khusus');
     Route::get('/get-data-where-field-id-first_customer/{model}/{where_field}/{id}', 'DataMasterController@get_data_where_field_id_first_customer');
     Route::get('/get-data-where-field-id-get/{model}/{where_field}/{id}', 'DataMasterController@get_data_where_field_id_get');
 

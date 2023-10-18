@@ -42,7 +42,7 @@ class DataMasterController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function get_data_where_field_id_first($model, $where_field, $id)
+    public function get_data_where_field_id_first_so_khusus($model, $where_field, $id)
     {
         // decode id
         $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)
@@ -52,6 +52,16 @@ class DataMasterController extends Controller
         $fc_stockcode = base64_decode($id);
         $model = 'App\\Models\\' . $model;
         $data = $model::where($where_field, $fc_stockcode)->where('fc_membercode', $fc_membercode)->first();
+        return ApiFormatter::getResponse($data);
+        // dd($data);
+    }
+
+    public function get_data_where_field_id_first($model, $where_field, $id)
+    {
+        // decode id
+        $fc_stockcode = base64_decode($id);
+        $model = 'App\\Models\\' . $model;
+        $data = $model::where($where_field, $fc_stockcode)->first();
         return ApiFormatter::getResponse($data);
         // dd($data);
     }
