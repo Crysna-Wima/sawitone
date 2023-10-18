@@ -709,24 +709,24 @@
                 },
                 {
                     data: 'fm_price_default',
-                    // render: function(data, type, row) {
-                    //     if ($('#category').val() == 'Khusus') {
-                    //         if (row.fm_price_customer == undefined) {
-                    //             return data
-                    //         } else {
-                    //             return row.fm_price_customer.toLocaleString('id-ID', {
-                    //                 style: 'currency',
-                    //                 currency: 'IDR'
-                    //             });
-                    //         }
+                    render: function(data, type, row) {
+                        if ($('#category').val() == 'Khusus') {
+                            if (row.fm_price_customer == undefined) {
+                                return data
+                            } else {
+                                return row.fm_price_customer.toLocaleString('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                });
+                            }
 
-                    //     } else {
-                    //         return data.toLocaleString('id-ID', {
-                    //             style: 'currency',
-                    //             currency: 'IDR'
-                    //         });
-                    //     }
-                    // }
+                        } else {
+                            return data.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            });
+                        }
+                    }
                 },
                 {
                     data: null
@@ -856,7 +856,7 @@
     function detail_stock_customer(id) {
         // console.log($id)
         var fc_stockcode = window.btoa(id);
-        console.log(fc_stockcode)
+        // console.log(fc_stockcode)
         $.ajax({
             url: "/master/get-data-where-field-id-first/StockCustomer/fc_stockcode/" + fc_stockcode,
             type: "GET",

@@ -45,9 +45,13 @@ class DataMasterController extends Controller
     public function get_data_where_field_id_first($model, $where_field, $id)
     {
         // decode id
+        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first()
+            ->fc_membercode;
         $fc_stockcode = base64_decode($id);
         $model = 'App\\Models\\' . $model;
-        $data = $model::where($where_field, $fc_stockcode)->first();
+        $data = $model::where($where_field, $fc_stockcode)->where('fc_membercode', $fc_membercode)->first();
         return ApiFormatter::getResponse($data);
         // dd($data);
     }
@@ -177,6 +181,7 @@ class DataMasterController extends Controller
 
         foreach ($data as $row) {
             $formattedRow = $row->stock;
+            $formattedRow['fm_price_customer'] = $row->fm_price_customer;
             $formattedRow['DT_RowIndex'] = ++$rowIndex;
             $formattedData[] = $formattedRow;
         }
