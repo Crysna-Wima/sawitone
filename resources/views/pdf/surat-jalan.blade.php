@@ -269,8 +269,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 50% !important; text-align: left;">(......................)</td>
-                    <td style="width: 50% !important; text-align: right;">( {{ $nama_pj }} )</td>
+                    <td style="width: 50% !important; text-align: left;">( {{ $nama_pj }} )</td>
+                    <td style="width: 50% !important; text-align: right;">(......................)</td>
                 </tr>
             </table>
             <div>
