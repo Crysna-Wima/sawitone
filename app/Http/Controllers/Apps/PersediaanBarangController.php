@@ -172,6 +172,7 @@ class PersediaanBarangController extends Controller
 
         $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
         return $pdf->stream();
+        // dd($data);
     }
 
     public function get_warehouse(){
