@@ -162,25 +162,28 @@ class DataMasterController extends Controller
             ->make(true);
     }
 
-    public function get_data_stock_customer_so_datatables(){
-        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first()->fc_membercode;
-        $data = StockCustomer::with(['stock.namepack'])->where('fc_membercode', $fc_membercode)->get();
+    public function get_data_stock_customer_so_datatables(Request $request) {
+        $fc_membercode = TempSoMaster::where('fc_sono', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first()
+            ->fc_membercode;
+
+        $data = StockCustomer::with(['stock.namepack'])
+            ->where('fc_membercode', $fc_membercode)
+            ->get();
 
         $formattedData = [];
         $rowIndex = 0;
-    
+
         foreach ($data as $row) {
-            $formattedRow = $row->stock; 
-            $formattedRow['DT_RowIndex'] = ++$rowIndex; 
+            $formattedRow = $row->stock;
+            $formattedRow['DT_RowIndex'] = ++$rowIndex;
             $formattedData[] = $formattedRow;
         }
-    
-        return response()->json([
-            'draw' => 0,
-            'recordsTotal' => count($formattedData),
-            'recordsFiltered' => count($formattedData),
-            'data' => $formattedData,
-        ]);  
+
+        return DataTables::of($formattedData)
+            ->addIndexColumn()
+            ->make(true);
     }
     
 
