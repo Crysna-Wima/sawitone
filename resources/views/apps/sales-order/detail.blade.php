@@ -597,6 +597,7 @@
         });
     }
 
+    
     function table_stock() {
         var tipe_bisnis = "{{ $data->customer->member_type_business->fv_description }}";
         var tb_stock = $('#tb_stock').DataTable({
@@ -649,82 +650,83 @@
                 },
                 {
                     data: 'fc_namelong',
-                    render: function(data, type, row) {
-                        if (!data) {
-                            return row.stock.fc_namelong;
-                        }
-                        return data;
-                    }
+                    // render: function(data, type, row) {
+                    //     if (!data) {
+                    //         return row.stock.fc_namelong;
+                    //     }
+                    //     return data;
+                    // },
+                    // searchable: true,
                 },
                 {
                     data: 'fc_brand',
-                    render: function(data, type, row) {
-                        if ($('#category').val() === 'Semua') {
-                            if (row && row.fc_brand) {
-                                return row.fc_brand;
-                            } else {
-                                return data;
-                            }
-                        } else if ($('#category').val() === 'Khusus') {
-                            if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
-                                return row.stock.fc_brand;
-                            } else {
-                                return data;
-                            }
-                        } else {
-                            return data;
-                        }
-                    }
+                    // render: function(data, type, row) {
+                    //     if ($('#category').val() === 'Semua') {
+                    //         if (row && row.fc_brand) {
+                    //             return row.fc_brand;
+                    //         } else {
+                    //             return data;
+                    //         }
+                    //     } else if ($('#category').val() === 'Khusus') {
+                    //         if (row.fc_brand === undefined && row.stock && row.stock.fc_brand) {
+                    //             return row.stock.fc_brand;
+                    //         } else {
+                    //             return data;
+                    //         }
+                    //     } else {
+                    //         return data;
+                    //     }
+                    // }
                 },
                 {
                     data: 'fc_subgroup',
-                    render: function(data, type, row) {
-                        if ($('#category').val() === 'Semua') {
-                            if (row && row.fc_subgroup) {
-                                return row.fc_subgroup;
-                            } else {
-                                return data;
-                            }
-                        } else if ($('#category').val() === 'Khusus') {
-                            if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
-                                return row.stock.fc_subgroup;
-                            } else {
-                                return data;
-                            }
-                        } else {
-                            return data;
-                        }
-                    }
+                    // render: function(data, type, row) {
+                    //     if ($('#category').val() === 'Semua') {
+                    //         if (row && row.fc_subgroup) {
+                    //             return row.fc_subgroup;
+                    //         } else {
+                    //             return data;
+                    //         }
+                    //     } else if ($('#category').val() === 'Khusus') {
+                    //         if (row.fc_subgroup === undefined && row.stock && row.stock.fc_subgroup) {
+                    //             return row.stock.fc_subgroup;
+                    //         } else {
+                    //             return data;
+                    //         }
+                    //     } else {
+                    //         return data;
+                    //     }
+                    // }
                 },
                 {
                     data: 'namepack.fv_description',
-                    render: function(data, type, row) {
-                        if (!data) {
-                            return row.stock.namepack.fv_description;
-                        }
-                        return data;
-                    }
+                    // render: function(data, type, row) {
+                    //     if (!data) {
+                    //         return row.stock.namepack.fv_description;
+                    //     }
+                    //     return data;
+                    // }
                 },
                 {
                     data: 'fm_price_default',
-                    render: function(data, type, row) {
-                        if ($('#category').val() == 'Khusus') {
-                            if (row.fm_price_customer == undefined) {
-                                return data
-                            } else {
-                                return row.fm_price_customer.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-                            }
+                    // render: function(data, type, row) {
+                    //     if ($('#category').val() == 'Khusus') {
+                    //         if (row.fm_price_customer == undefined) {
+                    //             return data
+                    //         } else {
+                    //             return row.fm_price_customer.toLocaleString('id-ID', {
+                    //                 style: 'currency',
+                    //                 currency: 'IDR'
+                    //             });
+                    //         }
 
-                        } else {
-                            return data.toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            });
-                        }
-                    }
+                    //     } else {
+                    //         return data.toLocaleString('id-ID', {
+                    //             style: 'currency',
+                    //             currency: 'IDR'
+                    //         });
+                    //     }
+                    // }
                 },
                 {
                     data: null
@@ -746,7 +748,7 @@
                 `);
                 }
 
-            }
+            },
         });
         // Reload datatable when category is changed
         $('#category').on('change', function() {
