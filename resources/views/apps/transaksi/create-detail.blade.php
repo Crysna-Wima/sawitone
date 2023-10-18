@@ -128,10 +128,10 @@
                 <div class="card-header">
                     <h4>Debit</h4>
                     <div class="card-header-action">
-                        @if (in_array('LBPB', json_decode($data->mapping->fc_debit_previledge), true))
+                        @if ($data->mapping->fc_debit_previledge && in_array('LBPB', json_decode($data->mapping->fc_debit_previledge)))
                         <button type="button" class="btn btn-warning" id="btn-bpb-debit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
                         <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
-                        @elseif (in_array('LINV', json_decode($data->mapping->fc_debit_previledge), true))
+                        @elseif ($data->mapping->fc_debit_previledge && in_array('LINV', json_decode($data->mapping->fc_debit_previledge)))
                         <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
                         <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
                         @else
@@ -168,10 +168,10 @@
                 <div class="card-header">
                     <h4>Kredit</h4>
                     <div class="card-header-action">
-                        @if (in_array('LBPB', json_decode($data->mapping->fc_credit_previledge), true))
+                        @if ($data->mapping->fc_credit_previledge && in_array('LBPB', json_decode($data->mapping->fc_credit_previledge), true))
                         <button type="button" class="btn btn-warning" id="btn-bpb-kredit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
-                        @elseif (in_array('LINV', json_decode($data->mapping->fc_credit_previledge), true))
+                        @elseif ($data->mapping->fc_credit_previledge && in_array('LINV', json_decode($data->mapping->fc_credit_previledge), true))
                         <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
                         @else
