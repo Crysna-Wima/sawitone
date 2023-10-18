@@ -165,6 +165,8 @@ class PersediaanBarangController extends Controller
 
     public function pdf($fc_warehousecode)
     {
+        ini_set('memory_limit', '2048M'); // 2GB
+        set_time_limit(360);
         $decode_fc_warehousecode = base64_decode($fc_warehousecode);
         session(['fc_warehousecode_global' => $decode_fc_warehousecode]);
         $data['gudang_mst'] = Warehouse::where('fc_warehousecode', $decode_fc_warehousecode)->where('fc_branch', auth()->user()->fc_branch)->first();
@@ -172,7 +174,7 @@ class PersediaanBarangController extends Controller
 
         $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
         return $pdf->stream();
-        // dd($data);
+        // dd($data['gudang_dtl']);
     }
 
     public function get_warehouse(){
