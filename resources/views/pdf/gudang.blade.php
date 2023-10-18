@@ -204,7 +204,7 @@
         </table>
         
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Data Persediaan Barang</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 50%" border="1">
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No.</th>
                 <th>Kode Barang</th>
