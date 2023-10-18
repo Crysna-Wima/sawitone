@@ -204,7 +204,7 @@
         </table>
         
         <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Data Persediaan Barang</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; font-size: 5px; width: 100%" border="1">
+        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No.</th>
                 <th>Kode Barang</th>
@@ -221,16 +221,16 @@
             @if(isset($gudang_dtl))
                 @foreach ($gudang_dtl as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ optional($item->stock)->fc_stockcode }}</td>
-                        <td>{{ optional($item->stock)->fc_namelong }}</td>
-                        <td>{{ optional($item->stock)->fc_nameshort }}</td>
-                        <td>{{ optional($item->stock)->fc_brand }}</td>
-                        <td>{{ optional($item->stock)->fc_subgroup }}</td>
-                        <td>{{ optional($item->stock)->fc_typestock2 }}</td>
-                        <td>{{ $item->fc_batch }}</td>
-                        <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
-                        <td>{{ $item->fn_quantity }}</td>
+                        <td style="width: 3%; font-size: 10px;">{{ $loop->iteration }}</td>
+                        <td style="width: 7%; font-size: 10px;">{{ optional($item->stock)->fc_stockcode }}</td>
+                        <td style="width: 15%; font-size: 10px;">{{ optional($item->stock)->fc_namelong }}</td>
+                        <td style="width: 15%; font-size: 10px;">{{ optional($item->stock)->fc_nameshort }}</td>
+                        <td style="width: 10%; font-size: 10px;">{{ optional($item->stock)->fc_brand }}</td>
+                        <td style="width: 12%; font-size: 10px;">{{ optional($item->stock)->fc_subgroup }}</td>
+                        <td style="width: 12%; font-size: 10px;">{{ optional($item->stock)->fc_typestock2 }}</td>
+                        <td style="width: 10%; font-size: 10px;">{{ $item->fc_batch }}</td>
+                        <td style="width: 8%; font-size: 10px;">{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td style="width: 6%; font-size: 10px;">{{ $item->fn_quantity }}</td>
                     </tr>
                 @endforeach
             @else
