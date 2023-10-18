@@ -23,7 +23,7 @@ class Invstore extends Model
 
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
+        return $this->hasOne(Stock::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();
     }
 
     // relasi dengan tabel dodtl
