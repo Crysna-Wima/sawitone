@@ -20,7 +20,7 @@
     }
 
     table {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     table th {
@@ -30,7 +30,7 @@
 
     table td {
         padding: 6px 4px;
-        font-size: .4rem;
+        font-size: .8rem;
     }
 
     .tp-1 td{
@@ -221,13 +221,13 @@
             @if(isset($gudang_dtl))
                 @foreach ($gudang_dtl as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ optional($item->stock)->fc_stockcode }}</td>
-                        <td>{{ optional($item->stock)->fc_namelong }}</td>
-                        <td>{{ optional($item->stock)->fc_nameshort }}</td>
-                        <td>{{ optional($item->stock)->fc_brand }}</td>
-                        <td>{{ optional($item->stock)->fc_subgroup }}</td>
-                        <td>{{ optional($item->stock)->fc_typestock2 }}</td>
+                        <td style="font-size: 9px">{{ $loop->iteration }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_stockcode }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_namelong }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_nameshort }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_brand }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_subgroup }}</td>
+                        <td style="font-size: 9px">{{ optional($item->stock)->fc_typestock2 }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_quantity }}</td>
