@@ -222,12 +222,12 @@
                 @foreach ($gudang_dtl as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->stock->fc_stockcode }}</td>
-                        <td>{{ $item->stock->fc_namelong }}</td>
-                        <td>{{ $item->stock->fc_nameshort }}</td>
-                        <td>{{ $item->stock->fc_brand }}</td>
-                        <td>{{ $item->stock->fc_subgroup }}</td>
-                        <td>{{ $item->stock->fc_typestock2 }}</td>
+                        <td>{{ optional($item->stock)->fc_stockcode }}</td>
+                        <td>{{ optional($item->stock)->fc_namelong }}</td>
+                        <td>{{ optional($item->stock)->fc_nameshort }}</td>
+                        <td>{{ optional($item->stock)->fc_brand }}</td>
+                        <td>{{ optional($item->stock)->fc_subgroup }}</td>
+                        <td>{{ optional($item->stock)->fc_typestock2 }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_quantity }}</td>
