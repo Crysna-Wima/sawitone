@@ -28,7 +28,8 @@
                 <div class="card-header">
                     <h4>Data COA</h4>
                     <div class="card-header-action">
-                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Data COA</button>
+                        <button type="button" class="btn btn-warning" onclick=""><i class="fas fa-file-export mr-1"></i> Export Excel</button>
+                        <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus"></i> Tambah Data COA</button>
                     </div>
                 </div>
                 <div class="card-body">
