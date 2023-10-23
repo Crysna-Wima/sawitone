@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apps;
 
 use App\Exports\KartuStockExport;
+use App\Exports\WarehouseExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Convert;
@@ -175,6 +176,13 @@ class PersediaanBarangController extends Controller
         $pdf = PDF::loadView('pdf.gudang', $data)->setPaper('a4');
         return $pdf->stream();
         // dd($data['gudang_dtl']);
+    }
+
+    public function export_excel(Request $request){
+        // ini_set('memory_limit', '2048M'); // 2GB
+        // set_time_limit(360);
+        $decode_fc_warehousecode = base64_decode($request->fc_warehousecode);
+        return Excel::download(new WarehouseExport($decode_fc_warehousecode), 'rekap_persediaan_barang.xlsx');
     }
 
     public function get_warehouse(){

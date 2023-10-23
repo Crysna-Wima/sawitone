@@ -391,11 +391,15 @@
         ],
         rowCallback: function(row, data) {
             var fc_warehousecode = window.btoa(data.fc_warehousecode);
-            $('td:eq(5)', row).html(`
+            var formHtml = `
                 <a href="/apps/persediaan-barang/detail/${fc_warehousecode}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-                <button class="btn btn-warning btn-sm" onclick=""><i class="fa-solid fa-file-excel"></i> Rekap</button>
+                <form id="exportForm" action="/apps/persediaan-barang/export-excel" method="POST" target="_blank" style="display: inline;">
+                    <input type="hidden" name="fc_warehousecode" value="${fc_warehousecode}" >
+                    <button type="submit" class="btn btn-warning btn-sm" style="display: inline;"><i class="fa-solid fa-file-excel"></i> Rekap</button>
+                </form>
                 <button class="btn btn-info btn-sm ml-1" onclick="click_modal_riwayat('${data.fc_warehousecode}', '${data.fc_rackname}')"><i class="fa fa-history"> </i> Riwayat</button>
-                `);
+            `;
+            $('td:eq(5)', row).html(formHtml);
                 // <a href="/apps/persediaan-barang/pdf/${fc_warehousecode}" target="_blank"><button class="btn btn-warning btn-sm"><i class="fa fa-file"></i> PDF</button></a>
         },
     });

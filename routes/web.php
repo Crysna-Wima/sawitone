@@ -442,6 +442,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get-warehouse', 'Apps\PersediaanBarangController@get_warehouse');
             Route::get('/get-stock', 'Apps\PersediaanBarangController@get_stock');
             Route::get('/pdf/{fc_warehousecode}', 'Apps\PersediaanBarangController@pdf');
+            Route::post('/export-excel', 'Apps\PersediaanBarangController@export_excel');
             Route::get('/detail/generate-qr/{fc_barcode}/{count}/{fd_expired_date}/{fc_batch}', 'Apps\PersediaanBarangController@generateQRCodePDF');
         });
 

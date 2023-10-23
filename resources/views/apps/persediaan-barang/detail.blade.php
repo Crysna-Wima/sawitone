@@ -260,7 +260,7 @@
                 var fc_batch = window.btoa(data.fc_batch);
                 var fc_barcode = window.btoa(data.stock.fc_barcode);
 
-                console.log(data);
+                // console.log(data);
                 $('td:eq(5)', row).html(`
                 <a href="/apps/persediaan-barang/detail/generate-qr/${fc_barcode}/${count}/${expired_date}/${fc_batch}" target="_blank" class="btn btn-primary btn-sm ml-1"><i class="fa fa-qrcode"></i> Generate QR</a>
                 `);
