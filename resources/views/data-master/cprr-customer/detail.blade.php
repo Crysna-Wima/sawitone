@@ -80,7 +80,7 @@
                         <div class="col-6 col-md-6 col-lg-6">
                             <div class="form-group required">
                                 <label>Harga</label>
-                                <input type="number" class="form-control required-field" name="fm_price" id="fm_price">
+                                <input class="form-control required-field" name="fm_price" id="fm_price">
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
