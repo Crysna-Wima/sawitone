@@ -25,7 +25,7 @@
             <th rowspan="2" style="border: 2px solid black;">Range Waktu</th>
             <th rowspan="2" style="border: 2px solid black;">Nama Gudang</th>
             <th rowspan="2" style="border: 2px solid black;">Nama Stock + Katalog</th>
-            <th colspan="3" style="border: 2px solid black;">Riwayat Inquiri</th>
+            <th colspan="3" style="border: 2px solid black;">Riwayat Inquiri</th> 
         </tr>
         <tr>
             <th style="border: 2px solid black;">Date</th>
