@@ -885,7 +885,9 @@
                     $("#fc_coacode").empty();
                     $("#fc_coacode").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_coacode").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
+                        if (data[i].mst_coa && data[i].mst_coa.fc_coaname !== null) {
+                            $("#fc_coacode").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
+                        }
                     }
                 } else {
                     iziToast.error({
@@ -902,6 +904,7 @@
             }
         });
     }
+
 
     function get_coa_kredit() {
         var mappingMst = window.btoa("{{ $data->fc_mappingcode }}");
@@ -916,13 +919,13 @@
                 }, 500);
                 if (response.status === 200) {
                     var data = response.data;
-                    // console.log(data)
                     $("#fc_coacode_kredit").empty();
                     $("#fc_coacode_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
-                        $("#fc_coacode_kredit").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
+                        if (data[i].mst_coa && data[i].mst_coa.fc_coaname !== null) {
+                            $("#fc_coacode_kredit").append(`<option value="${data[i].fc_coacode}">${data[i].mst_coa.fc_coaname}</option>`);
+                        }
                     }
-
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -938,7 +941,7 @@
             }
         });
     }
-
+    
     var tb_debit = $('#tb_debit').DataTable({
         processing: true,
         serverSide: true,
