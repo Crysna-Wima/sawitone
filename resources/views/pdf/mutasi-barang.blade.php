@@ -8,11 +8,11 @@
     @page {
         margin: 40px;
         padding: 40px;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     * {
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     p,
@@ -28,7 +28,7 @@
         padding: 6px 4px;
         font-size: 16px;
         font-weight: regular;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     table td {
@@ -166,7 +166,7 @@
     .table-lg,
     .table-lg th,
     .table-lg td {
-        border: 2px solid black;
+        border: 1px solid black;
     }
 
     @media print {
@@ -175,7 +175,7 @@
             width: 8.5in;
             height: 11in;
             display: block;
-            font-family: 'lucida-console-regular', sans-serif;
+            font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
         }
 
         @page {
@@ -191,7 +191,7 @@
                 <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
             </div>
             <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
-                <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
+                <p style="font-size: 12px;">PT DEXA ARFINDO PRATAMA</p>
                 <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
                 <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
                 <p>dexa-arfindopratama.com</p>

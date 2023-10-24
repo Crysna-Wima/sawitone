@@ -7,11 +7,11 @@
 <style>
     @page {
         margin: 40px 40px;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
     }
 
     * {
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
     }
 
 
@@ -28,7 +28,7 @@
         padding: 6px 4px;
         font-size: 16px;
         font-weight: regular;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
     }
 
     table td {
@@ -163,7 +163,7 @@
     .table-lg,
     .table-lg th,
     .table-lg td {
-        border: 2px solid black;
+        border: 1px solid black;
     }
 
     @media print {
@@ -172,7 +172,7 @@
             width: 8.5in;
             height: 11in;
             display: block;
-            font-family: 'lucida-console-regular', sans-serif;
+	        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
         }
 
         @page {
