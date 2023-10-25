@@ -17,23 +17,23 @@
 
     p,
     label {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     table {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px;
+        font-size: 12px;
         font-weight: regular;
         font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .tp-1 td {
@@ -46,7 +46,7 @@
     }
 
     .table-header {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .next-page {
@@ -83,15 +83,15 @@
     }
 
     .table-lg td {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .table-xl td {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .div-lg p {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     th,
@@ -196,19 +196,19 @@
         <div class="container" id="print">
             <div class="header" style="height: 100px">
                 <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
-                    <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
+                    <p style="font-size: 12px;">PT DEXA ARFINDO PRATAMA</p>
                     <p>Jl. Raya Jemursari No.329-331,</p>
                     <p>Sidosermo, Kec. Wonocolo,</p>
                     <p>Surabaya, Jawa Timur (60297)</p>
                     <p>dexa-arfindopratama.com</p>
                     <br>
-                    <p style="font-size: 16px;">Kepada</p>
+                    <p style="font-size: 12px;">Kepada</p>
                     <p>{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</p>
-                    <p style="font-size: 16px;">Alamat Pengiriman</p>
+                    <p style="font-size: 12px;">Alamat Pengiriman</p>
                     <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
                 </div>
                 <div style="position: absolute; right: 0px; top: 30; text-align: left;" class="no-margin">
-                    <p style="font-size: 16px;">SURAT JALAN</p>
+                    <p style="font-size: 14px;">SURAT JALAN</p>
                     <p>No. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_dono }}</p>
                     <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}</p>
                     <p>No. SO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $do_mst->fc_sono }}</p>
@@ -221,7 +221,7 @@
             <br><br>
             <br><br>
             <br>
-            <p style="font-size: 16px;">Pengiriman Barang</p>
+            <p style="font-size: 12px;">Pengiriman Barang</p>
             <table class="table-lg table-center" style="font-family: 'lucida-console-regular', sans-serif; margin-bottom: 15px; border-collapse: collapse; width: 100%;" border="1">
                 <tr>
                     <th>No</th>
