@@ -37,6 +37,7 @@
           <th width="30" style="font-weight: bold;">Batch</th>
           <th width="30" style="font-weight: bold;">Expired Date</th>
           <th width="30" style="font-weight: bold;">Qty</th>
+          <th width="30" style="font-weight: bold;">Satuan</th>
       </tr>
       @if(isset($gudang['gudang_dtl']))
           @foreach ($gudang['gudang_dtl'] as $item)
@@ -50,6 +51,7 @@
                   <td style="border: 1px solid black;">{{ $item->fc_batch }}</td>
                   <td style="border: 1px solid black;">{{ \Carbon\Carbon::parse($item->fd_expired)->isoFormat('D MMMM Y') }}</td>
                   <td style="border: 1px solid black;">{{ $item->fn_quantity }}</td>
+                  <td style="border: 1px solid black;">{{ optional($item->stock)->fc_namepack }}</td>
               </tr>
           @endforeach
       @else
