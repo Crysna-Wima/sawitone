@@ -17,23 +17,23 @@
 
     p,
     label {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     table {
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px;
+        font-size: 12px;
         font-weight: regular;
         font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     .tp-1 td{
@@ -46,7 +46,7 @@
     }
 
     .table-header {
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     .next-page {
@@ -93,15 +93,15 @@
     }
 
     .table-lg td{
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     .table-xl td {
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     .div-lg p{
-        font-size: 15px!important;
+        font-size: 12px!important;
     }
 
     .fw-bold{
@@ -160,7 +160,7 @@
     }
 
     .content p {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .table-lg,
@@ -200,7 +200,7 @@
     </div>
     <div class="content" id="print">
         <br>
-        <p style="text-align: center; font-size: 16px;">TANDA TERIMA MUTASI</p>
+        <p style="text-align: center; font-size: 14px;">TANDA TERIMA MUTASI</p>
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
             <tr>
                 <td>Tanggal</td>
@@ -229,7 +229,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto; margin-bottom:-15px;" class="no-space">
-        <p style="font-size: 16px; margin-left: 2%">Lokasi Awal :</p>
+        <p style="font-size: 12px; margin-left: 2%">Lokasi Awal :</p>
             <tr>
                 <td>{{ $mutasi_mst->warehouse_start->fc_rackname }}</td>
                 <td style="width: 5px"></td>
@@ -249,7 +249,7 @@
         </table>
 
         <table style="width: 92%; border-collapse: collapse; margin: auto;" class="no-space">
-        <p style="font-size: 16px; margin-left: 2%">Lokasi Tujuan :</p>
+        <p style="font-size: 12px; margin-left: 2%">Lokasi Tujuan :</p>
             <tr>
                 <td>{{ $mutasi_mst->warehouse_destination->fc_rackname }}</td>
                 <td style="width: 5px"></td>
@@ -268,7 +268,7 @@
             </tr>
         </table>
 
-        <p style="font-size: 16px; margin-left: 5%">Detail Barang</p>
+        <p style="font-size: 12px; margin-left: 5%">Detail Barang</p>
         <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
             <tr>
                 <th>No.</th>
