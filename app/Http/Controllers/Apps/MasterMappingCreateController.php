@@ -80,6 +80,7 @@ class MasterMappingCreateController extends Controller
                             ->where('fc_branch', auth()->user()->fc_branch)
                             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->first();
 
+        // cek di master mapping fc_balancerelation sama dengan '1 to N'
         if($cek_master_mapping && $cek_master_mapping->fc_balancerelation === '1 to N'){
             // filter berdasarkan mappingcode
             $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
@@ -105,7 +106,26 @@ class MasterMappingCreateController extends Controller
                     ];
                 }
             }
+        }
 
+        if($cek_master_mapping && is_array(json_decode($cek_master_mapping->fc_debit_previledge)) && count(json_decode($cek_master_mapping->fc_debit_previledge)) == 1 && json_decode($cek_master_mapping->fc_debit_previledge)[0] === ""){
+            return [
+                'status' => 300,
+                'message' => 'Pilih hak istimewa untuk Debit terlebih dahulu'
+            ];
+        }
+        
+        if($cek_master_mapping && in_array('ONCE', json_decode($cek_master_mapping->fc_debit_previledge))){
+            $count_debit = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+                                ->where('fc_branch', auth()->user()->fc_branch)
+                                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                ->where('fc_mappingpos', 'D')->count();
+            if($count_debit > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Hanya boleh ada satu catatan Debit'
+                ];
+            }
         }
 
         $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
@@ -193,7 +213,26 @@ class MasterMappingCreateController extends Controller
                     ];
                 }
             }
+        }
 
+        if($cek_master_mapping && is_array(json_decode($cek_master_mapping->fc_credit_previledge)) && count(json_decode($cek_master_mapping->fc_credit_previledge)) == 1 && json_decode($cek_master_mapping->fc_credit_previledge)[0] === ""){
+            return [
+                'status' => 300,
+                'message' => 'Pilih hak istimewa untuk Kredit terlebih dahulu'
+            ];
+        }
+        
+        if($cek_master_mapping && in_array('ONCE', json_decode($cek_master_mapping->fc_credit_previledge))){
+            $count_credit = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
+                                ->where('fc_branch', auth()->user()->fc_branch)
+                                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                ->where('fc_mappingpos', 'C')->count();
+            if($count_credit > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Hanya boleh ada satu catatan Credit'
+                ];
+            }
         }
 
         $exist_coa = MappingDetail::where('fc_mappingcode', $request->fc_mappingcode)
@@ -307,13 +346,77 @@ class MasterMappingCreateController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()]);
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
         }
 
         $decode_fc_mappingcode = base64_decode($fc_mappingcode);
-
         $json_encode = json_encode($request->trxaccmethod);
+        $cek_kredit = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                            ->where('fc_branch', auth()->user()->fc_branch)
+                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                            ->first();
+         
+        $onceValue = '';
+        $lbpbValue = '';
+        $linvValue = '';
 
+        foreach (json_decode($json_encode) as $value) {
+            if ($value === 'ONCE') {
+                $onceValue = $value;
+            } 
+
+            if ($value === 'LBPB') {
+                $lbpbValue = $value;
+            } 
+            
+            if ($value === 'LINV') {
+                $linvValue = $value;
+            }
+        }                    
+
+        // cek fc_credit_previledge apakah terdapat value 'ONCE', 'LBPB', 'LINV' di dalam array of string
+        $cek_once_kredit = in_array($onceValue,json_decode($cek_kredit->fc_credit_previledge));
+        $cek_lbpb_kredit = in_array($lbpbValue,json_decode($cek_kredit->fc_credit_previledge));
+        $cek_linv_kredit = in_array($linvValue,json_decode($cek_kredit->fc_credit_previledge));
+
+        if($cek_once_kredit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan One To Many pada Kredit terlebih dahulu'
+            ];
+        }
+
+        if($cek_lbpb_kredit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan Look BPB pada Kredit terlebih dahulu'
+            ];
+        }
+
+        if($cek_linv_kredit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan Look Invoice pada Kredit terlebih dahulu'
+            ];
+        }
+        
+        $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $decode_fc_mappingcode)
+                                            ->where('fc_mappingpos', 'D')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->count();
+
+        // apabila dia update dan memilih One To Many tetapi di mapping detail sudah ada lebih dari 1
+        if($cek_mapping_detail > 1 && $onceValue === 'ONCE'){
+            return [
+                'status' => 300,
+                'message' => 'Jika memilih One To Many hanya boleh ada 1 Mapping Debit'
+            ];
+        }
+        
         // insert ke t_mappingmst
         $data_update = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
@@ -334,6 +437,7 @@ class MasterMappingCreateController extends Controller
                 'message' => 'Metode Transaksi gagal diupdate',
             ];
         }
+        
     }
 
     public function update_trxaccmethod_kredit($fc_mappingcode, Request $request){
@@ -343,12 +447,78 @@ class MasterMappingCreateController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()]);
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
         }
 
         $decode_fc_mappingcode = base64_decode($fc_mappingcode);
 
         $json_encode = json_encode($request->trxaccmethod);
+
+        $cek_debit = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                            ->where('fc_branch', auth()->user()->fc_branch)
+                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                            ->first();
+         
+        $onceValue = '';
+        $lbpbValue = '';
+        $linvValue = '';
+
+        foreach (json_decode($json_encode) as $value) {
+            if ($value === 'ONCE') {
+                $onceValue = $value;
+            } 
+
+            if ($value === 'LBPB') {
+                $lbpbValue = $value;
+            } 
+            
+            if ($value === 'LINV') {
+                $linvValue = $value;
+            }
+        }                    
+
+        // cek fc_debit_previledge apakah terdapat value 'ONCE', 'LBPB', 'LINV' di dalam array of string
+        $cek_once_debit = in_array($onceValue,json_decode($cek_debit->fc_debit_previledge));
+        $cek_lbpb_debit = in_array($lbpbValue,json_decode($cek_debit->fc_debit_previledge));
+        $cek_linv_debit = in_array($linvValue,json_decode($cek_debit->fc_debit_previledge));
+
+        if($cek_once_debit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan One To Many pada Debit terlebih dahulu'
+            ];
+        }
+
+        if($cek_lbpb_debit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan Look BPB pada Debit terlebih dahulu'
+            ];
+        }
+
+        if($cek_linv_debit){
+            return [
+                'status' => 300,
+                'message' => 'Nonaktifkan Look Invoice pada Debit terlebih dahulu'
+            ];
+        }
+
+        $cek_mapping_detail = MappingDetail::where('fc_mappingcode', $decode_fc_mappingcode)
+                                            ->where('fc_mappingpos', 'C')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->count();
+
+        // apabila dia update dan memilih One To Many tetapi di mapping detail sudah ada lebih dari 1
+        if($cek_mapping_detail > 1 && $onceValue === 'ONCE'){
+            return [
+                'status' => 300,
+                'message' => 'Jika memilih One To Many hanya boleh ada 1 Mapping Kredit'
+            ];
+        }
 
         // insert ke t_mappingmst
         $data_update = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)

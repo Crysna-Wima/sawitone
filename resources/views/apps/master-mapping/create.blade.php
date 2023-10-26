@@ -189,6 +189,90 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_submit_accmethod_debit" action="/apps/master-mapping/create/trxaccmethod_debit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa Debit</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="checkAllDebit">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                    @if($trxaccmethod)
+                                        @foreach($trxaccmethod as $index => $accmethod)
+                                            @php
+                                                $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
+                                            @endphp
+                                            @if($accmethod->fc_kode !== 'DEFAULT')
+                                            <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }}>
+                                            <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            @if ($data->fc_debit_previledge == 'DEFAULT')
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            @else
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="form_submit" action="/apps/master-mapping/create/trxaccmethod_kredit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa Kredit</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="checkAllKredit">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                        @if($trxaccmethod)
+                                            @foreach($trxaccmethod as $index => $accmethod)
+                                                @php
+                                                    $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
+                                                @endphp
+                                                @if($accmethod->fc_kode !== 'DEFAULT')
+                                                    <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }}>
+                                                    <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            @if ($data->fc_credit_previledge == 'DEFAULT')
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            @else
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         {{-- Debit --}}
         <div class="col-12 col-md-12 col-lg-6 place_detail">
@@ -244,90 +328,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-12 col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <form id="form_submit_accmethod_debit" action="/apps/master-mapping/create/trxaccmethod_debit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Hak Istimewa Debit</label>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="checkAllDebit">General</label>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
-                                    <div class="ks-cboxtags">
-                                    @if($trxaccmethod)
-                                        @foreach($trxaccmethod as $index => $accmethod)
-                                            @php
-                                                $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
-                                            @endphp
-                                            @if($accmethod->fc_kode !== 'DEFAULT')
-                                            <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }}>
-                                            <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            @if ($data->fc_debit_previledge == null)
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            @else
-                            <button type="submit" class="btn btn-warning">Edit</button>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <form id="form_submit" action="/apps/master-mapping/create/trxaccmethod_kredit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Hak Istimewa Kredit</label>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="checkAllKredit">General</label>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
-                                    <div class="ks-cboxtags">
-                                        @if($trxaccmethod)
-                                            @foreach($trxaccmethod as $index => $accmethod)
-                                                @php
-                                                    $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
-                                                @endphp
-                                                @if($accmethod->fc_kode !== 'DEFAULT')
-                                                    <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }}>
-                                                    <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            @if ($data->fc_credit_previledge == null)
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                            @else
-                            <button type="submit" class="btn btn-warning">Edit</button>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
+
     </div>
     <div class="button text-right mb-4">
         <form id="form_submit_edit" action="/apps/master-mapping/submit/{{ $data->fc_mappingcode }}" method="post">
@@ -592,6 +594,95 @@
         }
     });
      // END Handle 'ONCE' value credit atau debit
+
+     // Handle 'LBPB' value credit atau debit
+        var lbpbDebitChecked = false;
+        var lbpbCreditChecked = false;
+
+        $('input[id^="checkbox_debit"]').each(function() {
+            if ($(this).val() === 'LBPB' && $(this).is(':checked')) {
+                lbpbDebitChecked = true;
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').each(function() {
+            if ($(this).val() === 'LBPB' && $(this).is(':checked')) {
+                lbpbCreditChecked = true;
+            }
+        });
+
+        if (lbpbDebitChecked) {
+            $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', true);
+        }
+        if (lbpbCreditChecked) {
+            $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', true);
+        }
+
+        $('input[id^="checkbox_debit"]').change(function() {
+            if ($(this).val() === 'LBPB') {
+                if ($(this).is(':checked')) {
+                    $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', false);
+                }
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').change(function() {
+            if ($(this).val() === 'LBPB') {
+                if ($(this).is(':checked')) {
+                    $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', false);
+                }
+            }
+        });
+        // END Handle 'LBPB' value credit atau debit
+
+        // Handle 'LINV' value credit atau debit
+        var linvDebitChecked = false;
+        var linvCreditChecked = false;
+
+        $('input[id^="checkbox_debit"]').each(function() {
+            if ($(this).val() === 'LINV' && $(this).is(':checked')) {
+                linvDebitChecked = true;
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').each(function() {
+            if ($(this).val() === 'LINV' && $(this).is(':checked')) {
+                linvCreditChecked = true;
+            }
+        });
+
+        if (linvDebitChecked) {
+            $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', true);
+        }
+        if (linvCreditChecked) {
+            $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', true);
+        }
+
+        $('input[id^="checkbox_debit"]').change(function() {
+            if ($(this).val() === 'LINV') {
+                if ($(this).is(':checked')) {
+                    $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', false);
+                }
+            }
+        });
+
+        $('input[id^="checkbox_kredit"]').change(function() {
+            if ($(this).val() === 'LINV') {
+                if ($(this).is(':checked')) {
+                    $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', false);
+                }
+            }
+        });
+     // END Handle 'LINV' value credit atau debit
+
 
      // Handle 'PAIR' value credit atau debit
         var pairDebitChecked = false;
