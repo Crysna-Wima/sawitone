@@ -295,7 +295,7 @@
                         <div class="form-group">
                             <label for="name">Hak Istimewa Kredit</label>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }}>
+                                <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="checkAllKredit">General</label>
                             </div>
                             <hr>
