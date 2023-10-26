@@ -359,9 +359,10 @@ class MasterMappingCreateController extends Controller
                             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                             ->first();
          
-        $onceValue = '';
-        $lbpbValue = '';
-        $linvValue = '';
+        // value 'empty' hanya sementara apabila kondisi tidak terpenuhi
+        $onceValue = 'empty';
+        $lbpbValue = 'empty';
+        $linvValue = 'empty';
 
         foreach (json_decode($json_encode) as $value) {
             if ($value === 'ONCE') {
@@ -462,9 +463,10 @@ class MasterMappingCreateController extends Controller
                             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                             ->first();
          
-        $onceValue = '';
-        $lbpbValue = '';
-        $linvValue = '';
+        // value 'empty' hanya sementara apabila kondisi tidak terpenuhi
+        $onceValue = 'empty';
+        $lbpbValue = 'empty';
+        $linvValue = 'empty';
 
         foreach (json_decode($json_encode) as $value) {
             if ($value === 'ONCE') {
