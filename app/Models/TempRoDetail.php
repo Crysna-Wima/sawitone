@@ -23,7 +23,7 @@ class TempRoDetail extends Model
     public $timestamps = true;
 
     public function stock(){
-        return $this->belongsTo(Stock::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->belongsTo(Stock::class, 'fc_barcode', 'fc_barcode');
     }
 
     

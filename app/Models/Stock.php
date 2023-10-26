@@ -67,7 +67,7 @@ class Stock extends Model
 
     // TempRoDetail
     public function temprodetail(){
-        return $this->hasMany(TempRoDetail::class, 'fc_stockcode', 'fc_stockcode');
+        return $this->hasMany(TempRoDetail::class, 'fc_barcode', 'fc_barcode');
     }
 
     // StockCustomer
