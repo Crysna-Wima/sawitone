@@ -221,7 +221,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            @if ($data->fc_debit_previledge == 'DEFAULT')
+                            @if ($data->fc_debit_previledge == '[""]')
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             @else
                             <button type="submit" class="btn btn-warning">Edit</button>
@@ -263,7 +263,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            @if ($data->fc_credit_previledge == 'DEFAULT')
+                            @if ($data->fc_credit_previledge == '[""]')
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             @else
                             <button type="submit" class="btn btn-warning">Edit</button>
@@ -274,6 +274,7 @@
             </div>
         </div>
 
+        @if ($data->fc_credit_previledge != '[""]' && $data->fc_debit_previledge != '[""]')
         {{-- Debit --}}
         <div class="col-12 col-md-12 col-lg-6 place_detail">
             <div class="card">
@@ -328,6 +329,8 @@
                 </div>
             </div>
         </div>
+        @else
+        @endif
     </div>
     <div class="button text-right mb-4">
         <form id="form_submit_edit" action="/apps/master-mapping/submit/{{ $data->fc_mappingcode }}" method="post">
