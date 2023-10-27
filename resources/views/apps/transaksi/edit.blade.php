@@ -910,7 +910,8 @@
         var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
-
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}"; 
+        var encode_mappingcode = btoa(fc_mappingcode);
         // console.log(tipe)
 
         swal({
@@ -922,16 +923,16 @@
         }).then(function(confirm) {
             if (confirm) {
                 if (tipe == 'D') {
-                    updateDebitTransaksi(rownum, newnominal, newdescription);
+                    updateDebitTransaksi(rownum, newnominal, newdescription, encode_mappingcode);
                 } else {
-                    updateKreditTransaksi(rownum, newnominal, newdescription);
+                    updateKreditTransaksi(rownum, newnominal, newdescription, encode_mappingcode);
                 }
 
             }
         });
     }
 
-    function updateDebitTransaksi(rownum, nominal, description) {
+    function updateDebitTransaksi(rownum, nominal, description, encode_mappingcode) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/edit/update-edit-debit-transaksi/' + encode_trxno,
@@ -940,6 +941,7 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
+                fc_mappingcode: encode_mappingcode
             },
             success: function(response) {
                 if (response.status == 200) {
@@ -977,6 +979,7 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
+                fc_mappingcode: encode_mappingcode
             },
             success: function(response) {
                 if (response.status == 200) {

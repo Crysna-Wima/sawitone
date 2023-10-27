@@ -316,7 +316,7 @@
 
         rowCallback: function(row, data) {
             var fc_trxno = window.btoa(data.fc_trxno);
-            console.log(fc_trxno);
+            // console.log(fc_trxno);
             var url_lanjutkan = "/apps/approvement/edit/" + fc_trxno;
 
             if (data['fc_approvalstatus'] == 'W') {

@@ -153,112 +153,126 @@ class TransaksiDetailController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function delete($fc_coacode, $fn_rownum, $fc_balancerelation)
+    public function delete($fc_coacode, $fn_rownum, $fc_balancerelation, $fc_mappingcode)
     {
         // decode
         $fc_balancerelation_decode = base64_decode($fc_balancerelation);
+        $fc_mappingcode_decode = base64_decode($fc_mappingcode);
         DB::beginTransaction();
 
         try {
-            if($fc_balancerelation_decode === '1 to N'){
-                $deletedRow = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
-                ->where('fn_rownum', $fn_rownum)
+            $deletedRow = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
+            ->where('fn_rownum', $fn_rownum)
+            ->first();
+    
+            // cek status_pos row yang dihapus
+            $status_pos = $deletedRow->fc_statuspos;
+            
+            // mengambil previledge sesuai dari mapping master
+            $previledge = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                 ->first();
-
-                if (!$deletedRow) {
+        
+            // cek apakah status_pos 'D' atau 'C'
+            if ($status_pos === 'D' || $status_pos === 'C') {
+                $debitPreviledge = json_decode($previledge->fc_debit_previledge);
+                $creditPreviledge = json_decode($previledge->fc_credit_previledge);
+                
+                // kondisi untuk cek apakah terdapat value ONCE di kredit apabila yang dihapus debit dan sebaliknya
+                if (in_array('ONCE', ($status_pos === 'D' ? $creditPreviledge : $debitPreviledge))) {
+                    if (!$deletedRow) {
+                        return [
+                            'status' => 300,
+                            'message' => 'Data tidak ditemukan'
+                        ];
+                    }
+        
+                    $isCredit = $deletedRow->fc_statuspos === 'C';
+                    $statusLawan = $isCredit ? 'D' : 'C'; // Status yang berlawanan dengan yang dihapus
+        
+                    // Hitung jumlah nominal selain row yang dihapus
+                    $remainingNominal = TempTrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum)
+                        ->where('fc_statuspos', $status_pos)
+                        ->where('fc_trxno', auth()->user()->fc_userid)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->sum('fm_nominal');
+        
+                    $countItem = TempTrxAccountingDetail::where('fc_statuspos', $status_pos)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
+        
+                    $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                        ->where('fn_rownum', $fn_rownum)
+                        ->delete();
+        
+                    if ($delete) {
+                        // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
+                        if ($isCredit) {
+                            if ($countItem < 2) {
+                                TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', auth()->user()->fc_userid)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => '0',
+                                    ]);
+                            } else {
+                                TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', auth()->user()->fc_userid)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => $remainingNominal,
+                                    ]);
+                            }
+                        }
+        
+                        DB::commit();
+                        return response()->json([
+                            'status' => 200,
+                            'message' => 'Data berhasil dihapus'
+                        ]);
+                    }
+        
+                    DB::rollback();
                     return [
                         'status' => 300,
-                        'message' => 'Data tidak ditemukan'
+                        'message' => 'Error'
                     ];
+                } else {
+                    $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                        ->where('fn_rownum', $fn_rownum)
+                        ->delete();
+        
+                    if ($delete) {
+                        DB::commit();
+                        return response()->json([
+                            'status' => 200,
+                            'message' => 'Data berhasil dihapus'
+                        ]);
+                    } else {
+                        DB::rollback();
+                        return [
+                            'status' => 300,
+                            'message' => 'Terjadi Error Saat Delete Data'
+                        ];
+                    }
                 }
-
-                $isCredit = $deletedRow->fc_statuspos === 'C';
-                $statusLawan = $isCredit ? 'D' : 'C'; // Status yang berlawanan dengan yang dihapus
-
-                // Hitung jumlah nominal selain row yang dihapus
-                $remainingNominal = TempTrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum) 
-                    ->where('fc_statuspos',  $deletedRow->fc_statuspos)
-                    ->where('fc_trxno', auth()->user()->fc_userid)
-                    ->where('fc_branch', auth()->user()->fc_branch)
-                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                    ->sum('fm_nominal');
-                
-                $countItem = TempTrxAccountingDetail::where('fc_statuspos',  $deletedRow->fc_statuspos)
-                    ->where('fc_branch', auth()->user()->fc_branch)
-                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
-
-                    // dd($remainingNominal);
+            } else {
                 $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
                     ->where('fn_rownum', $fn_rownum)
                     ->delete();
-
+        
                 if ($delete) {
-                    // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
-                    if ($isCredit) {
-                        if($countItem < 2){
-                            TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                            ->where('fc_trxno', auth()->user()->fc_userid)
-                            ->where('fc_branch', auth()->user()->fc_branch)
-                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                            ->update([
-                                'fm_nominal' => '0',
-                            ]);
-                        }else{
-                            TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                            ->where('fc_trxno', auth()->user()->fc_userid)
-                            ->where('fc_branch', auth()->user()->fc_branch)
-                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                            ->update([
-                                'fm_nominal' => $remainingNominal,
-                            ]);
-                        }
-                    
-                    } else {
-                        if($countItem < 2){
-                            TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                            ->where('fc_trxno', auth()->user()->fc_userid)
-                            ->where('fc_branch', auth()->user()->fc_branch)
-                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                            ->update([
-                                'fm_nominal' => '0',
-                            ]);
-                        }else{
-                            TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                            ->where('fc_trxno', auth()->user()->fc_userid)
-                            ->where('fc_branch', auth()->user()->fc_branch)
-                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                            ->update([
-                                'fm_nominal' => $remainingNominal,
-                            ]);
-                        }
-                    
-                    }
-
-                    DB::commit(); 
+                    DB::commit();
                     return response()->json([
                         'status' => 200,
                         'message' => 'Data berhasil dihapus'
                     ]);
-                }
-
-                DB::rollback(); 
-                return [
-                    'status' => 300,
-                    'message' => 'Error'
-                ];
-            }else{
-                $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
-                ->where('fn_rownum', $fn_rownum)
-                ->delete();
-
-                if ($delete) {
-                    DB::commit(); 
-                    return response()->json([
-                        'status' => 200,
-                        'message' => 'Data berhasil dihapus'
-                    ]);
-                }else{
-                    DB::rollback(); 
+                } else {
+                    DB::rollback();
                     return [
                         'status' => 300,
                         'message' => 'Terjadi Error Saat Delete Data'
@@ -647,9 +661,9 @@ class TransaksiDetailController extends Controller
 
     public function update_edit_debit_transaksi(Request $request, string $fc_trxno){
         $decode_fc_trxno = base64_decode($fc_trxno);
-        // validator
         $validator = Validator::make($request->all(), [
             'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
         ]);
     
         if($validator->fails()) {
@@ -658,51 +672,80 @@ class TransaksiDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-
+        
+        $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
-
+    
         if (is_array($invtrx)) {
             return $invtrx;
         } 
     
         DB::beginTransaction();
-
+    
         try {
-            
-            if($request->fc_balancerelation === '1 to N'){
-                // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'D'
-                $totalNominalDLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
-                    ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
-                    ->where('fc_statuspos', 'D')
-                    ->sum('fm_nominal');
-        
-                // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'D'
-                $updateDataD = [
-                    'fv_description' => $request->fv_description,
-                    'updated_by' => auth()->user()->fc_userid
+            // Jika $request->fc_credit_previledge array kosong
+            if (empty($request->fc_debit_previledge)){
+                return [
+                    'status' => 300,
+                    'message' => 'Tidak terdapat transaksi method previledge'
                 ];
-                
-                if (strpos($request->fm_nominal, 'Rp') === false) {
-                    $updateDataD['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
-                }
-                $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
-                    ->where('fn_rownum', $request->fn_rownum)
-                    ->where('fc_statuspos', 'D')
-                    ->update($updateDataD);
-        
-                if ($updateD) {
-                    // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'C' dengan total nominal dari 'D'
+            }
+    
+            $updateDescription = true;
+            $updateNominal = true;
+    
+            // Cek kondisi berdasarkan isi fc_credit_previledge
+            if (in_array('DESC', json_decode($request->fc_debit_previledge))) {
+                $updateDescription = false;
+            }
+    
+            if (in_array('VALUE', json_decode($request->fc_debit_previledge))) {
+                $updateNominal = false;
+            }
+    
+            // Update data pada TrxAccountingDetail dengan fc_statuspos 'D'
+            $updateDataC = [
+                'updated_by' => auth()->user()->fc_userid
+            ];
+    
+            if ($updateNominal && strpos($request->fm_nominal, 'Rp') === false) {
+                $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+            }
+    
+            if ($updateDescription) {
+                $updateDataC['fv_description'] = $request->fv_description;
+            }
+    
+            $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                ->where('fn_rownum', $request->fn_rownum)
+                ->where('fc_statuspos', 'D')
+                ->update($updateDataC);
+    
+            if ($updateD) {
+                $previledge = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                                  ->where('fc_branch', auth()->user()->fc_branch)
+                                                  ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                  ->first();
+                if (in_array('ONCE', json_decode($previledge->fc_credit_previledge))) {
+                    // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
+                    $totalNominalDLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                        ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
+                        ->where('fc_statuspos', 'D')
+                        ->sum('fm_nominal');
+                    
                     $updateDataC = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
-                    // dd(strpos($request->fm_nominal, 'Rp'));
-                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                    
+                    if ($updateNominal) {
                         $updateDataC['fm_nominal'] = Convert::convert_to_double($totalNominalDLama) + Convert::convert_to_double($request->fm_nominal);
                     }
+                    
+                    // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
                     $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_statuspos', 'C')
                         ->update($updateDataC);
-        
+                    
                     if ($updateC) {
                         DB::commit();
                         return [
@@ -717,40 +760,18 @@ class TransaksiDetailController extends Controller
                         ];
                     }
                 } else {
-                    DB::rollback();
-                    return [
-                        'status' => 300,
-                        'message' => 'Data gagal diubah'
-                    ];
-                }
-            }else{
-                $updateDataD = [
-                    'fv_description' => $request->fv_description,
-                    'updated_by' => auth()->user()->fc_userid
-                ];
-                
-                if (strpos($request->fm_nominal, 'Rp') === false) {
-                    $updateDataD['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
-                }
-                $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
-                    ->where('fn_rownum', $request->fn_rownum)
-                    ->where('fc_statuspos', 'D')
-                    ->update($updateDataD);
-                
-                if ($updateD) {
                     DB::commit();
                     return [
                         'status' => 200,
                         'message' => 'Data berhasil diubah'
                     ];
-                } else {
-                    DB::rollback();
-                    return [
-                        'status' => 300,
-                        'message' => 'Data debit gagal diubah'
-                    ];
                 }
-                // dd($request);
+            } else {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah'
+                ];
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -764,61 +785,93 @@ class TransaksiDetailController extends Controller
     public function update_edit_kredit_transaksi(Request $request, string $fc_trxno){
         $decode_fc_trxno = base64_decode($fc_trxno);
         // validator
-        $validator = Validator::make($request->all(), [
+         // validator
+         $validator = Validator::make($request->all(), [
             'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
         ]);
-
+    
         if($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
             ];
         }
-
+    
+        
+        $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
-
+    
         if (is_array($invtrx)) {
             return $invtrx;
         } 
-
+    
         DB::beginTransaction();
     
         try {
-
-          if($request->fc_balancerelation === '1 to N'){
-            // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
-            $totalNominalCLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
-            ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
-            ->where('fc_statuspos', 'C')
-            ->sum('fm_nominal');
+            // Jika $request->fc_credit_previledge array kosong
+            if (empty($request->fc_credit_previledge)){
+                return [
+                    'status' => 300,
+                    'message' => 'Tidak terdapat transaksi method previledge'
+                ];
+            }
+    
+            $updateDescription = true;
+            $updateNominal = true;
+    
+            // Cek kondisi berdasarkan isi fc_credit_previledge
+            if (in_array('DESC', json_decode($request->fc_credit_previledge))) {
+                $updateDescription = false;
+            }
+    
+            if (in_array('VALUE', json_decode($request->fc_credit_previledge))) {
+                $updateNominal = false;
+            }
     
             // Update data pada TempTrxAccountingDetail dengan fc_statuspos 'C'
             $updateDataC = [
-                'fv_description' => $request->fv_description,
                 'updated_by' => auth()->user()->fc_userid
             ];
-            
-            if (strpos($request->fm_nominal, 'Rp') === false) {
+    
+            if ($updateNominal && strpos($request->fm_nominal, 'Rp') === false) {
                 $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
             }
+    
+            if ($updateDescription) {
+                $updateDataC['fv_description'] = $request->fv_description;
+            }
+    
             $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                 ->where('fn_rownum', $request->fn_rownum)
                 ->where('fc_statuspos', 'C')
                 ->update($updateDataC);
     
-                if ($updateC) {
-                    // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
+            if ($updateC) {
+                $previledge = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                                  ->where('fc_branch', auth()->user()->fc_branch)
+                                                  ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                  ->first();
+                if (in_array('ONCE', json_decode($previledge->fc_debit_previledge))) {
+                    // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
+                    $totalNominalCLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                        ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
+                        ->where('fc_statuspos', 'C')
+                        ->sum('fm_nominal');
+                    
                     $updateDataD = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
-                    // dd(strpos($request->fm_nominal, 'Rp'));
-                    if (strpos($request->fm_nominal, 'Rp') === false) {
+                    
+                    if ($updateNominal) {
                         $updateDataD['fm_nominal'] = Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal);
                     }
+                    
+                    // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
                     $updateD = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_statuspos', 'D')
                         ->update($updateDataD);
-        
+                    
                     if ($updateD) {
                         DB::commit();
                         return [
@@ -833,40 +886,19 @@ class TransaksiDetailController extends Controller
                         ];
                     }
                 } else {
-                    DB::rollback();
-                    return [
-                        'status' => 300,
-                        'message' => 'Data gagal diubah'
-                    ];
-                }
-          }else{
-            $updateDataC = [
-                'fv_description' => $request->fv_description,
-                'updated_by' => auth()->user()->fc_userid
-            ];
-            
-            if (strpos($request->fm_nominal, 'Rp') === false) {
-                $updateDataC['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
-            }
-            $updateC = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
-                    ->where('fn_rownum', $request->fn_rownum)
-                    ->where('fc_statuspos', 'C')
-                    ->update($updateDataC);
-                
-                if ($updateC) {
                     DB::commit();
                     return [
                         'status' => 200,
                         'message' => 'Data berhasil diubah'
                     ];
-                } else {
-                    DB::rollback();
-                    return [
-                        'status' => 300,
-                        'message' => 'Data kredit gagal diubah'
-                    ];
                 }
-          }
+            } else {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah'
+                ];
+            }
         } catch (\Exception $e) {
             DB::rollback();
             return [
@@ -880,6 +912,7 @@ class TransaksiDetailController extends Controller
          // validator
          $validator = Validator::make($request->all(), [
             'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
         ]);
     
         if($validator->fails()) {

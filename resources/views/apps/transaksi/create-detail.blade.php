@@ -1024,7 +1024,9 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode;
+            var fc_mappingcode = "{{ $data->fc_mappingcode }}";
+            var encode_fc_mappingcode = btoa(fc_mappingcode);
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode ;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (lock == 'D' && data.coamst.fc_directpayment == 'T') {
@@ -1123,10 +1125,11 @@
         ],
 
         rowCallback: function(row, data) {
-
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode;
+            var fc_mappingcode = "{{ $data->fc_mappingcode }}";
+            var encode_fc_mappingcode = btoa(fc_mappingcode);
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
-
+            
             if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
@@ -1136,7 +1139,7 @@
             } else {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
-                <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
+                <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}','${encode_fc_mappingcode}')"><i class="fa fa-trash"> </i></button>
                 `);
             }
         },
