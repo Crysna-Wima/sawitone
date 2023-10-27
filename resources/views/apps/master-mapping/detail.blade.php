@@ -37,6 +37,80 @@
         content: ' *';
         display: inline;
     }
+
+    .cbox {
+        margin-top: 25px;
+    }
+
+    .ks-cboxtags {
+        list-style: none;
+    }
+
+    .ks-cboxtags {
+        display: inline;
+    }
+
+    .ks-cboxtags label {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, .9);
+        border: 2px solid rgba(139, 139, 139, .3);
+        color: #adadad;
+        border-radius: 25px;
+        white-space: nowrap;
+        margin: 3px 0px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags label {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+
+    .ks-cboxtags label::before {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 12px;
+        padding: 2px 6px 2px 2px;
+        content: "\f067";
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label::before {
+        content: "\f00c";
+        transform: rotate(-360deg);
+        transition: transform .3s ease-in-out;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:checked+label {
+        border: 2px solid #b6d7a8;
+        background-color: #0A9447;
+        color: #fff;
+        transition: all .2s;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        display: absolute;
+    }
+
+    .ks-cboxtags input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .ks-cboxtags input[type="checkbox"]:focus+label {
+        border: 2px solid #97d508;
+    }
 </style>
 @endsection
 @section('content')
@@ -104,6 +178,69 @@
                                 <div class="form-group">
                                     <label>Transaksi</label>
                                     <input type="text" class="form-control" name="fc_mappingtrxtype" id="fc_mappingtrxtype" value="{{ $data->transaksi->fv_description }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Hak Istimewa Debit</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }} disabled>
+                            <label class="form-check-label" for="checkAllDebit">General</label>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                <div class="ks-cboxtags">
+                                    @if($trxaccmethod)
+                                    @foreach($trxaccmethod as $index => $accmethod)
+                                    @php
+                                    $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
+                                    @endphp
+                                    @if($accmethod->fc_kode !== 'DEFAULT')
+                                    <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }} disabled>
+                                    <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Hak Istimewa Kredit</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }} disabled>
+                            <label class="form-check-label" for="checkAllKredit">General</label>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                <div class="ks-cboxtags">
+                                    @if($trxaccmethod)
+                                    @foreach($trxaccmethod as $index => $accmethod)
+                                    @php
+                                    $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
+                                    @endphp
+                                    @if($accmethod->fc_kode !== 'DEFAULT')
+                                    <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }} disabled>
+                                    <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                    @endif
+                                    @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
