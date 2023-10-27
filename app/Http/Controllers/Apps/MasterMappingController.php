@@ -31,7 +31,7 @@ class MasterMappingController extends Controller
             $data['fc_credit_previledge'] = json_decode($mapping_mst->fc_credit_previledge);
             $data['fc_debit_previledge'] = json_decode($mapping_mst->fc_debit_previledge);
             $data['data'] = MappingMaster::where('fc_branch', auth()->user()->fc_branch)->where('fc_mappingcode', $fc_mappingcode)->first();
-            $data['trxaccmethod'] = TransaksiType::where('fc_trx','TRXACCMETHOD')->get();
+            $data['trxaccmethod'] = TransaksiType::where('fc_trx', 'TRXACCMETHOD')->get();
             return view('apps.master-mapping.create', $data);
             // dd($data);
         }
@@ -42,8 +42,16 @@ class MasterMappingController extends Controller
     public function detail($fc_mappingcode)
     {
         $decode_fc_mappingcode = base64_decode($fc_mappingcode);
+        $mappingMaster = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->first();
+
         session(['fc_mappingcode_global' => $decode_fc_mappingcode]);
         $data['data'] = MappingMaster::with('branch', 'transaksi', 'tipe')->where('fc_mappingcode', $decode_fc_mappingcode)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['trxaccmethod'] = TransaksiType::where('fc_trx', 'TRXACCMETHOD')->get();
+        $data['fc_credit_previledge'] = json_decode($mappingMaster->fc_credit_previledge);
+        $data['fc_debit_previledge'] = json_decode($mappingMaster->fc_debit_previledge);
         return view('apps.master-mapping.detail', $data);
         // dd($data);
     }
@@ -147,8 +155,8 @@ class MasterMappingController extends Controller
     public function hold($fc_mappingcode)
     {
         $data = MappingMaster::where('fc_mappingcode', $fc_mappingcode)->update([
-                'fc_hold' => 'T',
-            ]);
+            'fc_hold' => 'T',
+        ]);
 
         if ($data) {
             return [
@@ -166,8 +174,8 @@ class MasterMappingController extends Controller
     public function unhold($fc_mappingcode)
     {
         $data = MappingMaster::where('fc_mappingcode', $fc_mappingcode)->update([
-                'fc_hold' => 'F',
-            ]);
+            'fc_hold' => 'F',
+        ]);
 
         if ($data) {
             return [

@@ -589,10 +589,9 @@
     var createBy = "{{ $data->mapping->created_by }}";
     var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
     var balancerelation_encode = window.btoa(fc_balancerelation);
-    var lock = "{{ $lock }}"
-    if (lock == 'C') {
+    if (previledgeCredit.includes('ONCE')) {
         $('#btn-kredit').prop('hidden', true);
-    } else if (lock == 'D') {
+    } else if (previledgeDebit.includes('ONCE')) {
         $('#btn-debit').prop('hidden', true);
     } else {
         $('#btn-kredit').prop('hidden', false);
@@ -977,7 +976,7 @@
                 render: function(data, type, full, meta) {
                     var isDescReadOnly = previledgeCredit.includes('VALUE');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-                    if (lock == 'D') {
+                    if (previledgeDebit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
@@ -1029,11 +1028,11 @@
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode ;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            if (lock == 'D' && data.coamst.fc_directpayment == 'T') {
+            if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `);
-            } else if (lock == 'D' && data.coamst.fc_directpayment != 'T') {
+            } else if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(``);
             } else {
                 $('td:eq(8)', row).html(`
@@ -1079,7 +1078,7 @@
                 render: function(data, type, full, meta) {
                     var isDescReadOnly = previledgeCredit.includes('VALUE');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-                    if (lock == 'C') {
+                    if (previledgeCredit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
@@ -1129,12 +1128,11 @@
             var encode_fc_mappingcode = btoa(fc_mappingcode);
             var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
-            
-            if (lock == 'C' && data.coamst.fc_directpayment == 'T') {
+            if (previledgeCredit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `)
-            } else if (lock == 'C' && data.coamst.fc_directpayment != 'T') {
+            } else if (previledgeCredit.includes('ONCE') && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(``)
             } else {
                 $('td:eq(8)', row).html(`
