@@ -888,7 +888,8 @@ class TransaksiDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-    
+        
+        $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
     
         if (is_array($invtrx)) {
@@ -937,7 +938,11 @@ class TransaksiDetailController extends Controller
                 ->update($updateDataC);
     
             if ($updateD) {
-                if (in_array('ONCE', json_decode($request->fc_debit_previledge))) {
+                $previledge = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                                  ->where('fc_branch', auth()->user()->fc_branch)
+                                                  ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                  ->first();
+                if (in_array('ONCE', json_decode($previledge->fc_credit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
                     $totalNominalDLama = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
@@ -997,6 +1002,7 @@ class TransaksiDetailController extends Controller
         // validator
         $validator = Validator::make($request->all(), [
             'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
         ]);
     
         if($validator->fails()) {
@@ -1006,6 +1012,8 @@ class TransaksiDetailController extends Controller
             ];
         }
     
+        
+        $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
     
         if (is_array($invtrx)) {
@@ -1054,7 +1062,11 @@ class TransaksiDetailController extends Controller
                 ->update($updateDataC);
     
             if ($updateC) {
-                if (in_array('ONCE', json_decode($request->fc_credit_previledge))) {
+                $previledge = MappingMaster::where('fc_mappingcode', $decode_fc_mappingcode)
+                                                  ->where('fc_branch', auth()->user()->fc_branch)
+                                                  ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                  ->first();
+                if (in_array('ONCE', json_decode($previledge->fc_debit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
                     $totalNominalCLama = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
