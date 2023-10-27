@@ -78,7 +78,7 @@
                                 <div class="form-group required">
                                     <label>Kode mapping</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="fc_mappingcode" name="fc_mappingcode" value="{{ $data->fc_mappingcode }}" readonly>
+                                        <input type="text" class="form-control" id="fc_mappingcode" value="{{ $data->fc_mappingcode }}" readonly>
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" disabled onclick="click_modal_mapping()" type="button"><i class="fa fa-search"></i></button>
                                         </div>
@@ -1149,7 +1149,8 @@
         var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
-
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}"; 
+        var encode_mappingcode = btoa(fc_mappingcode);
         // console.log(tipe)
 
         swal({
@@ -1161,16 +1162,16 @@
         }).then(function(confirm) {
             if (confirm) {
                 if (tipe == 'D') {
-                    updateDebitTransaksi(rownum, newnominal, newdescription);
+                    updateDebitTransaksi(rownum, newnominal, newdescription, encode_mappingcode);
                 } else {
-                    updateKreditTransaksi(rownum, newnominal, newdescription);
+                    updateKreditTransaksi(rownum, newnominal, newdescription, encode_mappingcode);
                 }
 
             }
         });
     }
 
-    function updateDebitTransaksi(rownum, nominal, description) {
+    function updateDebitTransaksi(rownum, nominal, description, encode_mappingcode) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/update-debit-transaksi',
@@ -1179,7 +1180,8 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
-                fc_balancerelation: fc_balancerelation
+                fc_balancerelation: fc_balancerelation,
+                fc_mappingcode: encode_mappingcode
             },
             success: function(response) {
                 if (response.status == 200) {
@@ -1208,7 +1210,7 @@
         });
     }
 
-    function updateKreditTransaksi(rownum, nominal, description) {
+    function updateKreditTransaksi(rownum, nominal, description, encode_mappingcode) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/update-kredit-transaksi',
@@ -1218,7 +1220,8 @@
                 fm_nominal: nominal,
                 fv_description: description,
                 fc_balancerelation: fc_balancerelation,
-                fc_credit_previledge: previledgeCredit
+                fc_credit_previledge: previledgeCredit,
+                fc_mappingcode: encode_mappingcode
             },
             success: function(response) {
                 if (response.status == 200) {
