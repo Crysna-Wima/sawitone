@@ -189,68 +189,76 @@
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="name">Hak Istimewa Debit</label>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }} disabled>
-                            <label class="form-check-label" for="checkAllDebit">General</label>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-9" id="checkbox">
-                                <div class="ks-cboxtags">
-                                    @if($trxaccmethod)
-                                    @foreach($trxaccmethod as $index => $accmethod)
-                                    @php
-                                    $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
-                                    @endphp
-                                    @if($accmethod->fc_kode !== 'DEFAULT')
-                                    <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }} disabled>
-                                    <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
-                                    @endif
-                                    @endforeach
-                                    @endif
+                    <form id="form_submit" action="/apps/master-mapping/trxaccmethod_debit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa Debit</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAllDebit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', json_decode(json_encode($fc_debit_previledge), true)) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="checkAllDebit">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                        @if($trxaccmethod)
+                                        @foreach($trxaccmethod as $index => $accmethod)
+                                        @php
+                                        $isDebitPreviledge = in_array($accmethod->fc_kode, $fc_debit_previledge);
+                                        @endphp
+                                        @if($accmethod->fc_kode !== 'DEFAULT')
+                                        <input type="checkbox" id="{{ 'checkbox_debit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isDebitPreviledge ? 'checked' : '' }}>
+                                        <label for="{{ 'checkbox_debit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                        @endif
+                                        @endforeach
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-warning" id="btn-debit">Edit</button>
-                    </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-warning" id="btn-debit">Edit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="name">Hak Istimewa Kredit</label>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }} disabled>
-                            <label class="form-check-label" for="checkAllKredit">General</label>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-9" id="checkbox">
-                                <div class="ks-cboxtags">
-                                    @if($trxaccmethod)
-                                    @foreach($trxaccmethod as $index => $accmethod)
-                                    @php
-                                    $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
-                                    @endphp
-                                    @if($accmethod->fc_kode !== 'DEFAULT')
-                                    <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }} disabled>
-                                    <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
-                                    @endif
-                                    @endforeach
-                                    @endif
+                <form id="update_kredit" action="/apps/master-mapping/trxaccmethod_kredit/{{ base64_encode($data->fc_mappingcode) }}" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Hak Istimewa Kredit</label>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkAllKredit" name="trxaccmethod[]" value="DEFAULT" {{ in_array('DEFAULT', $fc_credit_previledge) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="checkAllKredit">General</label>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-9" id="checkbox">
+                                    <div class="ks-cboxtags">
+                                        @if($trxaccmethod)
+                                        @foreach($trxaccmethod as $index => $accmethod)
+                                        @php
+                                        $isCreditPreviledge = in_array($accmethod->fc_kode, $fc_credit_previledge);
+                                        @endphp
+                                        @if($accmethod->fc_kode !== 'DEFAULT')
+                                        <input type="checkbox" id="{{ 'checkbox_kredit' . $index }}" name="trxaccmethod[]" value="{{ $accmethod->fc_kode }}" {{ $isCreditPreviledge ? 'checked' : '' }}>
+                                        <label for="{{ 'checkbox_kredit' . $index }}">{{ $accmethod->fv_description }}</label>
+                                        @endif
+                                        @endforeach
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-warning" id="btn-kredit">Edit</button>
-                    </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-warning" id="btn-kredit">Edit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -409,9 +417,251 @@
 
 @section('js')
 <script>
-    // $('btn-debit').click(function(){
-    //     $('input[type="checkbox"]').prop('disabled', false);
-    // });
+    $('btn-debit').click(function() {
+        $('input[type="checkbox"]').prop('disabled', false);
+    });
+
+    // trxaccmethod transaksi
+    var checkAllKredit = $('#checkAllKredit');
+    var isCheckedKredit = checkAllKredit.is(':checked');
+    var checkAllDebit = $('#checkAllDebit');
+    var isCheckedDebit = checkAllDebit.is(':checked');
+
+    if (isCheckedDebit) {
+        $('input[id^="checkbox_debit"]').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', true);
+    }
+
+    checkAllDebit.change(function() {
+        isCheckedDebit = $(this).is(':checked');
+        isCheckedKredit = $(this).is(':checked');
+
+        $('input[id^="checkbox_debit"]').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', isCheckedDebit);
+
+        if (!isCheckedKredit) {
+            $('input[id^="checkbox_kredit"]').prop('disabled', isCheckedDebit);
+        }
+    });
+
+    if (isCheckedKredit) {
+        $('input[id^="checkbox_kredit"]').prop('checked', false);
+        $('input[id^="checkbox_kredit"]').prop('disabled', true);
+    }
+
+    checkAllKredit.change(function() {
+        isCheckedKredit = $(this).is(':checked');
+        isCheckedDebit = $(this).is(':checked');
+
+        $('input[id^="checkbox_kredit"]').prop('checked', false);
+        $('input[id^="checkbox_kredit"]').prop('disabled', isCheckedKredit);
+
+        if (!isCheckedDebit) {
+            $('input[id^="checkbox_debit"]').prop('disabled', isCheckedDebit);
+        }
+
+    });
+
+    // Handle 'ONCE' value credit atau debit
+    var onceDebitChecked = false;
+    var onceCreditChecked = false;
+
+    $('input[id^="checkbox_debit"]').each(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            onceDebitChecked = true;
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').each(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            onceCreditChecked = true;
+        }
+    });
+
+    if (onceDebitChecked) {
+        $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+    }
+    if (onceCreditChecked) {
+        $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+    }
+
+    $('input[id^="checkbox_debit"]').change(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+        } else {
+            $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', false);
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').change(function() {
+        if ($(this).val() === 'ONCE' && $(this).is(':checked')) {
+            $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+        } else {
+            $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', false);
+        }
+    });
+    // END Handle 'ONCE' value credit atau debit
+
+    // Handle 'LBPB' value credit atau debit
+    var lbpbDebitChecked = false;
+    var lbpbCreditChecked = false;
+
+    $('input[id^="checkbox_debit"]').each(function() {
+        if ($(this).val() === 'LBPB' && $(this).is(':checked')) {
+            lbpbDebitChecked = true;
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').each(function() {
+        if ($(this).val() === 'LBPB' && $(this).is(':checked')) {
+            lbpbCreditChecked = true;
+        }
+    });
+
+    if (lbpbDebitChecked) {
+        $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', true);
+    }
+    if (lbpbCreditChecked) {
+        $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', true);
+    }
+
+    $('input[id^="checkbox_debit"]').change(function() {
+        if ($(this).val() === 'LBPB') {
+            if ($(this).is(':checked')) {
+                $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', true);
+            } else {
+                $('input[id^="checkbox_kredit"][value="LBPB"]').prop('disabled', false);
+            }
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').change(function() {
+        if ($(this).val() === 'LBPB') {
+            if ($(this).is(':checked')) {
+                $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', true);
+            } else {
+                $('input[id^="checkbox_debit"][value="LBPB"]').prop('disabled', false);
+            }
+        }
+    });
+    // END Handle 'LBPB' value credit atau debit
+
+    // Handle 'LINV' value credit atau debit
+    var linvDebitChecked = false;
+    var linvCreditChecked = false;
+
+    $('input[id^="checkbox_debit"]').each(function() {
+        if ($(this).val() === 'LINV' && $(this).is(':checked')) {
+            linvDebitChecked = true;
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').each(function() {
+        if ($(this).val() === 'LINV' && $(this).is(':checked')) {
+            linvCreditChecked = true;
+        }
+    });
+
+    if (linvDebitChecked) {
+        $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', true);
+    }
+    if (linvCreditChecked) {
+        $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', true);
+    }
+
+    $('input[id^="checkbox_debit"]').change(function() {
+        if ($(this).val() === 'LINV') {
+            if ($(this).is(':checked')) {
+                $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', true);
+            } else {
+                $('input[id^="checkbox_kredit"][value="LINV"]').prop('disabled', false);
+            }
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').change(function() {
+        if ($(this).val() === 'LINV') {
+            if ($(this).is(':checked')) {
+                $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', true);
+            } else {
+                $('input[id^="checkbox_debit"][value="LINV"]').prop('disabled', false);
+            }
+        }
+    });
+    // END Handle 'LINV' value credit atau debit
+
+
+    // Handle 'PAIR' value credit atau debit
+    var pairDebitChecked = false;
+    var pairCreditChecked = false;
+
+    $('input[id^="checkbox_debit"]').each(function() {
+        if ($(this).val() === 'PAIR' && $(this).is(':checked')) {
+            pairDebitChecked = true;
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').each(function() {
+        if ($(this).val() === 'PAIR' && $(this).is(':checked')) {
+            pairCreditChecked = true;
+        }
+    });
+
+    if (pairDebitChecked) {
+        $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+        $('#checkAllKredit').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', false);
+    }
+    if (pairCreditChecked) {
+        $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+        $('#checkAllDebit').prop('checked', false);
+        $('input[id^="checkbox_debit"]').prop('disabled', false);
+    }
+
+    $('input[id^="checkbox_debit"]').change(function() {
+        if ($(this).val() === 'PAIR') {
+            if ($(this).is(':checked')) {
+
+                var anyOnceChecked = $('input[id^="checkbox_debit"][value="ONCE"]:checked').length > 0;
+
+                if (anyOnceChecked) {
+                    $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+                    $('#checkAllKredit').prop('checked', false);
+                    $('input[id^="checkbox_kredit"]').prop('disabled', false);
+                    $('input[id^="checkbox_kredit"][value="ONCE"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', true);
+                    $('#checkAllKredit').prop('checked', false);
+                    $('input[id^="checkbox_kredit"]').prop('disabled', false);
+                }
+            } else {
+                $('input[id^="checkbox_kredit"][value="PAIR"]').prop('checked', false);
+            }
+        }
+    });
+
+    $('input[id^="checkbox_kredit"]').change(function() {
+        // console.log($(this).val())
+        if ($(this).val() === 'PAIR') {
+            if ($(this).is(':checked')) {
+                var anyOnceChecked = $('input[id^="checkbox_kredit"][value="ONCE"]:checked').length > 0;
+
+                if (anyOnceChecked) {
+                    $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+                    $('#checkAllDebit').prop('checked', false);
+                    $('input[id^="checkbox_debit"]').prop('disabled', false);
+                    $('input[id^="checkbox_debit"][value="ONCE"]').prop('disabled', true);
+                } else {
+                    $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', true);
+                    $('#checkAllDebit').prop('checked', false);
+                    $('input[id^="checkbox_debit"]').prop('disabled', false);
+                }
+                // console.log(anyOnceChecked)
+            } else {
+                $('input[id^="checkbox_debit"][value="PAIR"]').prop('checked', false);
+            }
+        }
+    });
 
     var mappingcode = "{{ $data->fc_mappingcode }}";
     var encode_mappingcode = window.btoa(mappingcode);
@@ -583,5 +833,83 @@
                 `);
         },
     });
+
+    $('#update_kredit').on('submit', function(e) {
+      e.preventDefault();
+
+      var form_id = $(this).attr("id");
+      var formData = new FormData($('#update_kredit')[0]);
+        // Cek apakah input dengan nama 'image_file' ada dan memiliki file terpilih
+      var imageInput = $('#customFile')[0];
+      if (imageInput && imageInput.files.length > 0) {
+         formData.append('image_file', imageInput.files[0]);
+      }
+      if (check_required(form_id) === false) {
+         swal("Oops! Mohon isi field yang kosong", {
+            icon: 'warning',
+         });
+         return;
+      }
+
+      swal({
+            title: 'Yakin?',
+            text: 'Apakah anda yakin akan menyimpan data ini?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+         })
+         .then((save) => {
+            if (save) {
+               $("#modal_loading").modal('show');
+               $.ajax({
+                  url: $('#update_kredit').attr('action'),
+                  type: $('#update_kredit').attr('method'),
+                  data: formData,
+                  contentType: false,
+                   processData: false,
+                  // data: $('#form_submit').serialize(),
+                  success: function(response) {
+                     setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                     }, 500);
+                     if (response.status == 200) {
+                        swal(response.message, {
+                           icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        $("#update_kredit")[0].reset();
+                        reset_all_select();
+                        tb.ajax.reload(null, false);
+
+                     } else if (response.status == 201) {
+                        swal(response.message, {
+                           icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        location.href = response.link;
+                     } else if (response.status == 203) {
+                        swal(response.message, {
+                           icon: 'success',
+                        });
+                        $("#modal").modal('hide');
+                        tb.ajax.reload(null, false);
+                     } else if (response.status == 300) {
+                        swal(response.message, {
+                           icon: 'error',
+                        });
+                     }
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                     setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                     }, 500);
+                     swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                        icon: 'error',
+                     });
+                  }
+               });
+            }
+         });
+   });
 </script>
 @endsection
