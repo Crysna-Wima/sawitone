@@ -327,6 +327,43 @@ class TransaksiDetailController extends Controller
         // dd($request);
     }
 
+    public function update_edit_pembayaran(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'fc_paymentmethod_edit' => 'required',
+            'fn_rownum' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        $update_pembayaran = TempTrxAccountingDetail::where([
+            'fn_rownum' => $request->fn_rownum,
+        ])->update([
+            'fc_paymentmethod' => $request->fc_paymentmethod_edit,
+            'fc_refno' => $request->fc_refno_edit,
+            'fd_agingref' => $request->fd_agingref_edit,
+            'fv_description' => $request->fv_description_payment
+        ]);
+
+        if ($update_pembayaran) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil diupdate'
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error'
+        ];
+        // dd($request);
+    }
+
     public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum)
     {
         DB::beginTransaction();

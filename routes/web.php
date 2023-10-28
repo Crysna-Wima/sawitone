@@ -727,6 +727,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::put('update-edit-kredit-transaksi/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_kredit_transaksi');
                 Route::delete('/delete/{fc_trxno}/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@edit_delete');
                 Route::put('/submit-edit/{fc_trxno}', 'Apps\TransaksiDetailController@submit_edit');
+                Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
             });
         });
 

@@ -214,6 +214,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-warning" id="btn-debit">Edit</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -244,6 +247,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-warning" id="btn-kredit">Edit</button>
                     </div>
                 </div>
             </div>
@@ -403,6 +409,10 @@
 
 @section('js')
 <script>
+    // $('btn-debit').click(function(){
+    //     $('input[type="checkbox"]').prop('disabled', false);
+    // });
+
     var mappingcode = "{{ $data->fc_mappingcode }}";
     var encode_mappingcode = window.btoa(mappingcode);
 
