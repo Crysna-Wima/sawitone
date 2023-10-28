@@ -1638,7 +1638,8 @@
                 data: 'fc_invno'
             },
             {
-                data: 'domst.fc_dono'
+                data: 'domst.fc_dono',
+                defaultContent: '-'
             },
             {
                 data: 'fd_inv_releasedate',
@@ -1649,7 +1650,8 @@
                 render: formatTimestamp
             },
             {
-                data: 'customer.fc_membername1'
+                data: 'customer.fc_membername1',
+                defaultContent: '-'
             },
             {
                 data: 'fm_brutto',
@@ -1701,7 +1703,8 @@
                 data: 'fc_invno'
             },
             {
-                data: 'romst.fc_rono'
+                data: 'romst.fc_rono',
+                defaultContent: '-'
             },
             {
                 data: 'fd_inv_releasedate',
@@ -1712,7 +1715,8 @@
                 render: formatTimestamp
             },
             {
-                data: 'supplier.fc_suppliername1'
+                data: 'supplier.fc_suppliername1',
+                defaultContent: '-'
             },
             {
                 data: 'fm_brutto',
