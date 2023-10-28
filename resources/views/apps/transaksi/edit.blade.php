@@ -554,6 +554,9 @@
     var createBy = "{{ $data->mapping->created_by }}";
     var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
     var balancerelation_encode = window.btoa(fc_balancerelation);
+    var referenceBpb = null;
+    var referenceInvoice = null;
+    
     if (previledgeCredit.includes('ONCE')) {
         $('#btn-kredit').prop('hidden', true);
     } else if (previledgeDebit.includes('ONCE')) {
@@ -1376,7 +1379,8 @@
     }
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
-    function look_inv() {
+    function look_inv(value) {
+        referenceInvoice = value;
         $("#modal_invoice").modal('show');
     }
 
@@ -1425,8 +1429,11 @@
                 defaultContent: '-'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: null,
+                render: function ( data, type, row ) {
+                    nominal = data.fm_brutto - data.fm_paidvalue;
+                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                }
             },
             {
                 data: null
@@ -1435,13 +1442,63 @@
 
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
-
+            var nominal = data.fm_brutto - data.fm_paidvalue;
+            
             $('td:eq(7)', row).html(`
-            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_inv('${data.fc_invno}','${nominal}')"><i class="fa fa-check"></i> Pilih</button>`)
         }
     });
 
-    function look_bpb() {
+    function select_inv(fc_invno, nominal) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/edit/store-from-inv',
+            type: 'POST',
+            data: {
+                fc_invno: fc_invno,
+                nominal: nominal,
+                fc_docreference: fc_docreference,
+                reference_invoice: referenceInvoice
+            },
+            success: function(response) {
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_invoice').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    tb_debit.ajax.reload();
+                    tb_kredit.ajax.reload();
+                } else {
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+
+                    $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                }
+            },
+            error: function(xhr, status, error) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function look_bpb(value) {
+        referenceBpb = value;
         $("#modal_bpb").modal('show');
     }
 
@@ -1490,8 +1547,11 @@
                 defaultContent: '-'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: null,
+                render: function ( data, type, row ) {
+                    nominal = data.fm_brutto - data.fm_paidvalue;
+                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                }
             },
             {
                 data: null
@@ -1500,11 +1560,60 @@
 
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
+            var nominal = data.fm_brutto - data.fm_paidvalue;
 
             $('td:eq(7)', row).html(`
-            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_bpb('${data.fc_invno}','${nominal}')"><i class="fa fa-check"></i> Pilih</button>`)
         }
     });
+
+    function select_bpb(fc_invno, nominal) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/edit/store-from-bpb',
+            type: 'POST',
+            data: {
+                fc_invno: fc_invno,
+                nominal: nominal,
+                fc_docreference: fc_docreference,
+                reference_bpb: referenceBpb
+            },
+            success: function(response) {
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_bpb').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    tb_debit.ajax.reload();
+                    tb_kredit.ajax.reload();
+                } else {
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+
+                    $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                }
+            },
+            error: function(xhr, status, error) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 </script>
 
 @endsection
