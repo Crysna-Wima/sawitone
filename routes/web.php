@@ -710,6 +710,8 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::get('/{coacode}', 'Apps\TransaksiDetailController@get_data_coa');
                 Route::get('/kredit/{coacode}', 'Apps\TransaksiDetailController@get_data_coa_kredit');
                 Route::post('/store-debit', 'Apps\TransaksiDetailController@store_debit');
+                Route::post('/store-from-bpb', 'Apps\TransaksiDetailController@store_bpb');
+                Route::post('/store-from-inv', 'Apps\TransaksiDetailController@store_invoice');
                 Route::post('/store-kredit', 'Apps\TransaksiDetailController@store_kredit');
                 Route::put('update-debit-transaksi', 'Apps\TransaksiDetailController@update_debit_transaksi');
                 Route::put('update-kredit-transaksi', 'Apps\TransaksiDetailController@update_kredit_transaksi');

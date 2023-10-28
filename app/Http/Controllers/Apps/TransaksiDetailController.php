@@ -485,6 +485,166 @@ class TransaksiDetailController extends Controller
         }
     }
 
+    public function store_bpb(Request $request){
+        DB::beginTransaction();
+    
+        try {
+            $fc_docreference = base64_decode($request->fc_docreference);
+            $validator = Validator::make($request->all(), [
+                'fc_invno' => 'required',
+                'nominal' => 'required',
+                'fc_docreference' => 'required'
+            ]);
+    
+            if($validator->fails()) {
+                return [
+                    'status' => 300,
+                    'message' => $validator->errors()->first()
+                ];
+            }
+            $cek_exist = TempTrxAccountingDetail::where('fv_description', $request->fc_invno)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->count();
+
+            if($cek_exist > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'No.Invoice sudah tersedia'
+                ];
+            }
+    
+            $temp_detail = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+            $fn_rownum = 1;
+            if (!empty($temp_detail)) {
+                $fn_rownum = $temp_detail->fn_rownum + 1;
+            }
+            
+            $fc_paymentmethod = 'NON';
+            $fc_directpayment = DB::table('t_coa')
+                                ->where('fc_coacode', '310.311')
+                                ->value('fc_directpayment');
+            if($fc_directpayment == 'F'){
+                $fc_paymentmethod = 'NON';
+            }else{
+                $fc_paymentmethod = 'TRANS';
+            }
+
+            $insert = TempTrxAccountingDetail::create([
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_trxno' => auth()->user()->fc_userid,
+                'fn_rownum' => $fn_rownum,
+                'fc_coacode' => '310.311.' . $fc_docreference,
+                'fc_statuspos' => $request->reference_bpb,
+                'fm_nominal' => $request->nominal,
+                'fc_paymentmethod' => $fc_paymentmethod,
+                'fv_description' => $request->fc_invno,
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($insert){
+                DB::commit(); 
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil disimpan'
+                ];
+            }else{
+                DB::rollback(); 
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback(); 
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function store_invoice(Request $request){
+        DB::beginTransaction();
+    
+        try {
+            $fc_docreference = base64_decode($request->fc_docreference);
+            $validator = Validator::make($request->all(), [
+                'fc_invno' => 'required',
+                'nominal' => 'required',
+                'fc_docreference' => 'required'
+            ]);
+    
+            if($validator->fails()) {
+                return [
+                    'status' => 300,
+                    'message' => $validator->errors()->first()
+                ];
+            }
+            $cek_exist = TempTrxAccountingDetail::where('fv_description', $request->fc_invno)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->count();
+
+            if($cek_exist > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'No.Invoice sudah tersedia'
+                ];
+            }
+    
+            $temp_detail = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+            $fn_rownum = 1;
+            if (!empty($temp_detail)) {
+                $fn_rownum = $temp_detail->fn_rownum + 1;
+            }
+            
+            $fc_paymentmethod = 'NON';
+            $fc_directpayment = DB::table('t_coa')
+                                ->where('fc_coacode', '130.131')
+                                ->value('fc_directpayment');
+            if($fc_directpayment == 'F'){
+                $fc_paymentmethod = 'NON';
+            }else{
+                $fc_paymentmethod = 'TRANS';
+            }
+
+            $insert = TempTrxAccountingDetail::create([
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_trxno' => auth()->user()->fc_userid,
+                'fn_rownum' => $fn_rownum,
+                'fc_coacode' => '130.131.' . $fc_docreference,
+                'fc_statuspos' => $request->reference_invoice,
+                'fm_nominal' => $request->nominal,
+                'fc_paymentmethod' => $fc_paymentmethod,
+                'fv_description' => $request->fc_invno,
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($insert){
+                DB::commit(); 
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil disimpan'
+                ];
+            }else{
+                DB::rollback(); 
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback(); 
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
     public function store_kredit(Request $request){
         DB::beginTransaction();
     

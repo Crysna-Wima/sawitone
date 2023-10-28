@@ -129,10 +129,10 @@
                     <h4>Debit</h4>
                     <div class="card-header-action">
                         @if ($data->mapping->fc_debit_previledge && in_array('LBPB', json_decode($data->mapping->fc_debit_previledge)))
-                        <button type="button" class="btn btn-warning" id="btn-bpb-debit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
+                        <button type="button" class="btn btn-warning" id="btn-bpb-debit" onclick="look_bpb('D');"><i class="fa fa-plus mr-1"></i> BPB</button>
                         <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
                         @elseif ($data->mapping->fc_debit_previledge && in_array('LINV', json_decode($data->mapping->fc_debit_previledge)))
-                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
+                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv('D');"><i class="fa fa-plus mr-1"></i> Invoice</button>
                         <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
                         @else
                         <button type="button" class="btn btn-success" id="btn-debit" onclick="add_debit();"><i class="fa fa-plus"></i> Tambah Debit</button>
@@ -169,10 +169,10 @@
                     <h4>Kredit</h4>
                     <div class="card-header-action">
                         @if ($data->mapping->fc_credit_previledge && in_array('LBPB', json_decode($data->mapping->fc_credit_previledge), true))
-                        <button type="button" class="btn btn-warning" id="btn-bpb-kredit" onclick="look_bpb();"><i class="fa fa-plus mr-1"></i> BPB</button>
+                        <button type="button" class="btn btn-warning" id="btn-bpb-kredit" onclick="look_bpb('C');"><i class="fa fa-plus mr-1"></i> BPB</button>
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
                         @elseif ($data->mapping->fc_credit_previledge && in_array('LINV', json_decode($data->mapping->fc_credit_previledge), true))
-                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv();"><i class="fa fa-plus mr-1"></i> Invoice</button>
+                        <button type="button" class="btn btn-warning" id="btn-inv-kredit" onclick="look_inv('C');"><i class="fa fa-plus mr-1"></i> Invoice</button>
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
                         @else
                         <button type="button" class="btn btn-success" id="btn-kredit" onclick="add_kredit();"><i class="fa fa-plus mr-1"></i> Tambah Kredit</button>
@@ -589,6 +589,8 @@
     var createBy = "{{ $data->mapping->created_by }}";
     var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
     var balancerelation_encode = window.btoa(fc_balancerelation);
+    var referenceBpb = null;
+    var referenceInvoice = null;
     if (previledgeCredit.includes('ONCE')) {
         $('#btn-kredit').prop('hidden', true);
     } else if (previledgeDebit.includes('ONCE')) {
@@ -1605,7 +1607,8 @@
     });
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
-    function look_inv() {
+    function look_inv(value) {
+        referenceInvoice = value;
         $("#modal_invoice").modal('show');
     }
 
@@ -1664,13 +1667,62 @@
 
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
-
+            var nominal = data.fm_brutto - data.fm_paidvalue;
             $('td:eq(7)', row).html(`
-            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_inv('${data.fc_invno}','${nominal}')"><i class="fa fa-check"></i> Pilih</button>`)
         }
     });
 
-    function look_bpb() {
+    function select_inv(fc_invno, nominal) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/detail/store-from-inv',
+            type: 'POST',
+            data: {
+                fc_invno: fc_invno,
+                nominal: nominal,
+                fc_docreference: fc_docreference,
+                reference_invoice: referenceInvoice
+            },
+            success: function(response) {
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_invoice').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    tb_debit.ajax.reload();
+                    tb_kredit.ajax.reload();
+                } else {
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+
+                    $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                }
+            },
+            error: function(xhr, status, error) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function look_bpb(value) {
+        referenceBpb = value;
         $("#modal_bpb").modal('show');
     }
 
@@ -1729,11 +1781,59 @@
 
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
-
+            var nominal = data.fm_brutto - data.fm_paidvalue;
             $('td:eq(7)', row).html(`
-            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="get_inv('${data.fc_invno}')"><i class="fa fa-check"></i> Pilih</button>`)
+            <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_bpb('${data.fc_invno}','${nominal}')"><i class="fa fa-check"></i> Pilih</button>`)
         }
     });
+
+    function select_bpb(fc_invno, nominal) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/detail/store-from-bpb',
+            type: 'POST',
+            data: {
+                fc_invno: fc_invno,
+                nominal: nominal,
+                fc_docreference: fc_docreference,
+                reference_bpb: referenceBpb
+            },
+            success: function(response) {
+                if (response.status === 200) {
+                    iziToast.success({
+                        title: 'Success!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                    $('#modal_bpb').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                    tb_debit.ajax.reload();
+                    tb_kredit.ajax.reload();
+                } else {
+                    iziToast.error({
+                        title: 'Gagal!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+
+                    $('#modal_debit').modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                }
+            },
+            error: function(xhr, status, error) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     $('.modal').css('overflow-y', 'auto');
 </script>
