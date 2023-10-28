@@ -648,6 +648,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/unhold/{fc_mappingcode}', 'Apps\MasterMappingController@unhold');
             Route::delete('/cancel/{fc_mappingcode}', 'Apps\MasterMappingController@cancel');
             Route::put('/submit/{fc_mappingcode}', 'Apps\MasterMappingController@submit');
+            Route::put('/trxaccmethod_debit/{fc_mappingcode}', 'Apps\MasterMappingController@update_trxaccmethod_debit');
+            Route::put('/trxaccmethod_kredit/{fc_mappingcode}', 'Apps\MasterMappingController@update_trxaccmethod_kredit');
 
             Route::prefix('delete')->group(function () {
                 Route::delete('/debit/{fc_coacode}', 'Apps\MasterMappingCreateController@delete_debit');
@@ -729,6 +731,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::put('update-edit-kredit-transaksi/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_kredit_transaksi');
                 Route::delete('/delete/{fc_trxno}/{fc_coacode}/{fn_rownum}', 'Apps\TransaksiDetailController@edit_delete');
                 Route::put('/submit-edit/{fc_trxno}', 'Apps\TransaksiDetailController@submit_edit');
+                Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
             });
         });
 
