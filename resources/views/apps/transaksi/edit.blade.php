@@ -554,6 +554,8 @@
     var createBy = "{{ $data->mapping->created_by }}";
     var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
     var balancerelation_encode = window.btoa(fc_balancerelation);
+    var referenceBpb = null;
+    var referenceInvoice = null;
     if (previledgeCredit.includes('ONCE')) {
         $('#btn-kredit').prop('hidden', true);
     } else if (previledgeDebit.includes('ONCE')) {
@@ -1376,7 +1378,7 @@
     }
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
-    function look_inv() {
+    function look_inv(value) {
         $("#modal_invoice").modal('show');
     }
 
