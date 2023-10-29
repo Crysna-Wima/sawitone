@@ -364,97 +364,134 @@ class TransaksiDetailController extends Controller
         // dd($request);
     }
 
-    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum)
+    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum,$fc_balancerelation, $fc_mappingcode)
     {
+        // decode
+        $fc_balancerelation_decode = base64_decode($fc_balancerelation);
+        $fc_mappingcode_decode = base64_decode($fc_mappingcode);
+        $decode_fc_trxno = base64_decode($fc_trxno);
         DB::beginTransaction();
 
         try {
-            $decode_fc_trxno = base64_decode($fc_trxno);
             $deletedRow = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
-                ->where('fn_rownum', $fn_rownum)
-                ->first();
-
-            if (!$deletedRow) {
-                return [
-                    'status' => 300,
-                    'message' => 'Data tidak ditemukan'
-                ];
-            }
-
-            $isCredit = $deletedRow->fc_statuspos === 'C';
-            $statusLawan = $isCredit ? 'D' : 'C'; // Status yang berlawanan dengan yang dihapus
-
-            // Hitung jumlah nominal selain row yang dihapus
-            $remainingNominal = TrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum) 
-                ->where('fc_statuspos',  $deletedRow->fc_statuspos)
-                ->where('fc_trxno', $decode_fc_trxno)
+            ->where('fn_rownum', $fn_rownum)
+            ->first();
+    
+            // cek status_pos row yang dihapus
+            $status_pos = $deletedRow->fc_statuspos;
+            
+            // mengambil previledge sesuai dari mapping master
+            $previledge = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
                 ->where('fc_branch', auth()->user()->fc_branch)
                 ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                ->sum('fm_nominal');
-            
-            $countItem = TrxAccountingDetail::where('fc_statuspos',  $deletedRow->fc_statuspos)
-                ->where('fc_branch', auth()->user()->fc_branch)
-                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
-
-                // dd($remainingNominal);
-            $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
-                ->where('fn_rownum', $fn_rownum)
-                ->delete();
-
-            if ($delete) {
-                // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
-                if ($isCredit) {
-                    if($countItem < 2){
-                        TrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                ->first();
+        
+            // cek apakah status_pos 'D' atau 'C'
+            if ($status_pos === 'D' || $status_pos === 'C') {
+                $debitPreviledge = json_decode($previledge->fc_debit_previledge);
+                $creditPreviledge = json_decode($previledge->fc_credit_previledge);
+                
+                // kondisi untuk cek apakah terdapat value ONCE di kredit apabila yang dihapus debit dan sebaliknya
+                if (in_array('ONCE', ($status_pos === 'D' ? $creditPreviledge : $debitPreviledge))) {
+                    if (!$deletedRow) {
+                        return [
+                            'status' => 300,
+                            'message' => 'Data tidak ditemukan'
+                        ];
+                    }
+        
+                    $isCredit = $deletedRow->fc_statuspos === 'C';
+                    $statusLawan = $isCredit ? 'D' : 'C'; // Status yang berlawanan dengan yang dihapus
+        
+                    // Hitung jumlah nominal selain row yang dihapus
+                    $remainingNominal = TrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum)
+                        ->where('fc_statuspos', $status_pos)
                         ->where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                        ->update([
-                            'fm_nominal' => '0',
-                        ]);
-                    }else{
-                        TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                        ->where('fc_trxno', $decode_fc_trxno)
+                        ->sum('fm_nominal');
+        
+                    $countItem = TrxAccountingDetail::where('fc_statuspos', $status_pos)
                         ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                        ->update([
-                            'fm_nominal' => $remainingNominal,
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
+        
+                    $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                        ->where('fn_rownum', $fn_rownum)
+                        ->delete();
+        
+                    if ($delete) {
+                        // Update nominal di debit jika yang dihapus adalah kredit, atau sebaliknya
+                        if ($isCredit) {
+                            if ($countItem < 2) {
+                                TrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => '0',
+                                    ]);
+                            } else {
+                                TrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => $remainingNominal,
+                                    ]);
+                            }
+                        }
+        
+                        DB::commit();
+                        return response()->json([
+                            'status' => 200,
+                            'message' => 'Data berhasil dihapus'
                         ]);
                     }
-                   
+        
+                    DB::rollback();
+                    return [
+                        'status' => 300,
+                        'message' => 'Error'
+                    ];
                 } else {
-                    if($countItem < 2){
-                        TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                        ->where('fc_trxno', $decode_fc_trxno)
-                        ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                        ->update([
-                            'fm_nominal' => '0',
+                    $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                        ->where('fn_rownum', $fn_rownum)
+                        ->delete();
+        
+                    if ($delete) {
+                        DB::commit();
+                        return response()->json([
+                            'status' => 200,
+                            'message' => 'Data berhasil dihapus'
                         ]);
-                    }else{
-                        TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                        ->where('fc_trxno', $decode_fc_trxno)
-                        ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
-                        ->update([
-                            'fm_nominal' => $remainingNominal,
-                        ]);
+                    } else {
+                        DB::rollback();
+                        return [
+                            'status' => 300,
+                            'message' => 'Terjadi Error Saat Delete Data'
+                        ];
                     }
-                  
                 }
-
-                DB::commit(); 
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Data berhasil dihapus'
-                ]);
+            } else {
+                $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                    ->where('fn_rownum', $fn_rownum)
+                    ->delete();
+        
+                if ($delete) {
+                    DB::commit();
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'Data berhasil dihapus'
+                    ]);
+                } else {
+                    DB::rollback();
+                    return [
+                        'status' => 300,
+                        'message' => 'Terjadi Error Saat Delete Data'
+                    ];
+                }
             }
-
-            DB::rollback(); 
-            return [
-                'status' => 300,
-                'message' => 'Error'
-            ];
+            
         } catch (\Exception $e) {
             DB::rollback(); 
             return [
@@ -522,6 +559,7 @@ class TransaksiDetailController extends Controller
         }
     }
 
+    // Transaksi Utama
     public function store_bpb(Request $request){
         DB::beginTransaction();
     
@@ -651,6 +689,170 @@ class TransaksiDetailController extends Controller
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_trxno' => auth()->user()->fc_userid,
+                'fn_rownum' => $fn_rownum,
+                'fc_coacode' => '130.131.' . $fc_docreference,
+                'fc_statuspos' => $request->reference_invoice,
+                'fm_nominal' => $request->nominal,
+                'fc_paymentmethod' => $fc_paymentmethod,
+                'fv_description' => $request->fc_invno,
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($insert){
+                DB::commit(); 
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil disimpan'
+                ];
+            }else{
+                DB::rollback(); 
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback(); 
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    // Edit Transaksi
+    public function store_bpb_edit(Request $request){
+        $decode_fc_trxno = base64_decode($request->fc_trxno);
+
+        DB::beginTransaction();
+    
+        try {
+            $fc_docreference = base64_decode($request->fc_docreference);
+            $validator = Validator::make($request->all(), [
+                'fc_invno' => 'required',
+                'nominal' => 'required',
+                'fc_docreference' => 'required'
+            ]);
+    
+            if($validator->fails()) {
+                return [
+                    'status' => 300,
+                    'message' => $validator->errors()->first()
+                ];
+            }
+            $cek_exist = TrxAccountingDetail::where('fv_description', $request->fc_invno)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->count();
+
+            if($cek_exist > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'No.Invoice sudah tersedia'
+                ];
+            }
+    
+            $detail = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)->orderBy('fn_rownum', 'DESC')->first();
+            $fn_rownum = 1;
+            if (!empty($detail)) {
+                $fn_rownum = $detail->fn_rownum + 1;
+            }
+            
+            $fc_paymentmethod = 'NON';
+            $fc_directpayment = DB::table('t_coa')
+                                ->where('fc_coacode', '310.311')
+                                ->value('fc_directpayment');
+            if($fc_directpayment == 'F'){
+                $fc_paymentmethod = 'NON';
+            }else{
+                $fc_paymentmethod = 'TRANS';
+            }
+
+            $insert = TrxAccountingDetail::create([
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_trxno' => $decode_fc_trxno,
+                'fn_rownum' => $fn_rownum,
+                'fc_coacode' => '310.311.' . $fc_docreference,
+                'fc_statuspos' => $request->reference_bpb,
+                'fm_nominal' => $request->nominal,
+                'fc_paymentmethod' => $fc_paymentmethod,
+                'fv_description' => $request->fc_invno,
+                'created_by' => auth()->user()->fc_userid
+            ]);
+    
+            if($insert){
+                DB::commit(); 
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil disimpan'
+                ];
+            }else{
+                DB::rollback(); 
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback(); 
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function store_invoice_edit(Request $request){
+        $decode_fc_trxno = base64_decode($request->fc_trxno);
+        DB::beginTransaction();
+    
+        try {
+            $fc_docreference = base64_decode($request->fc_docreference);
+            $validator = Validator::make($request->all(), [
+                'fc_invno' => 'required',
+                'nominal' => 'required',
+                'fc_docreference' => 'required'
+            ]);
+    
+            if($validator->fails()) {
+                return [
+                    'status' => 300,
+                    'message' => $validator->errors()->first()
+                ];
+            }
+            $cek_exist = TrxAccountingDetail::where('fv_description', $request->fc_invno)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+            ->count();
+
+            if($cek_exist > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'No.Invoice sudah tersedia'
+                ];
+            }
+    
+            $detail = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)->orderBy('fn_rownum', 'DESC')->first();
+            $fn_rownum = 1;
+            if (!empty($detail)) {
+                $fn_rownum = $detail->fn_rownum + 1;
+            }
+            
+            $fc_paymentmethod = 'NON';
+            $fc_directpayment = DB::table('t_coa')
+                                ->where('fc_coacode', '130.131')
+                                ->value('fc_directpayment');
+            if($fc_directpayment == 'F'){
+                $fc_paymentmethod = 'NON';
+            }else{
+                $fc_paymentmethod = 'TRANS';
+            }
+
+            $insert = TrxAccountingDetail::create([
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_trxno' => $decode_fc_trxno,
                 'fn_rownum' => $fn_rownum,
                 'fc_coacode' => '130.131.' . $fc_docreference,
                 'fc_statuspos' => $request->reference_invoice,

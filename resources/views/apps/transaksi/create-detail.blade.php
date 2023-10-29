@@ -599,8 +599,7 @@
         $('#btn-kredit').prop('hidden', false);
         $('#btn-debit').prop('hidden', false);
     }
-    // var editCatatan =  $('#fv_description').val();
-    // $('#fv_description_submit').val(editCatatan);
+
     $(document).ready(function() {
         get_data_payment();
         get_coa();
@@ -1657,8 +1656,11 @@
                 defaultContent: '-'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: null,
+                render: function ( data, type, row ) {
+                    nominal = data.fm_brutto - data.fm_paidvalue;
+                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                }
             },
             {
                 data: null
@@ -1771,8 +1773,11 @@
                 defaultContent: '-'
             },
             {
-                data: 'fm_brutto',
-                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                data: null,
+                render: function ( data, type, row ) {
+                    nominal = data.fm_brutto - data.fm_paidvalue;
+                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                }
             },
             {
                 data: null
