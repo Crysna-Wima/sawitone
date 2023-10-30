@@ -1384,10 +1384,14 @@
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
     function look_inv(value) {
-
         referenceInvoice = value;
-
-        $("#modal_invoice").modal('show');
+        if (tb_invoice.rows().data().length === 0) {
+            swal("Tidak terdapat data COA yang relevan.", {
+                icon: 'error',
+            });
+        }else{
+            $("#modal_invoice").modal('show');
+        }
     }
 
     var tb_invoice = $('#tb_invoice').DataTable({
@@ -1506,7 +1510,13 @@
 
     function look_bpb(value) {
         referenceBpb = value;
-        $("#modal_bpb").modal('show');
+        if (tb_bpb.rows().data().length === 0) {
+            swal("Tidak terdapat data COA yang relevan.", {
+                icon: 'error',
+            });
+        }else{
+            $("#modal_bpb").modal('show');
+        }
     }
 
     var tb_bpb = $('#tb_bpb').DataTable({

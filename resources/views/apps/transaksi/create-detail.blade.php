@@ -1183,6 +1183,7 @@
                 fm_nominal: nominal,
                 fv_description: description,
                 fc_balancerelation: fc_balancerelation,
+                fc_debit_previledge: previledgeDebit,
                 fc_mappingcode: encode_mappingcode
             },
             success: function(response) {
@@ -1608,7 +1609,13 @@
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
     function look_inv(value) {
         referenceInvoice = value;
-        $("#modal_invoice").modal('show');
+        if (tb_invoice.rows().data().length === 0) {
+            swal("Tidak terdapat data COA yang relevan.", {
+                icon: 'error',
+            });
+        }else{
+            $("#modal_invoice").modal('show');
+        }
     }
 
     var tb_invoice = $('#tb_invoice').DataTable({
@@ -1725,7 +1732,13 @@
 
     function look_bpb(value) {
         referenceBpb = value;
-        $("#modal_bpb").modal('show');
+        if (tb_bpb.rows().data().length === 0) {
+            swal("Tidak terdapat data COA yang relevan.", {
+                icon: 'error',
+            });
+        } else {
+            $("#modal_bpb").modal('show');
+        }
     }
 
     var tb_bpb = $('#tb_bpb').DataTable({
@@ -1783,7 +1796,6 @@
                 data: null
             },
         ],
-
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
             var nominal = data.fm_brutto - data.fm_paidvalue;

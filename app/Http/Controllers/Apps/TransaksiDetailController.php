@@ -577,6 +577,13 @@ class TransaksiDetailController extends Controller
                     'message' => $validator->errors()->first()
                 ];
             }
+
+            $invtrx = $this->validateAndUpdateInvoiceBpb($request);
+    
+            if (is_array($invtrx)) {
+                return $invtrx;
+            } 
+
             $cek_exist = TempTrxAccountingDetail::where('fv_description', $request->fc_invno)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
@@ -1074,10 +1081,15 @@ class TransaksiDetailController extends Controller
         
         $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
-    
         if (is_array($invtrx)) {
             return $invtrx;
+        }
+
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        if (is_array($invtrxBpb)) {
+            return $invtrxBpb;
         } 
+        
     
         DB::beginTransaction();
     
@@ -1200,9 +1212,13 @@ class TransaksiDetailController extends Controller
         
         $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
-    
         if (is_array($invtrx)) {
             return $invtrx;
+        } 
+
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        if (is_array($invtrxBpb)) {
+            return $invtrxBpb;
         } 
     
         DB::beginTransaction();
@@ -1323,9 +1339,13 @@ class TransaksiDetailController extends Controller
         
         $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
         $invtrx = $this->validateAndUpdateInvoice($request);
-    
         if (is_array($invtrx)) {
             return $invtrx;
+        } 
+
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        if (is_array($invtrxBpb)) {
+            return $invtrxBpb;
         } 
     
         DB::beginTransaction();
@@ -1450,6 +1470,11 @@ class TransaksiDetailController extends Controller
     
         if (is_array($invtrx)) {
             return $invtrx;
+        } 
+
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        if (is_array($invtrxBpb)) {
+            return $invtrxBpb;
         } 
     
         DB::beginTransaction();
@@ -1737,6 +1762,37 @@ class TransaksiDetailController extends Controller
                 return [
                     'status' => 300,
                     'message' => 'Data gagal diubah, karena melebihi total INV'
+                ];
+            }
+        } else {
+            $invtrx = null;
+        }
+
+        return $invtrx;
+    }
+
+    private function validateAndUpdateInvoiceBpb($request){
+        if ($request->fv_description !== null && str_contains($request->fv_description, 'BPB/')) {
+            $invtrx = InvTrx::where('fc_invno', $request->fv_description)->first();
+            $currInv = TempTrxAccountingDetail::where([
+                'fc_trxno' => Auth()->user()->fc_userid,
+                'fn_rownum' => $request->fn_rownum,
+                'fc_branch' => Auth()->user()->fc_branch,
+                'fc_divisioncode' => Auth()->user()->fc_divisioncode
+            ])->first();
+
+            $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
+            $totalInvoice = $invtrx->fm_invnetto + $invtrx->fm_taxvalue;
+
+            // Convert Value Request to Correct type number 
+            $currentNominal = str_replace(".", "", $request->fm_nominal);
+            $currentNominal = str_replace(",", ".", $currentNominal);
+            $currentNominal = (double) $currentNominal;
+            
+            if ($totalPaid + $currentNominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah, karena melebihi total INV BPB'
                 ];
             }
         } else {
