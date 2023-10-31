@@ -839,7 +839,7 @@
                 }
                 $('#fc_stockcode').val(data.fc_stockcode);
                 $('#fc_barcode').val(data.fc_barcode);
-
+                $('#category').val('Semua').trigger('change');
                 $("#modal_stock").modal('hide');
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -854,7 +854,7 @@
     }
 
     function detail_stock_customer(id) {
-        // console.log($id)
+        // console.log(id)
         var fc_stockcode = window.btoa(id);
         // console.log(fc_stockcode)
         $.ajax({
@@ -880,7 +880,7 @@
                 }
                 $('#fc_stockcode').val(data.fc_stockcode);
                 $('#fc_barcode').val(data.fc_barcode);
-
+                $('#category').val('Semua').trigger('change');
                 $("#modal_stock").modal('hide');
             },
             error: function(jqXHR, textStatus, errorThrown) {
