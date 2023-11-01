@@ -1148,7 +1148,7 @@
         });
     }
 
-    function updateKreditTransaksi(rownum, nominal, description) {
+    function updateKreditTransaksi(rownum, nominal, description, encode_mappingcode) {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/edit/update-edit-kredit-transaksi/' + encode_trxno,
