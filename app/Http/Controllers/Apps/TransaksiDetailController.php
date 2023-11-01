@@ -227,6 +227,24 @@ class TransaksiDetailController extends Controller
                                         'fm_nominal' => $remainingNominal,
                                     ]);
                             }
+                        }else{
+                            if ($countItem < 2) {
+                                TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', auth()->user()->fc_userid)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => '0',
+                                    ]);
+                            } else {
+                                TempTrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', auth()->user()->fc_userid)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => $remainingNominal,
+                                    ]);
+                            }
                         }
         
                         DB::commit();
@@ -439,6 +457,24 @@ class TransaksiDetailController extends Controller
                                         'fm_nominal' => $remainingNominal,
                                     ]);
                             }
+                        }else{
+                            if ($countItem < 2) {
+                                TrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => '0',
+                                    ]);
+                            } else {
+                                TrxAccountingDetail::where('fc_statuspos', $statusLawan)
+                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                    ->update([
+                                        'fm_nominal' => $remainingNominal,
+                                    ]);
+                            }
                         }
         
                         DB::commit();
@@ -565,6 +601,7 @@ class TransaksiDetailController extends Controller
     
         try {
             $fc_docreference = base64_decode($request->fc_docreference);
+            $fc_mappingcode_decode = base64_decode($request->fc_mappingcode);
             $validator = Validator::make($request->all(), [
                 'fc_invno' => 'required',
                 'nominal' => 'required',
@@ -612,6 +649,7 @@ class TransaksiDetailController extends Controller
                 $fc_paymentmethod = 'TRANS';
             }
 
+
             $insert = TempTrxAccountingDetail::create([
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -626,6 +664,44 @@ class TransaksiDetailController extends Controller
             ]);
     
             if($insert){
+                if ($request->reference_bpb == 'C') {
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->whereJsonContains('fc_debit_previledge', 'ONCE')
+                        ->first();
+    
+                        if ($mappingRecord) {
+                            $totalNominal = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                            ->where('fc_statuspos', 'C')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->sum('fm_nominal');
+                            // $totalNominal += $request->nominal;
+                            TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                                    ->where('fc_statuspos', 'D')
+                                                    ->update(['fm_nominal' => $totalNominal]);
+                        }
+                }else{
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                    ->whereJsonContains('fc_credit_previledge', 'ONCE')
+                    ->first();
+
+                    if ($mappingRecord) {
+                        $totalNominal = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                        ->where('fc_statuspos', 'D')
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                        ->sum('fm_nominal');
+                        // $totalNominal += $request->nominal;
+                        TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                                ->where('fc_statuspos', 'C')
+                                                ->update(['fm_nominal' => $totalNominal]);
+                        // dd($totalNominal);
+                    }
+                }
                 DB::commit(); 
                 return [
                     'status' => 200,
@@ -652,10 +728,12 @@ class TransaksiDetailController extends Controller
     
         try {
             $fc_docreference = base64_decode($request->fc_docreference);
+            $fc_mappingcode_decode = base64_decode($request->fc_mappingcode);
             $validator = Validator::make($request->all(), [
                 'fc_invno' => 'required',
                 'nominal' => 'required',
-                'fc_docreference' => 'required'
+                'fc_docreference' => 'required',
+                'fc_mappingcode' => 'required'
             ]);
     
             if($validator->fails()) {
@@ -664,6 +742,7 @@ class TransaksiDetailController extends Controller
                     'message' => $validator->errors()->first()
                 ];
             }
+
             $cek_exist = TempTrxAccountingDetail::where('fv_description', $request->fc_invno)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
@@ -706,6 +785,47 @@ class TransaksiDetailController extends Controller
             ]);
     
             if($insert){
+                if ($request->reference_invoice == 'C') {
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->whereJsonContains('fc_debit_previledge', 'ONCE')
+                        ->first();
+    
+                        if ($mappingRecord) {
+                            $totalNominal = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                            ->where('fc_statuspos', 'C')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->sum('fm_nominal');
+                            // $totalNominal += $request->nominal;
+                            TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                                    ->where('fc_statuspos', 'D')
+                                                    ->where('fc_branch', auth()->user()->fc_branch)
+                                                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                    ->update(['fm_nominal' => $totalNominal]);
+                        }
+                }else{
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                    ->whereJsonContains('fc_credit_previledge', 'ONCE')
+                    ->first();
+
+                    if ($mappingRecord) {
+                        $totalNominal = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                        ->where('fc_statuspos', 'D')
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                        ->sum('fm_nominal');
+                        // $totalNominal += $request->nominal;
+                        TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                                ->where('fc_statuspos', 'C')
+                                                ->where('fc_branch', auth()->user()->fc_branch)
+                                                ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                                ->update(['fm_nominal' => $totalNominal]);
+                    }
+                }
                 DB::commit(); 
                 return [
                     'status' => 200,
@@ -735,6 +855,7 @@ class TransaksiDetailController extends Controller
     
         try {
             $fc_docreference = base64_decode($request->fc_docreference);
+            $fc_mappingcode_decode = base64_decode($request->fc_mappingcode);
             $validator = Validator::make($request->all(), [
                 'fc_invno' => 'required',
                 'nominal' => 'required',
@@ -789,6 +910,44 @@ class TransaksiDetailController extends Controller
             ]);
     
             if($insert){
+                if ($request->reference_bpb == 'C') {
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->whereJsonContains('fc_debit_previledge', 'ONCE')
+                        ->first();
+    
+                        if ($mappingRecord) {
+                            $totalNominal = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                            ->where('fc_statuspos', 'C')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->sum('fm_nominal');
+                            // $totalNominal += $request->nominal;
+                            TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                                    ->where('fc_statuspos', 'D')
+                                                    ->update(['fm_nominal' => $totalNominal]);
+                        }
+                }else{
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                    ->whereJsonContains('fc_credit_previledge', 'ONCE')
+                    ->first();
+
+                    if ($mappingRecord) {
+                        $totalNominal = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                        ->where('fc_statuspos', 'D')
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                        ->sum('fm_nominal');
+                        // $totalNominal += $request->nominal;
+                        TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                                ->where('fc_statuspos', 'C')
+                                                ->update(['fm_nominal' => $totalNominal]);
+                        // dd($totalNominal);
+                    }
+                }
                 DB::commit(); 
                 return [
                     'status' => 200,
@@ -870,6 +1029,44 @@ class TransaksiDetailController extends Controller
             ]);
     
             if($insert){
+                if ($request->reference_invoice == 'C') {
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                        ->whereJsonContains('fc_debit_previledge', 'ONCE')
+                        ->first();
+    
+                        if ($mappingRecord) {
+                            $totalNominal = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                            ->where('fc_statuspos', 'C')
+                                            ->where('fc_branch', auth()->user()->fc_branch)
+                                            ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                            ->sum('fm_nominal');
+                            // $totalNominal += $request->nominal;
+                            TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                                    ->where('fc_statuspos', 'D')
+                                                    ->update(['fm_nominal' => $totalNominal]);
+                        }
+                }else{
+                    $mappingRecord = MappingMaster::where('fc_mappingcode', $fc_mappingcode_decode)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                    ->whereJsonContains('fc_credit_previledge', 'ONCE')
+                    ->first();
+
+                    if ($mappingRecord) {
+                        $totalNominal = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                        ->where('fc_statuspos', 'D')
+                                        ->where('fc_branch', auth()->user()->fc_branch)
+                                        ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
+                                        ->sum('fm_nominal');
+                        // $totalNominal += $request->nominal;
+                        TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                                                ->where('fc_statuspos', 'C')
+                                                ->update(['fm_nominal' => $totalNominal]);
+                        // dd($totalNominal);
+                    }
+                }
                 DB::commit(); 
                 return [
                     'status' => 200,

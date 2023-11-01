@@ -1683,6 +1683,8 @@
     });
 
     function select_inv(fc_invno, nominal) {
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}";
+        var encode_fc_mappingcode = btoa(fc_mappingcode);
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/store-from-inv',
@@ -1691,7 +1693,8 @@
                 fc_invno: fc_invno,
                 nominal: nominal,
                 fc_docreference: fc_docreference,
-                reference_invoice: referenceInvoice
+                reference_invoice: referenceInvoice,
+                fc_mappingcode: encode_fc_mappingcode
             },
             success: function(response) {
                 if (response.status === 200) {
@@ -1805,6 +1808,8 @@
     });
 
     function select_bpb(fc_invno, nominal) {
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}";
+        var encode_fc_mappingcode = btoa(fc_mappingcode);
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/transaksi/detail/store-from-bpb',
@@ -1813,7 +1818,8 @@
                 fc_invno: fc_invno,
                 nominal: nominal,
                 fc_docreference: fc_docreference,
-                reference_bpb: referenceBpb
+                reference_bpb: referenceBpb,
+                fc_mappingcode: encode_fc_mappingcode
             },
             success: function(response) {
                 if (response.status === 200) {
