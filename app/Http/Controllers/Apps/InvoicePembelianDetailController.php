@@ -279,8 +279,8 @@ class InvoicePembelianDetailController extends Controller
             ];
         }
 
-        $request->merge(['fm_discprice' => number_format($request->fm_discprice, 2, '.', '')]);
-        $request->merge(['fm_discprecen' => number_format($request->fm_discprecen, 2, '.', '')]);
+        $request->merge(['fm_discprice' => number_format((float)$request->fm_discprice, 2, '.', '')]);
+        $request->merge(['fm_discprecen' => number_format((float)$request->fm_discprecen, 2, '.', '')]);
         // dd($request->fm_discprice);
         $update_discprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,
