@@ -183,6 +183,7 @@
             value: fc_coacode,
             text: fc_coaname
         });
+        $('#fc_parentcode').prop('disabled', false);
         $('#fc_parentcode').val(fc_coaname);
         $('#fc_parentcode').append(coaIndukOption);
         $('#fc_coacode').prop('readonly', false);
