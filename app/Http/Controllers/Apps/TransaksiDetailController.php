@@ -975,6 +975,7 @@ class TransaksiDetailController extends Controller
     
         try {
             $fc_docreference = base64_decode($request->fc_docreference);
+            $fc_mappingcode_decode = base64_decode($request->fc_mappingcode);
             $validator = Validator::make($request->all(), [
                 'fc_invno' => 'required',
                 'nominal' => 'required',

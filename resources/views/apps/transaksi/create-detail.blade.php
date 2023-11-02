@@ -1589,6 +1589,7 @@
                     reset_all_select();
                     tb_debit.ajax.reload(null, false);
                     tb_kredit.ajax.reload(null, false);
+                    window.location.href = window.location.href;
                 } else if (response.status == 300) {
                     swal(response.message, {
                         icon: 'error',
@@ -1709,6 +1710,7 @@
                     }, 500);
                     tb_debit.ajax.reload();
                     tb_kredit.ajax.reload();
+                    window.location.href = window.location.href;
                 } else {
                     iziToast.error({
                         title: 'Gagal!',
