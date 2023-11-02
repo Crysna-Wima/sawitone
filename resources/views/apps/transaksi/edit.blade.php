@@ -911,8 +911,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    var isDescReadOnly = previledgeCredit.includes('VALUE');
-                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    var isNominalReadOnly = previledgeDebit.includes('VALUE');
+                    var readOnlyAttribute = isNominalReadOnly ? 'readonly' : '';
                     if (previledgeDebit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
@@ -937,19 +937,10 @@
                 render: function(data, type, full, meta) {
                     var isDescReadOnly = previledgeDebit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-
-                    if (createBy == 'SYS') {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                    if (data.fv_description == null) {
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                     } else {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                     }
                 }
             },
@@ -1014,8 +1005,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    var isDescReadOnly = previledgeCredit.includes('VALUE');
-                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    var isNominalReadOnly = previledgeCredit.includes('VALUE');
+                    var readOnlyAttribute = isNominalReadOnly ? 'readonly' : '';
                     if (previledgeCredit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
@@ -1038,20 +1029,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    var isDescReadOnly = previledgeCredit.includes('VALUE');
+                    var isDescReadOnly = previledgeCredit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-                    if (createBy == 'SYS') {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                    if (data.fv_description == null) {
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                     } else {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                     }
                 }
             },

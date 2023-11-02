@@ -941,7 +941,7 @@
             }
         });
     }
-    
+
     var tb_debit = $('#tb_debit').DataTable({
         processing: true,
         serverSide: true,
@@ -975,8 +975,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    var isDescReadOnly = previledgeCredit.includes('VALUE');
-                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    var isNominalReadOnly = previledgeDebit.includes('VALUE');
+                    var readOnlyAttribute = isNominalReadOnly ? 'readonly' : '';
                     if (previledgeDebit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
@@ -999,22 +999,12 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    // console.log(data.fv_description)
                     var isDescReadOnly = previledgeDebit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-
-                    if (createBy == 'SYS') {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                    if (data.fv_description == null) {
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                     } else {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                     }
                 }
             },
@@ -1026,7 +1016,7 @@
         rowCallback: function(row, data) {
             var fc_mappingcode = "{{ $data->fc_mappingcode }}";
             var encode_fc_mappingcode = btoa(fc_mappingcode);
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode ;
+            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
@@ -1077,8 +1067,8 @@
             {
                 data: null,
                 render: function(data, type, full, meta) {
-                    var isDescReadOnly = previledgeCredit.includes('VALUE');
-                    var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
+                    var isNominalReadOnly = previledgeCredit.includes('VALUE');
+                    var readOnlyAttribute = isNominalReadOnly ? 'readonly' : '';
                     if (previledgeCredit.includes('ONCE')) {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" readonly>`;
                     } else {
@@ -1103,19 +1093,10 @@
                 render: function(data, type, full, meta) {
                     var isDescReadOnly = previledgeCredit.includes('DESC');
                     var readOnlyAttribute = isDescReadOnly ? 'readonly' : '';
-
-                    if (createBy == 'SYS') {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                    if (data.fv_description == null) {
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
                     } else {
-                        if (data.fv_description == null) {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="" class="form-control" ${readOnlyAttribute}>`;
-                        } else {
-                            return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
-                        }
+                        return `<input type="text" id="fv_description_${data.fn_rownum}" value="${data.fv_description}" class="form-control" ${readOnlyAttribute}>`;
                     }
                 }
             },
@@ -1151,7 +1132,7 @@
         var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
-        var fc_mappingcode = "{{ $data->fc_mappingcode }}"; 
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}";
         var encode_mappingcode = btoa(fc_mappingcode);
         // console.log(tipe)
 
@@ -1608,13 +1589,14 @@
     });
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
+
     function look_inv(value) {
         referenceInvoice = value;
         if (tb_invoice.rows().data().length === 0) {
             swal("Tidak terdapat data COA yang relevan.", {
                 icon: 'error',
             });
-        }else{
+        } else {
             $("#modal_invoice").modal('show');
         }
     }
@@ -1665,9 +1647,9 @@
             },
             {
                 data: null,
-                render: function ( data, type, row ) {
+                render: function(data, type, row) {
                     nominal = data.fm_brutto - data.fm_paidvalue;
-                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                    return $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(nominal);
                 }
             },
             {
@@ -1792,9 +1774,9 @@
             },
             {
                 data: null,
-                render: function ( data, type, row ) {
+                render: function(data, type, row) {
                     nominal = data.fm_brutto - data.fm_paidvalue;
-                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                    return $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(nominal);
                 }
             },
             {
