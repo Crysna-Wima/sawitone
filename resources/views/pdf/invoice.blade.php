@@ -428,37 +428,6 @@
         </table>
         @endif
 
-        <!-- <p style="font-weight: bold; font-size: .8rem; margin-left: 5%">Biaya Lainnya</p>
-        <table class="table-lg table-center" style="margin-bottom: 25px; margin-top: 15px; border-collapse: collapse; width: 100%" border="1">
-            <tr>
-                <th>No</th>
-                <th>Keterangan</th>
-                <th>Satuan</th>
-                <th>Harga Satuan</th>
-                <th>Qty</th>
-                <th>Total</th>
-                <th>Catatan</th>
-            </tr>
-
-            @if(isset($inv_dtl))
-                @foreach ($inv_dtl as $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->fc_detailitem }}</td>
-                        <td>{{ $item->fc_unityname }}</td>
-                        <td>Rp. {{ number_format($item->fm_unityprice,0,',','.')}}</td>
-                        <td>{{ $item->fn_itemqty }}</td>
-                        <td>Rp. {{ number_format($item->fm_value,0,',','.')}}</td>
-                        <td>{{ $item->fv_description ?? '-'}}</td>
-                    </tr>
-                @endforeach
-
-            @else
-            <tr>
-                <td colspan="12" class="text-center">Data Not Found</td>
-            </tr>
-            @endif
-        </table> -->
         <table style="width: 90%; border-collapse: collapse; margin: auto;">
             <tr>
                 <td>Total</td>
