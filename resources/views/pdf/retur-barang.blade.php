@@ -1,40 +1,40 @@
 <html>
 
 <head>
-<title>Retur Barang</title>
+<title>Nota Retur</title>
 <link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>
     @page {
         size: 8.5in 11in;
         margin: 40px 40px;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     * {
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
 
     p,
     label {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     table {
-        font-size: 15px;
+        font-size: 13px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 16px;
+        font-size: 13px;
         font-weight: regular;
-        font-family: 'lucida-console-regular', sans-serif;
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     .tp-1 td{
@@ -47,7 +47,7 @@
     }
 
     .table-header {
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     .next-page {
@@ -94,15 +94,15 @@
     }
 
     .table-lg td{
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     .table-xl td {
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     .div-lg p{
-        font-size: 15px!important;
+        font-size: 13px!important;
     }
 
     .fw-bold{
@@ -186,7 +186,7 @@
             width: 8.5in;
             height: 11in;
             display: block;
-            font-family: 'lucida-console-regular', sans-serif;
+            font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
         }
 
         @page {
@@ -199,42 +199,55 @@
     <main>
     <div class="container" id="print">
     <div class="header" style="height: 100px">
-        <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
-            <p style="font-size: 16px;">PT DEXA ARFINDO PRATAMA</p>
-            <p>Jl. Raya Jemursari No.329-331,</p>
-            <p>Sidosermo, Kec. Wonocolo,</p>
-            <p>Surabaya, Jawa Timur (60297)</p>
-            <p>dexa-arfindopratama.com</p>
-            <br>
-            <p style="font-size: 16px;">Kepada</p>
-            <p>{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->domst->somst->customer->fc_membername1 }}</p>
-            <p style="font-size: 16px;">Alamat Pengiriman</p>
-            <p>{{ $retur_mst->domst->somst->customer->fc_memberaddress_loading1 }}</p>
+        <div style="position: absolute; left: 0; top: 0">
+            <img src="{{ public_path('/assets/img/logo-dexa.png') }}" width="35%">
         </div>
-        <div style="position: absolute; right: 0px; top: 30; text-align: left;" class="no-margin">
-            <p style="font-size: 16px;">RETUR BARANG</p>
-            <p>No. Retur &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_returno }}</p>
-            <p>Tanggal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : {{ \Carbon\Carbon::parse( $retur_mst->fd_returdate )->isoFormat('D MMMM Y'); }}</p>
-            <p>No. DO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ $retur_mst->fc_dono }}</p>
+        <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
+            <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
+            <p>Jl. Raya Jemursari No.329-331, Sidosermo,</p>
+            <p>Kec. Wonocolo, Surabaya, Jawa Timur (60297)</p>
+            <p>dexa-arfindopratama.com</p>
+        </div>
+        <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
+            <p style="font-size: 14px;">Kepada</p>
+            <p>{{ $retur_mst->domst->somst->customer->fc_memberlegalstatus }} {{ $retur_mst->domst->somst->customer->fc_membername1 }}</p>
+            <p style="font-size: 14px;">Alamat Pengiriman</p>
+            <p>{{ $retur_mst->domst->somst->customer->fc_memberaddress_loading1 }}</p>
         </div>
     </div>
 </div>
 
 <div class="content" id="print">
-    <br><br>
-    <br><br>
-    <br><br>
+    <br><br><br><br>
+    <p style="text-align: center; font-size: 14px; margin: 0;">NOTA RETUR</p>
     <br>
-        <p style="font-size: 16px;">Barang yang Diretur</p>
+        <table style="width: 90%; border-collapse: collapse; margin: auto;" class="no-space">
+            <tr>
+                <td>No. Retur</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $retur_mst->fc_returno }}</td>
+                <td>Tanggal Retur</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $retur_mst->fd_returdate )->isoFormat('D MMMM Y'); }}</td>
+            </tr>
+            <tr class="">
+                <td>Jatuh Tempo</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 30%">{{ $retur_mst->fc_dono }}</td>
+            </tr>
+        </table>
+        <p style="font-size: 14px;">Barang yang Diretur</p>
         <table class="table-lg table-center" style="margin-bottom: 15px; border-collapse: collapse; width: 100%;" border="1">
             <tr>
                 <th>No</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
+                <th>Satuan</th>
                 <th>Batch</th>
-                <th>Expired Date</th>
-                <th>Jumlah</th>
+                <th>Exp. Date</th>
+                <th>Qty</th>
                 <th>Harga Satuan</th>
+                <th>Total</th>>
             </tr>
 
             @if(isset($retur_dtl))
@@ -243,10 +256,12 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->invstore->stock->fc_stockcode }}</td>
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
+                        <td>{{ $item->fc_namepack }}</td>
                         <td>{{ $item->fc_batch }}</td>
                         <td>{{ \Carbon\Carbon::parse( $item->fd_expired )->isoFormat('D MMMM Y'); }}</td>
-                        <td>{{ $item->fn_returqty }} {{ $item->invstore->stock->fc_namepack }}</td>
+                        <td>{{ $item->fn_returqty }}</td>
                         <td>Rp. {{ number_format($item->fn_price,0,',','.')}}</td>
+                        <td>Rp. {{ number_format($item->fn_value,0,',','.')}}</td>
                     </tr>
                 @endforeach
             @else
@@ -255,8 +270,36 @@
             </tr>
             @endif
         </table>
+
         
-        <br><br>
+        <table style="width: 90%; border-collapse: collapse; margin: auto;">
+            <tr>
+                <td>Total</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 28%">Rp. {{ number_format($retur_mst->fm_netto, 2, ",", ".")}}</td>
+                <td>Biaya Kirim</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format( $retur_mst->fm_servpay, 2, ",", ".")}}</td>
+            </tr>
+
+            <tr>
+                <td>Pajak</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format($retur_mst->fm_tax, 2, ",", ".")}}</td>
+                <td>Biaya Materai</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. 0</td>
+            </tr>
+            <tr class="pb-1">
+                <td></td>
+                <td style="width: 5px"></td>
+                <td style="width: 28%"></td>
+                <td>Tagihan</td>
+                <td style="width: 5px">:</td>
+                <td style="width: 26%">Rp. {{ number_format($retur_mst->fm_brutto, 2, ",", ".")}}</td>
+            </tr>
+        </table>
+    
         <table style="width: 100%; margin: auto; dashed black; cellspacing=15 ">
             <br>
             <tr >
