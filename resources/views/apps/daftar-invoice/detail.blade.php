@@ -50,52 +50,52 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO : {{ $inv_mst->fc_child_suppdocno }}
+                                    <label>No. DO : {{ $inv_mst->fc_child_suppdocno ?? '-'}} 
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SO : {{ $inv_mst->fc_suppdocno }}
+                                    <label>No. SO : {{ $inv_mst->fc_suppdocno ?? '-'}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_dodate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_dodate )->isoFormat('D MMMM Y') ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate )->isoFormat('D MMMM Y') ?? '-'}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Tipe SO</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->fc_sotype }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->fc_sotype ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Sales</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->sales->fc_salesname1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->sales->fc_salesname1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Customer Code</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $inv_mst->somst->customer->fc_membercode }}" readonly>
+                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $inv_mst->somst->customer->fc_membercode ?? '-' }}" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->member_tax_code->fv_description }} ({{ $inv_mst->somst->member_tax_code->fc_action }}%)" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->member_tax_code->fv_description ?? '-' }} ({{ $inv_mst->somst->member_tax_code->fc_action ?? '-' }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -188,50 +188,50 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. BPB : {{ $inv_mst->fc_child_suppdocno }}
+                                    <label>No. BPB : {{ $inv_mst->fc_child_suppdocno ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. PO : {{ $inv_mst->fc_suppdocno }}
+                                    <label>No. PO : {{ $inv_mst->fc_suppdocno ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SJ : {{ $inv_mst->romst->fc_sjno }}
+                                    <label>No. SJ : {{ $inv_mst->romst->fc_sjno ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. GR : {{ $inv_mst->romst->fc_grno }}
+                                    <label>No. GR : {{ $inv_mst->romst->fc_grno ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($inv_mst->pomst->fd_podateinputuser)) }}
+                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($inv_mst->pomst->fd_podateinputuser)) ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($inv_mst->romst->fd_roarivaldate)) }}
+                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($inv_mst->romst->fd_roarivaldate)) ?? '-' }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Basis Gudang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->romst->warehouse->fc_rackname }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->romst->warehouse->fc_rackname ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_tax_code->fv_description }} ({{ $inv_mst->pomst->supplier->supplier_tax_code->fc_action }}%)" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_tax_code->fv_description ?? '-' }} ({{ $inv_mst->pomst->supplier->supplier_tax_code->fc_action ?? '-' }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -319,28 +319,28 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Operator</label>
-                                    <input type="text" class="form-control" id="fc_userid" name="fc_userid" value="{{ $inv_mst->fc_userid }}" readonly>
+                                    <input type="text" class="form-control" id="fc_userid" name="fc_userid" value="{{ $inv_mst->fc_userid ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-6 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Tanggal Terbit</label>
                                     <div class="input-group date">
-                                        <input type="text" id="fd_inv_releasedate" name="fd_inv_releasedate" class="form-control" fdprocessedid="8ovz8a" value="{{ $inv_mst->fd_inv_releasedate }}" readonly>
+                                        <input type="text" id="fd_inv_releasedate" name="fd_inv_releasedate" class="form-control" fdprocessedid="8ovz8a" value="{{ $inv_mst->fd_inv_releasedate ?? '-' }}" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>No. Dokumen RS</label>
-                                    <input type="text" class="form-control" id="fc_sono" name="fc_sono" value="{{ $inv_mst->fc_suppdocno }}" readonly>
+                                    <input type="text" class="form-control" id="fc_sono" name="fc_sono" value="{{ $inv_mst->fc_suppdocno ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Jatuh Tempo</label>
                                     <div class="input-group date">
-                                        <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control" fdprocessedid="8ovz8a" value="{{ $inv_mst->fd_inv_agingdate }}" readonly>
+                                        <input type="text" id="fd_inv_agingdate" name="fd_inv_agingdate" class="form-control" fdprocessedid="8ovz8a" value="{{ $inv_mst->fd_inv_agingdate ?? '-' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -348,7 +348,7 @@
                                 <div class="form-group required">
                                     <label>Customer</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $inv_mst->fc_entitycode}}" readonly>
+                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $inv_mst->fc_entitycode ?? '-' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -441,7 +441,7 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $inv_mst->domst->fc_sotransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $inv_mst->domst->fc_sotransport ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -449,7 +449,7 @@
                             <div class="form-group">
                                 <label>Transporter</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $inv_mst->domst->fc_transporter }}" readonly>
+                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $inv_mst->domst->fc_transporter ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -462,7 +462,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $inv_mst->fm_servpay }}" readonly>
+                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $inv_mst->fm_servpay ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -470,7 +470,7 @@
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $inv_mst->domst->fc_custreceiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $inv_mst->domst->fc_custreceiver ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -486,7 +486,7 @@
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $inv_mst->domst->fc_memberaddress_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $inv_mst->domst->fc_memberaddress_loading ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -506,7 +506,7 @@
                             <div class="form-group">
                                 <label>Transport</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $inv_mst->pomst->fc_potransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $inv_mst->pomst->fc_potransport ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -514,7 +514,7 @@
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $inv_mst->romst->fc_receiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $inv_mst->romst->fc_receiver ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -527,7 +527,7 @@
                                             Rp.
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $inv_mst->fm_servpay }}" readonly>
+                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $inv_mst->fm_servpay ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -543,7 +543,7 @@
                             <div class="form-group">
                                 <label>Alamat Penerimaan</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $inv_mst->romst->fc_address_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $inv_mst->romst->fc_address_loading ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
