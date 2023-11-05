@@ -1143,7 +1143,7 @@
                      //  tb.ajax.reload(null, false);
                      //  console.log(response.status);
                      if (response.status == 200) {
-                        console.log(tb_debit);
+                        // console.log(tb_debit);
                         swal(response.message, {
                            icon: 'success',
                         });

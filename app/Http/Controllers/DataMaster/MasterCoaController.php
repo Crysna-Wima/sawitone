@@ -15,6 +15,7 @@ class MasterCoaController extends Controller
 {
     public function index()
     {
+        set_time_limit(360);
         $deepestLayer = MasterCoa::select('fn_layer')->orderBy('fn_layer','DESC')->first();
         
         $stringRelasi = 'children';
@@ -171,6 +172,16 @@ class MasterCoaController extends Controller
                     throw new \Exception('Mohon maaf, kode COA sudah tersedia');
                 }
 
+                $duplicateRecord = MasterCoa::where([
+                    'fc_coacode' => $request->fc_parentcode . "." . $request->fc_coacode,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                    'fc_branch' => auth()->user()->fc_branch,
+                ])->count();
+                
+                if ($duplicateRecord > 0) {
+                    throw new \Exception('Mohon maaf, terdapat coacode dan parentcode yang sama');
+                }
+                // dd($duplicateRecord);
                 $parentRecord = MasterCoa::where([
                     'fc_coacode' => $request->fc_parentcode,
                     'deleted_at' => null
