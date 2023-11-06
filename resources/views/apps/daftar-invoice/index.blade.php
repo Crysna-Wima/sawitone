@@ -443,10 +443,12 @@
                 orderable: false
             },
             {
-                data: 'fc_invno'
+                data: 'fc_invno',
+                defaultContent: '-'
             },
             {
-                data: 'domst.fc_dono'
+                data: 'domst.fc_dono',
+                defaultContent: '-'
             },
             {
                 data: 'fd_inv_releasedate',
@@ -522,10 +524,12 @@
                 orderable: false
             },
             {
-                data: 'fc_invno'
+                data: 'fc_invno',
+                defaultContent: '-'
             },
             {
-                data: 'romst.fc_rono'
+                data: 'romst.fc_rono',
+                defaultContent: '-'
             },
             {
                 data: 'fd_inv_releasedate',
@@ -602,7 +606,8 @@
                 orderable: false
             },
             {
-                data: 'fc_invno'
+                data: 'fc_invno',
+                defaultContent: '-'
             },
             {
                 data: 'fd_inv_releasedate',

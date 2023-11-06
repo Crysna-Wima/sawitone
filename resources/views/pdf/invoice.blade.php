@@ -265,32 +265,32 @@
                 <td style="width: 30%">03.125.501.1-609.000</td>
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y'); }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y') ?? '-' }}</td>
             </tr>
             <tr class="">
                 <td>Nomor</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->fc_invno }}</td>
+                <td style="width: 30%">{{ $inv_mst->fc_invno ?? '-' }}</td>
                 <td>Jatuh Tempo</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y'); }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y') ?? '-' }}</td>
             </tr>
             @else
             <tr>
                 <td>No. BPB</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->fc_invno }}</td>
+                <td style="width: 30%">{{ $inv_mst->fc_invno ?? '-' }}</td>
                 <td>Tgl Diterima</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->romst->fd_roarivaldate )->isoFormat('D MMMM Y'); }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->romst->fd_roarivaldate )->isoFormat('D MMMM Y') ?? '-' }}</td>
             </tr>
             <tr class="pb-1">
                 <td>No. Surat Jalan</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->romst->fc_sjno }}</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_sjno ?? '-' }}</td>
                 <td>No. PO</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->fc_suppdocno }}</td>
+                <td style="width: 30%">{{ $inv_mst->fc_suppdocno ?? '-' }}</td>
             </tr>
             @endif
         </table>
@@ -299,7 +299,7 @@
             <tr>
                 <td>Penerima</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ $inv_mst->romst->fc_receiver }}</td>
+                <td style="width: 26%">{{ $inv_mst->romst->fc_receiver ?? '-' }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -307,12 +307,12 @@
             <tr>
                 <td>Alamat Pengiriman</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->romst->fc_address_loading }}</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_address_loading ?? '-' }}</td>
             </tr>
             <tr class="pb-1">
                 <td>By</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 30%">{{ $inv_mst->romst->fc_potransport }}</td>
+                <td style="width: 30%">{{ $inv_mst->romst->fc_potransport ?? '-' }}</td>
                 <td></td>
                 <td style="width: 5px"></td>
                 <td style="width: 26%"></td>
