@@ -51,6 +51,7 @@ class MasterReceivingOrderController extends Controller
 
     public function datatables_ro_detail()
     {
+        ini_set('memory_limit', '2048M');
         $data = RoDetail::with('invstore.stock', 'romst')->where('fc_rono', session('fc_rono_global'))->where('fc_branch', auth()->user()->fc_branch)->get();
         return DataTables::of($data)
             ->addIndexColumn()
