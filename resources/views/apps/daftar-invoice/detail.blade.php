@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate ?? '0000-00-00' )->isoFormat('D MMMM Y')}}
+                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate ?? '0000-00-00' )->isoFormat('D MMMM Y') ?? '-'}}
                                     </label>
                                 </div>
                             </div>
@@ -123,49 +123,49 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->member_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->member_typebranch->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_membertypebusiness }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_membertypebusiness ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_membername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_membername1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_memberaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_memberaddress1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fn_memberAgingAP ?? '-' }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->member_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->member_legal_status->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_memberaddress_loading1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->somst->customer->fc_memberaddress_loading1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->somst->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->somst->customer->fm_memberAP,0,',','.') ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -253,49 +253,49 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_supplierNPWP ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_typebranch->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_type_business->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_type_business->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_suppliername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_suppliername1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fc_supplier_npwpaddress1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Hutang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fn_supplierAgingAR }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->fn_supplierAgingAR ?? '-' }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->pomst->supplier->supplier_legal_status->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Hutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ $inv_mst->pomst->supplier->fm_supplierAR }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ $inv_mst->pomst->supplier->fm_supplierAR ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
