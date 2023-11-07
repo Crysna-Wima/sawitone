@@ -62,13 +62,13 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_dodate )->isoFormat('D MMMM Y') ?? '-' }}
+                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse($inv_mst->domst->fd_dodate ?? '-')->isoFormat('D MMMM Y') }}</label>
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate )->isoFormat('D MMMM Y') ?? '-'}}
+                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate ?? '-' )->isoFormat('D MMMM Y')}}
                                     </label>
                                 </div>
                             </div>
