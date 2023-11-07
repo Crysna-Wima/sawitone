@@ -767,13 +767,13 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Alamat</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -796,13 +796,13 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->supplier->fc_supplierbank1 }}" readonly>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->supplier->fc_supplierbank1 ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Alamat Supplier</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
@@ -825,13 +825,13 @@
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Bank</label>
-                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname }}" readonly>
+                                <input type="text" class="form-control" name="fc_bankcode" id="fc_bankcode" value="{{ $inv_mst->bank->fv_bankname ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group required">
                                 <label>Alamat</label>
-                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address }}" readonly>
+                                <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $inv_mst->fc_address ?? '-' }}" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
