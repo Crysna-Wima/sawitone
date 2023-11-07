@@ -189,7 +189,7 @@
         @if($inv_mst->fc_invtype == 'SALES')
         <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
             <p style="font-size: 14px;">Kepada Yth</p>
-            <p>{{ $inv_mst->somst->customer->fc_memberlegalstatus ?? '-' }} {{ $inv_mst->somst->customer->fc_membername1 ?? '-' }}</p>
+            <p>{{ $inv_mst->customer->fc_memberlegalstatus ?? '-' }} {{ $inv_mst->customer->fc_membername1 ?? '-' }}</p>
             <p>{{ $inv_mst->fc_address ?? '-' }}</p>
         </div>
         <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
@@ -201,7 +201,7 @@
         @elseif($inv_mst->fc_invtype == 'PURCHASE')
         <div style="position: absolute; left: 30; top: 110px; text-align: left;" class="no-margin">
             <p style="font-size: 14px;">Kepada Yth</p>
-            <p>{{ $inv_mst->pomst->supplier->fc_supplierlegalstatus ?? '-' }} {{ $inv_mst->pomst->supplier->fc_suppliername1 ?? '-' }}</p>
+            <p>{{ $inv_mst->supplier->fc_supplierlegalstatus ?? '-' }} {{ $inv_mst->supplier->fc_suppliername1 ?? '-' }}</p>
             <p>{{ $inv_mst->supplier->fc_supplier_npwpaddress1 ?? '-' }}</p>
         </div>
         <div style="position: absolute; right: 0; top: 0; text-align: right;" class="no-margin">
