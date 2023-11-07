@@ -507,7 +507,7 @@
             <tr>
                 <td style="width: 50% !important; text-align: left;">PT DEXA ARFINDO PRATAMA</td>
                 @if($inv_mst->fc_invtype == 'SALES')
-                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->somst->customer->fc_memberlegalstatus ?? '-' }} {{ $inv_mst->somst->customer->fc_membername1 ?? '-' }}</td>
+                <td style="width: 50% !important; text-align: right;">{{ $inv_mst->customer->fc_memberlegalstatus ?? '-' }} {{ $inv_mst->customer->fc_membername1 ?? '-' }}</td>
                 @elseif($inv_mst->fc_invtype == 'PURCHASE')
                 <td></td>
                 @else
@@ -551,8 +551,8 @@
                     <p>&nbsp;&nbsp;{{ $inv_mst->bank->fv_bankname ?? '-' }}</p>
                     <p>&nbsp;&nbsp;A/C {{ $inv_mst->bank->fc_bankcode ?? '-' }}</p>
                     @elseif($inv_mst->fc_invtype == 'PURCHASE')
-                    <p>&nbsp;&nbsp;Atas Nama : {{ $inv_mst->pomst->supplier->fc_suppliername1 ?? '-' }}</p>
-                    <p>&nbsp;&nbsp;{{ $inv_mst->pomst->supplier->fc_supplierbank1 ?? '-' }}</p>
+                    <p>&nbsp;&nbsp;Atas Nama : {{ $inv_mst->supplier->fc_suppliername1 ?? '-' }}</p>
+                    <p>&nbsp;&nbsp;{{ $inv_mst->supplier->fc_supplierbank1 ?? '-' }}</p>
                     <p>&nbsp;&nbsp;A/C {{ $inv_mst->fc_bankcode ?? '-' }}</p>
                     @else
                     <p>&nbsp;&nbsp;Atas Nama : PT DEXA ARFINDO PRATAMA</p>
