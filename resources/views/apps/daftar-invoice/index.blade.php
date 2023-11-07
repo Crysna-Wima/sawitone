@@ -65,7 +65,8 @@
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
-                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
+                                            <th scope="col" class="text-center">Terbayar</th>
+                                            <th scope="col" class="text-center text-nowrap">Cetak</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -85,7 +86,8 @@
                                             <th scope="col" class="text-center">Supplier</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
-                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
+                                            <th scope="col" class="text-center">Terbayar</th>
+                                            <th scope="col" class="text-center text-nowrap">Cetak</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
                                     </thead>
@@ -104,7 +106,8 @@
                                             <th scope="col" class="text-center">Customer</th>
                                             <th scope="col" class="text-center">Status</th>
                                             <th scope="col" class="text-center">Tagihan</th>
-                                            <th scope="col" class="text-center text-nowrap">Jumlah Cetak</th>
+                                            <th scope="col" class="text-center">Terbayar</th>
+                                            <th scope="col" class="text-center text-nowrap">Cetak</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -434,7 +437,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 9]
+                targets: [3, 10]
             },
         ],
         columns: [{
@@ -469,6 +472,11 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fm_paidvalue',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
+                defaultContent: '-'
+            },
+            {
                 data: 'fn_printout',
             },
             {
@@ -491,7 +499,7 @@
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/SALES"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>`)
@@ -515,7 +523,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [3, 9]
+                targets: [3, 10]
             },
         ],
         columns: [{
@@ -550,6 +558,11 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fm_paidvalue',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
+                defaultContent: '-'
+            },
+            {
                 data: 'fn_printout',
             },
             {
@@ -572,7 +585,7 @@
                 $('td:eq(6)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/PURCHASE"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>
@@ -597,7 +610,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [2, 3, 9]
+                targets: [2, 3, 10]
             },
         ],
         columns: [{
@@ -628,6 +641,11 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
             },
             {
+                data: 'fm_paidvalue',
+                render: $.fn.dataTable.render.number(',', '.', 0, 'Rp'),
+                defaultContent: '-'
+            },
+            {
                 data: 'fn_printout',
             },
             {
@@ -654,7 +672,7 @@
                 $('td:eq(5)', row).html('<span class="badge badge-success">Lunas</span>');
             }
 
-            $('td:eq(9)', row).html(`
+            $('td:eq(10)', row).html(`
             <a href="/apps/daftar-invoice/detail/${fc_invno}/CPRR"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-warning btn-sm mr-1" onclick="cekExistApproval('${data.fc_invno}')"><i class="fa fa-file"></i> PDF</button>
             <button class="btn btn-info btn-sm" onclick="click_modal_ttd('${data.fc_invno}')"><i class="fa-solid fa-receipt"></i> Kuitansi</button>

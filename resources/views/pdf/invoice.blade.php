@@ -265,7 +265,7 @@
                 <td style="width: 30%">03.125.501.1-609.000</td>
                 <td>Tanggal</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate )->isoFormat('D MMMM Y') ?? '-' }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_releasedate ?? '-' )->isoFormat('D MMMM Y') }}</td>
             </tr>
             <tr class="">
                 <td>Nomor</td>
@@ -273,7 +273,7 @@
                 <td style="width: 30%">{{ $inv_mst->fc_invno ?? '-' }}</td>
                 <td>Jatuh Tempo</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate )->isoFormat('D MMMM Y') ?? '-' }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->fd_inv_agingdate ?? '-' )->isoFormat('D MMMM Y') }}</td>
             </tr>
             @else
             <tr>
@@ -282,7 +282,7 @@
                 <td style="width: 30%">{{ $inv_mst->fc_invno ?? '-' }}</td>
                 <td>Tgl Diterima</td>
                 <td style="width: 5px">:</td>
-                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->romst->fd_roarivaldate )->isoFormat('D MMMM Y') ?? '-' }}</td>
+                <td style="width: 26%">{{ \Carbon\Carbon::parse( $inv_mst->romst->fd_roarivaldate ?? '-' )->isoFormat('D MMMM Y') }}</td>
             </tr>
             <tr class="pb-1">
                 <td>No. Surat Jalan</td>
@@ -333,6 +333,8 @@
                 <th>Exp. Date</th>
                 <th>Qty</th>
                 <th>Harga Satuan</th>
+                <th>Diskon</th>
+                <th>Persen</th>
                 <th>Total</th>
             </tr>
 
@@ -347,6 +349,8 @@
                         <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
+                        <td>Rp. {{ number_format($item->fm_discprice,2, ",", "." ?? '-')}}</td>
+                        <td>{{ number_format($item->fm_discprecen,2, ",", "." ?? '-')}} %</td>
                         <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
@@ -370,6 +374,8 @@
                 <th>Exp. Date</th>
                 <th>Qty</th>
                 <th>Harga Satuan</th>
+                <th>Diskon</th>
+                <th>Persen</th>
                 <th>Total</th>
             </tr>
 
@@ -384,6 +390,8 @@
                         <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
+                        <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>
+                        <td>{{ number_format($item->fm_discprecen,2, ",", ".")}} %</td>
                         <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
@@ -403,6 +411,8 @@
                 <th>Satuan</th>
                 <th>Jumlah</th>
                 <th>Harga Satuan</th>
+                <th>Diskon</th>
+                <th>Persen</th>
                 <th>Catatan</th>
                 <th>Total</th>
             </tr>
@@ -415,6 +425,8 @@
                         <td>{{ $item->nameunity->fv_description }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice, 2, ",", ".")}}</td>
+                        <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>
+                        <td>{{ number_format($item->fm_discprecen,2, ",", ".")}} %</td>
                         <td>{{ $item->fv_description ?? '-'}}</td>
                         <td>Rp. {{ number_format($item->fm_value, 2, ",", ".")}}</td>
                     </tr>

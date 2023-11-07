@@ -62,13 +62,13 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse($inv_mst->domst->fd_dodate ?? '0000-00-00')->isoFormat('D MMMM Y') }}</label>
+                                    <label>Tgl Delivery : {{ date('d-m-Y', strtotime($inv_mst->domst->fd_dodate ?? '-' )) }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $inv_mst->domst->fd_arrivaldate ?? '0000-00-00' )->isoFormat('D MMMM Y') ?? '-'}}
+                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($inv_mst->domst->fd_arrivaldate ?? '-' )) }}
                                     </label>
                                 </div>
                             </div>
@@ -212,13 +212,13 @@
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($inv_mst->pomst->fd_podateinputuser)) ?? '-' }}
+                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($inv_mst->pomst->fd_podateinputuser ?? '-')) }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($inv_mst->romst->fd_roarivaldate)) ?? '-' }}
+                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($inv_mst->romst->fd_roarivaldate ?? '-')) }}
                                     </label>
                                 </div>
                             </div>
@@ -707,6 +707,8 @@
                                                 <th scope="col" class="text-center">Satuan</th>
                                                 <th scope="col" class="text-center">Jumlah</th>
                                                 <th scope="col" class="text-center">Harga Satuan</th>
+                                                <th scope="col" class="text-center">Diskon</th>
+                                                <th scope="col" class="text-center">Persen</th>
                                                 <th scope="col" class="text-center">Catatan</th>
                                                 <th scope="col" class="text-center">Total</th>
                                             </tr>
@@ -720,6 +722,8 @@
                                                 <th scope="col" class="text-center">Exp. Date</th>
                                                 <th scope="col" class="text-center">Qty</th>
                                                 <th scope="col" class="text-center">Harga Satuan</th>
+                                                <th scope="col" class="text-center">Diskon</th>
+                                                <th scope="col" class="text-center">Persen</th>
                                                 <th scope="col" class="text-center">Total</th>
                                                 <th scope="col" class="text-center">Action</th>
                                             </tr>
@@ -907,6 +911,19 @@
                 }
             },
             {
+                data: 'fm_discprice',
+                render: function(data, type, row) {
+                    return row.fm_discprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'fm_discprecen',
+                defaultContent: '-'
+            },
+            {
                 data: 'fm_value',
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
             },
@@ -915,7 +932,7 @@
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(9)', row).html(`
+            $('td:eq(11)', row).html(`
                 <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
         },
         footerCallback: function(row, data, start, end, display) {
@@ -982,9 +999,9 @@
                     })
                 }
             },
-            {
+            { 
                 data: 'fv_description',
-                defaultContent: '-'
+               defaultContent: '-'
             },
         ],
         rowCallback: function(row, data) {
@@ -1048,11 +1065,24 @@
                 }
             },
             {
+                data: 'fm_discprice',
+                render: function(data, type, row) {
+                    return row.fm_discprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'fm_discprecen',
+                defaultContent: '-'
+            },
+            {
                 data: null
             },
         ],
         rowCallback: function(row, data) {
-            $('td:eq(9)', row).html(`
+            $('td:eq(11)', row).html(`
                 <button type="submit" class="btn btn-secondary" disabled>Edit</button>`);
         },
         footerCallback: function(row, data, start, end, display) {
@@ -1112,6 +1142,19 @@
                         currency: 'IDR'
                     })
                 }
+            },
+            {
+                data: 'fm_discprice',
+                render: function(data, type, row) {
+                    return row.fm_discprice.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                }
+            },
+            {
+                data: 'fm_discprecen',
+                defaultContent: '-'
             },
             {
                 data: 'fv_description',
