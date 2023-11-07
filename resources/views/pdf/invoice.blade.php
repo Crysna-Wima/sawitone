@@ -346,7 +346,7 @@
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->invstore->stock->fc_namepack }}</td>
                         <td>{{ $item->invstore->fc_batch }}</td>
-                        <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ date('d-m-Y', strtotime($item->invstore->fd_expired)) }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
                         <td>Rp. {{ number_format($item->fm_discprice,2, ",", "." ?? '-')}}</td>
@@ -387,7 +387,7 @@
                         <td>{{ $item->invstore->stock->fc_namelong }}</td>
                         <td>{{ $item->invstore->stock->fc_namepack }}</td>
                         <td>{{ $item->invstore->fc_batch }}</td>
-                        <td>{{ \Carbon\Carbon::parse( $item->invstore->fd_expired )->isoFormat('D MMMM Y'); }}</td>
+                        <td>{{ date('d-m-Y', strtotime($item->invstore->fd_expired)) }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
                         <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>

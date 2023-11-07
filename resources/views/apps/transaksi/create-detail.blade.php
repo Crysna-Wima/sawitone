@@ -7,6 +7,11 @@
         content: ' *';
         display: inline;
     }
+
+    table.dataTable tbody tr td {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
 </style>
 @endsection
 
@@ -209,13 +214,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-12">
+                            <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Catatan</label>
                                     @if ($data->fv_description == null)
-                                    <input type="text" name="fv_description" id="fv_description" class="form-control">
+                                    <input type="text" name="fv_description_submit" id="fv_description_submit" class="form-control">
                                     @else
-                                    <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}">
+                                    <input type="text" name="fv_description_submit" id="fv_description_submit" class="form-control" value="{{ $data->fv_description }}">
 
                                     @endif
 
@@ -943,6 +948,7 @@
     }
 
     var tb_debit = $('#tb_debit').DataTable({
+        autoWidth: false,
         processing: true,
         serverSide: true,
         destroy: true,
@@ -967,7 +973,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -982,7 +989,8 @@
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
@@ -1035,6 +1043,7 @@
     });
 
     var tb_kredit = $('#tb_kredit').DataTable({
+        autoWidth: false,
         processing: true,
         serverSide: true,
         destroy: true,
@@ -1059,7 +1068,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -1074,11 +1084,12 @@
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
-                defaultContent: '-'
+                defaultContent: '-',
             },
             {
                 data: 'fc_refno',

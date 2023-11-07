@@ -7,6 +7,10 @@
         content: ' *';
         display: inline;
     }
+
+    table.dataTable {
+        box-sizing: border-box;
+    }
 </style>
 @endsection
 
@@ -196,6 +200,7 @@
     }
 
     var tb = $('#tb').DataTable({
+        scrollX: true,
         processing: true,
         serverSide: true,
         destroy: true,

@@ -7,6 +7,11 @@
         content: ' *';
         display: inline;
     }
+
+    table.dataTable tbody tr td {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
 </style>
 @endsection
 
@@ -233,6 +238,7 @@
     });
 
     var tb_debit = $('#tb_debit').DataTable({
+        autoWidth: false,
         processing: true,
         serverSide: true,
         destroy: true,
@@ -256,7 +262,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -268,7 +275,8 @@
                         style: 'currency',
                         currency: 'IDR'
                     })
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
@@ -294,6 +302,7 @@
     });
 
     var tb_kredit = $('#tb_kredit').DataTable({
+        autoWidth: false,
         processing: true,
         serverSide: true,
         destroy: true,
@@ -317,7 +326,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -329,7 +339,8 @@
                         style: 'currency',
                         currency: 'IDR'
                     })
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
