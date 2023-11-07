@@ -165,7 +165,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ optional($inv_mst->somst->customer)->fm_memberAP ? number_format($inv_mst->somst->customer->fm_memberAP, 0, ',', '.') : '-' }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ optional($inv_mst->somst)->customer ? number_format($inv_mst->somst->customer->fm_memberAP, 0, ',', '.') : '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
