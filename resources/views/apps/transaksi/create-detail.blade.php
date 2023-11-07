@@ -1818,6 +1818,7 @@
                     }, 500);
                     tb_debit.ajax.reload();
                     tb_kredit.ajax.reload();
+                    window.location.href = window.location.href;
                 } else {
                     iziToast.error({
                         title: 'Gagal!',
