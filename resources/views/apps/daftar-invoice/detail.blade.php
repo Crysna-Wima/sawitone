@@ -165,7 +165,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->somst->customer->fm_memberAP,0,',','.') ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ optional($inv_mst->somst->customer)->fm_memberAP ? number_format($inv_mst->somst->customer->fm_memberAP, 0, ',', '.') : '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -419,7 +419,7 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->customer->fm_memberAP,0,',','.') ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ isset($inv_mst->customer) ? number_format($inv_mst->customer->fm_memberAP, 0, ',', '.') : '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
