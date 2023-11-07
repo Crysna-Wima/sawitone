@@ -377,49 +377,49 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->member_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->member_typebranch->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_membertypebusiness }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_membertypebusiness ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_membername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_membername1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_memberaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_memberaddress1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fn_memberAgingAP ?? '-' }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->member_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->member_legal_status->fv_description ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_memberaddress_loading1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $inv_mst->customer->fc_memberaddress_loading1 ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $inv_mst->customer->fm_memberAP,0,',','.') ?? '-' }}" readonly>
                                 </div>
                             </div>
                         </div>
