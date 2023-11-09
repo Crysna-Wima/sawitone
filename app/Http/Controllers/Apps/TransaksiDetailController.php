@@ -1823,7 +1823,7 @@ class TransaksiDetailController extends Controller
                 }
     
                 // Update TempTrxAccountingMaster
-                TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fc_branch', auth()->user()->fc_branch)->update([
                         'fc_status' => 'F',
                         'fv_description' => $request->fv_description_submit
@@ -1835,9 +1835,9 @@ class TransaksiDetailController extends Controller
                 TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fc_branch', auth()->user()->fc_branch)->delete();
     
-                // if (!$update) {
-                //     throw new \Exception('Oops! Gagal submit');
-                // }
+                if (!$update) {
+                    throw new \Exception('Oops! Gagal submit');
+                }
     
                 DB::commit();
     

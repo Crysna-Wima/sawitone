@@ -1102,7 +1102,8 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
-                fc_mappingcode: encode_mappingcode
+                fc_mappingcode: encode_mappingcode,
+                fc_debit_previledge: previledgeDebit
             },
             success: function(response) {
                 if (response.status == 200) {
@@ -1140,7 +1141,8 @@
                 fn_rownum: rownum,
                 fm_nominal: nominal,
                 fv_description: description,
-                fc_mappingcode: encode_mappingcode
+                fc_mappingcode: encode_mappingcode,
+                fc_credit_previledge: previledgeCredit
             },
             success: function(response) {
                 if (response.status == 200) {
