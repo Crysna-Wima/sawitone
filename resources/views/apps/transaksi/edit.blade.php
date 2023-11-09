@@ -1117,7 +1117,9 @@
                     swal(response.message, {
                         icon: 'error',
                     });
-                    $("#modal_loading").modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {
@@ -1156,7 +1158,9 @@
                     swal(response.message, {
                         icon: 'error',
                     });
-                    $("#modal_loading").modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {

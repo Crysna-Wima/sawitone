@@ -123,6 +123,7 @@ class DaftarInvoiceController extends Controller
         $encode_fc_invno = base64_encode($request->fc_invno);
         $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer', 'bank')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['tampil_diskon'] = $request->tampil_diskon;
 
         if ($request->name_pj === auth()->user()->fc_userid) {
             $data['nama_pj'] = $request->name_pj;
@@ -147,7 +148,7 @@ class DaftarInvoiceController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Invoice Berhasil ditampilkan',
-                    'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'],
+                    'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'] . '/' . $data['tampil_diskon'] ,
                 ];
             } else {
                 $data['fc_invno'] = $request->fc_invno;
@@ -165,13 +166,14 @@ class DaftarInvoiceController extends Controller
         }
     }
 
-    public function get_pdf($fc_invno, $nama_pj)
+    public function get_pdf($fc_invno, $nama_pj, $tampil_diskon)
     {
         set_time_limit(360);
         $decode_fc_invno = base64_decode($fc_invno);
         $data['inv_mst'] = InvoiceMst::with('domst', 'pomst', 'somst', 'romst', 'supplier', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['inv_dtl'] = InvoiceDtl::with('invstore.stock', 'invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['nama_pj'] = $nama_pj;
+        $data['tampil_diskon'] = $tampil_diskon;
         $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.invoice', $data)->setPaper('a4');
         return $pdf->stream();

@@ -423,9 +423,7 @@
                             <div class="form-group required">
                                 <input type="text" value="ADDON" id="fc_status" name="fc_status" hidden>
                                 <label>Keterangan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="fc_detailitem" name="fc_detailitem">
-                                </div>
+                                <select class="form-control select2" name="fc_detailitem" id="fc_detailitem"></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
@@ -592,9 +590,42 @@
         $("#modal_biaya").modal('show');
     }
 
+    $(document).ready(function() {
+        get_data_biaya();
+    })
+
     function detail(fn_invrownum) {
         $("#modal_detail").modal('show');
         get_detail(fn_invrownum);
+    }
+
+    function get_data_biaya() {
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/OTHEREXPENSE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_detailitem").empty();
+                    $("#fc_detailitem").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_detailitem").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
     }
 
     function get_detail(fn_invrownum) {
@@ -935,7 +966,7 @@
                 orderable: false
             },
             {
-                data: 'fc_detailitem'
+                data: 'keterangan.fv_description'
             },
             {
                 data: 'fc_unityname'
@@ -952,7 +983,8 @@
                 render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
             },
             {
-                data: 'fv_description'
+                data: 'fv_description',
+                defaultContent: '-'
             },
             {
                 data: null,

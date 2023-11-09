@@ -37,7 +37,8 @@
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center text-nowrap">No. Transaksi</th>
                                     <th scope="col" class="text-center text-nowrap">No. Giro</th>
-                                    <th scope="col" class="text-center text-nowrap">Nama COA</th>
+                                    <th scope="col" class="text-center text-nowrap">Customer</th>
+                                    <th scope="col" class="text-center text-nowrap">Nominal</th>
                                     <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
                                     <th scope="col" class="text-center">Status</th>
                                     <th scope="col" class="text-center">Deskripsi</th>
@@ -53,7 +54,8 @@
                                     <th scope="col" class="text-center">No</th>
                                     <th scope="col" class="text-center text-nowrap">No. Transaksi</th>
                                     <th scope="col" class="text-center text-nowrap">No. Giro</th>
-                                    <th scope="col" class="text-center text-nowrap">Nama COA</th>
+                                    <th scope="col" class="text-center text-nowrap">Supplier</th>
+                                    <th scope="col" class="text-center text-nowrap">Nominal</th>
                                     <th scope="col" class="text-center text-nowrap">Jatuh Tempo</th>
                                     <th scope="col" class="text-center">Status</th>
                                     <th scope="col" class="text-center">Deskripsi</th>
@@ -99,7 +101,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -116,7 +118,12 @@
                 data: 'fc_refno'
             },
             {
-                data: 'coa.fc_coaname'
+                data: 'coa.fc_coaname',
+                defaultContent: '-'
+            },
+            {
+                data: 'fm_value',
+                defaultContent: '-'
             },
             {
                 data: 'fd_agingref',
@@ -142,11 +149,11 @@
             }
 
             if (data['fc_girostatus'] == 'W') {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-info btn-sm ml-1" onclick="tuntaskan('${data.id}')"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</button>
                 `);
             } else {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-check"></i></button>
                 `);
             }
@@ -164,7 +171,7 @@
         },
         columnDefs: [{
             className: 'text-center',
-            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+            targets: [0, 1, 2, 3, 4, 5, 6, 7, 8]
         }, {
             className: 'text-nowrap',
             targets: []
@@ -181,7 +188,12 @@
                 data: 'fc_refno'
             },
             {
-                data: 'coa.fc_coaname'
+                data: 'coa.fc_coaname',
+                defaultContent: '-'
+            },
+            {
+                data: 'fm_value',
+                defaultContent: '-'
             },
             {
                 data: 'fd_agingref',
@@ -207,11 +219,11 @@
             }
 
             if (data['fc_girostatus'] == 'W') {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-info btn-sm ml-1" onclick="tuntaskan('${data.id}')"><i class="fa-solid fa-check-to-slot"></i> Tuntaskan</button>
                 `);
             } else {
-                $('td:eq(7)', row).html(`
+                $('td:eq(8)', row).html(`
                 <button class="btn btn-success btn-sm ml-1"><i class="fa-solid fa-check"></i></button>
                 `);
             }

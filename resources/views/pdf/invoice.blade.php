@@ -334,7 +334,6 @@
                 <th>Qty</th>
                 <th>Harga Satuan</th>
                 <th>Diskon</th>
-                <th>Persen</th>
                 <th>Total</th>
             </tr>
 
@@ -349,8 +348,11 @@
                         <td>{{ date('d-m-Y', strtotime($item->invstore->fd_expired)) }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
-                        <td>Rp. {{ number_format($item->fm_discprice,2, ",", "." ?? '-')}}</td>
-                        <td>{{ number_format($item->fm_discprecen,2, ",", "." ?? '-')}} %</td>
+                        @if ($tampil_diskon == 'N')
+                        <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>
+                        @else
+                        <td>{{ number_format($item->fm_discprecen,2, ",", ".")}} %</td>
+                        @endif
                         <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
@@ -375,7 +377,6 @@
                 <th>Qty</th>
                 <th>Harga Satuan</th>
                 <th>Diskon</th>
-                <th>Persen</th>
                 <th>Total</th>
             </tr>
 
@@ -390,8 +391,11 @@
                         <td>{{ date('d-m-Y', strtotime($item->invstore->fd_expired)) }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice,2, ",", ".")}}</td>
+                        @if ($tampil_diskon == 'N')
                         <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>
+                        @else
                         <td>{{ number_format($item->fm_discprecen,2, ",", ".")}} %</td>
+                        @endif
                         <td>Rp. {{ number_format($item->fm_value,2, ",", ".")}}</td>
                     </tr>
                 @endforeach
@@ -412,7 +416,6 @@
                 <th>Jumlah</th>
                 <th>Harga Satuan</th>
                 <th>Diskon</th>
-                <th>Persen</th>
                 <th>Catatan</th>
                 <th>Total</th>
             </tr>
@@ -425,8 +428,11 @@
                         <td>{{ $item->nameunity->fv_description }}</td>
                         <td>{{ $item->fn_itemqty }}</td>
                         <td>Rp. {{ number_format($item->fm_unityprice, 2, ",", ".")}}</td>
+                        @if ($tampil_diskon == 'N')
                         <td>Rp. {{ number_format($item->fm_discprice,2, ",", ".")}}</td>
+                        @else
                         <td>{{ number_format($item->fm_discprecen,2, ",", ".")}} %</td>
+                        @endif
                         <td>{{ $item->fv_description ?? '-'}}</td>
                         <td>Rp. {{ number_format($item->fm_value, 2, ",", ".")}}</td>
                     </tr>

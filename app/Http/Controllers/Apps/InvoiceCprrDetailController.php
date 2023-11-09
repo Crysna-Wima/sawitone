@@ -13,7 +13,7 @@ class InvoiceCprrDetailController extends Controller
 {
     public function index($fc_status){
         $typeInvDtl = base64_decode($fc_status);
-        $invoiceCprrDtl = TempInvoiceDtl::with('tempinvmst','cospertes','nameunity')
+        $invoiceCprrDtl = TempInvoiceDtl::with('tempinvmst','cospertes','nameunity', 'keterangan')
                         ->where([
                             'fc_invno' => auth()->user()->fc_userid,
                             'fc_status' => $typeInvDtl,
@@ -142,7 +142,7 @@ class InvoiceCprrDetailController extends Controller
                 'fc_unityname' => $request->fc_unityname2,
                 'fm_unityprice' => $request->fm_unityprice2,
                 'fn_itemqty' =>  $request->fn_itemqty2,
-                'fv_description' => $request->fv_description2,
+                'fv_description' => ($request->fv_description2 === '') ? NULL : $request->fv_description2
             ]);
         } else {
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
@@ -157,7 +157,7 @@ class InvoiceCprrDetailController extends Controller
                 'fc_unityname' => "CPRR",
                 'fm_unityprice' => $request->fm_unityprice,
                 'fn_itemqty' =>  $request->fn_itemqty,
-                'fv_description' => $request->fv_description
+                'fv_description' => ($request->fv_description === '') ? NULL : $request->fv_description
             ]);
         }
 

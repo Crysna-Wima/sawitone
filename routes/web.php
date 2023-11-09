@@ -569,7 +569,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/datatables/{fc_invtype}', 'Apps\DaftarInvoiceController@datatables');
             Route::get('/detail/{fc_invno}/{fc_invtype}', 'Apps\DaftarInvoiceController@detail');
             Route::post('/pdf', 'Apps\DaftarInvoiceController@pdf');
-            Route::get('/get_pdf/{fc_invno}/{nama_pj}', 'Apps\DaftarInvoiceController@get_pdf');
+            Route::get('/get_pdf/{fc_invno}/{nama_pj}/{tampil_diskon}', 'Apps\DaftarInvoiceController@get_pdf');
             Route::post('/kwitansi', 'Apps\DaftarInvoiceController@kwitansi');
             Route::get('/get_kwitansi/{fc_invno}/{nama_pj}', 'Apps\DaftarInvoiceController@get_kwitansi');
             Route::get('/datatables-inv-detail/{fc_invno}', 'Apps\DaftarInvoiceController@datatables_inv_detail');

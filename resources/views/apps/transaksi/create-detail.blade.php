@@ -954,7 +954,7 @@
         destroy: true,
         pageLength: 5,
         order: [
-            [1, 'desc']
+            [0, 'desc']
         ],
         ajax: {
             url: "/apps/transaksi/detail/datatables-debit",
@@ -1049,7 +1049,7 @@
         destroy: true,
         pageLength: 5,
         order: [
-            [1, 'desc']
+            [0, 'desc']
         ],
         ajax: {
             url: "/apps/transaksi/detail/datatables-kredit",
@@ -1190,7 +1190,9 @@
                     swal(response.message, {
                         icon: 'error',
                     });
-                    $("#modal_loading").modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {
@@ -1230,7 +1232,9 @@
                     swal(response.message, {
                         icon: 'error',
                     });
-                    $("#modal_loading").modal('hide');
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
                 }
             },
             error: function(xhr, status, error) {

@@ -111,7 +111,7 @@ class InvoicePembelianDetailController extends Controller
                 'fm_unityprice' => $request->fm_unityprice,
                 'fc_invtype' => 'PURCHASE',
                 'fn_itemqty' =>  $request->fn_itemqty,
-                'fv_description' => $request->fv_description,
+                'fv_description' => ($request->fv_description === '') ? NULL : $request->fv_description
             ]);
         } else {
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
@@ -125,7 +125,7 @@ class InvoicePembelianDetailController extends Controller
                 'fc_unityname' => "CPRR",
                 'fm_unityprice' => $request->fm_unityprice,
                 'fn_itemqty' =>  $request->fn_itemqty,
-                'fv_description' => $request->fv_description
+                'fv_description' => ($request->fv_description === '') ? NULL : $request->fv_description
             ]);
         }
 
@@ -193,7 +193,7 @@ class InvoicePembelianDetailController extends Controller
     }
 
     public function datatables_biaya_lain(){
-        $data = TempInvoiceDtl::with('tempinvmst', 'nameunity')
+        $data = TempInvoiceDtl::with('tempinvmst', 'nameunity', 'keterangan')
         ->where('fc_invno', auth()->user()->fc_userid)
         ->where('fc_branch', auth()->user()->fc_branch)
         ->where('fc_invtype', 'PURCHASE')

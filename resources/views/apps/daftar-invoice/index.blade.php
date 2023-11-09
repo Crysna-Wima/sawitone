@@ -150,6 +150,59 @@
                                 <div id="name_user_lainnya"></div>
                             </div>
                         </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label>Tampilan Diskon</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="tampil_diskon" id="tampil_diskon" value="N" class="selectgroup-input">
+                                        <span class="selectgroup-button">Nominal</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" checked name="tampil_diskon" id="tampil_diskon" checked="" value="P" class="selectgroup-input">
+                                        <span class="selectgroup-button">Persen</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modal_diskon" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Tampilan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="#" action="#" method="POST" autocomplete="off">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="form-group">
+                                <label>Tampilan Diskon</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" name="tampil_diskon" id="tampil_diskon" value="N" class="selectgroup-input">
+                                        <span class="selectgroup-button">Nominal</span>
+                                    </label>
+                                    <label class="selectgroup-item" style="margin: 0!important">
+                                        <input type="radio" checked name="tampil_diskon" id="tampil_diskon" checked="" value="P" class="selectgroup-input">
+                                        <span class="selectgroup-button">Persen</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -404,6 +457,10 @@
             }
         });
     }
+
+    function click_modal_diskon() {
+        $('#modal_diskon').modal('show');
+    };
 
     // untuk memunculkan nama penanggung jawab
     function click_modal_nama(fc_invno) {
