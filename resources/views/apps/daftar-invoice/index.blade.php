@@ -184,7 +184,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="#" action="#" method="POST" autocomplete="off">
+            <form id="modal_diskon_form" action="#" method="GET" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
@@ -193,20 +193,15 @@
                                 <label>Tampilan Diskon</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" name="tampil_diskon" id="tampil_diskon" value="N" class="selectgroup-input">
-                                        <span class="selectgroup-button">Nominal</span>
+                                        <a href="" class="btn btn-primary" id="radio-button-nominal" type="radio">Nominal</a>
                                     </label>
-                                    <label class="selectgroup-item" style="margin: 0!important">
-                                        <input type="radio" checked name="tampil_diskon" id="tampil_diskon" checked="" value="P" class="selectgroup-input">
-                                        <span class="selectgroup-button">Persen</span>
+                                    <label class="selectgroup-item" style="margin-left: 10px">
+                                        <a href="" class="btn btn-success" id="radio-button-persen" type="radio">Persen</a>
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <button type="submit" class="btn btn-success btn-submit">Konfirmasi </button>
                 </div>
             </form>
         </div>
@@ -429,9 +424,10 @@
                         tb_penjualan.ajax.reload(null, false);
                         tb_pembelian.ajax.reload(null, false);
                         tb_cprr.ajax.reload(null, false);
-                        window.open(response.link,
-                            '_blank'
-                        );
+                        click_modal_diskon(response.link);
+                        // window.open(response.link,
+                        //     '_blank'
+                        // );
                     } else if (response.approve == 'request') {
                         click_modal_nama(fc_invno);
                     } else {
@@ -458,7 +454,10 @@
         });
     }
 
-    function click_modal_diskon() {
+    function click_modal_diskon(tampil_diskon_value) {
+        var tampil_diskon = $('.tampil_diskon').val();
+        $('#radio-button-persen').attr('href', tampil_diskon_value + "/" + "P");
+        $('#radio-button-nominal').attr('href', tampil_diskon_value + "/" + "N");
         $('#modal_diskon').modal('show');
     };
 
@@ -811,5 +810,7 @@
                 }
             });
     });
+
+
 </script>
 @endsection
