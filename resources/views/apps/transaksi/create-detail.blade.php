@@ -237,7 +237,7 @@
                     <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
                     <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                     <button type="submit" class="btn btn-success">Submit Transaksi</button>
-
+                    <a href="/apps/transaksi/opsi-lanjutan"><button type="button" class="btn btn-info ml-1">Opsi Lanjutan</button></a>
                 </div>
             </form>
         </div>

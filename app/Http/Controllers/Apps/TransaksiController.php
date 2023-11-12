@@ -18,6 +18,7 @@ use App\Helpers\ApiFormatter;
 use App\Models\Approvement;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
+use App\Models\TempSuppTrxAcc;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -38,6 +39,12 @@ class TransaksiController extends Controller
     public function giro()
     {
         return view('apps.transaksi.giro');
+    }
+
+    public function opsi_lanjutan()
+    {
+        $data['data'] = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch')->where('fc_trxno', auth()->user()->fc_userid)->first();
+        return view('apps.transaksi.opsi-lanjutan', $data);
     }
 
     public function edit($fc_trxno)
@@ -146,6 +153,17 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
+    public function datatables_opsi()
+    {
+        $data = TempSuppTrxAcc::with('transaksitype', 'mapping')
+            ->where('fc_userid', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
     public function datatables_bookmark()
     {
         $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')
