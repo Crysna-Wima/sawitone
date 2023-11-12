@@ -18,6 +18,46 @@
 @section('content')
 <div class="section-body">
     <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group d-flex-row">
+                                <label>Debit</label>
+                                <div class="text mt-2">
+                                    <h5 class="text-success" style="font-weight: bold; font-size:large" id="debit" name="debit"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group d-flex-row">
+                                <label id="label_kekurangan">Kredit</label>
+                                <div class="text mt-2">
+                                    <h5 class="text-danger" style="font-weight: bold; font-size:large" id="kredit" name="kredit"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group d-flex-row">
+                                <label>Balance</label>
+                                <div class="text mt-2">
+                                    <h5 class="text-muted" style="font-weight: bold; font-size:large" id="balance" name="balance"></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 col-lg-3">
+                            <div class="form-group d-flex-row">
+                                <label>Nominal COA</label>
+                                <div class="text mt-2">
+                                    <h5 class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- Opsi Lanjutan --}}
         <div class="col-12 col-md-12 col-lg-12 place_detail">
             <div class="card">
@@ -75,13 +115,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_debit" action="/apps/transaksi/detail/store-opsi" method="POST" autocomplete="off">
+            <form id="form_submit_opsi" action="/apps/transaksi/store-opsi" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Kode COA</label>
-                                <select name="fc_coacode" id="fc_coacode" onchange="get_data_coa()" class="select2" required></select>
+                                <select name="fc_coacode" id="fc_coacode" onchange="get_detail_coa()" class="select2" required></select>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
@@ -160,6 +200,17 @@
 
 @section('js')
 <script>
+    var fc_balancerelation = "{{ $data->mapping->fc_balancerelation }}";
+    var balancerelation_encode = window.btoa(fc_balancerelation);
+
+    var nominalDebit = "{{ $data->fm_debitvalue }}";
+    var nominalKredit = "{{ $data->fm_creditvalue }}";
+    var nominalBalance = "{{ $data->fm_balance }}";
+
+    $('#debit').html(fungsiRupiahSystem(parseFloat(nominalDebit)));
+    $('#kredit').html(fungsiRupiahSystem(parseFloat(nominalKredit)));
+    $('#balance').html(fungsiRupiahSystem(parseFloat(nominalBalance)));
+
     $(document).ready(function() {
         get_data_coa();
         get_data_payment();
@@ -185,20 +236,10 @@
                 if (response.status === 200) {
                     var data = response.data;
                     // console.log(data);
-                    if (data.length) {
-                        var value = data[0].mst_coa.fc_directpayment;
-                        $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
-                        if (value == "F") {
-                            $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
-                            $('#fc_paymentmethod').prop('disabled', true);
-                            $('#fc_paymentmethod_hidden').val("NON");
-                        }
-                        var value2 = data[0].mst_coa.fc_balancestatus;
-                        $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
-                        if (data[0].mst_coa.transaksitype == null) {
-                            $('#fc_group').append(`<option value="" selected>-</option>`);
-                        }
-                        $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+                    $("#fc_coacode").empty();
+                    $("#fc_coacode").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_coacode").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
@@ -245,6 +286,52 @@
                             $('input[id="fd_agingref"]').val("");
                         }
                     });
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function get_detail_coa() {
+        $('#modal_loading').modal('show');
+        var fc_coacode = window.btoa($('#fc_coacode').val());
+        // console.log(fc_coacode);
+        $.ajax({
+            url: "/apps/transaksi/detail/" + fc_coacode,
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    // console.log(data);
+                    if (data.length) {
+                        var value = data[0].mst_coa.fc_directpayment;
+                        $("input[name=fc_directpayment][value=" + value + "]").prop('checked', true);
+                        if (value == "F") {
+                            $('#fc_paymentmethod').append(`<option value="NON" selected>NON DIRECT PAYMENT</option>`);
+                            $('#fc_paymentmethod').prop('disabled', true);
+                            $('#fc_paymentmethod_hidden').val("NON");
+                        }
+                        var value2 = data[0].mst_coa.fc_balancestatus;
+                        $("input[name=fc_balancestatus][value=" + value2 + "]").prop('checked', true);
+                        if (data[0].mst_coa.transaksitype == null) {
+                            $('#fc_group').append(`<option value="" selected>-</option>`);
+                        }
+                        $('#fc_group').append(`<option value="${data[0].mst_coa.fc_group}" selected>${data[0].mst_coa.transaksitype.fv_description}</option>`);
+                    }
                 } else {
                     iziToast.error({
                         title: 'Error!',
@@ -328,25 +415,78 @@
         ],
 
         rowCallback: function(row, data) {
-            var fc_mappingcode = "{{ $data->fc_mappingcode }}";
-            var encode_fc_mappingcode = btoa(fc_mappingcode);
-            var url_delete = "/apps/transaksi/detail/delete/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
+            var url_delete = "/apps/transaksi/delete-opsi/" + data.fc_trxno + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
-            if (data.coamst.fc_directpayment == 'T') {
-                $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
-                `);
-            } else if (data.coamst.fc_directpayment != 'T') {
-                $('td:eq(8)', row).html(``);
-            } else {
-                $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="D" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
+            $('td:eq(8)', row).html(`
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" onclick="editDetailTransaksi(this)"><i class="fas fa-edit"> </i></button>
                 <button class="btn btn-danger btn-sm" onclick="click_delete('${url_delete}','${data.coamst.fc_coaname}')"><i class="fa fa-trash"> </i></button>
-                `);
-            }
+            `);
         },
     });
+
+    function editDetailTransaksi(button) {
+        var rownum = $(button).data('rownum');
+        var nominal = $(button).data('nominal');
+        var description = $(button).data('description');
+        var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
+        var newdescription = $(`#fv_description_${rownum}`).val();
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}";
+        var encode_mappingcode = btoa(fc_mappingcode);
+
+        swal({
+            title: "Konfirmasi",
+            text: "Apakah kamu yakin ingin update data tersebut?",
+            icon: "warning",
+            buttons: ["Cancel", "Update"],
+            dangerMode: true,
+        }).then(function(confirm) {
+            if (confirm) {
+                updateOpsiTransaksi(rownum, newnominal, newdescription, encode_mappingcode);
+            }
+        });
+    }
+
+    function updateOpsiTransaksi(rownum, nominal, description, encode_mappingcode) {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/apps/transaksi/update-opsi',
+            type: 'PUT',
+            data: {
+                fn_rownum: rownum,
+                fm_nominal: nominal,
+                fv_description: description,
+                fc_balancerelation: fc_balancerelation,
+                fc_mappingcode: encode_mappingcode
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_loading").modal('hide');
+                    window.location.href = window.location.href;
+                    tb_opsi.ajax.reload();
+                } else {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                    setTimeout(function() {
+                        $('#modal_loading').modal('hide');
+                    }, 500);
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#modal_loading").modal('hide');
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
 
     function click_pending() {
         swal({
@@ -485,17 +625,13 @@
                                     icon: 'success',
                                 });
                                 $("#modal").modal('hide');
-                                tb_debit.ajax.reload(null, false);
-                                tb_kredit.ajax.reload(null, false);
-                                window.location.href = window.location.href;
+                                tb_opsi.ajax.reload(null, false);
                             } else if (response.status == 201) {
                                 swal(response.message, {
                                     icon: 'success',
                                 });
                                 $("#modal").modal('hide');
-                                tb_debit.ajax.reload(null, false);
-                                tb_kredit.ajax.reload(null, false);
-                                window.location.href = window.location.href;
+                                tb_opsi.ajax.reload(null, false);
                             } else {
                                 swal(response.message, {
                                     icon: 'error',
@@ -515,6 +651,78 @@
                 }
             });
     }
+
+    $('#form_submit_opsi').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        swal({
+                title: 'Yakin?',
+                text: 'Apakah anda yakin akan menyimpan data ini?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: $('#form_submit_opsi').attr('action'),
+                        type: $('#form_submit_opsi').attr('method'),
+                        data: $('#form_submit_opsi').serialize(),
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                tb_opsi.ajax.reload(null, false);
+                                $("#modal_opsi").modal('hide');
+                                $("#form_submit_opsi")[0].reset();
+                                $('#fc_paymentmethod').val(null).trigger('change');
+                                $('#fc_group').val(null).trigger('change');
+                                reset_all_select();
+
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb_opsi.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
+    });
+
 
     $('.modal').css('overflow-y', 'auto');
 </script>

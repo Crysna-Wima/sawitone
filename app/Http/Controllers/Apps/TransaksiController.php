@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MappingMaster;
 use App\Models\MappingDetail;
 use Carbon\Carbon;
+use App\Helpers\Convert;
 use DB;
 use App\Models\Giro;
 use App\Models\TrxAccountingMaster;
@@ -153,10 +154,11 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
+    // OPSI LANJUTAN
     public function datatables_opsi()
     {
-        $data = TempSuppTrxAcc::with('transaksitype', 'mapping')
-            ->where('fc_userid', auth()->user()->fc_userid)
+        $data = TempSuppTrxAcc::with('coamst', 'payment')
+            ->where('fc_trxno', auth()->user()->fc_userid)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->get();
 
@@ -164,6 +166,146 @@ class TransaksiController extends Controller
             ->addIndexColumn()
             ->make(true);
     }
+
+    public function store_opsi(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'fc_coacode' => 'required',
+                'fc_paymentmethod' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return [
+                    'status' => 300,
+                    'message' => $validator->errors()->first()
+                ];
+            }
+
+            $temp_detail = TempSuppTrxAcc::where('fc_trxno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
+            $fn_rownum = 1;
+            if (!empty($temp_detail)) {
+                $fn_rownum = $temp_detail->fn_rownum + 1;
+            }
+
+
+            $insert_debit = TempSuppTrxAcc::create([
+                'fc_branch' => auth()->user()->fc_branch,
+                'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                'fc_trxno' => auth()->user()->fc_userid,
+                'fn_rownum' => $fn_rownum,
+                'fc_coacode' => $request->fc_coacode,
+                'fc_statuspos' => 'O',
+                'fc_paymentmethod' => $request->fc_paymentmethod,
+                'fc_refno' => ($request->fc_refno === '') ? NULL : $request->fc_refno,
+                'fd_agingref' => ($request->fd_agingref === '') ? NULL : $request->fd_agingref,
+                'created_by' => auth()->user()->fc_userid
+            ]);
+
+            if ($insert_debit) {
+                DB::commit();
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil disimpan'
+                ];
+            } else {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function update_opsi(Request $request)
+    {
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $updateDescription = true;
+            $updateNominal = true;
+
+            $updateData = [
+                'updated_by' => auth()->user()->fc_userid
+            ];
+
+            if ($updateNominal && strpos($request->fm_nominal, 'Rp') === false) {
+                $updateData['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+            }
+
+            if ($updateDescription) {
+                $updateData['fv_description'] = $request->fv_description;
+            }
+
+            $updateNominal = TempSuppTrxAcc::where('fc_trxno', auth()->user()->fc_userid)
+                ->where('fn_rownum', $request->fn_rownum)
+                ->update($updateData);
+
+            if ($updateNominal) {
+                DB::commit();
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil diubah'
+                ];
+            } else {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function delete_opsi($fc_trxno, $fn_rownum)
+    {
+        $deleteOpsi = TempSuppTrxAcc::where([
+            'fc_trxno' => $fc_trxno,
+            'fn_rownum' => $fn_rownum,
+        ])->delete();
+
+        if ($deleteOpsi) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dihapus',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error',
+        ];
+    }
+
+
     public function datatables_bookmark()
     {
         $data = TempTrxAccountingMaster::with('transaksitype', 'mapping')
@@ -443,9 +585,9 @@ class TransaksiController extends Controller
         // decode fc_trxno
         $decode_fc_trxno = base64_decode($fc_trxno);
         $cek_step1 = Approvement::where('fc_trxno', $decode_fc_trxno)
-        ->where('fc_approvalused', 'F')
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->exists();
+            ->where('fc_approvalused', 'F')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->exists();
 
         // dd($cek);
         if ($cek_step1) {

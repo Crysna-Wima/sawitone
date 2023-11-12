@@ -704,6 +704,9 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/cek-exist-approval/{fc_trxno}', 'Apps\TransaksiController@cek_exist_approval');
             Route::get('/opsi-lanjutan', 'Apps\TransaksiController@opsi_lanjutan');
             Route::get('/datatables-opsi', 'Apps\TransaksiController@datatables_opsi');
+            Route::post('/store-opsi', 'Apps\TransaksiController@store_opsi');
+            Route::put('update-opsi', 'Apps\TransaksiController@update_opsi');
+            Route::delete('/delete-opsi/{fc_trxno}/{fn_rownum}', 'Apps\TransaksiController@delete_opsi');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables', 'Apps\TransaksiDetailController@datatables');
