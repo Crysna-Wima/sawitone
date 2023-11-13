@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit_edit" action="#" method="post">
+            <form id="form_submit_edit" action="/apps/transaksi/detail/submit_transaksi" method="post">
                 @csrf
                 @method('put')
                 <div class="button text-right mb-4">

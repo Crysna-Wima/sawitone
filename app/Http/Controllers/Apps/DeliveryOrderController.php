@@ -155,11 +155,12 @@ class DeliveryOrderController extends Controller
 
     public function datatables_stock_inventory($fc_stockcode){
         // get data from Invstore
-
+        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')
         ->where('fc_stockcode', $fc_stockcode)
         ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode)
+        ->where('fc_warehousecode', $now_fc_warehousecode)
         ->orderBy('fd_expired', 'ASC')
         ->get();
         return DataTables::of($data)

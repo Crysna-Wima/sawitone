@@ -232,12 +232,20 @@
                 <div class="button text-right mb-4">
                     <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
                     <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    @php
+                        $fcCreditPreviledgeArray = json_decode($data->mapping->fc_credit_previledge, true);
+                        $fcDebitPreviledgeArray = json_decode($data->mapping->fc_debit_previledge, true);
+                    @endphp
+                
+                    @if((is_array($fcCreditPreviledgeArray) && in_array('ONCE', $fcCreditPreviledgeArray) && in_array('LINV', $fcCreditPreviledgeArray)) ||
+                        (is_array($fcDebitPreviledgeArray) && in_array('ONCE', $fcDebitPreviledgeArray) && in_array('LINV', $fcDebitPreviledgeArray)))
+                        <button type="button" onclick="click_opsilanjut()" class="btn btn-info ml-1">Opsi Lanjutan</button>
+                    @endif
 
                     <input type="text" name="status_balance" id="status_balance" hidden>
                     <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
                     <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                     <button type="submit" class="btn btn-success">Submit Transaksi</button>
-                    <a href="/apps/transaksi/opsi-lanjutan"><button type="button" class="btn btn-info ml-1">Opsi Lanjutan</button></a>
                 </div>
             </form>
         </div>
@@ -1386,6 +1394,58 @@
                 }
             });
     });
+
+    function click_opsilanjut(){
+        swal({
+                title: 'Konfirmasi?',
+                text: 'Apakah anda yakin menambahkan opsi lanjutan?',
+                icon: 'warning',
+                buttons: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/transaksi/update-status-opsi-lanjutan',
+                        type: "PUT",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            //  tb.ajax.reload(null, false);
+                            //  console.log(response.status);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                window.location.href = window.location.href;
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                window.location.href = response.link;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
+    }
 
     function click_delete(url, nama) {
         swal({

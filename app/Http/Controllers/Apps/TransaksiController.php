@@ -285,6 +285,25 @@ class TransaksiController extends Controller
         }
     }
 
+    public function update_status_opsi_lanjutan(){
+        $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
+            'fc_status' => 'I-2'
+        ]);
+
+        if ($update) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil diubah',
+                'link' => '/apps/transaksi/opsi-lanjutan'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
+            ];
+        }
+    }
+
     public function delete_opsi($fc_trxno, $fn_rownum)
     {
         $deleteOpsi = TempSuppTrxAcc::where([
