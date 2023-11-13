@@ -232,6 +232,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-6 col-lg-5">
+                                    <div class="form-group">
+                                        <label>Kedatangan</label>
+                                        <div class="input-group" data-date-format="dd-mm-yyyy">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                                <input type="text" id="fd_stockarrived" class="form-control datepicker" name="fd_stockarrived">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-6 col-lg-7">
                                     <div class="form-group">
                                         <label>Catatan</label>
@@ -322,6 +335,7 @@
                                             <th scope="col" class="text-center">Disc</th>
                                             <th scope="col" class="text-center">Qty</th>
                                             <th scope="col" class="text-center">Total</th>
+                                            <th scope="col" class="text-center">Kedatangan</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <th scope="col" class="text-center justify-content-center">Action</th>
                                         </tr>
@@ -969,6 +983,9 @@
                     render: $.fn.dataTable.render.number('.', ',', 0, 'Rp')
                 },
                 {
+                    data: 'fd_stockarrived'
+                },
+                {
                     data: 'fv_description',
                     defaultContent: '-',
                 },
@@ -982,7 +999,7 @@
                 // console.log(data.fn_porownum);
                 var url_delete = "/apps/purchase-order/detail/delete/" + data.fc_pono + '/' + data.fn_porownum;
 
-                $('td:eq(9)', row).html(`
+                $('td:eq(10)', row).html(`
                 <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','Purchase Order Detail')"><i class="fa fa-trash"> </i> Hapus Item</button>
                 `);
             },
