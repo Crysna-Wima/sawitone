@@ -235,10 +235,10 @@
                     @php
                         $fcCreditPreviledgeArray = json_decode($data->mapping->fc_credit_previledge, true);
                         $fcDebitPreviledgeArray = json_decode($data->mapping->fc_debit_previledge, true);
+                        $mergedArray = array_merge($fcCreditPreviledgeArray, $fcDebitPreviledgeArray);
                     @endphp
-                
-                    @if((is_array($fcCreditPreviledgeArray) && in_array('ONCE', $fcCreditPreviledgeArray) && in_array('LINV', $fcCreditPreviledgeArray)) ||
-                        (is_array($fcDebitPreviledgeArray) && in_array('ONCE', $fcDebitPreviledgeArray) && in_array('LINV', $fcDebitPreviledgeArray)))
+
+                    @if(in_array('ONCE', $mergedArray) && in_array('LINV', $mergedArray))
                         <button type="button" onclick="click_opsilanjut()" class="btn btn-info ml-1">Opsi Lanjutan</button>
                     @endif
 
