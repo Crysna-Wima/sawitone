@@ -129,8 +129,8 @@ class DaftarInvoiceController extends Controller
             $data['nama_pj'] = $request->name_pj;
 
             InvoiceMst::where('fc_invno', $request->fc_invno)
-            ->where('fc_branch', auth()->user()->fc_branch)
-            ->increment('fn_printout', 1);
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->increment('fn_printout', 1);
 
             $insert = Approval::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -148,7 +148,7 @@ class DaftarInvoiceController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Invoice Berhasil ditampilkan',
-                    'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'] . '/' . $data['tampil_diskon'] ,
+                    'link' => '/apps/daftar-invoice/get_pdf/' . $encode_fc_invno . '/' . $data['nama_pj'] . '/' . $data['tampil_diskon'],
                 ];
             } else {
                 $data['fc_invno'] = $request->fc_invno;
@@ -209,7 +209,7 @@ class DaftarInvoiceController extends Controller
     public function get_user()
     {
         $data = User::where('fl_level', '3')
-        ->get();
+            ->get();
 
         return ApiFormatter::getResponse($data);
     }
@@ -290,14 +290,14 @@ class DaftarInvoiceController extends Controller
                 ->where('fc_approvalstatus', 'A')->where('fc_branch', auth()->user()->fc_branch)
                 ->exists();
             $accesor =  Approval::where('fc_docno', $decode_fc_invno)
-            ->where('fc_approvalstatus', 'A')->where('fc_branch', auth()->user()->fc_branch)->first();
-           
-            if($cek_step2){
+                ->where('fc_approvalstatus', 'A')->where('fc_branch', auth()->user()->fc_branch)->first();
+
+            if ($cek_step2) {
                 $get_accesor = $accesor->fc_accessorid;
-                
+
                 InvoiceMst::where('fc_invno', $decode_fc_invno)
-                ->where('fc_branch', auth()->user()->fc_branch)
-                ->increment('fn_printout', 1);
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->increment('fn_printout', 1);
 
                 return [
                     'status' => 200,
@@ -305,14 +305,13 @@ class DaftarInvoiceController extends Controller
                     'message' => 'Approval berhasil dikirim',
                     'link' => '/apps/daftar-invoice/get_pdf/' . $fc_invno . '/' . $get_accesor,
                 ];
-            }else{
+            } else {
                 return [
                     'status' => 200,
                     'approve' => 'wait',
                     'message' => 'Mohon ditunggu Invoice sedang proses Approvement',
                 ];
             }
-            
         } else {
             return [
                 'status' => 200,

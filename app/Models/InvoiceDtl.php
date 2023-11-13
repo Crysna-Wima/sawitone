@@ -18,19 +18,23 @@ class InvoiceDtl extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
-    public function invmst(){
+    public function invmst()
+    {
         return $this->hasOne(InvoiceMst::class, 'fc_invno', 'fc_invno');
     }
-    
-    public function cospertes(){
+
+    public function cospertes()
+    {
         return $this->hasOne(Cospertes::class, 'fc_cprrcode', 'fc_detailitem');
     }
 
-    public function nameunity(){
+    public function nameunity()
+    {
         return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_unityname')->where('fc_trx', 'LIKE', '%UNITY%')->withTrashed();
     }
 
-    public function invstore(){
-        return $this->hasOne(Invstore::class, 'fc_barcode','fc_detailitem');
+    public function invstore()
+    {
+        return $this->hasOne(Invstore::class, 'fc_barcode', 'fc_detailitem');
     }
 }

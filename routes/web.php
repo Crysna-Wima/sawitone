@@ -486,7 +486,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_warehousecode}', 'Apps\PenggunaanCprrController@detail');
             Route::get('/datatables-detail/{fc_warehousecode}', 'Apps\PenggunaanCprrController@datatables_detail');
             Route::get('/detail/{fc_warehousecode}/journal', 'Apps\PenggunaanCprrController@detail_unjournal');
-            
+
             Route::post('/detail/{fc_warehousecode}/journal/{fc_membercode}', 'Apps\PenggunaanCprrController@journal_cprr');
         });
 
@@ -506,6 +506,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/update-fm-unityprice', 'Apps\InvoicePenjualanDetailController@update_unityprice');
             Route::put('/update-discprice', 'Apps\InvoicePenjualanDetailController@update_discprice');
             Route::get('/get-detail/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@get_detail');
+            Route::put('/update-description', 'Apps\InvoicePenjualanDetailController@edit_description');
 
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice', 'Apps\InvoicePenjualanController@create_invoice');
@@ -528,6 +529,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/cancel-invoice', 'Apps\InvoicePembelianDetailController@cancel_invoice');
             Route::put('/update-fm-unityprice', 'Apps\InvoicePembelianDetailController@update_unityprice');
             Route::put('/update-discprice', 'Apps\InvoicePembelianDetailController@update_discprice');
+            Route::put('/update-description', 'Apps\InvoicePembelianDetailController@edit_description');
 
 
             Route::prefix('create')->group(function () {

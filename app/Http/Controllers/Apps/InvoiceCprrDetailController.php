@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\apps;
 
-use App\Helpers\Convert;
-use App\Http\Controllers\Controller;
-use App\Models\TempInvoiceDtl;
-use Illuminate\Http\Request;
 use Validator;
+use App\Helpers\Convert;
+use App\Models\InvoiceDtl;
+use Illuminate\Http\Request;
+use App\Models\TempInvoiceDtl;
+use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
 class InvoiceCprrDetailController extends Controller
 {
-    public function index($fc_status){
+    public function index($fc_status)
+    {
         $typeInvDtl = base64_decode($fc_status);
-        $invoiceCprrDtl = TempInvoiceDtl::with('tempinvmst','cospertes','nameunity', 'keterangan')
-                        ->where([
-                            'fc_invno' => auth()->user()->fc_userid,
-                            'fc_status' => $typeInvDtl,
-                            'fc_invtype' => "CPRR"
-                        ])->get();
-        
+        $invoiceCprrDtl = TempInvoiceDtl::with('tempinvmst', 'cospertes', 'nameunity', 'keterangan')
+            ->where([
+                'fc_invno' => auth()->user()->fc_userid,
+                'fc_status' => $typeInvDtl,
+                'fc_invtype' => "CPRR"
+            ])->get();
+
         return DataTables::of($invoiceCprrDtl)->addIndexColumn()->make(true);
     }
 
@@ -60,23 +62,24 @@ class InvoiceCprrDetailController extends Controller
         ];
     }
 
-    public function create(request $request){
+    public function create(request $request)
+    {
         $fn_invrownum = 1;
         $tempInvDtl = TempInvoiceDtl::where([
-                        'fc_invno' => auth()->user()->fc_userid,
-                        'fc_invtype' => "CPRR",
-                    ])
-                    ->orderBy('fn_invrownum', 'DESC')        
-                    ->first();
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_invtype' => "CPRR",
+        ])
+            ->orderBy('fn_invrownum', 'DESC')
+            ->first();
 
         $total = TempInvoiceDtl::where([
-                    'fc_invno' => auth()->user()->fc_userid,
-                    'fc_invtype' => "CPRR",
-                ])  
-                ->count();
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_invtype' => "CPRR",
+        ])
+            ->count();
 
-        // validator data yang dibutuhkan (mandatory) 
-        if(!empty($request->fc_status)){
+        // validator data yang dibutuhkan (mandatory)
+        if (!empty($request->fc_status)) {
             $validator = Validator::make($request->all(), [
                 'fc_detailitem2' => 'required',
                 'fc_unityname2' => 'required',
@@ -90,9 +93,9 @@ class InvoiceCprrDetailController extends Controller
                 'fn_itemqty' => 'required',
                 'fm_unityprice' => 'required',
             ]);
-        }  
+        }
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'total' => $total,
@@ -100,8 +103,8 @@ class InvoiceCprrDetailController extends Controller
             ];
         }
 
-        // Mencari apakah sudah pernah memasukkan CPRR yang sama 
-        if(!empty($request->fc_status)){
+        // Mencari apakah sudah pernah memasukkan CPRR yang sama
+        if (!empty($request->fc_status)) {
             $item = TempInvoiceDtl::where([
                 'fc_invno' => auth()->user()->fc_userid,
                 'fc_detailitem' => $request->fc_detailitem2,
@@ -114,9 +117,9 @@ class InvoiceCprrDetailController extends Controller
                 'fc_invtype' => "CPRR",
             ])->first();
         }
-        
-        // Kondisi ketika ada CPRR yang sama 
-        if(!empty($item)){
+
+        // Kondisi ketika ada CPRR yang sama
+        if (!empty($item)) {
             return [
                 'status' => 300,
                 'total' => $total,
@@ -124,15 +127,15 @@ class InvoiceCprrDetailController extends Controller
             ];
         }
 
-        if(!empty($tempInvDtl)){
+        if (!empty($tempInvDtl)) {
             $fn_invrownum = $tempInvDtl->fn_invrownum + 1;
         }
 
-        if(!empty($request->fc_status)){
+        if (!empty($request->fc_status)) {
             $request->merge(['fm_unityprice2' => Convert::convert_to_double($request->fm_unityprice2)]);
-            
+
             $insert_invdtl = TempInvoiceDtl::create([
-                'fn_invrownum' => $fn_invrownum, 
+                'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_invno' => auth()->user()->fc_userid,
@@ -148,7 +151,7 @@ class InvoiceCprrDetailController extends Controller
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
 
             $insert_invdtl = TempInvoiceDtl::create([
-                'fn_invrownum' => $fn_invrownum, 
+                'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_invno' => auth()->user()->fc_userid,
@@ -161,23 +164,24 @@ class InvoiceCprrDetailController extends Controller
             ]);
         }
 
-        if($insert_invdtl){
+        if ($insert_invdtl) {
             return response()->json([
                 'status' => 200,
                 'total' => $total,
                 'link' => '/apps/invoice-cprr',
                 'message' => 'Data berhasil disimpan'
             ]);
-        } else{
-             return [
-                 'status' => 300,
-                 'link' => '/apps/invoice-cprr',
-                 'message' => 'Error'
-             ];
+        } else {
+            return [
+                'status' => 300,
+                'link' => '/apps/invoice-cprr',
+                'message' => 'Error'
+            ];
         }
     }
 
-    public function delete($fc_invno, $fn_invrownum){
+    public function delete($fc_invno, $fn_invrownum)
+    {
         $count_invdtl = TempInvoiceDtl::where(['fc_invno' => $fc_invno, 'fc_invtype' => 'CPRR'])->count();
 
         $deleteInvDtl = TempInvoiceDtl::where([
@@ -186,8 +190,8 @@ class InvoiceCprrDetailController extends Controller
             'fc_invtype' => 'CPRR',
         ])->delete();
 
-        if($deleteInvDtl){
-            if($count_invdtl < 2){
+        if ($deleteInvDtl) {
+            if ($count_invdtl < 2) {
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil dihapus',
@@ -197,12 +201,25 @@ class InvoiceCprrDetailController extends Controller
             return [
                 'status' => 200,
                 'message' => 'Data berhasil dihapus',
-            ]; 
+            ];
         }
 
         return [
             'status' => 300,
             'message' => 'Error',
+        ];
+    }
+
+    public function edit_description(Request $request)
+    {
+        InvoiceDtl::where('fc_branch', auth()->user()->fc_branch)->update([
+            'fv_description' => $request->fv_description,
+        ]);
+
+        return [
+            'status' => 201, // SUCCESS
+            'link' => '#',
+            'message' => 'Catatan berhasil diubah'
         ];
     }
 }
