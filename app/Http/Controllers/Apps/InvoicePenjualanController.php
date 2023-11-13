@@ -19,6 +19,8 @@ use App\Models\TempInvoiceDtl;
 use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
 use Carbon\Carbon;
+use App\Helpers\ApiFormatter;
+use App\Models\Customer;
 use Validator;
 
 class InvoicePenjualanController extends Controller
@@ -127,5 +129,11 @@ class InvoicePenjualanController extends Controller
         }
 
         
+    }
+
+    public function customer()
+    {
+        $data = Customer::with('member_tax_code', 'member_typebranch', 'member_type_business', 'member_legal_status')->get();
+        return ApiFormatter::getResponse($data);
     }
 }

@@ -7,6 +7,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Data Surat Jalan</h4>
+                    <div class="card-header-action">
+                        <button type="button" class="btn btn-success" onclick="add_multi();"><i class="fa fa-plus"></i> Multi SJ</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -31,8 +34,82 @@
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade" role="dialog" id="modal_multi" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Multi SJ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_submit" action="#" method="POST" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Customer</label>
+                                <select name="fc_membercode" id="fc_membercode" onchange="get_detail_member()" class="select2" required></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Nama</label>
+                                <input name="fc_membercode" id="fc_membercode" class="form-control"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="submit" class="btn btn-primary">Tambahkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection
+
 @section('js')
 <script>
+    $(document).ready(function() {
+        get_data_customer();
+    })
+
+    function add_multi() {
+        $('#modal_multi').modal('show');
+    }
+
+    function get_data_customer() {
+        $.ajax({
+            url: "/apps/invoice-penjualan/data-customer",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                if (response.status === 200) {
+                    var data = response.data;
+                    // console.log(data);
+                    $("#fc_membercode").empty();
+                    $("#fc_membercode").append(`<option value="" selected disabled> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_membercode").append(`<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
     var tb = $('#tb').DataTable({
         processing: true,
         serverSide: true,

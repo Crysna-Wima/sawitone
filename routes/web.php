@@ -500,6 +500,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\InvoicePenjualanController@index');
             Route::get('/datatables', 'Apps\InvoicePenjualanController@datatables');
             Route::get('/detail/{fc_dono}', 'Apps\InvoicePenjualanController@detail');
+            Route::get('/data-customer', 'Apps\InvoicePenjualanController@customer');
             Route::get('/datatables-biaya-lain', 'Apps\InvoicePenjualanDetailController@datatables_biaya_lain');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@delete');
             Route::delete('/cancel-invoice', 'Apps\InvoicePenjualanDetailController@cancel_invoice');
