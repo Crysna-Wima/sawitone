@@ -53,10 +53,15 @@
                                 <select name="fc_membercode" id="fc_membercode" onchange="get_detail_member()" class="select2" required></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-12">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group required">
-                                <label>Nama</label>
-                                <input name="fc_membercode" id="fc_membercode" class="form-control"></input>
+                                <label>Sales Order</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fc_sono" name="fc_sono" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" onclick="click_modal_so()" type="button"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

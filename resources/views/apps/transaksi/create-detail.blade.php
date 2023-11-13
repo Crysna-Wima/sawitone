@@ -230,8 +230,9 @@
                     </div>
                 </div>
                 <div class="button text-right mb-4">
-                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    <input type="text" name="status_balance" id="status_balance" hidden>
+                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                     @php
                         $fcCreditPreviledgeArray = json_decode($data->mapping->fc_credit_previledge, true);
                         $fcDebitPreviledgeArray = json_decode($data->mapping->fc_debit_previledge, true);
@@ -239,13 +240,14 @@
                     @endphp
 
                     @if(in_array('ONCE', $mergedArray) && in_array('LINV', $mergedArray))
-                        <button type="button" onclick="click_opsilanjut()" class="btn btn-info ml-1">Opsi Lanjutan</button>
+                        <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+                        <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                        <button type="button" onclick="click_opsilanjut()" class="btn btn-info">Opsi Lanjutan</button>
+                    @else
+                        <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+                        <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                        <button type="submit" class="btn btn-success">Submit Transaksi</button>
                     @endif
-
-                    <input type="text" name="status_balance" id="status_balance" hidden>
-                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
-                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
-                    <button type="submit" class="btn btn-success">Submit Transaksi</button>
                 </div>
             </form>
         </div>
