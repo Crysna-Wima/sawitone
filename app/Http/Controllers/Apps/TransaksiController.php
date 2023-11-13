@@ -44,8 +44,23 @@ class TransaksiController extends Controller
 
     public function opsi_lanjutan()
     {
-        $data['data'] = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch')->where('fc_trxno', auth()->user()->fc_userid)->first();
+        $data['data'] = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch', 'temptrxaccountingdtl.coamst')->where('fc_trxno', auth()->user()->fc_userid)->first();
+        $get_mappingcode = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                                                    ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_mappingcode;
+        
+      
+
+        $statusposcredit = MappingMaster::where('fc_mappingcode', $get_mappingcode)
+                    ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_credit_previledge;
+        // $statusposcredit array of string json terdapat value 'ONCE' maka value 'C' selain itu 'D'
+        $statuspos = in_array('ONCE', json_decode($statusposcredit)) ? 'C' : 'D';
+        
+        $coa = TempTrxAccountingDetail::with('coamst')->where('fc_trxno', auth()->user()->fc_userid)
+                                ->where('fc_branch', auth()->user()->fc_branch)
+                                ->where('fc_statuspos', $statuspos)->first();
+        $data['coa'] = $coa;
         return view('apps.transaksi.opsi-lanjutan', $data);
+        // dd($coa);
     }
 
     public function edit($fc_trxno)

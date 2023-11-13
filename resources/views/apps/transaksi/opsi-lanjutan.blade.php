@@ -49,8 +49,9 @@
                         <div class="col-12 col-md-3 col-lg-3">
                             <div class="form-group d-flex-row">
                                 <label>Nominal COA</label>
+                                <p>{{ $coa->coamst->fc_coaname }}</p>
                                 <div class="text mt-2">
-                                    <h5 class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></h5>
+                                    <p class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></p>
                                 </div>
                             </div>
                         </div>
@@ -206,10 +207,12 @@
     var nominalDebit = "{{ $data->fm_debitvalue }}";
     var nominalKredit = "{{ $data->fm_creditvalue }}";
     var nominalBalance = "{{ $data->fm_balance }}";
+    var nominalCoa = "{{ $coa->fm_nominal }}";
 
     $('#debit').html(fungsiRupiahSystem(parseFloat(nominalDebit)));
     $('#kredit').html(fungsiRupiahSystem(parseFloat(nominalKredit)));
     $('#balance').html(fungsiRupiahSystem(parseFloat(nominalBalance)));
+    $('#nominal_coa').html(fungsiRupiahSystem(parseFloat(nominalCoa)));
 
     $(document).ready(function() {
         get_data_coa();
