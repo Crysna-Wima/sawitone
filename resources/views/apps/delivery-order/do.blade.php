@@ -438,6 +438,8 @@
 
     function pilih_inventory(fc_stockcode) {
         // console.log(fc_stockcode);
+        // encode
+        var encode_fc_stockcode = window.btoa(fc_stockcode);
         $("#modal_loading").modal('show');
 
         // tampilkan loading_data
@@ -451,7 +453,7 @@
             "pageLength" : 5,
             "ordering": false,
             "ajax": {
-                "url": '/apps/delivery-order/datatables-stock-inventory/' + fc_stockcode,
+                "url": '/apps/delivery-order/datatables-stock-inventory/' + encode_fc_stockcode,
                 "type": "GET",
                 "data": {
                     "fc_stockcode": fc_stockcode
