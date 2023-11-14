@@ -101,6 +101,7 @@ class TransaksiController extends Controller
         $decode_fc_trxno = base64_decode($fc_trxno);
         session(['fc_trxno_global' => $decode_fc_trxno]);
         $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['supp'] = SuppTrxAcc::with('coamst', 'payment')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->count();
         $data['fc_trxno'] = $decode_fc_trxno;
         return view('apps.transaksi.detail', $data);
         // dd($data);
@@ -186,6 +187,16 @@ class TransaksiController extends Controller
     {
         $decode_fc_trxno = base64_decode($fc_trxno);
         $data = TrxAccountingDetail::with('coamst', 'payment')->where('fc_statuspos', 'C')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function data_opsi($fc_trxno)
+    {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $data = SuppTrxAcc::with('coamst', 'payment')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
