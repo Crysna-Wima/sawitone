@@ -96,6 +96,9 @@
                 @csrf
                 @method('put')
                 <div class="button text-right mb-4">
+                    <input type="text" name="status_balance" id="status_balance" hidden>
+                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                     <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
                     <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
                     <button type="submit" class="btn btn-success">Submit Transaksi</button>
@@ -214,10 +217,19 @@
     $('#balance').html(fungsiRupiahSystem(parseFloat(nominalBalance)));
     $('#nominal_coa').html(fungsiRupiahSystem(parseFloat(nominalCoa)));
 
+    if(nominalDebit - nominalKredit === 0){
+        $('#status_balance').val("true");
+        $('#jumlah_balance').val(nominalBalance);
+    }else{
+        $('#status_balance').val("false");
+    }
+
     $(document).ready(function() {
         get_data_coa();
         get_data_payment();
     })
+
+    
 
     function add_opsi() {
         $('#fc_paymentmethod').prop('disabled', false);
