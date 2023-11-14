@@ -1,5 +1,5 @@
 @extends('partial.app')
-@section('title', 'Transaksi Accounting')
+@section('title', 'Edit Transaksi Accounting')
 @section('css')
 <style>
     .required label:after {
@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit_edit" action="/apps/transaksi/detail/submit_transaksi" method="post">
+            <form id="form_submit_edit" action="#" method="post">
                 @csrf
                 @method('put')
                 <div class="button text-right mb-4">
@@ -350,6 +350,9 @@
         });
     }
 
+    var trxno = "{{ $data->fc_trxno }}";
+    var encode_trxno = window.btoa(trxno);
+
     var tb_opsi = $('#tb_opsi').DataTable({
         autoWidth: false,
         processing: true,
@@ -360,7 +363,7 @@
             [0, 'desc']
         ],
         ajax: {
-            url: "/apps/transaksi/datatables-opsi",
+            url: "/apps/transaksi/datatables-edit-opsi/" + encode_trxno,
             type: 'GET',
         },
         columnDefs: [{

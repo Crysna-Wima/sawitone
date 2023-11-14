@@ -687,6 +687,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get/{fc_trxno}', 'Apps\TransaksiController@get');
             Route::get('/giro', 'Apps\TransaksiController@giro');
             Route::get('/edit/{fc_trxno}', 'Apps\TransaksiController@edit');
+            Route::get('/edit-opsi/{fc_trxno}', 'Apps\TransaksiController@edit_opsi');
+            Route::get('/datatable-edit-opsi/{fc_trxno}', 'Apps\TransaksiController@datatable_edit_opsi');
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
@@ -744,6 +746,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
                 Route::post('/store-from-bpb', 'Apps\TransaksiDetailController@store_bpb_edit');
                 Route::post('/store-from-inv', 'Apps\TransaksiDetailController@store_invoice_edit');
+                Route::put('/update-edit-status-opsi-lanjutan', 'Apps\TransaksiController@update_edit_status_opsi_lanjutan');
             });
         });
 

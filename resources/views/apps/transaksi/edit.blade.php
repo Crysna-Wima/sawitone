@@ -7,6 +7,11 @@
         content: ' *';
         display: inline;
     }
+
+    table.dataTable tbody tr td {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
 </style>
 @endsection
 
@@ -199,25 +204,48 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="form-group">
-                                <label>Catatan</label>
-                                @if ($data->fv_description == null)
-                                <input type="text" name="fv_description" id="fv_description" class="form-control" readonly>
-                                @else
-                                <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}" readonly>
-
-                                @endif
-
+            <form id="form_submit_edit" action="#" method="post">
+                @csrf
+                @method('put')
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label>Catatan</label>
+                                    @if ($data->fv_description == null)
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control">
+                                    @else
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}">
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="button text-right mb-4">
+                <div class="button text-right mb-4">
+                    <input type="text" name="status_balance" id="status_balance" hidden>
+                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
+                    @php
+                    $fcCreditPreviledgeArray = json_decode($data->mapping->fc_credit_previledge, true);
+                    $fcDebitPreviledgeArray = json_decode($data->mapping->fc_debit_previledge, true);
+                    $mergedArray = array_merge($fcCreditPreviledgeArray, $fcDebitPreviledgeArray);
+                    @endphp
+
+                    @if(in_array('ONCE', $mergedArray) && in_array('LINV', $mergedArray))
+                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    <button type="button" onclick="click_opsilanjut()" class="btn btn-info">Opsi Lanjutan</button>
+                    @else
+                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
+                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    <button type="submit" class="btn btn-success">Submit Transaksi</button>
+                    @endif
+                </div>
+            </form>
+        </div>
+        <!-- <div class="button text-right mb-4">
             <form id="form_submit_edit" action="#" method="post">
                 @csrf
                 @method('put')
@@ -226,9 +254,9 @@
                 <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                 <button type="submit" class="btn btn-success">Submit Transaksi</button>
             </form>
-            </div>
-        </div>
+            </div> -->
     </div>
+</div>
 </div>
 @endsection
 
@@ -903,7 +931,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -918,7 +947,8 @@
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
@@ -961,7 +991,7 @@
                 $('td:eq(8)', row).html(`
                 <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `);
-            } else if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment != 'T'){
+            } else if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(` `)
             } else {
                 $('td:eq(8)', row).html(`
@@ -997,7 +1027,8 @@
                 orderable: false
             },
             {
-                data: 'fc_coacode'
+                data: 'fc_coacode',
+                "width": "20px"
             },
             {
                 data: 'coamst.fc_coaname'
@@ -1012,7 +1043,8 @@
                     } else {
                         return `<input type="text" id="fm_nominal_${data.fn_rownum}" onkeyup="return onkeyupRupiah(this.id);" min="0" class="form-control format-rp" value="${fungsiRupiahSystem(data.fm_nominal)}" ${readOnlyAttribute}>`;
                     }
-                }
+                },
+                "width": "200px"
             },
             {
                 data: 'payment.fv_description',
@@ -1046,7 +1078,7 @@
         rowCallback: function(row, data) {
             var fc_mappingcode = "{{ $data->fc_mappingcode }}";
             var encode_fc_mappingcode = btoa(fc_mappingcode);
-            var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode ;
+            var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
@@ -1071,7 +1103,7 @@
         var newnominal = $(`#fm_nominal_${rownum}`).val().toString().replace('.', '');
         var newdescription = $(`#fv_description_${rownum}`).val();
         var tipe = $(button).data('tipe');
-        var fc_mappingcode = "{{ $data->fc_mappingcode }}"; 
+        var fc_mappingcode = "{{ $data->fc_mappingcode }}";
         var encode_mappingcode = btoa(fc_mappingcode);
         // console.log(tipe)
 
@@ -1372,13 +1404,14 @@
     }
 
     var fc_docreference = "{{ base64_encode($data->fc_docreference) }}"
+
     function look_inv(value) {
         referenceInvoice = value;
         if (tb_invoice.rows().data().length === 0) {
             swal("Tidak terdapat data COA yang relevan.", {
                 icon: 'error',
             });
-        }else{
+        } else {
             $("#modal_invoice").modal('show');
         }
     }
@@ -1429,9 +1462,9 @@
             },
             {
                 data: null,
-                render: function ( data, type, row ) {
+                render: function(data, type, row) {
                     nominal = data.fm_brutto - data.fm_paidvalue;
-                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                    return $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(nominal);
                 }
             },
             {
@@ -1442,7 +1475,7 @@
         rowCallback: function(row, data) {
             var fc_invno = window.btoa(data.fc_invno);
             var nominal = data.fm_brutto - data.fm_paidvalue;
-            
+
             $('td:eq(7)', row).html(`
             <button type="button" class="btn btn-warning btn-sm mr-1" onclick="select_inv('${data.fc_invno}','${nominal}')"><i class="fa fa-check"></i> Pilih</button>`)
         }
@@ -1507,7 +1540,7 @@
             swal("Tidak terdapat data COA yang relevan.", {
                 icon: 'error',
             });
-        }else{
+        } else {
             $("#modal_bpb").modal('show');
         }
     }
@@ -1558,9 +1591,9 @@
             },
             {
                 data: null,
-                render: function ( data, type, row ) {
+                render: function(data, type, row) {
                     nominal = data.fm_brutto - data.fm_paidvalue;
-                    return $.fn.dataTable.render.number( ',', '.', 0, 'Rp ' ).display(nominal);
+                    return $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(nominal);
                 }
             },
             {
@@ -1628,6 +1661,58 @@
                 });
             }
         });
+    }
+
+    function click_opsilanjut(){
+        swal({
+                title: 'Konfirmasi?',
+                text: 'Apakah anda yakin menambahkan opsi lanjutan?',
+                icon: 'warning',
+                buttons: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: '/apps/transaksi/edit/update-edit-status-opsi-lanjutan',
+                        type: "PUT",
+                        dataType: "JSON",
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            //  tb.ajax.reload(null, false);
+                            //  console.log(response.status);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                window.location.href = window.location.href;
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                window.location.href = response.link;
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                            }
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                            });
+                        }
+                    });
+                }
+            });
     }
 </script>
 

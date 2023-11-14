@@ -20,6 +20,7 @@ use App\Models\Approvement;
 use App\Models\InvoiceMst;
 use App\Models\MappingUser;
 use App\Models\TempSuppTrxAcc;
+use App\Models\SuppTrxAcc;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -71,6 +72,16 @@ class TransaksiController extends Controller
         $data['fc_trxno'] = $decode_fc_trxno;
 
         return view('apps.transaksi.edit', $data);
+    }
+
+    public function edit_opsi($fc_trxno)
+    {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        session(['fc_trxno_global' => $decode_fc_trxno]);
+        $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['fc_trxno'] = $decode_fc_trxno;
+
+        return view('apps.transaksi.edit-opsi', $data);
     }
 
     public function detail($fc_trxno)
@@ -174,6 +185,19 @@ class TransaksiController extends Controller
     {
         $data = TempSuppTrxAcc::with('coamst', 'payment')
             ->where('fc_trxno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function datatables_edit_opsi($fc_trxno)
+    {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $data = SuppTrxAcc::with('coamst', 'payment')
+            ->where('fc_trxno', $decode_fc_trxno)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->get();
 
@@ -310,6 +334,27 @@ class TransaksiController extends Controller
                 'status' => 201,
                 'message' => 'Data berhasil diubah',
                 'link' => '/apps/transaksi/opsi-lanjutan'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Data gagal diubah'
+            ];
+        }
+    }
+
+    // buat edit
+    public function update_edit_status_opsi_lanjutan($fc_trxno){
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $update = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)->update([
+            'fc_status' => 'I-2'
+        ]);
+
+        if ($update) {
+            return [
+                'status' => 201,
+                'message' => 'Data berhasil diubah',
+                'link' => '/apps/transaksi/edit-opsi'
             ];
         } else {
             return [
