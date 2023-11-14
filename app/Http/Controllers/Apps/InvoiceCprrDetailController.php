@@ -8,6 +8,7 @@ use App\Models\InvoiceDtl;
 use Illuminate\Http\Request;
 use App\Models\TempInvoiceDtl;
 use App\Http\Controllers\Controller;
+use App\Models\InvoiceMst;
 use Yajra\DataTables\Facades\DataTables;
 
 class InvoiceCprrDetailController extends Controller
@@ -212,7 +213,7 @@ class InvoiceCprrDetailController extends Controller
 
     public function edit_description(Request $request)
     {
-        InvoiceDtl::where('fc_branch', auth()->user()->fc_branch)->update([
+        InvoiceMst::where('fc_branch', auth()->user()->fc_branch)->update([
             'fv_description' => $request->fv_description,
         ]);
 
