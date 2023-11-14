@@ -326,8 +326,8 @@ class TransaksiDetailController extends Controller
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
-            'fc_refno' => $request->fc_refno_edit,
-            'fd_agingref' => $request->fd_agingref_edit,
+            'fc_refno' => ($request->fc_refno_edit === '') ? NULL : $request->fc_refno_edit,
+            'fd_agingref' => ($request->fd_agingref_edit === '') ? NULL : $request->fd_agingref_edit,
             'fv_description' => $request->fv_description_payment
         ]);
 
@@ -345,8 +345,9 @@ class TransaksiDetailController extends Controller
         // dd($request);
     }
 
-    public function update_edit_pembayaran(Request $request)
+    public function update_edit_pembayaran(Request $request, $fc_trxno)
     {
+        $decode_fc_trxno = base64_decode($fc_trxno);
         $validator = Validator::make($request->all(), [
             'fc_paymentmethod_edit' => 'required',
             'fn_rownum' => 'required',
@@ -359,12 +360,13 @@ class TransaksiDetailController extends Controller
             ];
         }
 
-        $update_pembayaran = TempTrxAccountingDetail::where([
+        $update_pembayaran = TrxAccountingDetail::where([
+            'fc_trxno' => $decode_fc_trxno,
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
-            'fc_refno' => $request->fc_refno_edit,
-            'fd_agingref' => $request->fd_agingref_edit,
+            'fc_refno' => ($request->fc_refno_edit === '') ? NULL : $request->fc_refno_edit,
+            'fd_agingref' => ($request->fd_agingref_edit === '') ? NULL : $request->fd_agingref_edit,
             'fv_description' => $request->fv_description_payment
         ]);
 
@@ -379,15 +381,15 @@ class TransaksiDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
-        // dd($request);
+        dd($request);
     }
 
-    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum,$fc_balancerelation, $fc_mappingcode)
+    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum, $fc_balancerelation, $fc_mappingcode)
     {
         // decode
+        $fc_trxno_decode = base64_decode($fc_trxno);
         $fc_balancerelation_decode = base64_decode($fc_balancerelation);
         $fc_mappingcode_decode = base64_decode($fc_mappingcode);
-        $decode_fc_trxno = base64_decode($fc_trxno);
         DB::beginTransaction();
 
         try {
@@ -424,7 +426,7 @@ class TransaksiDetailController extends Controller
                     // Hitung jumlah nominal selain row yang dihapus
                     $remainingNominal = TrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum)
                         ->where('fc_statuspos', $status_pos)
-                        ->where('fc_trxno', $decode_fc_trxno)
+                        ->where('fc_trxno', $fc_trxno_decode)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->sum('fm_nominal');
@@ -442,7 +444,7 @@ class TransaksiDetailController extends Controller
                         if ($isCredit) {
                             if ($countItem < 2) {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_trxno', $fc_trxno_decode)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -450,7 +452,7 @@ class TransaksiDetailController extends Controller
                                     ]);
                             } else {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_trxno', $fc_trxno_decode)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -460,7 +462,7 @@ class TransaksiDetailController extends Controller
                         }else{
                             if ($countItem < 2) {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_trxno', $fc_trxno_decode)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -468,7 +470,7 @@ class TransaksiDetailController extends Controller
                                     ]);
                             } else {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $decode_fc_trxno)
+                                    ->where('fc_trxno', $fc_trxno_decode)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([

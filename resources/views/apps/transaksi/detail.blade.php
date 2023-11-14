@@ -179,6 +179,37 @@
                 </div>
             </div>
         </div>
+        @if ($supp > 0)
+        {{-- Opsi Lanjutan --}}
+        <div class="col-12 col-md-12 col-lg-12 place_detail">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Opsi Lanjutan</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="tb_opsi" width="100%">
+                                <thead style="white-space: nowrap">
+                                    <tr>
+                                        <th scope="col" class="text-center">No</th>
+                                        <th scope="col" class="text-center">Kode COA</th>
+                                        <th scope="col" class="text-center">Nama COA</th>
+                                        <th scope="col" class="text-center">Nominal</th>
+                                        <th scope="col" class="text-center">Metode Pembayaran</th>
+                                        <th scope="col" class="text-center">No. Giro</th>
+                                        <th scope="col" class="text-center">Jatuh Tempo</th>
+                                        <th scope="col" class="text-center">Keterangan</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+        @endif
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -214,7 +245,7 @@
     var trxno = "{{ $data->fc_trxno }}";
     var balance = "{{ $data->fm_balance }}"
     var encode_trxno = window.btoa(trxno);
-    
+
     $.ajax({
         url: "/apps/transaksi/data/" + encode_trxno,
         type: "GET",
@@ -230,7 +261,7 @@
                     kredit += parseFloat(data.data[i].fm_nominal);
                 }
             }
-            
+
             $('#debit').html(fungsiRupiahSystem(parseFloat(debit)));
             $('#kredit').html(fungsiRupiahSystem(parseFloat(kredit)));
             $('#balance').html(fungsiRupiahSystem(parseFloat(balance)));
@@ -297,8 +328,7 @@
         ],
 
         rowCallback: function(row, data) {},
-        footerCallback: function(row, data, start, end, display) {
-        }
+        footerCallback: function(row, data, start, end, display) {}
     });
 
     var tb_kredit = $('#tb_kredit').DataTable({
@@ -361,8 +391,71 @@
         ],
 
         rowCallback: function(row, data) {},
-        footerCallback: function(row, data, start, end, display) {
-        }
+        footerCallback: function(row, data, start, end, display) {}
+    });
+
+
+    var tb_opsi = $('#tb_opsi').DataTable({
+        autoWidth: false,
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        pageLength: 5,
+        order: [
+            [0, 'desc']
+        ],
+        ajax: {
+            url: "/apps/transaksi/data-opsi/" + encode_trxno,
+            type: 'GET',
+        },
+        columnDefs: [{
+            className: 'text-center',
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+        }, {
+            className: 'text-nowrap',
+            targets: []
+        }],
+        columns: [{
+                data: 'DT_RowIndex',
+                searchable: false,
+                orderable: false
+            },
+            {
+                data: 'fc_coacode',
+                "width": "20px"
+            },
+            {
+                data: 'coamst.fc_coaname'
+            },
+            {
+                data: 'fm_nominal',
+                render: function(data, type, row) {
+                    return row.fm_nominal.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    })
+                },
+                "width": "200px"
+            },
+            {
+                data: 'payment.fv_description',
+                defaultContent: '-'
+            },
+            {
+                data: 'fc_refno',
+                defaultContent: '-'
+            },
+            {
+                data: 'fd_agingref',
+                defaultContent: '-',
+            },
+            {
+                data: 'fv_description',
+                defaultContent: '-'
+            },
+        ],
+
+        rowCallback: function(row, data) {},
     });
 </script>
 
