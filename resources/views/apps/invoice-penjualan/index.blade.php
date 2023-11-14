@@ -1,5 +1,19 @@
 @extends('partial.app')
 @section('title', 'Daftar Pengiriman')
+@section('css')
+<style>
+    .required label:after {
+        color: #e32;
+        content: ' *';
+        display: inline;
+    }
+
+    table.dataTable tbody tr td {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+</style>
+@endsection
 @section('content')
 <div class="section-body">
     <div class="row">
@@ -50,10 +64,10 @@
                         <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Customer</label>
-                                <select name="fc_membercode" id="fc_membercode" onchange="get_detail_member()" class="select2" required></select>
+                                <select name="fc_membercode" id="fc_membercode" class="form-control select2" required></select>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-6 col-lg-12">
                             <div class="form-group required">
                                 <label>Sales Order</label>
                                 <div class="input-group">
@@ -73,16 +87,60 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" role="dialog" id="modal_so" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header br">
+                <h5 class="modal-title">Pilih Sales Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="tb_so" width="100%">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">No</th>
+                                <th scope="col" class="text-center">No. SO</th>
+                                <th scope="col" class="text-center">Tanggal</th>
+                                <th scope="col" class="text-center">Expired</th>
+                                <th scope="col" class="text-center">Tipe</th>
+                                <th scope="col" class="text-center">Operator</th>
+                                <th scope="col" class="text-center">Customer</th>
+                                <th scope="col" class="text-center">Item</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Total</th>
+                                <th scope="col" class="text-center" style="width: 20%">Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
 <script>
     $(document).ready(function() {
         get_data_customer();
+        $('#fc_membercode').select2({
+            closeOnSelect: true
+        });
     })
 
     function add_multi() {
         $('#modal_multi').modal('show');
+    }
+
+    function click_modal_so() {
+        $('#modal_so').modal('show');
     }
 
     function get_data_customer() {
@@ -166,6 +224,90 @@
             );
 
         }
+    });
+
+    $('#fc_membercode').on('change', function(e) {
+        var fc_membercode = e.currentTarget.value
+
+        var encode_fc_membercode = window.btoa(fc_membercode);
+        console.log(encode_fc_membercode);
+
+        var tb_so = $('#tb_so').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 5,
+            order: [
+                [2, 'desc']
+            ],
+            ajax: {
+                url: '/apps/invoice-penjualan/datatables-so/' + encode_fc_membercode,
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 5, 6, 7]
+                },
+                {
+                    className: 'text-nowrap',
+                    targets: [3, 10]
+                },
+            ],
+            columns: [{
+                    data: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                {
+                    data: 'fc_sono'
+                },
+                {
+                    data: 'fd_sodatesysinput',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fd_soexpired',
+                    render: formatTimestamp
+                },
+                {
+                    data: 'fc_sotype'
+                },
+                {
+                    data: 'fc_userid'
+                },
+                {
+                    data: 'customer.fc_membername1'
+                },
+                {
+                    data: 'fn_sodetail'
+                },
+                {
+                    data: 'fc_sostatus'
+                },
+                {
+                    data: 'fm_brutto',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp')
+                },
+                {
+                    data: null
+                },
+            ],
+
+            rowCallback: function(row, data) {
+                var fc_sono = window.btoa(data.fc_sono);
+                // console.log(fc_sono);
+
+                $('td:eq(8)', row).html(`<i class="${data.fc_sostatus}"></i>`);
+                if (data['fc_sostatus'] == 'F') {
+                    $('td:eq(8)', row).html('<span class="badge badge-primary">Menunggu</span>');
+                } else {
+                    $(row).hide();
+                }
+
+                $('td:eq(10)', row).html(`
+            <a href="#"><button class="btn btn-warning btn-sm mr-1"><i class="fa fa-check"></i> Pilih</button></a>
+         `);
+            }
+        });
     });
 </script>
 @endsection

@@ -136,4 +136,14 @@ class InvoicePenjualanController extends Controller
         $data = Customer::with('member_tax_code', 'member_typebranch', 'member_type_business', 'member_legal_status')->get();
         return ApiFormatter::getResponse($data);
     }
+
+    public function datatables_so($fc_membercode){
+        $decoded_fc_membercode = base64_decode($fc_membercode);
+        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
 }
