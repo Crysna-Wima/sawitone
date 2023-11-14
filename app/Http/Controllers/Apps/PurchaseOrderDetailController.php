@@ -158,11 +158,6 @@ class PurchaseOrderDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        $temppodtl_table_by_operator = TempPoDetail::where('fc_pono', $fc_pono)->get();
-        foreach($temppodtl_table_by_operator as $item){
-            $item->fd_stockarrived = $request->fd_poexpired;
-            $item->save();
-        }
         $temp_po_master = TempPoMaster::where('fc_pono', $fc_pono)->first();
         $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay)]);
         $update_tempomst = $temp_po_master->update([
