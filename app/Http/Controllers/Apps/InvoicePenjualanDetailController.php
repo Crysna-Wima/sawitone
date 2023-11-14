@@ -430,7 +430,7 @@ class InvoicePenjualanDetailController extends Controller
 
     public function edit_description(Request $request)
     {
-        InvoiceDtl::where('fc_branch', auth()->user()->fc_branch)->update([
+        InvoiceMst::where('fc_branch', auth()->user()->fc_branch)->update([
             'fv_description' => $request->fv_description,
         ]);
 
