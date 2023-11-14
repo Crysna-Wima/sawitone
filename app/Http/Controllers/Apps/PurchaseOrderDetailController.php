@@ -39,7 +39,6 @@ class PurchaseOrderDetailController extends Controller
             'fn_so_qty.required' => 'Quantity harus diisi',
             'fm_po_price' => 'Harga harus diisi'
         ]);
-
         if ($validator->fails()) {
             return [
                 'status' => 300,
@@ -82,7 +81,7 @@ class PurchaseOrderDetailController extends Controller
 
         $request->merge(['fn_po_qty' => Convert::convert_to_double($request->fn_po_qty)]);
         $request->merge(['fn_po_value' => Convert::convert_to_double($total_harga)]);
-       
+        
         // dd($request->fm_po_price);
         $insert_po_detail = TempPoDetail::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -96,7 +95,8 @@ class PurchaseOrderDetailController extends Controller
             'fn_po_qty' => $request->fn_po_qty,
             'fn_po_value' => $request->fn_po_qty * $request->fm_po_price_edit,
             'fm_po_price' => $request->fm_po_price,
-            'fv_description' => $request->fv_description
+            'fv_description' => $request->fv_description,
+            'fd_stockarrived' => ($request->fd_stockarrived==='') ? NULL : $request->fd_stockarrived,
         ]);
 
         if ($insert_po_detail) {
@@ -169,6 +169,7 @@ class PurchaseOrderDetailController extends Controller
             'fc_address_loading1' => $request->fc_memberaddress_loading1,
             'fd_poexpired' => date('Y-m-d H:i:s', strtotime($request->fd_poexpired)),
         ]);
+
 
         $temp_po_master = TempPoMaster::with('branch', 'supplier_tax_code', 'sales', 'supplier.supplier_type_business', 'supplier.supplier_typebranch', 'supplier.supplier_legal_status')->where('fc_pono', auth()->user()->fc_userid)->first();
         $data = [];

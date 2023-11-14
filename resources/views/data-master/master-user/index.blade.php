@@ -1,14 +1,13 @@
 @extends('partial.app')
 @section('title', 'User')
 @section('css')
-<style>
-    .required label:after {
-        color: #e32;
-        content: ' *';
-        display:inline;
-    }
-
-</style>
+    <style>
+        .required label:after {
+            color: #e32;
+            content: ' *';
+            display: inline;
+        }
+    </style>
 @endsection
 @section('content')
 
@@ -63,7 +62,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form id="form_submit" action="/data-master/master-user/store-update" method="POST" autocomplete="off"
+                    enctype="multipart/form-data">
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
@@ -78,8 +78,8 @@
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group required">
                                     <label>Cabang</label>
-                                    <select class="form-control select2 required-field" name="fc_branch"
-                                        id="fc_branch" required></select>
+                                    <select class="form-control select2 required-field" name="fc_branch" id="fc_branch"
+                                        required></select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -99,7 +99,8 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Password</label>
-                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password" required>
+                                    <input type="text" class="form-control required-field" name="fc_password"
+                                        id="fc_password" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -129,10 +130,10 @@
                                                 class="selectgroup-input" checked="">
                                             <span class="selectgroup-button">Non Active</span>
                                         </label>
-                                       
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
@@ -141,7 +142,7 @@
                                         id="fc_membercode"></select>
                                 </div>
                             </div>
-                            
+
                             <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group">
                                     <label>Expired Date</label>
@@ -151,9 +152,9 @@
                                 <div class="form-group">
                                     <label for="password">Assign Roles</label>
                                     <select name="roles[]" id="roles" class="form-control select2" multiple>
-                                     
-                                            <option value="" ></option>
-                                     
+
+                                        <option value=""></option>
+
                                     </select>
                                 </div>
                             </div>
@@ -185,7 +186,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="/data-master/master-user/store-update" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form id="form_submit_edit" action="/data-master/master-user/store-update" method="POST"
+                    autocomplete="off" enctype="multipart/form-data">
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
@@ -221,7 +223,8 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Password</label>
-                                    <input type="text" class="form-control required-field" name="fc_password" id="fc_password" required>
+                                    <input type="text" class="form-control required-field" name="fc_password"
+                                        id="fc_password" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -251,13 +254,13 @@
                                                 class="selectgroup-input" checked="">
                                             <span class="selectgroup-button">Non Active</span>
                                         </label>
-                                       
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div id="fc_membercode_add-container" class="col-12 col-md-6 col-lg-6">
-                                <div class="form-group required" >
+                                <div class="form-group required">
                                     <label>Customer Code</label>
                                     <select class="form-control select2" name="fc_membercode"
                                         id="fc_membercode_add"></select>
@@ -391,7 +394,8 @@
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         }
                         $("#fc_groupuser_add").empty();
-                        $("#fc_groupuser_add").append(`<option value="" selected readonly> - Pilih - </option>`);
+                        $("#fc_groupuser_add").append(
+                        `<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_groupuser_add").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
@@ -427,18 +431,21 @@
                     }, 500);
                     if (response.status === 200) {
                         var data = response.data;
-                        
+
                         $("#fc_membercode").empty();
                         $("#fc_membercode").append(`<option value="" readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membercode").append(
-                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`
+                                );
                         }
                         $("#fc_membercode_add").empty();
-                        $("#fc_membercode_add").append(`<option value="" selected readonly> - Pilih - </option>`);
+                        $("#fc_membercode_add").append(
+                            `<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membercode_add").append(
-                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`);
+                                `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`
+                                );
                         }
                         $("#fc_membercode_add").parent().show();
                         $("#fc_membercode").parent().show();
@@ -466,7 +473,7 @@
         var tb = $('#tb').DataTable({
             processing: true,
             serverSide: true,
-            pageLength : 5,
+            pageLength: 5,
             ajax: {
                 url: '/data-master/master-user/datatables',
                 type: 'GET'
@@ -502,7 +509,7 @@
                 },
                 {
                     data: 'customer.fc_membername1',
-                    render: function (data, type, row) {
+                    render: function(data, type, row) {
                         return data ? data : '';
                     }
                 },
@@ -581,9 +588,9 @@
                                     $('#modal_loading').modal('hide');
                                 }, 500);
                                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown +
-                                ")", {
-                                    icon: 'error',
-                                });
+                                    ")", {
+                                        icon: 'error',
+                                    });
                             }
                         });
                     }
@@ -615,12 +622,13 @@
                     var user = response.user; // Ambil data user dari response
                     var roles = response.roles;
 
-                  
+
                     var rolesSelect = $('#roles');
                     rolesSelect.empty(); // Clear existing options
                     $.each(roles, function(index, role) {
                         var selected = response.selected.hasOwnProperty(role.name) ? 'selected' : '';
-                        rolesSelect.append('<option value="' + role.id + '" ' + selected + '>' + role.name + '</option>');
+                        rolesSelect.append('<option value="' + role.id + '" ' + selected + '>' + role
+                            .name + '</option>');
                     });
 
 
@@ -668,6 +676,5 @@
                 }
             });
         }
-
     </script>
 @endsection

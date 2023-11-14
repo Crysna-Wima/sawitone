@@ -28,26 +28,27 @@ class InvoicePembelianDetailController extends Controller
     public function create($fc_rono)
     {
         $encoded_fc_rono = base64_decode($fc_rono);
-        $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
+        $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
         $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $encoded_fc_rono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        
-        return view('apps.invoice-pembelian.create', $data);       
+
+        return view('apps.invoice-pembelian.create', $data);
         // dd($data);
     }
 
-    public function insert_item(Request $request){
+    public function insert_item(Request $request)
+    {
         $fn_invrownum = 1;
         $tempInvDtl = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
-                    ->orderBy('fn_invrownum', 'DESC')        
-                    ->first();
+            ->orderBy('fn_invrownum', 'DESC')
+            ->first();
 
-        $total = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)  
-                ->count();
+        $total = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
+            ->count();
 
-        // validator data yang dibutuhkan (mandatory) 
-        if(!empty($request->fc_status)){
+        // validator data yang dibutuhkan (mandatory)
+        if (!empty($request->fc_status)) {
             $validator = Validator::make($request->all(), [
                 'fc_detailitem' => 'required',
                 'fc_unityname' => 'required',
@@ -61,9 +62,9 @@ class InvoicePembelianDetailController extends Controller
                 'fn_itemqty' => 'required',
                 'fm_unityprice' => 'required',
             ]);
-        }  
+        }
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'total' => $total,
@@ -71,8 +72,8 @@ class InvoicePembelianDetailController extends Controller
             ];
         }
 
-        // Mencari apakah sudah pernah memasukkan CPRR yang sama 
-        if(!empty($request->fc_status)){
+        // Mencari apakah sudah pernah memasukkan CPRR yang sama
+        if (!empty($request->fc_status)) {
             $item = TempInvoiceDtl::where([
                 'fc_invno' => auth()->user()->fc_userid,
                 'fc_detailitem' => $request->fc_detailitem
@@ -83,9 +84,9 @@ class InvoicePembelianDetailController extends Controller
                 'fc_detailitem' => $request->fc_detailitem
             ])->first();
         }
-        
-        // Kondisi ketika ada CPRR yang sama 
-        if(!empty($item)){
+
+        // Kondisi ketika ada CPRR yang sama
+        if (!empty($item)) {
             return [
                 'status' => 300,
                 'total' => $total,
@@ -93,15 +94,15 @@ class InvoicePembelianDetailController extends Controller
             ];
         }
 
-        if(!empty($tempInvDtl)){
+        if (!empty($tempInvDtl)) {
             $fn_invrownum = $tempInvDtl->fn_invrownum + 1;
         }
 
-        if(!empty($request->fc_status)){
+        if (!empty($request->fc_status)) {
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
-            
+
             $insert_invdtl = TempInvoiceDtl::create([
-                'fn_invrownum' => $fn_invrownum, 
+                'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_invno' => auth()->user()->fc_userid,
@@ -117,7 +118,7 @@ class InvoicePembelianDetailController extends Controller
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
 
             $insert_invdtl = TempInvoiceDtl::create([
-                'fn_invrownum' => $fn_invrownum, 
+                'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_invno' => auth()->user()->fc_userid,
@@ -129,23 +130,24 @@ class InvoicePembelianDetailController extends Controller
             ]);
         }
 
-        if($insert_invdtl){
+        if ($insert_invdtl) {
             return response()->json([
                 'status' => 200,
                 'total' => $total,
                 'link' => '/apps/invoice-pembelian',
                 'message' => 'Data berhasil disimpan'
             ]);
-        } else{
-             return [
-                 'status' => 300,
-                 'message' => 'Error'
-             ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Error'
+            ];
         }
     }
 
-    public function update_inform($fc_invno, Request $request){
-    
+    public function update_inform($fc_invno, Request $request)
+    {
+
         $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'PURCHASE')->first();
         $update_tempinvmst = $temp_inv_master->update([
             'fv_description' => $request->fv_description_mst,
@@ -177,35 +179,38 @@ class InvoicePembelianDetailController extends Controller
     }
 
 
-    public function datatables_ro_detail($fc_rono){
+    public function datatables_ro_detail($fc_rono)
+    {
         // $decode_dono = base64_decode($fc_dono);
         $data = TempInvoiceDtl::with('invstore.stock', 'tempinvmst')
-        ->where('fc_invno',auth()->user()->fc_userid)
-        ->where('fc_status','DEFAULT')
-        ->where('fc_invtype' , "PURCHASE")
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->get();
+            ->where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_status', 'DEFAULT')
+            ->where('fc_invtype', "PURCHASE")
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
         // dd($data);
     }
 
-    public function datatables_biaya_lain(){
+    public function datatables_biaya_lain()
+    {
         $data = TempInvoiceDtl::with('tempinvmst', 'nameunity', 'keterangan')
-        ->where('fc_invno', auth()->user()->fc_userid)
-        ->where('fc_branch', auth()->user()->fc_branch)
-        ->where('fc_invtype', 'PURCHASE')
-        ->where('fc_status', 'ADDON')
-        ->get();
+            ->where('fc_invno', auth()->user()->fc_userid)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_invtype', 'PURCHASE')
+            ->where('fc_status', 'ADDON')
+            ->get();
 
         return DataTables::of($data)
-        ->addIndexColumn()
-        ->make(true);
+            ->addIndexColumn()
+            ->make(true);
     }
 
-    public function delete($fc_invno, $fn_invrownum){
+    public function delete($fc_invno, $fn_invrownum)
+    {
         $count_invdtl = TempInvoiceDtl::where('fc_invno', $fc_invno)->count();
 
         $deleteInvDtl = TempInvoiceDtl::where([
@@ -213,8 +218,8 @@ class InvoicePembelianDetailController extends Controller
             'fn_invrownum' => $fn_invrownum,
         ])->delete();
 
-        if($deleteInvDtl){
-            if($count_invdtl < 2){
+        if ($deleteInvDtl) {
+            if ($count_invdtl < 2) {
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil dihapus',
@@ -224,7 +229,7 @@ class InvoicePembelianDetailController extends Controller
             return [
                 'status' => 200,
                 'message' => 'Data berhasil dihapus',
-            ]; 
+            ];
         }
 
         return [
@@ -233,13 +238,14 @@ class InvoicePembelianDetailController extends Controller
         ];
     }
 
-    public function update_unityprice(Request $request){
+    public function update_unityprice(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fm_unityprice' => 'required',
             'fn_invrownum' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
@@ -252,7 +258,7 @@ class InvoicePembelianDetailController extends Controller
             'fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)
         ]);
 
-        if($update_unityprice){
+        if ($update_unityprice) {
             return [
                 'status' => 200,
                 'message' => 'Data berhasil diupdate'
@@ -306,7 +312,7 @@ class InvoicePembelianDetailController extends Controller
     {
         $rownum = base64_decode($fn_invrownum);
 
-        $data = RoDetail::with('invstore','stock')
+        $data = RoDetail::with('invstore', 'stock')
             ->where([
                 'fn_rownum' =>  $rownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -317,54 +323,53 @@ class InvoicePembelianDetailController extends Controller
         return ApiFormatter::getResponse($data);
     }
 
-    public function cancel_invoice(){
+    public function cancel_invoice()
+    {
         DB::beginTransaction();
 
-		try{
+        try {
             TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
-            ->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_invtype', 'PURCHASE')
-            ->delete();
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_invtype', 'PURCHASE')
+                ->delete();
             TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
-            ->where('fc_branch', auth()->user()->fc_branch)
-            ->where('fc_invtype', 'PURCHASE')
-            ->delete();
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_invtype', 'PURCHASE')
+                ->delete();
 
-			DB::commit();
+            DB::commit();
 
-			return [
-				'status' => 201, // SUCCESS
+            return [
+                'status' => 201, // SUCCESS
                 'link' => '/apps/invoice-pembelian',
-				'message' => 'Data berhasil dihapus'
-			];
-		}
+                'message' => 'Data berhasil dihapus'
+            ];
+        } catch (\Exception $e) {
 
-		catch(\Exception $e){
+            DB::rollback();
 
-			DB::rollback();
-
-			return [
-				'status' 	=> 300, // GAGAL
-				'message'       => (env('APP_DEBUG', 'true') == 'true')? $e->getMessage() : 'Operation error'
-			];
-
-		}
+            return [
+                'status'     => 300, // GAGAL
+                'message'       => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
+            ];
+        }
     }
 
 
-    public function submit_invoice(Request $request){
+    public function submit_invoice(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'fc_invtype' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
             ];
         }
-        $check_invdtl = TempInvoiceDtl::where('fc_status', 'DEFAULT')->where('fc_branch',auth()->user()->fc_branch)->count();
-        if($check_invdtl < 1){
+        $check_invdtl = TempInvoiceDtl::where('fc_status', 'DEFAULT')->where('fc_branch', auth()->user()->fc_branch)->count();
+        if ($check_invdtl < 1) {
             return [
                 'status' => 300,
                 'message' => 'Barang terkirim kosong'
@@ -373,31 +378,31 @@ class InvoicePembelianDetailController extends Controller
         try {
             DB::beginTransaction();
             TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
-            ->where('fc_invtype', $request->fc_invtype)
-            ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_invtype', $request->fc_invtype)
+                ->where('fc_branch', auth()->user()->fc_branch)
                 ->update([
                     'fc_status' => 'R'
-                    ]);
+                ]);
 
             TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
-                        ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_invtype', 'PURCHASE')
-                        ->delete();
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_invtype', 'PURCHASE')
+                ->delete();
             TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)
-                        ->where('fc_branch', auth()->user()->fc_branch)
-                        ->where('fc_invtype', 'PURCHASE')
-                        ->delete();
-            
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->where('fc_invtype', 'PURCHASE')
+                ->delete();
+
             DB::commit();
 
-            
+
 
             return [
-				'status' => 201, // SUCCESS
+                'status' => 201, // SUCCESS
                 'link' => '/apps/invoice-pembelian',
-				'message' => 'Data berhasil disubmit'
-			];
-        }catch(\Exception $e){
+                'message' => 'Data berhasil disubmit'
+            ];
+        } catch (\Exception $e) {
             return [
                 'status' => 300,
                 'message' => $e->getMessage()
@@ -405,5 +410,18 @@ class InvoicePembelianDetailController extends Controller
         }
         // dd($request);
 
+    }
+
+    public function edit_description(Request $request)
+    {
+        InvoiceMst::where('fc_branch', auth()->user()->fc_branch)->update([
+            'fv_description' => $request->fv_description,
+        ]);
+
+        return [
+            'status' => 201, // SUCCESS
+            'link' => '#',
+            'message' => 'Catatan berhasil diubah'
+        ];
     }
 }

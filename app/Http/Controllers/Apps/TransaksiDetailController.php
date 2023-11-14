@@ -1337,17 +1337,17 @@ class TransaksiDetailController extends Controller
                                                   ->first();
                 if (in_array('ONCE', json_decode($previledge->fc_credit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
-                    $totalNominalDLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                    $totalNominalDLama = doubleval(TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
                         ->where('fc_statuspos', 'D')
-                        ->sum('fm_nominal');
+                        ->sum('fm_nominal'));
                     
                     $updateDataC = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
                     
                     if ($updateNominal) {
-                        $updateDataC['fm_nominal'] = Convert::convert_to_double($totalNominalDLama) + Convert::convert_to_double($request->fm_nominal);
+                        $updateDataC['fm_nominal'] = $totalNominalDLama + Convert::convert_to_double($request->fm_nominal);
                     }
                     
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
@@ -1467,17 +1467,17 @@ class TransaksiDetailController extends Controller
                                                   ->first();
                 if (in_array('ONCE', json_decode($previledge->fc_debit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
-                    $totalNominalCLama = TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
+                    $totalNominalCLama = doubleval(TrxAccountingDetail::where('fc_trxno', $decode_fc_trxno)
                         ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
                         ->where('fc_statuspos', 'C')
-                        ->sum('fm_nominal');
+                        ->sum('fm_nominal'));
                     
                     $updateDataD = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
                     
                     if ($updateNominal) {
-                        $updateDataD['fm_nominal'] = Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal);
+                        $updateDataD['fm_nominal'] = $totalNominalCLama + Convert::convert_to_double($request->fm_nominal);
                     }
                     
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
@@ -1594,17 +1594,17 @@ class TransaksiDetailController extends Controller
                                                   ->first();
                 if (in_array('ONCE', json_decode($previledge->fc_credit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
-                    $totalNominalDLama = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                    $totalNominalDLama = doubleval(TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
                         ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
                         ->where('fc_statuspos', 'D')
-                        ->sum('fm_nominal');
+                        ->sum('fm_nominal'));
                     
                     $updateDataC = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
                     
                     if ($updateNominal) {
-                        $updateDataC['fm_nominal'] = Convert::convert_to_double($totalNominalDLama) + Convert::convert_to_double($request->fm_nominal);
+                        $updateDataC['fm_nominal'] = $totalNominalDLama + Convert::convert_to_double($request->fm_nominal);
                     }
                     
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'
@@ -1723,17 +1723,18 @@ class TransaksiDetailController extends Controller
                                                   ->first();
                 if (in_array('ONCE', json_decode($previledge->fc_debit_previledge))) {
                     // Hitung jumlah nominal dari baris dengan fc_trxno yang sama dan fc_statuspos 'C'
-                    $totalNominalCLama = TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
-                        ->where('fn_rownum', '!=', $request->fn_rownum) // kecuali fn_rownum request
-                        ->where('fc_statuspos', 'C')
-                        ->sum('fm_nominal');
+                    $totalNominalCLama = doubleval(TempTrxAccountingDetail::where('fc_trxno', auth()->user()->fc_userid)
+                                            ->where('fn_rownum', '!=', $request->fn_rownum)
+                                            ->where('fc_statuspos', 'C')
+                                            ->sum('fm_nominal'));
                     
                     $updateDataD = [
                         'updated_by' => auth()->user()->fc_userid
                     ];
                     
                     if ($updateNominal) {
-                        $updateDataD['fm_nominal'] = Convert::convert_to_double($totalNominalCLama) + Convert::convert_to_double($request->fm_nominal);
+                        $updateDataD['fm_nominal'] = $totalNominalCLama + Convert::convert_to_double($request->fm_nominal);
+                        // dd($totalNominalCLama);
                     }
                     
                     // Update semua baris dengan fc_trxno yang sama dan fc_statuspos 'D' dengan total nominal dari 'C'

@@ -28,7 +28,7 @@ class InvoicePenjualanDetailController extends Controller
     public function create($fc_dono)
     {
         $encoded_fc_dono = base64_decode($fc_dono);
-        $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
+        $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
         $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
@@ -53,7 +53,7 @@ class InvoicePenjualanDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype','SALES')->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'SALES')->first();
         $update_tempinvmst = $temp_inv_master->update([
             'fc_bankcode' => $request->fc_bankcode,
             'fc_address' => $request->fc_address,
@@ -93,7 +93,7 @@ class InvoicePenjualanDetailController extends Controller
         $total = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)
             ->count();
 
-        // validator data yang dibutuhkan (mandatory) 
+        // validator data yang dibutuhkan (mandatory)
         if (!empty($request->fc_status)) {
             $validator = Validator::make($request->all(), [
                 'fc_detailitem' => 'required',
@@ -118,7 +118,7 @@ class InvoicePenjualanDetailController extends Controller
             ];
         }
 
-        // Mencari apakah sudah pernah memasukkan CPRR yang sama 
+        // Mencari apakah sudah pernah memasukkan CPRR yang sama
         if (!empty($request->fc_status)) {
             $item = TempInvoiceDtl::where([
                 'fc_invno' => auth()->user()->fc_userid,
@@ -131,7 +131,7 @@ class InvoicePenjualanDetailController extends Controller
             ])->first();
         }
 
-        // Kondisi ketika ada CPRR yang sama 
+        // Kondisi ketika ada CPRR yang sama
         if (!empty($item)) {
             return [
                 'status' => 300,
@@ -162,7 +162,7 @@ class InvoicePenjualanDetailController extends Controller
             ]);
         } else {
             $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
-            
+
             $insert_invdtl = TempInvoiceDtl::create([
                 'fn_invrownum' => $fn_invrownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -331,7 +331,7 @@ class InvoicePenjualanDetailController extends Controller
     {
         $rownum = base64_decode($fn_invrownum);
 
-        $data = DoDetail::with('invstore','stock')
+        $data = DoDetail::with('invstore', 'stock')
             ->where([
                 'fn_rownum' =>  $rownum,
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
@@ -426,5 +426,18 @@ class InvoicePenjualanDetailController extends Controller
         }
         // dd($request);
 
+    }
+
+    public function edit_description(Request $request)
+    {
+        InvoiceMst::where('fc_branch', auth()->user()->fc_branch)->update([
+            'fv_description' => $request->fv_description,
+        ]);
+
+        return [
+            'status' => 201, // SUCCESS
+            'link' => '#',
+            'message' => 'Catatan berhasil diubah'
+        ];
     }
 }

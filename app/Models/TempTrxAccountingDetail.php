@@ -27,4 +27,8 @@ class TempTrxAccountingDetail extends Model
     public function payment(){
         return $this->hasOne(TransaksiType::class, 'fc_kode', 'fc_paymentmethod')->where('fc_trx', 'PAYMENTACC');
     }
+
+    public function temptrxaccountingmst(){
+        return $this->belongsTo(TempTrxAccountingMaster::class, 'fc_trxno', 'fc_trxno');
+    }
 }
