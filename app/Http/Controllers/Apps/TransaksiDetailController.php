@@ -433,7 +433,7 @@ class TransaksiDetailController extends Controller
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
         
-                    $delete = TempTrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                    $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
                         ->where('fn_rownum', $fn_rownum)
                         ->delete();
         
