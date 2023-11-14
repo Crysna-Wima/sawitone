@@ -50,7 +50,7 @@
                             <div class="form-group d-flex-row">
                                 <label>{{ $coa->coamst->fc_coaname }}</label>
                                 <div class="text mt-2">
-                                    <p class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></p>
+                                    <h5 class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></h5>
                                 </div>
                             </div>
                         </div>
@@ -227,8 +227,6 @@
         get_data_coa();
         get_data_payment();
     })
-
-    
 
     function add_opsi() {
         $('#fc_paymentmethod').prop('disabled', false);

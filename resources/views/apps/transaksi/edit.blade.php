@@ -204,7 +204,7 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit_edit" action="#" method="post">
+            <form id="form_submit_edit" action="/apps/transaksi/edit/submit-edit/{{ base64_encode($fc_trxno) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -214,9 +214,9 @@
                                 <div class="form-group">
                                     <label>Catatan</label>
                                     @if ($data->fv_description == null)
-                                    <input type="text" name="fv_description" id="fv_description" class="form-control">
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control" readonly>
                                     @else
-                                    <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}">
+                                    <input type="text" name="fv_description" id="fv_description" class="form-control" value="{{ $data->fv_description }}" readonly>
                                     @endif
                                 </div>
                             </div>
@@ -234,12 +234,8 @@
                     @endphp
 
                     @if(in_array('ONCE', $mergedArray) && in_array('LINV', $mergedArray))
-                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
                     <button type="button" onclick="click_opsilanjut()" class="btn btn-info">Opsi Lanjutan</button>
                     @else
-                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
                     <button type="submit" class="btn btn-success">Submit Transaksi</button>
                     @endif
                 </div>
@@ -270,7 +266,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_debit" action="#" method="POST" autocomplete="off">
+            <form id="form_submit_debit" action="/apps/transaksi/edit/edit-debit/{{ base64_encode($fc_trxno) }}" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
@@ -360,7 +356,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_kredit" action="#" method="POST" autocomplete="off">
+            <form id="form_submit_kredit" action="/apps/transaksi/edit/edit-kredit/{{ base64_encode($fc_trxno) }}" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
@@ -450,7 +446,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_update" action="/apps/transaksi/edit/update-pembayaran" method="PUT" autocomplete="off">
+            <form id="form_update" action="/apps/transaksi/edit/update-edit-pembayaran/{{ base64_encode($fc_trxno) }}" method="PUT" autocomplete="off">
                 <input name="fv_description_payment" id="fv_description_payment" type="text" hidden>
                 <input name="fm_nominal_payment" id="fm_nominal_payment" type="hidden">
                 <input name="tipe" id="tipe" type="text" hidden>
@@ -690,6 +686,8 @@
             success: function(response) {
                 if (response.status === 200) {
                     var data = response.data;
+                    $("#fc_paymentmethod_edit").empty();
+                    $("#fc_paymentmethod_edit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     $("#fc_paymentmethod_kredit").empty();
                     $("#fc_paymentmethod_kredit").append(`<option value="" selected disabled> - Pilih - </option>`);
                     $("#fc_paymentmethod").empty();
@@ -697,6 +695,7 @@
                     for (var i = 0; i < data.length; i++) {
                         $("#fc_paymentmethod").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                         $("#fc_paymentmethod_kredit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                        $("#fc_paymentmethod_edit").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
 
                     $("#fc_paymentmethod").change(function() {
@@ -728,6 +727,22 @@
                             $('#fd_agingref_kredit').attr('required', false);
                             $('input[id="fc_refno_kredit"]').val("");
                             $('input[id="fd_agingref_kredit"]').val("");
+                        }
+                    });
+
+                    $("#fc_paymentmethod_edit").change(function() {
+                        if ($('#fc_paymentmethod_edit').val() === "GIRO") {
+                            $('#no_giro_edit').attr('hidden', false);
+                            $('#tgl_giro_edit').attr('hidden', false);
+                            $('#fc_refno_edit').attr('required', true);
+                            $('#fd_agingref_edit').attr('required', true);
+                        } else {
+                            $('#no_giro_edit').attr('hidden', true);
+                            $('#tgl_giro_edit').attr('hidden', true);
+                            $('#fc_refno_edit').attr('required', false);
+                            $('#fd_agingref_edit').attr('required', false);
+                            $('input[id="fc_refno_edit"]').val("");
+                            $('input[id="fd_agingref_edit"]').val("");
                         }
                     });
                 } else {
@@ -981,10 +996,10 @@
 
         rowCallback: function(row, data) {
             var fc_trxno = window.btoa(data.fc_trxno);
-            var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
             var fc_mappingcode = "{{ $data->fc_mappingcode }}";
             var encode_fc_mappingcode = btoa(fc_mappingcode);
+            var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             // console.log(url_delete);
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
@@ -1663,7 +1678,7 @@
         });
     }
 
-    function click_opsilanjut(){
+    function click_opsilanjut() {
         swal({
                 title: 'Konfirmasi?',
                 text: 'Apakah anda yakin menambahkan opsi lanjutan?',
@@ -1674,7 +1689,7 @@
                 if (willDelete) {
                     $("#modal_loading").modal('show');
                     $.ajax({
-                        url: '/apps/transaksi/edit/update-edit-status-opsi-lanjutan',
+                        url: '/apps/transaksi/edit/update-edit-status-opsi-lanjutan/' + encode_trxno,
                         type: "PUT",
                         dataType: "JSON",
                         success: function(response) {
@@ -1714,6 +1729,54 @@
                 }
             });
     }
+
+    $('#form_update').on('submit', function(e) {
+        e.preventDefault();
+
+        var form_id = $(this).attr("id");
+        if (check_required(form_id) === false) {
+            swal("Oops! Mohon isi field yang kosong", {
+                icon: 'warning',
+            });
+            return;
+        }
+
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: $('#form_update').attr('action'),
+            type: $('#form_update').attr('method'),
+            data: $('#form_update').serialize(),
+            success: function(response) {
+
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status == 200) {
+                    swal(response.message, {
+                        icon: 'success',
+                    });
+                    $("#modal_pembayaran").modal('hide');
+                    $("#form_update")[0].reset();
+                    reset_all_select();
+                    tb_debit.ajax.reload(null, false);
+                    tb_kredit.ajax.reload(null, false);
+                    window.location.href = window.location.href;
+                } else if (response.status == 300) {
+                    swal(response.message, {
+                        icon: 'error',
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    });
 </script>
 
 @endsection

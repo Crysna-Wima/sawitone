@@ -50,7 +50,7 @@
                             <div class="form-group d-flex-row">
                                 <label>{{ $coa->coamst->fc_coaname }}</label>
                                 <div class="text mt-2">
-                                    <p class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></p>
+                                    <h5 class="text-info" style="font-weight: bold; font-size:large" id="nominal_coa" name="nominal_coa"></h5>
                                 </div>
                             </div>
                         </div>
@@ -91,12 +91,13 @@
             </div>
         </div>
         <div class="col-12 col-md-12 col-lg-12">
-            <form id="form_submit_edit" action="#" method="post">
+            <form id="form_submit_edit" action="/apps/transaksi/edit/submit-edit/{{ base64_encode($fc_trxno) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="button text-right mb-4">
-                    <button type="button" onclick="click_cancel()" class="btn btn-danger mr-1">Cancel</button>
-                    <button type="button" onclick="click_pending()" class="btn btn-warning mr-1">Pending</button>
+                    <input type="text" name="status_balance" id="status_balance" hidden>
+                    <input type="text" name="jumlah_balance" id="jumlah_balance" hidden>
+                    <input type="text" name="tipe_jurnal" id="tipe_jurnal" value="{{ $data->transaksitype->fv_description }}" hidden>
                     <button type="submit" class="btn btn-success">Submit Transaksi</button>
                 </div>
             </form>
@@ -115,7 +116,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit_opsi" action="/apps/transaksi/store-opsi" method="POST" autocomplete="off">
+            <form id="form_submit_opsi_edit" action="/apps/transaksi/store-edit-opsi/{{ base64_encode($fc_trxno) }}" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
@@ -212,6 +213,13 @@
     $('#kredit').html(fungsiRupiahSystem(parseFloat(nominalKredit)));
     $('#balance').html(fungsiRupiahSystem(parseFloat(nominalBalance)));
     $('#nominal_coa').html(fungsiRupiahSystem(parseFloat(nominalCoa)));
+
+    if (nominalDebit - nominalKredit === 0) {
+        $('#status_balance').val("true");
+        $('#jumlah_balance').val(nominalBalance);
+    } else {
+        $('#status_balance').val("false");
+    }
 
     $(document).ready(function() {
         get_data_coa();
@@ -363,7 +371,7 @@
             [0, 'desc']
         ],
         ajax: {
-            url: "/apps/transaksi/datatables-edit-opsi/" + encode_trxno,
+            url: "/apps/transaksi/datatable-edit-opsi/" + encode_trxno,
             type: 'GET',
         },
         columnDefs: [{
@@ -420,7 +428,9 @@
         ],
 
         rowCallback: function(row, data) {
-            var url_delete = "/apps/transaksi/delete-opsi/" + data.fc_trxno + "/" + data.fn_rownum;
+            var encode_fc_trxno = window.btoa(data.fc_trxno);
+            console.log(encode_fc_trxno);
+            var url_delete = "/apps/transaksi/edit-delete-opsi/" + encode_fc_trxno + "/" + data.fn_rownum;
             var fc_coacode = window.btoa(data.fc_coacode);
 
             $('td:eq(8)', row).html(`
@@ -455,7 +465,7 @@
     function updateOpsiTransaksi(rownum, nominal, description, encode_mappingcode) {
         $("#modal_loading").modal('show');
         $.ajax({
-            url: '/apps/transaksi/update-opsi',
+            url: '/apps/transaksi/update-edit-opsi/' + encode_trxno,
             type: 'PUT',
             data: {
                 fn_rownum: rownum,
@@ -491,117 +501,6 @@
                 });
             }
         });
-    }
-
-    function click_pending() {
-        swal({
-            title: 'Konfirmasi',
-            text: 'Apakah anda yakin akan Pending Transaksi Accounting ini?',
-            icon: 'warning',
-            buttons: true,
-            dangerMode: true,
-        }).then((save) => {
-            if (save) {
-                $("#modal_loading").modal('show');
-                $.ajax({
-                    url: '/apps/transaksi/pending',
-                    type: 'PUT',
-                    data: {
-                        fv_description: $('#fv_description').val(),
-                    },
-                    success: function(response) {
-                        setTimeout(function() {
-                            $('#modal_loading').modal('hide');
-                        }, 500);
-                        if (response.status == 200) {
-                            iziToast.success({
-                                title: 'Success!',
-                                message: response.message,
-                                position: 'topRight'
-                            });
-                            $("#modal").modal('hide');
-                            location.href = response.link;
-                        } else {
-                            iziToast.error({
-                                title: 'Gagal!',
-                                message: response.message,
-                                position: 'topRight'
-                            });
-                            $("#modal").modal('hide');
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        setTimeout(function() {
-                            $('#modal_loading').modal('hide');
-                        }, 500);
-                        swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                            .responseText + ")", {
-                                icon: 'error',
-                            });
-                    }
-                });
-            }
-        });
-
-    }
-
-    function click_cancel() {
-        swal({
-                title: 'Konfirmasi',
-                text: 'Apakah anda yakin akan cancel Transaksi Accounting?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $("#modal_loading").modal('show');
-                    $.ajax({
-                        url: '/apps/transaksi/cancel_transaksi',
-                        type: "DELETE",
-                        dataType: "JSON",
-                        success: function(response) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            if (response.status === 200) {
-
-                                $("#modal").modal('hide');
-                                iziToast.success({
-                                    title: 'Success!',
-                                    message: response.message,
-                                    position: 'topRight'
-                                });
-
-                                tb.ajax.reload(null, false);
-                            } else if (response.status === 201) {
-                                $("#modal").modal('hide');
-                                iziToast.success({
-                                    title: 'Success!',
-                                    message: response.message,
-                                    position: 'topRight'
-                                });
-                                // arahkan ke link
-                                location.href = response.link;
-                            } else {
-                                swal(response.message, {
-                                    icon: 'error',
-                                });
-                            }
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
-                                .responseText + ")", {
-                                    icon: 'error',
-                                });
-                        }
-                    });
-                }
-            });
     }
 
     function click_delete(url, nama) {
@@ -657,7 +556,7 @@
             });
     }
 
-    $('#form_submit_opsi').on('submit', function(e) {
+    $('#form_submit_opsi_edit').on('submit', function(e) {
         e.preventDefault();
 
         var form_id = $(this).attr("id");
@@ -679,9 +578,9 @@
                 if (save) {
                     $("#modal_loading").modal('show');
                     $.ajax({
-                        url: $('#form_submit_opsi').attr('action'),
-                        type: $('#form_submit_opsi').attr('method'),
-                        data: $('#form_submit_opsi').serialize(),
+                        url: $('#form_submit_opsi_edit').attr('action'),
+                        type: $('#form_submit_opsi_edit').attr('method'),
+                        data: $('#form_submit_opsi_edit').serialize(),
                         success: function(response) {
                             setTimeout(function() {
                                 $('#modal_loading').modal('hide');
@@ -692,7 +591,7 @@
                                 });
                                 tb_opsi.ajax.reload(null, false);
                                 $("#modal_opsi").modal('hide');
-                                $("#form_submit_opsi")[0].reset();
+                                $("#form_submit_opsi_edit")[0].reset();
                                 $('#fc_paymentmethod').val(null).trigger('change');
                                 $('#fc_group').val(null).trigger('change');
                                 reset_all_select();

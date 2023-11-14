@@ -47,18 +47,18 @@ class TransaksiController extends Controller
     {
         $data['data'] = TempTrxAccountingMaster::with('transaksitype', 'mapping', 'branch', 'temptrxaccountingdtl.coamst')->where('fc_trxno', auth()->user()->fc_userid)->first();
         $get_mappingcode = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
-                                                    ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_mappingcode;
-        
-      
+            ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_mappingcode;
+
+
 
         $statusposcredit = MappingMaster::where('fc_mappingcode', $get_mappingcode)
-                    ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_credit_previledge;
+            ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_credit_previledge;
         // $statusposcredit array of string json terdapat value 'ONCE' maka value 'C' selain itu 'D'
         $statuspos = in_array('ONCE', json_decode($statusposcredit)) ? 'C' : 'D';
-        
+
         $coa = TempTrxAccountingDetail::with('coamst')->where('fc_trxno', auth()->user()->fc_userid)
-                                ->where('fc_branch', auth()->user()->fc_branch)
-                                ->where('fc_statuspos', $statuspos)->first();
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_statuspos', $statuspos)->first();
         $data['coa'] = $coa;
         return view('apps.transaksi.opsi-lanjutan', $data);
         // dd($coa);
@@ -70,7 +70,6 @@ class TransaksiController extends Controller
         session(['fc_trxno_global' => $decode_fc_trxno]);
         $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['fc_trxno'] = $decode_fc_trxno;
-
         return view('apps.transaksi.edit', $data);
     }
 
@@ -80,6 +79,19 @@ class TransaksiController extends Controller
         session(['fc_trxno_global' => $decode_fc_trxno]);
         $data['data'] = TrxAccountingMaster::with('transaksitype', 'mapping')->where('fc_trxno', $decode_fc_trxno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $data['fc_trxno'] = $decode_fc_trxno;
+        $get_mappingcode = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)
+            ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_mappingcode;
+
+        $statusposcredit = MappingMaster::where('fc_mappingcode', $get_mappingcode)
+            ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_credit_previledge;
+        // $statusposcredit array of string json terdapat value 'ONCE' maka value 'C' selain itu 'D'
+        $statuspos = in_array('ONCE', json_decode($statusposcredit)) ? 'C' : 'D';
+
+        $coa = TrxAccountingDetail::with('coamst')->where('fc_trxno', $decode_fc_trxno)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_statuspos', $statuspos)->first();
+
+        $data['coa'] = $coa;
 
         return view('apps.transaksi.edit-opsi', $data);
     }
@@ -193,6 +205,7 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
+    // EDIT OPSI LANJUTAN
     public function datatables_edit_opsi($fc_trxno)
     {
         $decode_fc_trxno = base64_decode($fc_trxno);
@@ -206,6 +219,7 @@ class TransaksiController extends Controller
             ->make(true);
     }
 
+    // Store Opsi Biasa
     public function store_opsi(Request $request)
     {
         DB::beginTransaction();
@@ -264,6 +278,67 @@ class TransaksiController extends Controller
             ];
         }
     }
+
+        // Store Edit Opsi
+        public function store_edit_opsi(Request $request, $fc_trxno)
+        {
+            DB::beginTransaction();
+
+            $decode_fc_trxno = base64_decode($fc_trxno);
+            try {
+                $validator = Validator::make($request->all(), [
+                    'fc_coacode' => 'required',
+                    'fc_paymentmethod' => 'required',
+                ]);
+    
+                if ($validator->fails()) {
+                    return [
+                        'status' => 300,
+                        'message' => $validator->errors()->first()
+                    ];
+                }
+    
+                $detail = SuppTrxAcc::where('fc_trxno', $decode_fc_trxno)->orderBy('fn_rownum', 'DESC')->first();
+                $fn_rownum = 1;
+                if (!empty($detail)) {
+                    $fn_rownum = $detail->fn_rownum + 1;
+                }
+    
+    
+                $insert = SuppTrxAcc::create([
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                    'fc_trxno' => $decode_fc_trxno,
+                    'fn_rownum' => $fn_rownum,
+                    'fc_coacode' => $request->fc_coacode,
+                    'fc_statuspos' => 'O',
+                    'fc_paymentmethod' => $request->fc_paymentmethod,
+                    'fc_refno' => ($request->fc_refno === '') ? NULL : $request->fc_refno,
+                    'fd_agingref' => ($request->fd_agingref === '') ? NULL : $request->fd_agingref,
+                    'created_by' => auth()->user()->fc_userid
+                ]);
+    
+                if ($insert) {
+                    DB::commit();
+                    return [
+                        'status' => 200,
+                        'message' => 'Data berhasil disimpan'
+                    ];
+                } else {
+                    DB::rollback();
+                    return [
+                        'status' => 300,
+                        'message' => 'Data gagal disimpan'
+                    ];
+                }
+            } catch (\Exception $e) {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                ];
+            }
+        }
 
     public function update_opsi(Request $request)
     {
@@ -324,7 +399,68 @@ class TransaksiController extends Controller
         }
     }
 
-    public function update_status_opsi_lanjutan(){
+    public function update_edit_opsi(Request $request, $fc_trxno)
+    {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fn_rownum' => 'required',
+            'fc_mappingcode' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $updateDescription = true;
+            $updateNominal = true;
+
+            $updateData = [
+                'updated_by' => auth()->user()->fc_userid
+            ];
+
+            if ($updateNominal && strpos($request->fm_nominal, 'Rp') === false) {
+                $updateData['fm_nominal'] = Convert::convert_to_double($request->fm_nominal);
+            }
+
+            if ($updateDescription) {
+                $updateData['fv_description'] = $request->fv_description;
+            }
+
+            $updateNominal = SuppTrxAcc::where('fc_trxno', $decode_fc_trxno)
+                ->where('fn_rownum', $request->fn_rownum)
+                ->update($updateData);
+
+            if ($updateNominal) {
+                DB::commit();
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil diubah'
+                ];
+            } else {
+                DB::rollback();
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal diubah'
+                ];
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return [
+                'status' => 300,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function update_status_opsi_lanjutan()
+    {
         $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
             'fc_status' => 'I-2'
         ]);
@@ -344,7 +480,8 @@ class TransaksiController extends Controller
     }
 
     // buat edit
-    public function update_edit_status_opsi_lanjutan($fc_trxno){
+    public function update_edit_status_opsi_lanjutan($fc_trxno)
+    {
         $decode_fc_trxno = base64_decode($fc_trxno);
         $update = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)->update([
             'fc_status' => 'I-2'
@@ -354,7 +491,7 @@ class TransaksiController extends Controller
             return [
                 'status' => 201,
                 'message' => 'Data berhasil diubah',
-                'link' => '/apps/transaksi/edit-opsi'
+                'link' => '/apps/transaksi/edit-opsi/' . $fc_trxno
             ];
         } else {
             return [
@@ -364,6 +501,7 @@ class TransaksiController extends Controller
         }
     }
 
+    // DELETE DI OPSI LANJUTAN 
     public function delete_opsi($fc_trxno, $fn_rownum)
     {
         $deleteOpsi = TempSuppTrxAcc::where([
@@ -384,6 +522,27 @@ class TransaksiController extends Controller
         ];
     }
 
+    // DELETE DI EDIT OPSI LANJUTAN
+    public function edit_delete_opsi($fc_trxno, $fn_rownum)
+    {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        $deleteOpsi = SuppTrxAcc::where([
+            'fc_trxno' => $decode_fc_trxno,
+            'fn_rownum' => $fn_rownum,
+        ])->delete();
+
+        if ($deleteOpsi) {
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil dihapus',
+            ];
+        }
+
+        return [
+            'status' => 300,
+            'message' => 'Error',
+        ];
+    }
 
     public function datatables_bookmark()
     {

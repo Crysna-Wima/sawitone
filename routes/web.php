@@ -688,7 +688,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/giro', 'Apps\TransaksiController@giro');
             Route::get('/edit/{fc_trxno}', 'Apps\TransaksiController@edit');
             Route::get('/edit-opsi/{fc_trxno}', 'Apps\TransaksiController@edit_opsi');
-            Route::get('/datatable-edit-opsi/{fc_trxno}', 'Apps\TransaksiController@datatable_edit_opsi');
+            Route::get('/datatable-edit-opsi/{fc_trxno}', 'Apps\TransaksiController@datatables_edit_opsi');
             Route::get('/bookmark-index', 'Apps\TransaksiController@bookmark_index');
             Route::get('/create-index', 'Apps\TransaksiController@create');
             Route::get('/datatables', 'Apps\TransaksiController@datatables');
@@ -712,8 +712,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/opsi-lanjutan', 'Apps\TransaksiController@opsi_lanjutan');
             Route::get('/datatables-opsi', 'Apps\TransaksiController@datatables_opsi');
             Route::post('/store-opsi', 'Apps\TransaksiController@store_opsi');
+            Route::post('/store-edit-opsi/{fc_trxno}', 'Apps\TransaksiController@store_edit_opsi');
             Route::put('/update-opsi', 'Apps\TransaksiController@update_opsi');
+            Route::put('/update-edit-opsi/{fc_trxno}', 'Apps\TransaksiController@update_edit_opsi');
             Route::delete('/delete-opsi/{fc_trxno}/{fn_rownum}', 'Apps\TransaksiController@delete_opsi');
+            Route::delete('/edit-delete-opsi/{fc_trxno}/{fn_rownum}', 'Apps\TransaksiController@edit_delete_opsi');
 
             Route::prefix('detail')->group(function () {
                 Route::get('/datatables', 'Apps\TransaksiDetailController@datatables');
@@ -743,10 +746,10 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::put('update-edit-kredit-transaksi/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_kredit_transaksi');
                 Route::delete('/delete/{fc_trxno}/{fc_coacode}/{fn_rownum}/{fc_balancerelation}/{fc_mappingcode}', 'Apps\TransaksiDetailController@edit_delete');
                 Route::put('/submit-edit/{fc_trxno}', 'Apps\TransaksiDetailController@submit_edit');
-                Route::put('/update-pembayaran', 'Apps\TransaksiDetailController@update_pembayaran');
+                Route::put('/update-edit-pembayaran/{fc_trxno}', 'Apps\TransaksiDetailController@update_edit_pembayaran');
                 Route::post('/store-from-bpb', 'Apps\TransaksiDetailController@store_bpb_edit');
                 Route::post('/store-from-inv', 'Apps\TransaksiDetailController@store_invoice_edit');
-                Route::put('/update-edit-status-opsi-lanjutan', 'Apps\TransaksiController@update_edit_status_opsi_lanjutan');
+                Route::put('/update-edit-status-opsi-lanjutan/{fc_trxno}', 'Apps\TransaksiController@update_edit_status_opsi_lanjutan');
             });
         });
 
