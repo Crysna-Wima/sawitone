@@ -472,9 +472,11 @@ class TransaksiController extends Controller
 
     public function update_status_opsi_lanjutan()
     {
-        $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)->update([
-            'fc_status' => 'I-2'
-        ]);
+        $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->update([
+                        'fc_status' => 'I-2'
+                    ]);
 
         if ($update) {
             return [
@@ -494,9 +496,11 @@ class TransaksiController extends Controller
     public function update_edit_status_opsi_lanjutan($fc_trxno)
     {
         $decode_fc_trxno = base64_decode($fc_trxno);
-        $update = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)->update([
-            'fc_status' => 'I-2'
-        ]);
+        $update = TrxAccountingMaster::where('fc_trxno', $decode_fc_trxno)
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->update([
+                        'fc_status' => 'U-2'
+                    ]);
 
         if ($update) {
             return [
