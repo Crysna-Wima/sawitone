@@ -440,6 +440,7 @@
         // console.log(fc_stockcode);
         // encode
         var encode_fc_stockcode = window.btoa(fc_stockcode);
+        // console.log(encode_fc_stockcode);
         $("#modal_loading").modal('show');
 
         // tampilkan loading_data
@@ -516,15 +517,14 @@
                         } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                            index]
-                                        .fn_do_qty;
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
                                     break;
                                 }
                             }
 
                             // console.log("qty"+qty);
                             if (qty >= data.fn_quantity) {
+                                // console.log("qty"+ data.fn_quantity);
                                 return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                             } else {
                                 if (qty < 0) {
@@ -545,8 +545,7 @@
                             // looping data stock.sodtl[index].fn_so_qty
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
-                                        index].fn_do_bonusqty;
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[index].fn_do_bonusqty;
                                     break;
                                 }
                             }
@@ -565,9 +564,7 @@
                         } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                            index]
-                                        .fn_do_qty;
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
                                     break;
                                 }
                             }
@@ -630,7 +627,7 @@
         // ambil 8 string fc_barcode dari depan
         let fc_barcode_8 = fc_barcode.substring(0, 40);
         var barcodeEncode = window.btoa(fc_barcode);
-        console.log($('').val());
+        // console.log($('').val());
         // console.log(fc_barcode);
         // modal loading
         $('#modal_loading').modal('show');

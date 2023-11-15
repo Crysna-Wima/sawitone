@@ -235,8 +235,14 @@ class DeliveryOrderController extends Controller
             ];
         }
 
+        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
+
         //CHECK DATA STOCK
-        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
+        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)
+                                ->where('fc_warehousecode', $now_fc_warehousecode)
+                                ->where('fc_branch', auth()->user()->fc_branch)
+                                ->first();
         
         $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
                                       ->where('fc_sono', $request->fc_sono)
