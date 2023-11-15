@@ -146,11 +146,35 @@ class InvoicePenjualanController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->get();
+        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->orderBy('fc_sono')->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
+        // dd($data);
+    }
+
+    public function datatables_sj($fc_sono){
+        $decoded_fc_sono = base64_decode($fc_sono);
+        // jika $decoded_fc_sono samadengan 'all' maka tampilkan semua data
+        if($decoded_fc_sono == 'all'){
+            $data = DoMaster::with('somst.customer')->where('fc_dostatus', '!=', 'CC')
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+        } else {
+            $data = DoMaster::with('somst.customer')->where('fc_dostatus', '!=', 'CC')
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_sono', $decoded_fc_sono)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->orderBy('fc_dono')
+            ->get();
+        }
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+
         // dd($data);
     }
 }
