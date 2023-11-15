@@ -232,6 +232,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-6 col-lg-7">
+                                    <div class="form-group">
+                                        <label>Catatan</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" fdprocessedid="hgh1fp"
+                                                name="fv_description" id="fv_description">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-6 col-lg-5">
                                     <div class="form-group">
                                         <label>Kedatangan</label>
@@ -242,15 +251,6 @@
                                                 </div>
                                             </div>
                                                 <input type="text" id="fd_stockarrived" class="form-control datepicker" name="fd_stockarrived">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-7">
-                                    <div class="form-group">
-                                        <label>Catatan</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" fdprocessedid="hgh1fp"
-                                                name="fv_description" id="fv_description">
                                         </div>
                                     </div>
                                 </div>
