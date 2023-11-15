@@ -371,10 +371,11 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/get_pdf/{fc_pono}/{nama_pj}/{tampil_harga}', 'Apps\MasterPurchaseOrderController@get_pdf');
             // Route::post('/pdf', 'Apps\MasterReceivingOrderController@pdf_ro');
             Route::get('/get_pdf_ro/{fc_rono}/{nama_pj}', 'Apps\MasterReceivingOrderController@get_pdf_ro');
-            Route::get('/detail/{fc_pono}', 'Apps\MasterPurchaseOrderController@detail');
+            Route::get('/detail/{fc_pono}', 'Apps\MasterPurchaseOrderController@detail')->name('master-purchase-order-detail');
             Route::put('/close', 'Apps\MasterPurchaseOrderController@close_po');
             Route::put('/cancel_po', 'Apps\MasterPurchaseOrderController@cancel_po');
             Route::post('/export-excel/{status}', 'Apps\MasterPurchaseOrderController@export_excel');
+            Route::put('/edit/kedatangan/{fc_pono}', 'Apps\MasterPurchaseOrderController@edit_kedatangan');
         });
 
         Route::prefix('receiving-order')->group(function () {

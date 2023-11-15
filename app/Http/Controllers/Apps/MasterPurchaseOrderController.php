@@ -225,4 +225,18 @@ class MasterPurchaseOrderController extends Controller
         }
     }
 
+    public function edit_kedatangan(Request $req, $fc_pono){
+        $decode_fc_pono = base64_decode($fc_pono);
+        $get_filter_data_first = PoDetail::where('fc_pono', $decode_fc_pono)->where('fn_porownum', $req->fn_porownum)->first();
+        $get_filter_data_first->fd_stockarrived = $req->fd_stockarrived;
+        $get_filter_data_first->save();
+
+        $encode_fc_pono = base64_encode($decode_fc_pono);
+        return [
+            'status' => 201, // SUCCESS
+            'link' => '/apps/master-purchase-order/detail/'.$encode_fc_pono,
+            'message' => 'Kedatangan berhasil diubah'
+        ];
+    }
+
 }
