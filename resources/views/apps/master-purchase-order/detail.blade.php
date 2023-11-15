@@ -298,7 +298,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="form_submit_edit" action="#" method="POST" autocomplete="on">
+                <form id="form_edit" action="/apps/master-purchase-order/edit/kedatangan/{{ base64_encode($po_master->fc_pono) }}" method="POST" autocomplete="on">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -312,8 +312,8 @@
                                                 <i class="fas fa-calendar"></i>
                                             </div>
                                         </div>
-                                        <input type="text" id="!table_name!" class="form-control datepicker"
-                                            name="!table_name!">
+                                        <input type="text" id="fd_stockarrived" class="form-control datepicker" name="fd_stockarrived">
+                                        <input type="hidden" id="fn_porownum" name="fn_porownum">
                                     </div>
                                 </div>
                             </div>
@@ -368,9 +368,16 @@
             $('#modal_nama').modal('show');
         };
 
-        function modal_kedatangan(fc_rono) {
+        // function modal_kedatangan(fc_rono) {
+        //     $('#modal_kedatangan').modal('show');
+        // };
+        function modal_kedatangan(button) {
+            var id = $(button).data('rownum');
+            var fcPono = $(button).data('pono');
+            $('#fn_porownum').val(id);
+            $('#fc_pono').val(fcPono);
             $('#modal_kedatangan').modal('show');
-        };
+        }
 
         let encode_fc_pono = "{{ base64_encode($po_master->fc_pono) }}";
         // console.log(encode_fc_pono)
@@ -418,8 +425,7 @@
                 },
                 {
                     //FIELD KEDATANGAN
-                    data: null,
-                    defaultContent: 'xx/xx/xxxx',
+                    data: 'fd_stockarrived',
                 },
                 {
                     data: 'fc_status'
@@ -451,7 +457,7 @@
 
                 //BUTTON UBAH KEDATANGAN
                 $('td:eq(11)', row).html(`
-                    <button class="btn btn-warning btn-sm" onclick="modal_kedatangan()"><i class="fa fa-pen"></i> Ubah</button>
+                    <button class="btn btn-warning btn-sm" onclick="modal_kedatangan(this)" data-rownum="${data.fn_porownum}" data-pono="${data.fc_pono}"><i class="fa fa-pen"></i> Ubah</button>
                 `);
             }
         });
@@ -504,6 +510,104 @@
             <button class="btn btn-warning btn-sm" onclick="click_modal_nama('${data.fc_rono}')"><i class="fa fa-eye"></i> Detail</button>
             `);
             },
+        });
+
+        $('#form_edit').on('submit', function(e) {
+            e.preventDefault();
+
+            var form_id = $(this).attr("id");
+            var formData = new FormData($('#form_edit')[0]);
+            // Menambahkan data tambahan jika diperlukan
+            var imageInput = $('#customFile')[0];
+            if (imageInput && imageInput.files.length > 0) {
+                formData.append('image_file', imageInput.files[0]);
+            }
+            if (check_required(form_id) === false) {
+                swal("Oops! Mohon isi field yang kosong", {
+                    icon: 'warning',
+                });
+                return;
+            }
+
+            swal({
+                    title: 'Yakin?',
+                    text: 'Apakah anda yakin akan menyimpan data ini?',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((save) => {
+                    if (save) {
+                    $("#modal_loading").modal('show');
+                    
+                    $.ajax({
+                        url: $('#form_edit').attr('action'),
+                        type: $('#form_edit').attr('method'),
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                icon: 'success',ﬁ
+                                });
+                                $("#modal_edit").modal('hide');
+                                $("#form_edit")[0].reset();
+                                reset_all_select();
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 201) {
+                                swal(response.message, {
+                                icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                location.href = response.link;
+                            } else if (response.status == 203) {
+                                swal(response.message, {
+                                icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload(null, false);
+                            } else if (response.status == 300) {
+                                swal(response.message, {
+                                icon: 'error',
+                                });
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            var errorMessage = "Mohon maaf masih ada data yang tidak sesuai";
+
+                            // Khusus jika error di transaksi apabila coacode null
+                            var responseObj = JSON.parse(jqXHR.responseText);
+                            if (responseObj.message.includes("SQLSTATE[23000]: Integrity constraint violation")) {
+                                var startIndex = responseObj.message.indexOf("SQLSTATE[23000]: Integrity constraint violation");
+                                var endIndex = responseObj.message.indexOf("(SQL:");
+                                // potong string yang sesuai dengan pesan dari object respon
+                                var specificErrorMessage = responseObj.message.substring(startIndex, endIndex).trim();
+                                if (specificErrorMessage == "SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'fc_coacode' cannot be null") {
+                                swal(errorMessage, {
+                                    icon: 'error',
+                                });
+                                } else {
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                    icon: 'error',
+                                });
+                                }
+                            } else {
+                                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                                icon: 'error',
+                                });
+                            }
+
+                        }
+                    });
+                    }
+                });
         });
     </script>
 @endsection
