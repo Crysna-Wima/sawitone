@@ -174,8 +174,8 @@
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                <th scope="col" class="text-center">Disc.(Rp)</th>
-                                                                                <th scope="col" class="text-center">Total</th> -->
+                                                                                    <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                                                    <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
@@ -208,8 +208,8 @@
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                <th scope="col" class="text-center">Disc.</th>
-                                                                                <th scope="col" class="text-center">Total</th> -->
+                                                                                    <th scope="col" class="text-center">Disc.</th>
+                                                                                    <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center">Approval</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -471,6 +471,7 @@
             // console.log(fc_stockcode);
             // encode
             var encode_fc_stockcode = window.btoa(fc_stockcode);
+            // console.log(encode_fc_stockcode);
             $("#modal_loading").modal('show');
 
             // tampilkan loading_data
@@ -548,14 +549,14 @@
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
                                     if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
                                         var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                                index]
-                                            .fn_do_qty;
+                                            index].fn_do_qty;
                                         break;
                                     }
                                 }
 
                                 // console.log("qty"+qty);
                                 if (qty >= data.fn_quantity) {
+                                    // console.log("qty"+ data.fn_quantity);
                                     return `<input type="number" id="quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                                 } else {
                                     if (qty < 0) {
@@ -597,8 +598,7 @@
                                 for (let index = 0; index < data.stock.sodtl.length; index++) {
                                     if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
                                         var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
-                                                index]
-                                            .fn_do_qty;
+                                            index].fn_do_qty;
                                         break;
                                     }
                                 }
@@ -661,7 +661,7 @@
             // ambil 8 string fc_barcode dari depan
             let fc_barcode_8 = fc_barcode.substring(0, 40);
             var barcodeEncode = window.btoa(fc_barcode);
-            console.log($('').val());
+            // console.log($('').val());
             // console.log(fc_barcode);
             // modal loading
             $('#modal_loading').modal('show');
