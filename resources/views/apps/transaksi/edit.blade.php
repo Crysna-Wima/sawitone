@@ -1091,10 +1091,12 @@
         ],
 
         rowCallback: function(row, data) {
+            var fc_trxno = window.btoa(data.fc_trxno);
             var fc_mappingcode = "{{ $data->fc_mappingcode }}";
             var encode_fc_mappingcode = btoa(fc_mappingcode);
             var url_delete = "/apps/transaksi/edit/delete/" + fc_trxno + "/" + data.fc_coacode + "/" + data.fn_rownum + "/" + balancerelation_encode + "/" + encode_fc_mappingcode;
             var fc_coacode = window.btoa(data.fc_coacode);
+            // console.log(fc_coacode)
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
@@ -1150,7 +1152,7 @@
                 fm_nominal: nominal,
                 fv_description: description,
                 fc_mappingcode: encode_mappingcode,
-                fc_debit_previledge: previledgeDebit
+                fc_debit_previledge: previledgeDebit,
             },
             success: function(response) {
                 if (response.status == 200) {
@@ -1191,7 +1193,7 @@
                 fm_nominal: nominal,
                 fv_description: description,
                 fc_mappingcode: encode_mappingcode,
-                fc_credit_previledge: previledgeCredit
+                fc_credit_previledge: previledgeCredit,
             },
             success: function(response) {
                 if (response.status == 200) {

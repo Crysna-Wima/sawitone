@@ -326,8 +326,8 @@ class TransaksiDetailController extends Controller
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
-            'fc_refno' => ($request->fc_refno_edit === '') ? NULL : $request->fc_refno_edit,
-            'fd_agingref' => ($request->fd_agingref_edit === '') ? NULL : $request->fd_agingref_edit,
+            'fc_refno' => $request->fc_refno_edit,
+            'fd_agingref' => $request->fd_agingref_edit,
             'fv_description' => $request->fv_description_payment
         ]);
 
@@ -345,9 +345,8 @@ class TransaksiDetailController extends Controller
         // dd($request);
     }
 
-    public function update_edit_pembayaran(Request $request, $fc_trxno)
+    public function update_edit_pembayaran(Request $request)
     {
-        $decode_fc_trxno = base64_decode($fc_trxno);
         $validator = Validator::make($request->all(), [
             'fc_paymentmethod_edit' => 'required',
             'fn_rownum' => 'required',
@@ -360,13 +359,12 @@ class TransaksiDetailController extends Controller
             ];
         }
 
-        $update_pembayaran = TrxAccountingDetail::where([
-            'fc_trxno' => $decode_fc_trxno,
+        $update_pembayaran = TempTrxAccountingDetail::where([
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
-            'fc_refno' => ($request->fc_refno_edit === '') ? NULL : $request->fc_refno_edit,
-            'fd_agingref' => ($request->fd_agingref_edit === '') ? NULL : $request->fd_agingref_edit,
+            'fc_refno' => $request->fc_refno_edit,
+            'fd_agingref' => $request->fd_agingref_edit,
             'fv_description' => $request->fv_description_payment
         ]);
 
@@ -381,15 +379,15 @@ class TransaksiDetailController extends Controller
             'status' => 300,
             'message' => 'Error'
         ];
-        dd($request);
+        // dd($request);
     }
 
-    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum, $fc_balancerelation, $fc_mappingcode)
+    public function edit_delete($fc_trxno, $fc_coacode, $fn_rownum,$fc_balancerelation, $fc_mappingcode)
     {
         // decode
-        $fc_trxno_decode = base64_decode($fc_trxno);
         $fc_balancerelation_decode = base64_decode($fc_balancerelation);
         $fc_mappingcode_decode = base64_decode($fc_mappingcode);
+        $decode_fc_trxno = base64_decode($fc_trxno);
         DB::beginTransaction();
 
         try {
@@ -426,16 +424,18 @@ class TransaksiDetailController extends Controller
                     // Hitung jumlah nominal selain row yang dihapus
                     $remainingNominal = TrxAccountingDetail::where('fn_rownum', '!=', $fn_rownum)
                         ->where('fc_statuspos', $status_pos)
-                        ->where('fc_trxno', $fc_trxno_decode)
+                        ->where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                         ->sum('fm_nominal');
         
                     $countItem = TrxAccountingDetail::where('fc_statuspos', $status_pos)
+                        ->where('fc_trxno', $decode_fc_trxno)
                         ->where('fc_branch', auth()->user()->fc_branch)
                         ->where('fc_divisioncode', auth()->user()->fc_divisioncode)->count();
         
                     $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
+                        ->where('fc_trxno', $decode_fc_trxno)
                         ->where('fn_rownum', $fn_rownum)
                         ->delete();
         
@@ -444,7 +444,7 @@ class TransaksiDetailController extends Controller
                         if ($isCredit) {
                             if ($countItem < 2) {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $fc_trxno_decode)
+                                    ->where('fc_trxno', $decode_fc_trxno)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -452,17 +452,18 @@ class TransaksiDetailController extends Controller
                                     ]);
                             } else {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $fc_trxno_decode)
+                                    ->where('fc_trxno', $decode_fc_trxno)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
                                         'fm_nominal' => $remainingNominal,
                                     ]);
                             }
+                            // dd($countItem);
                         }else{
                             if ($countItem < 2) {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $fc_trxno_decode)
+                                    ->where('fc_trxno', $decode_fc_trxno)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -470,7 +471,7 @@ class TransaksiDetailController extends Controller
                                     ]);
                             } else {
                                 TrxAccountingDetail::where('fc_statuspos', $statusLawan)
-                                    ->where('fc_trxno', $fc_trxno_decode)
+                                    ->where('fc_trxno', $decode_fc_trxno)
                                     ->where('fc_branch', auth()->user()->fc_branch)
                                     ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
                                     ->update([
@@ -491,6 +492,7 @@ class TransaksiDetailController extends Controller
                         'status' => 300,
                         'message' => 'Error'
                     ];
+                    // dd($decode_fc_trxno);
                 } else {
                     $delete = TrxAccountingDetail::where('fc_coacode', $fc_coacode)
                         ->where('fn_rownum', $fn_rownum)
@@ -1280,12 +1282,12 @@ class TransaksiDetailController extends Controller
         }
         
         $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
-        $invtrx = $this->validateAndUpdateInvoice($request);
+        $invtrx = $this->validateAndUpdateInvoiceEdit($request, $decode_fc_trxno);
         if (is_array($invtrx)) {
             return $invtrx;
         }
 
-        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpbEdit($request, $decode_fc_trxno);
         if (is_array($invtrxBpb)) {
             return $invtrxBpb;
         } 
@@ -1411,12 +1413,12 @@ class TransaksiDetailController extends Controller
     
         
         $decode_fc_mappingcode = base64_decode($request->fc_mappingcode);
-        $invtrx = $this->validateAndUpdateInvoice($request);
+        $invtrx = $this->validateAndUpdateInvoiceEdit($request, $decode_fc_trxno);
         if (is_array($invtrx)) {
             return $invtrx;
         } 
 
-        $invtrxBpb = $this->validateAndUpdateInvoiceBpb($request);
+        $invtrxBpb = $this->validateAndUpdateInvoiceBpbEdit($request, $decode_fc_trxno);
         if (is_array($invtrxBpb)) {
             return $invtrxBpb;
         } 
@@ -1974,15 +1976,82 @@ class TransaksiDetailController extends Controller
         return $invtrx;
     }
 
+    private function validateAndUpdateInvoiceEdit($request, $decode_fc_trxno){
+        if ($request->fv_description !== null && str_contains($request->fv_description, 'INV/')) {
+            $invtrx = InvTrx::where('fc_invno', $request->fv_description)->first();
+            if($invtrx){
+                $currInv = TrxAccountingDetail::where([
+                    // 'fc_trxno' => $request->fc_trxno,
+                    'fn_rownum' => $request->fn_rownum,
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode
+                ])->first();
+    
+                $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
+                $totalInvoice = $invtrx->fm_invnetto + $invtrx->fm_taxvalue;
+    
+                // Convert Value Request to Correct type number 
+                $currentNominal = str_replace(".", "", $request->fm_nominal);
+                $currentNominal = str_replace(",", ".", $currentNominal);
+                $currentNominal = (double) $currentNominal;
+                
+                if ($totalPaid + $currentNominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
+                    return [
+                        'status' => 300,
+                        'message' => 'Data gagal diubah, karena melebihi total INV'
+                    ];
+                }
+                // dd($currInv);
+            }
+        } else {
+            $invtrx = null;
+        }
+
+        return $invtrx;
+    }
+
     private function validateAndUpdateInvoiceBpb($request){
         if ($request->fv_description !== null && str_contains($request->fv_description, 'BPB/')) {
             $invtrx = InvTrx::where('fc_invno', $request->fv_description)->first();
             if($invtrx){
                 $currInv = TempTrxAccountingDetail::where([
-                    'fc_trxno' => Auth()->user()->fc_userid,
+                    'fc_trxno' => auth()->user()->fc_userid,
                     'fn_rownum' => $request->fn_rownum,
-                    'fc_branch' => Auth()->user()->fc_branch,
-                    'fc_divisioncode' => Auth()->user()->fc_divisioncode
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode
+                ])->first();
+    
+                $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
+                $totalInvoice = $invtrx->fm_invnetto + $invtrx->fm_taxvalue;
+    
+                // Convert Value Request to Correct type number 
+                $currentNominal = str_replace(".", "", $request->fm_nominal);
+                $currentNominal = str_replace(",", ".", $currentNominal);
+                $currentNominal = (double) $currentNominal;
+                
+                if ($totalPaid + $currentNominal > $totalInvoice && (str_contains($currInv->fc_coacode, "310.311") || str_contains($currInv->fc_coacode, "130.131"))) {
+                    return [
+                        'status' => 300,
+                        'message' => 'Data gagal diubah, karena melebihi total INV BPB'
+                    ];
+                }
+            }
+        } else {
+            $invtrx = null;
+        }
+
+        return $invtrx;
+    }
+
+    private function validateAndUpdateInvoiceBpbEdit($request, $decode_fc_trxno){
+        if ($request->fv_description !== null && str_contains($request->fv_description, 'BPB/')) {
+            $invtrx = InvTrx::where('fc_invno', $request->fv_description)->first();
+            if($invtrx){
+                $currInv = TrxAccountingDetail::where([
+                    'fc_trxno' => $decode_fc_trxno,
+                    'fn_rownum' => $request->fn_rownum,
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode
                 ])->first();
     
                 $totalPaid = $invtrx->fm_paidinvvalue + $invtrx->fm_paidtaxvalue;
