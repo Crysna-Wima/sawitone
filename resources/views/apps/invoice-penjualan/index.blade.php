@@ -226,12 +226,8 @@
         }
     });
 
-    $('#fc_membercode').on('change', function(e) {
-        var fc_membercode = e.currentTarget.value
-
-        var encode_fc_membercode = window.btoa(fc_membercode);
-        console.log(encode_fc_membercode);
-
+    var defaultCustomer = 'all';
+    var encodedDefaultCustomer = btoa(defaultCustomer);
         var tb_so = $('#tb_so').DataTable({
             processing: true,
             serverSide: true,
@@ -240,7 +236,7 @@
                 [2, 'desc']
             ],
             ajax: {
-                url: '/apps/invoice-penjualan/datatables-so/' + encode_fc_membercode,
+                url: '/apps/invoice-penjualan/datatables-so/' + encodedDefaultCustomer,
                 type: 'GET'
             },
             columnDefs: [{
@@ -308,6 +304,16 @@
          `);
             }
         });
-    });
+
+        $('#fc_membercode').on('change', function() {
+            var selectedCustomer = $(this).val();
+            var encodedSelectedCustomer = btoa(selectedCustomer); 
+            updateDataTable(encodedSelectedCustomer);
+        });
+
+        function updateDataTable(encodedSelectedCustomer) {
+            tb_so.ajax.url('/apps/invoice-penjualan/datatables-so/' + encodedSelectedCustomer).load();
+        }
+   
 </script>
 @endsection

@@ -139,6 +139,13 @@ class InvoicePenjualanController extends Controller
 
     public function datatables_so($fc_membercode){
         $decoded_fc_membercode = base64_decode($fc_membercode);
+        // jika $decoded_fc_membercode samadengan 'all' maka tampilkan semua data
+        if($decoded_fc_membercode == 'all'){
+            $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        }
         $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->get();
 
         return DataTables::of($data)
