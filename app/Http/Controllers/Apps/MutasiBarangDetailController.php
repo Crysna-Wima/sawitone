@@ -13,6 +13,7 @@ use DB;
 use Yajra\DataTables\DataTables as DataTables;
 use App\Models\TempMutasiDetail;
 use App\Models\Invstore;
+use App\Models\MutasiMaster;
 use App\Models\SoDetail;
 use App\Models\Stock;
 use App\Models\TempMutasiMaster;
@@ -60,8 +61,13 @@ class MutasiBarangDetailController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
+        $now_fc_warehousecode = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)
+        ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_startingpoint_code;
 
-        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)->first();
+        $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)
+            ->where('fc_warehousecode', $now_fc_warehousecode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first();
         $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
             ->where('fc_sono', $request->fc_sono)
             ->where('fc_branch', auth()->user()->fc_branch)
