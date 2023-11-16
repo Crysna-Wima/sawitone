@@ -431,6 +431,7 @@
     });
 
     $('#fc_membercode').on('change', function() {
+        $('#fc_sono').val('');
         var selectedCustomer = $(this).val();
         var encodedSelectedCustomer = btoa(selectedCustomer);
         updateDataTable(encodedSelectedCustomer);
@@ -464,7 +465,7 @@
             [2, 'desc']
         ],
         ajax: {
-            url: '/apps/invoice-penjualan/datatables-sj/YWxs',
+            url: '/apps/invoice-penjualan/datatables-sj/all',
             type: 'GET'
         },
         columnDefs: [{
@@ -538,5 +539,20 @@
     function updateDataTableSono(encode_sono) {
         tb_sj.ajax.url('/apps/invoice-penjualan/datatables-sj/' + encode_sono).load();
     }
+
+
+    $('#save').on('click', function () {
+                // Dapatkan baris yang dipilih dari DataTable telah dicheck
+                var selectedRows = tb_sj.rows({ selected: true }).data();
+
+                var selectedDonos = [];
+
+                $.each(selectedRows, function (index, row) {
+                    selectedDonos.push(row.fc_dono);
+                });
+
+                $('#fc_dono').val(selectedDonos);
+                $('#modal_sj').modal('hide');
+    });
 </script>
 @endsection
