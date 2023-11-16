@@ -62,7 +62,7 @@ class MutasiBarangDetailController extends Controller
             ];
         }
         $now_fc_warehousecode = TempMutasiMaster::where('fc_mutationno', auth()->user()->fc_userid)
-        ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_startingpoint_code;
+        ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_startpoint_code;
 
         $data_stock = Invstore::where('fc_barcode', $request->fc_barcode)
             ->where('fc_warehousecode', $now_fc_warehousecode)
@@ -85,6 +85,7 @@ class MutasiBarangDetailController extends Controller
                 ];
             }
         }
+        // dd($data_stock);
         
         if ($request->fn_qty > $data_stock_sodtl->fn_so_qty) {
             return [
