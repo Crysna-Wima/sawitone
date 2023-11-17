@@ -174,8 +174,8 @@
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                    <th scope="col" class="text-center">Disc.(Rp)</th>
-                                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                        <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                                                        <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
@@ -208,8 +208,8 @@
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                    <th scope="col" class="text-center">Disc.</th>
-                                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                        <th scope="col" class="text-center">Disc.</th>
+                                                                                        <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center">Approval</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -471,7 +471,6 @@
             // console.log(fc_stockcode);
             // encode
             var encode_fc_stockcode = window.btoa(fc_stockcode);
-            // console.log(encode_fc_stockcode);
             $("#modal_loading").modal('show');
 
             // tampilkan loading_data
