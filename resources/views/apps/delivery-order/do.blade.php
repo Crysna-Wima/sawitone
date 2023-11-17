@@ -174,8 +174,8 @@
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                    <th scope="col" class="text-center">Disc.(Rp)</th>
-                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                                                <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
@@ -208,8 +208,8 @@
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                    <th scope="col" class="text-center">Disc.</th>
-                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                <th scope="col" class="text-center">Disc.</th>
+                                                                                <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center">Approval</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -772,7 +772,7 @@
 
             ],
             rowCallback: function(row, data) {
-                if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
+                if (data.somst.tempdomst.fc_dostatus == 'D' && data.somst.tempdomst.fc_sostatus == 'P') {
                     // kosong
                     $('td:eq(9)', row).html(``);
                 } else {
@@ -794,16 +794,16 @@
             footerCallback: function(row, data, start, end, display) {
 
                 // jika data[0].somst.domst.fc_sotransport tidak kosong
-                if (data[0].somst.domst.fc_sotransport) {
-                    $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
+                if (data[0].somst.tempdomst.fc_sotransport) {
+                    $("#fc_sotransport").val(data[0].somst.tempdomst.fc_sotransport);
                 } else if (data[0].somst.fc_sotransport) {
                     $("#fc_sotransport").val(data[0].somst.fc_sotransport);
                 } else {
                     $("#fc_sotransport").val('');
                 }
 
-                if (data[0].somst.domst.fc_memberaddress_loading !== "") {
-                    $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
+                if (data[0].somst.tempdomst.fc_memberaddress_loading !== "") {
+                    $("#fc_memberaddress_loading").val(data[0].somst.tempdomst.fc_memberaddress_loading);
                 } else {
                     $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
                 }
