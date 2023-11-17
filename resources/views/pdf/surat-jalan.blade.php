@@ -5,35 +5,37 @@
     <link href="https://www.dafontfree.net/embed/bHVjaWRhLWNvbnNvbGUtcmVndWxhciZkYXRhLzExL2wvNjAzODMvTHVjaWRhIENvbnNvbGUudHRm" rel="stylesheet" type="text/css" />
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
     @page {
         margin: 40px 40px;
-        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+        font-family: 'Roboto Mono', monospace;
     }
 
     * {
-        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+        font-family: 'Roboto Mono', monospace;
     }
 
 
     p,
     label {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     table {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     table th {
         padding: 6px 4px;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: regular;
-        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+        font-family: 'Roboto Mono', monospace;
     }
 
     table td {
         padding: 6px 4px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .tp-1 td {
@@ -46,7 +48,7 @@
     }
 
     .table-header {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .next-page {
@@ -83,15 +85,15 @@
     }
 
     .table-lg td {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .table-xl td {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .div-lg p {
-        font-size: 12px;
+        font-size: 14px;
     }
 
     th,
@@ -172,7 +174,7 @@
             width: 8.5in;
             height: 11in;
             display: block;
-	        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+	        font-family: 'Roboto Mono', monospace;
         }
 
         @page {
@@ -196,15 +198,15 @@
         <div class="container" id="print">
             <div class="header" style="height: 100px">
                 <div style="position: absolute; left: 0; top: 30; text-align: left;" class="no-margin">
-                    <p style="font-size: 12px;">PT DEXA ARFINDO PRATAMA</p>
+                    <p style="font-size: 14px;">PT DEXA ARFINDO PRATAMA</p>
                     <p>Jl. Raya Jemursari No.329-331,</p>
                     <p>Sidosermo, Kec. Wonocolo,</p>
                     <p>Surabaya, Jawa Timur (60297)</p>
                     <p>dexa-arfindopratama.com</p>
                     <br>
-                    <p style="font-size: 12px;">Kepada</p>
+                    <p style="font-size: 14px;">Kepada</p>
                     <p>{{ $do_mst->somst->customer->fc_memberlegalstatus }} {{ $do_mst->somst->customer->fc_membername1 }}</p>
-                    <p style="font-size: 12px;">Alamat Pengiriman</p>
+                    <p style="font-size: 14px;">Alamat Pengiriman</p>
                     <p>{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</p>
                 </div>
                 <div style="position: absolute; right: 0px; top: 30; text-align: left;" class="no-margin">
@@ -221,7 +223,7 @@
             <br><br>
             <br><br>
             <br>
-            <p style="font-size: 12px;">Pengiriman Barang</p>
+            <p>Pengiriman Barang</p>
             <table class="table-lg table-center" style="font-family: 'lucida-console-regular', sans-serif; margin-bottom: 15px; border-collapse: collapse; width: 100%;" border="1">
                 <tr>
                     <th>No</th>
@@ -250,7 +252,7 @@
                 @endif
             </table>
 
-            <br><br>
+            <br>
             <table style="width: 100%; margin: auto; dashed black; cellspacing=15 ">
                 <br>
                 <tr>
