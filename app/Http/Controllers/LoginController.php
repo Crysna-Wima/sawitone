@@ -19,28 +19,29 @@ use DB;
 
 class LoginController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         if (Auth::check()) {
             $userCount = User::all()->count();
-            $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count(); 
+            $soCount = SoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
             $poCount = PoMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
             $invCount = InvMaster::all()->where('fc_branch', auth()->user()->fc_branch)->count();
 
             $expiredDateCount = Invstore::with('stock')
-            ->where('t_invstore.fc_branch', auth()->user()->fc_branch)
-            ->whereDate('t_invstore.fd_expired', '<=', now())
-            ->count();
+                ->where('t_invstore.fc_branch', auth()->user()->fc_branch)
+                ->whereDate('t_invstore.fd_expired', '<=', now())
+                ->count();
 
             $subquery = DB::table('t_invstore')
                 ->select(DB::raw('SUM(fn_quantity)'))
                 ->where('fc_branch', auth()->user()->fc_branch);
 
             $maqCount = DB::table('t_invstore as a')
-            ->select('a.fc_stockcode', DB::raw('SUM(a.fn_quantity) as total_quantity'), 'b.fn_maxonhand')
-            ->leftJoin('t_stock as b', 'a.fc_stockcode', '=', 'b.fc_stockcode')
-            ->groupBy('a.fc_stockcode')
-            ->havingRaw('SUM(a.fn_quantity) > b.fn_maxonhand')
-            ->count();
+                ->select('a.fc_stockcode', DB::raw('SUM(a.fn_quantity) as total_quantity'), 'b.fn_maxonhand')
+                ->leftJoin('t_stock as b', 'a.fc_stockcode', '=', 'b.fc_stockcode')
+                ->groupBy('a.fc_stockcode')
+                ->havingRaw('SUM(a.fn_quantity) > b.fn_maxonhand')
+                ->count();
 
 
             $moqCount = DB::table('t_invstore as a')
@@ -49,13 +50,14 @@ class LoginController extends Controller
                 ->groupBy('a.fc_stockcode')
                 ->havingRaw('SUM(a.fn_quantity) < b.fn_reorderlevel')
                 ->count();
-            return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount','maqCount','moqCount','expiredDateCount'));
+            return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount', 'maqCount', 'moqCount', 'expiredDateCount'));
         }
-        
+
         return view('login.index');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $rules = [
             'username' => 'required',
             'password' => 'required'
@@ -68,7 +70,7 @@ class LoginController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return [
                 'status' => 300,
                 'message' => $validator->errors()->first()
@@ -76,17 +78,17 @@ class LoginController extends Controller
         }
 
         $user = User::where(['fc_username' => $request->username])->first();
-        if(!empty($user)){
+        if (!empty($user)) {
             if (Hash::check($request->password, $user->fc_password)) {
 
-                if($user->fl_hold == 'T'){
+                if ($user->fl_hold == 'T') {
                     return [
                         'status' => 300,
                         'message' => 'Akun anda saat ini sedang di hold silahkan hubungi admin untuk aktivasi'
                     ];
                 }
 
-                if($user->fd_expired != null && $user->fd_expired < Carbon::now()->format('Y-m-d')){
+                if ($user->fd_expired != null && $user->fd_expired < Carbon::now()->format('Y-m-d')) {
                     return [
                         'status' => 300,
                         'message' => 'Akun anda saat ini sudah expired'
@@ -103,7 +105,7 @@ class LoginController extends Controller
                 'message' => 'Anda berhasil login',
                 'link' => '/dashboard',
             ];
-        }else{
+        } else {
 
             return [
                 'status' => 300,
@@ -112,46 +114,46 @@ class LoginController extends Controller
         }
     }
 
-    public function change_password(){
+    public function change_password()
+    {
         return view('login.change-password');
     }
 
-    public function action_change_password(request $request){
+    public function action_change_password(request $request)
+    {
         $validator = Validator::make($request->all(), [
-			'old_password' => 'required',
-			'new_password' => 'required| min:6',
-			'retype_password' => 'required|same:new_password',
-		]);
+            'old_password' => 'required',
+            'new_password' => 'required| min:6',
+            'retype_password' => 'required|same:new_password',
+        ]);
 
-		if($validator->fails()) {
-			return [
-				'status' => 300,
-				'message' => $validator->errors()->first()
-			];
-		}
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
 
-		$user = User::where('id',Auth::user()->id)->first();
+        $user = Auth::user();
 
-		if (password_verify($request->old_password, $user['password'])) {
-			$user->password = hash::make($request->new_password);
-			$user->save();
+        if (password_verify($request->old_password, $user->fc_password)) {
+            $user->fc_password = Hash::make($request->new_password);
+            $user->save();
 
-			return [
-				'status' => 200,
-				'message' => 'Password berhasil diganti'
-			];
-
-		}else{
-			return [
-				'status' => 300,
-				'message' => 'Password lama anda salah, silahkan coba lagi'
-			];
-		}
-
-
+            return [
+                'status' => 200,
+                'message' => 'Password berhasil diganti'
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Password lama anda salah, silahkan coba lagi'
+            ];
+        }
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }
