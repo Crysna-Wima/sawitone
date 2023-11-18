@@ -33,12 +33,15 @@ class MasterUserController extends Controller
         return view('data-master.master-user.index', compact('roles'));
     }
 
-    public function detail($fc_username, $id){
+    public function detail($fc_userid,$fc_username, $id){
         if (is_null($this->user) || !$this->user->can('Master User')) {
             abort(403, 'Sorry !! You are Unauthorized to edit any admin !');
         }
        
-        $user = User::find($id)->with('customer')->where('fc_username', $fc_username)->first();
+        $user = User::find($id)->with('customer')
+        ->where('fc_userid', $fc_userid)
+        ->where('fc_username', $fc_username)->first();
+        
         $roles = ModelsRole::all();
 
         // user punya role apa sajakah?

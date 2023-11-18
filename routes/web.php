@@ -95,7 +95,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('master-user')->group(function () {
             Route::get('/', 'DataMaster\MasterUserController@index');
-            Route::get('/detail/{fc_username}/{id}', 'DataMaster\MasterUserController@detail');
+            Route::get('/detail/{fc_userid}/{fc_username}/{id}', 'DataMaster\MasterUserController@detail');
             Route::get('/datatables', 'DataMaster\MasterUserController@datatables');
             Route::post('/store-update', 'DataMaster\MasterUserController@store_update');
             Route::delete('/delete/{fc_username}', 'DataMaster\MasterUserController@delete');
