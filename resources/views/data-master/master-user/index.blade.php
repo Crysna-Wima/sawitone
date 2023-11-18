@@ -540,7 +540,7 @@
                 }
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
-                var url_edit = "/data-master/master-user/detail/" + data.fc_username + "/" + data.id;
+                var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
                 var url_delete = "/data-master/master-user/delete/" + data.fc_username;
 
                 $('td:eq(11)', row).html(`
