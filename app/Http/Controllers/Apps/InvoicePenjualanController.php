@@ -131,6 +131,65 @@ class InvoicePenjualanController extends Controller
         
     }
 
+    public function create_invoice_multisj(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_sono' => 'required',
+            'fc_membercode' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // ambil fc_dodetail in domaster
+        $fn_dodetail = DoMaster::where('fc_sono', $request->fc_sono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        if(empty($temp_inv_master)){
+            // create TempInvoiceMst
+         $create = TempInvoiceMst::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_suppdocno' => $request->fc_sono,
+            'fc_child_suppdocno' => $request->fc_dono,
+            'fc_entitycode' => $request->fc_membercode,
+            'fc_status' => 'I',
+            'fc_invtype' => 'SALES',
+            'fd_inv_releasedate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_releasedate)),
+            'fn_inv_agingday' => $request->fn_inv_agingday,
+            'fd_inv_agingdate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_agingdate)),
+            'fc_userid' => auth()->user()->fc_userid,
+            'fn_invdetail' => $fn_dodetail
+         ]);
+
+            if($create){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil disimpan',
+                    'link' => '/apps/invoice-penjualan/create/' . base64_encode( $request->fc_child_suppdocno)
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        // dd($request);
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data sudah ada'
+            ];
+        }
+
+        
+    }
+
     public function customer()
     {
         $data = Customer::with('member_tax_code', 'member_typebranch', 'member_type_business', 'member_legal_status')->get();

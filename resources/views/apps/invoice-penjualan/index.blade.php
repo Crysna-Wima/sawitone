@@ -145,7 +145,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="form_submit" action="#" method="POST" autocomplete="off">
+            <form id="form_submit" action="/apps/invoice-penjualan/create/store-invoice-multi-sj" method="POST" autocomplete="off">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-12">
@@ -173,6 +173,48 @@
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" onclick="click_modal_sj()" type="button"><i class="fa fa-search"></i></button>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Tanggal Terbit</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="fd_inv_releasedate" data-provide="datepicker" class="form-control" name="fd_inv_releasedate" required>
+                                    {{-- <input type="hidden" id="fc_suppdocno" class="form-control" value="{{ $do_mst->somst->fc_sono }}" name="fc_suppdocno" required>
+                                    <input type="hidden" id="fc_child_suppdocno" class="form-control" value="{{ $do_mst->fc_dono }}" name="fc_child_suppdocno" required>
+                                    <input type="hidden" id="fc_entitycode" class="form-control" value="{{ $do_mst->somst->customer->fc_membercode }}" name="fc_entitycode" required> --}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="form-group required">
+                                <label>Masa Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <input type="number" id="fn_inv_agingday" class="form-control" name="fn_inv_agingday" required>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            Hari
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Estimasi Jatuh Tempo</label>
+                                <div class="input-group" data-date-format="dd-mm-yyyy">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" id="fd_inv_agingdate" class="form-control" name="fd_inv_agingdate" readonly>
                                 </div>
                             </div>
                         </div>
@@ -265,6 +307,16 @@
             closeOnSelect: true
         });
     })
+
+    $('#fn_inv_agingday').on('input', function() {
+        var fd_inv_releasedate = $('#fd_inv_releasedate').val();
+        var fn_inv_agingday = parseInt($('#fn_inv_agingday').val());
+
+        if (moment(fd_inv_releasedate, 'MM/DD/YYYY').isValid()) {
+            var fd_inv_agingdate = moment(fd_inv_releasedate, 'MM/DD/YYYY').add(fn_inv_agingday, 'days').format('MM/DD/YYYY');
+            $('#fd_inv_agingdate').val(fd_inv_agingdate);
+        }
+    });
 
     function add_multi() {
         $('#modal_multi').modal('show');
@@ -551,8 +603,17 @@
                     selectedDonos.push(row.fc_dono);
                 });
 
-                $('#fc_dono').val(selectedDonos);
-                $('#modal_sj').modal('hide');
+                if (selectedDonos.length > 0) {
+                    $('#fc_dono').val(selectedDonos);
+                    $('#modal_sj').modal('hide');
+                } else {
+                    iziToast.warning({
+                        title: 'Warning',
+                        message: 'Pilih setidaknya satu Surat Jalan.',
+                        position: 'topRight',
+                        timeout: 3000, 
+                    });
+                }
     });
 </script>
 @endsection

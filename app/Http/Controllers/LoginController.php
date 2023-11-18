@@ -51,6 +51,7 @@ class LoginController extends Controller
                 ->havingRaw('SUM(a.fn_quantity) < b.fn_reorderlevel')
                 ->count();
             return view('dashboard.index', compact('userCount', 'soCount', 'poCount', 'invCount', 'maqCount', 'moqCount', 'expiredDateCount'));
+            // dd($userCount, $soCount, $poCount, $invCount,$maqCount,$moqCount,$expiredDateCount);
         }
 
         return view('login.index');
