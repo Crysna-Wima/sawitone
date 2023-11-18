@@ -98,7 +98,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/detail/{fc_userid}/{fc_username}/{id}', 'DataMaster\MasterUserController@detail');
             Route::get('/datatables', 'DataMaster\MasterUserController@datatables');
             Route::post('/store-update', 'DataMaster\MasterUserController@store_update');
-            Route::delete('/delete/{fc_username}', 'DataMaster\MasterUserController@delete');
+            Route::delete('/delete/{fc_userid}/{fc_username}/{id}', 'DataMaster\MasterUserController@delete');
 
             Route::get('/reset-password/{fc_username}', 'DataMaster\MasterUserController@reset_password');
             // Route::get('/add-menu/{id}','Settings\MasterUserController@add_menu');

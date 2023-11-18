@@ -540,8 +540,10 @@
                 }
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
-                var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
-                var url_delete = "/data-master/master-user/delete/" + data.fc_username;
+                var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username +
+                    "/" + data.id;
+                var url_delete = "/data-master/master-user/delete/" + data.fc_userid + "/" + data.fc_username +
+                    "/" + data.id;
 
                 $('td:eq(11)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
