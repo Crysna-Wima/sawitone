@@ -88,6 +88,7 @@ class MasterUserController extends Controller
         // dd($request);
         if(empty($request->type)){
             $validation_array['fc_password'] = 'required';
+            $validation_array['fc_userid'] = 'required|unique:t_user,fc_userid,NULL,fc_userid,deleted_at,NULL';
             $validation_array['fc_username'] = 'required|unique:t_user,fc_username,NULL,fc_username,deleted_at,NULL';
         }
 
@@ -117,13 +118,14 @@ class MasterUserController extends Controller
                     'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
                 ];
             }
-        }
 
-        if($request->type === 'update'){
-            $userAdmin = User::find($id);
-            $userAdmin->roles()->detach();
-            if ($request->roles) {
-                $userAdmin->assignRole($request->roles);
+            $cek_username = User::where('fc_username', $request->fc_username)->withTrashed()->count();
+
+            if ($cek_username > 0) {
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Insert gagal karena data username sudah ditemukan didalam sistem kami'
+                ];
             }
         }
 
@@ -138,21 +140,74 @@ class MasterUserController extends Controller
     
 
         $request->merge(['fc_password' => Hash::make($request->fc_password)]);
-        User::updateOrCreate([
-            'id' => $request->id,
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_userid' => $request->fc_userid,
-        ], $request->all());
 
-		return [
-			'status' => 200, // SUCCESS
-			'message' => 'Data berhasil disimpan'
-		];
+        // untuk update data user
+        if($request->type === 'update'){
+            $userAdmin = User::find($id);
+            $userAdmin->roles()->detach();
+            if ($request->roles) {
+                $userAdmin->assignRole($request->roles);
+            }
+
+            $dataToUpdate = $request->except(['id', 'type', 'roles']);
+
+            $cek_data = User::where([
+                ['fc_divisioncode', '=', $request->fc_divisioncode],
+                ['fc_branch', '=', $request->fc_branch],
+                ['fc_userid', '=', $request->fc_userid],
+                ['id', '!=', $id], // kecuali id yg sama
+            ])->withTrashed()->count();
+
+            $cek_username = User::where([
+                ['fc_username', '=', $request->fc_username],
+                ['id', '!=', $id], // kecuali id yg sama
+            ])->withTrashed()->count();
+
+            if ($cek_data > 0) {
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Update gagal karena data userid sudah ditemukan didalam sistem kami'
+                ];
+            }
+
+            if($cek_username > 0){
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Update gagal karena data username sudah ditemukan didalam sistem kami'
+                ];
+            }
+
+            $update = User::where('id', $id)->update($dataToUpdate);
+
+            if ($update) {
+                return [
+                    'status' => 200,
+                    'message' => 'Data berhasil diupdate'
+                ];
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Oops! Update gagal, terdapat kesalahan'
+                ];
+            }
+        }
+
+
+        // insert data user
+        User::create($request->except(['type','roles']));
+
+        return [
+            'status' => 200,
+            'message' => 'Data berhasil disimpan'
+        ];
+
     }
 
-    public function delete($fc_username){
-        User::where('fc_username', $fc_username)->delete();
+    public function delete($fc_userid, $fc_username, $id){
+        User::where('fc_username', $fc_username)
+        ->where('fc_userid', $fc_userid)
+        ->where('id', $id)
+        ->delete();
         return response()->json([
             'status' => 200,
             'message' => "Data berhasil dihapus"
