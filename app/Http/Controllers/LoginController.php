@@ -134,9 +134,11 @@ class LoginController extends Controller
             ];
         }
 
-        if (password_verify($request->old_password, Auth::user()->fc_password)) {
-            Auth::user()->fc_password = hash::make($request->new_password);
-            Auth::user()->save();
+        $user = Auth::user();
+
+        if (password_verify($request->old_password, $user->fc_password)) {
+            $user->fc_password = Hash::make($request->new_password);
+            $user->save();
 
             return [
                 'status' => 200,
