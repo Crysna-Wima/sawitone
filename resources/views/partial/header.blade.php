@@ -76,9 +76,10 @@
         <div class="dropdown-list-content dropdown-list-icons" style="overflow: hidden; outline: none;" tabindex="3">
           @foreach($notifList as $notif)
           @php
-          $status = $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'Belum dibaca' : 'Telah dibaca';
-          $icon = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'fa-book-open' : 'fa-check';
-          $bgColorClass = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first()->fd_watchingdate === null ? 'bg-warning text-white' : 'bg-success text-white';
+          $notifDetail = $notif->notifdtl->where('fc_userid', auth()->user()->fc_userid)->first();
+          $status = $notifDetail && $notifDetail->fd_watchingdate === null ? 'Belum dibaca' : 'Telah dibaca';
+          $icon = $notifDetail && $notifDetail->fd_watchingdate === null ? 'fa-book-open' : 'fa-check';
+          $bgColorClass = $notifDetail && $notifDetail->fd_watchingdate === null ? 'bg-warning text-white' : 'bg-success text-white';
           @endphp
           @if ($status == 'Belum dibaca')
           <a href="{{ $notif->fv_link }}" class="dropdown-item dropdown-item-unread" data-notificationCode="{{ $notif->fc_notificationcode }}">
