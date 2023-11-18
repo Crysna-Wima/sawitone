@@ -99,7 +99,7 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Password</label>
-                                    <input type="text" class="form-control required-field" name="fc_password"
+                                    <input type="password" class="form-control required-field" name="fc_password"
                                         id="fc_password" required>
                                 </div>
                             </div>
@@ -600,12 +600,13 @@
         function edit(url) {
             edit_action_custom(url, 'Edit Data User');
             $("#type").val('update');
-            $('#fc_branch').attr('disabled', true);
+            // $('#fc_branch').attr('disabled', true);
+            $('#fc_branch').prop('disabled', false);
         }
 
-        $('#form_submit').on('submit', function() {
-            $('#fc_branch').prop('disabled', false);
-        });
+        // $('#form_submit').on('submit', function() {
+        //     $('#fc_branch').prop('disabled', false);
+        // });
 
         $('.modal').css('overflow-y', 'auto');
 
