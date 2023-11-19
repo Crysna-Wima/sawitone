@@ -98,14 +98,16 @@
                                         id="fc_username" required>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            {{-- <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Password</label>
                                     <input type="text" class="form-control required-field" name="fc_password"
+                                        value={{ Auth::user()->fc_password }} id="fc_password" required>
+                                    <input type="password" class="form-control required-field" name="fc_password"
                                         id="fc_password" required>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            </div> --}}
+                            <div class="col-12 col-md-12 col-lg-12">
                                 <div class="form-group required">
                                     <label>Group User</label>
                                     <select class="form-control select2 required-field" name="fc_groupuser"
@@ -399,7 +401,7 @@
                         }
                         $("#fc_groupuser_add").empty();
                         $("#fc_groupuser_add").append(
-                        `<option value="" selected readonly> - Pilih - </option>`);
+                            `<option value="" selected readonly> - Pilih - </option>`);
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_groupuser_add").append(
                                 `<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
@@ -441,7 +443,7 @@
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membercode").append(
                                 `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`
-                                );
+                            );
                         }
                         $("#fc_membercode_add").empty();
                         $("#fc_membercode_add").append(
@@ -449,7 +451,7 @@
                         for (var i = 0; i < data.length; i++) {
                             $("#fc_membercode_add").append(
                                 `<option value="${data[i].fc_membercode}">${data[i].fc_membername1}</option>`
-                                );
+                            );
                         }
                         $("#fc_membercode_add").parent().show();
                         $("#fc_membercode").parent().show();
@@ -542,8 +544,10 @@
                 }
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
-                var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
-                var url_delete = "/data-master/master-user/delete/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
+                var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username +
+                    "/" + data.id;
+                var url_delete = "/data-master/master-user/delete/" + data.fc_userid + "/" + data.fc_username +
+                    "/" + data.id;
 
                 $('td:eq(11)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
@@ -604,12 +608,13 @@
         function edit(url) {
             edit_action_custom(url, 'Edit Data User');
             $("#type").val('update');
-            $('#fc_branch').attr('readonly', true);
+            // $('#fc_branch').attr('disabled', true);
+            $('#fc_branch').prop('disabled', false);
         }
 
-        $('#form_submit').on('submit', function() {
-            $('#fc_branch').prop('disabled', false);
-        });
+        // $('#form_submit').on('submit', function() {
+        //     $('#fc_branch').prop('disabled', false);
+        // });
 
         $('.modal').css('overflow-y', 'auto');
 
