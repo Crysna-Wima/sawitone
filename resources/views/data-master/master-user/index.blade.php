@@ -216,8 +216,10 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Username</label>
+                                    {{-- <input type="text" class="form-control required-field" name="fc_username"
+                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required> --}}
                                     <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required>
+                                        id="fc_username" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
