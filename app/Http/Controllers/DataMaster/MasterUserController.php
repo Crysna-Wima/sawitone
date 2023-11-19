@@ -174,7 +174,7 @@ class MasterUserController extends Controller
                 ];
             }
 
-            if ($cek_username > 0) {
+            if($cek_username > 0){
                 return [
                     'status' => 300,
                     'message' => 'Oops! Update gagal karena data username sudah ditemukan didalam sistem kami'
