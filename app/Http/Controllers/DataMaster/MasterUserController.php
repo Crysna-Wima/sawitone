@@ -91,7 +91,7 @@ class MasterUserController extends Controller
 
         // dd($request);
         if (empty($request->type)) {
-            $validation_array['fc_password'] = 'required';
+            // $validation_array['fc_password'] = 'required';
             $validation_array['fc_userid'] = 'required|unique:t_user,fc_userid,NULL,fc_userid,deleted_at,NULL';
             $validation_array['fc_username'] = 'required|unique:t_user,fc_username,NULL,fc_username,deleted_at,NULL';
         }
@@ -143,7 +143,7 @@ class MasterUserController extends Controller
         }
 
 
-        $request->merge(['fc_password' => Hash::make($request->fc_password)]);
+        // $request->merge(['fc_password' => Hash::make($request->fc_password)]);
 
         // untuk update data user
         if ($request->type === 'update') {
