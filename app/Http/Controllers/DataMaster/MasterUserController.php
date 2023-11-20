@@ -118,15 +118,6 @@ class MasterUserController extends Controller
                     'message' => 'Oops! Insert gagal karena data sudah ditemukan didalam sistem kami'
                 ];
             }
-
-            // $cek_username = User::where('fc_username', $request->fc_username)->withTrashed()->count();
-
-            // if ($cek_username > 0) {
-            //     return [
-            //         'status' => 300,
-            //         'message' => 'Oops! Insert gagal karena data username sudah ditemukan didalam sistem kami'
-            //     ];
-            // }
         }
 
         if ($request->hasFile('image_file')) {
@@ -158,22 +149,10 @@ class MasterUserController extends Controller
                 ['id', '!=', $id], // kecuali id yg sama
             ])->withTrashed()->count();
 
-            $cek_username = User::where([
-                ['fc_username', '=', $request->fc_username],
-                ['id', '!=', $id], // kecuali id yg sama
-            ])->withTrashed()->count();
-
             if ($cek_data > 0) {
                 return [
                     'status' => 300,
                     'message' => 'Oops! Update gagal karena data userid sudah ditemukan didalam sistem kami'
-                ];
-            }
-
-            if($cek_username > 0){
-                return [
-                    'status' => 300,
-                    'message' => 'Oops! Update gagal karena data username sudah ditemukan didalam sistem kami'
                 ];
             }
 

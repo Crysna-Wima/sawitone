@@ -275,7 +275,7 @@
                         <div class="form-group">
                             <label>Tanggal Approval</label>
                             <div class="input-group date">
-                                <input name="fd_approvaldate" id="fd_approvaldate_dtl" class="form-control" readonly>
+                                <input name="fd_userinput" id="fd_userinput_dtl" class="form-control" readonly>
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="fas fa-calendar"></i>
@@ -582,7 +582,7 @@
 
                     $('#fc_approvalno_dtl').val(data.fc_approvalno);
                     $('#fd_accessorrespon_dtl').val(data.fd_accessorrespon);
-                    $('#fd_approvaldate_dtl').val(data.fd_approvaldate);
+                    $('#fd_userinput_dtl').val(data.fd_userinput);
                     $('#fc_accessorid_dtl').val(data.fc_accessorid);
 
                     $('#fc_docno_input').val(data.fc_docno);
