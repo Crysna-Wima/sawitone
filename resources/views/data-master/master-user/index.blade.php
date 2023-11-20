@@ -601,7 +601,6 @@
         function edit(url) {
             edit_action_custom(url, 'Edit Data User');
             $("#type").val('update');
-<
             $('#fc_branch').attr('readonly', true);
         }
 
