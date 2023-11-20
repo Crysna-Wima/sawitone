@@ -67,6 +67,8 @@
                     <input type="text" name="type" id="type" hidden>
                     <div class="modal-body">
                         <div class="row">
+                        <input type="text" class="form-control" name="fc_userid" id="fc_userid_edit" hidden>
+                        <input type="text" class="form-control" name="fc_branch" id="fc_branch_edit" hidden>
                             <div class="col-12 col-md-12 col-lg-12" hidden>
                                 <div class="form-group">
                                     <label>Division Code</label>
@@ -92,10 +94,8 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Username</label>
-                                    {{-- <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required> --}}
                                     <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" required>
+                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -218,10 +218,8 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Username</label>
-                                    {{-- <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required> --}}
                                     <input type="text" class="form-control required-field" name="fc_username"
-                                        id="fc_username" required>
+                                        id="fc_username" onkeyup="return onkeyupLowercase(this.id)" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -543,7 +541,7 @@
 
                 var url_reset_password = "/data-master/master-user/reset-password/" + data.fc_username;
                 var url_edit = "/data-master/master-user/detail/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
-                var url_delete = "/data-master/master-user/delete/" + data.fc_userid + "/" + data.fc_username + "/" + data.id;
+                var url_delete = "/data-master/master-user/delete/" + data.fc_username;
 
                 $('td:eq(11)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
@@ -604,12 +602,13 @@
         function edit(url) {
             edit_action_custom(url, 'Edit Data User');
             $("#type").val('update');
-            $('#fc_branch').attr('readonly', true);
+            $('#fc_branch').attr('disabled', true);
+            $('#fc_userid').attr('disabled', true);
         }
 
-        $('#form_submit').on('submit', function() {
-            $('#fc_branch').prop('disabled', false);
-        });
+        // $('#form_submit').on('submit', function() {
+        //     $('#fc_branch').prop('disabled', false);
+        // });
 
         $('.modal').css('overflow-y', 'auto');
 
@@ -666,6 +665,8 @@
 
                     // menambahkan input hidden id user
                     $('#id_user').val(user.id);
+                    $('#fc_branch_edit').val(user.fc_branch);
+                    $('#fc_userid_edit').val(user.fc_userid);
                     setTimeout(function() {
                         $('#modal_loading').modal('hide');
                     }, 600);
