@@ -174,8 +174,8 @@
                                             <th scope="col" class="text-center">Bonus DO</th>
                                             <th scope="col" class="text-center">Catatan</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                                    <th scope="col" class="text-center">Disc.(Rp)</th>
-                                                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                                        <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                                                                        <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                         </tr>
                                     </thead>
@@ -208,8 +208,8 @@
                                             <th scope="col" class="text-center">CAT</th>
                                             <th scope="col" class="text-center">Exp.</th>
                                             <!-- <th scope="col" class="text-center">Harga</th>
-                                                                                                    <th scope="col" class="text-center">Disc.</th>
-                                                                                                    <th scope="col" class="text-center">Total</th> -->
+                                                                                                        <th scope="col" class="text-center">Disc.</th>
+                                                                                                        <th scope="col" class="text-center">Total</th> -->
                                             <th scope="col" class="text-center">Approval</th>
                                             <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                         </tr>
@@ -1021,7 +1021,6 @@
             stock_inventory_table.DataTable().ajax.reload();
         });
 
-        }
 
         function select_stock(fc_barcode, fc_stockcode) {
             let stock_name = 'input[name="pname[]'
