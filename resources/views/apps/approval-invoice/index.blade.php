@@ -534,7 +534,7 @@
                 setTimeout(function() {}, 500);
 
                 if (response.status == 200) {
-                    console.log(data);
+                    // console.log(data);
                     $('#fc_approvalno_cancel').val(data.fc_approvalno);
                     $('#fc_applicantid').val(data.fc_applicantid);
 
