@@ -22,6 +22,7 @@ use App\Models\DoDetail;
 use App\Models\DoMaster;
 use App\Models\Warehouse;
 use App\Models\Stock;
+use App\Models\TempDoMaster;
 use Yajra\DataTables\DataTables;
 
 class DeliveryOrderController extends Controller
@@ -157,7 +158,7 @@ class DeliveryOrderController extends Controller
         // decode fc_stockcode
         $decode_fc_stockcode = base64_decode($fc_stockcode);
         // get data from Invstore
-        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+        $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
             ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')
         ->where('fc_stockcode', $decode_fc_stockcode)
@@ -235,7 +236,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+        $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
         ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
 
         //CHECK DATA STOCK
