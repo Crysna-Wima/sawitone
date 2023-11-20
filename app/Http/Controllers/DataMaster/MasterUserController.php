@@ -93,7 +93,7 @@ class MasterUserController extends Controller
         if (empty($request->type)) {
             // $validation_array['fc_password'] = 'required';
             $validation_array['fc_userid'] = 'required|unique:t_user,fc_userid,NULL,fc_userid,deleted_at,NULL';
-            $validation_array['fc_username'] = 'required|unique:t_user,fc_username,NULL,fc_username,deleted_at,NULL';
+            $validation_array['fc_username'] = 'required';
         }
 
         if ($request->hasFile('image_file')) {
@@ -123,14 +123,14 @@ class MasterUserController extends Controller
                 ];
             }
 
-            $cek_username = User::where('fc_username', $request->fc_username)->withTrashed()->count();
+            // $cek_username = User::where('fc_username', $request->fc_username)->withTrashed()->count();
 
-            if ($cek_username > 0) {
-                return [
-                    'status' => 300,
-                    'message' => 'Oops! Insert gagal karena data username sudah ditemukan didalam sistem kami'
-                ];
-            }
+            // if ($cek_username > 0) {
+            //     return [
+            //         'status' => 300,
+            //         'message' => 'Oops! Insert gagal karena data username sudah ditemukan didalam sistem kami'
+            //     ];
+            // }
         }
 
         if ($request->hasFile('image_file')) {
