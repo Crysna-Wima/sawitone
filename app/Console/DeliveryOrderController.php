@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers\Apps;
 
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Helpers\NoDocument;
+use DB;
+use PDF;
+use File;
+use Carbon\Carbon;
+use App\Models\Stock;
 use App\Helpers\Convert;
 
-use PDF;
-use Carbon\Carbon;
-use File;
-use DB;
-
-use App\Models\SoMaster;
-use App\Models\SoDetail;
-use App\Models\TempSoPay;
-use App\Models\Invstore;
 use App\Models\DoDetail;
 use App\Models\DoMaster;
+use App\Models\Invstore;
+use App\Models\SoDetail;
+
+use App\Models\SoMaster;
+use App\Models\TempSoPay;
 use App\Models\Warehouse;
-use App\Models\Stock;
+use App\Helpers\NoDocument;
+use App\Models\TempDoDetail;
 use App\Models\TempDoMaster;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class DeliveryOrderController extends Controller
 {
@@ -31,7 +32,7 @@ class DeliveryOrderController extends Controller
     public function index()
     {
         // cari di domst yang userid nya sama dengan userid yang login
-        $do_master = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        $do_master = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika $do_master tidak kosong return ke route create_do
         if (!empty($do_master)) {
             return redirect()->route('create_do');
@@ -93,8 +94,8 @@ class DeliveryOrderController extends Controller
         // dd($so_master->fc_salescode);
 
         // cek apakah Do sudah ada apa belum berdasarkan dono dari userid yang login
-        $do_master = DoMaster::where('fc_dono', $request->fc_dono)->first();
-        if (!empty($do_master)) {
+        $temp_do_master = TempDoMaster::where('fc_dono', $request->fc_dono)->first();
+        if (!empty($temp_do_master)) {
             return response()->json(
                 [
                     'status' => 200,
@@ -105,7 +106,7 @@ class DeliveryOrderController extends Controller
 
         // dd($so_master);
 
-        $create_do_master = DoMaster::create([
+        $create_temp_do_master = TempDoMaster::create([
             'fc_divisioncode' => $request->fc_divisioncode,
             'fc_branch' => $request->fc_branch,
             'fc_sono' => $request->fc_sono,
@@ -121,7 +122,7 @@ class DeliveryOrderController extends Controller
         ]);
 
         // // jika validasi sukses dan $do_master berhasil response 200
-        if ($create_do_master) {
+        if ($create_temp_do_master) {
             return response()->json(
                 [
                     'status' => 200,
@@ -140,12 +141,12 @@ class DeliveryOrderController extends Controller
 
     public function create()
     {
-        $domst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $fc_sono_domst = $domst->fc_sono;
+        $temp_domst = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $fc_sono_domst = $temp_domst->fc_sono;
         $data['data'] = SoMaster::with('branch', 'member_tax_code', 'sales', 'customer.member_type_business', 'customer.member_typebranch', 'customer.member_legal_status', 'domst')
             ->where('fc_sono', $fc_sono_domst)
             ->first();
-        $data['domst'] = $domst;
+        $data['domst'] = $temp_domst;
         return view('apps.delivery-order.do', $data);
         // dd($data);
     }
@@ -164,7 +165,7 @@ class DeliveryOrderController extends Controller
         // decode fc_stockcode
         $decode_fc_stockcode = base64_decode($fc_stockcode);
         // get data from Invstore
-        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+        $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
             ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')
             ->where('fc_stockcode', $decode_fc_stockcode)
@@ -180,7 +181,7 @@ class DeliveryOrderController extends Controller
     public function datatables_so_detail($fc_sono)
     {
         $decode_fc_sono = base64_decode($fc_sono);
-        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.domst')->where('fc_sono', $decode_fc_sono)->get();
+        $data = SoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'somst.tempdomst')->where('fc_sono', $decode_fc_sono)->get();
 
         return DataTables::of($data)
             ->addColumn('total_harga', function ($item) {
@@ -246,11 +247,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-<<<<<<< HEAD
-        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
-=======
         $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
->>>>>>> f3fc8de9f3d43fd9c7fd2cfea392823d2c337c5a
             ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
 
         //CHECK DATA STOCK
@@ -303,7 +300,7 @@ class DeliveryOrderController extends Controller
 
         // // //INSERT DoDetail dari data stock
         if ($request->quantity) {
-            $do_dtl = DoDetail::create([
+            $do_dtl = TempDoDetail::create([
                 'fc_divisioncode' => auth()->user()->fc_divisioncode,
                 'fc_branch' => auth()->user()->fc_branch,
                 'fc_dono' => auth()->user()->fc_userid,
@@ -318,7 +315,7 @@ class DeliveryOrderController extends Controller
                 'fn_disc' => $data_stock_sodtl->fm_so_disc,
             ]);
         } else {
-            $do_dtl = DoDetail::create([
+            $do_dtl = TempDoDetail::create([
                 'fc_divisioncode' => $data_stock->fc_divisioncode,
                 'fc_branch' => $data_stock->fc_branch,
                 'fc_dono' => auth()->user()->fc_userid,
@@ -351,7 +348,7 @@ class DeliveryOrderController extends Controller
     // datatable deliver item
     public function datatables_do_detail()
     {
-        $data = DoDetail::with('invstore.stock', 'domst')->where('fc_dono', auth()->user()->fc_userid)->get();
+        $data = TempDoDetail::with('invstore.stock', 'domst')->where('fc_dono', auth()->user()->fc_userid)->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -376,10 +373,10 @@ class DeliveryOrderController extends Controller
         }
 
         // jumlah DoDetail
-        $count_do_detail = DoDetail::where('fc_barcode', $fc_barcode)->where('fc_branch', auth()->user()->fc_branch)->count();
+        $count_do_detail = TempDoDetail::where('fc_barcode', $fc_barcode)->where('fc_branch', auth()->user()->fc_branch)->count();
 
         // hapus
-        $hapus_item = DoDetail::where(
+        $hapus_item = TempDoDetail::where(
             [
                 'fc_barcode' => $fc_barcode,
                 'fn_rownum' => $fn_rownum
@@ -439,7 +436,7 @@ class DeliveryOrderController extends Controller
 
         $request->merge(['fm_servpay' => Convert::convert_to_double($request->fm_servpay)]);
         $fd_dodate = date('Y-m-d H:i:s', strtotime($request->fd_dodate));
-        $update_transport = DoMaster::where('fc_dono', auth()->user()->fc_userid)
+        $update_transport = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
             ->update([
                 'fc_sotransport' => $request->fc_sotransport,
                 'fc_transporter' => $request->fc_transporter,
@@ -471,8 +468,8 @@ class DeliveryOrderController extends Controller
         DB::beginTransaction();
 
         try {
-            DoDetail::where('fc_dono', auth()->user()->fc_userid)->delete();
-            DoMaster::where('fc_dono', auth()->user()->fc_userid)->delete();
+            TempDoDetail::where('fc_dono', auth()->user()->fc_userid)->delete();
+            TempDoMaster::where('fc_dono', auth()->user()->fc_userid)->delete();
 
             DB::commit();
 
@@ -512,8 +509,8 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        $do_dtl = DoDetail::where('fc_dono', auth()->user()->fc_userid)->get();
-        $do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
+        $do_dtl = TempDoDetail::where('fc_dono', auth()->user()->fc_userid)->get();
+        $do_mst = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)->first();
         // jika fd_dodate,fc_sotransport,fc_transporter,fc_memberaddress_loading, fm_servpay di domst masih kosong
         if ($do_mst->fd_dodate == null || $do_mst->fc_sotransport == null || $do_mst->fc_transporter == null || $do_mst->fc_memberaddress_loading == null || $do_mst->fm_servpay === null) {
             return [
@@ -531,23 +528,36 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        // update
-        $update_do_mst = DoMaster::where('fc_dono', auth()->user()->fc_userid)
-            ->update([
-                'fc_sostatus' => $request->fc_sostatus,
-                'fc_dostatus' => $request->fc_dostatus,
-                'fd_dodatesysinput' => $request->fd_dodatesysinput,
-            ]);
+        //DB Transaction Submit
+        DB::beginTransaction();
 
+        try {
+            // update
+            TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
+                ->update([
+                    'fc_sostatus' => $request->fc_sostatus,
+                    'fc_dostatus' => $request->fc_dostatus,
+                    'fd_dodatesysinput' => $request->fd_dodatesysinput,
+                ]);
 
-        // jika $update_do bisa
-        if ($update_do_mst) {
+            TempDoDetail::where('fc_dono', auth()->user()->fc_userid)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->delete();
+
+            TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->delete();
+
+            DB::commit();
+
             return [
                 'status' => 201,
                 'link' => '/apps/delivery-order/',
                 'message' => 'Data berhasil disubmit'
             ];
-        } else {
+        } catch (\Exception $e) {
+            DB::rollback();
+
             return [
                 'status' => 300,
                 'message' => 'Data gagal disubmit'
@@ -557,7 +567,7 @@ class DeliveryOrderController extends Controller
 
     public function approve()
     {
-        $isApproved = DoDetail::where('fc_dono', auth()->user()->fc_userid)
+        $isApproved = TempDoDetail::where('fc_dono', auth()->user()->fc_userid)
             ->where('fc_approval', 'T')
             ->exists();
 
