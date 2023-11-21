@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-deploy_production:
+deploy_development:
   stage: deploy
   script:
     - git checkout development
