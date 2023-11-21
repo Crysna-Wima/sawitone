@@ -8,5 +8,9 @@ deploy_production:
     - git pull origin development
     - rm -r /var/www/staging-dexa-web/*
     - cp -r * /var/www/staging-dexa-web/
+    - cd /var/www/staging-dexa-web/
+    - composer install
+    - php artisan storage:link
+    - chmod 777 -R /var/www/staging-dexa-web/storage/
   tags:
     - development
