@@ -251,6 +251,14 @@
                                 <label>Expired Date</label>
                                 <input type="text" class="form-control datepicker" name="fd_expired" id="fd_expired">
                             </div>
+                            <div class="form-group">
+                                <label for="password">Assign Roles</label>
+                                <select name="roles[]" id="add_roles" class="form-control select2" multiple>
+
+                                    <option value=""></option>
+
+                                </select>
+                            </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
@@ -309,6 +317,7 @@
         $("#modal_add").modal('show');
         $(".modal-title").text('Tambah User');
         $("#form_submit")[0].reset();
+        add_user();
     }
 
     function get_data_branch() {
@@ -604,6 +613,38 @@
     // });
 
     $('.modal').css('overflow-y', 'auto');
+
+    function add_user() {
+        $("#modal_add").modal('show');
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: '/data-master/master-user/get-role',
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                var roles = response.roles;
+
+                var rolesSelect = $('#add_roles');
+                rolesSelect.empty(); // Clear existing options
+                $.each(roles, function(index, role) {
+                    rolesSelect.append('<option value="' + role.id + '">' + role
+                        .name + '</option>');
+                });
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
+                    icon: 'error'
+                });
+            }
+        });
+    }
 
     function edit_action_custom(url, modal_text) {
         save_method = 'edit';
