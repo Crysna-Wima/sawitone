@@ -99,6 +99,12 @@
                                 <input type="text" class="form-control required-field" name="fc_salescode" id="fc_salescode" value="fc_salescode" readonly>
                             </div>
                         </div>
+                        <div class="col-12 col-md-6 col-lg-12">
+                            <div class="form-group required">
+                                <label>Area</label>
+                                <select class="form-control select2" name="fc_area" id="fc_area" required></select>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group required">
                                 <label>Nama Sales 1</label>
@@ -239,6 +245,7 @@
         get_data_sales_type();
         get_data_sales_level();
         get_data_sales_bank();
+        get_data_area()
     });
 
     function get_data_branch() {
@@ -333,6 +340,42 @@
                     $("#fn_saleslevel").append(`<option value="" selected readonly> - Pilih - </option>`);
                     for (var i = 0; i < data.length; i++) {
                         $("#fn_saleslevel").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
+                    }
+                } else {
+                    iziToast.error({
+                        title: 'Error!',
+                        message: response.message,
+                        position: 'topRight'
+                    });
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + errorThrown + ")", {
+                    icon: 'error',
+                });
+            }
+        });
+    }
+
+    function get_data_area() {
+        $("#modal_loading").modal('show');
+        $.ajax({
+            url: "/master/get-data-where-field-id-get/TransaksiType/fc_trx/DIVISIONCODE",
+            type: "GET",
+            dataType: "JSON",
+            success: function(response) {
+                setTimeout(function() {
+                    $('#modal_loading').modal('hide');
+                }, 500);
+                if (response.status === 200) {
+                    var data = response.data;
+                    $("#fc_area").empty();
+                    $("#fc_area").append(`<option value="" selected readonly> - Pilih - </option>`);
+                    for (var i = 0; i < data.length; i++) {
+                        $("#fc_area").append(`<option value="${data[i].fc_kode}">${data[i].fv_description}</option>`);
                     }
                 } else {
                     iziToast.error({
