@@ -6,6 +6,6 @@ deploy_production:
   script:
     - git checkout development
     - git pull origin development
-    - cp * /var/www/staging-dexa-web/
+    - cp -r * /var/www/staging-dexa-web/
   tags:
     - development
