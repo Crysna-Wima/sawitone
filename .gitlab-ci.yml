@@ -4,6 +4,7 @@ stages:
 deploy_production:
   stage: deploy
   script:
+    - git checkout development
     - git pull origin development
   tags:
     - development
