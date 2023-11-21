@@ -1,0 +1,9 @@
+stages:
+  - deploy
+
+deploy_production:
+  stage: deploy
+  script:
+    - git pull
+  tags:
+    - development
