@@ -165,8 +165,8 @@
                                         <th scope="col" class="text-center">Bonus DO</th>
                                         <th scope="col" class="text-center">Catatan</th>
                                         <!-- <th scope="col" class="text-center">Harga</th>
-                                                                <th scope="col" class="text-center">Disc.(Rp)</th>
-                                                                <th scope="col" class="text-center">Total</th> -->
+                                                                                                    <th scope="col" class="text-center">Disc.(Rp)</th>
+                                                                                                    <th scope="col" class="text-center">Total</th> -->
                                         <th scope="col" class="text-center" style="width: 10%">Actions</th>
                                     </tr>
                                 </thead>
@@ -199,8 +199,8 @@
                                         <th scope="col" class="text-center">CAT</th>
                                         <th scope="col" class="text-center">Exp.</th>
                                         <!-- <th scope="col" class="text-center">Harga</th>
-                                                                <th scope="col" class="text-center">Disc.</th>
-                                                                <th scope="col" class="text-center">Total</th> -->
+                                                                                                                                <th scope="col" class="text-center">Disc.</th>
+                                                                                                                                <th scope="col" class="text-center">Total</th> -->
                                         <th scope="col" class="text-center">Approval</th>
                                         <th scope="col" class="text-center" style="width: 20%">Actions</th>
                                     </tr>
@@ -300,15 +300,16 @@
         </div>
         <div class="col-12 col-md-12 col-lg-6 place_detail">
             <div class="card" id="card_calculation">
-                <div class="card-header">
-                    <h4>Calculation</h4>
-                </div>
-                <div class="card-body" style="height: 190px">
+                <div class="card-body">
                     <div class="d-flex">
                         <div class="flex-row-item" style="margin-right: 30px">
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
+                            </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Item</p>
-                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0,00</p>
+                                <p class="text-success flex-row-item text-right" style="font-size: medium" id="fn_dodetail">0</p>
                             </div>
                             <div class="d-flex">
                                 <p class="flex-row-item"></p>
@@ -328,6 +329,10 @@
                             </div>
                         </div>
                         <div class="flex-row-item">
+                            <div class="d-flex">
+                                <p class="flex-row-item"></p>
+                                <p class="flex-row-item text-right"></p>
+                            </div>
                             <div class="d-flex" style="gap: 5px; white-space: pre">
                                 <p class="text-secondary flex-row-item" style="font-size: medium">Pelayanan</p>
                                 <p class="text-success flex-row-item text-right" style="font-size: medium" id="fm_servpay_calculate">0,00</p>
@@ -451,7 +456,7 @@
         stock_inventory_table.DataTable({
             "processing": true,
             "serverSide": true,
-            "pageLength" : 5,
+            "pageLength": 5,
             "ordering": false,
             "ajax": {
                 "url": '/apps/delivery-order/datatables-stock-inventory/' + encode_fc_stockcode,
@@ -506,7 +511,7 @@
                                     break;
                                 }
                             }
-                            
+
                             if (qty >= data.fn_quantity) {
                                 return `<input type="number" id="bonus_quantity_cart_stock_${barcodeEncode}" min="0" class="form-control" value="${data.fn_quantity}">`;
                             } else {
@@ -517,7 +522,8 @@
                         } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                        index].fn_do_qty;
                                     break;
                                 }
                             }
@@ -545,7 +551,8 @@
                             // looping data stock.sodtl[index].fn_so_qty
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[index].fn_do_bonusqty;
+                                    qty = data.stock.sodtl[index].fn_so_bonusqty - data.stock.sodtl[
+                                        index].fn_do_bonusqty;
                                     break;
                                 }
                             }
@@ -564,7 +571,8 @@
                         } else {
                             for (let index = 0; index < data.stock.sodtl.length; index++) {
                                 if (data.stock.sodtl[index].fc_sono === '{{ $data->fc_sono }}') {
-                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[index].fn_do_qty;
+                                    var qty = data.stock.sodtl[index].fn_so_qty - data.stock.sodtl[
+                                        index].fn_do_qty;
                                     break;
                                 }
                             }
@@ -572,10 +580,10 @@
                             // console.log("qty"+qty);
 
                             if (qty == 0) {
-                                    return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
-                                } else {
-                                    return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
-                                }
+                                return `<button type="button" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>`;
+                            } else {
+                                return `<button type="button" class="btn btn-primary" onclick="select_stock('${data.fc_barcode}','${data.fc_stockcode}')">Select</button>`;
+                            }
                         }
 
                     }
@@ -583,7 +591,7 @@
             ],
             "columnDefs": [{
                     "className": "text-center",
-                    "targets": [0, 3, 4, 5 , 8]
+                    "targets": [0, 3, 4, 5, 8]
                 },
                 {
                     className: 'text-nowrap',
@@ -738,7 +746,7 @@
 
         ],
         rowCallback: function(row, data) {
-            if (data.somst.domst.fc_dostatus == 'D' && data.somst.domst.fc_sostatus == 'P') {
+            if (data.somst.tempdomst.fc_dostatus == 'D' && data.somst.tempdomst.fc_sostatus == 'P') {
                 // kosong
                 $('td:eq(9)', row).html(``);
             } else {
@@ -759,17 +767,17 @@
         },
         footerCallback: function(row, data, start, end, display) {
 
-            // jika data[0].somst.domst.fc_sotransport tidak kosong
-            if (data[0].somst.domst.fc_sotransport) {
-                $("#fc_sotransport").val(data[0].somst.domst.fc_sotransport);
+            // jika data[0].somst.tempdomst.fc_sotransport tidak kosong
+            if (data[0].somst.tempdomst.fc_sotransport) {
+                $("#fc_sotransport").val(data[0].somst.tempdomst.fc_sotransport);
             } else if (data[0].somst.fc_sotransport) {
                 $("#fc_sotransport").val(data[0].somst.fc_sotransport);
             } else {
                 $("#fc_sotransport").val('');
             }
 
-            if (data[0].somst.domst.fc_memberaddress_loading !== "") {
-                $("#fc_memberaddress_loading").val(data[0].somst.domst.fc_memberaddress_loading);
+            if (data[0].somst.tempdomst.fc_memberaddress_loading !== "") {
+                $("#fc_memberaddress_loading").val(data[0].somst.tempdomst.fc_memberaddress_loading);
             } else {
                 $("#fc_memberaddress_loading").val(data[0].somst.fc_memberaddress_loading1);
             }
@@ -791,7 +799,7 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 3, 4, 5, 6, 7, 8, 9,10]
+                targets: [0, 3, 4, 5, 6, 7, 8, 9, 10]
             },
             {
                 className: 'text-nowrap',
@@ -1046,9 +1054,9 @@
                     });
                 }
             });
-    } 
+    }
 
-    function cek_submit(){
+    function cek_submit() {
         $("#modal_loading").modal('show');
         $.ajax({
             url: '/apps/delivery-order/need-approve',
@@ -1076,7 +1084,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 setTimeout(function() {
-                        $('#modal_loading').modal('hide');
+                    $('#modal_loading').modal('hide');
                 }, 500);
                 swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
                     icon: 'error',
@@ -1117,7 +1125,7 @@
                                     position: 'topRight'
                                 });
                                 window.location.href = response.link;
-                            }else {
+                            } else {
                                 swal(response.message, {
                                     icon: 'error',
                                 });
@@ -1177,6 +1185,5 @@
             }
         });
     }
-
 </script>
 @endsection

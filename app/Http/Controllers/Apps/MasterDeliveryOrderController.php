@@ -2,25 +2,29 @@
 
 namespace App\Http\Controllers\Apps;
 
-use App\Exports\SuratJalanExport;
-use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Helpers\NoDocument;
-use App\Helpers\Convert;
-
-use PDF;
-use Carbon\Carbon;
-use File;
 use DB;
+use PDF;
+use auth;
+use File;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Helpers\Convert;
 
 use App\Models\DoDetail;
 use App\Models\DoMaster;
-use App\Models\InvMaster;
 use App\Models\Invstore;
-use App\Models\User;
+use App\Models\InvMaster;
+
+use App\Helpers\NoDocument;
+use App\Models\TempDoDetail;
+use App\Models\TempDoMaster;
+use Illuminate\Http\Request;
+use App\Exports\SuratJalanExport;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables as DataTables;
 
 class MasterDeliveryOrderController extends Controller
@@ -28,7 +32,7 @@ class MasterDeliveryOrderController extends Controller
 
     public function index()
     {
-        $data['do_mst'] = DoMaster::with('somst.customer')->first();
+        $data['do_mst'] = TempDoMaster::with('somst.customer')->first();
 
         return view('apps.master-delivery-order.index', $data);
     }
@@ -39,8 +43,8 @@ class MasterDeliveryOrderController extends Controller
         // kalau decode pakai base64_decode
         $encoded_fc_dono = base64_decode($fc_dono);
         session(['fc_dono_global' => $encoded_fc_dono]);
-        $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+        $data['do_mst'] = TempDoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $data['do_dtl'] = TempDoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
         return view('apps.master-delivery-order.detail', $data);
         // dd($data);
     }
@@ -60,7 +64,7 @@ class MasterDeliveryOrderController extends Controller
 
         $decoded_dono = base64_decode($request->fc_dono);
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', $decoded_dono)
+        $do_mst = TempDoMaster::where('fc_dono', $decoded_dono)
             ->update([
                 'fc_dostatus' => $request->fc_dostatus,
             ]);
@@ -99,8 +103,8 @@ class MasterDeliveryOrderController extends Controller
         // Transaction update data fc_dostatus in DoMaster dan DODTL
         DB::beginTransaction();
         try {
-            DoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
-            DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
+            TempDoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
+            TempDoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
             DB::commit();
 
             return [
@@ -127,7 +131,7 @@ class MasterDeliveryOrderController extends Controller
                 ->whereIn('fc_dostatus', ['D', 'P', 'CC', 'L', 'R'])
                 ->get();
         } elseif ($fc_dostatus == "APR") {
-            $data = DoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
+            $data = TempDoMaster::with('somst.customer')->where('fc_branch', auth()->user()->fc_branch)
                 ->whereIn('fc_dostatus', ['NA', 'AC', 'RJ'])
                 ->get();
         } else {
@@ -143,7 +147,9 @@ class MasterDeliveryOrderController extends Controller
     public function datatables_do_detail($fc_dono)
     {
         $decode_dono = base64_decode($fc_dono);
-        $data = DoDetail::with('domst', 'invstore.stock')->where('fc_branch', auth()->user()->fc_branch)->where('fc_dono', $decode_dono)->get();
+        $data = TempDoDetail::with('domst', 'invstore.stock')->where('fc_branch', auth()->user()->fc_branch)
+            ->where('fc_dono', $decode_dono)
+            ->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -159,12 +165,17 @@ class MasterDeliveryOrderController extends Controller
         return response()->json($data);
     }
 
-    public function datatables_invstore($fc_stockcode, $fc_warehousecode)
+    public function datatables_invstore($fc_stockcode, $fc_warehousecode, $fc_barcode)
     {
         $data = Invstore::with('stock')
             ->where('fc_stockcode', $fc_stockcode)
+            ->where('fn_quantity', '>', 0)
             ->where('fc_warehousecode', $fc_warehousecode)
             ->where('fc_branch', auth()->user()->fc_branch)
+            ->orWhere(function (Builder $query) use ($fc_barcode, $fc_warehousecode) {
+                $query->where('fc_barcode', $fc_barcode)
+                    ->where('fc_warehousecode', $fc_warehousecode);
+            })
             ->get();
 
         return DataTables::of($data)
@@ -261,12 +272,12 @@ class MasterDeliveryOrderController extends Controller
         $data['nama_pj'] = $nama_pj;
         $data['user'] = User::where('fc_userid', $nama_pj)->where('fc_branch', auth()->user()->fc_branch)->first();
         $pdf = PDF::loadView('pdf.surat-jalan', $data)
-        ->setPaper('a4')
-        ->setOption([
-            'fontDir' => storage_path('fonts/'),
-            'font_cache' => storage_path('fonts/')
-        ]);
-        
+            ->setPaper('a4')
+            ->setOption([
+                'fontDir' => storage_path('fonts/'),
+                'font_cache' => storage_path('fonts/')
+            ]);
+
         return $pdf->stream();
     }
 
@@ -381,7 +392,7 @@ class MasterDeliveryOrderController extends Controller
         }
 
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)
+        $do_mst = TempDoMaster::where('fc_dono', $request->fc_dono)
             ->update([
                 'fc_dostatus' => $request->fc_dostatus,
                 'fv_description' => $request->fv_description,
@@ -420,7 +431,7 @@ class MasterDeliveryOrderController extends Controller
         }
 
         // update data fc_dostatus in DoMaster
-        $do_mst = DoMaster::where('fc_dono', $request->fc_dono)
+        $do_mst = TempDoMaster::where('fc_dono', $request->fc_dono)
             ->update([
                 'fc_dostatus' => $request->fc_dostatus,
             ]);

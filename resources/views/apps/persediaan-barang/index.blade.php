@@ -64,8 +64,6 @@
                                     <button type="submit" class="btn btn-info"><i class="fas fa-file-export"></i> Export Kartu Stock</button>
                                 </div>
                             </form> --}}
-                        <a href="/apps/konversi-stock" class="btn btn-primary mr-2">Konversi Stock</a>
-                        <a href="/apps/stock-opname" class="btn btn-warning mr-2">Stock Opname</a>
                         <a href="/apps/upcoming-stock" class="btn btn-success">Upcoming Stock</a>
                     </div>
                 </div>
