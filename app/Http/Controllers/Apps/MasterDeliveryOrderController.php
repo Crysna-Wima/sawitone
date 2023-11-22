@@ -103,8 +103,8 @@ class MasterDeliveryOrderController extends Controller
         // Transaction update data fc_dostatus in DoMaster dan DODTL
         DB::beginTransaction();
         try {
-            DoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
-            DoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
+            TempDoDetail::where('fc_dono', $request->fc_dono)->update(['fc_dono' => auth()->user()->fc_userid]);
+            TempDoMaster::where('fc_dono', $request->fc_dono)->update(['fc_dostatus' => $request->fc_dostatus, 'fc_dono' => auth()->user()->fc_userid]);
             DB::commit();
 
             return [

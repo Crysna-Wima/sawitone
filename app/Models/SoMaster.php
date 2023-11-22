@@ -21,41 +21,56 @@ class SoMaster extends Model
     public $incrementing = false;
     protected $guarded = ['type'];
 
-    public function branch(){
+    public function branch()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
-    public function member_tax_code(){
+    public function member_tax_code()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_membertaxcode', 'fc_kode')->withTrashed()->where('fc_trx', 'like', '%TAX%');
     }
 
-    public function sales(){
+    public function sales()
+    {
         return $this->belongsTo(Sales::class, 'fc_salescode', 'fc_salescode')->withTrashed();
     }
 
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class, 'fc_membercode', 'fc_membercode')->withTrashed();
     }
 
-    public function tempsodtl(){
+    public function tempsodtl()
+    {
         return $this->hasMany(TempSoDetail::class, 'fc_sono', 'fc_sono')->withTrashed();
     }
 
-    public function tempsopay(){
+    public function tempsopay()
+    {
         return $this->hasMany(TempSoPay::class, 'fc_sono', 'fc_sono');
     }
 
-   // one to one
-    public function domst(){
+    // one to one
+    public function domst()
+    {
         return $this->hasOne(DoMaster::class, 'fc_sono', 'fc_sono');
     }
 
-    public function mutasimst(){
+    // one to one
+    public function tempdomst()
+    {
+        return $this->hasOne(TempDoMaster::class, 'fc_sono', 'fc_sono');
+    }
+
+    public function mutasimst()
+    {
         return $this->belongsTo(MutasiMaster::class, 'fc_sono', 'fc_sono');
     }
 
     // sodtl
-    public function sodtl(){
+    public function sodtl()
+    {
         return $this->hasMany(SoDetail::class, 'fc_sono', 'fc_sono');
     }
 }

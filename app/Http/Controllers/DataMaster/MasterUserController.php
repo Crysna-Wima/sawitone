@@ -57,6 +57,15 @@ class MasterUserController extends Controller
         // dd($selected);
     }
 
+    public function getAllRole(){
+        $roles = ModelsRole::all();
+
+        $response = [
+            'roles' => $roles
+        ];
+        return $response;
+    }
+
     public function datatables(){
         $data = User::with('branch', 'group_user','customer')->orderBy('created_at', 'DESC')->get();
 
@@ -173,12 +182,29 @@ class MasterUserController extends Controller
 
 
         // insert data user
-        User::create($request->except(['type','roles']));
-
-        return [
-            'status' => 200,
-            'message' => 'Data berhasil disimpan'
-        ];
+        $insertResult = User::create($request->except(['type','roles']));
+        if ($insertResult) {
+            // Mendapatkan ID pengguna terakhir yang dibuat oleh database
+            $newUserId = User::latest('id')->first()->id;
+    
+            $newUser = User::find($newUserId);
+    
+            // Assign roles to the new user
+            if ($request->roles) {
+                $newUser->assignRole($request->roles);
+            }
+    
+            // Mengembalikan data pengguna yang baru dibuat
+            return [
+                'status' => 200,
+                'message' => 'Data berhasil disimpan',
+            ];
+        } else {
+            return [
+                'status' => 300,
+                'message' => 'Oops! Insert gagal, terdapat kesalahan'
+            ];
+        }
 
     }
 
