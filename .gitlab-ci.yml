@@ -6,7 +6,7 @@ deploy_development:
   script:
     - git checkout development
     - git pull origin development
-    - rm -r /var/www/staging-dexa-web/*
+    - sudo rm -r /var/www/staging-dexa-web/*
     - cp -r * /var/www/staging-dexa-web/
     - cd /var/www/staging-dexa-web/
     - composer install
