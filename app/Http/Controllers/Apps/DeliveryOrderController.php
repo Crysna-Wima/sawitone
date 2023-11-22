@@ -560,7 +560,7 @@ class DeliveryOrderController extends Controller
 
             return [
                 'status' => 300,
-                'message' => 'Data gagal disubmit'
+                'message' => (env('APP_DEBUG', 'true') == 'true') ? $e->getMessage() : 'Operation error'
             ];
         }
     }
