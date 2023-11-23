@@ -108,7 +108,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Data Surat Jalan</h4>
-                    <div class="card-header-action" hidden>
+                    <div class="card-header-action">
                         <button type="button" class="btn btn-success" onclick="add_multi();"><i class="fa fa-plus"></i> Multi SJ</button>
                     </div>
                 </div>

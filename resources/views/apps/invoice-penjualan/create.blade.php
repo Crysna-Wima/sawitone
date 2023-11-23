@@ -53,52 +53,84 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO : {{ $do_mst->fc_dono }}
+                                    <label>No. DO :
+                                        @if(count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ $do->fc_dono }}
+                                                @if($index < count($do_mst) - 1)
+                                                    , 
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ $do_mst->fc_dono }}
+                                        @endif
                                     </label>
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SO : {{ $do_mst->somst->fc_sono }}
-                                    </label>
+                                    <label>No. SO :  {{ $do_mst->first()->fc_sono}}
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Delivery :
+                                        @if(count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
+                                                @if($index < count($do_mst) - 1)
+                                                    , 
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
+                                        @endif
                                     </label>
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $do_mst->fd_arrivaldate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Diterima :
+                                        @if(count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ \Carbon\Carbon::parse($do->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                                @if($index < count($do_mst) - 1)
+                                                    , 
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ \Carbon\Carbon::parse($do_mst->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                        @endif
                                     </label>
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Tipe SO</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->fc_sotype }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->fc_sotype }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Sales</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->sales->fc_salesname1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->sales->fc_salesname1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Customer Code</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $do_mst->somst->customer->fc_membercode }}" readonly>
+                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $do_mst->first()->somst->customer->fc_membercode }}" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->member_tax_code->fv_description }} ({{ $do_mst->somst->member_tax_code->fc_action }}%)" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->member_tax_code->fv_description }} ({{ $do_mst->first()->somst->member_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -120,55 +152,55 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membernpwp_no ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->member_typebranch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membertypebusiness }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membertypebusiness }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fn_memberAgingAP }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->member_legal_status->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $do_mst->somst->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $do_mst->first()->somst->customer->fm_memberAP,0,',','.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -186,56 +218,131 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transport</label>
+                                @php
+                                    $sotransports = collect();
+                                @endphp
+
+                                @if(count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        @php
+                                            $sotransports->push($do->fc_sotransport);
+                                        @endphp
+                                    @endforeach
+                                @else
+                                    @php
+                                        $sotransports->push($do_mst->first()->fc_sotransport);
+                                    @endphp
+                                @endif
+
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $do_mst->fc_sotransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $sotransports->implode(', ') }}" readonly>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transporter</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $do_mst->fc_transporter }}" readonly>
-                                </div>
+                                        @php
+                                            $transporters = collect();
+                                        @endphp
+
+                                        @if(count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                @php
+                                                    $transporters->push($do->fc_transporter);
+                                                @endphp
+                                            @endforeach
+                                        @else
+                                            @php
+                                                $transporters->push($do_mst->first()->fc_transporter);
+                                            @endphp
+                                        @endif
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $transporters->implode(', ') }}" readonly>
+                                        </div>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Biaya Transport</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            Rp.
+                                @if(count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    Rp.
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" name="fm_servpay[]" id="fm_servpay_{{ $index }}" value="{{ $do->fm_servpay }}" readonly>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
-                                </div>
+                                @endif
                             </div>
+                            
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Penerima</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $do_mst->fc_custreceiver }}" readonly>
-                                </div>
+                                @if(count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="fc_custreceiver[]" id="fc_custreceiver_{{ $index }}" value="{{ $do->fc_custreceiver }}" readonly>
+                                            </div>
+                                    @endforeach
+                                @else
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $do_mst->fc_custreceiver }}" readonly>
+                                        </div>
+                                @endif
+                                
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="form-group">
                                 <label>Catatan</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $do_mst->fv_description ?? '-' }}" readonly>
-                                </div>
+                                @if(count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fd_dodatesysinput[]" id="fd_dodatesysinput_{{ $index }}" value="{{ $do->fv_description ?? '-' }}" readonly>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $do_mst->fv_description ?? '-' }}" readonly>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                        
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $do_mst->fc_memberaddress_loading }}" readonly>
-                                </div>
+                                @if(count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fc_memberaddress_loading[]" id="fc_memberaddress_loading_{{ $index }}" value="{{ $do->fc_memberaddress_loading }}" readonly>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $do_mst->fc_memberaddress_loading }}" readonly>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -384,18 +491,18 @@
                                     @if (empty($temp->fc_address))
                                     <select class="form-control select2" name="fc_address" id="fc_address" required>
                                         <option value="" selected disabled>- Pilih Alamat -</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}</option>
                                     </select>
                                     @else
                                     <select class="form-control select2" name="fc_address" id="fc_address">
                                         <option value="{{ $temp->fc_address }}" selected disabled>
                                             {{ $temp->fc_address }}
                                         </option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}</option>
                                     </select>
                                     @endif
                                 </div>
@@ -817,7 +924,8 @@
         });
     }
 
-    var dono = "{{ $do_mst->fc_dono }}";
+    var dono = "{{ $do_mst->isNotEmpty() ? $do_mst->first()->fc_dono : '' }}";
+
     var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
         // apabila data kosong
