@@ -527,7 +527,7 @@
                     defaultContent: '-'
                 },
                 {
-                    data: 'domst.fc_dono',
+                    data: 'fc_child_suppdocno',
                     defaultContent: '-'
                 },
                 {

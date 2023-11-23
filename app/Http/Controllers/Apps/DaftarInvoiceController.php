@@ -14,6 +14,7 @@ use App\Models\InvoiceDtl;
 use App\Models\InvoiceMst;
 use App\Helpers\ApiFormatter;
 use App\Models\Approval;
+use App\Models\DoMaster;
 use App\Models\TransaksiType;
 use App\Models\User;
 use Validator;
@@ -31,15 +32,59 @@ class DaftarInvoiceController extends Controller
         set_time_limit(360);
         $decode_fc_invno = base64_decode($fc_invno);
         session(['fc_invno_global' => $decode_fc_invno]);
+        $inv_master = InvoiceMst::with('customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $decoded_childsuppdocno_array = json_decode($inv_master->fc_child_suppdocno, true);
         if ($fc_invtype == "SALES") {
             $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->get();
+            if(count($decoded_childsuppdocno_array) > 0){   
+                $data['do_mst'] = DoMaster::with('somst.customer')
+                ->where(function ($query) use ($decoded_childsuppdocno_array) {
+                    foreach ($decoded_childsuppdocno_array as $index => $value) {
+                        if ($index === 0) {
+                            $query->where('fc_dono', $value);
+                        } else {
+                            $query->orWhere('fc_dono', $value);
+                        }
+                    }
+                })
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+            }
         } else if ($fc_invtype == "PURCHASE") {
             $data['inv_mst'] = InvoiceMst::with('pomst', 'romst', 'supplier')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->get();
+            if(count($decoded_childsuppdocno_array) > 0){   
+                $data['do_mst'] = DoMaster::with('somst.customer')
+                ->where(function ($query) use ($decoded_childsuppdocno_array) {
+                    foreach ($decoded_childsuppdocno_array as $index => $value) {
+                        if ($index === 0) {
+                            $query->where('fc_dono', $value);
+                        } else {
+                            $query->orWhere('fc_dono', $value);
+                        }
+                    }
+                })
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+            }
         } else {
             $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->get();
+            if(count($decoded_childsuppdocno_array) > 0){   
+                $data['do_mst'] = DoMaster::with('somst.customer')
+                ->where(function ($query) use ($decoded_childsuppdocno_array) {
+                    foreach ($decoded_childsuppdocno_array as $index => $value) {
+                        if ($index === 0) {
+                            $query->where('fc_dono', $value);
+                        } else {
+                            $query->orWhere('fc_dono', $value);
+                        }
+                    }
+                })
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+            }
         }
         $data['fc_invno'] = $decode_fc_invno;
         return view('apps.daftar-invoice.detail', $data);
