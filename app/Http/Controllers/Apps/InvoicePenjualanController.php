@@ -28,12 +28,42 @@ class InvoicePenjualanController extends Controller
     public function index(){
         $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
+        $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
         $total = count($temp_detail);
         if(!empty($temp_inv_master)){
-            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
-            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
             $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
-            
+            if (count($fc_child_suppdocno) > 1) {
+                $data['do_mst'] = DoMaster::with('somst.customer')
+                    ->where(function ($query) use ($fc_child_suppdocno) {
+                        foreach ($fc_child_suppdocno as $index => $value) {
+                            if ($index === 0) {
+                                $query->where('fc_dono', $value);
+                            } else {
+                                $query->orWhere('fc_dono', $value);
+                            }
+                        }
+                    })
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+        
+                $data['do_dtl'] = DoDetail::with('invstore.stock')
+                    ->where(function ($query) use ($fc_child_suppdocno) {
+                        $query->whereIn('fc_dono',  $fc_child_suppdocno);
+                    })
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+            } else {
+                $data['do_mst'] = DoMaster::with('somst.customer')
+                    ->where('fc_dono',  $fc_child_suppdocno[0])
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->first();
+        
+                $data['do_dtl'] = DoDetail::with('invstore.stock')
+                    ->where('fc_dono',  $fc_child_suppdocno[0])
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+            }
+    
             return view('apps.invoice-penjualan.create',$data);
            
             
