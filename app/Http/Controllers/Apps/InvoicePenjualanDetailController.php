@@ -25,16 +25,44 @@ use Validator;
 
 class InvoicePenjualanDetailController extends Controller
 {
-    public function create($fc_dono)
-    {
+    public function create($fc_dono){
         $encoded_fc_dono = base64_decode($fc_dono);
+        $decoded_fc_dono_array = json_decode($encoded_fc_dono, true);
         $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
-        $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->first();
-        $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
-        // $data['ro_mst'] = RoMaster::with('pomst','rodtl','invmst')->where('fc_dono', $encoded_fc_dono)->where('fc_branch', auth()->user()->fc_branch)->get();
+
+        if (count($decoded_fc_dono_array) > 1) {
+            $data['do_mst'] = DoMaster::with('somst.customer')
+                ->where(function ($query) use ($decoded_fc_dono_array) {
+                    foreach ($decoded_fc_dono_array as $index => $value) {
+                        if ($index === 0) {
+                            $query->where('fc_dono', $value);
+                        } else {
+                            $query->orWhere('fc_dono', $value);
+                        }
+                    }
+                })
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+    
+            $data['do_dtl'] = DoDetail::with('invstore.stock')
+                ->where(function ($query) use ($decoded_fc_dono_array) {
+                    $query->whereIn('fc_dono', $decoded_fc_dono_array);
+                })
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+        } else {
+            $data['do_mst'] = DoMaster::with('somst.customer')
+                ->where('fc_dono', $decoded_fc_dono_array[0])
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->first();
+    
+            $data['do_dtl'] = DoDetail::with('invstore.stock')
+                ->where('fc_dono', $decoded_fc_dono_array[0])
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+        }
 
         return view('apps.invoice-penjualan.create', $data);
-        // dd($data);
     }
 
     public function update_inform($fc_invno, Request $request)

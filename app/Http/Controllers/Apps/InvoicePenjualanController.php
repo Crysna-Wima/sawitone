@@ -150,13 +150,18 @@ class InvoicePenjualanController extends Controller
         $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if(empty($temp_inv_master)){
+        $fc_dono_array = explode(',', $request->fc_dono);
+
+        // JSON-encoded string
+        $fc_dono_json = json_encode($fc_dono_array, JSON_UNESCAPED_SLASHES);
+
             // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_invno' => auth()->user()->fc_userid,
             'fc_suppdocno' => $request->fc_sono,
-            'fc_child_suppdocno' => $request->fc_dono,
+            'fc_child_suppdocno' =>  $fc_dono_json,
             'fc_entitycode' => $request->fc_membercode,
             'fc_status' => 'I',
             'fc_invtype' => 'SALES',
@@ -171,7 +176,7 @@ class InvoicePenjualanController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/invoice-penjualan/create/' . base64_encode( $request->fc_child_suppdocno)
+                    'link' => '/apps/invoice-penjualan/create/' . base64_encode($fc_dono_json)
                 ];
             }else{
                 return [
