@@ -28,9 +28,10 @@ class InvoicePenjualanController extends Controller
     public function index(){
         $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
-        $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
+       
         $total = count($temp_detail);
         if(!empty($temp_inv_master)){
+            $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
             $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
             if (count($fc_child_suppdocno) > 1) {
                 $data['do_mst'] = DoMaster::with('somst.customer')
