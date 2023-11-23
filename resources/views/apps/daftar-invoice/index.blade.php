@@ -196,16 +196,16 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-lg-4">
+                            <div class="col-12 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tampilan Diskon</label>
                                     <div class="selectgroup w-100">
                                         <label class="selectgroup-item" style="margin: 0!important">
-                                            <a href="" class="btn btn-primary" id="radio-button-nominal"
+                                            <a href="" target="_blank" class="btn btn-primary" id="radio-button-nominal"
                                                 type="radio">Nominal</a>
                                         </label>
                                         <label class="selectgroup-item" style="margin-left: 10px">
-                                            <a href="" class="btn btn-success" id="radio-button-persen"
+                                            <a href="" target="_blank" class="btn btn-success" id="radio-button-persen"
                                                 type="radio">Persen</a>
                                         </label>
                                     </div>
@@ -436,10 +436,6 @@
                                 icon: 'error',
                             });
                         } else if (response.approve == 'pdf') {
-                            // arahkan ke response.link
-                            tb_penjualan.ajax.reload(null, false);
-                            tb_pembelian.ajax.reload(null, false);
-                            tb_cprr.ajax.reload(null, false);
                             click_modal_diskon(response.link);
                             // window.open(response.link,
                             //     '_blank'
@@ -474,8 +470,17 @@
             var tampil_diskon = $('.tampil_diskon').val();
             $('#radio-button-persen').attr('href', tampil_diskon_value + "/" + "P");
             $('#radio-button-nominal').attr('href', tampil_diskon_value + "/" + "N");
+
+            $("#radio-button-persen").on('click', reloadTB)
+            $("#radio-button-nominal").on('click', reloadTB)
             $('#modal_diskon').modal('show');
         };
+
+        function reloadTB(){
+            tb_penjualan.ajax.reload(null, false);
+            tb_pembelian.ajax.reload(null, false);
+            tb_cprr.ajax.reload(null, false);
+        }
 
         // untuk memunculkan nama penanggung jawab
         function click_modal_nama(fc_invno) {

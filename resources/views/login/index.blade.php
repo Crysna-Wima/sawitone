@@ -36,10 +36,10 @@
                 <form id="form">
                   @csrf
                    <div class="form-group">
-                      <label>Username</label>
-                      <input id="text" type="text" class="form-control" name="username" tabindex="1" required autofocus>
+                      <label>User ID</label>
+                      <input id="text" type="text" class="form-control" name="userid" tabindex="1" required autofocus>
                       <div class="invalid-feedback">
-                         Mohon Isi username anda
+                         Mohon Isi User ID anda
                       </div>
                    </div>
                    <div class="form-group">

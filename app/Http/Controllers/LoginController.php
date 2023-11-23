@@ -60,12 +60,12 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $rules = [
-            'username' => 'required',
+            'userid' => 'required',
             'password' => 'required'
         ];
 
         $messages = [
-            'username.required' => 'Username wajib di isi',
+            'userid.required' => 'Userid wajib di isi',
             'password.required' => 'Password wajib diisi',
         ];
 
@@ -77,8 +77,9 @@ class LoginController extends Controller
                 'message' => $validator->errors()->first()
             ];
         }
+        
 
-        $user = User::where(['fc_username' => $request->username])->first();
+        $user = User::where(['fc_userid' => $request->userid])->first();
         if (!empty($user)) {
             if (Hash::check($request->password, $user->fc_password)) {
 
