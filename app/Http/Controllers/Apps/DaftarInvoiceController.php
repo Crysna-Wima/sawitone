@@ -125,7 +125,7 @@ class DaftarInvoiceController extends Controller
         $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $request->fc_invno)->where('fc_branch', auth()->user()->fc_branch)->get();
         $data['tampil_diskon'] = $request->tampil_diskon;
 
-        if ($request->name_pj === auth()->user()->fc_userid) {
+        if ($request->name_pj === auth()->user()->fc_username) {
             $data['nama_pj'] = $request->name_pj;
 
             InvoiceMst::where('fc_invno', $request->fc_invno)
