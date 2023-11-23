@@ -221,24 +221,24 @@
                                 @php
                                     $sotransports = collect();
                                 @endphp
-
+                            
                                 @if(count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
-                                            $sotransports->push($do->fc_sotransport);
+                                            $sotransports->push($do->fc_sotransport ?? '-');
                                         @endphp
                                     @endforeach
                                 @else
                                     @php
-                                        $sotransports->push($do_mst->first()->fc_sotransport);
+                                        $sotransports->push($do_mst->first()->fc_sotransport ?? '-');
                                     @endphp
                                 @endif
-
+                            
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $sotransports->implode(', ') }}" readonly>
+                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $sotransports->unique()->implode(', ') }}" readonly>
                                 </div>
-
                             </div>
+                            
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
@@ -250,17 +250,17 @@
                                         @if(count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 @php
-                                                    $transporters->push($do->fc_transporter);
+                                                    $transporters->push($do->fc_transporter ?? '-');
                                                 @endphp
                                             @endforeach
                                         @else
                                             @php
-                                                $transporters->push($do_mst->first()->fc_transporter);
+                                                $transporters->push($do_mst->first()->fc_transporter ?? '-');
                                             @endphp
                                         @endif
 
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $transporters->implode(', ') }}" readonly>
+                                            <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $transporters->unique()->implode(', ') }}" readonly>
                                         </div>
 
                             </div>
@@ -268,17 +268,23 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Biaya Transport</label>
+                                @php
+                                    $fm_servpay_values = collect();
+                                @endphp
                                 @if(count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
-                                        <div class="input-group mb-2">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    Rp.
-                                                </div>
-                                            </div>
-                                            <input type="text" class="form-control" name="fm_servpay[]" id="fm_servpay_{{ $index }}" value="{{ $do->fm_servpay }}" readonly>
-                                        </div>
+                                        @php
+                                            $fm_servpay_values->push($do->fm_servpay);
+                                        @endphp
                                     @endforeach
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
+                                    </div>
                                 @else
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -286,60 +292,79 @@
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->first()->fm_servpay }}" readonly>
                                     </div>
                                 @endif
                             </div>
+                            
                             
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Penerima</label>
+                                @php
+                                    $fc_custreceiver = collect();
+                                @endphp
                                 @if(count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="fc_custreceiver[]" id="fc_custreceiver_{{ $index }}" value="{{ $do->fc_custreceiver }}" readonly>
-                                            </div>
+                                        @php
+                                            $fc_custreceiver->push($do->fc_custreceiver ?? '-');
+                                        @endphp
                                     @endforeach
                                 @else
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $do_mst->fc_custreceiver }}" readonly>
-                                        </div>
+                                    @php
+                                        $fc_custreceiver->push($do_mst->first()->fc_custreceiver ?? '-');
+                                    @endphp
                                 @endif
-                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $fc_custreceiver->unique()->implode(', ') }}" readonly>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="form-group">
                                 <label>Catatan</label>
+                                @php
+                                    $fv_descriptions = collect();
+                                @endphp
                                 @if(count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="fd_dodatesysinput[]" id="fd_dodatesysinput_{{ $index }}" value="{{ $do->fv_description ?? '-' }}" readonly>
-                                        </div>
+                                        @php
+                                            $fv_descriptions->push($do->fv_description ?? '-');
+                                        @endphp
                                     @endforeach
                                 @else
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $do_mst->fv_description ?? '-' }}" readonly>
-                                    </div>
+                                    @php
+                                        $fv_descriptions->push($do_mst->first()->fv_description ?? '-');
+                                    @endphp
                                 @endif
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $fv_descriptions->unique()->implode(', ') }}" readonly>
+                                </div>
                             </div>
+                            
                         </div>
                         
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
+                                @php
+                                     $fc_memberaddress_loading = collect();
+                                 @endphp
                                 @if(count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="fc_memberaddress_loading[]" id="fc_memberaddress_loading_{{ $index }}" value="{{ $do->fc_memberaddress_loading }}" readonly>
-                                        </div>
+                                        @php
+                                            $fc_memberaddress_loading->push($do->fc_memberaddress_loading ?? '-');
+                                        @endphp
                                     @endforeach
                                 @else
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $do_mst->fc_memberaddress_loading }}" readonly>
-                                    </div>
+                                    @php
+                                        $fc_memberaddress_loading->push($do_mst->first()->fc_memberaddress_loading ?? '-');
+                                    @endphp
                                 @endif
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $fc_memberaddress_loading->unique()->implode(', ') }}" readonly>
+                                </div>
                             </div>
                         </div>
                         
