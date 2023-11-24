@@ -668,7 +668,9 @@
 
 
     var rono = "{{ $ro_mst->fc_rono }}";
+    var fc_warehousecode = "{{ $ro_mst->warehouse->fc_warehousecode }}"
     var encode_rono = window.btoa(rono);
+    var encode_warehousecode = window.btoa(fc_warehousecode);
     // console.log(encode_rono)
     var tb = $('#tb').DataTable({
         // apabila data kosong
@@ -676,7 +678,7 @@
         serverSide: true,
         destroy: true,
         ajax: {
-            url: "/apps/invoice-pembelian/create/datatables-ro-detail/" + encode_rono,
+            url: "/apps/invoice-pembelian/create/datatables-ro-detail/" + encode_rono + "/" + encode_warehousecode,
             type: 'GET',
         },
         columnDefs: [{

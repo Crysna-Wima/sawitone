@@ -179,9 +179,10 @@ class InvoicePembelianDetailController extends Controller
     }
 
 
-    public function datatables_ro_detail($fc_rono)
+    public function datatables_ro_detail($fc_rono, $fc_warehousecode)
     {
         // $decode_dono = base64_decode($fc_dono);
+        $decode_fc_warehousecode = base64_decode($fc_warehousecode);
         $data = TempInvoiceDtl::with('invstore.stock', 'tempinvmst')
             ->where('fc_invno', auth()->user()->fc_userid)
             ->where('fc_status', 'DEFAULT')
@@ -189,6 +190,7 @@ class InvoicePembelianDetailController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)
             ->get();
 
+        
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
