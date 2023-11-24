@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Apps\KasBonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -786,6 +787,10 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'Apps\UpcomingStockController@index');
             Route::get('/datatables', 'Apps\UpcomingStockController@datatables');
             Route::get('/datatables-detail/{fc_stockcode}', 'Apps\UpcomingStockController@datatables_detail');
+        });
+
+        Route::prefix('kas-bon')->group(function () {
+            Route::get('/', [KasBonController::class, 'index']);
         });
     });
 });

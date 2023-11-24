@@ -300,20 +300,27 @@ class DeliveryOrderController extends Controller
 
         // // //INSERT DoDetail dari data stock
         if ($request->quantity) {
-            $do_dtl = TempDoDetail::create([
-                'fc_divisioncode' => auth()->user()->fc_divisioncode,
-                'fc_branch' => auth()->user()->fc_branch,
-                'fc_dono' => auth()->user()->fc_userid,
-                'fc_barcode' => $request->fc_barcode,
-                'fn_qty_do' => $request->quantity,
-                'fc_status_bonus_do' => 'F',
-                'fc_namepack' => $data_stock->stock->fc_namepack,
-                'fc_batch' => $data_stock->fc_batch,
-                'fc_catnumber' => $data_stock->fc_catnumber,
-                'fd_expired' => $data_stock->fd_expired,
-                'fn_price' => $data_stock_sodtl->fm_so_price,
-                'fn_disc' => $data_stock_sodtl->fm_so_disc,
-            ]);
+            if (empty($data_temp_dodtl)) {
+                $do_dtl = TempDoDetail::create([
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_dono' => auth()->user()->fc_userid,
+                    'fc_barcode' => $request->fc_barcode,
+                    'fn_qty_do' => $request->quantity,
+                    'fc_status_bonus_do' => 'F',
+                    'fc_namepack' => $data_stock->stock->fc_namepack,
+                    'fc_batch' => $data_stock->fc_batch,
+                    'fc_catnumber' => $data_stock->fc_catnumber,
+                    'fd_expired' => $data_stock->fd_expired,
+                    'fn_price' => $data_stock_sodtl->fm_so_price,
+                    'fn_disc' => $data_stock_sodtl->fm_so_disc,
+                ]);
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal ditambahkan, terdapat duplikasi Item! Silahkan hapus Item yang tersimpan!'
+                ];
+            }
         } else {
             $do_dtl = TempDoDetail::create([
                 'fc_divisioncode' => $data_stock->fc_divisioncode,
