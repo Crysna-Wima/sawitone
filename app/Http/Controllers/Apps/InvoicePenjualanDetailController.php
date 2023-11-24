@@ -29,7 +29,7 @@ class InvoicePenjualanDetailController extends Controller
         $encoded_fc_dono = base64_decode($fc_dono);
         $decoded_fc_dono_array = json_decode($encoded_fc_dono, true);
         $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
-
+        $decoded_fc_dono_array = [$encoded_fc_dono];
         if (count($decoded_fc_dono_array) > 1) {
             $data['do_mst'] = DoMaster::with('somst.customer')
                 ->where(function ($query) use ($decoded_fc_dono_array) {
