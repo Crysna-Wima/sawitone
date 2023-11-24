@@ -34,9 +34,11 @@ class DaftarInvoiceController extends Controller
         session(['fc_invno_global' => $decode_fc_invno]);
         $inv_master = InvoiceMst::with('customer')->where('fc_invno', $decode_fc_invno)->where('fc_branch', auth()->user()->fc_branch)->first();
         $decoded_childsuppdocno_array = json_decode($inv_master->fc_child_suppdocno, true);
+        
         if ($fc_invtype == "SALES") {
             $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->get();
+            $decoded_childsuppdocno_array = [$inv_master->fc_child_suppdocno];
             if(count($decoded_childsuppdocno_array) > 0){   
                 $data['do_mst'] = DoMaster::with('somst.customer')
                 ->where(function ($query) use ($decoded_childsuppdocno_array) {
