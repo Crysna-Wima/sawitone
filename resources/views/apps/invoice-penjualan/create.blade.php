@@ -53,17 +53,18 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery :
-                                        @if(is_array($do_mst))
+                                    <label>No. DO :
+                                        @if($do_mst instanceof \Illuminate\Support\Collection)
                                             @foreach($do_mst as $index => $do)
-                                                {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
-                                                @if($index < count($do_mst) - 1)
+                                                {{ $do->fc_dono }}
+                                                @if($index < $do_mst->count() - 1)
                                                     ,
                                                 @endif
                                             @endforeach
                                         @else
-                                            {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
+                                            {{ $do_mst->fc_dono }}
                                         @endif
+
                                     </label>
                                     
                                     
@@ -77,16 +78,16 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Tgl Delivery :
-                                        @if(is_array($do_mst) && count($do_mst) > 1)
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
                                                 @if($index < count($do_mst) - 1)
                                                     ,
                                                 @endif
                                             @endforeach
-                                        @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                        @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                             {{ \Carbon\Carbon::parse($do_mst[0]->fd_dodate)->isoFormat('D MMMM Y') }}
-                                        @elseif(!is_array($do_mst))
+                                        @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
                                             {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
                                         @endif
                                     </label>
@@ -97,16 +98,16 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Tgl Diterima :
-                                        @if(is_array($do_mst) && count($do_mst) > 1)
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 {{ \Carbon\Carbon::parse($do->fd_arrivaldate)->isoFormat('D MMMM Y') }}
                                                 @if($index < count($do_mst) - 1)
                                                     ,
                                                 @endif
                                             @endforeach
-                                        @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                        @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                             {{ \Carbon\Carbon::parse($do_mst[0]->fd_arrivaldate)->isoFormat('D MMMM Y') }}
-                                        @elseif(!is_array($do_mst))
+                                        @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
                                             {{ \Carbon\Carbon::parse($do_mst->fd_arrivaldate)->isoFormat('D MMMM Y') }}
                                         @endif
                                     </label>
@@ -229,17 +230,17 @@
                                     $sotransports = collect();
                                 @endphp
                             
-                            @if(is_array($do_mst) && count($do_mst) > 1)
+                            @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                 @foreach($do_mst as $index => $do)
                                     @php
                                         $sotransports->push($do->fc_sotransport ?? '-');
                                     @endphp
                                 @endforeach
-                            @elseif(is_array($do_mst) && count($do_mst) === 1)
+                            @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                 @php
                                     $sotransports->push($do_mst[0]->fc_sotransport ?? '-');
                                 @endphp
-                            @elseif(!is_array($do_mst))
+                            @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
                                 @php
                                     $sotransports->push($do_mst->fc_sotransport ?? '-');
                                 @endphp
@@ -258,13 +259,13 @@
                                             $transporters = collect();
                                         @endphp
 
-                                        @if(is_array($do_mst) && count($do_mst) > 1)
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 @php
                                                     $transporters->push($do->fc_transporter ?? '-');
                                                 @endphp
                                             @endforeach
-                                            @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                            @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                                 @php
                                                     $transporters->push($do_mst[0]->fc_transporter ?? '-');
                                                 @endphp
@@ -286,7 +287,7 @@
                                 @php
                                     $fm_servpay_values = collect();
                                 @endphp
-                                @if(is_array($do_mst) && count($do_mst) > 1)
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fm_servpay_values->push($do->fm_servpay);
@@ -300,7 +301,7 @@
                                         </div>
                                         <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
                                     </div>
-                                @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
@@ -330,13 +331,13 @@
                                 @php
                                     $fc_custreceiver = collect();
                                 @endphp
-                                @if(is_array($do_mst) && count($do_mst) > 1)
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fc_custreceiver->push($do->fc_custreceiver ?? '-');
                                         @endphp
                                     @endforeach
-                                @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                     @php
                                         $fc_custreceiver->push($do_mst[0]->fc_custreceiver ?? '-');
                                     @endphp
@@ -357,13 +358,13 @@
                                 @php
                                     $fv_descriptions = collect();
                                 @endphp
-                                @if(is_array($do_mst) && count($do_mst) > 1)
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fv_descriptions->push($do->fv_description ?? '-');
                                         @endphp
                                     @endforeach
-                                @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                     @php
                                         $fv_descriptions->push($do_mst[0]->fv_description ?? '-');
                                     @endphp
@@ -385,17 +386,17 @@
                                 @php
                                     $fc_memberaddress_loading = collect();
                                 @endphp
-                                @if(is_array($do_mst) && count($do_mst) > 1)
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fc_memberaddress_loading->push($do->fc_memberaddress_loading ?? '-');
                                         @endphp
                                     @endforeach
-                                @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
                                     @php
                                         $fc_memberaddress_loading->push($do_mst[0]->fc_memberaddress_loading ?? '-');
                                     @endphp
-                                @elseif(!is_array($do_mst))
+                                @elseif(!$do_mst instanceof \Illuminate\Support\Collection)
                                     @php
                                         $fc_memberaddress_loading->push($do_mst->fc_memberaddress_loading ?? '-');
                                     @endphp

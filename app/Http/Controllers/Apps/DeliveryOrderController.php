@@ -267,20 +267,18 @@ class DeliveryOrderController extends Controller
             ->where('fc_sono', $request->fc_sono)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->first();
-        // dd($request->bonus_quantity);
-        $sodtlLength = count($data_stock_sodtl->stock->sodtl);
-        $qty = 0;
-        for ($i = 0; $i < $sodtlLength; $i++) {
-            $qty += $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty;
-        }
-        if ($qty >= $data_stock->fn_quantity) {
+            
+       
+        $qty = $data_stock_sodtl->fn_so_qty - $data_stock_sodtl->fn_do_qty;
+        
+        // if ($qty >= $data_stock->fn_quantity) {
             if ($request->quantity > $data_stock->fn_quantity) {
                 return [
                     'status' => 300,
                     'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
                 ];
             }
-        }
+        // }
 
         // dd($request->quantity);
         if ($request->quantity > $qty) {
@@ -290,7 +288,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        if ($request->quantity > $data_stock_sodtl->fn_so_qty || $request->bonus_quantity > $data_stock_sodtl->fn_so_bonusqty) {
+        if ($request->bonus_quantity > ($data_stock_sodtl->fn_so_bonusqty - $data_stock_sodtl->fn_do_bonusqty)) {
             return [
                 'status' => 300,
                 'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
