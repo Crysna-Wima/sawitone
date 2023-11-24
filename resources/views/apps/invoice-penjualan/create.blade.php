@@ -53,18 +53,19 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO :
-                                        @if(count($do_mst) > 1)
+                                    <label>Tgl Delivery :
+                                        @if(is_array($do_mst))
                                             @foreach($do_mst as $index => $do)
-                                                {{ $do->fc_dono }}
+                                                {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
                                                 @if($index < count($do_mst) - 1)
-                                                    , 
+                                                    ,
                                                 @endif
                                             @endforeach
                                         @else
-                                            {{ $do_mst->fc_dono }}
+                                            {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
                                         @endif
                                     </label>
+                                    
                                     
                                 </div>
                             </div>
@@ -76,34 +77,40 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Tgl Delivery :
-                                        @if(count($do_mst) > 1)
+                                        @if(is_array($do_mst) && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
                                                 @if($index < count($do_mst) - 1)
-                                                    , 
+                                                    ,
                                                 @endif
                                             @endforeach
-                                        @else
+                                        @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                            {{ \Carbon\Carbon::parse($do_mst[0]->fd_dodate)->isoFormat('D MMMM Y') }}
+                                        @elseif(!is_array($do_mst))
                                             {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
                                         @endif
                                     </label>
+                                    
                                     
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Tgl Diterima :
-                                        @if(count($do_mst) > 1)
+                                        @if(is_array($do_mst) && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 {{ \Carbon\Carbon::parse($do->fd_arrivaldate)->isoFormat('D MMMM Y') }}
                                                 @if($index < count($do_mst) - 1)
-                                                    , 
+                                                    ,
                                                 @endif
                                             @endforeach
-                                        @else
+                                        @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                            {{ \Carbon\Carbon::parse($do_mst[0]->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                        @elseif(!is_array($do_mst))
                                             {{ \Carbon\Carbon::parse($do_mst->fd_arrivaldate)->isoFormat('D MMMM Y') }}
                                         @endif
                                     </label>
+                                    
                                     
                                 </div>
                             </div>
@@ -222,17 +229,21 @@
                                     $sotransports = collect();
                                 @endphp
                             
-                                @if(count($do_mst) > 1)
-                                    @foreach($do_mst as $index => $do)
-                                        @php
-                                            $sotransports->push($do->fc_sotransport ?? '-');
-                                        @endphp
-                                    @endforeach
-                                @else
+                            @if(is_array($do_mst) && count($do_mst) > 1)
+                                @foreach($do_mst as $index => $do)
                                     @php
-                                        $sotransports->push($do_mst->first()->fc_sotransport ?? '-');
+                                        $sotransports->push($do->fc_sotransport ?? '-');
                                     @endphp
-                                @endif
+                                @endforeach
+                            @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                @php
+                                    $sotransports->push($do_mst[0]->fc_sotransport ?? '-');
+                                @endphp
+                            @elseif(!is_array($do_mst))
+                                @php
+                                    $sotransports->push($do_mst->fc_sotransport ?? '-');
+                                @endphp
+                            @endif
                             
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $sotransports->unique()->implode(', ') }}" readonly>
@@ -247,15 +258,19 @@
                                             $transporters = collect();
                                         @endphp
 
-                                        @if(count($do_mst) > 1)
+                                        @if(is_array($do_mst) && count($do_mst) > 1)
                                             @foreach($do_mst as $index => $do)
                                                 @php
                                                     $transporters->push($do->fc_transporter ?? '-');
                                                 @endphp
                                             @endforeach
-                                        @else
+                                            @elseif(is_array($do_mst) && count($do_mst) === 1)
+                                                @php
+                                                    $transporters->push($do_mst[0]->fc_transporter ?? '-');
+                                                @endphp
+                                            @elseif(!is_array($do_mst))
                                             @php
-                                                $transporters->push($do_mst->first()->fc_transporter ?? '-');
+                                                $transporters->push($do_mst->fc_transporter ?? '-');
                                             @endphp
                                         @endif
 
@@ -271,7 +286,7 @@
                                 @php
                                     $fm_servpay_values = collect();
                                 @endphp
-                                @if(count($do_mst) > 1)
+                                @if(is_array($do_mst) && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fm_servpay_values->push($do->fm_servpay);
@@ -285,17 +300,27 @@
                                         </div>
                                         <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
                                     </div>
-                                @else
+                                @elseif(is_array($do_mst) && count($do_mst) === 1)
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
                                                 Rp.
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->first()->fm_servpay }}" readonly>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst[0]->fm_servpay }}" readonly>
+                                    </div>
+                                @elseif(!is_array($do_mst))
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
                                     </div>
                                 @endif
                             </div>
+                            
                             
                             
                         </div>
@@ -305,21 +330,26 @@
                                 @php
                                     $fc_custreceiver = collect();
                                 @endphp
-                                @if(count($do_mst) > 1)
+                                @if(is_array($do_mst) && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fc_custreceiver->push($do->fc_custreceiver ?? '-');
                                         @endphp
                                     @endforeach
-                                @else
+                                @elseif(is_array($do_mst) && count($do_mst) === 1)
                                     @php
-                                        $fc_custreceiver->push($do_mst->first()->fc_custreceiver ?? '-');
+                                        $fc_custreceiver->push($do_mst[0]->fc_custreceiver ?? '-');
+                                    @endphp
+                                @elseif(!is_array($do_mst))
+                                    @php
+                                        $fc_custreceiver->push($do_mst->fc_custreceiver ?? '-');
                                     @endphp
                                 @endif
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $fc_custreceiver->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="form-group">
@@ -327,39 +357,47 @@
                                 @php
                                     $fv_descriptions = collect();
                                 @endphp
-                                @if(count($do_mst) > 1)
+                                @if(is_array($do_mst) && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fv_descriptions->push($do->fv_description ?? '-');
                                         @endphp
                                     @endforeach
-                                @else
+                                @elseif(is_array($do_mst) && count($do_mst) === 1)
                                     @php
-                                        $fv_descriptions->push($do_mst->first()->fv_description ?? '-');
+                                        $fv_descriptions->push($do_mst[0]->fv_description ?? '-');
+                                    @endphp
+                                @elseif(!is_array($do_mst))
+                                    @php
+                                        $fv_descriptions->push($do_mst->fv_description ?? '-');
                                     @endphp
                                 @endif
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $fv_descriptions->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
-                            
                         </div>
+                        
                         
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 @php
-                                     $fc_memberaddress_loading = collect();
-                                 @endphp
-                                @if(count($do_mst) > 1)
+                                    $fc_memberaddress_loading = collect();
+                                @endphp
+                                @if(is_array($do_mst) && count($do_mst) > 1)
                                     @foreach($do_mst as $index => $do)
                                         @php
                                             $fc_memberaddress_loading->push($do->fc_memberaddress_loading ?? '-');
                                         @endphp
                                     @endforeach
-                                @else
+                                @elseif(is_array($do_mst) && count($do_mst) === 1)
                                     @php
-                                        $fc_memberaddress_loading->push($do_mst->first()->fc_memberaddress_loading ?? '-');
+                                        $fc_memberaddress_loading->push($do_mst[0]->fc_memberaddress_loading ?? '-');
+                                    @endphp
+                                @elseif(!is_array($do_mst))
+                                    @php
+                                        $fc_memberaddress_loading->push($do_mst->fc_memberaddress_loading ?? '-');
                                     @endphp
                                 @endif
                                 <div class="input-group">
@@ -367,6 +405,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         
                     </div>
                 </div>
@@ -949,7 +988,7 @@
         });
     }
 
-    var dono = "{{ $do_mst->isNotEmpty() ? $do_mst->first()->fc_dono : '' }}";
+    var dono = "{{ $do_mst->count() > 0 ? $do_mst->first()->fc_dono : '' }}";
 
     var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
