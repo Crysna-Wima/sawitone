@@ -4,11 +4,11 @@ stages:
 deploy_development:
   stage: deploy
   script:
+    - su - dexa $DEXA_PASSWORD
     - whoami
-    - echo 'gitlab-runner ALL=(ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
     - git checkout development
     - git pull origin development
-    - sudo rm -r /var/www/staging-dexa-web/*
+    - sudo -S rm -r /var/www/staging-dexa-web/*
     - cp -r * /var/www/staging-dexa-web/
     - cd /var/www/staging-dexa-web/
     - composer install
