@@ -5,6 +5,7 @@ deploy_development:
   stage: deploy
   script:
     - whoami
+    - echo 'gitlab-runner ALL=(ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
     - git checkout development
     - git pull origin development
     - sudo rm -r /var/www/staging-dexa-web/*
