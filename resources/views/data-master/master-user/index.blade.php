@@ -483,7 +483,7 @@
         },
         columnDefs: [{
                 className: 'text-center',
-                targets: [0, 7]
+                targets: [0, 7, 11]
             },
             {
                 className: 'text-nowrap',
@@ -548,8 +548,12 @@
             $('td:eq(11)', row).html(`
             <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
+        //     $('td:eq(11)', row).html(`
+        //     <button class="btn btn-warning btn-sm mr-1" onclick="reset_password('${url_reset_password}')"><i class="fas fa-key"></i></button>
+        //     <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+        //     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.name}')"><i class="fa fa-trash"> </i> Hapus</button>
+        //  `);
         }
     });
 
