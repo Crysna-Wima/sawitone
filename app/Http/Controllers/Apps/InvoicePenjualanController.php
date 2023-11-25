@@ -26,21 +26,54 @@ use Validator;
 class InvoicePenjualanController extends Controller
 {
     public function index(){
-        $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
-        $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
-        $total = count($temp_detail);
-        if(!empty($temp_inv_master)){
-            $data['do_mst'] = DoMaster::with('somst.customer')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
-            $data['do_dtl'] = DoDetail::with('invstore.stock')->where('fc_dono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
-            $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
+            $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
+            $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
+
+            $total = count($temp_detail);
             
-            return view('apps.invoice-penjualan.create',$data);
-           
-            
-            // dd($temp_inv_master->fc_child_suppdocno);
+            if (!empty($temp_inv_master)) {
+                $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
+                $fc_child_suppdocno = [$temp_inv_master->fc_child_suppdocno];
+                $data['temp'] = TempInvoiceMst::with('domst', 'somst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
+
+                if (count($fc_child_suppdocno) > 0 && is_array($fc_child_suppdocno)) {
+                    $values = array_map(function ($jsonString) {
+                        return json_decode($jsonString, true);
+                    }, $fc_child_suppdocno);
+
+                    $query = DoMaster::with('somst.customer')
+                        ->where(function ($query) use ($values) {
+                            $query->whereIn('fc_dono', array_merge(...$values));
+                        })
+                        ->where('fc_branch', auth()->user()->fc_branch);
+
+                    $data['do_mst'] = $query->get();
+
+                    $data['do_dtl'] = DoDetail::with('invstore.stock')
+                        ->where(function ($query) use ($values) {
+                            $query->whereIn('fc_dono', array_merge(...$values));
+                        })
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->get();
+                } else {
+                    $data['do_mst'] = DoMaster::with('somst.customer')
+                        ->where('fc_dono', $fc_child_suppdocno[0])
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->first();
+
+                    $data['do_dtl'] = DoDetail::with('invstore.stock')
+                        ->where('fc_dono', $fc_child_suppdocno[0])
+                        ->where('fc_branch', auth()->user()->fc_branch)
+                        ->get();
+                }
+
+                return view('apps.invoice-penjualan.create', $data);
+                // dd($fc_child_suppdocno);
+            }
+
+            return view('apps.invoice-penjualan.index');
         }
-        return view('apps.invoice-penjualan.index');     
-    }
+
 
     public function datatables()
     {
@@ -92,13 +125,15 @@ class InvoicePenjualanController extends Controller
         $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if(empty($temp_inv_master)){
+        $fc_child_suppdocno_array = explode(',', $request->fc_child_suppdocno);
+        $fc_child_suppdocno_json = json_encode($fc_child_suppdocno_array, JSON_UNESCAPED_SLASHES);
             // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_invno' => auth()->user()->fc_userid,
             'fc_suppdocno' => $request->fc_suppdocno,
-            'fc_child_suppdocno' => $request->fc_child_suppdocno,
+            'fc_child_suppdocno' => $fc_child_suppdocno_json,
             'fc_entitycode' => $request->fc_entitycode,
             'fc_status' => 'I',
             'fc_invtype' => 'SALES',
@@ -121,6 +156,8 @@ class InvoicePenjualanController extends Controller
                     'message' => 'Data gagal disimpan'
                 ];
             }
+
+        // dd($fc_child_suppdocno_json);
         }else{
             return [
                 'status' => 300,
@@ -135,9 +172,17 @@ class InvoicePenjualanController extends Controller
         // validator
         $validator = Validator::make($request->all(), [
             'fc_sono' => 'required',
-            'fc_membercode' => 'required'
+            'fc_membercode' => 'required',
+            'fc_dono' => 'required'
         ]);
 
+        // pesan required custom replaced $validator
+        $validator->customMessages = [
+            'fc_sono.required' => 'SO wajib diisi',
+            'fc_membercode.required' => 'Customer wajib diisi',
+            'fc_dono.required' => 'Surat Jalan wajib diisi'
+        ];
+        
         if($validator->fails()) {
             return [
                 'status' => 300,
@@ -150,13 +195,18 @@ class InvoicePenjualanController extends Controller
         $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'SALES')->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if(empty($temp_inv_master)){
+        $fc_dono_array = explode(',', $request->fc_dono);
+
+        // JSON-encoded string
+        $fc_dono_json = json_encode($fc_dono_array, JSON_UNESCAPED_SLASHES);
+
             // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_invno' => auth()->user()->fc_userid,
             'fc_suppdocno' => $request->fc_sono,
-            'fc_child_suppdocno' => $request->fc_dono,
+            'fc_child_suppdocno' =>  $fc_dono_json,
             'fc_entitycode' => $request->fc_membercode,
             'fc_status' => 'I',
             'fc_invtype' => 'SALES',
@@ -171,7 +221,7 @@ class InvoicePenjualanController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/invoice-penjualan/create/' . base64_encode( $request->fc_child_suppdocno)
+                    'link' => '/apps/invoice-penjualan/create/multisj/' . base64_encode($fc_dono_json)
                 ];
             }else{
                 return [

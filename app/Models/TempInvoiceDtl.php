@@ -17,6 +17,7 @@ class TempInvoiceDtl extends Model
     protected $primaryKey = 'fn_invrownum';
     public $incrementing = false;
     protected $guarded = ['type'];
+    
 
     public function tempinvmst(){
         return $this->belongsTo(TempInvoiceMst::class, ['fc_invno', 'fc_invtype'], ['fc_invno', 'fc_invtype'])->where([
@@ -37,7 +38,8 @@ class TempInvoiceDtl extends Model
     }
 
     public function invstore(){
-        return $this->hasOne(Invstore::class, 'fc_barcode','fc_detailitem');
+        return $this->hasOne(Invstore::class, ['fc_barcode'],['fc_detailitem']);
     }
+
 
 }

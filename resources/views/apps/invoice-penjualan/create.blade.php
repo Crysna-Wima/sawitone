@@ -53,52 +53,92 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. DO : {{ $do_mst->fc_dono }}
+                                    <label>No. DO :
+                                        @if($do_mst instanceof \Illuminate\Support\Collection)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ $do->fc_dono }}
+                                                @if($index < $do_mst->count() - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ $do_mst->fc_dono }}
+                                        @endif
+
                                     </label>
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SO : {{ $do_mst->somst->fc_sono }}
-                                    </label>
+                                    <label>No. SO :  {{ $do_mst->first()->fc_sono}}
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Delivery : {{ \Carbon\Carbon::parse( $do_mst->fd_dodate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Delivery :
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ \Carbon\Carbon::parse($do->fd_dodate)->isoFormat('D MMMM Y') }}
+                                                @if($index < count($do_mst) - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                            {{ \Carbon\Carbon::parse($do_mst[0]->fd_dodate)->isoFormat('D MMMM Y') }}
+                                        @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
+                                            {{ \Carbon\Carbon::parse($do_mst->fd_dodate)->isoFormat('D MMMM Y') }}
+                                        @endif
                                     </label>
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ \Carbon\Carbon::parse( $do_mst->fd_arrivaldate )->isoFormat('D MMMM Y'); }}
+                                    <label>Tgl Diterima :
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                {{ \Carbon\Carbon::parse($do->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                                @if($index < count($do_mst) - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                            {{ \Carbon\Carbon::parse($do_mst[0]->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                        @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
+                                            {{ \Carbon\Carbon::parse($do_mst->fd_arrivaldate)->isoFormat('D MMMM Y') }}
+                                        @endif
                                     </label>
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Tipe SO</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->fc_sotype }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->fc_sotype }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Sales</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->sales->fc_salesname1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->sales->fc_salesname1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Customer Code</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $do_mst->somst->customer->fc_membercode }}" readonly>
+                                        <input type="text" class="form-control" id="fc_membercode" name="fc_membercode" value="{{ $do_mst->first()->somst->customer->fc_membercode }}" readonly>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->member_tax_code->fv_description }} ({{ $do_mst->somst->member_tax_code->fc_action }}%)" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->member_tax_code->fv_description }} ({{ $do_mst->first()->somst->member_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -120,55 +160,55 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membernpwp_no ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membernpwp_no ?? '-' }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->member_typebranch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membertypebusiness }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membertypebusiness }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_membername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_membername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Piutang</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fn_memberAgingAP }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fn_memberAgingAP }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->member_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->member_legal_status->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat Muat</label>
-                                    <input type="text" class="form-control" value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Piutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ number_format( $do_mst->somst->customer->fm_memberAP,0,',','.') }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ number_format( $do_mst->first()->somst->customer->fm_memberAP,0,',','.') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -186,56 +226,188 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transport</label>
+                                @php
+                                    $sotransports = collect();
+                                @endphp
+                            
+                            @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                @foreach($do_mst as $index => $do)
+                                    @php
+                                        $sotransports->push($do->fc_sotransport ?? '-');
+                                    @endphp
+                                @endforeach
+                            @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                @php
+                                    $sotransports->push($do_mst[0]->fc_sotransport ?? '-');
+                                @endphp
+                            @elseif(!($do_mst instanceof \Illuminate\Support\Collection))
+                                @php
+                                    $sotransports->push($do_mst->fc_sotransport ?? '-');
+                                @endphp
+                            @endif
+                            
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $do_mst->fc_sotransport }}" readonly>
+                                    <input type="text" class="form-control" name="fc_sotransport" id="fc_sotransport" value="{{ $sotransports->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transporter</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $do_mst->fc_transporter }}" readonly>
-                                </div>
+                                        @php
+                                            $transporters = collect();
+                                        @endphp
+
+                                        @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                            @foreach($do_mst as $index => $do)
+                                                @php
+                                                    $transporters->push($do->fc_transporter ?? '-');
+                                                @endphp
+                                            @endforeach
+                                            @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                                @php
+                                                    $transporters->push($do_mst[0]->fc_transporter ?? '-');
+                                                @endphp
+                                            @elseif(!is_array($do_mst))
+                                            @php
+                                                $transporters->push($do_mst->fc_transporter ?? '-');
+                                            @endphp
+                                        @endif
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="fc_transporter" id="fc_transporter" value="{{ $transporters->unique()->implode(', ') }}" readonly>
+                                        </div>
+
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Biaya Transport</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            Rp.
+                                @php
+                                    $fm_servpay_values = collect();
+                                @endphp
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        @php
+                                            $fm_servpay_values->push($do->fm_servpay);
+                                        @endphp
+                                    @endforeach
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
                                         </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
-                                </div>
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst[0]->fm_servpay }}" readonly>
+                                    </div>
+                                @elseif(!is_array($do_mst))
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->fm_servpay }}" readonly>
+                                    </div>
+                                @endif
                             </div>
+                            
+                            
+                            
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Penerima</label>
+                                @php
+                                    $fc_custreceiver = collect();
+                                @endphp
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        @php
+                                            $fc_custreceiver->push($do->fc_custreceiver ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                    @php
+                                        $fc_custreceiver->push($do_mst[0]->fc_custreceiver ?? '-');
+                                    @endphp
+                                @elseif(!is_array($do_mst))
+                                    @php
+                                        $fc_custreceiver->push($do_mst->fc_custreceiver ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $do_mst->fc_custreceiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_custreceiver" id="fc_custreceiver" value="{{ $fc_custreceiver->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
+                            
                         </div>
                         <div class="col-12 col-md-12 col-lg-4">
                             <div class="form-group">
                                 <label>Catatan</label>
+                                @php
+                                    $fv_descriptions = collect();
+                                @endphp
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        @php
+                                            $fv_descriptions->push($do->fv_description ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                    @php
+                                        $fv_descriptions->push($do_mst[0]->fv_description ?? '-');
+                                    @endphp
+                                @elseif(!is_array($do_mst))
+                                    @php
+                                        $fv_descriptions->push($do_mst->fv_description ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fd_dodatesysinput" id="fd_dodatesysinput" value="{{ $do_mst->fv_description ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $fv_descriptions->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
+                        
+                        
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
+                                @php
+                                    $fc_memberaddress_loading = collect();
+                                @endphp
+                                @if($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) > 1)
+                                    @foreach($do_mst as $index => $do)
+                                        @php
+                                            $fc_memberaddress_loading->push($do->fc_memberaddress_loading ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($do_mst instanceof \Illuminate\Support\Collection && count($do_mst) === 1)
+                                    @php
+                                        $fc_memberaddress_loading->push($do_mst[0]->fc_memberaddress_loading ?? '-');
+                                    @endphp
+                                @elseif(!$do_mst instanceof \Illuminate\Support\Collection)
+                                    @php
+                                        $fc_memberaddress_loading->push($do_mst->fc_memberaddress_loading ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $do_mst->fc_memberaddress_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_memberaddress_loading" id="fc_memberaddress_loading" value="{{ $fc_memberaddress_loading->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -384,18 +556,18 @@
                                     @if (empty($temp->fc_address))
                                     <select class="form-control select2" name="fc_address" id="fc_address" required>
                                         <option value="" selected disabled>- Pilih Alamat -</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}</option>
                                     </select>
                                     @else
                                     <select class="form-control select2" name="fc_address" id="fc_address">
                                         <option value="{{ $temp->fc_address }}" selected disabled>
                                             {{ $temp->fc_address }}
                                         </option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress1 }}">{{ $do_mst->somst->customer->fc_memberaddress1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->somst->customer->fc_memberaddress_loading1 }}</option>
-                                        <option value="{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->somst->customer->fc_member_npwpaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}">{{ $do_mst->first()->somst->customer->fc_memberaddress_loading1 }}</option>
+                                        <option value="{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}">{{ $do_mst->first()->somst->customer->fc_member_npwpaddress1 }}</option>
                                     </select>
                                     @endif
                                 </div>
@@ -817,7 +989,8 @@
         });
     }
 
-    var dono = "{{ $do_mst->fc_dono }}";
+    var dono = "{{ $do_mst->count() > 0 ? $do_mst->first()->fc_dono : '' }}";
+
     var encode_dono = window.btoa(dono);
     var tb = $('#tb').DataTable({
         // apabila data kosong

@@ -169,6 +169,8 @@ class DeliveryOrderController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')
             ->where('fc_stockcode', $decode_fc_stockcode)
+            ->where('fn_quantity', '>', 0)
+            ->where('fd_expired', '>', Carbon::now())
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_warehousecode', $now_fc_warehousecode)
             ->orderBy('fd_expired', 'ASC')
@@ -264,24 +266,27 @@ class DeliveryOrderController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)
             ->first();
 
+        $data_temp_dodtl = TempDoDetail::where('fc_dono', auth()->user()->fc_userid)
+            ->where('fc_barcode', $request->fc_barcode)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->first();
+
         $data_stock_sodtl = SoDetail::where('fc_stockcode', $request->fc_stockcode)
             ->where('fc_sono', $request->fc_sono)
             ->where('fc_branch', auth()->user()->fc_branch)
             ->first();
-        // dd($request->bonus_quantity);
-        $sodtlLength = count($data_stock_sodtl->stock->sodtl);
-        $qty = 0;
-        for ($i = 0; $i < $sodtlLength; $i++) {
-            $qty += $data_stock_sodtl->stock->sodtl[$i]->fn_so_qty - $data_stock_sodtl->stock->sodtl[$i]->fn_do_qty;
-        }
-        if ($qty >= $data_stock->fn_quantity) {
+            
+       
+        $qty = $data_stock_sodtl->fn_so_qty - $data_stock_sodtl->fn_do_qty;
+        
+        // if ($qty >= $data_stock->fn_quantity) {
             if ($request->quantity > $data_stock->fn_quantity) {
                 return [
                     'status' => 300,
                     'message' => 'Quantity yang anda masukkan melebihi stock yang tersedia'
                 ];
             }
-        }
+        // }
 
         // dd($request->quantity);
         if ($request->quantity > $qty) {
@@ -291,7 +296,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-        if ($request->quantity > $data_stock_sodtl->fn_so_qty || $request->bonus_quantity > $data_stock_sodtl->fn_so_bonusqty) {
+        if ($request->bonus_quantity > ($data_stock_sodtl->fn_so_bonusqty - $data_stock_sodtl->fn_do_bonusqty)) {
             return [
                 'status' => 300,
                 'message' => 'Quantity yang diinputkan melebihi jumlah pesanan'
@@ -307,21 +312,29 @@ class DeliveryOrderController extends Controller
         }
 
         // // //INSERT DoDetail dari data stock
+        // echo ($request->fc_barcode);
         if ($request->quantity) {
-            $do_dtl = TempDoDetail::create([
-                'fc_divisioncode' => auth()->user()->fc_divisioncode,
-                'fc_branch' => auth()->user()->fc_branch,
-                'fc_dono' => auth()->user()->fc_userid,
-                'fc_barcode' => $request->fc_barcode,
-                'fn_qty_do' => $request->quantity,
-                'fc_status_bonus_do' => 'F',
-                'fc_namepack' => $data_stock->stock->fc_namepack,
-                'fc_batch' => $data_stock->fc_batch,
-                'fc_catnumber' => $data_stock->fc_catnumber,
-                'fd_expired' => $data_stock->fd_expired,
-                'fn_price' => $data_stock_sodtl->fm_so_price,
-                'fn_disc' => $data_stock_sodtl->fm_so_disc,
-            ]);
+            if (empty($data_temp_dodtl)) {
+                $do_dtl = TempDoDetail::create([
+                    'fc_divisioncode' => auth()->user()->fc_divisioncode,
+                    'fc_branch' => auth()->user()->fc_branch,
+                    'fc_dono' => auth()->user()->fc_userid,
+                    'fc_barcode' => $request->fc_barcode,
+                    'fn_qty_do' => $request->quantity,
+                    'fc_status_bonus_do' => 'F',
+                    'fc_namepack' => $data_stock->stock->fc_namepack,
+                    'fc_batch' => $data_stock->fc_batch,
+                    'fc_catnumber' => $data_stock->fc_catnumber,
+                    'fd_expired' => $data_stock->fd_expired,
+                    'fn_price' => $data_stock_sodtl->fm_so_price,
+                    'fn_disc' => $data_stock_sodtl->fm_so_disc,
+                ]);
+            } else {
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal ditambahkan, terdapat duplikasi Item! Silahkan hapus Item yang tersimpan!'
+                ];
+            }
         } else {
             $do_dtl = TempDoDetail::create([
                 'fc_divisioncode' => $data_stock->fc_divisioncode,
