@@ -4,6 +4,7 @@ stages:
 deploy_development:
   stage: deploy
   script:
+    - whois
     - git checkout development
     - git pull origin development
     - sudo rm -r /var/www/staging-dexa-web/*
