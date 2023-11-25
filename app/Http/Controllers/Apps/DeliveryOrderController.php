@@ -249,15 +249,7 @@ class DeliveryOrderController extends Controller
             ];
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $now_fc_warehousecode = DoMaster::where('fc_dono', auth()->user()->fc_userid)
-=======
         $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
->>>>>>> f3fc8de9f3d43fd9c7fd2cfea392823d2c337c5a
-=======
-        $now_fc_warehousecode = TempDoMaster::where('fc_dono', auth()->user()->fc_userid)
->>>>>>> 6528c9614ca22814ac11dd2bf76356a5a1654697
             ->where('fc_branch', auth()->user()->fc_branch)->first()->fc_warehousecode;
 
         //CHECK DATA STOCK

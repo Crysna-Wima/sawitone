@@ -250,12 +250,12 @@ class InvoicePenjualanController extends Controller
         $decoded_fc_membercode = base64_decode($fc_membercode);
         // jika $decoded_fc_membercode samadengan 'all' maka tampilkan semua data
         if($decoded_fc_membercode == 'all'){
-            $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->get();
+            $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_sotype', 'Retail')->whereNotIn('fc_sostatus', ['L', 'CC', 'F'])->get();
             return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
         }
-        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->orderBy('fc_sono')->get();
+        $data = SoMaster::with('domst','customer')->where('fc_branch', auth()->user()->fc_branch)->where('fc_invstatus', '!=' ,'INV')->where('fc_membercode', $decoded_fc_membercode)->where('fc_sotype', 'Retail')->whereNotIn('fc_sostatus', ['L', 'CC', 'F'])->orderBy('fc_sono')->get();
 
         return DataTables::of($data)
             ->addIndexColumn()
