@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class KasBon extends Model
 {
     use HasFactory;
+
+    protected $table = 't_kasbon';
 }

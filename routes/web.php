@@ -791,6 +791,7 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('kas-bon')->group(function () {
             Route::get('/', [KasBonController::class, 'index']);
+            Route::post('/store', [KasBonController::class, 'store']);
         });
     });
 });
