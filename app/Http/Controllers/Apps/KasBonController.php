@@ -11,7 +11,21 @@ class KasBonController extends Controller
 {
     public function index()
     {
-        $data = KasBon::all();
+        // $data = KasBon::all();
+        $data = array(
+            [
+                "title" => "Test",
+                "content" => "Est reprehenderit commodo excepteur in nisi duis fugiat culpa ipsum sit sunt quis. Dolor esse et amet duis. Veniam officia veniam enim exercitation ut ad."
+            ],
+            [
+                "title" => "Test",
+                "content" => "Est reprehenderit commodo excepteur in nisi duis fugiat culpa ipsum sit sunt quis. Dolor esse et amet duis. Veniam officia veniam enim exercitation ut ad."
+            ],
+            [
+                "title" => "Test",
+                "content" => "Est reprehenderit commodo excepteur in nisi duis fugiat culpa ipsum sit sunt quis. Dolor esse et amet duis. Veniam officia veniam enim exercitation ut ad."
+            ],
+        );
         return view('apps.kas-bon.index', compact('data'));
     }
 
@@ -53,5 +67,17 @@ class KasBonController extends Controller
             //     'message' => 'Kas Bon tidak berhasil ditambahkan'
             // ]);
         }
+    }
+
+    public function update(KasBon $KasBon, Request $request)
+    {
+    }
+
+    public function delete(KasBon $KasBon)
+    {
+    }
+
+    public function datatables()
+    {
     }
 }
