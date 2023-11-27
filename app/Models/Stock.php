@@ -23,62 +23,73 @@ class Stock extends Model
     protected $guarded = ['type'];
     protected $appends = [];
 
-    public function GetFmPriceDefaultAttribute(){
+    public function GetFmPriceDefaultAttribute()
+    {
         return number_format($this->attributes['fm_price_default'], 2, ",", ".");
     }
 
-    public function scopeActive($query){
+    public function scopeActive($query)
+    {
         $query->where('status', 1);
     }
 
-    public function branch(){
+    public function branch()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_branch', 'fc_kode')->withTrashed();
     }
 
-    public function namepack(){
+    public function namepack()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_namepack', 'fc_kode')->withTrashed();
     }
 
-    public function type_stock1(){
+    public function type_stock1()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_typestock1', 'fc_kode')->withTrashed();
     }
 
-    public function type_stock2(){
+    public function type_stock2()
+    {
         return $this->belongsTo(TransaksiType::class, 'fc_typestock2', 'fc_kode')->withTrashed();
     }
 
-    public function tempsodetail(){
+    public function tempsodetail()
+    {
         return $this->hasMany(TempSoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
-    public function invstore(){
+    public function invstore()
+    {
         return $this->hasMany(Invstore::class, ['fc_stockcode'], ['fc_stockcode']);
     }
 
     // sodtl
-    public function sodtl(){
+    public function sodtl()
+    {
         return $this->hasMany(SoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
     // RoDetail
-    public function rodetail(){
+    public function rodetail()
+    {
         return $this->hasMany(RoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
 
     // TempRoDetail
-    public function temprodetail(){
+    public function temprodetail()
+    {
         return $this->hasMany(TempRoDetail::class, 'fc_barcode', 'fc_barcode');
     }
 
     // StockCustomer
-    public function stockcustomer(){
+    public function stockcustomer()
+    {
         return $this->hasMany(StockCustomer::class, 'fc_stockcode', 'fc_stockcode')->withTrashed();;
     }
 
     // podetail
-    public function podetail(){
+    public function podetail()
+    {
         return $this->hasMany(PoDetail::class, 'fc_stockcode', 'fc_stockcode');
     }
-
-    
 }

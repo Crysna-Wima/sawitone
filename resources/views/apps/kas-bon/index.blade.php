@@ -29,7 +29,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">No</th>
-                                        <th scope="col" class="text-center">Nama Pengguna</th>
+                                        <th scope="col" class="text-center">Pemohon</th>
                                         <th scope="col" class="text-center">Tanggal</th>
                                         <th scope="col" class="text-center">Keterangan</th>
                                         <th scope="col" class="text-center">Nominal</th>
@@ -76,7 +76,15 @@
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group required">
                                     <label>Nominal</label>
-                                    <input type="number" class="form-control required-field" name="fm_nominal" required />
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" id="fm_nominal" name="fm_nominal"
+                                            onkeyup="return onkeyupRupiah(this.id);" required />
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -105,58 +113,137 @@
             $("#form_submit")[0].reset();
         }
 
-        // var tb = $('#tb').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     pageLength: 5,
-        //     ajax: {
-        //         url: '/apps/kas-bon/datatables',
-        //         type: 'GET'
-        //     },
-        //     columnDefs: [{
-        //         className: 'text-center',
-        //         targets: [0, 2, 3, 4, 6]
-        //     }, ],
-        //     columns: [{
-        //             data: 'DT_RowIndex',
-        //             searchable: false,
-        //             orderable: false
-        //         },
-        //         //add data for datatables here
-        //         {
-        //             'Nama'
-        //         },
-        //         {
-        //             'xx/xx/xxxx'
-        //         },
-        //         {
-        //             'Id sit pariatur esse occaecat excepteur aliqua mollit amet. Ad laboris proident pariatur eu officia aliqua officia excepteur aute amet. Nisi eu do aliqua voluptate cillum anim laborum occaecat officia.'
-        //         },
-        //         {
-        //             'Rp. xxxxxxx'
-        //         },
-        //         {
-        //             data: 'DT_RowIndex'
-        //         },
-        //     ],
-        //     rowCallback: function(row, data) {
-        //         if (data['status'] == 'J') {
-        //             $('td:eq(#)', row).html('<span class="badge badge-success">Journal</span>');
-        //         } else if (data['status' == 'CC']) {
-        //             $('td:eq(#)', row).html('<span class="badge badge-danger">Cancel</span>');
-        //         } else {
-        //             $('td:eq(#)', row).html('<span class="badge badge-primary">Process</span>');
-        //         }
+        $("#form_submit").on("submit", function() {
+            $("#modal_create").modal('hide');
+        });
 
-        //         var url_cencel = "/" + data.id;
-        //         var url_delete = "/" + data.id;
+        var tb = $('#tb').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 5,
+            ajax: {
+                url: '/apps/kas-bon/datatables',
+                type: 'GET'
+            },
+            columnDefs: [{
+                    className: 'text-center',
+                    targets: [0, 1, 2, 4, 5, 6]
+                },
+                {
+                    "width": "15%",
+                    targets: [4]
+                }
+            ],
+            columns: [{
+                    data: 'fc_kasbonno',
+                },
+                {
+                    data: 'fc_userapplicant'
+                },
+                {
+                    data: 'fd_kasbondate',
+                    render: function(data, type, row) {
+                        return moment(data).format(
+                            // format tanggal
+                            'DD/MM/YYYY'
+                        );
+                    }
+                },
+                {
+                    data: 'fv_description'
+                },
+                {
+                    data: 'fm_nominal',
+                    // render: $.fn.dataTable.render.number(',', '.', 0, 'Rp ')
+                    render: function(data, type, row) {
+                        return row.fm_nominal.toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        })
+                    }
+                },
+                {
+                    data: 'fc_status'
+                },
+                {
+                    data: null
+                },
+            ],
+            rowCallback: function(row, data) {
+                if (data['fc_status'] == 'J') {
+                    $('td:eq(5)', row).html('<span class="badge badge-success">Journal</span>');
+                } else if (data['fc_status'] == 'CC') {
+                    $('td:eq(5)', row).html('<span class="badge badge-danger">Cancel</span>');
+                } else {
+                    $('td:eq(5)', row).html('<span class="badge badge-primary">Process</span>');
+                }
 
-        //         $('td:eq(#)', row).html(
-        //             `
-    //     <button class="btn btn-info btn-sm mr-1" onclick="cancel('#')"><i class="fa fa-edit"></i> Cancel</button>
-    //     <button class="btn btn-danger btn-sm" onclick="submit('#')"><i class="fa fa-trash"> </i> Submit</button>`
-        //         );
-        //     }
-        // });
+                var kasbonno = window.btoa(data.fc_kasbonno);
+                var url_update = "/apps/kas-bon/update/" + kasbonno;
+
+                data['fc_status'] == 'F' ?
+                    $('td:eq(6)', row).html(
+                        `
+                            <button class="btn btn-danger btn-sm mr-1" onclick="update('${url_update}', 'CC', 'Anda yakin ingin mencancel?')"><i class="fa fa-close"></i> Batal</button>
+                            <button class="btn btn-success btn-sm" onclick="update('${url_update}', 'J', 'Anda yakin ingin menjurnal?')"><i class="fa fa-book-open"> </i> Jurnal</button>
+                        `
+                    ) :
+                    $('td:eq(6)', row).html(
+                        `
+                            <strong><i>No Action Necessary</i></strong>
+                        `
+                    )
+            }
+
+
+        });
+
+        function update(url, data, message) {
+            swal({
+                title: "Konfirmasi",
+                text: message,
+                type: "warning",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((save) => {
+                if (save) {
+                    $("#modal_loading").modal('show');
+                    $.ajax({
+                        url: url,
+                        data: {
+                            fc_status: data,
+                        },
+                        type: 'PUT',
+                        success: function(response) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            if (response.status == 200) {
+                                swal(response.message, {
+                                    icon: 'success',
+                                });
+                                $("#modal").modal('hide');
+                                tb.ajax.reload();
+                            } else {
+                                swal(response.message, {
+                                    icon: 'error',
+                                });
+                                $("#modal").modal('hide');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            setTimeout(function() {
+                                $('#modal_loading').modal('hide');
+                            }, 500);
+                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR
+                                .responseText + ")", {
+                                    icon: 'error',
+                                });
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endsection
