@@ -378,9 +378,6 @@
                 },
             ],
             rowCallback: function(row, data) {
-                if (data['fn_quantity'] == '0') {
-                    $(row).hide();
-                }
                 $('td:eq(5)', row).html(`
                     <button type="button" class="btn btn-warning btn-sm" onclick="detail_inventory('${data.fn_quantity}','${data.fc_stockcode}','${data.fc_barcode}','${data.stock.fc_namelong}')"><i class="fa fa-check"></i> Pilih</button>
                 `);

@@ -52,7 +52,7 @@ class MutasiBarangController extends Controller
         $data = Invstore::with('stock.sodtl.somst', 'warehouse')->where('fc_stockcode', $decode_fc_stockcode)
         ->where('fc_branch', auth()->user()->fc_branch)
         ->where('fc_warehousecode', $fc_warehousecode)
-        // ->where('fc_warehousecode', Warehouse::where('fc_warehousepos', 'INTERNAL')->first()->fc_warehousecode)
+        ->where('fn_quantity','>', 0)
         ->orderBy('fd_expired', 'ASC')
         ->get();
         return DataTables::of($data)

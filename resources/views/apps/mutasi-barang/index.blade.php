@@ -378,7 +378,7 @@
             )
         } else {
             $('#modal_so_cprr').modal('show');
-            table_so_cprr(fc_membercode_tujuan);
+            table_so_cprr(fc_destination);
         }
 
     }
@@ -425,8 +425,8 @@
         $('#modal_so_cprr').modal('hide');
     }
 
-    function table_so_cprr(fc_membercode_tujuan) {
-        console.log(fc_membercode_tujuan)
+    function table_so_cprr(fc_destination) {
+        // console.log(fc_membercode_tujuan)
         var tb = $('#tb_so_cprr').DataTable({
             processing: true,
             serverSide: true,
@@ -435,7 +435,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_membercode_tujuan,
+                url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_destination,
                 type: 'GET'
             },
             columnDefs: [{
