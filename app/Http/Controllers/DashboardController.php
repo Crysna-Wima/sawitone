@@ -29,6 +29,7 @@ class DashboardController extends Controller
         $expiredDateCount = Invstore::with('stock')
             ->where('t_invstore.fc_branch', auth()->user()->fc_branch)
             ->whereDate('t_invstore.fd_expired', '<=', now())
+            ->where('fn_quantity', '>', 0)
             ->count();
 
             $subquery = DB::table('t_invstore')
@@ -64,6 +65,7 @@ class DashboardController extends Controller
             ->where('fc_branch', auth()->user()->fc_branch)
             ->where('fc_divisioncode', auth()->user()->fc_divisioncode)
             ->whereDate('fd_expired', '<', now())
+            ->where('fn_quantity', '>', 0)
             ->get();
         }else if($tipe == 'moq'){
             $data = Invstore::with('stock')

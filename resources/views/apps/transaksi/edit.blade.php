@@ -600,12 +600,21 @@
         var id = $(button).data('rownum');
         var method = $(button).data('method');
         var nominal = $(button).data('nominal');
+        var refno = $(button).data('refno');
+        var agingref = $(button).data('agingref');
         var description = $(button).data('description');
         var newdescription = $(`#fv_description_${id}`).val();
         $('#modal_pembayaran').modal('show');
         $('#fn_rownum').val(id);
         $('#fc_paymentmethod_edit').val(method);
         $('#fv_description_payment').val(newdescription);
+
+        if ($('#fc_paymentmethod_edit').val() === 'GIRO' ){
+            $('#no_giro_edit').attr('hidden', false);
+            $('#tgl_giro_edit').attr('hidden', false);
+            $('#fc_refno_edit').val(refno);
+            $('#fd_agingref_edit').val(agingref);
+        }
     }
 
     $.ajax({
@@ -1004,7 +1013,7 @@
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-refno="${data.fc_refno}" data-agingref="${data.fd_agingref}" data-description="${data.fv_description}" data-nominal="${data.fm_nominal}" data-tipe="D" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `);
             } else if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(` `)
@@ -1100,7 +1109,7 @@
 
             if (previledgeDebit.includes('ONCE') && data.coamst.fc_directpayment == 'T') {
                 $('td:eq(8)', row).html(`
-                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
+                <button type="submit" class="btn btn-warning btn-sm mr-1" data-rownum="${data.fn_rownum}" data-method="${data.fc_paymentmethod}" data-refno="${data.fc_refno}" data-agingref="${data.fd_agingref}" data-nominal="${data.fm_nominal}" data-description="${data.fv_description}" data-tipe="C" onclick="edit_pembayaran(this)"><i class="fas fa-edit"> </i></button>
                 `)
             } else if (previledgeCredit.includes('ONCE') && data.coamst.fc_directpayment != 'T') {
                 $('td:eq(8)', row).html(` `)

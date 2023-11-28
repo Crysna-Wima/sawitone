@@ -323,6 +323,7 @@ class TransaksiDetailController extends Controller
         }
 
         $update_pembayaran = TempTrxAccountingDetail::where([
+            'fc_trxno' => auth()->user()->fc_userid,
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
@@ -345,8 +346,10 @@ class TransaksiDetailController extends Controller
         // dd($request);
     }
 
-    public function update_edit_pembayaran(Request $request)
+    public function update_edit_pembayaran(Request $request, $fc_trxno)
     {
+        $decode_fc_trxno = base64_decode($fc_trxno);
+        
         $validator = Validator::make($request->all(), [
             'fc_paymentmethod_edit' => 'required',
             'fn_rownum' => 'required',
@@ -359,7 +362,8 @@ class TransaksiDetailController extends Controller
             ];
         }
 
-        $update_pembayaran = TempTrxAccountingDetail::where([
+        $update_pembayaran = TrxAccountingDetail::where([
+            'fc_trxno' => $decode_fc_trxno,
             'fn_rownum' => $request->fn_rownum,
         ])->update([
             'fc_paymentmethod' => $request->fc_paymentmethod_edit,
