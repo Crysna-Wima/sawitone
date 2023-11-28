@@ -48,6 +48,8 @@ class SalesOrderDetailController extends Controller
 
     public function datatables_inventory()
     {
+        ini_set('memory_limit', '2048M'); // 2GB
+        set_time_limit(360);
         $data = Invstore::with('stock', 'warehouse')
         ->whereHas('warehouse', function($query){
             $query->where('fc_warehousepos', '=', 'INTERNAL');
