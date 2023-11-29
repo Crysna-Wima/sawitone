@@ -46,8 +46,8 @@ class InvoiceCprrDetailController extends Controller
         $update_discprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,
         ])->update([
-            'fm_discprice' => $request->fm_discprice,
-            'fm_discprecen' => $request->fm_discprecen
+            'fm_discprice' => ($request->fm_discprice === '') ? NULL : $request->fm_discprice,
+            'fm_discprecen' => ($request->fm_discprecen === '') ? NULL : $request->fm_discprecen
         ]);
 
         if ($update_discprice) {
