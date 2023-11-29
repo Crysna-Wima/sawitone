@@ -531,6 +531,9 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
             Route::get('/', 'Apps\InvoicePembelianController@index');
             Route::get('/detail/{fc_rono}', 'Apps\InvoicePembelianController@detail');
+            Route::get('/data-supplier', 'Apps\InvoicePembelianController@supplier');
+            Route::get('/datatables-po/{fc_suppliercode}', 'Apps\InvoicePembelianController@datatables_po');
+            Route::get('/datatables-bpb/{fc_pono}', 'Apps\InvoicePembelianController@datatables_bpb');
             Route::get('/get-detail/{fn_invrownum}', 'Apps\InvoicePembelianDetailController@get_detail');
             Route::delete('/detail/delete/{fc_invno}/{fn_invrownum}', 'Apps\InvoicePembelianDetailController@delete');
             Route::get('/datatables', 'Apps\InvoicePembelianController@datatables');
@@ -539,9 +542,9 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/update-discprice', 'Apps\InvoicePembelianDetailController@update_discprice');
             Route::put('/update-description', 'Apps\InvoicePembelianDetailController@edit_description');
 
-
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
+                Route::post('/store-invoice-multi-bpb', 'Apps\InvoicePembelianController@create_invoice_multibpb');
                 Route::post('/store-detail', 'Apps\InvoicePembelianDetailController@insert_item');
                 Route::put('/update-info/{fc_invno}', 'Apps\InvoicePembelianDetailController@update_inform');
                 Route::get('/{fc_rono}', 'Apps\InvoicePembelianDetailController@create');

@@ -10,14 +10,17 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 use PDF;
+use App\Models\PoMaster;
 use App\Models\RoMaster;
 use App\Models\RoDetail;
 use App\Models\InvDetail;
 use App\Models\InvMaster;
 use App\Models\InvoiceMst;
+use App\Models\Supplier;
 use App\Models\TempInvoiceDtl;
 use App\Models\TempInvoiceMst;
 use App\Models\TransaksiType;
+use App\Helpers\ApiFormatter;
 use Carbon\Carbon;
 use Validator;
 
@@ -138,5 +141,134 @@ class InvoicePembelianController extends Controller
             ];
         }
        
+    }
+
+    public function supplier()
+    {
+        $data = Supplier::with(
+            'branch',
+            'supplier_legal_status',
+            'supplier_nationality',
+            'supplier_type_business',
+            'supplier_tax_code',
+            'supplier_typebranch',
+            'supplier_bank1',
+            'supplier_bank2',
+            'supplier_bank3',
+        )->get();
+        return ApiFormatter::getResponse($data);
+    }
+
+    public function datatables_po($fc_suppliercode){
+        $decoded_fc_suppliercode = base64_decode($fc_suppliercode);
+        // jika $decoded_fc_membercode samadengan 'all' maka tampilkan semua data
+        if($decoded_fc_suppliercode == 'all'){
+
+            $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        }
+
+        $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->where('fc_suppliercode', $decoded_fc_suppliercode)->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->orderBy('fc_pono')->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
+    }
+
+    public function datatables_bpb($fc_pono){
+        $decoded_fc_pono = base64_decode($fc_pono);
+        // jika $decoded_fc_sono samadengan 'all' maka tampilkan semua data
+        if($decoded_fc_pono == 'all'){
+            $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+        } else {
+            $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_sono', $decoded_fc_pono)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->orderBy('fc_dono')
+            ->get();
+        }
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function create_invoice_multibpb(Request $request){
+        // validator
+        $validator = Validator::make($request->all(), [
+            'fc_pono' => 'required',
+            'fc_suppliercode' => 'required',
+            'fc_rono' => 'required'
+        ]);
+
+        // pesan required custom replaced $validator
+        $validator->customMessages = [
+            'fc_pono.required' => 'PO wajib diisi',
+            'fc_suppliercode.required' => 'Supplier wajib diisi',
+            'fc_rono.required' => 'BPB Performa wajib diisi'
+        ];
+        
+        if($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+
+        // ambil fc_dodetail in domaster
+        $fn_rodetail = RoMaster::where('fc_pono', $request->fc_pono)->where('fc_branch', auth()->user()->fc_branch)->first();
+        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
+
+        if(empty($temp_inv_master)){
+        $fc_rono_array = explode(',', $request->fc_rono);
+
+        // JSON-encoded string
+        $fc_rono_json = json_encode($fc_rono_array, JSON_UNESCAPED_SLASHES);
+
+            // create TempInvoiceMst
+         $create = TempInvoiceMst::create([
+            'fc_divisioncode' => auth()->user()->fc_divisioncode,
+            'fc_branch' => auth()->user()->fc_branch,
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_suppdocno' => $request->fc_pono,
+            'fc_child_suppdocno' =>  $fc_rono_json,
+            'fc_entitycode' => $request->fc_suppliercode,
+            'fc_status' => 'I',
+            'fc_invtype' => 'PURCHASE',
+            'fd_inv_releasedate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_releasedate)),
+            'fn_inv_agingday' => $request->fn_inv_agingday,
+            'fd_inv_agingdate' => date('Y-m-d H:i:s', strtotime($request->fd_inv_agingdate)),
+            'fc_userid' => auth()->user()->fc_userid,
+            'fn_invdetail' => $fn_rodetail
+         ]);
+
+            if($create){
+                return [
+                    'status' => 201,
+                    'message' => 'Data berhasil disimpan',
+                    'link' => '/apps/invoice-pembelian/create/multisj/' . base64_encode($fc_rono_json)
+                ];
+            }else{
+                return [
+                    'status' => 300,
+                    'message' => 'Data gagal disimpan'
+                ];
+            }
+        // dd($request);
+        }else{
+            return [
+                'status' => 300,
+                'message' => 'Data sudah ada'
+            ];
+        }
+
+        
     }
 }
