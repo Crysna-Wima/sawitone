@@ -831,6 +831,7 @@
 
                     var discprice = parseFloat($('#fm_discprice1').val().toString().replace(/[^\d|\,]/g, ''));
                     $('#fm_discprice').val(discprice);
+                    $('#fm_discprecen').val(0);
                 });
             }
         });
