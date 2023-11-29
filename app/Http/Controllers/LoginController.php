@@ -111,7 +111,7 @@ class LoginController extends Controller
 
             return [
                 'status' => 300,
-                'message' => 'Username atau password anda salah silahkan coba lagi'
+                'message' => 'Userid atau password anda salah silahkan coba lagi'
             ];
         }
     }

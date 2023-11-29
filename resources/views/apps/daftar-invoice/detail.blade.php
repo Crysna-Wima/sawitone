@@ -579,7 +579,7 @@
                                                     Rp.
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $do_mst->first()->fm_servpay }}" readonly>
+                                            <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
                                         </div>
                                     @endif
                                 </div>

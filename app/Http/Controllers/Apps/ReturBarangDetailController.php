@@ -54,7 +54,10 @@ class ReturBarangDetailController extends Controller
         }
 
         $tempretur_detail = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->orderBy('fn_rownum', 'DESC')->first();
-        $tempretur_detail_sumquantity = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)->where('fc_branch', auth()->user()->fc_branch)->sum('fn_returqty');
+        $tempretur_detail_sumquantity = TempReturDetail::where('fc_returno', auth()->user()->fc_userid)
+        ->where('fc_barcode', $request->fc_barcode)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->sum('fn_returqty');
 
         if(($request->fn_returqty + $tempretur_detail_sumquantity) > $request->fn_qty_do){
             return [

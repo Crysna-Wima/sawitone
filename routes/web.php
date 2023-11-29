@@ -169,6 +169,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'DataMaster\MasterWarehouseController@index');
             Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}', 'DataMaster\MasterWarehouseController@detail');
             Route::get('/datatables', 'DataMaster\MasterWarehouseController@datatables');
+            Route::post('/add-warehouse', 'DataMaster\MasterWarehouseController@add_warehouse');
             Route::post('/store-update', 'DataMaster\MasterWarehouseController@store_update');
             Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}', 'DataMaster\MasterWarehouseController@delete');
         });
@@ -519,6 +520,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::post('/store-detail', 'Apps\InvoicePenjualanDetailController@insert_item');
                 Route::put('/update-inform/{fc_invno}', 'Apps\InvoicePenjualanDetailController@update_inform');
                 Route::get('/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create');
+                Route::get('/multisj/{fc_dono}', 'Apps\InvoicePenjualanDetailController@create_multisj');
                 Route::get('/datatables-do-detail/{fc_dono}', 'Apps\InvoicePenjualanDetailController@datatables_do_detail');
                 Route::put('/submit-invoice', 'Apps\InvoicePenjualanDetailController@submit_invoice');
             });
