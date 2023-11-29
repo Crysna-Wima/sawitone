@@ -49,7 +49,9 @@ class MappingUserController extends Controller
 
     public function get_user()
     {
-        $data = User::where('fc_branch', auth()->user()->fc_branch)->get();
+        $data = User::where('fc_branch', auth()->user()->fc_branch)
+        ->where('fl_hold','!=','T')
+        ->get();
 
         if (empty($data)) {
             return [

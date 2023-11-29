@@ -67,13 +67,17 @@ class MasterWarehouseController extends Controller
             }
         }
 
-        Warehouse::updateOrCreate([
-            'fc_divisioncode' => $request->fc_divisioncode,
-            'fc_branch' => $request->fc_branch,
-            'fc_warehousecode' => $request->fc_warehousecode,
-            'fc_membercode' => $request->fc_membercode,
-        ], $request->except(['type']));
-
+        //update
+        if($request->type == 'update'){
+            Warehouse::where([
+                'fc_divisioncode' => $request->fc_divisioncode,
+                'fc_branch' => $request->fc_branch,
+                'fc_warehousecode' => $request->fc_warehousecode,
+            ])->update($request->except(['type']));
+        }else{
+            Warehouse::create( $request->except(['type']));
+        }
+        
 		return [
 			'status' => 200, // SUCCESS
 			'message' => 'Data berhasil disimpan'

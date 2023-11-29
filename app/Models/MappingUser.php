@@ -26,7 +26,7 @@ class MappingUser extends Model
     }
 
     public function user(){
-        return $this->hasOne(User::class, 'fc_userid', 'fc_userid');
+        return $this->hasOne(User::class, 'fc_userid', 'fc_userid')->where('fl_hold', 'F');
     }
 
 }

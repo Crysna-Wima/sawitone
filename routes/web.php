@@ -168,6 +168,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::get('/', 'DataMaster\MasterWarehouseController@index');
             Route::get('/detail/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}', 'DataMaster\MasterWarehouseController@detail');
             Route::get('/datatables', 'DataMaster\MasterWarehouseController@datatables');
+            Route::post('/add-warehouse', 'DataMaster\MasterWarehouseController@add_warehouse');
             Route::post('/store-update', 'DataMaster\MasterWarehouseController@store_update');
             Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{fc_warehousecode}', 'DataMaster\MasterWarehouseController@delete');
         });
