@@ -269,12 +269,12 @@ class InvoicePenjualanController extends Controller
         $decoded_fc_sono = base64_decode($fc_sono);
         // jika $decoded_fc_sono samadengan 'all' maka tampilkan semua data
         if($decoded_fc_sono == 'all'){
-            $data = DoMaster::with('somst.customer')->where('fc_dostatus', '!=', ['CC', 'L'])
+            $data = DoMaster::with('somst.customer')->whereNotIn('fc_dostatus', ['L', 'CC'])
             ->where('fc_invstatus', '!=', 'INV')
             ->where('fc_branch', auth()->user()->fc_branch)
             ->get();
         } else {
-            $data = DoMaster::with('somst.customer')->where('fc_dostatus', '!=', ['CC', 'L'])
+            $data = DoMaster::with('somst.customer')->whereNotIn('fc_dostatus', ['L', 'CC'])
             ->where('fc_invstatus', '!=', 'INV')
             ->where('fc_sono', $decoded_fc_sono)
             ->where('fc_branch', auth()->user()->fc_branch)

@@ -53,50 +53,92 @@
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. BPB : {{ $ro_mst->fc_rono }}
+                                    <label>No. BPB :     
+                                    @if($ro_mst instanceof \Illuminate\Support\Collection)
+                                        @foreach($ro_mst as $index => $ro)
+                                            {{ $ro->fc_rono }}
+                                            @if($index < $ro_mst->count() - 1)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        {{ $ro_mst->fc_rono }}
+                                    @endif
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. PO : {{ $ro_mst->fc_pono }}
+                                    <label>No. PO : {{ $ro_mst->first()->fc_pono}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. SJ : {{ $ro_mst->fc_sjno }}
+                                    <label>No. SJ : 
+                                        @if($ro_mst instanceof \Illuminate\Support\Collection)
+                                            @foreach($ro_mst as $index => $ro)
+                                                {{ $ro->fc_sjno }}
+                                                @if($index < $ro_mst->count() - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ $ro_mst->fc_sjno }}
+                                        @endif
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>No. GR : {{ $ro_mst->fc_grno }}
+                                    <label>No. GR :
+                                        @if($ro_mst instanceof \Illuminate\Support\Collection)
+                                            @foreach($ro_mst as $index => $ro)
+                                                {{ $ro->fc_grno }}
+                                                @if($index < $ro_mst->count() - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            {{ $ro_mst->fc_grno }}
+                                        @endif
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($ro_mst->pomst->fd_podateinputuser)) }}
+                                    <label>Tgl PO : {{ date('d-m-Y', strtotime($ro_mst->first()->pomst->fd_podateinputuser)) }}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group">
-                                    <label>Tgl Diterima : {{ date('d-m-Y', strtotime($ro_mst->fd_roarivaldate)) }}
+                                    <label>Tgl Diterima : 
+                                        @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                            @foreach($ro_mst as $index => $ro)
+                                                {{ \Carbon\Carbon::parse($ro->fd_roarivaldate)->isoFormat('D MMMM Y') }}
+                                                @if($index < count($ro_mst) - 1)
+                                                    ,
+                                                @endif
+                                            @endforeach
+                                        @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                            {{ \Carbon\Carbon::parse($ro_mst[0]->fd_roarivaldate)->isoFormat('D MMMM Y') }}
+                                        @elseif(!($ro_mst instanceof \Illuminate\Support\Collection))
+                                            {{ \Carbon\Carbon::parse($ro_mst->fd_roarivaldate)->isoFormat('D MMMM Y') }}
+                                        @endif
                                     </label>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Basis Gudang</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->warehouse->fc_rackname }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->warehouse->fc_rackname }}" readonly>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <div class="form-group">
                                     <label>Status PKP</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_tax_code->fv_description }} ({{ $ro_mst->pomst->supplier->supplier_tax_code->fc_action }}%)" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->supplier_tax_code->fv_description }} ({{ $ro_mst->first()->pomst->supplier->supplier_tax_code->fc_action }}%)" readonly>
                                 </div>
                             </div>
                         </div>
@@ -118,49 +160,49 @@
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>NPWP</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplierNPWP }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fc_supplierNPWP }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Cabang</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->supplier_typebranch->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Tipe Bisnis</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_type_business->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->supplier_type_business->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliername1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fc_suppliername1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                     <label>Masa Hutang</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->fn_supplierAgingAR }} Hari" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fn_supplierAgingAR }} Hari" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Legal Status</label>
-                                    <input type="text" class="form-control" value="{{ $ro_mst->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
+                                    <input type="text" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->supplier_legal_status->fv_description }}" readonly>
                                 </div>
                             </div>
                             <div class="col-4 col-md-4 col-lg-6">
                                 <div class="form-group">
                                     <label>Hutang</label>
-                                    <input type="text" class="form-control" value="Rp. {{ $ro_mst->pomst->supplier->fm_supplierAR }}" readonly>
+                                    <input type="text" class="form-control" value="Rp. {{ $ro_mst->first()->pomst->supplier->fm_supplierAR }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -178,45 +220,146 @@
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Transport</label>
+                                @php
+                                    $potransports = collect();
+                                @endphp
+                            
+                            @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                @foreach($ro_mst as $index => $ro)
+                                    @php
+                                        $potransports->push($dr->fc_potransport ?? '-');
+                                    @endphp
+                                @endforeach
+                            @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                @php
+                                    $potransports->push($ro_mst[0]->fc_potransport ?? '-');
+                                @endphp
+                            @elseif(!($ro_mst instanceof \Illuminate\Support\Collection))
+                                @php
+                                    $potransports->push($ro_mst->fc_potransport ?? '-');
+                                @endphp
+                            @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $ro_mst->pomst->fc_potransport ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fc_potransport" id="fc_potransport" value="{{ $potransports->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Penerima</label>
+                                @php
+                                    $fc_receiver = collect();
+                                @endphp
+                                @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                    @foreach($ro_mst as $index => $ro)
+                                        @php
+                                            $fc_receiver->push($ro->fc_receiver ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                    @php
+                                        $fc_receiver->push($ro_mst[0]->fc_receiver ?? '-');
+                                    @endphp
+                                @elseif(!is_array($ro_mst))
+                                    @php
+                                        $fc_receiver->push($ro_mst->fc_receiver ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $ro_mst->fc_receiver }}" readonly>
+                                    <input type="text" class="form-control" name="fc_receiver" id="fc_receiver" value="{{ $fc_receiver->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label>Biaya Transport</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            Rp.
+                                @php
+                                    $fm_servpay_values = collect();
+                                @endphp
+                                @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                    @foreach($ro_mst as $index => $ro)
+                                        @php
+                                            $fm_servpay_values->push($ro->fm_servpay);
+                                        @endphp
+                                    @endforeach
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
                                         </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $fm_servpay_values->sum() }}" readonly>
                                     </div>
-                                    <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
-                                </div>
+                                @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst[0]->fm_servpay }}" readonly>
+                                    </div>
+                                @elseif(!is_array($ro_mst))
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                Rp.
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" name="fm_servpay" id="fm_servpay" value="{{ $ro_mst->fm_servpay }}" readonly>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group">
                                 <label>Catatan</label>
+                                @php
+                                    $fv_descriptions = collect();
+                                @endphp
+                                @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                    @foreach($ro_mst as $index => $ro)
+                                        @php
+                                            $fv_descriptions->push($ro->fv_description ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                    @php
+                                        $fv_descriptions->push($ro_mst[0]->fv_description ?? '-');
+                                    @endphp
+                                @elseif(!is_array($ro_mst))
+                                    @php
+                                        $fv_descriptions->push($ro_mst->fv_description ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $ro_mst->fv_description ?? '-' }}" readonly>
+                                    <input type="text" class="form-control" name="fv_description" id="fv_description" value="{{ $fv_descriptions->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>Alamat Penerimaan</label>
+                                @php
+                                    $fc_address_loading = collect();
+                                @endphp
+                                @if($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) > 1)
+                                    @foreach($ro_mst as $index => $ro)
+                                        @php
+                                            $fc_address_loading->push($ro->fc_address_loading ?? '-');
+                                        @endphp
+                                    @endforeach
+                                @elseif($ro_mst instanceof \Illuminate\Support\Collection && count($ro_mst) === 1)
+                                    @php
+                                        $fc_address_loading->push($ro_mst[0]->fc_address_loading ?? '-');
+                                    @endphp
+                                @elseif(!$ro_mst instanceof \Illuminate\Support\Collection)
+                                    @php
+                                        $fc_address_loading->push($ro_mst->fc_address_loading ?? '-');
+                                    @endphp
+                                @endif
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $ro_mst->fc_address_loading }}" readonly>
+                                    <input type="text" class="form-control" name="fc_address_loading" id="fc_address_loading" value="{{ $fc_address_loading->unique()->implode(', ') }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -351,15 +494,15 @@
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group required">
                                     <label>Bank</label>
-                                    <input type="text" class="form-control" name="fc_supplierbank1" id="fc_supplierbank1" value="{{ $ro_mst->pomst->supplier->fc_supplierbank1 }}" readonly>
-                                    <input type="hidden" id="fc_bankcode" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_suppliernorek1 }}" name="fc_bankcode" required>
+                                    <input type="text" class="form-control" name="fc_supplierbank1" id="fc_supplierbank1" value="{{ $ro_mst->first()->pomst->supplier->fc_supplierbank1 }}" readonly>
+                                    <input type="hidden" id="fc_bankcode" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fc_suppliernorek1 }}" name="fc_bankcode" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-6">
                                 <div class="form-group required">
                                     <label>Alamat Supplier</label>
-                                    <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
-                                    <input type="hidden" id="fc_address" class="form-control" value="{{ $ro_mst->pomst->supplier->fc_supplier_npwpaddress1 }}" name="fc_address" required>
+                                    <input type="text" class="form-control" name="fc_address" id="fc_address" value="{{ $ro_mst->first()->pomst->supplier->fc_supplier_npwpaddress1 }}" readonly>
+                                    <input type="hidden" id="fc_address" class="form-control" value="{{ $ro_mst->first()->pomst->supplier->fc_supplier_npwpaddress1 }}" name="fc_address" required>
                                 </div>
                             </div>
                             <div class="col-12 col-md-12 col-lg-12">
@@ -667,8 +810,8 @@
     }
 
 
-    var rono = "{{ $ro_mst->fc_rono }}";
-    var fc_warehousecode = "{{ $ro_mst->warehouse->fc_warehousecode }}"
+    var rono = "{{ $ro_mst->first()->fc_rono }}";
+    var fc_warehousecode = "{{ $ro_mst->first()->warehouse->fc_warehousecode }}"
     var encode_rono = window.btoa(rono);
     var encode_warehousecode = window.btoa(fc_warehousecode);
     // console.log(encode_rono)
