@@ -37,6 +37,47 @@ class InvoicePembelianDetailController extends Controller
         // dd($data);
     }
 
+    public function create_multibpb($fc_rono){
+        $encoded_fc_rono = base64_decode($fc_rono);
+        // $decoded_fc_rono_array = json_decode($encoded_fc_rono, true);
+        $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno', auth()->user()->fc_userid)->first();
+        $decoded_fc_rono_array = [$encoded_fc_rono];
+        if (count($decoded_fc_rono_array) > 0 && is_array($decoded_fc_rono_array)) {
+            $values = array_map(function ($jsonString) {
+                return json_decode($jsonString, true);
+            }, $decoded_fc_rono_array);
+
+            $query = RoMaster::with('pomst.supplier')
+                ->where(function ($query) use ($values) {
+                    $query->whereIn('fc_rono', array_merge(...$values));
+                })
+                ->where('fc_branch', auth()->user()->fc_branch);
+
+                $data['ro_mst'] = $query->get();
+
+                $data['ro_dtl'] = RoDetail::with('invstore.stock')
+                    ->where(function ($query) use ($values) {
+                        $query->whereIn('fc_rono', array_merge(...$values));
+                    })
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+        } else {
+            $data['ro_mst'] = RoMaster::with('pomst.supplier')
+                ->where('fc_rono', $decoded_fc_rono_array[0])
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->first();
+    
+            $data['do_dtl'] = RoDetail::with('invstore.stock')
+                ->where('fc_rono', $decoded_fc_rono_array[0])
+                ->where('fc_branch', auth()->user()->fc_branch)
+                ->get();
+        }
+
+        return view('apps.invoice-pembelian.create', $data);
+        // dd($data);
+        // dd($decoded_fc_dono_array);
+    }
+
     public function insert_item(Request $request)
     {
         $fn_invrownum = 1;

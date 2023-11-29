@@ -29,13 +29,48 @@ class InvoicePembelianController extends Controller
     public function index(){
         $temp_inv_master = TempInvoiceMst::with('customer')->where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
         $temp_detail = TempInvoiceDtl::where('fc_invno', auth()->user()->fc_userid)->get();
+
         $total = count($temp_detail);
-        if(!empty($temp_inv_master)){
+        
+        if (!empty($temp_inv_master)) {
+            $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
+            $fc_child_suppdocno = [$temp_inv_master->fc_child_suppdocno];
             $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
-            $data['ro_mst'] = RoMaster::with('pomst')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->first();
-            $data['ro_dtl'] = RoDetail::with('invstore.stock')->where('fc_rono', $temp_inv_master->fc_child_suppdocno)->where('fc_branch', auth()->user()->fc_branch)->get();
-            return view('apps.invoice-pembelian.create',$data);
-            // dd($data);
+
+            if (count($fc_child_suppdocno) > 0 && is_array($fc_child_suppdocno)) {
+                $values = array_map(function ($jsonString) {
+                    return json_decode($jsonString, true);
+                }, $fc_child_suppdocno);
+
+                $query =  RoMaster::with('pomst.supplier')
+                    ->where(function ($query) use ($values) {
+                        $query->whereIn('fc_rono', array_merge(...$values));
+                    })
+                    ->where('fc_branch', auth()->user()->fc_branch);
+
+                $data['ro_mst'] = $query->get();
+
+                $data['ro_dtl'] = RoDetail::with('invstore.stock')
+                    ->where(function ($query) use ($values) {
+                        $query->whereIn('fc_rono', array_merge(...$values));
+                    })
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+            } else {
+                $data['ro_mst'] = RoMaster::with('pomst.supplier')
+                    ->where('fc_rono', $fc_child_suppdocno[0])
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->first();
+
+                $data['ro_dtl'] = RoDetail::with('invstore.stock')
+                    ->where('fc_rono', $fc_child_suppdocno[0])
+                    ->where('fc_branch', auth()->user()->fc_branch)
+                    ->get();
+            }
+
+            return view('apps.invoice-pembelian.create', $data);
+            // dd($fc_child_suppdocno);
+            // dd($data['ro_mst']);
         }
         return view('apps.invoice-pembelian.index');     
     }
@@ -253,7 +288,7 @@ class InvoicePembelianController extends Controller
                 return [
                     'status' => 201,
                     'message' => 'Data berhasil disimpan',
-                    'link' => '/apps/invoice-pembelian/create/multisj/' . base64_encode($fc_rono_json)
+                    'link' => '/apps/invoice-pembelian/create/multibpb/' . base64_encode($fc_rono_json)
                 ];
             }else{
                 return [

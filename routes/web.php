@@ -548,6 +548,7 @@ Route::group(['middleware' => ['cek_login']], function () {
                 Route::post('/store-detail', 'Apps\InvoicePembelianDetailController@insert_item');
                 Route::put('/update-info/{fc_invno}', 'Apps\InvoicePembelianDetailController@update_inform');
                 Route::get('/{fc_rono}', 'Apps\InvoicePembelianDetailController@create');
+                Route::get('/multibpb/{fc_rono}', 'Apps\InvoicePembelianDetailController@create_multibpb');
                 Route::get('/datatables-ro-detail/{fc_rono}/{fc_warehousecode}', 'Apps\InvoicePembelianDetailController@datatables_ro_detail');
                 Route::put('/submit-invoice', 'Apps\InvoicePembelianDetailController@submit_invoice');
             });
