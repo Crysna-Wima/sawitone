@@ -340,6 +340,7 @@ class InvoicePenjualanDetailController extends Controller
         $request->merge(['fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)]);
 
         $update_unityprice = TempInvoiceDtl::where([
+            'fc_invno' => auth()->user()->fc_userid,
             'fn_invrownum' => $request->fn_invrownum,
         ])->update([
             'fm_unityprice' => $request->fm_unityprice
