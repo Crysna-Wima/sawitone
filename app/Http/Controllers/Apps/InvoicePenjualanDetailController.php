@@ -484,7 +484,7 @@ class InvoicePenjualanDetailController extends Controller
             return [
                 'status' => 201, // SUCCESS
                 'link' => '/apps/invoice-penjualan',
-                'message' => 'Data berhasil dihapus'
+                'message' => 'Data berhasil disubmit'
             ];
         } catch (\Exception $e) {
             return [

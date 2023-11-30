@@ -224,9 +224,9 @@ class InvoicePembelianController extends Controller
         } else {
             $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
             ->where('fc_invstatus', '!=', 'INV')
-            ->where('fc_sono', $decoded_fc_pono)
+            ->where('fc_pono', $decoded_fc_pono)
             ->where('fc_branch', auth()->user()->fc_branch)
-            ->orderBy('fc_dono')
+            ->orderBy('fc_rono')
             ->get();
         }
 
