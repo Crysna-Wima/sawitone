@@ -176,10 +176,14 @@ Route::group(['middleware' => ['cek_login']], function () {
 
         Route::prefix('sales-customer')->group(function () {
             Route::get('/', 'DataMaster\SalesCustomerController@index');
+            Route::get('/detail/customer/{fc_salescode}', 'DataMaster\SalesCustomerController@detailSalesCustomer');
             Route::get('/detail/{fc_divisioncode}/{fc_branch}/{salescode}/{membercode}', 'DataMaster\SalesCustomerController@detail');
             Route::get('/datatables', 'DataMaster\SalesCustomerController@datatables');
+            Route::get('/datatables/customer/{fc_salescode}', 'DataMaster\SalesCustomerController@detaillDatatables');
             Route::post('/store-update', 'DataMaster\SalesCustomerController@store_update');
+            Route::post('/create-customer/{fc_salescode}', 'DataMaster\SalesCustomerController@createCustomer');
             Route::delete('/delete/{fc_divisioncode}/{fc_branch}/{salescode}/{membercode}', 'DataMaster\SalesCustomerController@delete');
+            Route::delete('/delete/customer/{fc_membercode}/{fc_salescode}', 'DataMaster\SalesCustomerController@deleteCustomer');
         });
 
         Route::prefix('stock-customer')->group(function () {

@@ -351,6 +351,7 @@
         rowCallback: function(row, data) {
             var url_edit = "/data-master/sales-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
             var url_delete = "/data-master/sales-customer/delete/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
+            var url_get = "/data-master/sales-customer/detail/customer/" + data.fc_salescode;
 
             if (data.fl_active == 'T') {
                 $('td:eq(6)', row).html(`<span class="badge badge-success">YES</span>`);
@@ -359,6 +360,7 @@
             }
 
             $('td:eq(8)', row).html(`
+            <a href="${url_get}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);

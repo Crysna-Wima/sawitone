@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use DataTables;
 use Carbon\Carbon;
 use File;
-
+use App\Models\User;
 use App\Models\SalesCustomer;
 
 class SalesCustomerController extends Controller
@@ -36,6 +36,48 @@ class SalesCustomerController extends Controller
                 ->make(true);
     }
 
+    public function detailSalesCustomer($fc_salescode){
+        $data = SalesCustomer::where('fc_salescode', $fc_salescode)->with('branch', 'sales', 'customer')->first();
+        $nama = $data->sales->fc_salesname1;
+        return view('apps.detail-sales-customer.index', compact('fc_salescode', 'nama', 'data'));
+    }
+
+    public function detaillDatatables($fc_salescode){
+        $decode_fc_salescode = base64_decode($fc_salescode);
+        $data = SalesCustomer::with('branch', 'sales', 'customer')->where('fc_salescode', $decode_fc_salescode)->orderBy('created_at', 'DESC')->get();
+        return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function createCustomer(Request $request, $fc_salescode){
+        SalesCustomer::create([
+            'fc_divisioncode' => $request->fc_divisioncode,
+            'fc_branch' => $request->fc_branch,
+            'fc_salescode' => $request->fc_salescode,
+            'fc_membercode' => $request->fc_membercode,
+            'fd_memberjoindate' => $request->fd_memberjoindate,
+            'fl_active' => $request->fl_active,
+            'fv_salescustomerdescription' => $request->fv_salescustomerdescription
+        ]);
+        
+        return [
+            'status' => 200,
+            'link' => '/data-master/sales-customer/detail/customer/' . $fc_salescode,
+            'message' => 'Data berhasil disimpan'
+        ];
+    }
+
+    public function deleteCustomer($fc_membercode, $fc_salescode)
+    {
+        $getOneData = SalesCustomer::where('fc_membercode', $fc_membercode)->where('fc_salescode', $fc_salescode);
+        $getOneData->delete();
+        return [
+            'status' => 200,
+            'link' => '/data-master/sales-customer/detail/customer/' . $fc_salescode,
+            'message' => 'Data berhasil dihapus'
+        ];
+    }
     public function store_update(request $request){
         $validator = Validator::make($request->all(), [
             'fc_divisioncode' => 'required',
