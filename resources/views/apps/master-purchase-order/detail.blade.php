@@ -499,7 +499,7 @@
             ],
             rowCallback: function(row, data) {
                 var fc_rono = window.btoa(data.fc_rono);
-                $('td:eq(4)', row).html(`<i class="${data.fc_postatus}"></i>`);
+                $('td:eq(4)', row).html(`<i class="${data.fc_rostatus}"></i>`);
                 if (data['fc_rostatus'] == 'P') {
                     $('td:eq(4)', row).html('<span class="badge badge-primary">Terbayar</span>');
                 } else {

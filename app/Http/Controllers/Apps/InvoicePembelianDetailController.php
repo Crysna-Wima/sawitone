@@ -296,6 +296,7 @@ class InvoicePembelianDetailController extends Controller
         }
 
         $update_unityprice = TempInvoiceDtl::where([
+            'fc_invno' => auth()->user()->fc_userid,
             'fn_invrownum' => $request->fn_invrownum,
         ])->update([
             'fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)

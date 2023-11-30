@@ -95,6 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <input type="text" name="fc_membercode_tujuan" id="fc_membercode_tujuan" hidden>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group required">
                                         <label>Lokasi Tujuan</label>
@@ -370,6 +371,7 @@
 
     function click_modal_so_cprr() {
         var fc_destination = $('#fc_destination').val();
+        var fc_membercode = $('#fc_membercode_tujuan').val();
         if (fc_destination === '') {
             swal(
                 'Perhatian',
@@ -378,7 +380,7 @@
             )
         } else {
             $('#modal_so_cprr').modal('show');
-            table_so_cprr(fc_destination);
+            table_so_cprr(fc_membercode);
         }
 
     }
@@ -425,7 +427,7 @@
         $('#modal_so_cprr').modal('hide');
     }
 
-    function table_so_cprr(fc_destination) {
+    function table_so_cprr(fc_membercode) {
         // console.log(fc_membercode_tujuan)
         var tb = $('#tb_so_cprr').DataTable({
             processing: true,
@@ -435,7 +437,7 @@
                 [1, 'desc']
             ],
             ajax: {
-                url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_destination,
+                url: '/apps/mutasi-barang/datatables/so_cprr/' + fc_membercode,
                 type: 'GET'
             },
             columnDefs: [{
@@ -655,7 +657,7 @@
     }
 
     function detail_warehouse_tujuan(fc_warehousecode, fc_membercode) {
-        console.log(fc_membercode)
+        // console.log(fc_membercode)
         $.ajax({
             url: "/master/data-warehouse-first/" + fc_warehousecode,
             type: "GET",
@@ -670,6 +672,7 @@
                 $('#fc_rackname_tujuan').val(data.fc_rackname);
                 $('#fc_destination').val(data.fc_warehousecode);
                 fc_membercode_tujuan = fc_membercode;
+                $('#fc_membercode_tujuan').val(fc_membercode_tujuan);
                 if (data.fc_warehouseaddress != null) {
                     $('#fc_warehouseaddress_tujuan').val(data.fc_warehouseaddress);
                 } else {
