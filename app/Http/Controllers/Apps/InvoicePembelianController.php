@@ -33,7 +33,7 @@ class InvoicePembelianController extends Controller
         $total = count($temp_detail);
         
         if (!empty($temp_inv_master)) {
-            $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
+            // $fc_child_suppdocno = json_decode($temp_inv_master->fc_child_suppdocno, true);
             $fc_child_suppdocno = [$temp_inv_master->fc_child_suppdocno];
             $data['temp'] = TempInvoiceMst::with('romst', 'pomst', 'bank')->where('fc_invno',auth()->user()->fc_userid)->first();
 
@@ -41,7 +41,7 @@ class InvoicePembelianController extends Controller
                 $values = array_map(function ($jsonString) {
                     return json_decode($jsonString, true);
                 }, $fc_child_suppdocno);
-
+                
                 $query =  RoMaster::with('pomst.supplier')
                     ->where(function ($query) use ($values) {
                         $query->whereIn('fc_rono', array_merge(...$values));
@@ -140,13 +140,15 @@ class InvoicePembelianController extends Controller
         $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->where('fc_invtype', 'PURCHASE')->where('fc_branch', auth()->user()->fc_branch)->first();
 
         if(empty($temp_inv_master)){
+        $fc_child_suppdocno_array = explode(',', $request->fc_child_suppdocno);
+        $fc_child_suppdocno_json = json_encode($fc_child_suppdocno_array, JSON_UNESCAPED_SLASHES);
              // create TempInvoiceMst
          $create = TempInvoiceMst::create([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
             'fc_branch' => auth()->user()->fc_branch,
             'fc_invno' => auth()->user()->fc_userid,
             'fc_suppdocno' => $request->fc_suppdocno,
-            'fc_child_suppdocno' => $request->fc_child_suppdocno,
+            'fc_child_suppdocno' => $fc_child_suppdocno_json,
             'fc_entitycode' => $request->fc_entitycode,
             'fc_status' => 'I',
             'fc_invtype' => 'PURCHASE',
