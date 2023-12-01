@@ -43,6 +43,7 @@ class SalesCustomerController extends Controller
             $filterCount = $dataArray[$index];
             return $filterCount;
         })
+        //dd()
         ->addIndexColumn()
         ->make(true);
     }

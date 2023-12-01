@@ -25,9 +25,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Data Master Sales Customer</h4>
-                    <div class="card-header-action">
+                    <!-- <div class="card-header-action">
                         <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Master Sales Customer</button>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -35,13 +35,12 @@
                             <thead style="white-space: nowrap">
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Divisi</th>
-                                    <th scope="col" class="text-center">Branch</th>
-                                    <th scope="col" class="text-center">Sales Code</th>
-                                    <th scope="col" class="text-center">Qty Member</th>
+                                    <th scope="col" class="text-center">Cabang</th>
+                                    <th scope="col" class="text-center">Area</th>
+                                    <th scope="col" class="text-center">Nama Sales</th>
+                                    <th scope="col" class="text-center">Type</th>
                                     <th scope="col" class="text-center">Level</th>
-                                    <th scope="col" class="text-center">Active</th>
-                                    <th scope="col" class="text-center">Sales Customer Description</th>
+                                    <th scope="col" class="text-center">Qty Member</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -313,7 +312,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [8]
+                targets: [7]
             },
         ],
         columns: [{
@@ -322,27 +321,24 @@
                 orderable: false
             },
             {
-                data: 'fc_divisioncode'
+                data: 'branch.fv_description'
             },
             {
-                data: 'branch.fv_description'
+                data: 'fc_divisioncode'
             },
             {
                 data: 'sales.fc_salesname1',
                 defaultContent: '',
             },
             {
-                data: 'sum_membercode',
-                defaultContent: '',
+                data: 'sales.fc_salestype'
             },
             {
                 data: 'sales.fn_saleslevel'
             },
             {
-                data: 'fl_active'
-            },
-            {
-                data: 'fv_salescustomerdescription'
+                data: 'sum_membercode',
+                defaultContent: '',
             },
             {
                 data: 'fd_memberjoindate'
@@ -354,16 +350,17 @@
             var url_get = "/data-master/sales-customer/detail/customer/" + data.fc_salescode;
 
             if (data.fl_active == 'T') {
-                $('td:eq(6)', row).html(`<span class="badge badge-success">YES</span>`);
+                $('td:eq(8)', row).html(`<span class="badge badge-success">YES</span>`);
             } else {
-                $('td:eq(6)', row).html(`<span class="badge badge-danger">NO</span>`);
+                $('td:eq(8)', row).html(`<span class="badge badge-danger">NO</span>`);
             }
 
-            $('td:eq(8)', row).html(`
+            $('td:eq(7)', row).html(`
             <a href="${url_get}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
             <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
          `);
+        //  <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
+        //     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
         }
     });
 
