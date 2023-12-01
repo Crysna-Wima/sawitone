@@ -35,9 +35,11 @@
                             <thead style="white-space: nowrap">
                                 <tr>
                                     <th scope="col" class="text-center">No</th>
-                                    <th scope="col" class="text-center">Cabang</th>
-                                    <th scope="col" class="text-center">Kode Area</th>
                                     <th scope="col" class="text-center">Nama Customer</th>
+                                    <th scope="col" class="text-center">Alamat</th>
+                                    <th scope="col" class="text-center">Type Bisnis</th>
+                                    <th scope="col" class="text-center">Status Cabang</th>
+                                    <th scope="col" class="text-center">Active</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -64,6 +66,7 @@
             </div>
             <!-- <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden> -->
             <form id="form_submit_edit" action="/data-master/sales-customer/create-customer/{{ $data->fc_salescode}}" method="POST" autocomplete="off">
+                <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12" hidden>
@@ -160,7 +163,7 @@
             },
             {
                 className: 'text-nowrap',
-                targets: [4]
+                targets: [6]
             },
         ],
         columns: [{
@@ -169,13 +172,21 @@
                 orderable: false
             },
             {
-                data: 'customer.fc_divisioncode'
-            },
-            {
-                data: 'customer.fc_branch'
-            },
-            {
                 data: 'customer.fc_membername1',
+                defaultContent: '',
+            },
+            {
+                data: 'customer.fc_memberaddress1'
+            },
+            {
+                data: 'customer.fc_membertypebusiness'
+            },
+            {
+                data: 'customer.fv_memberdescription',
+                defaultContent: '',
+            },
+            {
+                data: 'fl_active',
                 defaultContent: '',
             },
             {
@@ -185,18 +196,25 @@
         ],
         rowCallback: function(row, data) {
             var url_delete = "/data-master/sales-customer/delete/customer/" + data.fc_membercode + '/' + data.fc_salescode;
+            var url_edit = "/data-master/sales-customer/detail/" + data.fc_divisioncode + '/' + data.fc_branch + '/' + data.fc_salescode + "/" + data.fc_membercode;
 
             if (data.fl_active == 'T') {
-                $('td:eq(4)', row).html(`<span class="badge badge-success">YES</span>`);
+                $('td:eq(5)', row).html(`<span class="badge badge-success">YES</span>`);
             } else {
-                $('td:eq(4)', row).html(`<span class="badge badge-danger">NO</span>`);
+                $('td:eq(5)', row).html(`<span class="badge badge-danger">NO</span>`);
             }
 
-            $('td:eq(4)', row).html(`
+            $('td:eq(6)', row).html(`
             <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}')"><i class="fa fa-trash"> </i> Hapus</button>
+            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
          `);
         }
     });
+    function edit(url) {
+        edit_action_sales_customer(url, 'Edit Data Sales Customer');
+        $("#type").val('update');
+    }
+    
 
     function get_data_member_code() {
         $("#modal_loading").modal('show');
