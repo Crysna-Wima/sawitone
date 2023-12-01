@@ -594,7 +594,7 @@
         rowCallback: function(row, data) {}
     });
 
-    function updateDataTableSono(encode_pono) {
+    function updateDataTablePono(encode_pono) {
         tb_bpb.ajax.url('/apps/invoice-pembelian/datatables-bpb/' + encode_pono).load();
     }
 
