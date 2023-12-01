@@ -197,43 +197,42 @@ class InvoicePembelianController extends Controller
     public function datatables_po($fc_suppliercode){
         $decoded_fc_suppliercode = base64_decode($fc_suppliercode);
         // jika $decoded_fc_membercode samadengan 'all' maka tampilkan semua data
-        // if($decoded_fc_suppliercode == 'all'){
+        if($decoded_fc_suppliercode == 'all'){
 
-        //     $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->get();
-        //     return DataTables::of($data)
-        //     ->addIndexColumn()
-        //     ->make(true);
-        // }
+            $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->get();
+            return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        }
 
-        // $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->where('fc_suppliercode', $decoded_fc_suppliercode)->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->orderBy('fc_pono')->get();
+        $data = PoMaster::with('romst','supplier')->where('fc_branch', auth()->user()->fc_branch)->where('fc_potype', 'PO Beli')->where('fc_invstatus', '!=' ,'INV')->where('fc_suppliercode', $decoded_fc_suppliercode)->whereNotIn('fc_postatus', ['L', 'CC', 'F'])->orderBy('fc_pono')->get();
 
-        // return DataTables::of($data)
-        //     ->addIndexColumn()
-        //     ->make(true);
-        dd($fc_suppliercode);
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+        // dd($data);
     }
 
     public function datatables_bpb($fc_pono){
         $decoded_fc_pono = base64_decode($fc_pono);
-        dd($decoded_fc_pono);
         // jika $decoded_fc_sono samadengan 'all' maka tampilkan semua data
-        // if($decoded_fc_pono == 'all'){
-        //     $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
-        //     ->where('fc_invstatus', '!=', 'INV')
-        //     ->where('fc_branch', auth()->user()->fc_branch)
-        //     ->get();
-        // } else {
-        //     $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
-        //     ->where('fc_invstatus', '!=', 'INV')
-        //     ->where('fc_pono', $decoded_fc_pono)
-        //     ->where('fc_branch', auth()->user()->fc_branch)
-        //     ->orderBy('fc_rono')
-        //     ->get();
-        // }
+        if($decoded_fc_pono == 'all'){
+            $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->get();
+        } else {
+            $data = RoMaster::with('pomst.supplier')->whereNotIn('fc_rostatus', ['L', 'CC'])
+            ->where('fc_invstatus', '!=', 'INV')
+            ->where('fc_pono', $decoded_fc_pono)
+            ->where('fc_branch', auth()->user()->fc_branch)
+            ->orderBy('fc_rono')
+            ->get();
+        }
 
-        // return DataTables::of($data)
-        //     ->addIndexColumn()
-        //     ->make(true);
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->make(true);
     }
 
     public function create_invoice_multibpb(Request $request){
