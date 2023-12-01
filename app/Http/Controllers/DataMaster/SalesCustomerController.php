@@ -29,7 +29,7 @@ class SalesCustomerController extends Controller
     }
 
     public function datatables(){
-        $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->get();
+        $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
 
         return DataTables::of($data)
                 ->addIndexColumn()
