@@ -29,11 +29,22 @@ class SalesCustomerController extends Controller
     }
 
     public function datatables(){
-        $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->get();
-
+        $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
+        $dataArray = array();
+    
+        foreach($data as $item){
+            $filter = SalesCustomer::where('fc_salescode', $item->fc_salescode)->get()->count();
+            array_push($dataArray, $filter);
+        }
+    
         return DataTables::of($data)
-                ->addIndexColumn()
-                ->make(true);
+        ->addColumn('sum_membercode', function($row) use ($data, $dataArray) {
+            $index = array_search($row->fc_salescode, array_column($data->toArray(), 'fc_salescode'));
+            $filterCount = $dataArray[$index];
+            return $filterCount;
+        })
+        ->addIndexColumn()
+        ->make(true);
     }
 
     public function detailSalesCustomer($fc_salescode){

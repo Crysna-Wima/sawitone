@@ -38,8 +38,8 @@
                                     <th scope="col" class="text-center">Divisi</th>
                                     <th scope="col" class="text-center">Branch</th>
                                     <th scope="col" class="text-center">Sales Code</th>
-                                    <th scope="col" class="text-center">Member Code</th>
-                                    <th scope="col" class="text-center">Member Join Date</th>
+                                    <th scope="col" class="text-center">Qty Member</th>
+                                    <th scope="col" class="text-center">Level</th>
                                     <th scope="col" class="text-center">Active</th>
                                     <th scope="col" class="text-center">Sales Customer Description</th>
                                     <th scope="col" class="text-center">Actions</th>
@@ -332,11 +332,11 @@
                 defaultContent: '',
             },
             {
-                data: 'customer.fc_membername1',
+                data: 'sum_membercode',
                 defaultContent: '',
             },
             {
-                data: 'fd_memberjoindate'
+                data: 'sales.fn_saleslevel'
             },
             {
                 data: 'fl_active'
