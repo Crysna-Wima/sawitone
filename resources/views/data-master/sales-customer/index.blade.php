@@ -331,7 +331,7 @@
                 defaultContent: '',
             },
             {
-                data: 'sales.fc_salestype'
+                data: 'type'
             },
             {
                 data: 'sales.fn_saleslevel'
@@ -357,7 +357,6 @@
 
             $('td:eq(7)', row).html(`
             <a href="${url_get}"><button class="btn btn-primary btn-sm mr-1"><i class="fa fa-eye"></i> Detail</button></a>
-            <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
          `);
         //  <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
         //     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
