@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use File;
 use App\Models\User;
 use App\Models\SalesCustomer;
+use App\Models\TransaksiType;
 
 class SalesCustomerController extends Controller
 {
@@ -31,9 +32,12 @@ class SalesCustomerController extends Controller
     public function datatables(){
         $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
         $dataArray = array();
+        $dataArrayType = array();
     
         foreach($data as $item){
             $filter = SalesCustomer::where('fc_salescode', $item->fc_salescode)->get()->count();
+            $getType = TransaksiType::where('fc_kode', $item->sales->fc_salestype)->first();
+            array_push($dataArrayType, $getType->fv_description);
             array_push($dataArray, $filter);
         }
     
@@ -41,6 +45,11 @@ class SalesCustomerController extends Controller
         ->addColumn('sum_membercode', function($row) use ($data, $dataArray) {
             $index = array_search($row->fc_salescode, array_column($data->toArray(), 'fc_salescode'));
             $filterCount = $dataArray[$index];
+            return $filterCount;
+        })
+        ->addColumn('type', function($row) use ($data, $dataArrayType) {
+            $index = array_search($row->fc_salescode, array_column($data->toArray(), 'fc_salescode'));
+            $filterCount = $dataArrayType[$index];
             return $filterCount;
         })
         //dd()
@@ -57,7 +66,27 @@ class SalesCustomerController extends Controller
     public function detaillDatatables($fc_salescode){
         $decode_fc_salescode = base64_decode($fc_salescode);
         $data = SalesCustomer::with('branch', 'sales', 'customer')->where('fc_salescode', $decode_fc_salescode)->orderBy('created_at', 'DESC')->get();
+        $dataArrayType = array();
+        $dataArrayBisnisType = array();
+        
+        foreach($data as $item){
+            $getType = TransaksiType::where('fc_kode', $item->customer->fc_member_branchtype)->first();
+            $getTypeBisnis = TransaksiType::where('fc_kode', $item->customer->fc_membertypebusiness)->first();
+            array_push($dataArrayType, $getType->fv_description);
+            array_push($dataArrayBisnisType, $getTypeBisnis->fv_description);
+        }
+
         return DataTables::of($data)
+                ->addColumn('statusCabang', function($row) use ($data, $dataArrayType) {
+                    $index = array_search($row->fc_membercode, array_column($data->toArray(), 'fc_membercode'));
+                    $filterCount = $dataArrayType[$index];
+                    return $filterCount;
+                })
+                ->addColumn('typeBisnis', function($row) use ($data, $dataArrayBisnisType) {
+                    $index = array_search($row->fc_membercode, array_column($data->toArray(), 'fc_membercode'));
+                    $filterCount = $dataArrayBisnisType[$index];
+                    return $filterCount;
+                })
                 ->addIndexColumn()
                 ->make(true);
     }

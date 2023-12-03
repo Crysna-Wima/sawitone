@@ -179,10 +179,10 @@
                 data: 'customer.fc_memberaddress1'
             },
             {
-                data: 'customer.fc_membertypebusiness'
+                data: 'typeBisnis'
             },
             {
-                data: 'customer.fv_memberdescription',
+                data: 'statusCabang',
                 defaultContent: '',
             },
             {
