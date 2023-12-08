@@ -969,7 +969,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12">
-                                    <form id="form_submit" action="/apps/invoice-pembelian/update-description"
+                                    <form id="form_submit" action="/apps/daftar-invoce/update-description"
                                         method="POST">
                                         @csrf
                                         @method('PUT')
@@ -978,6 +978,10 @@
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="fv_description"
                                                     id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}">
+                                                <input type="hidden" class="form-control" name="fc_invtype" 
+                                                    id="fc_invtype" value="{{ $inv_mst->fc_invtype }}" />
+                                                <input type="hidden" class="form-control" name="fc_invno" 
+                                                    id="fc_invno" value="{{ $inv_mst->fc_invno }}" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-12">
@@ -1012,7 +1016,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12">
-                                    <form id="form_submit" action="/apps/invoice-pembelian/update-description"
+                                    <form id="form_submit" action="/apps/daftar-invoice/update-description"
                                         method="POST">
                                         @csrf
                                         @method('PUT')
@@ -1021,6 +1025,10 @@
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="fv_description"
                                                     id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}">
+                                                <input type="hidden" class="form-control" name="fc_invtype" 
+                                                    id="fc_invtype" value="{{ $inv_mst->fc_invtype }}" />
+                                                <input type="hidden" class="form-control" name="fc_invno" 
+                                                    id="fc_invno" value="{{ $inv_mst->fc_invno }}" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-12">
@@ -1055,7 +1063,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12">
-                                    <form id="form_submit" action="/apps/invoice-pembelian/update-description"
+                                    <form id="form_submit" action="/apps/daftar-invoice/update-description"
                                         method="POST">
                                         @csrf
                                         @method('PUT')
@@ -1064,6 +1072,10 @@
                                             <div class="input-group">
                                                 <input type="text" class="form-control" name="fv_description"
                                                     id="fv_description" value="{{ $inv_mst->fv_description ?? '-' }}">
+                                                <input type="hidden" class="form-control" name="fc_invtype" 
+                                                id="fc_invtype" value="{{ $inv_mst->fc_invtype }}" />
+                                                <input type="hidden" class="form-control" name="fc_invno" 
+                                                id="fc_invno" value="{{ $inv_mst->fc_invno }}" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-12">

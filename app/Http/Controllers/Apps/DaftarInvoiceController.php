@@ -73,20 +73,20 @@ class DaftarInvoiceController extends Controller
         } else {
             $data['inv_mst'] = InvoiceMst::with('domst', 'somst', 'customer')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->first();
             $data['inv_dtl'] = InvoiceDtl::with('invmst', 'nameunity', 'cospertes')->where('fc_invno', $decode_fc_invno)->where('fc_invtype', 'CPRR')->where('fc_branch', auth()->user()->fc_branch)->get();
-            if(count($decoded_childsuppdocno_array) > 0){   
-                $data['do_mst'] = DoMaster::with('somst.customer')
-                ->where(function ($query) use ($decoded_childsuppdocno_array) {
-                    foreach ($decoded_childsuppdocno_array as $index => $value) {
-                        if ($index === 0) {
-                            $query->where('fc_dono', $value);
-                        } else {
-                            $query->orWhere('fc_dono', $value);
-                        }
-                    }
-                })
+            // if(count($decoded_childsuppdocno_array) > 0){   
+            $data['do_mst'] = DoMaster::with('somst.customer')
+                // ->where(function ($query) use ($decoded_childsuppdocno_array) {
+                //     foreach ($decoded_childsuppdocno_array as $index => $value) {
+                //         if ($index === 0) {
+                //             $query->where('fc_dono', $value);
+                //         } else {
+                //             $query->orWhere('fc_dono', $value);
+                //         }
+                //     }
+                // })
                 ->where('fc_branch', auth()->user()->fc_branch)
                 ->get();
-            }
+            // }
         }
         $data['fc_invno'] = $decode_fc_invno;
         return view('apps.daftar-invoice.detail', $data);
@@ -366,5 +366,23 @@ class DaftarInvoiceController extends Controller
                 'message' => 'Pilih Penandatangan !!',
             ];
         }
+    }
+
+    public function edit_description(Request $request)
+    {
+        $decode_invno = base64_encode($request->fc_invno);
+        InvoiceMst::where('fc_invno', $request->fc_invno)
+        ->where('fc_branch', auth()->user()->fc_branch)
+        ->where('fc_invtype', $request->fc_invtype)
+        ->update([
+            'fv_description' => $request->fv_description,
+        ]);
+
+        return [
+            'status' => 201, // SUCCESS
+            'link' => '/apps/daftar-invoice/detail/' . $decode_invno . '/' . $request->fc_invtype,
+            'message' => 'Catatan berhasil diubah'
+        ];
+        // dd($request);
     }
 }

@@ -516,7 +516,6 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/update-fm-unityprice', 'Apps\InvoicePenjualanDetailController@update_unityprice');
             Route::put('/update-discprice', 'Apps\InvoicePenjualanDetailController@update_discprice');
             Route::get('/get-detail/{fn_invrownum}', 'Apps\InvoicePenjualanDetailController@get_detail');
-            Route::put('/update-description', 'Apps\InvoicePenjualanDetailController@edit_description');
 
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice', 'Apps\InvoicePenjualanController@create_invoice');
@@ -544,6 +543,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::delete('/cancel-invoice', 'Apps\InvoicePembelianDetailController@cancel_invoice');
             Route::put('/update-fm-unityprice', 'Apps\InvoicePembelianDetailController@update_unityprice');
             Route::put('/update-discprice', 'Apps\InvoicePembelianDetailController@update_discprice');
+            // update-description ada di daftar invoice detail view
             Route::put('/update-description', 'Apps\InvoicePembelianDetailController@edit_description');
 
             Route::prefix('create')->group(function () {
@@ -600,6 +600,8 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::post('/request-approval', 'Apps\DaftarInvoiceController@request_approval');
             Route::post('/cek-approval', 'Apps\DaftarInvoiceController@cek_approval');
             Route::get('/cek-exist-approval/{fc_invno}', 'Apps\DaftarInvoiceController@cek_exist_approval');
+            // update-description ada di daftar invoice detail view
+            Route::put('/update-description', 'Apps\DaftarInvoiceController@edit_description');
         });
 
         Route::prefix('retur-barang')->group(function () {

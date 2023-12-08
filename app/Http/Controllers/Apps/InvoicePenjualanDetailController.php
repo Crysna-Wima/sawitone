@@ -501,16 +501,19 @@ class InvoicePenjualanDetailController extends Controller
 
     }
 
-    public function edit_description(Request $request)
-    {
-        InvoiceMst::where('fc_branch', auth()->user()->fc_branch)->update([
-            'fv_description' => $request->fv_description,
-        ]);
 
-        return [
-            'status' => 201, // SUCCESS
-            'link' => '#',
-            'message' => 'Catatan berhasil diubah'
-        ];
-    }
+    // view ada di daftar invoice detail buat update desc
+    // public function edit_description(Request $request)
+    // {
+    //     InvoiceMst::where('fc_invno', $request->fc_invno)
+    //     ->where('fc_branch', auth()->user()->fc_branch)
+    //     ->where('fc_invtype', $request->fc_invtype)->update([
+    //         'fv_description' => $request->fv_description,
+    //     ]);
+
+    //     return [
+    //         'status' => 201, // SUCCESS
+    //         'message' => 'Catatan berhasil diubah'
+    //     ];
+    // }
 }
