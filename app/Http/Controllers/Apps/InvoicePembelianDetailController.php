@@ -259,6 +259,7 @@ class InvoicePembelianDetailController extends Controller
         $deleteInvDtl = TempInvoiceDtl::where([
             'fc_invno' => $fc_invno,
             'fn_invrownum' => $fn_invrownum,
+            'fc_invtype' => 'PURCHASE'
         ])->delete();
 
         if ($deleteInvDtl) {
@@ -298,6 +299,7 @@ class InvoicePembelianDetailController extends Controller
         $update_unityprice = TempInvoiceDtl::where([
             'fc_invno' => auth()->user()->fc_userid,
             'fn_invrownum' => $request->fn_invrownum,
+            'fc_invtype' => 'PURCHASE'
         ])->update([
             'fm_unityprice' => Convert::convert_to_double($request->fm_unityprice)
         ]);
@@ -334,6 +336,8 @@ class InvoicePembelianDetailController extends Controller
         // dd($request->fm_discprice);
         $update_discprice = TempInvoiceDtl::where([
             'fn_invrownum' => $request->fn_invrownum,
+            'fc_invno' => auth()->user()->fc_userid,
+            'fc_invtype' => 'PURCHASE'
         ])->update([
             'fm_discprice' => ($request->fm_discprice === '') ? NULL : $request->fm_discprice,
             'fm_discprecen' => ($request->fm_discprecen === '') ? NULL : $request->fm_discprecen

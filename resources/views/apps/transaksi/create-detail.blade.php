@@ -1407,6 +1407,7 @@
     });
 
     function click_opsilanjut(){
+        var fvDescriptionSubmitValue = $("#fv_description_submit").val();
         swal({
                 title: 'Konfirmasi?',
                 text: 'Apakah anda yakin menambahkan opsi lanjutan?',
@@ -1416,10 +1417,14 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $("#modal_loading").modal('show');
+                    var dataToSend = {
+                        fv_description_submit: fvDescriptionSubmitValue
+                    };
                     $.ajax({
                         url: '/apps/transaksi/update-status-opsi-lanjutan',
                         type: "PUT",
                         dataType: "JSON",
+                        data: dataToSend,
                         success: function(response) {
                             setTimeout(function() {
                                 $('#modal_loading').modal('hide');

@@ -470,11 +470,12 @@ class TransaksiController extends Controller
         }
     }
 
-    public function update_status_opsi_lanjutan()
+    public function update_status_opsi_lanjutan(Request $request)
     {
         $update = TempTrxAccountingMaster::where('fc_trxno', auth()->user()->fc_userid)
                     ->where('fc_branch', auth()->user()->fc_branch)
                     ->update([
+                        'fv_description' => $request->fv_description_submit,
                         'fc_status' => 'I-2'
                     ]);
 
