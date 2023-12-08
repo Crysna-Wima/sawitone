@@ -140,21 +140,36 @@ class InvoiceCprrController extends Controller
     }
 
     public function update_inform($fc_invno, Request $request){
-    
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', $fc_invno)->where('fc_invtype', 'CPRR')->first();
-        $update_tempinvmst = $temp_inv_master->update([
+        $validator = Validator::make($request->all(), [
+            'fc_bankcode' => 'required',
+            'fc_address' => 'required',
+        ], [
+            'fc_bankcode.required' => 'Bank harus diisi',
+            'fc_address.required' => 'Alamat harus diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 300,
+                'message' => $validator->errors()->first()
+            ];
+        }
+        $temp_inv_master = TempInvoiceMst::where([
+            'fc_invno' => $fc_invno,
+            'fc_invtype' => 'CPRR'
+        ])->update([
             'fc_bankcode' => $request->fc_bankcode,
             'fc_address' => $request->fc_address,
             'fv_description' => $request->fv_description_mst,
         ]);
 
-        $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->first();
+        // $temp_inv_master = TempInvoiceMst::where('fc_invno', auth()->user()->fc_userid)->first();
         // $data = [];
         // if (!empty($temp_inv_master)) {
         //     $data['data'] = $temp_inv_master;
         // }
 
-        if ($update_tempinvmst) {
+        if ($temp_inv_master) {
             return [
                 'status' => 201,
                 // 'data' => $data,
@@ -164,5 +179,6 @@ class InvoiceCprrController extends Controller
             ];
             // dd($request);
         }
+        // dd($temp_inv_master);
     }
 }

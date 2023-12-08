@@ -544,7 +544,7 @@ Route::group(['middleware' => ['cek_login']], function () {
             Route::put('/update-fm-unityprice', 'Apps\InvoicePembelianDetailController@update_unityprice');
             Route::put('/update-discprice', 'Apps\InvoicePembelianDetailController@update_discprice');
             // update-description ada di daftar invoice detail view
-            Route::put('/update-description', 'Apps\InvoicePembelianDetailController@edit_description');
+            // Route::put('/update-description', 'Apps\InvoicePembelianDetailController@edit_description');
 
             Route::prefix('create')->group(function () {
                 Route::post('/store-invoice', 'Apps\InvoicePembelianController@create_invoice');
