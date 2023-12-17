@@ -202,11 +202,16 @@
 
                     <div class="form-group">
                         <label for="startDate">Start Date:</label>
-                        <input type="date" class="form-control" id="startDate" name="start_date">
+                        <input type="date" class="form-control" id="startDate" name="start_date" value="">
                     </div>
                     <div class="form-group">
                         <label for="endDate">End Date:</label>
-                        <input type="date" class="form-control" id="endDate" name="end_date">
+                        {{-- Teks petunjuk --}}
+                        <p>
+                            <small class="text-muted
+                            ">*End Date akan otomatis diisi dengan tanggal hari ini jika kolom ini dikosongkan</small>
+                        </p>
+                        <input type="date" class="form-control" id="endDate" name="end_date" value="" placeholder="YYYY-MM-DD">
                     </div>
                     <div class="form-group">
                         <label for="warehouse">Warehouse:</label>
@@ -295,9 +300,29 @@
 
 @section('js')
 <script>
+     $(document).ready(function () {
+        // Mendapatkan tanggal hari ini
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+        var yyyy = today.getFullYear();
+        
+        today = yyyy + '-' + mm + '-' + dd;
+
+        // Menangani perubahan pada input tanggal
+        $('#endDate').on('change', function () {
+            // Jika input tanggal dikosongkan, isi dengan tanggal hari ini
+            if (!$(this).val()) {
+                $(this).val(today);
+            }
+        });
+
+        // Setel nilai input tanggal dengan tanggal hari ini jika awalnya kosong
+        if (!$('#endDate').val()) {
+            $('#endDate').val(today);
+        }
+    });
     function click_filter_export() {
-
-
         var warehouseSelect = $('#warehousefilter');
         // warehouseSelect.empty().append(new Option('Loading...', '', true, true)).prop('disabled', true);
         warehouseSelect.empty()

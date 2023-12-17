@@ -197,31 +197,111 @@ class PersediaanBarangController extends Controller
         return response()->json($data);
     }
 
+    // public function export_kartu_stock(Request $request){
+    //     ini_set('memory_limit', '2048M'); // 2GB
+    //     set_time_limit(360);
+    //     $startDate = $request->start_date;
+    //     $endDate = $request->end_date;
+    //     $warehouseFilter = $request->warehousefilter;
+    //     $filename = 'Kartu Stok : ' . now()->format('Y-m-d_His') . '.xlsx';
+    //     $range_date = date('d M Y', strtotime($startDate)) . ' - ' . date('d M Y', strtotime($endDate));
+    //     $query = StockInquiri::with('warehouse', 'invstore.stock')
+    //         ->where('fc_branch', auth()->user()->fc_branch);
+    
+    //     if (!empty($startDate)) {
+    //         $query->where('fd_inqdate', '>=', $startDate);
+    //     }
+    
+    //     if (!empty($endDate)) {
+    //         $query->where('fd_inqdate', '<=', $endDate);
+    //     }
+    
+    //     if (!empty($warehouseFilter)) {
+    //         $query->where('fc_warehousecode', $warehouseFilter);
+    //     }
+    
+    //     $kartuStock = $query->orderBy('fc_warehousecode')->orderBy('fd_inqdate')->get();
+    
+    //     return Excel::download(new KartuStockExport($kartuStock, $range_date), $filename);
+    // }
+
+    // from SQL Script
     public function export_kartu_stock(Request $request){
+        ini_set('memory_limit', '2048M'); // 2GB
+        set_time_limit(360);
         $startDate = $request->start_date;
         $endDate = $request->end_date;
+    
+        // Ubah format tanggal ke timestamp
+        $startTimestamp = date('Y-m-d H:i:s', strtotime($startDate));
+        $endTimestamp = date('Y-m-d H:i:s', strtotime($endDate));
         $warehouseFilter = $request->warehousefilter;
+    
         $filename = 'Kartu Stok : ' . now()->format('Y-m-d_His') . '.xlsx';
         $range_date = date('d M Y', strtotime($startDate)) . ' - ' . date('d M Y', strtotime($endDate));
-        $query = StockInquiri::with('warehouse', 'invstore.stock')
-            ->where('fc_branch', auth()->user()->fc_branch);
     
-        if (!empty($startDate)) {
-            $query->where('fd_inqdate', '>=', $startDate);
-        }
-    
-        if (!empty($endDate)) {
-            $query->where('fd_inqdate', '<=', $endDate);
-        }
-    
-        if (!empty($warehouseFilter)) {
-            $query->where('fc_warehousecode', $warehouseFilter);
-        }
-    
-        $kartuStock = $query->orderBy('fc_warehousecode')->orderBy('fd_inqdate')->get();
+        // SQL Script kartu stock
+        $kartuStock = DB::select("SELECT 
+                a.fc_stockcode, 
+                SUBSTRING(b.fc_barcode,1,LENGTH(a.fc_stockcode)) AS fc_stockcode_substring,
+                b.fc_barcode, 
+                d.fc_batch, 
+                d.fd_expired, 
+                c.created_at, 
+                b.max_trans, 
+                a.fc_nameshort, 
+                a.fc_namelong, 
+                a.fc_brand, 
+                fc_group, 
+                fc_subgroup, 
+                fc_typestock1, 
+                fc_typestock2,
+                fn_in, 
+                fn_out,
+                c.fc_docreference, 
+                COALESCE(c.fv_description,'') AS fv_description, 
+                d.fn_quantity, 
+                c.fc_warehousecode, 
+                CASE 
+                    WHEN e.fc_warehousepos = 'INTERNAL' THEN 'W/H INTERNAL DEXA'
+                    WHEN e.fc_warehousepos = 'EXTERNAL' THEN CONCAT('W/H ', e.fc_membername1)
+                    ELSE 'UN-IDENTIFIED W/H'
+                END AS warehouse_name
+            FROM t_stock a
+        -- Mengambil posisi inquery ( tanggal terakhir masing-masing barcode dari t_inquiri )
+        -- menggunakan max(created_ar) yang di group by fc_barcode
+            LEFT OUTER JOIN (
+                SELECT fc_barcode, MAX(created_at) AS max_trans
+                FROM t_inquiri 
+                GROUP BY fc_barcode
+            ) b ON a.fc_stockcode = SUBSTRING(b.fc_barcode,1,LENGTH(a.fc_stockcode))
+            LEFT OUTER JOIN t_inquiri c ON b.fc_barcode = c.fc_barcode AND c.created_at = b.max_trans
+            LEFT OUTER JOIN t_invstore d ON d.fc_barcode = c.fc_barcode AND d.fc_warehousecode = c.fc_warehousecode
+            LEFT OUTER JOIN (
+                SELECT a.fc_warehousecode, a.fc_warehousepos, b.fc_membername1 
+                FROM t_warehouse a 
+                LEFT OUTER JOIN t_customer b ON a.fc_membercode = b.fc_membercode
+            ) e ON d.fc_warehousecode = e.fc_warehousecode
+            -- filter dari input user
+            WHERE 
+                (
+                    (b.max_trans >= '$startTimestamp' AND '$startTimestamp' != '' AND '$startTimestamp' IS NOT NULL)
+                    OR '$startTimestamp' = '' OR '$startTimestamp' IS NULL
+                )
+                AND (
+                    (b.max_trans <= '$endTimestamp' AND '$endTimestamp' != '' AND '$endTimestamp' IS NOT NULL)
+                    OR '$endTimestamp' = '' OR '$endTimestamp' IS NULL
+                )
+                AND (
+                    (c.fc_warehousecode = '$warehouseFilter' AND '$warehouseFilter' != '' AND '$warehouseFilter' IS NOT NULL)
+                    OR '$warehouseFilter' = '' OR '$warehouseFilter' IS NULL
+                )
+            ORDER BY a.fc_group, a.fc_namelong, c.created_at, d.fd_expired DESC"); 
     
         return Excel::download(new KartuStockExport($kartuStock, $range_date), $filename);
+        // dd($endTimestamp);
     }
+    
 
     public function generateQRCodePDF($fc_barcode, $count, $fd_expired_date, $fc_batch)
     {
