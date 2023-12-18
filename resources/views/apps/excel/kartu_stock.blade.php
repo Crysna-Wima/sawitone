@@ -31,7 +31,7 @@
     <tr>
       <td rowspan="2" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">No</td>
       <td colspan="7" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Informasi Stock</td>
-      <td colspan="4" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Riwayat Inquiri</td>
+      <td colspan="3" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Riwayat Inquiri</td>
       <td rowspan="2" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Keterangan</td>
       <td rowspan="2" style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Nama Gudang</td>
       
@@ -45,8 +45,7 @@
       <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Tipe Stock 1</td>
       <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Tipe Stock 2</td>
       <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Date</td>
-      <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">IN</td>
-      <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">OUT</td>
+      <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Balance</td>
       <td style="text-align: center; font-weight: bold; background-color: #CCCC99; border: 2px solid black;">Reference</td>
       
 
@@ -55,7 +54,7 @@
     @foreach($kartu_stock as $key => $stock)
     <tr>
       <td style="border: 2px solid black;">{{ $key + 1 }}</td>
-      <td style="text-align: left; border: 2px solid black;">{{ $stock->fc_stockcode_substring }}</td>
+      <td style="text-align: left; border: 2px solid black;">{{ strval($stock->fc_stockcode_substring) }}</td>
       <td style="border: 2px solid black;">{{ $stock->fc_namelong }}</td>
       <td style="border: 2px solid black;">{{ $stock->fc_brand }}</td>
       <td style="border: 2px solid black;">{{ $stock->fc_group }}</td>
@@ -63,8 +62,7 @@
       <td style="border: 2px solid black;">{{ $stock->fc_typestock1 }}</td>
       <td style="border: 2px solid black;">{{ $stock->fc_typestock2 }}</td>
       <td style="border: 2px solid black;">{{ $stock->created_at }}</td>
-      <td style="border: 2px solid black;">{{ $stock->fn_in }}</td>
-      <td style="border: 2px solid black;">{{ $stock->fn_out }}</td>
+      <td style="border: 2px solid black;">{{ $stock->fn_quantity }}</td>
       <td style="border: 2px solid black;">{{ $stock->fc_docreference }}</td>
       <td style="border: 2px solid black;">{{ $stock->fv_description }}</td>
       <td style="border: 2px solid black;">{{ $stock->warehouse_name }}</td>

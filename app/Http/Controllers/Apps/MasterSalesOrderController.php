@@ -179,21 +179,24 @@ class MasterSalesOrderController extends Controller
         ];
     }
 
-    public function export_excel($status){
+    public function export_excel(Request $request, $status){
         if($status == 'pending'){
-            return Excel::download(new SalesOrderExport('P'), 'so_master_pending.xlsx');
+            return Excel::download(new SalesOrderExport('P', $request), 'so_master_pending.xlsx');
         }else if($status == 'clear'){
-            return Excel::download(new SalesOrderExport('C'), 'so_master_clear.xlsx');
+            return Excel::download(new SalesOrderExport('C', $request), 'so_master_clear.xlsx');
         }else if($status == 'dodone'){
-            return Excel::download(new SalesOrderExport('DD'), 'so_master_do_done.xlsx');
+            return Excel::download(new SalesOrderExport('DD', $request), 'so_master_do_done.xlsx');
         }else if($status == 'menunggu'){
-            return Excel::download(new SalesOrderExport('F'), 'so_master_menunggu.xlsx');
+            return Excel::download(new SalesOrderExport('F', $request), 'so_master_menunggu.xlsx');
         }else{
-            return Excel::download(new SalesOrderExport('A'), 'so_master_all.xlsx');
+            return Excel::download(new SalesOrderExport('A', $request), 'so_master_all.xlsx');
         }
 
+        // dd($request);
+        // dd($status);
+
         
-        // return Excel::download(new SalesOrderExport, 'so_master_pending.xlsx');
+        return Excel::download(new SalesOrderExport, 'so_master_pending.xlsx');
       
     }
 }

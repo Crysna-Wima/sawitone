@@ -65,12 +65,12 @@
                             <div class="tab-pane fade active show" id="semua" role="tabpanel"
                                 aria-labelledby="semua-tab">
                                 <div class="table-responsive">
-                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/all" method="POST" target="_blank">
-                                        @csrf
+                                   
                                         <div class="button text-right mb-3">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateRangeModalSoAll">
+                                                <i class="fas fa-file-export"></i> Export Excel
+                                            </button>
                                         </div>
-                                    </form>
                                     <table class="table table-striped" id="tb_semua" width="100%">
                                         <thead>
                                             <tr>
@@ -92,12 +92,13 @@
                             </div>
                             <div class="tab-pane fade" id="menunggu" role="tabpanel" aria-labelledby="menunggu-tab">
                                 <div class="table-responsive">
-                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/menunggu" method="POST" target="_blank">
-                                        @csrf
+                                 
                                         <div class="button text-right mb-3">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateRangeModalSoMenunggu">
+                                                <i class="fas fa-file-export"></i> Export Excel
+                                            </button>
                                         </div>
-                                    </form>
+                                 
                                     <table class="table table-striped" id="tb_menunggu" width="100%">
                                         <thead>
                                             <tr>
@@ -119,12 +120,13 @@
                             </div>
                             <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                 <div class="table-responsive">
-                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/pending" method="POST" target="_blank">
-                                        @csrf
+                                   
                                         <div class="button text-right mb-3">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateRangeModalSoPending">
+                                                <i class="fas fa-file-export"></i> Export Excel
+                                            </button>
                                         </div>
-                                    </form>
+
                                     <table class="table table-striped" id="tb_pending" width="100%">
                                      
                                         
@@ -148,12 +150,13 @@
                             </div>
                             <div class="tab-pane fade" id="selesai" role="tabpanel" aria-labelledby="selesai-tab">
                                 <div class="table-responsive">
-                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/clear" method="POST" target="_blank">
-                                        @csrf
+                                 
                                         <div class="button text-right mb-3">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateRangeModalSoClear">
+                                                <i class="fas fa-file-export"></i> Export Excel
+                                            </button>
                                         </div>
-                                    </form>
+                                  
                                     <table class="table table-striped" id="tb_selesai" width="100%">
                                         <thead>
                                             <tr>
@@ -175,12 +178,13 @@
                             </div>
                             <div class="tab-pane fade" id="do-tuntas" role="tabpanel" aria-labelledby="do-tuntas-tab">
                                 <div class="table-responsive">
-                                    <form id="exportForm" action="/apps/master-sales-order/export-excel/dodone" method="POST" target="_blank">
-                                        @csrf
+                                   
                                         <div class="button text-right mb-3">
-                                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateRangeModalSoDodone">
+                                                <i class="fas fa-file-export"></i> Export Excel
+                                            </button>
                                         </div>
-                                    </form>
+                                  
                                     <table class="table table-striped" id="tb_do_done" width="100%">
                                         <thead>
                                             <tr>
@@ -252,7 +256,148 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="dateRangeModalSoAll" tabindex="-1" role="dialog" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="/apps/master-sales-order/export-excel/all" method="POST" target="_blank">
+                        @csrf
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_start">Start Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_start" name="fd_sodatesysinput_start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_end">End Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_end" name="fd_sodatesysinput_end" required>
+                        </div>
+                        <div class="button text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dateRangeModalSoPending" tabindex="-1" role="dialog" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="/apps/master-sales-order/export-excel/pending" method="POST" target="_blank">
+                        @csrf
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_start">Start Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_start" name="fd_sodatesysinput_start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_end">End Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_end" name="fd_sodatesysinput_end" required>
+                        </div>
+                        <div class="button text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dateRangeModalSoMenunggu" tabindex="-1" role="dialog" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="/apps/master-sales-order/export-excel/menunggu" method="POST" target="_blank">
+                        @csrf
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_start">Start Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_start" name="fd_sodatesysinput_start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_end">End Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_end" name="fd_sodatesysinput_end" required>
+                        </div>
+                        <div class="button text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dateRangeModalSoClear" tabindex="-1" role="dialog" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="/apps/master-sales-order/export-excel/clear" method="POST" target="_blank">
+                        @csrf
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_start">Start Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_start" name="fd_sodatesysinput_start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_end">End Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_end" name="fd_sodatesysinput_end" required>
+                        </div>
+                        <div class="button text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dateRangeModalSoDodone" tabindex="-1" role="dialog" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Select Date Range</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="exportForm" action="/apps/master-sales-order/export-excel/dodone" method="POST" target="_blank">
+                        @csrf
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_start">Start Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_start" name="fd_sodatesysinput_start" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fd_sodatesysinput_end">End Date</label>
+                            <input type="date" class="form-control" id="fd_sodatesysinput_end" name="fd_sodatesysinput_end" required>
+                        </div>
+                        <div class="button text-right">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Excel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
 
 @section('js')
     <script>
