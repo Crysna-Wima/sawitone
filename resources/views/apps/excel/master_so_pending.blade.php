@@ -80,8 +80,8 @@
         <td class="column0">&nbsp;</td>
         <td class="column1 style1 s style6" style="border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" rowspan="2">No</td>
         <td class="column2 style2 s style3" style="border: 1px solid black; border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" colspan="5">Informasi Sales Order</td>
-        <td class="column7 style2 s style4" style="border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" colspan="4">Detail Customer</td>
-        <td class="column10 style5 s style4" style="border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" colspan="3">Detail Barang</td>
+        <td class="column7 style2 s style4" style="border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" colspan="3">Detail Customer</td>
+        <td class="column10 style5 s style4" style="border: 1px solid black; text-align: center; background-color: #cccc99; font-size: 15px;font-weight:bold;" colspan="4">Detail Barang</td>
         <td class="column14">&nbsp;</td>
         <td class="column15">&nbsp;</td>
         <td class="column16">&nbsp;</td>
