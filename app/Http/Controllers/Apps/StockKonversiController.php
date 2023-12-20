@@ -185,6 +185,8 @@ class StockKonversiController extends Controller
     }
 
     public function datatable_inquiry(){
+        ini_set('memory_limit', '2048M'); // 2GB
+        set_time_limit(360);
         $data = StockInquiri::with('invstore.stock','warehouse')
         ->where([
             'fc_divisioncode' => auth()->user()->fc_divisioncode,
