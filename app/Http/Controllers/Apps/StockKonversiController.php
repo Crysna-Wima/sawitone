@@ -244,6 +244,8 @@ class StockKonversiController extends Controller
     }
 
     public function invstore_warehouse($fc_warehousecode){
+        ini_set('memory_limit', '2048M'); // 2GB
+        set_time_limit(360);
         $warehousecode = base64_decode($fc_warehousecode);
 
         $data = Invstore::with('stock', 'warehouse')
