@@ -962,7 +962,7 @@
                     data: 'fc_stockcode'
                 },
                 {
-                    data: 'stock.fc_namelong'
+                    data: 'fc_namelong'
                 },
                 {
                     data: 'fc_namepack'

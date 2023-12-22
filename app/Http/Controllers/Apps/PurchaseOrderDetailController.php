@@ -17,8 +17,12 @@ class PurchaseOrderDetailController extends Controller
 {
     public function datatables()
     {
-        $data = TempPoDetail::with('branch', 'warehouse', 'stock', 'namepack', 'temppomst')->where('fc_pono', auth()->user()->fc_userid)->get();
-
+        $data = TempPoDetail::with('branch', 'warehouse', 'namepack', 'temppomst')
+        ->join('t_stock', 't_stock.fc_stockcode', '=', 't_temppodtl.fc_stockcode')
+        ->where('t_temppodtl.fc_pono', auth()->user()->fc_userid)
+        ->select('t_temppodtl.*', 't_stock.*')
+        ->get();
+        
         return DataTables::of($data)
             ->addIndexColumn()
             ->make(true);
