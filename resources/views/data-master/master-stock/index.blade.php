@@ -382,7 +382,7 @@
                                     <label>Waktu Start</label>
                                     <input type="text" class="form-control time-format" name="ft_disc_begin" id="ft_disc_begin" maxlength="5" onkeypress="return hanyaAngka(event,false);" onkeyup="separator('ft_disc_begin', ':', 2)">
                                 </div>
-                            </div>col-lg-3
+                            </div>
                             <div class="col-12 col-md-3 col-lg-3 place_diskon_waktu" hidden>
                                 <div class="form-group">
                                     <label>Waktu End</label>
