@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 use DataTables;
 use Carbon\Carbon;
 use File;
 use App\Models\User;
+use App\Models\Sales;
 use App\Models\SalesCustomer;
 
 class SalesCustomerController extends Controller
@@ -29,9 +29,10 @@ class SalesCustomerController extends Controller
     }
 
     public function datatables(){
-        $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
+        // $data = SalesCustomer::with('branch', 'sales', 'customer')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
+        $data = Sales::with('branch')->orderBy('created_at', 'DESC')->groupBy('fc_salescode')->get();
         $dataArray = array();
-    
+        
         foreach($data as $item){
             $filter = SalesCustomer::where('fc_salescode', $item->fc_salescode)->get()->count();
             array_push($dataArray, $filter);
@@ -43,15 +44,19 @@ class SalesCustomerController extends Controller
             $filterCount = $dataArray[$index];
             return $filterCount;
         })
-        //dd()
         ->addIndexColumn()
         ->make(true);
     }
 
     public function detailSalesCustomer($fc_salescode){
         $data = SalesCustomer::where('fc_salescode', $fc_salescode)->with('branch', 'sales', 'customer')->first();
+        if($data == null)
+        {
+            $data = Sales::where('fc_salescode', $fc_salescode)->first();
+            return view('apps.detail-sales-customer.index', compact('data', 'fc_salescode'));
+        }
         $nama = $data->sales->fc_salesname1;
-        return view('apps.detail-sales-customer.index', compact('fc_salescode', 'nama', 'data'));
+        return view('apps.detail-sales-customer.index', compact('nama', 'fc_salescode', 'data'));
     }
 
     public function detaillDatatables($fc_salescode){
