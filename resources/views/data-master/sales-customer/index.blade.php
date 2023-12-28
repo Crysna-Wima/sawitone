@@ -56,7 +56,7 @@
 @section('modal')
 
 <!-- Modal -->
-<div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
+<!-- <div class="modal fade" role="dialog" id="modal_edit" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-xs" role="document">
         <div class="modal-content">
             <div class="modal-header br">
@@ -66,7 +66,7 @@
                 </button>
             </div>
             <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden>
-            <form id="form_submit_edit_sales_custom" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
+            <form id="form_submit" action="/data-master/sales-customer/store-update" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
@@ -130,7 +130,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
 
 @endsection
@@ -295,7 +295,6 @@
         $("#modal_edit").modal('show');
         $(".modal-title").text('Tambah Sales Customer');
         $("#form_submit")[0].reset();
-        $("#modal_edit").modal('hide');
     }
 
     var tb = $('#tb').DataTable({
@@ -327,21 +326,21 @@
                 data: 'fc_divisioncode'
             },
             {
-                data: 'sales.fc_salesname1',
+                data: 'fc_salesname1',
                 defaultContent: '',
             },
             {
-                data: 'type'
+                data: 'fc_salestype'
             },
             {
-                data: 'sales.fn_saleslevel'
+                data: 'fn_saleslevel'
             },
             {
                 data: 'sum_membercode',
                 defaultContent: '',
             },
             {
-                data: 'fd_memberjoindate'
+                data: 'sum_membercode'
             },
         ],
         rowCallback: function(row, data) {
@@ -360,6 +359,7 @@
          `);
         //  <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
         //     <button class="btn btn-danger btn-sm" onclick="delete_action('${url_delete}','${data.fc_membercode}')"><i class="fa fa-trash"> </i> Hapus</button>
+        // <button class="btn btn-info btn-sm mr-1" onclick="edit('${url_edit}')"><i class="fa fa-edit"></i> Edit</button>
         }
     });
 
@@ -367,73 +367,5 @@
         edit_action_sales_customer(url, 'Edit Data Sales Customer');
         $("#type").val('update');
     }
-
-    $('#form_submit_edit_sales_custom').on('submit', function(e) {
-        e.preventDefault();
-
-        var form_id = $(this).attr("id");
-        if (check_required(form_id) === false) {
-            swal("Oops! Mohon isi field yang kosong", {
-                icon: 'warning',
-            });
-            return;
-        }
-
-        swal({
-                title: 'Yakin?',
-                text: 'Apakah anda yakin akan menyimpan data ini?',
-                icon: 'warning',
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((save) => {
-                if (save) {
-                    $("#modal_loading").modal('show');
-                    $.ajax({
-                        url: $('#form_submit_edit_sales_custom').attr('action'),
-                        type: $('#form_submit_edit_sales_custom').attr('method'),
-                        data: $('#form_submit_edit_sales_custom').serialize(),
-                        success: function(response) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            if (response.status == 200) {
-                                swal(response.message, {
-                                    icon: 'success',
-                                });
-                                $("#modal_edit").modal('hide');
-                                $("#form_submit_edit_sales_custom")[0].reset();
-                                reset_all_select();
-                                tb.ajax.reload(null, false);
-                            } else if (response.status == 201) {
-                                swal(response.message, {
-                                    icon: 'success',
-                                });
-                                $("#modal_edit").modal('hide');
-                                location.href = response.link;
-                            } else if (response.status == 203) {
-                                swal(response.message, {
-                                    icon: 'success',
-                                });
-                                $("#modal_edit").modal('hide');
-                                tb.ajax.reload(null, false);
-                            } else if (response.status == 300) {
-                                swal(response.message, {
-                                    icon: 'error',
-                                });
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            setTimeout(function() {
-                                $('#modal_loading').modal('hide');
-                            }, 500);
-                            swal("Oops! Terjadi kesalahan segera hubungi tim IT (" + jqXHR.responseText + ")", {
-                                icon: 'error',
-                            });
-                        }
-                    });
-                }
-            });
-    });
 </script>
 @endsection
