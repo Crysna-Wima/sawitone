@@ -24,7 +24,7 @@
         <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>{{$nama}}</h4>
+                    <h4>{{$data->fc_salesname1 ?? $nama}}</h4>
                     <div class="card-header-action">
                         <button type="button" class="btn btn-success" onclick="add();"><i class="fa fa-plus mr-1"></i> Tambah Customer</button>
                     </div>
@@ -65,26 +65,26 @@
                 </button>
             </div>
             <!-- <input type="text" class="form-control" name="fc_branch_view" id="fc_branch_view" value="{{ auth()->user()->fc_branch}}" readonly hidden> -->
-            <form id="form_submit_edit" action="/data-master/sales-customer/create-customer/{{ $data->fc_salescode}}" method="POST" autocomplete="off">
+            <form id="form_submit_edit" action="/data-master/sales-customer/create-customer/{{ $data->fc_salescode }}" method="POST" autocomplete="off">
                 <input type="text" name="type" id="type" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12" hidden>
                             <div class="form-group">
                                 <label>Division Code</label>
-                                <input type="text" class="form-control required-field" name="fc_divisioncode" value="{{ $data->sales->fc_divisioncode }}" id="fc_divisioncode" readonly>
+                                <input type="text" class="form-control required-field" name="fc_divisioncode" value="{{ $data->fc_divisioncode }}" id="fc_divisioncode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>Sales Code</label>
-                                <input type="text" class="form-control required-field" name="fc_salescode" value="{{ $data->sales->fc_salescode }}" id="fc_divisioncode" readonly>
+                                <input type="text" class="form-control required-field" name="fc_salescode" value="{{ $data->fc_salescode }}" id="fc_salescode" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
                             <div class="form-group required">
                                 <label>Cabang</label>
-                                <input type="text" class="form-control required-field" name="fc_branch" value="{{ $data->sales->fc_branch }}" id="fc_branch" readonly>
+                                <input type="text" class="form-control required-field" name="fc_branch" value="{{ $data->fc_branch }}" id="fc_branch" readonly>
                             </div>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12">
