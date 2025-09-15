@@ -1,35 +1,116 @@
-# SawitOne 🌴  
-*Aplikasi ERP untuk Industri Kelapa Sawit berbasis Laravel & MySQL*  
+# Sawitone
 
-## 📖 Deskripsi  
-**SawitOne** adalah aplikasi ERP (Enterprise Resource Planning) yang dikembangkan khusus untuk industri kelapa sawit.  
-Aplikasi ini membantu perusahaan dalam mengelola proses bisnis mulai dari manajemen kebun, produksi, hingga distribusi dengan sistem terintegrasi.  
-
-Dibangun menggunakan **Laravel** sebagai backend framework dan **MySQL** sebagai sistem basis data utama.  
+Sawitone adalah aplikasi **ERP untuk pengelolaan kelapa sawit** yang dibangun menggunakan **Laravel Framework** dan **MySQL** sebagai basis data utama. Aplikasi ini dikembangkan untuk membantu perusahaan kelapa sawit dalam mengelola data operasional, keuangan, dan distribusi secara terintegrasi.
 
 ---
 
-## 🚀 Fitur Utama  
-- ✅ Manajemen Kebun (lahan, tanaman, panen)  
-- ✅ Manajemen Produksi & Pabrik  
-- ✅ Modul Keuangan & Akuntansi  
-- ✅ Manajemen Persediaan & Gudang  
-- ✅ Integrasi dengan proses distribusi  
-- ✅ Laporan & Dashboard Analitik  
+## 🚀 Teknologi yang Digunakan
+
+* **Bahasa Pemrograman**: PHP `^7.3|^8.0`
+* **Framework**: Laravel `^8.75`
+* **Database**: MySQL
+* **Web Server**: Apache / Nginx
+* **Dependency Management**: Composer & NPM
 
 ---
 
-## 🛠️ Teknologi yang Digunakan  
-- **Framework**: [Laravel 11+](https://laravel.com/)  
-- **Database**: [MySQL 8+](https://www.mysql.com/)  
-- **Frontend**: Blade / Vue.js (opsional jika ditambahkan)  
-- **Manajemen Dependensi**: [Composer](https://getcomposer.org/) & [NPM](https://www.npmjs.com/)  
+## 📂 Struktur Proyek
+
+```
+sawitone/
+├── app/              # Business logic aplikasi
+├── bootstrap/        # File bootstrap Laravel
+├── config/           # Konfigurasi aplikasi
+├── database/         # Migrasi dan seeder database
+├── public/           # Entry point aplikasi (index.php)
+├── resources/        # Blade templates, CSS, JS
+├── routes/           # Definisi routes (web/api)
+├── storage/          # Cache, logs, uploads
+├── tests/            # Unit & feature tests
+└── vendor/           # Dependency composer
+```
 
 ---
 
-## 📦 Instalasi  
+## ⚙️ Instalasi
 
-### 1. Clone Repository  
+### 1. Clone Repository
+
 ```bash
 git clone https://github.com/username/sawitone.git
 cd sawitone
+```
+
+### 2. Install Dependencies
+
+```bash
+composer install
+npm install && npm run dev
+```
+
+### 3. Konfigurasi Environment
+
+Salin file `.env.example` menjadi `.env` lalu sesuaikan konfigurasi database dan lainnya:
+
+```bash
+cp .env.example .env
+```
+
+Edit file `.env`:
+
+```env
+APP_NAME=Sawitone
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sawitone_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Migrasi Database
+
+```bash
+php artisan migrate --seed
+```
+
+### 6. Jalankan Aplikasi
+
+```bash
+php artisan serve
+```
+
+Aplikasi dapat diakses di: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🛠️ Fitur Utama
+
+* 📊 **Manajemen Data Operasional** (perkebunan, panen, distribusi)
+* 💰 **Modul Keuangan & Akuntansi**
+* 👥 **Manajemen Karyawan & Absensi**
+* 🏭 **Integrasi Produksi & Gudang**
+* 📈 **Dashboard & Laporan Analitik**
+
+---
+
+## 👨‍💻 Kontribusi
+
+Jika ingin berkontribusi, silakan fork repository ini dan ajukan pull request dengan penjelasan yang jelas mengenai perubahan yang diajukan.
+
+---
+
+## 📜 Lisensi
+
+Proyek ini dirilis di bawah lisensi [MIT License](LICENSE).
