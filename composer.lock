@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a903d6504e014157853fdc8ebed0a6b3",
+    "content-hash": "f1eb2b109166eea51c1d255230bf9f79",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7065,13 +7065,13 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "2.12-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider"
                     ]
+                },
+                "branch-alias": {
+                    "dev-master": "2.12-dev"
                 }
             },
             "autoload": {

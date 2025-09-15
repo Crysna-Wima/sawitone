@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\apps;
+namespace App\Http\Controllers\Apps;
 
 use Validator;
 use App\Helpers\Convert;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\apps;
+namespace App\Http\Controllers\Apps;
 
 use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
